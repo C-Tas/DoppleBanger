@@ -18,18 +18,16 @@ typedef enum AudioId {
 
 //Vector con las rutas de las imagenes a cargar
 static vector<string> texRoutes {
-	("Ruta de los recursos a cargar"),
+	{"Ruta de los recursos a cargar"},
 };
 
 //Vector con las rutas de los audios a cargar
 static vector<string> audRoutes{
-	("Ruta de los recursos a cargar"),
+	{"Ruta de los recursos a cargar"},
 };
-
 
 class Resources
 {
 	static int textureSize() { return TexSize; };
 	static int audioSize() { return AudSize; };
 };
-

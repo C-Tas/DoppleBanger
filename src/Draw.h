@@ -4,8 +4,7 @@
 
 class Texture;//TODO´s:
 
-class Draw :
-	public GameObject
+class Draw : public GameObject
 {
 private:
 	Texture* texture_;
