@@ -19,4 +19,11 @@ public:
 	void setX(double x) { x_ = x; };
 	void setY(double y) { y_ = y; };
 #pragma endregion
+
+#pragma region Operators
+	Vector2D operator+(const Vector2D& v)const;
+	Vector2D operator-(const Vector2D& v) const;
+	Vector2D operator*(double d) const;
+	Vector2D operator=(const Vector2D& v)const;
+#pragma endregion
 };
