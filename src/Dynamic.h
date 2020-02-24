@@ -3,7 +3,8 @@
 class Dynamic : public Collider
 {
 protected:
-	double velX, velY;
+	//double velX_, velY_;
+	Vector2D vel_;
 public:
 };
 
