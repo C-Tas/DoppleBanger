@@ -12,6 +12,6 @@ vector <Resources::MusicInfo> Resources::musicRoutes{
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 };
 
-vector <Resources::FontInfo> Resources::fontRoutes{
+vector <Resources::FontInfo> Resources::fontsRoutes{
 	//Para añadir nueva ruta: {FontId, "./Sources/fonts/name.ttf", size}
 };

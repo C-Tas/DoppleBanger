@@ -11,6 +11,7 @@ private:
 protected:
 	//Draw(Texture* texture = nullptr) : texture_(texture) {};
 	Draw(Texture* texture=nullptr, Vector2D pos = { 0,0 }, Vector2D scale = {0,0}) :GameObject(pos, scale), texture_(texture) {};
-	virtual void render() {};
+public:
+	virtual void draw() {};
 };
 

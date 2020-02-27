@@ -1,6 +1,7 @@
 #pragma once
 #include <list>
 #include "GameObject.h"
+#include "Draw.h"
 #include "Application.h"
 
 using namespace std;
@@ -10,6 +11,7 @@ class GameState
 {
 protected:
 	list<GameObject*> gameObjects_;
+	list<Draw*> objectToRender_;
 	Application* app_;
 public:
 	GameState(Application* app) : app_(app) {};

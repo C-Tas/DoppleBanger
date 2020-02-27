@@ -5,6 +5,7 @@ GameState::~GameState() {
 		delete (*it);
 	}
 	gameObjects_.clear();
+	objectToRender_.clear();
 }
 
 void GameState::update() {
@@ -14,7 +15,7 @@ void GameState::update() {
 }
 
 void GameState::draw() const {
-	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+	for (auto it = objectToRender_.begin(); it != objectToRender_.end(); ++it) {
 		(*it)->draw();
 	}
 }
