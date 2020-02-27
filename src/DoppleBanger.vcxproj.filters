@@ -75,6 +75,12 @@
     <ClCompile Include="MainMenuState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\ControlsState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\CreditsState.cpp">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h">
@@ -126,6 +132,12 @@
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ControlsState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\CreditsState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
   </ItemGroup>

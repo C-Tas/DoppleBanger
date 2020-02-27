@@ -24,6 +24,8 @@
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
+    <ClCompile Include="Sources\ControlsState.cpp" />
+    <ClCompile Include="Sources\CreditsState.cpp" />
     <ClCompile Include="Sources\Draw.cpp" />
     <ClCompile Include="Sources\Dynamic.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
@@ -44,6 +46,8 @@
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Collider.h" />
+    <ClInclude Include="Sources\ControlsState.h" />
+    <ClInclude Include="Sources\CreditsState.h" />
     <ClInclude Include="Sources\Draw.h" />
     <ClInclude Include="Sources\Dynamic.h" />
     <ClInclude Include="Sources\Enemy.h" />
