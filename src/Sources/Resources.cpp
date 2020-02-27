@@ -1,13 +1,17 @@
 #include "Resources.h"
 
 vector<Resources::ImageInfo> Resources::imageRoutes{
-	//{TextureId, "./Sources/images/name.png"}
+	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{
-	//{AudioId, "./Sources/audio/name.mp3"}
+	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 };
 
 vector <Resources::MusicInfo> Resources::musicRoutes{
-	//{AudioId, "./Sources/audio/name.mp3"}
+	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
+};
+
+vector <Resources::FontInfo> Resources::fontRoutes{
+	//Para añadir nueva ruta: {FontId, "./Sources/fonts/name.ttf", size}
 };

@@ -17,7 +17,11 @@ public:
 	enum AudioId : int{
 		
 	};
-
+	
+	enum FontId : int {
+		
+	};
+	
 	struct ImageInfo {
 		TextureId textureId;
 		string filename;
@@ -32,6 +36,12 @@ public:
 		AudioId id;
 		string fileName;
 	};
+	
+	struct FontInfo {
+		FontId id;
+		string fileName;
+		int size;
+	};
 
 	//Vector con las rutas de las imagenes a cargar
 	static vector<ImageInfo> imageRoutes;
@@ -41,4 +51,7 @@ public:
 
 	//Vector con las rutas de la música a cargar
 	static vector<MusicInfo> musicRoutes;
+	
+	//Vector con las rutas de la música a cargar
+	static vector<FontInfo> fontsRoutes;
 };
