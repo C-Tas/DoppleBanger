@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MainMenuState.cpp" />
+    <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
@@ -37,6 +39,8 @@
     <ClCompile Include="Sources\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="PauseState.h" />
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Collider.h" />

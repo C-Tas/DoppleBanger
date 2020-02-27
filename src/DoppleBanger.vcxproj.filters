@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\GameStateMachine">
+      <UniqueIdentifier>{8e6546b5-ae60-47f2-9cc9-01b7f8b16e4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameStateMachine">
+      <UniqueIdentifier>{72511ca6-78eb-40c7-92c4-9e08bfb1b3d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\Actor.cpp">
@@ -36,12 +42,6 @@
     <ClCompile Include="Sources\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\GameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\GameStateMachine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\interactuable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -62,6 +62,18 @@
     </ClCompile>
     <ClCompile Include="Sources\Vector2D.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\GameStateMachine.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\GameState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,12 +98,6 @@
     <ClInclude Include="Sources\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\GameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\GameStateMachine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\interactuable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -109,6 +115,18 @@
     </ClInclude>
     <ClInclude Include="Sources\Vector2D.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\GameState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\GameStateMachine.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
