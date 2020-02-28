@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MainMenuState.cpp" />
-    <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
@@ -34,15 +32,15 @@
     <ClCompile Include="Sources\GameStateMachine.cpp" />
     <ClCompile Include="Sources\interactuable.cpp" />
     <ClCompile Include="Sources\main.cpp" />
+    <ClCompile Include="Sources\MainMenuState.cpp" />
     <ClCompile Include="Sources\NPC.cpp" />
+    <ClCompile Include="Sources\PauseState.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\Resources.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MainMenuState.h" />
-    <ClInclude Include="PauseState.h" />
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Collider.h" />
@@ -55,7 +53,9 @@
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
     <ClInclude Include="Sources\interactuable.h" />
+    <ClInclude Include="Sources\MainMenuState.h" />
     <ClInclude Include="Sources\NPC.h" />
+    <ClInclude Include="Sources\PauseState.h" />
     <ClInclude Include="Sources\Player.h" />
     <ClInclude Include="Sources\Resources.h" />
     <ClInclude Include="Sources\Trigger.h" />

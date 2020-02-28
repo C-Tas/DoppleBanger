@@ -3,5 +3,8 @@
 class ControlsState :
 	public GameState
 {
+public:
+	ControlsState();
+	void BackToPreviousState() {};
 };
 

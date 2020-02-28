@@ -69,17 +69,17 @@
     <ClCompile Include="Sources\GameState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="PauseState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\ControlsState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Sources\CreditsState.cpp">
-      <Filter>Header Files\GameStateMachine</Filter>
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\MainMenuState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\PauseState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,16 +128,16 @@
     <ClInclude Include="Sources\GameStateMachine.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="PauseState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenuState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\ControlsState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\CreditsState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MainMenuState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\PauseState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
   </ItemGroup>
