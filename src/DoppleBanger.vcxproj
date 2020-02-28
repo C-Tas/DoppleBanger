@@ -33,6 +33,7 @@
     <ClCompile Include="Sources\NPC.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\Resources.cpp" />
+    <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
   </ItemGroup>
@@ -50,6 +51,7 @@
     <ClInclude Include="Sources\NPC.h" />
     <ClInclude Include="Sources\Player.h" />
     <ClInclude Include="Sources\Resources.h" />
+    <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\Vector2D.h" />
   </ItemGroup>
