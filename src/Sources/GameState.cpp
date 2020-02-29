@@ -6,6 +6,7 @@ GameState::~GameState() {
 	}
 	gameObjects_.clear();
 	objectToRender_.clear();
+	//objectEvent_.clear();
 }
 
 void GameState::update() {
@@ -18,4 +19,9 @@ void GameState::draw() const {
 	for (auto it = objectToRender_.begin(); it != objectToRender_.end(); ++it) {
 		(*it)->draw();
 	}
+}
+void GameState::HandleEvents(SDL_Event& event) {
+	//for (HandleEventClass* hE: objectEvents_) {
+	//	hE->HandleEvent(event);
+	//}
 }
