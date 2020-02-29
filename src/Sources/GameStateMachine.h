@@ -9,9 +9,9 @@ private:
 public:
 	GameStateMachine();
 	virtual ~GameStateMachine() {};
-	GameState* GetState() { return gameStateStack_.top(); };
-	void PopState() { if (!gameStateStack_.empty())gameStateStack_.pop(); };
-	void PushState(GameState* gameState) { gameStateStack_.push(gameState); };
-	void ChangeState(GameState* gameState) { if (!gameStateStack_.empty())gameStateStack_.pop(); gameStateStack_.push(gameState);};
+	GameState* getState() { return gameStateStack_.top(); };
+	void popState() { if (!gameStateStack_.empty())gameStateStack_.pop(); };
+	void pushState(GameState* gameState) { gameStateStack_.push(gameState); };
+	void changeState(GameState* gameState) { if (!gameStateStack_.empty())gameStateStack_.pop(); gameStateStack_.push(gameState);};
 };
 

@@ -1,6 +1,6 @@
 #include "GameState.h"
 //Actualiza todos los objetos que esten en la lista de objetos
-void GameState::Update() {
+void GameState::update() {
 	list<GameObject*>::iterator it = objectList_.begin();
 	while (it!=objectList_.end())
 	{
@@ -9,7 +9,7 @@ void GameState::Update() {
 	}
 }
 //Renderiza todos los objetos que esten en la lista de objetos
-void GameState::Render() {
+void GameState::render() {
 	list<GameObject*>::iterator it = objectList_.begin();
 	while (it != objectList_.end())
 	{

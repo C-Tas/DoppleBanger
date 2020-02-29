@@ -3,8 +3,9 @@
 class ControlsState :
 	public GameState
 {
+private:
 public:
-	ControlsState();
-	void BackToPreviousState() {};
+	ControlsState(Application* app=nullptr) :GameState(app) {};
+	void backToPreviousState() ;
 };
 
