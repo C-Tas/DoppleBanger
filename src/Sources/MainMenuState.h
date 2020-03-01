@@ -5,7 +5,7 @@ class MainMenuState :
 {
 private:
 public:
-	MainMenuState(Application* app = nullptr) :GameState(app) {};
+	MainMenuState(Application* app = nullptr) : GameState(app) { printf("MainMenuState"); };
 	void goControlState();
 	void goCreditsState();
 	void goLoadState();

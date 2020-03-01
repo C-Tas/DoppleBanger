@@ -9,6 +9,7 @@ public:
 	void goToSaveGame();
 	void goToInventoryState();
 	void goToSelectState();
+	void goToStashState();
 	//falta otro cambio
 };
 

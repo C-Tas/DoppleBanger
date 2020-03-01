@@ -5,7 +5,7 @@ class ControlsState :
 {
 private:
 public:
-	ControlsState(Application* app=nullptr) :GameState(app) {};
+	ControlsState(Application* app = nullptr) : GameState(app) {};
 	void backToPreviousState() ;
 };
 
