@@ -1,20 +1,23 @@
 #include "PlayState.h"
 #include "PauseState.h"
+#include "SaveLoadState.h"
+#include "InventoryState.h"
+#include "SelectLevelState.h"
 #pragma region ChangeState
 void PlayState::goToPauseState() {
-	//app_->getStateMachine()->pushState( PauseState(app_));
+	app_->getStateMachine()->pushState(new PauseState(app_));
 
 }
 void PlayState::goToSaveGame() {
-	//app_->getStateMachine()->pushState( SaveLoadState(app_));
+	app_->getStateMachine()->pushState( new SaveLoadState(app_));
 
 }
 void PlayState::goToInventoryState() {
-	//app_->getStateMachine()->pushState( InventoryState(app_));
+	app_->getStateMachine()->pushState( new InventoryState(app_));
 
 }
 void PlayState::goToSelectState() {
-	//app_->getStateMachine()->pushState( SelectLevelState(app_));
+	app_->getStateMachine()->pushState( new SelectLevelState(app_));
 
 }
 #pragma endregion

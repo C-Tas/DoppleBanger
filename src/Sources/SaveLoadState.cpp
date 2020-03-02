@@ -1,9 +1,9 @@
 #include "SaveLoadState.h"
 #include "MainMenuState.h"
 void SaveLoadState::goToGame(){
-	//app_->getStateMachine()->popState();
+	app_->getStateMachine()->popState();
 
 }
 void SaveLoadState::goToMainMenu() {
-	//app_->getStateMachine()->changeState(	MainMenuState(app_));
+	app_->getStateMachine()->changeState(	new MainMenuState(app_));
 }

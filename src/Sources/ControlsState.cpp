@@ -1,4 +1,5 @@
 #include "ControlsState.h"
 void ControlsState::backToPreviousState() {
-	//app_->getStateMachine()->popState();
+	app_->getStateMachine()->popState();
+		
 }

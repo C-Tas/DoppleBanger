@@ -1,19 +1,26 @@
 #include "GameState.h"
-//Actualiza todos los objetos que esten en la lista de objetos
+GameState::~GameState() {
+	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+		delete (*it);
+	}
+	gameObjects_.clear();
+	objectToRender_.clear();
+	//objectEvent_.clear();
+}
+
 void GameState::update() {
-	list<GameObject*>::iterator it = objectList_.begin();
-	while (it!=objectList_.end())
-	{
-		//(*it)->update();
-		it++;
+	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+		(*it)->update();
 	}
 }
-//Renderiza todos los objetos que esten en la lista de objetos
-void GameState::render() {
-	list<GameObject*>::iterator it = objectList_.begin();
-	while (it != objectList_.end())
-	{
-		//(*it)->Render();
-		it++;
+
+void GameState::draw() const {
+	for (auto it = objectToRender_.begin(); it != objectToRender_.end(); ++it) {
+		(*it)->draw();
 	}
+}
+void GameState::handleEvents(SDL_Event& event) {
+	//for (HandleEventClass* hE: objectEvents_) {
+	//	hE->HandleEvent(event);
+	//}
 }

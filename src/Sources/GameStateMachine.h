@@ -1,13 +1,13 @@
 #pragma once
-#include"GameState.h"
 #include<stack>
+class GameState;
 using namespace std;
 class GameStateMachine
 {
 private:
 	stack<GameState*> gameStateStack_;
 public:
-	GameStateMachine();
+	GameStateMachine() {};
 	virtual ~GameStateMachine() {};
 	GameState* getState() { return gameStateStack_.top(); };
 	void popState() { if (!gameStateStack_.empty())gameStateStack_.pop(); };

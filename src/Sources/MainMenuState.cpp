@@ -5,14 +5,14 @@
 #include "SaveLoadState.h"
 
 void MainMenuState::goControlState() {
-	//app_->getStateMachine()->pushState( ControlsState(app_));
+	app_->getStateMachine()->pushState( new ControlsState(app_));
 };
 void MainMenuState::goCreditsState() {
-	//app_->getStateMachine()->pushState( CreditsState(app_));
+	app_->getStateMachine()->pushState( new CreditsState(app_));
 };
 void MainMenuState::goLoadState() {
-	//app_->getStateMachine()->pushState( SaveLoadState(app_));
+	app_->getStateMachine()->pushState(new SaveLoadState(app_));
 };
 void MainMenuState::goStoryState() {
-	//app_->getStateMachine()->pushState( StoryState(app_));
+	app_->getStateMachine()->pushState( new StoryState(app_));
 };
