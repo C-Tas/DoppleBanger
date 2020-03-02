@@ -79,6 +79,12 @@
     <ClCompile Include="Sources\StashState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\HandleEvents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h">
@@ -155,6 +161,12 @@
     </ClInclude>
     <ClInclude Include="Sources\StashState.h">
       <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\HandleEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Button.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
