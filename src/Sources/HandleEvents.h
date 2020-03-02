@@ -35,7 +35,7 @@ private:
 	}
 	inline void onMouseMotion(SDL_Event& event) {
 		isMouseMotion_ = true;
-		mousePos_.setVec(Vector2D{ event.motion.x, event.motion.y });
+		mousePos_.setVec(Vector2D{ (double)event.motion.x, (double)event.motion.y });
 	}
 	inline void onMouseButtonChange(SDL_Event& event, bool isDown) {
 		isMouseButton_ = true;
