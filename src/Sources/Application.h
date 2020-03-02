@@ -7,14 +7,14 @@ using namespace std;
 class Application
 {
 private:
-	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
+	SDL_Window* window_ = nullptr;
+	SDL_Renderer* renderer_ = nullptr;
 	GameStateMachine* machine_ = nullptr;
-	bool appClosed = false;
+	bool appClosed_ = false;
 
 	//Constantes pantalla
-	const int winWidth = 1600;
-	const int winHeight = 900;
+	static const int winWidth_ = 1600;
+	static const int winHeight_ = 900;
 
 	//Métodos auxiliares para la constructora
 	void initSDL();
@@ -25,12 +25,12 @@ public:
 	void runApp();
 	
 	//Setters
-	void endGame() { appClosed = true; };
+	void endGame() { appClosed_ = true; };
 	
 	//Getters
 	GameStateMachine* getStateMachine() { return machine_; };
-	bool isRunning() { return !appClosed; };
-	int getWindowWidth() { return winWidth; };
-	int getWindowHeight() { return winHeight; };
+	bool isRunning() { return !appClosed_; };
+	int getWindowWidth() { return winWidth_; };
+	int getWindowHeight() { return winHeight_; };
 };
 

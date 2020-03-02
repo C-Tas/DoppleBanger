@@ -9,15 +9,15 @@ Application::Application(GameStateMachine* state) {
 }
 
 Application::~Application() {
-	//Faltaría vaciar máquina de estados
 	
 	delete machine_;
-	//Destruimos render y window
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
 
-	renderer = nullptr;
-	window = nullptr;
+	//Destruimos render y window
+	SDL_DestroyRenderer(renderer_);
+	SDL_DestroyWindow(window_);
+
+	renderer_ = nullptr;
+	window_ = nullptr;
 
 	//Cerramos SDL
 	SDL_Quit();
@@ -28,25 +28,25 @@ void Application::initSDL() {
 	winX = winY = SDL_WINDOWPOS_CENTERED;
 	// Inicialización del sistema, ventana y renderer
 	SDL_Init(SDL_INIT_EVERYTHING);
-	window = SDL_CreateWindow("Dopplebanger", winX, winY, winWidth,
-		winHeight, SDL_WINDOW_SHOWN);
+	window_ = SDL_CreateWindow("Dopplebanger", winX, winY, winWidth_,
+		winHeight_, SDL_WINDOW_SHOWN);
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	if (window == nullptr || renderer == nullptr) {
+	renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
+	if (window_ == nullptr || renderer_ == nullptr) {
 		throw exception("Game window or renderer was null");
 	}
 }
 
 void Application::runApp() {
-	while (!appClosed) {
+	while (!appClosed_) {
 
 		//update state 
 		//render state
 
 		//just for testing
-		SDL_SetRenderDrawColor(renderer, 180, 50, 0, 255);
-		SDL_RenderClear(renderer);
-		SDL_RenderPresent(renderer);
+		SDL_SetRenderDrawColor(renderer_, 180, 50, 0, 255);
+		SDL_RenderClear(renderer_);
+		SDL_RenderPresent(renderer_);
 		SDL_Delay(5000);
 		endGame();
 	}
