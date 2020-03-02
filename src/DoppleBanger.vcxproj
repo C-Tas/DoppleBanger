@@ -31,12 +31,17 @@
     <ClCompile Include="Sources\GameState.cpp" />
     <ClCompile Include="Sources\GameStateMachine.cpp" />
     <ClCompile Include="Sources\interactuable.cpp" />
+    <ClCompile Include="Sources\InventoryState.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\MainMenuState.cpp" />
     <ClCompile Include="Sources\NPC.cpp" />
     <ClCompile Include="Sources\PauseState.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
+    <ClCompile Include="Sources\PlayState.cpp" />
     <ClCompile Include="Sources\Resources.cpp" />
+    <ClCompile Include="Sources\SaveLoadState.cpp" />
+    <ClCompile Include="Sources\SelectLevelState.cpp" />
+    <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
   </ItemGroup>
@@ -53,11 +58,16 @@
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
     <ClInclude Include="Sources\interactuable.h" />
+    <ClInclude Include="Sources\InventoryState.h" />
     <ClInclude Include="Sources\MainMenuState.h" />
     <ClInclude Include="Sources\NPC.h" />
     <ClInclude Include="Sources\PauseState.h" />
     <ClInclude Include="Sources\Player.h" />
+    <ClInclude Include="Sources\PlayState.h" />
     <ClInclude Include="Sources\Resources.h" />
+    <ClInclude Include="Sources\SaveLoadState.h" />
+    <ClInclude Include="Sources\SelectLevelState.h" />
+    <ClInclude Include="Sources\StoryState.h" />
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\Vector2D.h" />
   </ItemGroup>

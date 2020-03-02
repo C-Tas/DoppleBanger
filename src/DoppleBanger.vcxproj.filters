@@ -81,6 +81,21 @@
     <ClCompile Include="Sources\PauseState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\PlayState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\StoryState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\InventoryState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\SelectLevelState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\SaveLoadState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h">
@@ -138,6 +153,21 @@
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\PauseState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\PlayState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\StoryState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\InventoryState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\SelectLevelState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\SaveLoadState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
   </ItemGroup>

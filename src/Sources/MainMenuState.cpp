@@ -2,6 +2,7 @@
 #include "ControlsState.h"
 #include "CreditsState.h"
 #include "StoryState.h"
+#include "SaveLoadState.h"
 
 void MainMenuState::goControlState() {
 	//app_->getStateMachine()->pushState( ControlsState(app_));
