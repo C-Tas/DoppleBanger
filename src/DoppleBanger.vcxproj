@@ -41,6 +41,7 @@
     <ClCompile Include="Sources\Resources.cpp" />
     <ClCompile Include="Sources\SaveLoadState.cpp" />
     <ClCompile Include="Sources\SelectLevelState.cpp" />
+    <ClCompile Include="Sources\StashState.cpp" />
     <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="Sources\Resources.h" />
     <ClInclude Include="Sources\SaveLoadState.h" />
     <ClInclude Include="Sources\SelectLevelState.h" />
+    <ClInclude Include="Sources\StashState.h" />
     <ClInclude Include="Sources\StoryState.h" />
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\Vector2D.h" />

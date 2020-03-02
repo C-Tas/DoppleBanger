@@ -1,26 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\GameStateMachine">
-      <UniqueIdentifier>{8e6546b5-ae60-47f2-9cc9-01b7f8b16e4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameStateMachine">
-      <UniqueIdentifier>{72511ca6-78eb-40c7-92c4-9e08bfb1b3d1}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Sources\Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,16 +43,19 @@
     <ClCompile Include="Sources\Vector2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\ControlsState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\CreditsState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
     <ClCompile Include="Sources\GameStateMachine.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Sources\GameState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\ControlsState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\CreditsState.cpp">
+    <ClCompile Include="Sources\InventoryState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Sources\MainMenuState.cpp">
@@ -84,16 +67,16 @@
     <ClCompile Include="Sources\PlayState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\StoryState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\InventoryState.cpp">
+    <ClCompile Include="Sources\SaveLoadState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Sources\SelectLevelState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\SaveLoadState.cpp">
+    <ClCompile Include="Sources\StoryState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\StashState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -137,16 +120,16 @@
     <ClInclude Include="Sources\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\GameState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\GameStateMachine.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\ControlsState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\CreditsState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\GameState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\GameStateMachine.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\MainMenuState.h">
@@ -158,17 +141,34 @@
     <ClInclude Include="Sources\PlayState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\SaveLoadState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\SelectLevelState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
     <ClInclude Include="Sources\StoryState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\InventoryState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\SelectLevelState.h">
+    <ClInclude Include="Sources\StashState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\SaveLoadState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4316819d-7168-46c3-9aa7-c30388d3f49c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{b72a284d-9993-484d-a9c5-5343284e9e60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameStateMachine">
+      <UniqueIdentifier>{8721b18c-d234-47a9-8a43-096859e1522b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameStateMachine">
+      <UniqueIdentifier>{81e52352-c529-4aa1-8a12-8c8d738aef2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

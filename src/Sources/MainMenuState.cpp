@@ -11,7 +11,7 @@ void MainMenuState::goCreditsState() {
 	app_->getStateMachine()->pushState( new CreditsState(app_));
 };
 void MainMenuState::goLoadState() {
-	app_->getStateMachine()->pushState(new SaveLoadState(app_));
+	app_->getStateMachine()->pushState(new SaveLoadState(app_, true)); //TRUE => LOAD //FALSE => SAVE
 };
 void MainMenuState::goStoryState() {
 	app_->getStateMachine()->pushState( new StoryState(app_));

@@ -5,5 +5,6 @@ class CreditsState :
 {
 public:
 	CreditsState(Application* app = nullptr) :GameState(app) {};
+	void backToPreviousState();
 };
 
