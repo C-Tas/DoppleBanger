@@ -7,6 +7,9 @@
     <ClCompile Include="Sources\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Sources\Collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -20,6 +23,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sources\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\HandleEvents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sources\interactuable.cpp">
@@ -37,6 +43,9 @@
     <ClCompile Include="Sources\Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Sources\Trigger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -49,22 +58,22 @@
     <ClCompile Include="Sources\CreditsState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\GameStateMachine.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\GameState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\InventoryState.cpp">
+    <ClCompile Include="Sources\GameStateMachine.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Sources\MainMenuState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\PauseState.cpp">
+    <ClCompile Include="Sources\InventoryState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Sources\PlayState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\PauseState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Sources\SaveLoadState.cpp">
@@ -73,17 +82,11 @@
     <ClCompile Include="Sources\SelectLevelState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\StoryState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\StashState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\HandleEvents.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Button.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Sources\StoryState.cpp">
+      <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +94,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Collider.h">
@@ -108,16 +114,22 @@
     <ClInclude Include="Sources\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\interactuable.h">
+    <ClInclude Include="Sources\HandleEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\NPC.h">
+    <ClInclude Include="Sources\interactuable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\PlayState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Sources\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Trigger.h">
@@ -126,11 +138,8 @@
     <ClInclude Include="Sources\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\ControlsState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\CreditsState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
+    <ClInclude Include="Sources\NPC.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\GameState.h">
       <Filter>Header Files\GameStateMachine</Filter>
@@ -138,16 +147,25 @@
     <ClInclude Include="Sources\GameStateMachine.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\MainMenuState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\PauseState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\PlayState.h">
+    <ClInclude Include="Sources\MainMenuState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\InventoryState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ControlsState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\CreditsState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\SaveLoadState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\StashState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\SelectLevelState.h">
@@ -156,31 +174,19 @@
     <ClInclude Include="Sources\StoryState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\InventoryState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\StashState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\HandleEvents.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4316819d-7168-46c3-9aa7-c30388d3f49c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{b72a284d-9993-484d-a9c5-5343284e9e60}</UniqueIdentifier>
+      <UniqueIdentifier>{0fc2beed-6c85-43f6-81aa-02fdeae7e569}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{501cbab9-8599-423d-b694-042d8206aad4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\GameStateMachine">
-      <UniqueIdentifier>{8721b18c-d234-47a9-8a43-096859e1522b}</UniqueIdentifier>
+      <UniqueIdentifier>{69007b5a-de38-4e0c-a670-a7abd34a02ea}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\GameStateMachine">
-      <UniqueIdentifier>{81e52352-c529-4aa1-8a12-8c8d738aef2d}</UniqueIdentifier>
+      <UniqueIdentifier>{1f38b45f-f34d-46b0-b5af-a596207bf217}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
