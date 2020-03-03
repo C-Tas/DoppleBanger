@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "GameState.h"
 #include <exception>
 
 Application::Application(GameStateMachine* state) {
@@ -41,7 +42,9 @@ void Application::runApp() {
 	while (!appClosed_) {
 
 		//update state 
+		//if(machine_ != nullptr)//machine_->getState()->update();
 		//render state
+		//if(machine_ != nullptr)//machine_->getState()->draw();
 
 		//just for testing
 		SDL_SetRenderDrawColor(renderer_, 180, 50, 0, 255);
