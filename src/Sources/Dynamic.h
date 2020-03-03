@@ -2,9 +2,10 @@
 #include "Collider.h"
 class Dynamic : public Collider
 {
-protected:
-	//double velX_, velY_;
+private:
 	Vector2D vel_;
+protected:
+	Dynamic() {};
 public:
 };
 
