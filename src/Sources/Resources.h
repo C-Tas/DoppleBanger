@@ -10,7 +10,7 @@ class Resources
 public:
 	//Enum para las distintas imagenes del juego
 	enum TextureId : int {
-	
+		Timon,
 	};
 
 	//Enum para las distintos audios del juego

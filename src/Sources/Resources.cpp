@@ -1,6 +1,7 @@
 #include "Resources.h"
 
 vector<Resources::ImageInfo> Resources::imageRoutes{
+	{Timon, "./assert/images/timon.png"}
 	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 };
 

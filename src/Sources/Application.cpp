@@ -5,7 +5,7 @@
 Application::Application(GameStateMachine* state) {
 	
 	initSDL();
-	machine_ = state;
+	machine_ = new GameStateMachine();
 	//Añadir estado mainMenu a la maquina de estados
 }
 

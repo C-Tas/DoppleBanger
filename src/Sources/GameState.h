@@ -3,6 +3,8 @@
 #include "Draw.h"
 #include "Application.h"
 #include "SDL.h"
+#include "Texture.h"
+#include "Resources.h"
 #include <list>
 //#include "//clase EventHandler"
 using namespace std;
@@ -20,7 +22,7 @@ protected:
 	Application* app_;
 public:
 	GameState(Application* app=nullptr) : app_(app) {};
-	~GameState();
+	virtual ~GameState();
 	///<summary>Renderiza todos los objetos en la lista de objectToRender_</summary>
 	virtual void draw() const;//Renderiza todos los objetos en la lista de objectToRender_
 	///<summary>Actualiza todos los objetos en la lista de gameObjects_</summary>

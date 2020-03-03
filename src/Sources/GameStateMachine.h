@@ -7,8 +7,8 @@ class GameStateMachine
 private:
 	stack<GameState*> gameStateStack_;
 public:
-	GameStateMachine() {};
-	virtual ~GameStateMachine() {};
+	GameStateMachine();
+	virtual ~GameStateMachine();
 
 	//<summary>Devuelve el estado actual</summary>
 	GameState* getState() { return gameStateStack_.top(); };

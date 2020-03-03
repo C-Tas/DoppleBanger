@@ -4,6 +4,11 @@
 #include "StoryState.h"
 #include "SaveLoadState.h"
 
+void MainMenuState::initMenuState()
+{
+	//meter botones etc..
+}
+
 void MainMenuState::goControlState() {
 	app_->getStateMachine()->pushState( new ControlsState(app_));
 };
