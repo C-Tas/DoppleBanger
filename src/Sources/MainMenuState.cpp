@@ -7,6 +7,9 @@
 void MainMenuState::initMenuState()
 {
 	//meter botones etc..
+	player_ = new Player(new Texture(app_->getRenderer(), "../Sources/assets/timon.png"), Vector2D(50, 50), Vector2D(50, 50));
+	addUpdateList(player_);
+	addRenderList(player_);
 }
 
 void MainMenuState::goControlState() {
