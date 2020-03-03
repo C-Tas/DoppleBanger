@@ -7,8 +7,6 @@ using uint = unsigned int;
 
 class GameObject
 {
-private:
-
 protected:
 	Vector2D pos_, scale_;
 public:
@@ -21,7 +19,6 @@ public:
 	//constructor por movimiento
 	GameObject(const GameObject&& other)noexcept : pos_(other.pos_), scale_(other.scale_) {};
 	virtual void update() = 0;
-	//virtual void logic() = 0;
 
 	//get
 	const Vector2D getPos() { return pos_; }
