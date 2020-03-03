@@ -1,38 +1,55 @@
 #pragma once
 
-#include "SDL.h"
-#include "SDL_image.h" 
-
+#include <SDL.h>
+//#include "Font.h"
 #include <string>
 
 using namespace std;
-typedef unsigned int uint;
 
 class Texture {
 private:
-	SDL_Texture* texture = nullptr;
-	SDL_Renderer* renderer = nullptr;
-	uint w = 0;	//Ancho de la imagen
-	uint h = 0;	//Alto de la imagen
-	uint fw = 0; // Ancho del frame
-	uint fh = 0; // Alto del frame
-	uint numCols = 1; //Número de columnas de la imagen
-	uint numRows = 1; //Número de filas de la imagen
+	SDL_Texture* texture_;
+	SDL_Renderer* renderer_;
+	int width_;
+	int height_;
 
 public:
-	Texture(SDL_Renderer* r) : renderer(r) {}
-	Texture(SDL_Renderer* r, string filename, uint numRows = 1, uint numCols = 1) : renderer(r) { load(filename, numRows, numCols); }
-	~Texture() { cls(); }
-	void cls();
+	Texture();
+	Texture(SDL_Renderer* renderer, const string& fileName);
+	/*Texture(SDL_Renderer* renderer, const string& text, const Font* font,
+		const SDL_Color& color);*/
+	virtual ~Texture();
 
-	int getW() const { return w; };
-	int getH() const { return h; };
-	uint getNumRows() const { return numRows; }
-	uint getNumCols() const { return numCols; }
-	SDL_Texture* getTexture() const { return texture; }
+	inline int getWidth() {
+		return width_;
+	}
 
-	void load(string filename, uint numRows = 1, uint numCols = 1);
-	void render(const SDL_Rect& rect, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
-	void renderFrame(const SDL_Rect& destRect, int row, int col, int angle = 0, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
+	inline int getHeight() {
+		return height_;
+	}
+
+	inline bool isReady() {
+		return texture_ != nullptr;
+	}
+
+	// Carga las texturas a partir de una imagen
+	bool loadFromImg(SDL_Renderer* renderer, const string& fileName);
+
+	//Carga las texturas a partir de un texto con una fuente
+	/*bool loadFromText(SDL_Renderer* renderer, const string& text, const Font* font,
+		const SDL_Color& color = { 0, 0, 0, 255 });*/
+
+	//Renderiza en posiciones directamente
+	void render(int x, int y) const;
+
+	//Renderiza un frame de la textura en el destRect, si no hay frame se renderiza toda la textura
+	void render(const SDL_Rect& dest) const;
+	void render(const SDL_Rect& dest, const SDL_Rect& frame) const;
+
+	// Renderiza un frame de la textura en el destRect con una rotación, si no hay frame se renderiza toda la textura con un ángulo
+	void render(const SDL_Rect& dest, double angle, const SDL_Rect& frame) const;
+	void render(const SDL_Rect& dest, double angle) const;
+
+	void close();
+
 };
-
