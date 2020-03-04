@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Texture.h"
-#include "SDL.h"
+
 
 
 class Draw : public GameObject
