@@ -1,20 +1,37 @@
 #pragma once
 #include "GameObject.h"
-#include "Texture.h" 
+#include "Texture.h"
 #include "SDL.h"
 
-//class Texture;//TODO´s:
 
 class Draw : public GameObject
 {
 private:
 	Texture* texture_;
+	SDL_Rect* destiny_;
+	SDL_Rect* frame_;
+
 protected:
-	//Draw(Texture* texture = nullptr) : texture_(texture) {};
-	Draw(Texture* texture = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = {0,0}) : GameObject(pos, scale), texture_(texture) {};
-	//~Draw() {};
+	Draw() :texture_(nullptr), destiny_(nullptr), frame_(nullptr) {};
+	Draw(Texture* texture, SDL_Rect* destiny) : texture_(texture), destiny_(destiny), frame_(nullptr) {};
+	Draw(Texture* texture, SDL_Rect* destiny, SDL_Rect* frame) : frame_(frame), texture_(texture), destiny_(destiny) {};
+	Draw(Texture* texture, SDL_Rect* destiny, SDL_Rect* frame, Vector2D pos, Vector2D scale) :
+		GameObject(pos, scale), texture_(texture), destiny_(destiny), frame_(frame) {};
+	Draw(const Draw& other) : GameObject(other.pos_, other.scale_), 
+		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {};
+	Draw(const Draw&& other)noexcept : GameObject(other.pos_, other.scale_),
+		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {};
+	virtual ~Draw() { delete destiny_, frame_; };
 public:
-	virtual void draw() { texture_->render(getDestRect()); };
-	virtual SDL_Rect getDestRect() { return { (int)getPosX(), (int)getPosY(), (int)getScaleX(), (int)getScaleY() }; }
+	const virtual void draw() { texture_->render(*destiny_, SDL_FLIP_NONE); };
+#pragma region getters
+	const virtual SDL_Rect getDestiny() { return *destiny_; };
+#pragma endregion
+
+#pragma region setters
+	void setFrame(SDL_Rect* frame) { frame_ = frame; };
+	void setDestiny(SDL_Rect* destiny) { destiny_ = destiny; };
+	void setTexture(Texture* texture) { texture_ = texture; };
+#pragma endregion
 };
 
