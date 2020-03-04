@@ -1,12 +1,13 @@
 #include "Application.h"
-#include "GameState.h"
+#include "MainMenuState.h"
 #include <exception>
 
 Application::Application(GameStateMachine* state) {
 	
 	initSDL();
-	machine_ = state;
-	//Añadir estado mainMenu a la maquina de estados
+	machine_ = new GameStateMachine();
+	GameState* startState = new MainMenuState(this);
+	machine_->pushState(startState);
 }
 
 Application::~Application() {
@@ -40,17 +41,14 @@ void Application::initSDL() {
 
 void Application::runApp() {
 	while (!appClosed_) {
+		SDL_RenderClear(renderer_);
 
 		//update state 
-		//if(machine_ != nullptr)//machine_->getState()->update();
+		if(machine_ != nullptr) machine_->getState()->update();
 		//render state
-		//if(machine_ != nullptr)//machine_->getState()->draw();
+		if(machine_ != nullptr) machine_->getState()->draw();
 
-		//just for testing
-		SDL_SetRenderDrawColor(renderer_, 180, 50, 0, 255);
-		SDL_RenderClear(renderer_);
 		SDL_RenderPresent(renderer_);
-		SDL_Delay(5000);
-		endGame();
 	}
+	endGame();
 }

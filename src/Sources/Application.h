@@ -32,5 +32,8 @@ public:
 	bool isRunning() { return !appClosed_; };
 	int getWindowWidth() { return winWidth_; };
 	int getWindowHeight() { return winHeight_; };
+	SDL_Window* getWindow() { return window_; };
+	SDL_Renderer* getRenderer() { return renderer_; };
+	GameStateMachine* getGameStateMachine() { return machine_; };
 };
 

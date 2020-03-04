@@ -3,8 +3,7 @@
 class Player : public Actor
 {
 public:
-	Player();
-	~Player();
-	void update();
+	Player(Texture* texture = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0,0 }) : Actor(texture, pos, scale) {};
+	~Player() {};
+	void update() {};
 };
-
