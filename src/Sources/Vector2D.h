@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math.h>
+
 class Vector2D
 {
 private:
@@ -25,5 +27,15 @@ public:
 	Vector2D operator-(const Vector2D& v) const;
 	Vector2D operator*(double d) const;
 	Vector2D operator=(const Vector2D& v)const;
+	bool operator==(const Vector2D& v)const;
+	bool operator!=(const Vector2D& v)const;
+#pragma endregion
+
+#pragma region Operations
+	Vector2D normalize()const;
+	double magnitude()const;
+	double angle()const;
 #pragma endregion
 };
+
+typedef Vector2D Point2D;
