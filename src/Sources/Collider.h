@@ -3,9 +3,16 @@
 
 class Collider: public Draw
 {
+private:
+	SDL_Rect* collisionArea_;
 protected:
-	Collider(Texture* texture = nullptr, Vector2D pos = { 0,0 }, Vector2D scale= {0,0}) : Draw(texture, pos, scale) {};
-	//~Collider() {};
-	virtual void onCollider() {};
+	Collider(): collisionArea_(nullptr) {};
+	Collider(SDL_Rect* collisionArea) : collisionArea_(collisionArea) {};
+	Collider(const Collider& other) :collisionArea_(other.collisionArea_) {};
+	Collider(const Collider&& other)noexcept : collisionArea_(other.collisionArea_) {};
+	virtual void onCollider() = 0;
+public:
+	const SDL_Rect* getCollider() { return collisionArea_; };
+	void setCollider(SDL_Rect* newRect) { collisionArea_ = newRect; };
 };
 
