@@ -8,7 +8,7 @@ void PauseState::goControlState() {
 //mirar
 void PauseState::goMainMenuState() {
 
-	app_->getStateMachine()->doublePopState();
+	app_->getStateMachine()->clearAllStateExceptFirst();
 };
 void PauseState::backToGameState() {
 	app_->getStateMachine()->popState();
