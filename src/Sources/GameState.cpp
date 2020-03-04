@@ -4,7 +4,7 @@ GameState::~GameState() {
 		delete (*it);
 	}
 	gameObjects_.clear();
-	objectToRender_.clear();
+	objectsToRender_.clear();
 	//objectEvent_.clear();
 }
 
@@ -15,7 +15,7 @@ void GameState::update() {
 }
 
 void GameState::draw() const {
-	for (auto it = objectToRender_.begin(); it != objectToRender_.end(); ++it) {
+	for (auto it = objectsToRender_.begin(); it != objectsToRender_.end(); ++it) {
 		(*it)->draw();
 	}
 }
@@ -23,4 +23,12 @@ void GameState::handleEvents(SDL_Event& event) {
 	//for (HandleEventClass* hE: objectEvents_) {
 	//	hE->HandleEvent(event);
 	//}
+}
+
+void GameState::addUpdateList(GameObject* obj) {
+	gameObjects_.push_back(obj);
+}
+
+void GameState::addRenderList(Draw* obj) {
+	objectsToRender_.push_back(obj);
 }

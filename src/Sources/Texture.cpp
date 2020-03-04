@@ -1,5 +1,4 @@
 #include "Texture.h"
-#include "Texture.h"
 #include <iostream>
 
 using namespace std;
