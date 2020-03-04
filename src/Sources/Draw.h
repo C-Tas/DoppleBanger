@@ -6,20 +6,18 @@
 
 class Draw : public GameObject
 {
-private:
+protected:
 	Texture* texture_;
 	SDL_Rect* destiny_;
 	SDL_Rect* frame_;
-
-protected:
 	Draw() :texture_(nullptr), destiny_(nullptr), frame_(nullptr) {};
-	Draw(Texture* texture, SDL_Rect* destiny) : texture_(texture), destiny_(destiny), frame_(nullptr) {};
-	Draw(Texture* texture, SDL_Rect* destiny, SDL_Rect* frame) : frame_(frame), texture_(texture), destiny_(destiny) {};
-	Draw(Texture* texture, SDL_Rect* destiny, SDL_Rect* frame, Vector2D pos, Vector2D scale) :
-		GameObject(pos, scale), texture_(texture), destiny_(destiny), frame_(frame) {};
+	Draw(Texture* texture, SDL_Rect* destiny, Point2D pos, Vector2D scale) :
+		GameObject(pos, scale), texture_(texture), destiny_(destiny), frame_(nullptr) {};
+	Draw(Texture* texture, SDL_Rect* destiny, SDL_Rect* frame, Point2D pos, Vector2D scale) :
+		GameObject(pos, scale), frame_(frame), texture_(texture), destiny_(destiny) {};
 	Draw(const Draw& other) : GameObject(other.pos_, other.scale_), 
 		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {};
-	Draw(const Draw&& other)noexcept : GameObject(other.pos_, other.scale_),
+	Draw(const Draw&& other)noexcept : GameObject(other.pos_, other.scale_),	
 		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {};
 	virtual ~Draw() { delete destiny_, frame_; };
 public:

@@ -17,9 +17,12 @@ private:
 #pragma endregion
 
 public:
-	Player(Texture* texture = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0,0 }) : Actor(texture, pos, scale) {
+	Player() {};
+	Player(Vector2D dir, Texture* texture, SDL_Rect* destiny, Vector2D pos, Vector2D scale, SDL_Rect* collisionArea) :
+		Actor(dir, texture, destiny, pos, scale, collisionArea) {
 		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
 	~Player() {};
 	void update() {};
+	virtual void onCollider() {};
 };

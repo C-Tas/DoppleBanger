@@ -1,14 +1,15 @@
 #include "Button.h"
 #include "HandleEvents.h"
 
-
-Button::Button(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack) : Draw(texture,pos,scale), ButtonCallBack(callBack) {};
+//Texture* texture, SDL_Rect* destiny, Point2D pos, Vector2D scale)
+Button::Button(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack)
+	: Draw(texture, &SDL_Rect({0,0,0,0}), pos, scale), ButtonCallBack(callBack) {};
 
 void Button::Logic() {
 	HandleEvents* input = HandleEvents::instance();
 	Vector2D aux = input->getMousePos();
 	SDL_Point mouse = { aux.getX(), aux.getY() };
-	if (SDL_PointInRect(&mouse, &getDestRect())) {
+	if (SDL_PointInRect(&mouse, &getDestiny())) {
 		//buttonCallBack(PlayState->getApp())
 	}
 }

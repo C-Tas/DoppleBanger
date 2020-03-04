@@ -23,7 +23,8 @@ private:
 
 protected:
 	Actor() {};
-	Actor(Texture* texture = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0,0 }) : Dynamic(texture, pos, scale) {};
+	Actor(Vector2D dir, Texture* texture, SDL_Rect* destiny, Vector2D pos, Vector2D scale, SDL_Rect* collisionArea)
+		: Dynamic(dir, texture, destiny, pos, scale, collisionArea) {};
 	stats currStats;
 	void initStats(int health, int mana, int manaReg, int armor, int ad, int crit, double moveSpeed, double meleeRate, double distRate);
 };
