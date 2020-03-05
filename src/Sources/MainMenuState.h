@@ -5,7 +5,10 @@ class MainMenuState :
 {
 private:
 public:
-	MainMenuState(Application* app = nullptr) : GameState(app) { printf("MainMenuState"); };
+	//MainMenuState(Application* app = nullptr) : GameState(app) { printf("MainMenuState"); initMenuState(); };
+	MainMenuState(Application* app = nullptr) : GameState(app) ;
+	virtual ~MainMenuState() {};
+	void initMenuState();
 	void goControlState();
 	void goCreditsState();
 	void goLoadState();

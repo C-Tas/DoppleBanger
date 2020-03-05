@@ -3,6 +3,18 @@
 #include "CreditsState.h"
 #include "StoryState.h"
 #include "SaveLoadState.h"
+#include "Button.h"
+
+MainMenuState::MainMenuState(Application* app) { 
+	
+	cout << "MainMenuState"; initMenuState(); 
+
+}
+void MainMenuState::initMenuState()
+{
+	//meter botones etc..
+	gameObjects_.push_back();
+}
 
 void MainMenuState::goControlState() {
 	app_->getStateMachine()->pushState( new ControlsState(app_));

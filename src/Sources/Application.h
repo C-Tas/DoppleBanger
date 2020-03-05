@@ -21,7 +21,7 @@ private:
 
 public:
 	Application(GameStateMachine* state=nullptr);
-	~Application(); 
+	virtual ~Application(); 
 	void runApp();
 	
 	//Setters

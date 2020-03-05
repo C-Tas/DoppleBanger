@@ -24,3 +24,6 @@ void GameState::handleEvents(SDL_Event& event) {
 	//	hE->HandleEvent(event);
 	//}
 }
+void GameState::createButton(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack) {
+	Button* button = new Button(texture, pos, scale, callBack);
+}

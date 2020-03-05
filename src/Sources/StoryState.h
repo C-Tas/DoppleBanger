@@ -5,6 +5,7 @@ class StoryState :
 {
 public:
 	StoryState(Application* app = nullptr) :GameState(app) {};
+	virtual ~StoryState() {};
 	void goToGame();
 };
 

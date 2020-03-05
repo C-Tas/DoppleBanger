@@ -19,11 +19,11 @@ public:
 	virtual void logic() = 0;
 
 	//get
-	Vector2D getPos() { return pos_; }
-	double getPosX() { return pos_.getX(); }
-	double getPosY() { return pos_.getY(); }
+	inline const Vector2D& getPos() const { return pos_; }
+	inline double getPosX() { return pos_.getX(); }
+	inline double getPosY() { return pos_.getY(); }
 
-	Vector2D getScale() { return scale_; }
+	inline const Vector2D& getScale()const { return scale_; }
 	double getScaleX() { return scale_.getX(); }
 	double getScaleY() { return scale_.getY(); }
 

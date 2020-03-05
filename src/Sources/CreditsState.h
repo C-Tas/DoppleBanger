@@ -5,6 +5,7 @@ class CreditsState :
 {
 public:
 	CreditsState(Application* app = nullptr) :GameState(app) {};
+	virtual ~CreditsState() {};
 	void backToPreviousState();
 };
 

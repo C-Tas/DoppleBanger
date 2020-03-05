@@ -3,11 +3,15 @@
 #include "Draw.h"
 #include "Application.h"
 #include "SDL.h"
+#include "Texture.h"
+#include "Resources.h"
+#include "Button.h"
 #include <list>
 //#include "//clase EventHandler"
 using namespace std;
 using uint = unsigned int;
 
+using CallBackOnClick = void(Application * App);
 class GameState
 {
 protected:
@@ -20,12 +24,14 @@ protected:
 	Application* app_;
 public:
 	GameState(Application* app=nullptr) : app_(app) {};
-	~GameState();
+	virtual ~GameState();
 	///<summary>Renderiza todos los objetos en la lista de objectToRender_</summary>
 	virtual void draw() const;//Renderiza todos los objetos en la lista de objectToRender_
 	///<summary>Actualiza todos los objetos en la lista de gameObjects_</summary>
 	virtual void update();
 	///<summary>Maneja los eventos de todos los objetos en la lista de objectEvents_</summary>
 	virtual void handleEvents(SDL_Event& event);//Ejecuta los eventos de los objetos objectEvents_
+	///
+	virtual void createButton(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack);
 };
 
