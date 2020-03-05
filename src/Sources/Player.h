@@ -9,7 +9,8 @@ private:
 	const int MANA = 100;
 	const double MANA_REG = 1;
 	const int ARMOR = 10;
-	const int AD = 10;			//Attack damage
+	const int AD = 0;
+	const int AP = 0;
 	const int CRIT = 0;
 	const double MOVE_SPEED = 5;
 	const double MELEE_RATE = 1;
@@ -18,9 +19,9 @@ private:
 
 public:
 	Player() {};
-	Player(Vector2D dir, Texture* texture, SDL_Rect* destiny, Vector2D pos, Vector2D scale, SDL_Rect* collisionArea) :
-		Actor(dir, texture, destiny, pos, scale, collisionArea) {
-		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	Player(Vector2D dir, Texture* texture, Vector2D pos, Vector2D scale, SDL_Rect collisionArea) :
+		Actor(dir, texture, pos, scale, collisionArea) {
+		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
 	~Player() {};
 	void update() {};

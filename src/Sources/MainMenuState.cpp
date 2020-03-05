@@ -7,10 +7,12 @@
 void MainMenuState::initMenuState()
 {
 	//meter botones etc..
-	player_ = new Player(Vector2D(0.5, -0.5), new Texture(app_->getRenderer(), "../Sources/assets/timon.png"),
-		&SDL_Rect({ 50,50,100,100 }), Vector2D(50, 50), Vector2D(50, 50), &SDL_Rect({ 0,0,0,0 }));
-	addUpdateList(player_);
-	addRenderList(player_);
+	for (int i = 0; i < 5; i++)
+	{
+		Equipment* equip = app_->genEquip();
+		equip->writeStats();
+		cout << "\n";
+	}
 }
 
 void MainMenuState::goControlState() {

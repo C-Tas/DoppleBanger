@@ -88,6 +88,18 @@
     <ClCompile Include="Sources\StoryState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Equipment.cpp">
+      <Filter>Source Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Item.cpp">
+      <Filter>Source Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\RandEquipGen.cpp">
+      <Filter>Source Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\SRandBasedGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h">
@@ -174,6 +186,21 @@
     <ClInclude Include="Sources\StoryState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Stats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Item.h">
+      <Filter>Header Files\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Equipment.h">
+      <Filter>Header Files\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\RandEquipGen.h">
+      <Filter>Header Files\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\SRandBasedGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -187,6 +214,12 @@
     </Filter>
     <Filter Include="Source Files\GameStateMachine">
       <UniqueIdentifier>{1f38b45f-f34d-46b0-b5af-a596207bf217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items">
+      <UniqueIdentifier>{1efd69ab-45e8-4a2c-a787-a1d00a490737}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items">
+      <UniqueIdentifier>{191f9aec-acef-47b0-80d7-07b557654829}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

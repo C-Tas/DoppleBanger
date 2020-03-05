@@ -5,6 +5,9 @@
 Application::Application(GameStateMachine* state) {
 	
 	initSDL();
+
+	equipGen_ = new RandEquipGen(this);
+
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
 	machine_->pushState(startState);
@@ -13,6 +16,7 @@ Application::Application(GameStateMachine* state) {
 Application::~Application() {
 	
 	delete machine_;
+	delete equipGen_;
 
 	//Destruimos render y window
 	SDL_DestroyRenderer(renderer_);
