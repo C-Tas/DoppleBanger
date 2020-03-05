@@ -21,12 +21,12 @@ public:
 	virtual void update() = 0;
 
 	//get
-	const Vector2D getPos() { return pos_; }
-	const Vector2D getScale() { return scale_; }
-	const double getPosX() { return pos_.getX(); }
-	const double getPosY() { return pos_.getY(); }
-	const double getScaleX() { return scale_.getX(); }
-	const double getScaleY() { return scale_.getY(); }
+	inline const Vector2D& getPos() const { return pos_; }
+	inline const Vector2D& getScale()const { return scale_; }
+	inline const double getPosX() { return pos_.getX(); }
+	inline const double getPosY() { return pos_.getY(); }
+	inline const double getScaleX() { return scale_.getX(); }
+	inline const double getScaleY() { return scale_.getY(); }
 
 	//set
 	Vector2D setPosX(double x) { pos_.setX(x); }
