@@ -12,7 +12,7 @@ protected:
 	Collider(const Collider&& other)noexcept : collisionArea_(other.collisionArea_) {};
 	virtual void onCollider() = 0;
 public:
-	const SDL_Rect* getCollider() { return collisionArea_; };
+	inline const SDL_Rect* getCollider()const { return collisionArea_; };
 	void setCollider(SDL_Rect* newRect) { collisionArea_ = newRect; };
 };
 
