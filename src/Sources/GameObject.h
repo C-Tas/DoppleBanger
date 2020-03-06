@@ -29,11 +29,11 @@ public:
 	inline const double getScaleY() { return scale_.getY(); }
 
 	//set
-	Vector2D setPosX(double x) { pos_.setX(x); }
-	Vector2D setPosY(double y) { pos_.setY(y); }
-	Vector2D setPos(Vector2D newPos) { pos_.setVec(newPos); }
-	Vector2D setScaleX(double x) { scale_.setX(x); }
-	Vector2D setScaleY(double y) { scale_.setY(y); }
-	Vector2D setScale(Vector2D newPos) { scale_.setVec(newPos); }
+	inline void setPosX(double x) { pos_.setX(x); }
+	inline void setPosY(double y) { pos_.setY(y); }
+	inline void setPos(Vector2D newPos) { pos_.setVec(newPos); }
+	inline void setScaleX(double x) { scale_.setX(x); }
+	inline void setScaleY(double y) { scale_.setY(y); }
+	inline void setScale(Vector2D newPos) { scale_.setVec(newPos); }
 };
 
