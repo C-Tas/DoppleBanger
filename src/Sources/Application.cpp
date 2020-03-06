@@ -47,10 +47,9 @@ void Application::runApp() {
 	while (!appClosed_) {
 		SDL_RenderClear(renderer_);
 
-		//update state 
-		if(machine_ != nullptr) machine_->getState()->update();
-		//render state
-		if(machine_ != nullptr) machine_->getState()->draw();
+		if (machine_ != nullptr) machine_->getState()->handleEvents();
+		if (machine_ != nullptr) machine_->getState()->update();
+		if (machine_ != nullptr) machine_->getState()->draw();
 
 		SDL_RenderPresent(renderer_);
 	}

@@ -37,11 +37,17 @@ protected:
 	virtual ~Draw() {};//{ delete destiny_, frame_; };
 
 public:
-	const virtual void draw() { texture_->render(destiny_, SDL_FLIP_NONE); };
+	const virtual void draw() { texture_->render(getDestiny(), SDL_FLIP_NONE); };
 
 
 #pragma region getters
-	const virtual SDL_Rect getDestiny() { return destiny_; };
+	const virtual SDL_Rect getDestiny() {
+		destiny_.x = pos_.getX();
+		destiny_.y = pos_.getY();
+		destiny_.w = scale_.getX();
+		destiny_.h = scale_.getY();
+		return destiny_;
+	};
 #pragma endregion
 
 

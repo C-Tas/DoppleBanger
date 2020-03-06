@@ -2,7 +2,7 @@
 
 void Dynamic::move(Point2D target)
 {
-	vel_.setX(target.getX() - target.getX());
-	vel_.setY(target.getY() - target.getY());
-	vel_.normalize();
+	dir_.setX(target.getX() - pos_.getX());
+	dir_.setY(target.getY() - pos_.getY());
+	dir_.normalize(); //No normaliza
 }

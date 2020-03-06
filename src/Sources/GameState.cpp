@@ -19,10 +19,8 @@ void GameState::draw() const {
 		(*it)->draw();
 	}
 }
-void GameState::handleEvents(SDL_Event& event) {
-	//for (HandleEventClass* hE: objectEvents_) {
-	//	hE->HandleEvent(event);
-	//}
+void GameState::handleEvents() {
+	eventHandler_->update();
 }
 
 void GameState::addUpdateList(GameObject* obj) {

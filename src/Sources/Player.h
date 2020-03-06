@@ -1,9 +1,13 @@
 #pragma once
+
 #include "Actor.h"
+#include "HandleEvents.h"
+
 class Player : public Actor
 {
 private:
-	//Constantes para inicializar el player
+	HandleEvents* eventHandler_ = nullptr;
+
 #pragma region consts
 	const int HEALTH = 100;
 	const int MANA = 100;
@@ -18,12 +22,12 @@ private:
 #pragma endregion
 
 public:
-	Player() {};
-	Player(Vector2D dir, Texture* texture, Vector2D pos, Vector2D scale, SDL_Rect collisionArea) :
-		Actor(dir, texture, pos, scale, collisionArea) {
+	Player(Texture* texture, Vector2D pos, Vector2D scale, SDL_Rect collisionArea) :
+		Actor(texture, pos, scale, collisionArea) {
+		eventHandler_ = HandleEvents::instance();
 		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
 	~Player() {};
-	void update() {};
+	void update();
 	virtual void onCollider() {};
 };

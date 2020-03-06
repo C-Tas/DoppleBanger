@@ -1,14 +1,16 @@
 #pragma once
 #include "GameState.h"
-#include "Equipment.h" //include temporal
+#include "Player.h" //Include temporal
+#include "Equipment.h" //Include temporal
 
 class MainMenuState :
 	public GameState
 {
 private:
+	Player* player_ = nullptr;
 
 public:
-	MainMenuState(Application* app = nullptr) : GameState(app) { printf("MainMenuState"); initMenuState(); };
+	MainMenuState(Application* app = nullptr) : GameState(app) { initMenuState(); };
 	void initMenuState();
 	void goControlState();
 	void goCreditsState();
