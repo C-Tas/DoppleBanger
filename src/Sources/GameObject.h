@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Vector2D.h"
+#include "SDL.h"
 
 using namespace std;
 using uint = unsigned int;
@@ -9,7 +10,6 @@ class GameObject
 {
 protected:
 	Vector2D pos_, scale_;
-public:
 	//constructor vac�o
 	GameObject() : pos_({ 0,0 }), scale_(0, 0) {};
 	//constructor con par�metros
@@ -18,6 +18,7 @@ public:
 	GameObject(const GameObject& other) : pos_(other.pos_), scale_(other.scale_) {};
 	//constructor por movimiento
 	GameObject(const GameObject&& other)noexcept : pos_(other.pos_), scale_(other.scale_) {};
+public:
 	virtual void update() = 0;
 	//get
 	inline const Vector2D& getPos() const { return pos_; }
