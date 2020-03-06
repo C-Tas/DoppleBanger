@@ -18,7 +18,7 @@ private:
 
 public:
 	Player() {};
-	Player(Vector2D dir, Texture* texture, SDL_Rect* destiny, Vector2D pos, Vector2D scale, SDL_Rect* collisionArea) :
+	Player(Vector2D dir, Texture* texture, SDL_Rect* destiny, Vector2D pos, Vector2D scale, SDL_Rect collisionArea) :
 		Actor(dir, texture, destiny, pos, scale, collisionArea) {
 		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
