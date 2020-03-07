@@ -3,7 +3,8 @@
 class Dynamic : public Collider
 {
 protected:
-	Vector2D dir_;				//Vector que representa la direcci�n
+	Vector2D dir_;				//Vector que representa la direccion
+	Point2D obj_;				//Lugar al que tiene que llegar
 
 	Dynamic() : dir_({ 0,0 }) {};
 	Dynamic(Texture* texture, Point2D pos, Vector2D scale, SDL_Rect collisionArea) :

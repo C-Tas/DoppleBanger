@@ -32,7 +32,7 @@ public:
 #pragma endregion
 
 #pragma region Operations
-	Vector2D normalize()const;
+	void normalize();
 	double magnitude()const;
 	double angle()const;
 #pragma endregion
