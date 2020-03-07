@@ -46,6 +46,7 @@ void Application::initSDL() {
 void Application::runApp() {
 	while (!appClosed_) {
 		SDL_RenderClear(renderer_);
+		updateDelta();
 
 		if (machine_ != nullptr) machine_->getState()->handleEvents();
 		if (machine_ != nullptr) machine_->getState()->update();
@@ -54,4 +55,11 @@ void Application::runApp() {
 		SDL_RenderPresent(renderer_);
 	}
 	endGame();
+}
+
+void Application::updateDelta()
+{
+	lastTicks_ = currTicks_;
+	currTicks_ = SDL_GetPerformanceCounter();
+	deltaTime_ = (double)((currTicks_ - lastTicks_) / (double)SDL_GetPerformanceFrequency());
 }

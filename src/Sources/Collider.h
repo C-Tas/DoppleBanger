@@ -5,9 +5,10 @@ class Collider: public Draw
 {
 protected:
 	SDL_Rect collisionArea_;
+
 	Collider() {};
-	Collider(SDL_Rect collisionArea, Texture* texture, Point2D pos, Vector2D scale) :
-		Draw(texture, pos, scale), collisionArea_(collisionArea) {};
+	Collider(Application* app, SDL_Rect collisionArea, Texture* texture, Point2D pos, Vector2D scale) :
+		Draw(app, texture, pos, scale), collisionArea_(collisionArea) {};
 
 	Collider(const Collider& other) :collisionArea_(other.collisionArea_) {};
 	Collider(const Collider&& other)noexcept : collisionArea_(other.collisionArea_) {};

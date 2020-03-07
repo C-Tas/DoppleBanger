@@ -7,8 +7,9 @@ protected:
 	Point2D obj_;				//Lugar al que tiene que llegar
 
 	Dynamic() : dir_({ 0,0 }) {};
-	Dynamic(Texture* texture, Point2D pos, Vector2D scale, SDL_Rect collisionArea) :
-		Collider(collisionArea, texture, pos, scale), dir_({ 0,0 }) {};
+	Dynamic(Application* app, Texture* texture, Point2D pos, Vector2D scale, SDL_Rect collisionArea) :
+		Collider(app, collisionArea, texture, pos, scale), dir_({ 0,0 }) {};
+
 	Dynamic(Dynamic& other): dir_(other.dir_) {};
 	Dynamic(Dynamic&& other)noexcept : dir_(other.dir_) {};
 	void move(Point2D target);

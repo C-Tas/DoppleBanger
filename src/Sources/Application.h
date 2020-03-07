@@ -24,6 +24,12 @@ private:
 	//Métodos auxiliares para la constructora
 	void initSDL();
 
+	//Constantes y métodos relacionados con delta time
+	Uint64 currTicks_ = SDL_GetPerformanceCounter();
+	Uint64 lastTicks_ = 0;
+	double deltaTime_;
+	void updateDelta();
+
 	//Area en la que se encuentra el jugador (1 - 3 -> primera isla, 4 - 6 -> segunda isla)
 	int currArea_ = 1;
 	RandEquipGen* equipGen_;
@@ -44,6 +50,7 @@ public:
 	SDL_Window* getWindow() { return window_; };
 	SDL_Renderer* getRenderer() { return renderer_; };
 	GameStateMachine* getGameStateMachine() { return machine_; };
+	double getDeltaTime() { return deltaTime_; }
 	int getCurrArea() { return currArea_; };
 
 	//Generators

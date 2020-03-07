@@ -1,5 +1,5 @@
 #pragma once
-#include <iostream>
+#include "Application.h"
 #include "Vector2D.h"
 
 using namespace std;
@@ -9,11 +9,14 @@ class GameObject
 {
 protected:
 	Vector2D pos_, scale_;
+	Application* app_;
+
 public:
 	//constructor vac�o
 	GameObject() : pos_({ 0,0 }), scale_(0, 0) {};
 	//constructor con par�metros
-	GameObject(Vector2D pos, Vector2D scale) : pos_(pos), scale_(scale) {};
+	GameObject(Application* app, Vector2D pos, Vector2D scale) : app_(app), pos_(pos), scale_(scale) {};
+
 	//constructor por cop�a
 	GameObject(const GameObject& other) : pos_(other.pos_), scale_(other.scale_) {};
 	//constructor por movimiento

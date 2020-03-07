@@ -19,7 +19,7 @@ void MainMenuState::initMenuState()
 
 	Texture* playerTexture = new Texture(app_->getRenderer(), "../Sources/assets/timon.png");
 	SDL_Rect playerCollision; playerCollision.x = 0; playerCollision.y = 0; playerCollision.w = 0; playerCollision.h = 0;
-	player_ = new Player(playerTexture, Vector2D(50, 50), Vector2D(50, 50), playerCollision);
+	player_ = new Player(app_, playerTexture, Vector2D(50, 50), Vector2D(50, 50), playerCollision);
 	addUpdateList(player_);
 	addRenderList(player_);
 }
