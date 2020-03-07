@@ -5,15 +5,15 @@
 Button::Button(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack)
 	: Draw(texture, &SDL_Rect({0,0,0,0}), pos, scale), ButtonCallBack(callBack) {};
 
-void Button::Logic() {
+void Button::update() {
 	HandleEvents* input = HandleEvents::instance();
 	Vector2D aux = input->getMousePos();
 	SDL_Point mouse = { aux.getX(), aux.getY() };
 	if (SDL_PointInRect(&mouse, &getDestiny())) {
-		//buttonCallBack(PlayState->getApp())
+		//buttonCallBack
 	}
 }
 
-void Button::Render() {
+void Button::draw() const {
 	//Falta la clase texture
 }

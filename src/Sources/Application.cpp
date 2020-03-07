@@ -1,13 +1,15 @@
 #include "Application.h"
 #include "MainMenuState.h"
+#include "SelectLevelState.h"
 #include <exception>
 
 Application::Application(GameStateMachine* state) {
 	
 	initSDL();
+	initResources();
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState);
+	machine_->pushState(/*startState*/ new SelectLevelState(this, 1));
 }
 
 Application::~Application() {
@@ -51,4 +53,21 @@ void Application::runApp() {
 		SDL_RenderPresent(renderer_);
 	}
 	endGame();
+}
+
+void Application::initResources() {
+	//De momento solo voy a introducir las imagenes
+	textureManager_ = new TextureManager();
+	textureManager_->init();
+
+	for (auto& image : Resources::imageRoutes) {
+		textureManager_->loadFromImg(image.textureId, renderer_, image.filename);
+		cout << "Creada textura de: " << image.textureId << endl;
+	}
+}
+
+//De momento en este método solo se llama al delete de textureManager puesto que todavía no están creados ni inicializados
+//el resto de objetos con recursos del juego
+void Application::closeResources() {
+	delete textureManager_;
 }

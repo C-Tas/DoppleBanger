@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "GameStateMachine.h"
+#include "TextureManager.h"
 using namespace std;
 //class GameStateMachine;
 //Clase que llamará al estado actual desde la máquina de estados
@@ -10,6 +11,7 @@ private:
 	SDL_Window* window_ = nullptr;
 	SDL_Renderer* renderer_ = nullptr;
 	GameStateMachine* machine_ = nullptr;
+	TextureManager* textureManager_ = nullptr;
 	bool appClosed_ = false;
 
 	//Constantes pantalla
@@ -18,6 +20,8 @@ private:
 
 	//Métodos auxiliares para la constructora
 	void initSDL();
+	void initResources();
+	void closeResources();
 
 public:
 	Application(GameStateMachine* state=nullptr);
@@ -35,5 +39,6 @@ public:
 	SDL_Window* getWindow() { return window_; };
 	SDL_Renderer* getRenderer() { return renderer_; };
 	GameStateMachine* getGameStateMachine() { return machine_; };
+	TextureManager* getTextureManager() { return textureManager_; };
 };
 

@@ -46,6 +46,7 @@
     <ClCompile Include="Sources\StashState.cpp" />
     <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
+    <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
   </ItemGroup>
@@ -76,6 +77,7 @@
     <ClInclude Include="Sources\StashState.h" />
     <ClInclude Include="Sources\StoryState.h" />
     <ClInclude Include="Sources\Texture.h" />
+    <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\Vector2D.h" />
   </ItemGroup>
