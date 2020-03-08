@@ -33,5 +33,7 @@ public:
 	virtual void addUpdateList(GameObject* obj);
 	///<summary>Añade un objeto a la lista de objectsToRender_</summary>
 	virtual void addRenderList(Draw* obj);
+	///<summary>Añade un objeto a las listas de objectsToRender_ y gameObjects_</summary>
+	void addRenderUpdateLists(Draw* obj);
 };
 

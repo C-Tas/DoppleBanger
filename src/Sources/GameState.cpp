@@ -9,6 +9,7 @@ GameState::~GameState() {
 }
 
 void GameState::update() {
+	
 	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
 		(*it)->update();
 	}
@@ -31,4 +32,9 @@ void GameState::addUpdateList(GameObject* obj) {
 
 void GameState::addRenderList(Draw* obj) {
 	objectsToRender_.push_back(obj);
+}
+
+void GameState::addRenderUpdateLists(Draw* obj) {
+	addUpdateList(obj);
+	addRenderList(obj);
 }

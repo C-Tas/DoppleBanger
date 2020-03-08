@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "MainMenuState.h"
 #include "SelectLevelState.h"
+#include "HandleEvents.h"
 #include <exception>
 
 Application::Application(GameStateMachine* state) {
@@ -9,7 +10,7 @@ Application::Application(GameStateMachine* state) {
 	initResources();
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
-	machine_->pushState(/*startState*/ new SelectLevelState(this, 1));
+	machine_->pushState(/*startState*/ new SelectLevelState(this, 3));
 }
 
 Application::~Application() {
@@ -44,6 +45,10 @@ void Application::initSDL() {
 void Application::runApp() {
 	while (!appClosed_) {
 		SDL_RenderClear(renderer_);
+
+		//actualize input handler
+		HandleEvents* ih = HandleEvents::instance();
+		ih->update();
 
 		//update state 
 		if(machine_ != nullptr) machine_->getState()->update();
