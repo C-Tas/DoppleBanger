@@ -10,10 +10,10 @@ void Button::update() {
 	Vector2D aux = input->getMousePos();
 	SDL_Point mouse = { aux.getX(), aux.getY() };
 	if (SDL_PointInRect(&mouse, &getDestiny())) {
-		//buttonCallBack(PlayState->getApp())
+		ButtonCallBack();
 	}
 }
 
 void Button::Render() {
-	//Falta la clase texture
+	texture_->render(pos_.getX(),pos_.getY());//provisional
 }

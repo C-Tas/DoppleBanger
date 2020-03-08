@@ -3,7 +3,8 @@
 #include "Application.h"
 
 
-using CallBackOnClick = void(Application* App); 
+//using CallBackOnClick = void(Application* App); 
+using CallBackOnClick = void ();
 //declaracion de CallBacks
 
 class Button : public Draw
