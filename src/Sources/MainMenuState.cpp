@@ -12,6 +12,7 @@ MainMenuState::MainMenuState(Application* app) {
 }
 void MainMenuState::initMenuState()
 {
+	Button(nullptr, { 0,0 }, { 0,0 }, goControlState);
 	//meter botones etc..
 	gameObjects_.push_back();
 }
