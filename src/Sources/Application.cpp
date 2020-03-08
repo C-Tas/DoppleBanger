@@ -15,7 +15,9 @@ Application::Application(GameStateMachine* state) {
 
 Application::~Application() {
 	
+
 	delete machine_;
+	closeResources();
 
 	//Destruimos render y window
 	SDL_DestroyRenderer(renderer_);

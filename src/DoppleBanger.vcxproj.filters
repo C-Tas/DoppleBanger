@@ -88,7 +88,6 @@
     <ClCompile Include="Sources\StoryState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\SpookyIslandState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
     </ClCompile>
@@ -97,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="Sources\VolcanicIslandState.cpp">
       <Filter>Source Files\GameStateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\TextureManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +133,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\PlayState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Resources.h">
@@ -194,6 +193,9 @@
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\VolcanicIslandState.h">
+      <Filter>Header Files\GameStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\PlayState.h">
       <Filter>Header Files\GameStateMachine</Filter>
     </ClInclude>
   </ItemGroup>
