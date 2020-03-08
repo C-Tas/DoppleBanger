@@ -21,6 +21,7 @@ public:
 	GameObject(const GameObject& other) : pos_(other.pos_), scale_(other.scale_) {};
 	//constructor por movimiento
 	GameObject(const GameObject&& other)noexcept : pos_(other.pos_), scale_(other.scale_) {};
+
 	virtual void update() = 0;
 	//get
 	const Vector2D getPos() { return pos_; }

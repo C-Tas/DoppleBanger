@@ -36,7 +36,7 @@ protected:
 	Draw(const Draw&& other)noexcept : GameObject(other.app_, other.pos_, other.scale_),
 		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {};
 
-	virtual ~Draw() {};//{ delete destiny_, frame_; };
+	virtual ~Draw() {};
 
 public:
 	const virtual void draw() { texture_->render(getDestiny(), SDL_FLIP_NONE); };

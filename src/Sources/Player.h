@@ -16,7 +16,7 @@ private:
 	const int AD = 0;
 	const int AP = 0;
 	const int CRIT = 0;
-	const double MOVE_SPEED = 50;
+	const double MOVE_SPEED = 100;
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 5;
 #pragma endregion
@@ -27,7 +27,7 @@ public:
 		eventHandler_ = HandleEvents::instance();
 		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
-	~Player() {};
+	~Player() { delete texture_; };
 	void update();
 	virtual void onCollider() {};
 };
