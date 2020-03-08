@@ -10,7 +10,7 @@ class Button : public Draw
 { 
 public:
 	Button(Texture* texture,Vector2D pos, Vector2D scale, CallBackOnClick* callBack);
-	virtual void Logic();
+	virtual void update();
 	virtual void Render();
 	virtual ~Button() {};
 
