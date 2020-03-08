@@ -13,8 +13,8 @@ private:
 	bool appClosed_ = false;
 
 	//Constantes pantalla
-	static const int winWidth_ = 1600;
-	static const int winHeight_ = 900;
+	static const int winWidth_ = 800;
+	static const int winHeight_ = 700;
 
 	//Métodos auxiliares para la constructora
 	void initSDL();

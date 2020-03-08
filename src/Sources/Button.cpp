@@ -16,4 +16,10 @@ void Button::update() {
 
 const void Button::draw() {
 	//Falta la clase texture
+	SDL_Rect dest;
+	dest.x=pos_.getX();
+	dest.y=pos_.getY();
+	dest.w=scale_.getX();
+	dest.h=scale_.getY();
+	texture_->render(dest);
 }
