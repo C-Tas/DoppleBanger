@@ -18,12 +18,12 @@ protected:
 	///<summary>Lista con todos los objetos</summary>
 	list<GameObject*> gameObjects_;
 	///<summary>Lista con todos los objetos con metodo Draw()</summary>
-	list<Draw*> objectToRender_;
+	list<Draw*> objectsToRender_;
 	//list<EventHandlerClass*> objectEvents_;
 	///<summary>Puntero a la aplicacion</summary>
 	Application* app_;
 public:
-	GameState(Application* app=nullptr) : app_(app) {};
+	GameState(Application* app = nullptr) : app_(app) {};
 	virtual ~GameState();
 	///<summary>Renderiza todos los objetos en la lista de objectToRender_</summary>
 	virtual void draw() const;//Renderiza todos los objetos en la lista de objectToRender_
@@ -33,5 +33,9 @@ public:
 	virtual void handleEvents(SDL_Event& event);//Ejecuta los eventos de los objetos objectEvents_
 	///
 	virtual void createButton(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack);
+	///<summary>A�ade un objeto a la lista de gameObjects</summary>
+	virtual void addUpdateList(GameObject* obj);
+	///<summary>A�ade un objeto a la lista de objectsToRender_</summary>
+	virtual void addRenderList(Draw* obj);
 };
 

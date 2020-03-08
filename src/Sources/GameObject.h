@@ -1,40 +1,39 @@
 #pragma once
 #include <iostream>
 #include "Vector2D.h"
+#include "SDL.h"
 
 using namespace std;
 using uint = unsigned int;
 
 class GameObject
 {
-private:
-
 protected:
 	Vector2D pos_, scale_;
-public:
+	//constructor vac�o
 	GameObject() : pos_({ 0,0 }), scale_(0, 0) {};
-	//GameObject(Vector2D pos, Vector2D scale) : pos_(pos), scale_(scale) {};
-	GameObject(Vector2D pos = { 0,0 }, Vector2D scale = {0,0}): pos_(pos),scale_(scale) {}
+	//constructor con par�metros
+	GameObject(Vector2D pos, Vector2D scale) : pos_(pos), scale_(scale) {};
+	//constructor por cop�a
+	GameObject(const GameObject& other) : pos_(other.pos_), scale_(other.scale_) {};
+	//constructor por movimiento
+	GameObject(const GameObject&& other)noexcept : pos_(other.pos_), scale_(other.scale_) {};
+public:
 	virtual void update() = 0;
-	virtual void logic() = 0;
-
 	//get
 	inline const Vector2D& getPos() const { return pos_; }
-	inline double getPosX() { return pos_.getX(); }
-	inline double getPosY() { return pos_.getY(); }
-
 	inline const Vector2D& getScale()const { return scale_; }
-	double getScaleX() { return scale_.getX(); }
-	double getScaleY() { return scale_.getY(); }
+	inline const double getPosX() { return pos_.getX(); }
+	inline const double getPosY() { return pos_.getY(); }
+	inline const double getScaleX() { return scale_.getX(); }
+	inline const double getScaleY() { return scale_.getY(); }
 
 	//set
-	Vector2D setPosX(double x) { pos_.setX(x); }
-	Vector2D setPosY(double y) { pos_.setY(y); }
-	Vector2D setPos(Vector2D newPos) { pos_.setVec(newPos); }
-
-	Vector2D setScaleX(double x) { scale_.setX(x); }
-	Vector2D setScaleY(double y) { scale_.setY(y); }
-	Vector2D setScale(Vector2D newPos) { scale_.setVec(newPos); }
-
+	inline void setPosX(double x) { pos_.setX(x); }
+	inline void setPosY(double y) { pos_.setY(y); }
+	inline void setPos(Vector2D newPos) { pos_.setVec(newPos); }
+	inline void setScaleX(double x) { scale_.setX(x); }
+	inline void setScaleY(double y) { scale_.setY(y); }
+	inline void setScale(Vector2D newPos) { scale_.setVec(newPos); }
 };
 

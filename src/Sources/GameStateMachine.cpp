@@ -4,9 +4,9 @@
 //Inicializa el juego en MainMenuState
 GameStateMachine::GameStateMachine()
 {
-	GameState* startedState;
+	/*GameState* startedState;
 	startedState = new MainMenuState();
-	gameStateStack_.push(startedState);
+	gameStateStack_.push(startedState);*/
 }
 
 GameStateMachine::~GameStateMachine()
