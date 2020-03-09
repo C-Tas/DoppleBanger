@@ -3,7 +3,14 @@
 
 //Texture* texture, SDL_Rect* destiny, Point2D pos, Vector2D scale)
 Button::Button(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack)
-	: Draw(texture, &SDL_Rect({0,0,0,0}), pos, scale), ButtonCallBack(callBack) {};
+	: Draw(texture, &SDL_Rect({ 0,0,0,0 }), pos, scale), ButtonCallBack(callBack) {
+	call = 0;
+};
+
+Button::Button(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu)
+	: Draw(texture, &SDL_Rect({ 0,0,0,0 }), pos, scale), ButtonCallBackMenu(callBackMenu) {
+	call = 1;
+};
 
 void Button::update() {
 	HandleEvents* input = HandleEvents::instance();
