@@ -22,6 +22,7 @@
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Button.cpp" />
+    <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
     <ClCompile Include="Sources\ControlsState.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
@@ -47,16 +48,20 @@
     <ClCompile Include="Sources\SaveLoadState.cpp" />
     <ClCompile Include="Sources\SelectLevelState.cpp" />
     <ClCompile Include="Sources\SRandBasedGenerator.cpp" />
+    <ClCompile Include="Sources\SpookyIslandState.cpp" />
     <ClCompile Include="Sources\StashState.cpp" />
     <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
+    <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
+    <ClCompile Include="Sources\VolcanicIslandState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Button.h" />
+    <ClInclude Include="Sources\CaribbeanIslandState.h" />
     <ClInclude Include="Sources\Collider.h" />
     <ClInclude Include="Sources\ControlsState.h" />
     <ClInclude Include="Sources\CreditsState.h" />
@@ -81,12 +86,15 @@
     <ClInclude Include="Sources\SaveLoadState.h" />
     <ClInclude Include="Sources\SelectLevelState.h" />
     <ClInclude Include="Sources\SRandBasedGenerator.h" />
+    <ClInclude Include="Sources\SpookyIslandState.h" />
     <ClInclude Include="Sources\StashState.h" />
     <ClInclude Include="Sources\Stats.h" />
     <ClInclude Include="Sources\StoryState.h" />
     <ClInclude Include="Sources\Texture.h" />
+    <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\Vector2D.h" />
+    <ClInclude Include="Sources\VolcanicIslandState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -199,14 +207,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SDL2_image-2.0.5\include;$(SolutionDir)SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

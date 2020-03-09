@@ -16,18 +16,18 @@ protected:
 
 	Draw(Application* app, Texture* texture, Point2D pos, Vector2D scale) :
 		GameObject(app, pos, scale), texture_(texture) {
-		destiny_.x = pos.getX();
-		destiny_.y = pos.getY();
-		destiny_.w = scale.getX();
-		destiny_.h = scale.getY();
+		destiny_.x = (int)pos.getX();
+		destiny_.y = (int)pos.getY();
+		destiny_.w = (int)scale.getX();
+		destiny_.h = (int)scale.getY();
 	};
 
 	Draw(Application* app, Texture* texture, SDL_Rect* frame, Point2D pos, Vector2D scale) :
 		GameObject(app, pos, scale), texture_(texture) {
-		destiny_.x = pos.getX();
-		destiny_.y = pos.getY();
-		destiny_.w = scale.getX();
-		destiny_.h = scale.getY();
+		destiny_.x = (int)pos.getX();
+		destiny_.y = (int)pos.getY();
+		destiny_.w = (int)scale.getX();
+		destiny_.h = (int)scale.getY();
 	};
 
 	Draw(const Draw& other) : GameObject(other.app_, other.pos_, other.scale_), 
@@ -40,17 +40,17 @@ protected:
 
 public:
 	const virtual void draw() { texture_->render(getDestiny(), SDL_FLIP_NONE); };
+	//Devuelve la posiciï¿½n "visual" del objeto
+	//Cuando se mueva un objeto no se mira su posiciï¿½n superior izquierda, sino sus pies.
+	void updateVisPos() { visPos_.setVec(Vector2D(pos_.getX() + (scale_.getX() / 2), pos_.getY() + (scale_.getY() * 0.8))); } ;
 
-	//Devuelve la posición "visual" del objeto
-	//Cuando se mueva un objeto no se mira su posición superior izquierda, sino sus pies.
-	void updateVisPos() { visPos_.setVec(Vector2D(pos_.getX() + (scale_.getX() / 2), pos_.getY() + (scale_.getY() * 0.8))); } 
 
 #pragma region getters
 	const virtual SDL_Rect getDestiny() {
-		destiny_.x = pos_.getX();
-		destiny_.y = pos_.getY();
-		destiny_.w = scale_.getX();
-		destiny_.h = scale_.getY();
+		destiny_.x = (int)pos_.getX();
+		destiny_.y = (int)pos_.getY();
+		destiny_.w = (int)scale_.getX();
+		destiny_.h = (int)scale_.getY();
 		return destiny_;
 	};
 #pragma endregion
@@ -62,4 +62,3 @@ public:
 	void setTexture(Texture* texture) { texture_ = texture; };
 #pragma endregion
 };
-

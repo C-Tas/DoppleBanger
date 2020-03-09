@@ -1,22 +1,23 @@
 #include "Application.h"
 #include "MainMenuState.h"
+#include "SelectLevelState.h"
+#include "HandleEvents.h"
 #include <exception>
 
 Application::Application(GameStateMachine* state) {
 	
 	initSDL();
-
-	equipGen_ = new RandEquipGen(this);
-
+	initResources();
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState);
+	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
 }
 
 Application::~Application() {
 	
+
 	delete machine_;
-	delete equipGen_;
+	closeResources();
 
 	//Destruimos render y window
 	SDL_DestroyRenderer(renderer_);
@@ -30,9 +31,9 @@ Application::~Application() {
 }
 
 void Application::initSDL() {
-	int winX, winY; // Posición de la ventana
+	int winX, winY; // Posiciï¿½n de la ventana
 	winX = winY = SDL_WINDOWPOS_CENTERED;
-	// Inicialización del sistema, ventana y renderer
+	// Inicializaciï¿½n del sistema, ventana y renderer
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window_ = SDL_CreateWindow("Dopplebanger", winX, winY, winWidth_,
 		winHeight_, SDL_WINDOW_SHOWN);
@@ -62,4 +63,23 @@ void Application::updateDelta()
 	lastTicks_ = currTicks_;
 	currTicks_ = SDL_GetPerformanceCounter();
 	deltaTime_ = (double)((currTicks_ - lastTicks_) / (double)SDL_GetPerformanceFrequency());
+}
+
+void Application::initResources() {
+	equipGen_ = new RandEquipGen(this);
+	//De momento solo voy a introducir las imagenes
+	textureManager_ = new TextureManager();
+	textureManager_->init();
+
+	for (auto& image : Resources::imageRoutes) {
+		textureManager_->loadFromImg(image.textureId, renderer_, image.filename);
+		cout << "Creada textura de: " << image.textureId << endl;
+	}
+}
+
+//De momento en este mï¿½todo solo se llama al delete de textureManager puesto que todavï¿½a no estï¿½n creados ni inicializados
+//el resto de objetos con recursos del juego
+void Application::closeResources() {
+	delete textureManager_;
+    delete equipGen_;
 }
