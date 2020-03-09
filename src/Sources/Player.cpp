@@ -3,7 +3,7 @@
 void Player::update()
 {
 	updateVisPos();
-	if (eventHandler_->getMouseButtonState(0))
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 		move(eventHandler_->getMousePos());
 
 	//Margen de 2 pixeles

@@ -15,7 +15,6 @@ public:
 	virtual ~Button() {};
 
 protected:
-	Application* appReference_ = nullptr;
 	CallBackOnClick* ButtonCallBack;
 
 };
