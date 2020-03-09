@@ -12,7 +12,7 @@ private:
 	Stats modifiers_;
 
 public:
-	Equipment(equipType type) : type_(type) { modifiers_ = Stats(); };
+	Equipment(equipType type) : Item(), type_(type) { modifiers_ = Stats(); };
 	void writeStats();
 
 #pragma region Setters
