@@ -1,6 +1,8 @@
 #pragma once
 #include "SDL.h"
 #include "GameStateMachine.h"
+
+#define debugCode true;
 using namespace std;
 //class GameStateMachine;
 //Clase que llamará al estado actual desde la máquina de estados

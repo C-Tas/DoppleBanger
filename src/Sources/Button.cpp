@@ -8,9 +8,15 @@ Button::Button(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* 
 void Button::update() {
 	HandleEvents* input = HandleEvents::instance();
 	Vector2D aux = input->getMousePos();
-	SDL_Point mouse = { aux.getX(), aux.getY() };
+	SDL_Point mouse = { aux.getX(), aux.getY() }; 
 	if (SDL_PointInRect(&mouse, &getDestiny())) {
-		//buttonCallBack(PlayState->getApp())
+#if debugCode
+		cout << "he clickeado un boton" << endl;
+#endif
+		ButtonCallBack;
+#if debugCode
+		cout << "he ejecutado el callBack" << endl;
+#endif
 	}
 }
 

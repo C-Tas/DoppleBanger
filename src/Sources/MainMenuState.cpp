@@ -6,17 +6,16 @@
 #include "Button.h"
 #include "Texture.h"
 using namespace std;
-MainMenuState::MainMenuState(Application* app) :GameState(app) {
-	cout << "MainMenuState";
-	initMenuState();
-}
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
 {
+#if debugCode
+	cout << "MainMenuState"<<endl;
+#endif // _DEBUG
+
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
 }
-
 void MainMenuState::createButtons() {
 	//creamos el boton para ir a los controles
 	Button* b = new Button(new Texture(app_->getRenderer(), "../Sources/assets/timon.png"), { 50,50 }, { 50,50 }, goControlState);
@@ -34,11 +33,11 @@ void MainMenuState::createButtons() {
 	Button* b3 = new Button(new Texture(app_->getRenderer(), "../Sources/assets/timon.png"), { 150,150 }, { 50,50 }, goStoryState);
 	gameObjects_.push_back(b3);
 	objectsToRender_.push_back(b3);
-
+#if debugCode
+	cout << "creados los botones correctamente"<<endl;
+#endif
 }
 #pragma endregion
-
-
 #pragma region Cambios de estados
 void MainMenuState::goControlState(Application* app) {
 	app->getStateMachine()->pushState(new ControlsState(app));
@@ -53,4 +52,3 @@ void MainMenuState::goStoryState(Application* app) {
 	app->getStateMachine()->pushState(new StoryState(app));
 };
 #pragma endregion
-
