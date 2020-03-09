@@ -40,6 +40,7 @@ void Application::initSDL() {
 }
 
 void Application::runApp() {
+	HandleEvents* input = HandleEvents::instance();
 	while (!appClosed_) {
 		SDL_RenderClear(renderer_);
 
@@ -47,8 +48,8 @@ void Application::runApp() {
 		if(machine_ != nullptr) machine_->getState()->update();
 		//render state
 		if(machine_ != nullptr) machine_->getState()->draw();
-
 		SDL_RenderPresent(renderer_);
+		input->update();
 	}
 	endGame();
 }

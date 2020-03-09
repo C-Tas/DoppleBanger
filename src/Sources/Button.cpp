@@ -3,18 +3,22 @@
 
 //Texture* texture, SDL_Rect* destiny, Point2D pos, Vector2D scale)
 Button::Button(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack)
-	: Draw(texture, &SDL_Rect({0,0,0,0}), pos, scale), ButtonCallBack(callBack) {};
+	: Draw(texture, &SDL_Rect({int(pos.getX()),int(pos.getY()),int(scale.getX()),int(scale.getY())}), pos, scale), ButtonCallBack(callBack) {};
 
 void Button::update() {
 	HandleEvents* input = HandleEvents::instance();
 	Vector2D aux = input->getMousePos();
 	SDL_Point mouse = { aux.getX(), aux.getY() }; 
-	if (SDL_PointInRect(&mouse, &getDestiny())) {
-#if debugCode
+//#ifdef _DEBUG
+//	if (input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT));
+//	cout << input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT) << endl;
+//#endif
+	if (SDL_PointInRect(&mouse, &getDestiny())&&input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+#ifdef _DEBUG
 		cout << "he clickeado un boton" << endl;
 #endif
 		ButtonCallBack;
-#if debugCode
+#ifdef _DEBUG
 		cout << "he ejecutado el callBack" << endl;
 #endif
 	}

@@ -9,7 +9,7 @@ using namespace std;
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
 {
-#if debugCode
+#ifdef _DEBUG
 	cout << "MainMenuState"<<endl;
 #endif // _DEBUG
 
@@ -33,7 +33,7 @@ void MainMenuState::createButtons() {
 	Button* b3 = new Button(new Texture(app_->getRenderer(), "../Sources/assets/timon.png"), { 150,150 }, { 50,50 }, goStoryState);
 	gameObjects_.push_back(b3);
 	objectsToRender_.push_back(b3);
-#if debugCode
+#ifdef _DEBUG
 	cout << "creados los botones correctamente"<<endl;
 #endif
 }
