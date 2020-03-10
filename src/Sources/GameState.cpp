@@ -9,8 +9,9 @@ GameState::~GameState() {
 }
 
 void GameState::update() {
+	
 	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
-		(*it)->update();
+		if((*it)->update())return;
 	}
 }
 
@@ -19,11 +20,11 @@ void GameState::draw() const {
 		(*it)->draw();
 	}
 }
-void GameState::handleEvents(SDL_Event& event) {
-	//for (HandleEventClass* hE: objectEvents_) {
-	//	hE->HandleEvent(event);
-	//}
+void GameState::handleEvents() {
+	eventHandler_->update();
 }
+void GameState::createButton(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack, Application* app) {
+	Button* button = new Button(app,texture, pos, scale, callBack);}
 
 void GameState::addUpdateList(GameObject* obj) {
 	gameObjects_.push_back(obj);
@@ -31,4 +32,9 @@ void GameState::addUpdateList(GameObject* obj) {
 
 void GameState::addRenderList(Draw* obj) {
 	objectsToRender_.push_back(obj);
+}
+
+void GameState::addRenderUpdateLists(Draw* obj) {
+	addUpdateList(obj);
+	addRenderList(obj);
 }

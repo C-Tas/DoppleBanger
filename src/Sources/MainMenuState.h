@@ -1,17 +1,30 @@
 #pragma once
 #include "GameState.h"
-#include "Player.h"
+#include "Player.h" //Include temporal
+#include "Equipment.h" //Include temporal
 
 class MainMenuState :
 	public GameState
 {
 private:
-	Draw* player_;
-public:
-	MainMenuState(Application* app = nullptr) : GameState(app) { printf("MainMenuState"); initMenuState(); };
+	Player* player_ = nullptr;
+
+protected:
+	///<summary>Se inicializa el menu</summary>
 	void initMenuState();
-	void goControlState();
-	void goCreditsState();
-	void goLoadState();
-	void goStoryState();
+	///<summary>crea los 4 botones necesarios del main menu</summary>
+	void createButtons();
+
+public:
+	//MainMenuState(Application* app = nullptr) : GameState(app) { printf("MainMenuState"); initMenuState(); };
+	MainMenuState(Application* app = nullptr) :GameState(app) {initMenuState();};
+	virtual ~MainMenuState() {};
+	///<summary>Nos lleva al estado controles</summary>
+	static void goControlState(Application* app);
+	///<summary>Nos lleva al estado creditos</summary>
+	static void goCreditsState(Application* app);
+	///<summary>Nos lleva al estado load</summary>
+	static void goLoadState(Application* app);
+	///<summary>Nos lleva al estado Story</summary>
+	static void goStoryState(Application* app);
 };

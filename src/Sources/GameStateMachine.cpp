@@ -17,3 +17,5 @@ GameStateMachine::~GameStateMachine()
 		gameStateStack_.pop();
 	}
 }
+void GameStateMachine::popState() { if (!gameStateStack_.empty()) { GameState* n = gameStateStack_.top(); delete n; gameStateStack_.pop(); } };
+

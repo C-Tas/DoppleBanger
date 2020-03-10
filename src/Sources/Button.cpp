@@ -3,26 +3,28 @@
 
 //Texture* texture, SDL_Rect* destiny, Point2D pos, Vector2D scale)
 Button::Button(Application* app,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack)
-	: Draw(texture, &SDL_Rect({ 0,0,0,0 }), pos, scale), ButtonCallBack(callBack),appReference_(app)  {
-	call = 0;
-};
+	: Draw(app,texture, SDL_Rect({(int)pos.getX(),(int)pos.getY(),(int)scale.getX(),(int)scale.getY()}), pos, scale), ButtonCallBack(callBack){call = 0;};
 
-Button::Button(GameState* state,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu)
-	: Draw(texture, &SDL_Rect({ 0,0,0,0 }), pos, scale), ButtonCallBackMenu(callBackMenu),currentState_(state) {
+	Button::Button(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu)
+	: Draw(app,texture, SDL_Rect({(int)pos.getX(),(int)pos.getY(),(int)scale.getX(),(int)scale.getY()}), pos, scale), ButtonCallBackMenu(callBackMenu),currentState_(state) {
 	call = 1;
 };
 
-void Button::update() {
+bool Button::update() {
 	HandleEvents* input = HandleEvents::instance();
 	Vector2D aux = input->getMousePos();
 	SDL_Point mouse = { aux.getX(), aux.getY() };
-	if (SDL_PointInRect(&mouse, &getDestiny())&& input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) 
-	{
-		if (call == 0) ButtonCallBack(appReference_);
+	
+	if (SDL_PointInRect(&mouse, &getDestiny()) && input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+		if (call == 0) ButtonCallBack(app_);
 		else if (call == 1) ButtonCallBackMenu(currentState_);
+		return true;
 	}
+	else return false;
+
 }
 
-void Button::Render() {
-	texture_->render(pos_.getX(),pos_.getY());//provisional
+const void Button::draw()  {
+	//Falta la clase texture
+	texture_->render(destiny_, SDL_FLIP_NONE);
 }

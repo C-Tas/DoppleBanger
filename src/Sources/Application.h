@@ -1,27 +1,47 @@
 #pragma once
+
 #include "SDL.h"
 #include "GameStateMachine.h"
+#include "RandEquipGen.h"
+#include "TextureManager.h"
+#include "checkML.h"
 using namespace std;
+
 //class GameStateMachine;
-//Clase que llamará al estado actual desde la máquina de estados
+//Clase que llamarï¿½ al estado actual desde la mï¿½quina de estados
 class Application
 {
 private:
+	//Variables bï¿½sicas de la aplicaciï¿½n
 	SDL_Window* window_ = nullptr;
 	SDL_Renderer* renderer_ = nullptr;
 	GameStateMachine* machine_ = nullptr;
+	TextureManager* textureManager_ = nullptr;
+	RandEquipGen* equipGen_ = nullptr;
+	
 	bool appClosed_ = false;
 
 	//Constantes pantalla
 	static const int winWidth_ = 1600;
 	static const int winHeight_ = 900;
 
-	//Métodos auxiliares para la constructora
+	//Mï¿½todos auxiliares para la constructora
 	void initSDL();
+	void initResources();
+	void closeResources();
+
+	//Constantes y mï¿½todos relacionados con delta time
+	Uint64 currTicks_ = SDL_GetPerformanceCounter();
+	Uint64 lastTicks_ = 0;
+	double deltaTime_;
+	void updateDelta();
+
+	//Area en la que se encuentra el jugador (1 - 3 -> primera isla, 4 - 6 -> segunda isla)
+	int currArea_ = 1;
 
 public:
 	Application(GameStateMachine* state=nullptr);
-	~Application(); 
+	virtual ~Application(); 
 	void runApp();
 	
 	//Setters
@@ -35,5 +55,10 @@ public:
 	SDL_Window* getWindow() { return window_; };
 	SDL_Renderer* getRenderer() { return renderer_; };
 	GameStateMachine* getGameStateMachine() { return machine_; };
+	double getDeltaTime() { return deltaTime_; }
+	int getCurrArea() { return currArea_; }; //Mover a GameManager cuando tengamos
+	TextureManager* getTextureManager() { return textureManager_; };
+	//Generators
+	Equipment* genEquip() { return equipGen_->genEquip(); };
+	Equipment* genEquip(equipType type) { return equipGen_->genEquip(type); };
 };
-

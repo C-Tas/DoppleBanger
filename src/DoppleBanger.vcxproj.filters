@@ -1,210 +1,88 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Sources\Actor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Collider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Dynamic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\HandleEvents.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\interactuable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\NPC.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Resources.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Trigger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Vector2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\ControlsState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\CreditsState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\GameState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\GameStateMachine.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\MainMenuState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\InventoryState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\PlayState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\PauseState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\SaveLoadState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\SelectLevelState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\StashState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\StoryState.cpp">
-      <Filter>Source Files\GameStateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\InventoryButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Equipable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Inventory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="Sources\Actor.cpp" />
+    <ClCompile Include="Sources\Application.cpp" />
+    <ClCompile Include="Sources\Button.cpp" />
+    <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
+    <ClCompile Include="Sources\Collider.cpp" />
+    <ClCompile Include="Sources\ControlsState.cpp" />
+    <ClCompile Include="Sources\CreditsState.cpp" />
+    <ClCompile Include="Sources\Draw.cpp" />
+    <ClCompile Include="Sources\Dynamic.cpp" />
+    <ClCompile Include="Sources\Enemy.cpp" />
+    <ClCompile Include="Sources\Equipment.cpp" />
+    <ClCompile Include="Sources\GameObject.cpp" />
+    <ClCompile Include="Sources\GameState.cpp" />
+    <ClCompile Include="Sources\GameStateMachine.cpp" />
+    <ClCompile Include="Sources\HandleEvents.cpp" />
+    <ClCompile Include="Sources\interactuable.cpp" />
+    <ClCompile Include="Sources\InventoryState.cpp" />
+    <ClCompile Include="Sources\Item.cpp" />
+    <ClCompile Include="Sources\main.cpp" />
+    <ClCompile Include="Sources\MainMenuState.cpp" />
+    <ClCompile Include="Sources\NPC.cpp" />
+    <ClCompile Include="Sources\PauseState.cpp" />
+    <ClCompile Include="Sources\Player.cpp" />
+    <ClCompile Include="Sources\PlayState.cpp" />
+    <ClCompile Include="Sources\RandEquipGen.cpp" />
+    <ClCompile Include="Sources\Resources.cpp" />
+    <ClCompile Include="Sources\SaveLoadState.cpp" />
+    <ClCompile Include="Sources\SelectLevelState.cpp" />
+    <ClCompile Include="Sources\SRandBasedGenerator.cpp" />
+    <ClCompile Include="Sources\SpookyIslandState.cpp" />
+    <ClCompile Include="Sources\StashState.cpp" />
+    <ClCompile Include="Sources\StoryState.cpp" />
+    <ClCompile Include="Sources\Texture.cpp" />
+    <ClCompile Include="Sources\TextureManager.cpp" />
+    <ClCompile Include="Sources\Trigger.cpp" />
+    <ClCompile Include="Sources\Vector2D.cpp" />
+    <ClCompile Include="Sources\VolcanicIslandState.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\Actor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Collider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Draw.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Dynamic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\HandleEvents.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\interactuable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\PlayState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Resources.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Trigger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Vector2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\NPC.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\GameState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\GameStateMachine.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\PauseState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\MainMenuState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\InventoryState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\ControlsState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\CreditsState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\SaveLoadState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\StashState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\SelectLevelState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\StoryState.h">
-      <Filter>Header Files\GameStateMachine</Filter>
-    </ClInclude>
+    <ClInclude Include="Sources\Actor.h" />
+    <ClInclude Include="Sources\Application.h" />
+    <ClInclude Include="Sources\Button.h" />
+    <ClInclude Include="Sources\CaribbeanIslandState.h" />
+    <ClInclude Include="Sources\Collider.h" />
+    <ClInclude Include="Sources\ControlsState.h" />
+    <ClInclude Include="Sources\CreditsState.h" />
+    <ClInclude Include="Sources\Draw.h" />
+    <ClInclude Include="Sources\Dynamic.h" />
+    <ClInclude Include="Sources\Enemy.h" />
+    <ClInclude Include="Sources\Equipment.h" />
+    <ClInclude Include="Sources\GameObject.h" />
+    <ClInclude Include="Sources\GameState.h" />
+    <ClInclude Include="Sources\GameStateMachine.h" />
+    <ClInclude Include="Sources\HandleEvents.h" />
+    <ClInclude Include="Sources\interactuable.h" />
+    <ClInclude Include="Sources\InventoryState.h" />
+    <ClInclude Include="Sources\Item.h" />
+    <ClInclude Include="Sources\MainMenuState.h" />
+    <ClInclude Include="Sources\NPC.h" />
+    <ClInclude Include="Sources\PauseState.h" />
+    <ClInclude Include="Sources\Player.h" />
+    <ClInclude Include="Sources\PlayState.h" />
+    <ClInclude Include="Sources\RandEquipGen.h" />
+    <ClInclude Include="Sources\Resources.h" />
+    <ClInclude Include="Sources\SaveLoadState.h" />
+    <ClInclude Include="Sources\SelectLevelState.h" />
+    <ClInclude Include="Sources\SRandBasedGenerator.h" />
+    <ClInclude Include="Sources\SpookyIslandState.h" />
+    <ClInclude Include="Sources\StashState.h" />
+    <ClInclude Include="Sources\Stats.h" />
+    <ClInclude Include="Sources\StoryState.h" />
+    <ClInclude Include="Sources\Texture.h" />
+    <ClInclude Include="Sources\TextureManager.h" />
+    <ClInclude Include="Sources\Trigger.h" />
+    <ClInclude Include="Sources\Vector2D.h" />
+    <ClInclude Include="Sources\VolcanicIslandState.h" />
+    <ClInclude Include="Sources\checkML.h" />
     <ClInclude Include="Sources\InventoryButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\Inventory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\Equipable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{0fc2beed-6c85-43f6-81aa-02fdeae7e569}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{501cbab9-8599-423d-b694-042d8206aad4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameStateMachine">
-      <UniqueIdentifier>{69007b5a-de38-4e0c-a670-a7abd34a02ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameStateMachine">
-      <UniqueIdentifier>{1f38b45f-f34d-46b0-b5af-a596207bf217}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Sources\InventoryButton.cpp">
+    <ClCompile Include="Sources\Equipable.cpp">
+    <ClCompile Include="Sources\Inventory.cpp">
   </ItemGroup>
 </Project>

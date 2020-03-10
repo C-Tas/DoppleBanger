@@ -114,5 +114,8 @@ public:
 		return mbState_[button];
 	}
 
+	inline int getMouseButtonState(int button) { //No sé usar el MOUSEBUTTON xD
+		return mbState_[button];
+	}
 };
 

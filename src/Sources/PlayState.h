@@ -5,6 +5,7 @@ class PlayState :
 {
 public:
 	PlayState(Application* app=nullptr) :GameState(app) {};
+	virtual ~PlayState() {};
 	void goToPauseState();
 	void goToSaveGame();
 	void goToInventoryState();
