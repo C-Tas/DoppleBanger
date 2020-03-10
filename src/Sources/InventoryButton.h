@@ -4,7 +4,7 @@
 #include <list>
 using namespace std;
 //using CallBackOnClickInventory = void(GameState* state, InventoryButton* button);
-using CallBackOnClickInventory = void(GameState * state, Button * button);
+using CallBackOnClickInventory = void(GameState * state, Equipable* ob);
 
 
 class InventoryButton: public Button
@@ -13,7 +13,8 @@ private:
 	list <InventoryButton*> ::iterator inventoryIterator_ ;
 	Equipable* object_;
 	bool equipped = false;
-	CallBackOnClickInventory callBackInventory_;
+	CallBackOnClickInventory* callBackInventory_;
+	
 
 public:
 

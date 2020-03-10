@@ -1,9 +1,12 @@
 #include "Inventory.h"
 //callbacks
-void callSelectObject(GameState* state, InventoryButton* button) {
-	dynamic_cast<Inventory*>(state)->selectObject(button);
-}
+//void callSelectObject(GameState* state, InventoryButton* button) {
+//	dynamic_cast<Inventory*>(state)->selectObject(button);
+//}
 
+void callSelectObject(GameState * state, Equipable* ob) {
+		dynamic_cast<Inventory*>(state)->selectObject(ob->getButton());
+	}
 void callDeleteObject(GameState* state) {
 	dynamic_cast<Inventory*>(state)->deleteObj();
 }
@@ -68,7 +71,7 @@ void Inventory::deleteObj() {
 }
 
 void Inventory::addToInventory(Equipable* ob) {
-	InventoryButton* b = new InventoryButton(this,texture, Vector2D{ 300,400 }, Vector2D{ 50,50 }, callSelectObject);
+	InventoryButton* b = new InventoryButton(this,texture, Vector2D{ 300,400 }, Vector2D{ 50,50 },ob, callSelectObject);
 	list <InventoryButton*>::iterator it = InventoryList_.insert(InventoryList_.end(), b);
 	b->setIterator(it);
 
