@@ -17,13 +17,13 @@ public:
 	static void goToIsland2(Application* app);
 
 private: 
-	int islandsUnlocked_ = 1; //La primera por defecto siempre está desbloqueada
+	int islandsUnlocked_ = 1; //La primera por defecto siempre estï¿½ desbloqueada
 	
-	//Método privado para iniciar el estado
+	//Mï¿½todo privado para iniciar el estado
 	void initState();
 
-	/*Arrays con la información de los botones para que su creación dependiendo del número de islas desbloqueadas
-	sea más sencilla*/
+	/*Arrays con la informaciï¿½n de los botones para que su creaciï¿½n dependiendo del nï¿½mero de islas desbloqueadas
+	sea mï¿½s sencilla*/
 	const array<CallBackOnClick*, 3> functions_ = { goToIsland0, goToIsland1, goToIsland2 };
 	const array <Vector2D, 3> buttonPositions_ = { Vector2D(100, 400), Vector2D(800, 400),Vector2D(1300, 400) };
 }; 

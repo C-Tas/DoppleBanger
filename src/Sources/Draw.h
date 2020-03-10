@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 #include "Texture.h"
 #include "SDL.h"
@@ -42,7 +42,7 @@ public:
 	const virtual void draw() { texture_->render(getDestiny(), SDL_FLIP_NONE); };
 	//Devuelve la posici�n "visual" del objeto
 	//Cuando se mueva un objeto no se mira su posici�n superior izquierda, sino sus pies.
-	void updateVisPos() { visPos_.setVec(Vector2D(pos_.getX() + (scale_.getX() / 2), pos_.getY() + (scale_.getY() * 0.8))); } ;
+	void updateVisPos() { visPos_.setVec(Vector2D(pos_.getX() + (scale_.getX() / 2), pos_.getY() + (scale_.getY() * 0.8))); };
 
 
 #pragma region getters

@@ -6,6 +6,7 @@ class ControlsState :
 
 public:
 	ControlsState(Application* app = nullptr) : GameState(app) {};
+	virtual ~ControlsState() {};
 	void backToPreviousState() ;
 };
 

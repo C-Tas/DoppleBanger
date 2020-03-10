@@ -23,6 +23,8 @@ void GameState::draw() const {
 void GameState::handleEvents() {
 	eventHandler_->update();
 }
+void GameState::createButton(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack, Application* app) {
+	Button* button = new Button(texture, pos, scale, callBack,app);}
 
 void GameState::addUpdateList(GameObject* obj) {
 	gameObjects_.push_back(obj);

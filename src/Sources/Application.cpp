@@ -10,7 +10,7 @@ Application::Application(GameStateMachine* state) {
 	initResources();
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
+	machine_->pushState(/*startState */new SelectLevelState(this, 3));
 }
 
 Application::~Application() {
@@ -45,6 +45,7 @@ void Application::initSDL() {
 }
 
 void Application::runApp() {
+	HandleEvents* input = HandleEvents::instance();
 	while (!appClosed_) {
 		SDL_RenderClear(renderer_);
 		updateDelta();
@@ -54,6 +55,7 @@ void Application::runApp() {
 		if (machine_ != nullptr) machine_->getState()->draw();
 
 		SDL_RenderPresent(renderer_);
+		input->update();
 	}
 	endGame();
 }

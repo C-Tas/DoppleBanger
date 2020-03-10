@@ -7,11 +7,13 @@
 #include "Texture.h"
 #include "Resources.h"
 #include "HandleEvents.h"
+#include "Button.h"
 #include <list>
 
 using namespace std;
 using uint = unsigned int;
 
+using CallBackOnClick = void(Application * App);
 class GameState
 {
 protected:
@@ -31,12 +33,14 @@ public:
 	///<summary>Actualiza todos los objetos en la lista de gameObjects_</summary>
 	virtual void update();
 	///<summary>Maneja los eventos de todos los objetos en la lista de objectEvents_</summary>
+	///<summary>Aï¿½ade un objeto a la lista de gameObjects</summary>
 	virtual void handleEvents();//Ejecuta los eventos de los objetos objectEvents_
-	///<summary>Añade un objeto a la lista de gameObjects</summary>
+	virtual void createButton(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack,Application* app);
+	///<summary>Aï¿½ade un objeto a la lista de gameObjects</summary>
 	virtual void addUpdateList(GameObject* obj);
-	///<summary>Añade un objeto a la lista de objectsToRender_</summary>
+	///<summary>Aï¿½ade un objeto a la lista de objectsToRender_</summary>
 	virtual void addRenderList(Draw* obj);
-	///<summary>Añade un objeto a las listas de objectsToRender_ y gameObjects_</summary>
+	///<summary>Aï¿½ade un objeto a las listas de objectsToRender_ y gameObjects_</summary>
 	void addRenderUpdateLists(Draw* obj);
 };
 

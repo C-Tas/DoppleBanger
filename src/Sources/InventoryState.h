@@ -5,6 +5,7 @@ class InventoryState :
 {
 public:
 	InventoryState(Application* app) :GameState(app) {};
+	virtual ~InventoryState() {};
 	void goToGame();
 };
 
