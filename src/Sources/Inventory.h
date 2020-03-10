@@ -41,8 +41,8 @@ private:
 public:
 	Inventory(Application* app = nullptr);
 	void addToInventory(Equipable* ob);
-	virtual void draw() const;
-	virtual void update();
+	virtual void draw() const;//Métodos que faltan por definir y por eso dan fallo de link
+	virtual void update();//Métodos que faltan por definir y por eso dan fallo de link
 	void selectObject(InventoryButton* ob);
 	void equippedObj();
 	void deleteObj();

@@ -14,7 +14,7 @@ void callEquipedObject(GameState* state) {
 	dynamic_cast<Inventory*>(state)->equippedObj();
 }
 
-Inventory::Inventory(Application* app = nullptr) :GameState(app) {
+Inventory::Inventory(Application* app) :GameState(app) {
 	deleteButton_ = new Button(dynamic_cast<GameState*>(this),texture, Vector2D{ 300,400 }, Vector2D{ 50,50 },callDeleteObject);
 	addUpdateList(deleteButton_);
 	addRenderList(deleteButton_);

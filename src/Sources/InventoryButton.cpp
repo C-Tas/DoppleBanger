@@ -11,5 +11,6 @@ void InventoryButton::update() {
 	Vector2D aux = input->getMousePos();
 	SDL_Point mouse = { aux.getX(), aux.getY() };
 	if (SDL_PointInRect(&mouse, &getDestiny())) {
-		callBackInventory_(currentState_,object_);
+		callBackInventory_(currentState_, object_);
+	}
 }
