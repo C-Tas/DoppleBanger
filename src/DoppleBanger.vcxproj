@@ -26,7 +26,6 @@
     <ClCompile Include="Sources\Collider.cpp" />
     <ClCompile Include="Sources\ControlsState.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
-    <ClCompile Include="Sources\Draw.cpp" />
     <ClCompile Include="Sources\Dynamic.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
     <ClCompile Include="Sources\Equipment.cpp" />

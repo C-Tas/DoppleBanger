@@ -29,7 +29,7 @@ public:
 		eventHandler_ = HandleEvents::instance();
 		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
-	~Player() { texture_ == nullptr; };
+	~Player() { texture_ = nullptr; };
 	virtual bool update();
 	virtual void onCollider() {};
 };

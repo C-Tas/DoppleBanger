@@ -5,24 +5,24 @@
 #include "SelectLevelState.h"
 #include "StashState.h"
 #pragma region ChangeState
-void PlayState::goToPauseState() {
-	app_->getStateMachine()->pushState(new PauseState(app_));
+void PlayState::goToPauseState(Application* app) {
+	app->getStateMachine()->pushState(new PauseState(app));
 
 }
-void PlayState::goToSaveGame() {
-	app_->getStateMachine()->pushState(new SaveLoadState(app_, false)); //TRUE => LOAD //FALSE => SAVE
+void PlayState::goToSaveGame(Application* app) {
+	app->getStateMachine()->pushState(new SaveLoadState(app, false)); //TRUE => LOAD //FALSE => SAVE
 }
-void PlayState::goToInventoryState() {
-	app_->getStateMachine()->pushState( new InventoryState(app_));
+void PlayState::goToInventoryState(Application* app) {
+	app->getStateMachine()->pushState( new InventoryState(app));
 
 }
-void PlayState::goToSelectState() {
-	app_->getStateMachine()->pushState( new SelectLevelState(app_));
+void PlayState::goToSelectState(Application* app) {
+	app->getStateMachine()->pushState( new SelectLevelState(app));
 
 }
-void PlayState::goToStashState()
+void PlayState::goToStashState(Application* app)
 {
-	app_->getStateMachine()->pushState( new StashState(app_));
+	app->getStateMachine()->pushState( new StashState(app));
 }
 #pragma endregion
 

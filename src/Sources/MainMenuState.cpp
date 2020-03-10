@@ -9,7 +9,6 @@ using namespace std;
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
 {
-	eventHandler_ = HandleEvents::instance();
 	//meter botones etc..
 
 	//Comprobaci�n del generador aleatorio de equipamiento

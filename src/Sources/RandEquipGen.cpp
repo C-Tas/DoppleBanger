@@ -44,7 +44,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 
 	//Ap y velocidad de disparo
 	case Gun:
-		obj->setAp(rn_.nextInt(5 * area, 16 * area));
+		obj->setAd(rn_.nextInt(5 * area, 16 * area));
 		obj->setDistRate(rn_.nextInt(1 * area, 4 * area)); //Revisar fórmula
 		break;
 	}

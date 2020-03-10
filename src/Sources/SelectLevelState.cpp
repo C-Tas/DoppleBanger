@@ -24,6 +24,7 @@ void SelectLevelState::initState() {
 	
 	Button* newIslandButton;
 
+	//Bucle que genera los botones para pasar a las distintas islas según el numero que hayan sido desbloqueadas
 	for (int i = 0; i < functions_.size() && i < islandsUnlocked_; i++) {
 		newIslandButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon),
 			buttonPositions_[i], Vector2D(200, 200), functions_[i]);
