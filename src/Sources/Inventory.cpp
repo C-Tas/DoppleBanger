@@ -15,10 +15,10 @@ void callEquipedObject(GameState* state) {
 }
 
 Inventory::Inventory(Application* app) :GameState(app) {
-	deleteButton_ = new Button(dynamic_cast<GameState*>(this),texture, Vector2D{ 300,400 }, Vector2D{ 50,50 },callDeleteObject);
+	deleteButton_ = new Button(app, dynamic_cast<GameState*>(this),app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 600,400 }, Vector2D{ 50,50 },callDeleteObject);
 	addUpdateList(deleteButton_);
 	addRenderList(deleteButton_);
-	equippedButton_ = new Button(this,texture, Vector2D{ 300,400 }, Vector2D{ 50,50 },callEquipedObject);
+	equippedButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 300,400 }, Vector2D{ 50,50 },callEquipedObject);
 	addUpdateList(equippedButton_);
 	addRenderList(equippedButton_);
 
@@ -71,7 +71,7 @@ void Inventory::deleteObj() {
 }
 
 void Inventory::addToInventory(Equipable* ob) {
-	InventoryButton* b = new InventoryButton(this,texture, Vector2D{ 300,400 }, Vector2D{ 50,50 },ob, callSelectObject);
+	InventoryButton* b = new InventoryButton(app_,this,texture, Vector2D{ 300,400 }, Vector2D{ 50,50 },ob, callSelectObject);
 	list <InventoryButton*>::iterator it = InventoryList_.insert(InventoryList_.end(), b);
 	b->setIterator(it);
 

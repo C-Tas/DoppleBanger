@@ -3,7 +3,7 @@
 #include "GameState.h"
 #include <list>
 using namespace std;
-struct Equipment
+struct Equipments
 {
 	InventoryButton* helmet_ = nullptr;
 	InventoryButton* armor_ = nullptr;
@@ -29,7 +29,7 @@ private:
 	
 	InventoryButton* select_ = nullptr;
 	list<InventoryButton>:: iterator ListPos;
-	Equipment equipment_;
+	Equipments equipment_;
 	//const int MAX_OBJECTS;
 
 	//metodos privados
@@ -41,8 +41,8 @@ private:
 public:
 	Inventory(Application* app = nullptr);
 	void addToInventory(Equipable* ob);
-	virtual void draw() const;//Métodos que faltan por definir y por eso dan fallo de link
-	virtual void update();//Métodos que faltan por definir y por eso dan fallo de link
+	//const virtual void draw() {};//Métodos que faltan por definir y por eso dan fallo de link
+	virtual void update() {};//Métodos que faltan por definir y por eso dan fallo de link
 	void selectObject(InventoryButton* ob);
 	void equippedObj();
 	void deleteObj();

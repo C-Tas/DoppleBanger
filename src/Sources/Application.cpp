@@ -2,6 +2,7 @@
 #include "MainMenuState.h"
 #include "SelectLevelState.h"
 #include "HandleEvents.h"
+#include "Inventory.h"
 #include <exception>
 
 Application::Application(GameStateMachine* state) {
@@ -9,8 +10,8 @@ Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine();
-	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
+	//GameState* startState = new MainMenuState(this);
+	machine_->pushState(/*startState *//*new SelectLevelState(this, 3)*/ new Inventory(this));
 }
 
 Application::~Application() {
