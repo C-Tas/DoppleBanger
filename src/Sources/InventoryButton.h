@@ -3,7 +3,9 @@
 #include "Equipable.h"
 #include <list>
 using namespace std;
-using CallBackOnClick = void(InventoryButton* button);
+//using CallBackOnClickInventory = void(GameState* state, InventoryButton* button);
+using CallBackOnClickInventory = void(GameState * state, Button * button);
+
 
 class InventoryButton: public Button
 {
@@ -11,10 +13,11 @@ private:
 	list <InventoryButton*> ::iterator inventoryIterator_ ;
 	Equipable* object_;
 	bool equipped = false;
+	CallBackOnClickInventory callBackInventory_;
 
 public:
 
-	InventoryButton(Texture* texture, Vector2D pos, Vector2D scale, Equipable* ob, CallBackOnClick* callBack);
+	InventoryButton(GameState* state,Texture* texture, Vector2D pos, Vector2D scale, Equipable* ob, CallBackOnClickInventory* callBack);
 	virtual void update();
 	bool isEquipped() { return equipped; }
 	void Enable(bool e) { equipped = e; }
