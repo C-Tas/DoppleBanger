@@ -8,6 +8,7 @@ class Player : public Actor
 private:
 	HandleEvents* eventHandler_ = nullptr;
 
+//<summary>Estadisticas del jugador</summary>
 #pragma region consts
 	const int HEALTH = 100;
 	const int MANA = 100;
@@ -22,12 +23,13 @@ private:
 #pragma endregion
 
 public:
+//Constructora de player
 	Player(Application* app, Texture* texture, Vector2D pos, Vector2D scale, SDL_Rect collisionArea) :
 		Actor(app, texture, pos, scale, collisionArea) {
 		eventHandler_ = HandleEvents::instance();
 		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
-	~Player() { delete texture_; };
+	~Player() { texture_ == nullptr; };
 	virtual bool update();
 	virtual void onCollider() {};
 };

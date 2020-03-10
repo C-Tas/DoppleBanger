@@ -12,9 +12,9 @@ protected:
 	SDL_Rect frame_;
 	Vector2D visPos_;
 
-	Draw() : texture_(nullptr), frame_({ 0,0,0,0 }), destiny_({0,0,0,0}) {};
+	Draw() : texture_(nullptr), frame_({ 0,0,0,0 }), destiny_({0,0,0,0}) {}; //Constructora vacia de Draw
 
-	Draw(Application* app, Texture* texture, Point2D pos, Vector2D scale) :
+	Draw(Application* app, Texture* texture, Point2D pos, Vector2D scale) : //Constructora con argumentos de Draw
 		GameObject(app, pos, scale), texture_(texture) {
 		destiny_.x = (int)pos.getX();
 		destiny_.y = (int)pos.getY();
@@ -23,7 +23,7 @@ protected:
 		frame_ = { 0,0,0,0 };
 	};
 
-	Draw(Application* app, Texture* texture, SDL_Rect frame, Point2D pos, Vector2D scale) :
+	Draw(Application* app, Texture* texture, SDL_Rect frame, Point2D pos, Vector2D scale) : //Constructora por Frame y argumentos de Draw 
 		GameObject(app, pos, scale), texture_(texture) {
 		destiny_.x = (int)pos.getX();
 		destiny_.y = (int)pos.getY();
@@ -33,21 +33,22 @@ protected:
 	};
 
 	Draw(const Draw& other) : GameObject(other.app_, other.pos_, other.scale_), 
-		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {};
+		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {}; //Constructora por copia de Draw
 
 	Draw(const Draw&& other)noexcept : GameObject(other.app_, other.pos_, other.scale_),
-		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {};
+		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {}; //Constructora por movimiento de Draw
 
-	virtual ~Draw() {};
+	virtual ~Draw() {}; //Destructora de Draw
 
 public:
 	const virtual void draw() { texture_->render(getDestiny(), SDL_FLIP_NONE); };
-	//Devuelve la posici�n "visual" del objeto
-	//Cuando se mueva un objeto no se mira su posici�n superior izquierda, sino sus pies.
-	void updateVisPos() { visPos_.setVec(Vector2D(pos_.getX() + (scale_.getX() / 2), pos_.getY() + (scale_.getY() * 0.8))); };
+	//Devuelve la posicion "visual" del objeto
+	//Cuando se mueva un objeto no se mira su posicion superior izquierda, sino sus pies.
+	void updateVisPos() { visPos_.setVec(Vector2D(pos_.getX() + (scale_.getX() / 2), pos_.getY() + (scale_.getY() * 0.8))); }; //Actualiza la posicion visual del objeto
 
 
 #pragma region getters
+//Devuelve el rectangulo destino
 	const virtual SDL_Rect getDestiny() {
 		destiny_.x = (int)pos_.getX();
 		destiny_.y = (int)pos_.getY();
@@ -59,8 +60,8 @@ public:
 
 
 #pragma region setters
-	void setFrame(SDL_Rect frame) { frame_ = frame; };
-	void setDestiny(SDL_Rect destiny) { destiny_ = destiny; };
-	void setTexture(Texture* texture) { texture_ = texture; };
+	void setFrame(SDL_Rect frame) { frame_ = frame; }; //Asigna el frame
+	void setDestiny(SDL_Rect destiny) { destiny_ = destiny; }; //Asigna el rectangulo de destino
+	void setTexture(Texture* texture) { texture_ = texture; }; //Asigna la textura
 #pragma endregion
 };
