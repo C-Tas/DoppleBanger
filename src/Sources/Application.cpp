@@ -6,8 +6,8 @@ Application::Application(GameStateMachine* state) {
 	
 	initSDL();
 	machine_ = new GameStateMachine();
-	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState);
+	//GameState* startState = new MainMenuState(this);
+	machine_->pushState(/*startState*/new MainMenuState(this));
 }
 
 Application::~Application() {

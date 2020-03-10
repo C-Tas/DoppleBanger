@@ -11,6 +11,11 @@ private:
 	void initMenuState();
 	///<summary>crea los 4 botones necesarios del main menu</summary>
 	void createButtons();
+
+public:
+	//MainMenuState(Application* app = nullptr) : GameState(app) { printf("MainMenuState"); initMenuState(); };
+	MainMenuState(Application* app = nullptr) :GameState(app) {initMenuState();};
+	virtual ~MainMenuState() {};
 	///<summary>Nos lleva al estado controles</summary>
 	static void goControlState(Application* app);
 	///<summary>Nos lleva al estado creditos</summary>
@@ -19,9 +24,4 @@ private:
 	static void goLoadState(Application* app);
 	///<summary>Nos lleva al estado Story</summary>
 	static void goStoryState(Application* app);
-public:
-	//MainMenuState(Application* app = nullptr) : GameState(app) { printf("MainMenuState"); initMenuState(); };
-	MainMenuState(Application* app = nullptr) :GameState(app) {initMenuState();};
-	virtual ~MainMenuState() {};
-
 };
