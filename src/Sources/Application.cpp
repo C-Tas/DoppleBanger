@@ -10,7 +10,7 @@ Application::Application(GameStateMachine* state) {
 	initResources();
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
-	machine_->pushState(/*startState */new SelectLevelState(this, 3));
+	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
 }
 
 Application::~Application() {
@@ -55,7 +55,9 @@ void Application::runApp() {
 		if (machine_ != nullptr) machine_->getState()->draw();
 
 		SDL_RenderPresent(renderer_);
-		input->update();
+		HandleEvents* ih = HandleEvents::instance();
+		if (ih->isKeyDown(SDLK_ESCAPE))appClosed_ = true;
+	
 	}
 	endGame();
 }

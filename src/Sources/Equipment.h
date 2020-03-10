@@ -3,7 +3,7 @@
 #include "Item.h"
 #include "Stats.h"
 
-static const enum equipType { Armor, Boots, Gloves, Sword, Gun };
+const enum equipType { Armor, Boots, Gloves, Sword, Gun };
 
 class Equipment : public Item
 {

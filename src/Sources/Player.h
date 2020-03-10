@@ -28,6 +28,6 @@ public:
 		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
 	~Player() { delete texture_; };
-	void update();
+	virtual bool update();
 	virtual void onCollider() {};
 };

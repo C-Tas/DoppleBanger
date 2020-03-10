@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void Player::update()
+bool Player::update()
 {
 	updateVisPos();
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
@@ -16,4 +16,5 @@ void Player::update()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 	}
+	return false;
 }

@@ -11,7 +11,7 @@ GameState::~GameState() {
 void GameState::update() {
 	
 	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
-		(*it)->update();
+		if((*it)->update())return;
 	}
 }
 
@@ -24,7 +24,7 @@ void GameState::handleEvents() {
 	eventHandler_->update();
 }
 void GameState::createButton(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack, Application* app) {
-	Button* button = new Button(texture, pos, scale, callBack,app);}
+	Button* button = new Button(app,texture, pos, scale, callBack);}
 
 void GameState::addUpdateList(GameObject* obj) {
 	gameObjects_.push_back(obj);

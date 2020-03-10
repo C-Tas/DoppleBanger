@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Vector2D.h"
 #include "SDL.h"
+#include "checkML.h"
 
 using namespace std;
 using uint = unsigned int;
@@ -10,7 +11,7 @@ class GameObject
 {
 protected:
 	Vector2D pos_, scale_;
-	Application* app_;
+	Application* app_ = nullptr;
 
 protected:
 	//constructor vac�o
@@ -19,12 +20,12 @@ protected:
 	GameObject(Application* app, Vector2D pos, Vector2D scale) : app_(app), pos_(pos), scale_(scale) {};
 
 	//constructor por cop�a
-	GameObject(const GameObject& other) : pos_(other.pos_), scale_(other.scale_) {};
+	GameObject(const GameObject& other) : pos_(other.pos_), scale_(other.scale_), app_(other.app_) {};
 	//constructor por movimiento
-	GameObject(const GameObject&& other)noexcept : pos_(other.pos_), scale_(other.scale_) {};
+	GameObject(const GameObject&& other)noexcept : pos_(other.pos_), scale_(other.scale_), app_(other.app_) {};
 
 public:
-	virtual void update() = 0;
+	virtual bool update() = 0;
 	//get
 	inline const Vector2D& getPos() const { return pos_; }
 	inline const Vector2D& getScale()const { return scale_; }

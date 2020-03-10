@@ -4,6 +4,7 @@
 #include "GameStateMachine.h"
 #include "RandEquipGen.h"
 #include "TextureManager.h"
+#include "checkML.h"
 using namespace std;
 
 //class GameStateMachine;

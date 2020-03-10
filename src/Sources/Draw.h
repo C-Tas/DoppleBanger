@@ -12,7 +12,7 @@ protected:
 	SDL_Rect frame_;
 	Vector2D visPos_;
 
-	Draw() : texture_(nullptr) {};
+	Draw() : texture_(nullptr), frame_({ 0,0,0,0 }), destiny_({0,0,0,0}) {};
 
 	Draw(Application* app, Texture* texture, Point2D pos, Vector2D scale) :
 		GameObject(app, pos, scale), texture_(texture) {
@@ -20,14 +20,16 @@ protected:
 		destiny_.y = (int)pos.getY();
 		destiny_.w = (int)scale.getX();
 		destiny_.h = (int)scale.getY();
+		frame_ = { 0,0,0,0 };
 	};
 
-	Draw(Application* app, Texture* texture, SDL_Rect* frame, Point2D pos, Vector2D scale) :
+	Draw(Application* app, Texture* texture, SDL_Rect frame, Point2D pos, Vector2D scale) :
 		GameObject(app, pos, scale), texture_(texture) {
 		destiny_.x = (int)pos.getX();
 		destiny_.y = (int)pos.getY();
 		destiny_.w = (int)scale.getX();
 		destiny_.h = (int)scale.getY();
+		frame_ = frame;
 	};
 
 	Draw(const Draw& other) : GameObject(other.app_, other.pos_, other.scale_), 

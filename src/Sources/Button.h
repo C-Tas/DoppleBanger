@@ -10,7 +10,7 @@ class Button : public Draw
 { 
 public:
 	Button(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack);
-	virtual void update();
+	virtual bool update();
 	const virtual void draw();
 	virtual ~Button() {};
 

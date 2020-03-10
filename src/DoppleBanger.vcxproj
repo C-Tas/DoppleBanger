@@ -62,6 +62,7 @@
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Button.h" />
     <ClInclude Include="Sources\CaribbeanIslandState.h" />
+    <ClInclude Include="Sources\checkML.h" />
     <ClInclude Include="Sources\Collider.h" />
     <ClInclude Include="Sources\ControlsState.h" />
     <ClInclude Include="Sources\CreditsState.h" />
