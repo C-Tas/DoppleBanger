@@ -43,8 +43,8 @@ public:
 	const virtual void draw() { texture_->render(getDestiny(), SDL_FLIP_NONE); };
 
 #pragma region getters
-	//Devuelve una posición con el offset del sprite aplicado
-	//Sirve para encontrar en centro en relación a un objeto
+	//Dada una posición le resta el offset del objeto que invoca el método
+	//de tal forma que si este se mueve a la dicha posición queda centrado en ella
 	Vector2D getCenter(Vector2D pos)
 	{
 		Vector2D center;
@@ -52,8 +52,8 @@ public:
 		center.setY(pos.getY() - (scale_.getY() / 2));
 		return center;
 	}
-	//Devuelve "la posición visual" del sprite
-	//Vease: cuando se mueve el jugador este mueve "sus pies" a esa posición
+	//Dada una posición le resta el offset del objeto que invoca el método
+	//de tal forma que si este se mueve a la dicha posición queda con "los pies" colocados en ella
 	Vector2D getVisPos(Vector2D pos)
 	{
 		Vector2D vis;
