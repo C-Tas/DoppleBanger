@@ -10,7 +10,6 @@ protected:
 	Texture* texture_;
 	SDL_Rect destiny_;
 	SDL_Rect frame_;
-	Vector2D visPos_;
 
 	Draw() : texture_(nullptr), frame_({ 0,0,0,0 }), destiny_({0,0,0,0}) {}; //Constructora vacia de Draw
 
@@ -42,13 +41,27 @@ protected:
 
 public:
 	const virtual void draw() { texture_->render(getDestiny(), SDL_FLIP_NONE); };
-	//Devuelve la posicion "visual" del objeto
-	//Cuando se mueva un objeto no se mira su posicion superior izquierda, sino sus pies.
-	void updateVisPos() { visPos_.setVec(Vector2D(pos_.getX() + (scale_.getX() / 2), pos_.getY() + (scale_.getY() * 0.8))); }; //Actualiza la posicion visual del objeto
-
 
 #pragma region getters
-//Devuelve el rectangulo destino
+	//Devuelve una posición con el offset del sprite aplicado
+	//Sirve para encontrar en centro en relación a un objeto
+	Vector2D getCenter(Vector2D pos)
+	{
+		Vector2D center;
+		center.setX(pos.getX() - (scale_.getX() / 2));
+		center.setY(pos.getY() - (scale_.getY() / 2));
+		return center;
+	}
+	//Devuelve "la posición visual" del sprite
+	//Vease: cuando se mueve el jugador este mueve "sus pies" a esa posición
+	Vector2D getVisPos(Vector2D pos)
+	{
+		Vector2D vis;
+		vis.setX(pos.getX() - (scale_.getX() / 2));
+		vis.setY(pos.getY() - (scale_.getY() * 0.8));
+		return vis;
+	}
+	//Devuelve el rectangulo destino
 	const virtual SDL_Rect getDestiny() {
 		destiny_.x = (int)pos_.getX();
 		destiny_.y = (int)pos_.getY();

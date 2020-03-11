@@ -8,7 +8,6 @@
     <ClCompile Include="Sources\Collider.cpp" />
     <ClCompile Include="Sources\ControlsState.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
-    <ClCompile Include="Sources\Draw.cpp" />
     <ClCompile Include="Sources\Dynamic.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
     <ClCompile Include="Sources\Equipment.cpp" />
@@ -38,6 +37,7 @@
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
+    <ClCompile Include="Sources\Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -78,5 +78,6 @@
     <ClInclude Include="Sources\Vector2D.h" />
     <ClInclude Include="Sources\VolcanicIslandState.h" />
     <ClInclude Include="Sources\checkML.h" />
+    <ClInclude Include="Sources\Bullet.h" />
   </ItemGroup>
 </Project>

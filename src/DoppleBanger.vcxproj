@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
+    <ClCompile Include="Sources\Bullet.cpp" />
     <ClCompile Include="Sources\Button.cpp" />
     <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
@@ -59,6 +60,7 @@
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
+    <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\Button.h" />
     <ClInclude Include="Sources\CaribbeanIslandState.h" />
     <ClInclude Include="Sources\checkML.h" />
