@@ -9,13 +9,12 @@ using CallBackOnClick = void(Application* App);
 class Button : public Draw
 { 
 public:
-	Button(Texture* texture,Vector2D pos, Vector2D scale, CallBackOnClick* callBack);
-	virtual void Logic();
-	virtual void Render();
+	Button(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack);
+	virtual bool update(); //Lleva la logica del boton
+	const virtual void draw();
 	virtual ~Button() {};
 
 protected:
-	
 	CallBackOnClick* ButtonCallBack;
 
 };

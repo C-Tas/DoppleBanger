@@ -7,6 +7,7 @@ private:
 	bool isLoad_ = false; //TRUE => LOAD //FALSE => SAVE
 public:
 	SaveLoadState(Application* app, bool load) : GameState(app), isLoad_(load) { if(isLoad_) printf("LoadState"); else printf("SaveState"); };
+	virtual ~SaveLoadState() {};
 	void goToGame();
 	void goToMainMenu();
 };

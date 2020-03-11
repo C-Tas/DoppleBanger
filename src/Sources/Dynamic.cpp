@@ -2,7 +2,10 @@
 
 void Dynamic::move(Point2D target)
 {
-	vel_.setX(target.getX() - target.getX());
-	vel_.setY(target.getY() - target.getY());
-	vel_.normalize();
+	//establecemos el objetivo para poder parar al llegar
+	obj_.setVec(target);
+	//establecemos la direccion
+	dir_.setX(target.getX() - visPos_.getX());
+	dir_.setY(target.getY() - visPos_.getY());
+	dir_.normalize();
 }

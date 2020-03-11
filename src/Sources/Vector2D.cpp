@@ -33,16 +33,12 @@ bool Vector2D::operator!=(const Vector2D& v) const
 {
 	return !(x_ == v.x_ && y_ == v.y_);
 }
-Vector2D Vector2D::normalize() const {
-	Vector2D r;
-	r.x_ = x_;
-	r.y_ = y_;
+void Vector2D::normalize() {
 	double mag = magnitude();
 	if (mag > 0.0) {
-		r.x_ = r.x_ / mag;
-		r.y_ = r.y_ / mag;
+		x_ = x_ / mag;
+		y_ = y_ / mag;
 	}
-	return r;
 }
 double Vector2D::magnitude() const
 {	

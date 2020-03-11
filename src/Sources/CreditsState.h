@@ -4,7 +4,11 @@ class CreditsState :
 	public GameState
 {
 public:
+	///<summary>Constructora de CreditsState</summary>
 	CreditsState(Application* app = nullptr) :GameState(app) {};
-	void backToPreviousState();
+	///<summary>Destructora</summary>
+	virtual ~CreditsState() {};
+	///<summary>Metodo para pasar a los botones de este estado, vuelve al anterior</summary>
+	static void backToPreviousState(Application* app);
 };
 

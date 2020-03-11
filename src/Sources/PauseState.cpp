@@ -2,15 +2,15 @@
 #include "MainMenuState.h"
 #include "ControlsState.h"
 
-void PauseState::goControlState() {
-	app_->getStateMachine()->pushState( new ControlsState(app_));
+void PauseState::goControlState(Application* app) {
+	app->getStateMachine()->pushState( new ControlsState(app));
 };
-//mirar
-void PauseState::goMainMenuState() {
 
-	app_->getStateMachine()->doublePopState();
+void PauseState::goMainMenuState(Application* app) {
+	app->getStateMachine()->clearAllStateExceptFirst();
 };
-void PauseState::backToGameState() {
-	app_->getStateMachine()->popState();
+
+void PauseState::backToGameState(Application* app) {
+	app->getStateMachine()->popState();
 
 }
