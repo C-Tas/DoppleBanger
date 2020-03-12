@@ -17,7 +17,7 @@ private:
 	const int AD = 0;
 	const int AP = 0;
 	const int CRIT = 0;
-	const double MOVE_SPEED = 100;
+	const int MOVE_SPEED = 100;
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 5;
 #pragma endregion
