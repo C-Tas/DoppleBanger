@@ -8,12 +8,15 @@ class FontManager {
 private:
 	map<int, Font*> fonts_;
 	bool initialized_ = false;
+
 public:
-	FontManager() : initialized_(false) {};
+	FontManager() {};
 	virtual ~FontManager();
 
 	bool init();
 
-	Font* getFont(size_t tag);
+	///<summary>Devuelve la fuente correspondiente al tag (Resources::FontId::NameTag)</summary>
+	Font* getFont(size_t tag) { return fonts_[tag]; };
+	///<summary>Carga la fuente pedida</summary>
 	bool loadFont(size_t tag, const string& fileName, int size);
 };

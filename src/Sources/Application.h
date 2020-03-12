@@ -4,6 +4,7 @@
 #include "GameStateMachine.h"
 #include "RandEquipGen.h"
 #include "TextureManager.h"
+#include "FontManager.h"
 #include "checkML.h"
 using namespace std;
 
@@ -17,8 +18,13 @@ private:
 
 	///<summary>Máquina de estados</summary>
 	GameStateMachine* machine_ = nullptr;
+
 	///<summary>Manager que gestiona las texturas </summary>
 	TextureManager* textureManager_ = nullptr;
+
+	///<summary>Manager que gestiona las fuentes de texto </summary>
+	FontManager* fontManager_ = nullptr;
+
 	///<summary>Generador de randoms</summary>
 	RandEquipGen* equipGen_ = nullptr;
 	
@@ -82,6 +88,8 @@ public:
 	int getCurrArea() { return currArea_; }; //Mover a GameManager cuando tengamos
 	///<summary>Devuelve el texture manager</summary>
 	TextureManager* getTextureManager() { return textureManager_; };
+	///<summary>Devuelve el font manager</summary>
+	FontManager* getFontManager() { return fontManager_; };
 
 	///<summary>Devuelve el generador de equipamiento aleatorio </summary>
 	Equipment* genEquip() { return equipGen_->genEquip(); };

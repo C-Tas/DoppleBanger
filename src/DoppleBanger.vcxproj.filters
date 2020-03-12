@@ -37,9 +37,9 @@
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
-    <ClCompile Include="FontManager.h" />
-    <ClCompile Include="Font.cpp" />
-    <ClCompile Include="FontManager.cpp" />
+    <ClCompile Include="Sources\Font.cpp" />
+    <ClCompile Include="Sources\FontManager.cpp" />
+    <ClCompile Include="Sources\SDL_macros.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -80,6 +80,8 @@
     <ClInclude Include="Sources\Vector2D.h" />
     <ClInclude Include="Sources\VolcanicIslandState.h" />
     <ClInclude Include="Sources\checkML.h" />
-    <ClInclude Include="Font.h" />
+    <ClInclude Include="Sources\Font.h" />
+    <ClInclude Include="Sources\FontManager.h" />
+    <ClInclude Include="Sources\SDL_macros.h" />
   </ItemGroup>
 </Project>

@@ -16,4 +16,3 @@ public:
 	void close();
 	SDL_Surface* renderText(const string& text, SDL_Color color) const;
 };
-

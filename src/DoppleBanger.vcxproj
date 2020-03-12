@@ -19,9 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Font.cpp" />
-    <ClCompile Include="FontManager.cpp" />
-    <ClCompile Include="FontManager.h" />
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Button.cpp" />
@@ -32,6 +29,8 @@
     <ClCompile Include="Sources\Dynamic.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
     <ClCompile Include="Sources\Equipment.cpp" />
+    <ClCompile Include="Sources\Font.cpp" />
+    <ClCompile Include="Sources\FontManager.cpp" />
     <ClCompile Include="Sources\GameObject.cpp" />
     <ClCompile Include="Sources\GameState.cpp" />
     <ClCompile Include="Sources\GameStateMachine.cpp" />
@@ -48,6 +47,7 @@
     <ClCompile Include="Sources\RandEquipGen.cpp" />
     <ClCompile Include="Sources\Resources.cpp" />
     <ClCompile Include="Sources\SaveLoadState.cpp" />
+    <ClCompile Include="Sources\SDL_macros.cpp" />
     <ClCompile Include="Sources\SelectLevelState.cpp" />
     <ClCompile Include="Sources\SRandBasedGenerator.cpp" />
     <ClCompile Include="Sources\SpookyIslandState.cpp" />
@@ -60,7 +60,6 @@
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Font.h" />
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Button.h" />
@@ -73,6 +72,8 @@
     <ClInclude Include="Sources\Dynamic.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\Equipment.h" />
+    <ClInclude Include="Sources\Font.h" />
+    <ClInclude Include="Sources\FontManager.h" />
     <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
@@ -88,6 +89,7 @@
     <ClInclude Include="Sources\RandEquipGen.h" />
     <ClInclude Include="Sources\Resources.h" />
     <ClInclude Include="Sources\SaveLoadState.h" />
+    <ClInclude Include="Sources\SDL_macros.h" />
     <ClInclude Include="Sources\SelectLevelState.h" />
     <ClInclude Include="Sources\SRandBasedGenerator.h" />
     <ClInclude Include="Sources\SpookyIslandState.h" />

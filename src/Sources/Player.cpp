@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "Resources.h"
+#include "SDL_macros.h"
 
 bool Player::update()
 {
@@ -16,5 +18,10 @@ bool Player::update()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 	}
+
+	//Para comprobar que las fuentes funcionan
+	Texture text(app_->getRenderer(), "Esto es un texto de prueba puesto en Player.cpp ;)", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0xffffffff) });
+	text.render(app_->getWindowWidth() / 2, app_->getWindowHeight() / 2);
+
 	return false;
 }

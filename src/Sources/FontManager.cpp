@@ -20,18 +20,10 @@ bool FontManager::init() {
 
 	int ttfInit_r = TTF_Init();
 	assert(ttfInit_r == 0);
-	/*
-	 if ( r != 0 ) {
-	 throw "Something went wrong with TTF_init";
-	 }
-	 */
+
 	initialized_ = true;
 
 	return true;
-}
-
-Font* FontManager::getFont(std::size_t tag) {
-	return fonts_[tag];
 }
 
 bool FontManager::loadFont(std::size_t tag, const string& fileName, int size) {
