@@ -1,7 +1,7 @@
 #include "Resources.h"
 
 vector<Resources::ImageInfo> Resources::imageRoutes{
-	{Timon, "../Sources/assets/timon.png"}
+	{ Timon, "../Sources/assets/timon.png" }
 	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 };
 
@@ -14,5 +14,6 @@ vector <Resources::MusicInfo> Resources::musicRoutes{
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{
+	{ RETRO, "../Sources/fonts/RetroGaming.ttf", 16 }
 	//Para añadir nueva ruta: {FontId, "./Sources/fonts/name.ttf", size}
 };

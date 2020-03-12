@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <vector>
 
 using namespace std;
@@ -17,9 +18,10 @@ public:
 	enum AudioId : int{
 		
 	};
+
 	///<summary>Enum para las distintos fuentes del juego</summary>
 	enum FontId : int {
-		
+		RETRO
 	};
 	
 	///<summary>Struct para la informacion de las imagenes</summary>
