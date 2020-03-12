@@ -6,10 +6,10 @@ void StoryState::goToGame(Application* app) {
 
 void StoryState::draw() const {
 
-	GameState::draw();
-
 	//Dibujamos en toda la pantalla, tomando como origen el (0,0)
 	scenes[currentScene].sceneTexture->render({ 0,0,app_->getWindowWidth(), app_->getWindowHeight() });
+
+	GameState::draw(); //Después, dibujamos encima los botones
 }
 
 void StoryState::update() {
