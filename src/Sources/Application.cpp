@@ -3,6 +3,7 @@
 #include "SelectLevelState.h"
 #include "HandleEvents.h"
 #include <exception>
+#include "GameManager.h"
 
 Application::Application(GameStateMachine* state) {
 	
@@ -46,6 +47,7 @@ void Application::initSDL() {
 
 void Application::runApp() {
 	HandleEvents* input = HandleEvents::instance();
+	GameManager::instance();
 	while (!appClosed_) {
 		SDL_RenderClear(renderer_); //Clear
 		updateDelta(); //Actualizamos deltaTime
