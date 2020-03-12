@@ -29,7 +29,7 @@ private:
 	Button* ExitButton_; // boton para volver al estado anterior
 	
 	InventoryButton* select_ = nullptr;
-	list<InventoryButton>:: iterator ListPos;
+	list<InventoryButton*>:: iterator ListPos;
 	Equipments equipment_;
 	const int  VIEW_LIST = 6; //variable que guarda el numero de onjetos que se va a mostrar a la vez por pantalla
 	int advanced = 0;
@@ -45,8 +45,8 @@ private:
 public:
 	Inventory(Application* app = nullptr);
 	void addToInventory(Equipment* ob);
-	const virtual void draw() ;//Métodos que faltan por definir y por eso dan fallo de link
-	virtual void update() {};//Métodos que faltan por definir y por eso dan fallo de link
+	virtual void draw() const;//Métodos que faltan por definir y por eso dan fallo de link
+	virtual void update();//Métodos que faltan por definir y por eso dan fallo de link
 	void selectObject(InventoryButton* ob);
 	void equippedObj();
 	void deleteObj();

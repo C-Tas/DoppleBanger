@@ -48,5 +48,6 @@ public:
 	//virtual void OnEnabled() = 0;//Metodo que se utilizara cuando el objeto se equipe
 	//virtual void OnDisabled() = 0;//Metodo que se utiliza cuando el objeto se desEquipa
 	InventoryButton* getButton() { return inventoryButton_; }
+	void setButton(InventoryButton* but) { inventoryButton_ = but; }
 
 };
