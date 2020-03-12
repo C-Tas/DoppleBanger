@@ -21,6 +21,7 @@ private:
 	Texture* background_;
 	Texture* texture;//provisional
 	list<InventoryButton*> InventoryList_;
+	list<int> AuxList_;
 	Button* deleteButton_;// boton para eliminar un elemento del inventario
 	Button* equippedButton_; // boton para equipar un elemento al jugador
 	Button* advanceButton_; // boton para que se muestren los siguientes elementos de la lista
@@ -30,6 +31,8 @@ private:
 	InventoryButton* select_ = nullptr;
 	list<InventoryButton>:: iterator ListPos;
 	Equipments equipment_;
+	const int  VIEW_LIST = 6; //variable que guarda el numero de onjetos que se va a mostrar a la vez por pantalla
+	int advanced = 0;
 	//const int MAX_OBJECTS;
 
 	//metodos privados
@@ -38,14 +41,17 @@ private:
 	void equiparAux(InventoryButton* but);
 	
 	
+	
 public:
 	Inventory(Application* app = nullptr);
-	void addToInventory(Equipable* ob);
-	//const virtual void draw() {};//Métodos que faltan por definir y por eso dan fallo de link
+	void addToInventory(Equipment* ob);
+	const virtual void draw() ;//Métodos que faltan por definir y por eso dan fallo de link
 	virtual void update() {};//Métodos que faltan por definir y por eso dan fallo de link
 	void selectObject(InventoryButton* ob);
 	void equippedObj();
 	void deleteObj();
+	void forwardList();
+	void backList();
 	
 
 	

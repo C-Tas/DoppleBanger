@@ -3,13 +3,20 @@
 #include "Item.h"
 #include "Stats.h"
 
+class Player;
+class Inventory;
+class InventoryButton;
+
 const enum equipType { Armor, Boots, Gloves, Sword, Gun };
 
 class Equipment : public Item
 {
-private:
+protected:
 	equipType type_;
 	Stats modifiers_;
+	Player* player_;
+	Inventory* inventory_;
+	InventoryButton* inventoryButton_;
 
 public:
 	Equipment(equipType type) : Item(), type_(type) { modifiers_ = Stats(); };
@@ -36,5 +43,10 @@ public:
 	double getDistRate() { return modifiers_.distRate_; };
 	double getMeleeRate() { return modifiers_.meleeRate_; };
 #pragma endregion
+
+
+	//virtual void OnEnabled() = 0;//Metodo que se utilizara cuando el objeto se equipe
+	//virtual void OnDisabled() = 0;//Metodo que se utiliza cuando el objeto se desEquipa
+	InventoryButton* getButton() { return inventoryButton_; }
 
 };
