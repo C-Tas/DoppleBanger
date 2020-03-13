@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Resources.h"
 #include "SDL_macros.h"
+#include "TextBoxManager.h"
 
 bool Player::update()
 {
@@ -20,8 +21,10 @@ bool Player::update()
 	}
 
 	//Para comprobar que las fuentes funcionan
-	Texture text(app_->getRenderer(), "Esto es un texto de prueba puesto en Player.cpp ;)", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0xffffffff) });
-	text.render(app_->getWindowWidth() / 2, app_->getWindowHeight() / 2);
+	TextBoxManager tx(app_);
+	tx.DialogChef(false);
+	//Texture text(app_->getRenderer(), "Esto es un texto de prueba puesto en Player.cpp ;)", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0xffffffff) });
+	//text.render(app_->getWindowWidth() / 2, app_->getWindowHeight() / 2);
 
 	return false;
 }

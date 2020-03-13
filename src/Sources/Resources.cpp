@@ -14,6 +14,6 @@ vector <Resources::MusicInfo> Resources::musicRoutes{
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{
-	{ RETRO, "../Sources/fonts/RetroGaming.ttf", 16 }
+	{ RETRO, "../Sources/fonts/RetroGaming.ttf", 20 }
 	//Para añadir nueva ruta: {FontId, "./Sources/fonts/name.ttf", size}
 };
