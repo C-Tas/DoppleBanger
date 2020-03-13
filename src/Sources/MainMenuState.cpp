@@ -34,7 +34,7 @@ void MainMenuState::initMenuState()
 
 void MainMenuState::createButtons() {
 	//creamos el boton para ir a los controles
-	Button* b = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 50,50 }, { 50,50 }, goControlState);
+	Button* b = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::GoControls), { 50,50 }, { 50,50 }, goControlState);
 	gameObjects_.push_back(b);
 	objectsToRender_.push_back(b);
 	//creamos el boton para ir a los creditos

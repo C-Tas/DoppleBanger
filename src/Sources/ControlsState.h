@@ -8,14 +8,11 @@ private:
 	const uint controlsW = app_->getWindowWidth();
 	const uint controlsH = app_->getWindowHeight();
 	void initState();
+
 public:
 //<summary>Constructor del estado de los controles</summary>
 	ControlsState(Application* app = nullptr) : GameState(app) { initState(); }
 	virtual void draw() const;
 	virtual ~ControlsState() { controlsImage_ = nullptr; }
-
-//<summary>Nos devuelve al estado anterior</summary>
-	void backToPreviousState();
-
 };
 

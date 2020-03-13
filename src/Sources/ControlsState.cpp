@@ -1,12 +1,19 @@
 #include "ControlsState.h"
 
-void ControlsState::backToPreviousState() {
-	app_->getStateMachine()->popState();
+//Calback del botón "Volver"
+void backToPreviousState(Application* app) {
+	app->getGameStateMachine()->popState(); //Vuelve al estado previo
 }
 
 void ControlsState::initState() {
-	controlsImage_ = app_->getTextureManager()->getTexture(Resources::Controls);
+	controlsImage_ = app_->getTextureManager()->getTexture(Resources::Controls); //Textura de los controles
+
+	//Posición y tamaño en función del tamaño de la ventana
+	Vector2D scaleButton(app_->getWindowWidth() / 20, app_->getWindowHeight() / 20);
+	Vector2D posButton(scaleButton.getX(), scaleButton.getY());
+	createButton(app_->getTextureManager()->getTexture(Resources::BackButton), posButton, scaleButton, backToPreviousState, app_); //Botón "Volver"
 }
+
 //Se redefine el método draw para que renderice los objetos y para que renderice la imagen de los controles
 void ControlsState::draw() const
 {

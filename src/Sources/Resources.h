@@ -10,8 +10,14 @@ class Resources
 public:
 	///<summary>Enum para las distintas imagenes del juego</summary>
 	enum TextureId : int {
+		//Botones
 		Timon,
+		GoControls,
+		BackButton,
+
+		//Background
 		Controls
+		//Characters
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

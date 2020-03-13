@@ -2,6 +2,8 @@
 
 vector<Resources::ImageInfo> Resources::imageRoutes{
 	{Timon, "../Sources/assets/timon.png"},
+	{GoControls, "../Sources/assets/botonControles.png"},
+	{BackButton, "../Sources/assets/volver.png"},
 	{Controls, "../Sources/assets/controles.png"}
 	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
 };
