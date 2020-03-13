@@ -12,6 +12,7 @@ public:
 	///<summary>Enum para las distintas imagenes del juego</summary>
 	enum TextureId : int {
 		Timon,
+		TextBox
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
@@ -30,7 +31,7 @@ public:
 		string filename;
 	};
 
-	///<summary>Struct para la informacion del sonido</summary>
+	///<summary>Struct para la información del sonido</summary>
 	struct SoundInfo {
 		AudioId audioId;
 		string filename;
@@ -55,9 +56,9 @@ public:
 	///<summary>Vector con las rutas de los audios a cargar</summary>
 	static vector<SoundInfo> soundRoutes;
 
-	///<summary>Vector con las rutas de la m�sica a cargar</summary>
+	///<summary>Vector con las rutas de la música a cargar</summary>
 	static vector<MusicInfo> musicRoutes;
 	
-	///<summary>Vector con las rutas de la m�sica a cargar</summary>
+	///<summary>Vector con las rutas de las fuentes a cargar</summary>
 	static vector<FontInfo> fontsRoutes;
 };

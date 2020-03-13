@@ -22,9 +22,7 @@ bool Player::update()
 
 	//Para comprobar que las fuentes funcionan
 	TextBoxManager tx(app_);
-	tx.DialogChef(false);
-	//Texture text(app_->getRenderer(), "Esto es un texto de prueba puesto en Player.cpp ;)", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0xffffffff) });
-	//text.render(app_->getWindowWidth() / 2, app_->getWindowHeight() / 2);
+	tx.dialogElderMan(0);
 
 	return false;
 }
