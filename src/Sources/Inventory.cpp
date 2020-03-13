@@ -20,6 +20,9 @@ void callForwardList(GameState* state) {
 void callBackList(GameState* state) {
 	dynamic_cast<Inventory*>(state)->backList();
 }
+void callExit(Application* app){
+	app->getStateMachine()->popState();
+}
 
 Inventory::Inventory(Application* app) :GameState(app) {
 	deleteButton_ = new Button(app, dynamic_cast<GameState*>(this),app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 600,400 }, Vector2D{ 50,50 },callDeleteObject);
@@ -34,6 +37,9 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	gobackButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 500,100 }, Vector2D{ 50,50 }, callBackList);
 	addUpdateList(gobackButton_);
 	addRenderList(gobackButton_);
+	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 1200,100 }, Vector2D{ 50,50 }, callExit);
+	addUpdateList(exitButton_);
+	addRenderList(exitButton_);
 	#ifdef _DEBUG
 	cout << "creamos el objeto" << endl;
 	addToInventory(nullptr);
@@ -197,6 +203,8 @@ void Inventory::update() {
 	//todos los botones...
 
 }
+
+
 
 
 

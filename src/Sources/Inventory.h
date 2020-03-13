@@ -26,7 +26,7 @@ private:
 	Button* equippedButton_; // boton para equipar un elemento al jugador
 	Button* advanceButton_; // boton para que se muestren los siguientes elementos de la lista
 	Button* gobackButton_; // boton para que se muestren los anteriores elementos de la lista
-	Button* ExitButton_; // boton para volver al estado anterior
+	Button* exitButton_; // boton para volver al estado anterior
 	
 	InventoryButton* select_ = nullptr;
 	list<InventoryButton*>:: iterator ListPos;
@@ -52,6 +52,7 @@ public:
 	void deleteObj();
 	void forwardList();
 	void backList();
+	
 	
 
 	
