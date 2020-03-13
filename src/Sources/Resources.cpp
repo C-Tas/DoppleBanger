@@ -1,7 +1,8 @@
 #include "Resources.h"
 
 vector<Resources::ImageInfo> Resources::imageRoutes{
-	{Timon, "../Sources/assets/timon.png"}
+	{Timon, "../Sources/assets/timon.png"},
+	{BotonMenu, "../Sources/assets/botonMenu.png"}
 	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 };
 

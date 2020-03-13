@@ -34,21 +34,26 @@ void MainMenuState::initMenuState()
 
 void MainMenuState::createButtons() {
 	//creamos el boton para ir a los controles
-	Button* b = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 50,50 }, { 50,50 }, goControlState);
+	Button* b = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BotonMenu), 
+		{ double(app_->getWindowWidth() / 2),double(app_->getWindowHeight() / 2) - 400 }, { 500,500 }, goControlState);
 	gameObjects_.push_back(b);
 	objectsToRender_.push_back(b);
 	//creamos el boton para ir a los creditos
-	Button* b1 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 150,50 }, { 50,50 }, goCreditsState);
+	Button* b1 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BotonMenu),
+		{ double(app_->getWindowWidth() / 2),double(app_->getWindowHeight() / 2) - 200 }, { 500,500 }, goCreditsState);
 	gameObjects_.push_back(b1);
 	objectsToRender_.push_back(b1);
 	//creamos el boton para jugar cargando el juego del archivo de guardado
-	Button* b2 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 50,150 }, { 50,50 }, goLoadState);
+	Button* b2 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BotonMenu),
+		{ double(app_->getWindowWidth() / 2),double(app_->getWindowHeight() / 2) }, { 500,500 }, goLoadState);
 	gameObjects_.push_back(b2);
 	objectsToRender_.push_back(b2);
 	//creamos el boton para jugar sin cargar el juego del archivo de guardado
-	Button* b3 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 150,150 }, { 50,50 }, goStoryState);
+	Button* b3 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BotonMenu),
+		{ double(app_->getWindowWidth() / 2),double(app_->getWindowHeight() / 2) + 200 }, { 500,500 }, goStoryState);
 	gameObjects_.push_back(b3);
 	objectsToRender_.push_back(b3);
+
 #ifdef _DEBUG
 	cout << "creados los botones correctamente"<<endl;
 #endif
@@ -67,4 +72,7 @@ void MainMenuState::goLoadState(Application* app) {
 void MainMenuState::goStoryState(Application* app) {
 	app->getStateMachine()->pushState(new StoryState(app));
 };
+void MainMenuState::goCreditState(Application* app) {
+	app->getStateMachine()->pushState(new CreditsState(app));
+}
 #pragma endregion

@@ -26,4 +26,6 @@ public:
 	static void goLoadState(Application* app);
 	///<summary>Nos lleva al estado Story</summary>
 	static void goStoryState(Application* app);
+	///<summary>Nos lleva al estado de creditos</summary>
+	static void goCreditState(Application* app);
 };
