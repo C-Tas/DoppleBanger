@@ -11,6 +11,7 @@ public:
 	///<summary>Enum para las distintas imagenes del juego</summary>
 	enum TextureId : int {
 		Timon,
+		Controls
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
