@@ -9,12 +9,17 @@
 //y se renderiza hasta que se presione cualquier tecla y se elimine el textBox.
 
 void TextBoxManager::init() {
+	//Generamos la caja donde irá el texto
 	dest.w = app_->getWindowWidth();
 	dest.h = app_->getWindowHeight() / 4;
 	dest.x = 0;
 	dest.y = app_->getWindowHeight() - dest.h;
 	Texture* whiteRect = app_->getTextureManager()->getTexture(Resources::TextureId::TextBox);
 	whiteRect->render(dest);
+
+	//Comentario al final de la caja de texto
+	Texture pressAnyKey(app_->getRenderer(), "Pulse cualquier tecla >>", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x99999999) });
+	pressAnyKey.render(app_->getWindowWidth() - pressAnyKey.getWidth() - lineSpacing, app_->getWindowHeight() - pressAnyKey.getHeight() - lineSpacing);
 }
 
 void TextBoxManager::dialogElderMan(int isle) {
