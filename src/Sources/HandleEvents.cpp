@@ -8,11 +8,9 @@ HandleEvents::HandleEvents() {
 
 HandleEvents::~HandleEvents() {
 }
-
 void HandleEvents::update() {
 
 	SDL_Event event;
-
 	clearState();
 
 	while (SDL_PollEvent(&event)) {

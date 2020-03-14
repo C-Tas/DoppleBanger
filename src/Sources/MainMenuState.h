@@ -16,7 +16,6 @@ protected:
 	void createButtons();
 
 public:
-	//MainMenuState(Application* app = nullptr) : GameState(app) { printf("MainMenuState"); initMenuState(); };
 	MainMenuState(Application* app = nullptr) :GameState(app) {initMenuState();};
 	virtual ~MainMenuState() {};
 	///<summary>Nos lleva al estado controles</summary>

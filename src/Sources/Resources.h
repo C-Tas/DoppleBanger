@@ -8,50 +8,54 @@ using namespace std;
 class Resources
 {
 public:
-	//Enum para las distintas imagenes del juego
+	///<summary>Enum para las distintas imagenes del juego</summary>
 	enum TextureId : int {
 		Timon,
 	};
 
-	//Enum para las distintos audios del juego
+	///<summary>Enum para las distintos audios del juego</summary>
 	enum AudioId : int{
 		
 	};
-	
+	///<summary>Enum para las distintos fuentes del juego</summary>
 	enum FontId : int {
 		
 	};
 	
+	///<summary>Struct para la informacion de las imagenes</summary>
 	struct ImageInfo {
 		TextureId textureId;
 		string filename;
 	};
 
+	///<summary>Struct para la informacion del sonido</summary>
 	struct SoundInfo {
 		AudioId audioId;
 		string filename;
 	};
 
+	///<summary>Struct para la informacion de la mÃºsica</summary>
 	struct MusicInfo {
 		AudioId id;
 		string fileName;
 	};
 	
+	///<summary>Struct para la informacion de las fuentes</summary>
 	struct FontInfo {
 		FontId id;
 		string fileName;
 		int size;
 	};
 
-	//Vector con las rutas de las imagenes a cargar
+	///<summary>Vector con las rutas de las imagenes a cargar</summary>
 	static vector<ImageInfo> imageRoutes;
 
-	//Vector con las rutas de los audios a cargar
+	///<summary>Vector con las rutas de los audios a cargar</summary>
 	static vector<SoundInfo> soundRoutes;
 
-	//Vector con las rutas de la música a cargar
+	///<summary>Vector con las rutas de la mï¿½sica a cargar</summary>
 	static vector<MusicInfo> musicRoutes;
 	
-	//Vector con las rutas de la música a cargar
+	///<summary>Vector con las rutas de la mï¿½sica a cargar</summary>
 	static vector<FontInfo> fontsRoutes;
 };

@@ -24,6 +24,7 @@ protected:
 	list<Draw*> objectsToRender_;
 	///<summary>Puntero a la aplicacion</summary>
 	Application* app_;
+	///<summary>Referencia al HandleEvents</summary>
 	HandleEvents* eventHandler_;
 
 public:
@@ -38,9 +39,9 @@ public:
 	virtual void handleEvents();//Ejecuta los eventos de los objetos objectEvents_
 	virtual void createButton(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack,Application* app);
 	///<summary>A�ade un objeto a la lista de gameObjects</summary>
-	virtual void addUpdateList(GameObject* obj);
+	void addUpdateList(GameObject* obj);
 	///<summary>A�ade un objeto a la lista de objectsToRender_</summary>
-	virtual void addRenderList(Draw* obj);
+	void addRenderList(Draw* obj);
 	///<summary>A�ade un objeto a las listas de objectsToRender_ y gameObjects_</summary>
 	void addRenderUpdateLists(Draw* obj);
 };

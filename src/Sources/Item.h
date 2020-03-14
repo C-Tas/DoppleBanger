@@ -12,7 +12,7 @@ private:
 	double itemQuantity_, itemPrice_;
 	
 public:
-	Item(Texture* tex, string name, string desc, double quantity, double price) { itemTexture_ = tex; itemName_ = name; itemDescription_ = desc; itemQuantity_ = quantity; itemPrice_ = price; };
+	Item(Texture* tex, string name, string desc, double price, double quantity = 1) { itemTexture_ = tex; itemName_ = name; itemDescription_ = desc; itemQuantity_ = quantity; itemPrice_ = price; };
 	Item() { itemTexture_ = nullptr; itemName_ = ""; itemDescription_ = ""; itemQuantity_ = 1; itemPrice_ = 0; };
 	~Item() { itemTexture_ = nullptr; };
 	void setItemDescription(string desc) { itemDescription_ = desc; };

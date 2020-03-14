@@ -8,7 +8,6 @@
     <ClCompile Include="Sources\Collider.cpp" />
     <ClCompile Include="Sources\ControlsState.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
-    <ClCompile Include="Sources\Draw.cpp" />
     <ClCompile Include="Sources\Dynamic.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
     <ClCompile Include="Sources\Equipment.cpp" />
@@ -40,6 +39,11 @@
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
+    <ClCompile Include="Sources\Armor.cpp" />
+    <ClCompile Include="Sources\Boots.cpp" />
+    <ClCompile Include="Sources\Gloves.cpp" />
+    <ClCompile Include="Sources\Gun.cpp" />
+    <ClCompile Include="Sources\Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -82,5 +86,12 @@
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\Vector2D.h" />
     <ClInclude Include="Sources\VolcanicIslandState.h" />
+    <ClInclude Include="Sources\checkML.h" />
+    <ClInclude Include="Sources\Bullet.h" />
+    <ClInclude Include="Sources\Armor.h" />
+    <ClInclude Include="Sources\Boots.h" />
+    <ClInclude Include="Sources\Gloves.h" />
+    <ClInclude Include="Sources\Gun.h" />
+    <ClInclude Include="Sources\Sword.h" />
   </ItemGroup>
 </Project>
