@@ -12,12 +12,12 @@ void MainMenuState::initMenuState()
 	//meter botones etc..
 
 	//Comprobaci�n del generador aleatorio de equipamiento
-	/*for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		Equipment* equip = app_->genEquip();
 		equip->writeStats();
 		cout << "\n";
-	}*/
+	}
 
 	SDL_Rect playerCollision; playerCollision.x = 0; playerCollision.y = 0; playerCollision.w = 0; playerCollision.h = 0;
 	player_ = new Player(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D(50, 50), Vector2D(100, 100), playerCollision);
