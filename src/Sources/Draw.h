@@ -11,19 +11,11 @@ protected:
 	SDL_Rect destiny_;
 	SDL_Rect frame_;
 	Vector2D visPos_;
+	int numberFrames_=0;
 
 	Draw() : texture_(nullptr), frame_({ 0,0,0,0 }), destiny_({0,0,0,0}) {}; //Constructora vacia de Draw
 
-	Draw(Application* app, Texture* texture, Point2D pos, Vector2D scale) : //Constructora con argumentos de Draw
-		GameObject(app, pos, scale), texture_(texture) {
-		destiny_.x = (int)pos.getX();
-		destiny_.y = (int)pos.getY();
-		destiny_.w = (int)scale.getX();
-		destiny_.h = (int)scale.getY();
-		frame_ = { 0,0,0,0 };
-	};
-
-	Draw(Application* app, Texture* texture, SDL_Rect frame, Point2D pos, Vector2D scale) : //Constructora por Frame y argumentos de Draw 
+	Draw(Application* app, Texture* texture, Point2D pos, Vector2D scale, SDL_Rect frame = { 0,0,0,0}) : //Constructora con argumentos de Draw
 		GameObject(app, pos, scale), texture_(texture) {
 		destiny_.x = (int)pos.getX();
 		destiny_.y = (int)pos.getY();
@@ -31,6 +23,15 @@ protected:
 		destiny_.h = (int)scale.getY();
 		frame_ = frame;
 	};
+
+	//Draw(Application* app, Texture* texture, SDL_Rect frame, Point2D pos, Vector2D scale) : //Constructora por Frame y argumentos de Draw 
+	//	GameObject(app, pos, scale), texture_(texture) {
+	//	destiny_.x = (int)pos.getX();
+	//	destiny_.y = (int)pos.getY();
+	//	destiny_.w = (int)scale.getX();
+	//	destiny_.h = (int)scale.getY();
+	//	frame_ = frame;
+	//};
 
 	Draw(const Draw& other) : GameObject(other.app_, other.pos_, other.scale_), 
 		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {}; //Constructora por copia de Draw
