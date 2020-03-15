@@ -1,6 +1,7 @@
 #pragma once
 #include "Application.h"
 #include "Texture.h"
+#include "Vector2D.h"
 
 class TextBoxManager {
 protected:
@@ -9,12 +10,19 @@ protected:
 	const int lineSpacing = 30;	//Interlineado y márgenes del texto
 
 public:
-	TextBoxManager(Application* app) : app_(app) { init(); };
+	///<summary>Constructora del textBox de diálogo</summary>
+	TextBoxManager(Application* app) : app_(app) { initDialog(); };
+	///<summary>Constructora del textBox de descripción</summary>
+	TextBoxManager(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
 	~TextBoxManager() {};
 
-	///<summary>Carga el textBox inicial, se llama desde la constructora</summary>
-	void init();
+	///<summary>Carga el textBox de diálogo inicial, se llama desde la constructora</summary>
+	void initDialog();
 
+	///<summary>Carga el textBox de descripción inicial, se llama desde la constructora</summary>
+	void initDescription(Point2D pos);
+
+#pragma region Diálogos
 	///<summary>Frases del viejo cuando se viaja a una isla nueva o se está en el barco</summary>
 	void dialogElderMan(int isle = -1);
 
@@ -38,4 +46,55 @@ public:
 
 	///<summary>Frases de Cleon al empezar/acabar la batalla</summary>
 	void dialogCleon(bool defeated);
+#pragma endregion
+
+#pragma region Descripciones
+	///<summary>Descripción de las armaduras caribeñas</summary>
+	void armorCaribbean();
+	///<summary>Descripción de las armaduras fantasmales</summary>
+	void armorSpooky();
+
+	///<summary>Descripción de los guantes caribeños</summary>
+	void glovesCaribbean();
+	///<summary>Descripción de los guantes fantasmales</summary>
+	void glovesSpooky();
+
+	///<summary>Descripción de los calzados caribeños</summary>
+	void bootsCaribbean();
+	///<summary>Descripción de los calzados fantasmales</summary>
+	void bootsSpooky();
+
+	///<summary>Descripción de las espadas caribeñas</summary>
+	void swordCaribbean();
+	///<summary>Descripción de las espadas fantasmales</summary>
+	void swordSpooky();
+
+	///<summary>Descripción de los sables caribeños</summary>
+	void saberCaribbean();
+	///<summary>Descripción de los sables fantasmales</summary>
+	void saberSpooky();
+
+	///<summary>Descripción de las pistolas caribeñas</summary>
+	void pistolCaribbean();
+	///<summary>Descripción de las pistolas fantasmales</summary>
+	void pistolSpooky();
+
+	///<summary>Descripción de los trabucos caribeños</summary>
+	void blunderbussCaribbean();
+	///<summary>Descripción de los trabucos fantasmales</summary>
+	void blunderbussSpooky();
+
+	///<summary>Descripción de la poción de vida</summary>
+	void lifePotion();
+	///<summary>Descripción de la poción de maná</summary>
+	void manaPotion();
+	///<summary>Descripción de la poción de velocidad</summary>
+	void velocityPotion();
+	///<summary>Descripción de la poción de daño</summary>
+	void damagePotion();
+	///<summary>Descripción de la poción de defensa</summary>
+	void defensePotion();
+	///<summary>Descripción de la poción de crítico</summary>
+	void criticPotion();
+#pragma endregion
 };

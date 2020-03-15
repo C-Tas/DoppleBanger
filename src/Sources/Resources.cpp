@@ -2,7 +2,8 @@
 
 vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Timon, "../Sources/assets/timon.png" },
-	{ TextBox, "../Sources/assets/whiteRectangle.png" }
+	{ TextBox, "../Sources/assets/whiteRectangle.png" },
+	{ InventaryMenu, "../Sources/assets/InventarioFondo.png" }
 	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 };
 
@@ -15,6 +16,7 @@ vector <Resources::MusicInfo> Resources::musicRoutes{
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{
-	{ RETRO, "../Sources/fonts/RetroGaming.ttf", 20 }
+	{ RETRO, "../Sources/fonts/RetroGaming.ttf", 20 },
+	{ RETROSM, "../Sources/fonts/RetroGaming.ttf", 18 }
 	//Para añadir nueva ruta: {FontId, "./Sources/fonts/name.ttf", size}
 };

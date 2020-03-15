@@ -20,9 +20,5 @@ bool Player::update()
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 	}
 
-	//Para comprobar que las fuentes funcionan
-	TextBoxManager tx(app_);
-	tx.dialogElderMan(0);
-
 	return false;
 }

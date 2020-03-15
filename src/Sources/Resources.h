@@ -11,8 +11,12 @@ class Resources
 public:
 	///<summary>Enum para las distintas imagenes del juego</summary>
 	enum TextureId : int {
+		//Objetos
 		Timon,
-		TextBox
+		TextBox,
+
+		//Fondos
+		InventaryMenu
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
@@ -22,7 +26,8 @@ public:
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
 	enum FontId : int {
-		RETRO
+		RETRO,
+		RETROSM
 	};
 	
 	///<summary>Struct para la informacion de las imagenes</summary>
