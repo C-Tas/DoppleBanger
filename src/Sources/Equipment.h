@@ -19,7 +19,7 @@ public:
 		Item(texture, name, desc, price, 1), type_(type) { };
 	virtual ~Equipment() {}; //Destructora generica
 
-	virtual void equip() = 0;
-	virtual void remove() = 0;
+	virtual void equip(Player* player) = 0;
+	virtual void remove(Player* player) = 0;
 	virtual void writeStats() = 0;
 };

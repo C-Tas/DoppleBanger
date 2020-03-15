@@ -32,7 +32,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		health = rn_.nextInt(7 * area, 16 * area);
 		armor = rn_.nextInt(3 * area, 8 * area);
 		price = rn_.nextInt(2 * area, 4 * area);
-		obj = new Armor(nullptr, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pechera", "helloWorld", price, health, armor, type);
+		obj = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pechera", "helloWorld", price, health, armor);
 		break;
 
 	//Velocidad y armadura
@@ -40,7 +40,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		speed = rn_.nextInt(1 * area, 4 * area);
 		armor = rn_.nextInt(2 * area, 6 * area);
 		price = rn_.nextInt(1 * area, 2 * area);
-		obj = new Boots(nullptr, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Botas", "helloWorld", price, speed, armor, type);
+		obj = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Botas", "helloWorld", price, speed, armor);
 		break;
 
 	//Crítico y armadura
@@ -48,7 +48,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		crit = rn_.nextInt(3 * area, 8 * area);
 		armor = rn_.nextInt(1 * area, 3 * area);
 		price = rn_.nextInt(1 * area, 4 * area);
-		obj = new Gloves(nullptr, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Guantes", "helloWorld", price, crit, armor, type);
+		obj = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Guantes", "helloWorld", price, crit, armor);
 		break;
 
 	//Ad y velocidad de ataque
@@ -57,7 +57,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		ad = rn_.nextInt(5 * area, 16 * area);
 		meleeRate = rn_.nextInt(3 * area, 6 * area);
 		price = rn_.nextInt(3 * area, 5 * area);
-		obj = new Sword(nullptr, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Espada", "helloWorld", price, ad, meleeRate, type);
+		obj = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Espada", "helloWorld", price, ad, meleeRate, type);
 		break;
 
 	//Mas daño que la espada
@@ -65,7 +65,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		ad = rn_.nextInt(6 * area, 17 * area);
 		meleeRate = rn_.nextInt(1 * area, 4 * area);
 		price = rn_.nextInt(3 * area, 5 * area);
-		obj = new Sword(nullptr, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Sable", "helloWorld", price, ad, meleeRate, type);
+		obj = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Sable", "helloWorld", price, ad, meleeRate, type);
 		break;
 
 	//Ap y velocidad de disparo
@@ -74,7 +74,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		ad = rn_.nextInt(5 * area, 16 * area);
 		distRate = rn_.nextInt(2 * area, 4 * area);
 		price = rn_.nextInt(4 * area, 6 * area);
-		obj = new Gun(nullptr, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pistola", "helloWorld", price, ad, distRate, type);
+		obj = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pistola", "helloWorld", price, ad, distRate, type);
 		break;
 
 	//Dispara en are recta con menos daño y alcance que la escopeta
@@ -82,7 +82,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		ad = rn_.nextInt(3 * area, 13 * area);
 		distRate = rn_.nextInt(1 * area, 2 * area);
 		price = rn_.nextInt(4 * area, 6 * area);
-		obj = new Gun(nullptr, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Trabuco", "helloWorld", price, ad, distRate, type);
+		obj = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Trabuco", "helloWorld", price, ad, distRate, type);
 		break;
 	default:
 		return nullptr;

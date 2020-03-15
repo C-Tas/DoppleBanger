@@ -1,14 +1,14 @@
 #include "Gun.h"
 #include "Player.h"
 
-void Gun::equip()
+void Gun::equip(Player* player)
 {
-	player_->addAd(ad_);
-	player_->addDistRate(distRate_);
+	player->addAd(ad_);
+	player->addDistRate(distRate_);
 }
 
-void Gun::remove()
+void Gun::remove(Player* player)
 {
-	player_->removeAd(ad_);
-	player_->removeDistRate(distRate_);
+	player->removeAd(ad_);
+	player->removeDistRate(distRate_);
 }

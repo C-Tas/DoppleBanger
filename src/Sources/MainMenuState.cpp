@@ -5,27 +5,29 @@
 #include "SaveLoadState.h"
 #include "Button.h"
 #include "Texture.h"
+
 using namespace std;
+
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
 {
 	//meter botones etc..
+	SDL_Rect playerCollision; playerCollision.x = 0; playerCollision.y = 0; playerCollision.w = 0; playerCollision.h = 0;
+	player_ = new Player(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D(50, 50), Vector2D(100, 100), playerCollision);
+
+	addUpdateList(player_);
+	addRenderList(player_);
+
+#ifdef _DEBUG
+	cout << "\n" << "---------------" << "\n";
 
 	//Comprobaci�n del generador aleatorio de equipamiento
+	//El primer valor es el tipo de equipamiento, y se puede ver en el struct equipType en Equipment.h
 	for (int i = 0; i < 5; i++)
 	{
 		Equipment* equip = app_->genEquip();
-		equip->writeStats();
-		cout << "\n";
+		player_->equip(equip);
 	}
-
-	SDL_Rect playerCollision; playerCollision.x = 0; playerCollision.y = 0; playerCollision.w = 0; playerCollision.h = 0;
-	player_ = new Player(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D(50, 50), Vector2D(100, 100), playerCollision);
-	
-	addUpdateList(player_);
-	addRenderList(player_);
-#ifdef _DEBUG
-	cout << "MainMenuState" << endl;
 #endif // _DEBUG
 
 	//Cargamos un objeto con el fondo(tipo Draw)

@@ -1,14 +1,14 @@
 #include "Sword.h"
 #include "Player.h"
 
-void Sword::equip()
+void Sword::equip(Player* player)
 {
-	player_->addAd(ad_);
-	player_->addMeleeRate(meleeRate_);
+	player->addAd(ad_);
+	player->addMeleeRate(meleeRate_);
 }
 
-void Sword::remove()
+void Sword::remove(Player* player)
 {
-	player_->removeAd(ad_);
-	player_->removeMeleeRate(meleeRate_);
+	player->removeAd(ad_);
+	player->removeMeleeRate(meleeRate_);
 }
