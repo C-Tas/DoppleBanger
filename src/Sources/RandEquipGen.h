@@ -3,16 +3,17 @@
 #include "Equipment.h"
 #include "SRandBasedGenerator.h"
 
-class Application;
+class GameManager;
+
 
 class RandEquipGen
 {
 private:
-	Application* app_ = nullptr;
+	GameManager* gameManager_ = nullptr;
 	SRandBasedGenerator rn_;
 
 public:
-	RandEquipGen(Application* app);
+	RandEquipGen(GameManager* gm);
 	Equipment* genEquip();
 	Equipment* genEquip(equipType type);
 };

@@ -72,8 +72,6 @@ void Application::updateDelta()
 }
 
 void Application::initResources() {
-	//Inicializar generacion aleatoria de objetos
-	equipGen_ = new RandEquipGen(this);
 	//Crear e inicializar textureManager
 	textureManager_ = new TextureManager();
 	textureManager_->init();
@@ -89,5 +87,4 @@ void Application::initResources() {
 void Application::closeResources() {
 	//Faltaría el borrar los recursos que añadiesemos a posteriori
 	delete textureManager_;
-    delete equipGen_;
 }
