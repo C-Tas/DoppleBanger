@@ -19,4 +19,5 @@ struct Stats
 	Stats() {
 		health_, mana_, manaReg_, armor_, ad_, ap_, crit_, moveSpeed_, meleeRate_, distRate_ = 0;
 	}
+	Stats operator=(const Stats& v)const { Stats r; r.health_ = v.health_; r.mana_ = v.mana_; r.manaReg_ = v.manaReg_; r.armor_ = v.armor_; r.ad_ = v.ad_; r.ap_ = v.ap_; r.crit_ = v.crit_; r.moveSpeed_ = v.moveSpeed_; r.meleeRate_ = v.meleeRate_; r.distRate_ = v.distRate_; return r; };
 };
