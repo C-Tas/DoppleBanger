@@ -26,7 +26,7 @@ public:
 	void haltChannel(int channel);
 	//<summary>Cambia el volumen de un canal</summary>
 	int setChannelVolume(int volume, int channel);
-	//<summary>Estadisticas del jugador</summary>
+	//<summary>Devuelve el total de canales</summary>
 	int channels();
 
 	//Música
