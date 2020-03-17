@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -17,6 +16,7 @@ public:
 
 		//Fondos
 		InventaryMenu
+		Scene1, Scene2, Scene3,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

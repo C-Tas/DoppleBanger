@@ -4,6 +4,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Timon, "../Sources/assets/timon.png" },
 	{ TextBox, "../Sources/assets/whiteRectangle.png" },
 	{ InventaryMenu, "../Sources/assets/InventarioFondo.png" }
+	{Scene1, "../Sources/assets/Scene1.png"},
+	{Scene2, "../Sources/assets/Scene2.png"},
+	{Scene3, "../Sources/assets/Scene3.png"},
 	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 };
 
