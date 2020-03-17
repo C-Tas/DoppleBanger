@@ -96,6 +96,7 @@ void Application::initResources() {
 
 void Application::closeResources() {
 	//Faltaría el borrar los recursos que añadiesemos a posteriori
+	delete fontManager_;
 	delete textureManager_;
     delete equipGen_;
 }
