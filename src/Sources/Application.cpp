@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "MainMenuState.h"
 #include "SelectLevelState.h"
+#include "ControlsState.h"
 #include "HandleEvents.h"
 #include <exception>
 
