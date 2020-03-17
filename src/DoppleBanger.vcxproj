@@ -25,6 +25,7 @@
     <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
+    <ClCompile Include="Sources\Collisions.cpp" />
     <ClCompile Include="Sources\ControlsState.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
     <ClCompile Include="Sources\Dynamic.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="Sources\MainMenuState.cpp" />
     <ClCompile Include="Sources\NPC.cpp" />
     <ClCompile Include="Sources\PauseState.cpp" />
+    <ClCompile Include="Sources\Physics.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\PlayState.cpp" />
     <ClCompile Include="Sources\RandEquipGen.cpp" />
@@ -69,6 +71,7 @@
     <ClInclude Include="Sources\checkML.h" />
     <ClInclude Include="Sources\Clon.h" />
     <ClInclude Include="Sources\Collider.h" />
+    <ClInclude Include="Sources\Collisions.h" />
     <ClInclude Include="Sources\ControlsState.h" />
     <ClInclude Include="Sources\CreditsState.h" />
     <ClInclude Include="Sources\Draw.h" />
@@ -81,6 +84,7 @@
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
     <ClInclude Include="Sources\HandleEvents.h" />
+    <ClInclude Include="Sources\Physics.h" />
     <ClInclude Include="Sources\interactuable.h" />
     <ClInclude Include="Sources\InventoryState.h" />
     <ClInclude Include="Sources\Item.h" />
