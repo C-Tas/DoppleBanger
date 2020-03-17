@@ -32,4 +32,5 @@ public:
 	~Player() { texture_ = nullptr; };
 	virtual bool update();
 	virtual void onCollider() {};
+	virtual void stop() { dir_ = Vector2D(0, 0); }
 };

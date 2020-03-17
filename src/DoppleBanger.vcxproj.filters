@@ -44,6 +44,8 @@
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
     <ClCompile Include="Sources\Collisions.cpp" />
     <ClCompile Include="Sources\Physics.cpp" />
+    <ClCompile Include="Sources\TestCollisionState.cpp" />
+    <ClCompile Include="Sources\TestObjectCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -91,5 +93,7 @@
     <ClInclude Include="Sources\VolcanicIslandState.h" />
     <ClInclude Include="Sources\Collisions.h" />
     <ClInclude Include="Sources\Physics.h" />
+    <ClInclude Include="Sources\TestCollisionState.h" />
+    <ClInclude Include="Sources\TestObjectCollider.h" />
   </ItemGroup>
 </Project>

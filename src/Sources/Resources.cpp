@@ -9,7 +9,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Scene1, "../Sources/assets/Scene1.png"},
 	{ Scene2, "../Sources/assets/Scene2.png"},
 	{ Scene3, "../Sources/assets/Scene3.png"},
-	{ TextBox, "../Sources/assets/whiteRectangle.png" }
+	{ TextBox, "../Sources/assets/whiteRectangle.png" },
+	{ Roca, "../Sources/assets/roca.png" }
 	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
 };
 
