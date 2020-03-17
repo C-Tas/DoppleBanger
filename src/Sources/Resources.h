@@ -11,7 +11,12 @@ class Resources
 public:
 	///<summary>Enum para las distintas imagenes del juego</summary>
 	enum TextureId : int {
+		//Objetos
 		Timon,
+		TextBox,
+
+		//Fondos
+		InventaryMenu
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
@@ -21,7 +26,8 @@ public:
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
 	enum FontId : int {
-		RETRO
+		RETRO,
+		RETROSM
 	};
 	
 	///<summary>Struct para la informacion de las imagenes</summary>
@@ -30,7 +36,7 @@ public:
 		string filename;
 	};
 
-	///<summary>Struct para la informacion del sonido</summary>
+	///<summary>Struct para la información del sonido</summary>
 	struct SoundInfo {
 		AudioId audioId;
 		string filename;
@@ -55,9 +61,9 @@ public:
 	///<summary>Vector con las rutas de los audios a cargar</summary>
 	static vector<SoundInfo> soundRoutes;
 
-	///<summary>Vector con las rutas de la m�sica a cargar</summary>
+	///<summary>Vector con las rutas de la música a cargar</summary>
 	static vector<MusicInfo> musicRoutes;
 	
-	///<summary>Vector con las rutas de la m�sica a cargar</summary>
+	///<summary>Vector con las rutas de las fuentes a cargar</summary>
 	static vector<FontInfo> fontsRoutes;
 };
