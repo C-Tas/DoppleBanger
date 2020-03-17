@@ -54,25 +54,24 @@ bool Collisions::PointInRectangle(Vector2D X, Vector2D Y, Vector2D Z, Vector2D W
 }
 
 bool Collisions::PointInTriangle(Vector2D A, Vector2D B, Vector2D C, Vector2D P) {
-
 	//Vértices del triángulo
 	Vector2D v0 = C - A;
 	Vector2D v1 = B - A;
 	Vector2D v2 = P - A;
 
-	// 
+	// Puntos cardinales entre vectores para la operación de cálculos trigonométricos
 	double dot00 = v0 * v0;
 	double dot01 = v0 * v1;
 	double dot02 = v0 * v2;
 	double dot11 = v1 * v1;
 	double dot12 = v1 * v2;
 
-	// Compute barycentric coordinates
+	// Se calculan variables trigonométricas para aplicar posteriormente
+	// las propiedades para la comprobación del punto dentro del triángulo
 	double invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
 	double u = (dot11 * dot02 - dot01 * dot12) * invDenom;
 	double v = (dot00 * dot12 - dot01 * dot02) * invDenom;
 
-	// Check if point is in triangle
 	if (u >= 0 && v >= 0 && (u + v) < 1) {
 		return true;
 	}
@@ -83,17 +82,17 @@ bool Collisions::PointInTriangle(Vector2D A, Vector2D B, Vector2D C, Vector2D P)
 
 bool Collisions::collides(Vector2D o1Pos, double o1Width, double o1Height, Vector2D o2Pos, double o2Width, double o2Height) {
 
-	// o1 completely to the left of o2, or vice versa
+	// Objeto1 a la izquierda o a la derecha  del Objeto2 y viceversa sin colisión
 	if (o1Pos.getX() + o1Width < o2Pos.getX()
 		|| o2Pos.getX() + o2Width < o1Pos.getX()) {
 		return false;
 	}
 
-	// o1 completely to the top of o2, or vice versa
+	// Objeto1 encima o debajo del Objeto2 y viceversa sin colisión
 	if (o1Pos.getY() + o1Height < o2Pos.getY()
 		|| o2Pos.getY() + o2Height < o1Pos.getY()) {
 		return false;
 	}
 
-	return true;
+	return true; //Si no está a la derecha, izquierda, encima o debajo entonces hay colisión
 }
