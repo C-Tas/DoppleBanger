@@ -2,11 +2,9 @@
 #include <SDL_image.h>
 #include <assert.h>
 
-TextureManager::TextureManager() {
-}
+TextureManager::TextureManager() {}
 
 TextureManager::~TextureManager() {
-
 	if (!initialized_)
 		return;
 
@@ -17,7 +15,6 @@ TextureManager::~TextureManager() {
 	}
 
 	IMG_Quit();
-
 }
 
 bool TextureManager::init() {
@@ -25,8 +22,7 @@ bool TextureManager::init() {
 		return false;
 
 	// SDL Image
-	int imgInit_ret = IMG_Init(
-		IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP);
+	int imgInit_ret = IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP);
 	assert(imgInit_ret != 0);
 
 	initialized_ = true;
@@ -49,10 +45,9 @@ bool TextureManager::loadFromImg(std::size_t tag,
 	// if we get here something went wrong
 	return false;
 }
-/*
-bool TextureManager::loadFromText(std::size_t tag,
-	SDL_Renderer* renderer, const string& text, const Font* font,
-	const SDL_Color& color) {
+
+bool TextureManager::loadFromText(std::size_t tag, SDL_Renderer* renderer,
+	const string& text, const Font* font, const SDL_Color& color) {
 
 	if (!initialized_)
 		return false;
@@ -65,8 +60,7 @@ bool TextureManager::loadFromText(std::size_t tag,
 
 	// if we get here something went wrong
 	return false;
-
-}*/
+}
 
 void TextureManager::storeTexture(std::size_t tag, Texture* texture) {
 	Texture* curr = textures_[tag];

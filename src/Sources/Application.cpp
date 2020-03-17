@@ -14,8 +14,6 @@ Application::Application(GameStateMachine* state) {
 }
 
 Application::~Application() {
-	
-
 	delete machine_;
 	closeResources();
 
@@ -72,14 +70,25 @@ void Application::updateDelta()
 void Application::initResources() {
 	//Inicializar generacion aleatoria de objetos
 	equipGen_ = new RandEquipGen(this);
+
 	//Crear e inicializar textureManager
 	textureManager_ = new TextureManager();
 	textureManager_->init();
+
+	//Crear e inicializar fontManager
+	fontManager_ = new FontManager();
+	fontManager_->init();
 
 	//Creacion de las texturas
 	for (auto& image : Resources::imageRoutes) {
 		textureManager_->loadFromImg(image.textureId, renderer_, image.filename);
 		cout << "Creada textura de: " << image.textureId << endl;
+	}
+
+	//Creación de las fuentes
+	for (auto& font : Resources::fontsRoutes) {
+		fontManager_->loadFont(font.id, font.fileName, font.size);
+		cout << "Creada fuente: " << font.id << endl;
 	}
 }
 

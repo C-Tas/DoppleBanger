@@ -29,6 +29,8 @@
     <ClCompile Include="Sources\Dynamic.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
     <ClCompile Include="Sources\Equipment.cpp" />
+    <ClCompile Include="Sources\Font.cpp" />
+    <ClCompile Include="Sources\FontManager.cpp" />
     <ClCompile Include="Sources\GameObject.cpp" />
     <ClCompile Include="Sources\GameState.cpp" />
     <ClCompile Include="Sources\GameStateMachine.cpp" />
@@ -45,11 +47,13 @@
     <ClCompile Include="Sources\RandEquipGen.cpp" />
     <ClCompile Include="Sources\Resources.cpp" />
     <ClCompile Include="Sources\SaveLoadState.cpp" />
+    <ClCompile Include="Sources\SDL_macros.cpp" />
     <ClCompile Include="Sources\SelectLevelState.cpp" />
     <ClCompile Include="Sources\SRandBasedGenerator.cpp" />
     <ClCompile Include="Sources\SpookyIslandState.cpp" />
     <ClCompile Include="Sources\StashState.cpp" />
     <ClCompile Include="Sources\StoryState.cpp" />
+    <ClCompile Include="Sources\TextBoxManager.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
@@ -69,6 +73,8 @@
     <ClInclude Include="Sources\Dynamic.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\Equipment.h" />
+    <ClInclude Include="Sources\Font.h" />
+    <ClInclude Include="Sources\FontManager.h" />
     <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
@@ -84,12 +90,14 @@
     <ClInclude Include="Sources\RandEquipGen.h" />
     <ClInclude Include="Sources\Resources.h" />
     <ClInclude Include="Sources\SaveLoadState.h" />
+    <ClInclude Include="Sources\SDL_macros.h" />
     <ClInclude Include="Sources\SelectLevelState.h" />
     <ClInclude Include="Sources\SRandBasedGenerator.h" />
     <ClInclude Include="Sources\SpookyIslandState.h" />
     <ClInclude Include="Sources\StashState.h" />
     <ClInclude Include="Sources\Stats.h" />
     <ClInclude Include="Sources\StoryState.h" />
+    <ClInclude Include="Sources\TextBoxManager.h" />
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\Trigger.h" />
@@ -173,12 +181,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SDL2_image-2.0.5\include;$(SolutionDir)SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SDL2_image-2.0.5\include;$(SolutionDir)SDL2_ttf-2.0.14\include;$(SolutionDir)SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -207,14 +215,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SDL2_image-2.0.5\include;$(SolutionDir)SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SDL2_image-2.0.5\include;$(SolutionDir)SDL2_ttf-2.0.14\include;$(SolutionDir)SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
