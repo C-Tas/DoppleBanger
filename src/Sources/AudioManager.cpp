@@ -10,6 +10,7 @@ AudioManager::AudioManager(int channels) : initialized_(false), channels_(channe
 AudioManager::~AudioManager() {
 	if (!initialized_) return;
 
+	//Libera los map de la clase
 	for (const auto& pair : chunks_) {
 		if (pair.second != nullptr) Mix_FreeChunk(pair.second);
 	}
