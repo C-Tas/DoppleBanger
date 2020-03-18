@@ -1,7 +1,7 @@
 #include "Resources.h"
 
 vector<Resources::ImageInfo> Resources::imageRoutes{
-	{BotonMenu, "../Sources/assets/botonMenu.png"}
+	{BotonMenu, "../Sources/assets/botonMenu.png"},
 	{ Timon, "../Sources/assets/timon.png" },
 	{ GoControls, "../Sources/assets/botonControles.png"},
 	{ BackButton, "../Sources/assets/volver.png"},
