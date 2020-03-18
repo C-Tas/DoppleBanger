@@ -38,7 +38,7 @@ private:
 	//metodos privados
 	
 	void printInformation() {};
-	void equiparAux(InventoryButton* but);
+	void equiparAux(InventoryButton* &but);
 	
 	
 	

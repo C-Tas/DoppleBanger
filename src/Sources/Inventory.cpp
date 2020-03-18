@@ -1,4 +1,7 @@
 #include "Inventory.h"
+//includes de prueba
+#include "Gloves.h"
+#include "Player.h"
 using namespace std;
 //callbacks
 //void callSelectObject(GameState* state, InventoryButton* button) {
@@ -25,24 +28,36 @@ void callExit(Application* app){
 }
 
 Inventory::Inventory(Application* app) :GameState(app) {
-	deleteButton_ = new Button(app, dynamic_cast<GameState*>(this),app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 600,400 }, Vector2D{ 50,50 },callDeleteObject);
+	deleteButton_ = new Button(app, dynamic_cast<GameState*>(this),app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 50,500 }, Vector2D{ 50,50 },callDeleteObject);
 	addUpdateList(deleteButton_);
 	addRenderList(deleteButton_);
-	equippedButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 300,400 }, Vector2D{ 50,50 },callEquipedObject);
+	equippedButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 50,700 }, Vector2D{ 50,50 },callEquipedObject);
 	addUpdateList(equippedButton_);
 	addRenderList(equippedButton_);
-	advanceButton_ = new Button(app,this,app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 600,100 }, Vector2D{ 50,50 }, callForwardList);
+	advanceButton_ = new Button(app,this,app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 700,100 }, Vector2D{ 50,50 }, callForwardList);
 	addUpdateList(advanceButton_);
 	addRenderList(advanceButton_);
 	gobackButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 500,100 }, Vector2D{ 50,50 }, callBackList);
 	addUpdateList(gobackButton_);
 	addRenderList(gobackButton_);
-	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 1200,100 }, Vector2D{ 50,50 }, callExit);
+	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 1300,100 }, Vector2D{ 50,50 }, callExit);
 	addUpdateList(exitButton_);
 	addRenderList(exitButton_);
 	#ifdef _DEBUG
 	cout << "creamos el objeto" << endl;
-	addToInventory(nullptr);
+	string nombre = "guantes1";
+	string desc = "duantes1";
+	Player* player = nullptr;
+	
+	Gloves* guante0 = new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
+	Gloves* guante1 = new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
+	Gloves* guante2 = new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
+	Gloves* guante3 = new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
+	Gloves* guante4 = new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
+	Gloves* guante5= new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
+	Gloves* guante6= new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
+
+	addToInventory(guante0);
 
 	#endif
 
@@ -54,51 +69,51 @@ void Inventory::selectObject(InventoryButton* ob) {
 }
 
 void Inventory::equippedObj() {
-	////comprobamos si hay un objeto seleccionado
-	//if (sellect_ != nullptr) {
-	//	//comprobamos de que tipo es
-	//	if (typeid(*sellect_->getObject()) == typeid(helmet)) {
-	//		equiparAux(equipment_.helmet_);
-	//	}
-	//	else if (typeid(*sellect_->getObject()) == typeid(boots)) {
-	//		equiparAux(equipment_.boots_);
-	//	}
+	//comprobamos si hay un objeto seleccionado
+	if (select_ != nullptr) {
+		//comprobamos de que tipo es
+		if (typeid(*select_->getObject()) == typeid(Gloves)) {
+			equiparAux(equipment_.gloves_);
+		}
+		/*else if (typeid(*sellect_->getObject()) == typeid(boots)) {
+			equiparAux(equipment_.boots_);
+		}*/
 
-	//	// Una vez Equipado el nuevo objeto, lo activamos y lo eliminamos de la lista
-	//	sellect_->Enable(true);
-	//	sellect_->getObject()->OnEnabled();
-	//	InventoryList_.erase(sellect_->getIterator());
+		// Una vez Equipado el nuevo objeto, lo activamos y lo eliminamos de la lista
+		select_->Enable(true);
+		//select_->getObject()->equip();
+		InventoryList_.erase(select_->getIterator());
 
-	//}
+	}
 
 }
 void Inventory::deleteObj() {
-	////Comprobamos si hay algun elemento seleccionado
-	//if (sellect_ != nullptr) {
-	//	// comprobamos si se trata de un objeto equipado o de uno de la lista
-	//	if (sellect_->isEquipped()) {
-	//		//comprobamos de que tipo es
-	//		if (typeid(*sellect_->getObject()) == typeid(helmet)) {
-	//			equipment_.helmet_ = nullptr;
-	//			
-	//		}
-	//		//etc aun no existe ningun objeto
+	//Comprobamos si hay algun elemento seleccionado
+	if (select_ != nullptr) {
+		// comprobamos si se trata de un objeto equipado o de uno de la lista
+		if (select_->isEquipped()) {
+			//comprobamos de que tipo es
+			if (typeid(*select_->getObject()) == typeid(Gloves)) {
+				equipment_.gloves_ = nullptr;
+			}
 
-	//		
-	//	}
-	//	//lo borramos de la lista
-	//	else {InventoryList_.erase(sellect_->getIterator());}
-	//	//Eliminamos el objeto
-	//	delete sellect_;
-	//	sellect_ = nullptr;
-	//}
+			//etc aun no existe ningun objeto
+
+			
+		}
+		//lo borramos de la lista
+		else {InventoryList_.erase(select_->getIterator());}
+		//Eliminamos el objeto
+		delete select_;
+		select_ = nullptr;
+	}
 }
 
 void Inventory::addToInventory(Equipment* ob) {
 	//creamos un boton
 	InventoryButton* b = new InventoryButton(app_,this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 300,400 }, Vector2D{ 50,50 },ob, callSelectObject);
 	//le asignamos al objeto su boton
-	//ob->setButton(b);
+	ob->setButton(b);
 	//Añadimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = InventoryList_.insert(InventoryList_.end(), b);
 	b->setIterator(it);
@@ -111,11 +126,11 @@ void Inventory::addToInventory(Equipment* ob) {
 }
 
 // este metodo desequipa el objeto si esta equipado y equipa el nuevo objeto
-void Inventory::equiparAux(InventoryButton* but) {
+void Inventory::equiparAux(InventoryButton* &but) {
 	//Si ya hay un objeto equipado
-	/*if (but != nullptr) {
+	if (but != nullptr) {
 	//desequipamos el objeto actual
-		but->getObject()->OnDisabled();
+		//but->getObject()->remove();
 		but->Enable(false);
 		InventoryButton* aux = but;
 		//El objeto desequipado lo devolvemos al final de la lista
@@ -123,7 +138,7 @@ void Inventory::equiparAux(InventoryButton* but) {
 		aux->setIterator(it);
 	}
 	//equipamos el nuevo objeto
-	but= select_; */
+	but= select_; 
 }
 
 //boton que avanza en la lista para mostrar los siguientes elementos, en este caso avazara el iterador
@@ -140,7 +155,7 @@ void Inventory::forwardList() {
 void Inventory::backList() {
 	int aux = advanced;
 	aux -= 1;
-	if ((aux * VIEW_LIST) <= 1) {
+	if ((aux * VIEW_LIST) >= 1) {
 		advanced = aux;
 		advance(ListPos, -VIEW_LIST);//retrocedemos el iterador
 	}
@@ -148,38 +163,45 @@ void Inventory::backList() {
 }
 
 void Inventory::draw()const {
-#ifdef _DEBUG
-	cout << "entramos en draw" << endl;
-#endif
+//#ifdef _DEBUG
+//	cout << "entramos en draw" << endl;
+//#endif
 	GameState::draw();//dibujamos todos los botones normales
 	//Despues dibujaremos SOLO los botones de la lista que salen por pantalla
-	list<InventoryButton*>::iterator aux = ListPos;
-	InventoryButton* auxOb = nullptr;
-	// posiciones estandar de los botones
-	int x = 900; 
-	int y = 100;
-	int i = 0;
-	//dibujamos los objetos de la primera columna
-	while (i < VIEW_LIST/2 && aux != InventoryList_.end()) {
-#ifdef _DEBUG
-		cout << "entramos en el bucle" << endl;
-#endif
-		auxOb = *aux;
-		auxOb->setPos(Vector2D{ double(x),double(y + (i * 100)) });
-		auxOb->draw();//desreferenciamos el puntero
-		aux++;
-		i++;
+	if (!InventoryList_.empty()) {
+		list<InventoryButton*>::iterator aux = ListPos;
+		InventoryButton* auxOb = nullptr;
+		// posiciones estandar de los botones
+		int x = 700;
+		int y = 200;
+		int i = 0;
+		//dibujamos los objetos de la primera columna
+		while (i < VIEW_LIST / 2 && aux != InventoryList_.end()) {
+			//#ifdef _DEBUG
+			//		cout << "entramos en el bucle" << endl;
+			//#endif
+			auxOb = *aux;
+			auxOb->setPos(Vector2D{ double(x),double(y + (i * 100)) });
+			auxOb->draw();//desreferenciamos el puntero
+			aux++;
+			i++;
+		}
+		//dibujamos los objetos de la segunda colmna
+		int j = 0;
+		while (j < VIEW_LIST / 2 && aux != InventoryList_.end()) {
+			auxOb = *aux;
+			auxOb->setPos(Vector2D{ double(x + 100),double(y + (i * 100)) });
+			auxOb->draw();//desreferenciamos el puntero
+			aux++;
+			j++;
+		}
 	}
-	//dibujamos los objetos de la segunda colmna
-	int j = 0;
-	while (j < VIEW_LIST / 2 && aux != InventoryList_.end()) {
-		auxOb = *aux;
-		auxOb->setPos(Vector2D{ double(x + 100),double(y + (i * 100)) });
-		auxOb->draw();//desreferenciamos el puntero
-		aux++;
-		j++;
-	}
+	
 
+	if (equipment_.gloves_ != nullptr) {
+		equipment_.gloves_->setPos(Vector2D{ 500.0,500.0 });
+		equipment_.gloves_->draw();
+	}
 	//todos los botones...
 	
 
@@ -200,7 +222,26 @@ void Inventory::update() {
 			i++;
 		}
 	}
-	//todos los botones...
+	if (equipment_.gloves_ != nullptr) {
+		equipment_.gloves_->update();
+	}
+	if (equipment_.armor_ != nullptr) {
+		equipment_.armor_->update();
+	}
+	if (equipment_.boots_ != nullptr) {
+		equipment_.boots_->update();
+	}
+	if (equipment_.gun_ != nullptr) {
+		equipment_.gun_->update();
+	}
+	if (equipment_.helmet_ != nullptr) {
+		equipment_.helmet_->update();
+	}
+	if (equipment_.sword_ != nullptr) {
+		equipment_.sword_->update();
+	}
+
+	
 
 }
 
