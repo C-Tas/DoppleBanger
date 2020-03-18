@@ -10,7 +10,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Scene2, "../Sources/assets/Scene2.png"},
 	{ Scene3, "../Sources/assets/Scene3.png"},
 	{ TextBox, "../Sources/assets/whiteRectangle.png" }
-	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
+    ,{Dragon,"../Sources/assets/dragon.png"}
+	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{

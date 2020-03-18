@@ -21,9 +21,10 @@ public:
 		Scene1,
 		Scene2,
 		Scene3,
-		TextBox
+		TextBox,
 
 		//Personajes
+		Dragon
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
