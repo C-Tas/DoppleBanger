@@ -42,6 +42,7 @@
     <ClCompile Include="Sources\SDL_macros.cpp" />
     <ClCompile Include="Sources\TextBoxManager.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
+    <ClCompile Include="Sources\AudioManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -87,5 +88,6 @@
     <ClInclude Include="Sources\SDL_macros.h" />
     <ClInclude Include="Sources\TextBoxManager.h" />
     <ClInclude Include="Sources\Clon.h" />
+    <ClInclude Include="Sources\AudioManager.h" />
   </ItemGroup>
 </Project>
