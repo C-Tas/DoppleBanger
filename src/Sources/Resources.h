@@ -12,6 +12,8 @@ public:
 	enum TextureId : int {
 		//Botones
 		Timon,
+		BotonMenu,
+		//Botones
 		GoControls,
 		BackButton,
 		Controls,
