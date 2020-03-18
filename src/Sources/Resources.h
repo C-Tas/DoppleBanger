@@ -24,6 +24,7 @@ public:
 		TextBox
 
 		//Personajes
+		Timon,Dragon
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
