@@ -5,6 +5,7 @@
 #include <list>
 #include "Equipment.h"
 #include "RandEquipGen.h"
+#include "Vector2D.h"
 
 
 using namespace std;
@@ -30,8 +31,11 @@ enum class spentPoints : int {
 	 Ghost
 };
 
+
 class GameManager {
 private:
+	//Numero de misiones secundarias
+	static const int NUM_MISION = 10;
 	//Puntero unico para evitar copias
 	static unique_ptr<GameManager> instance_;
 	//Cantidad de oro que genera en un nivel
@@ -52,11 +56,16 @@ private:
 	list<Item>* stash_ = nullptr;
 	///<summary>Generador de randoms</summary>
 	RandEquipGen equipGen_ = RandEquipGen(this);
+	//Vector que representa las misiones secundarias
+	vector<bool> secMission = vector<bool>(NUM_MISION);
 	//Pendiente de guardar y cargar
 public:
 	//Constructor vacío
 	GameManager() {
 		currIsland_ = Island::CaribeanA;
+		for (int i = 0; i < NUM_MISION; i++) {
+			secMission[i] = false;
+		}
 	}
 	//Destructor
 	~GameManager() {
@@ -95,6 +104,8 @@ public:
 	const spentPoints getMeleePoints() { return melee_; };
 	//Devuelve los puntos gastados en la rama fantasma
 	const spentPoints getGhostPoints() { return ghost_; };
+	//Devuelve true si la misión ha sido pasada
+	const bool isThatMissionPass(int mission) { return secMission[mission]; };
 #pragma endregion
 
 #pragma region setters
@@ -111,6 +122,8 @@ public:
 	inline void setMeleePoints(int value) { melee_ = (spentPoints)value; };
 	//Asigna los puntos gastados a la rama Ghost
 	inline void setGhostPoints(int value) { ghost_ = (spentPoints)value; };
+	//Desbloquea una misión secundaria
+	inline void setSecMission(int mission) { secMission[mission] = true; };
 #pragma endregion
 };
 
