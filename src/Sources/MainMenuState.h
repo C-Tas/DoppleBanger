@@ -26,4 +26,7 @@ public:
 	static void goLoadState(Application* app);
 	///<summary>Nos lleva al estado Story</summary>
 	static void goStoryState(Application* app);
+
+	//BORRAR
+	static void goSkillState(Application* app);
 };

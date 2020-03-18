@@ -5,6 +5,14 @@
 #include "SaveLoadState.h"
 #include "Button.h"
 #include "Texture.h"
+<<<<<<< Updated upstream
+=======
+#include "SDL_macros.h"
+
+//BORRAR
+#include "SkillState.h"
+
+>>>>>>> Stashed changes
 using namespace std;
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
@@ -49,6 +57,11 @@ void MainMenuState::createButtons() {
 	Button* b3 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 150,150 }, { 50,50 }, goStoryState);
 	gameObjects_.push_back(b3);
 	objectsToRender_.push_back(b3);
+
+	//BORRAR
+	Button* b4 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 600,600 }, { 50,50 }, goSkillState);
+	gameObjects_.push_back(b4);
+	objectsToRender_.push_back(b4);
 #ifdef _DEBUG
 	cout << "creados los botones correctamente"<<endl;
 #endif
@@ -66,5 +79,10 @@ void MainMenuState::goLoadState(Application* app) {
 };
 void MainMenuState::goStoryState(Application* app) {
 	app->getStateMachine()->pushState(new StoryState(app));
+};
+
+//BORRAR
+void MainMenuState::goSkillState(Application* app) {
+	app->getStateMachine()->pushState(new SkillState(app));
 };
 #pragma endregion

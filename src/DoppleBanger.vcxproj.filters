@@ -38,6 +38,12 @@
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="Sources\AudioManager.cpp" />
+    <ClCompile Include="Sources\GameManager.cpp" />
+    <ClCompile Include="Sources\SkillState.cpp" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -79,5 +85,12 @@
     <ClInclude Include="Sources\VolcanicIslandState.h" />
     <ClInclude Include="Sources\checkML.h" />
     <ClInclude Include="Sources\Clon.h" />
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="Sources\SDL_macros.h" />
+    <ClInclude Include="Sources\TextBoxManager.h" />
+    <ClInclude Include="Sources\GameManager.h" />
+    <ClInclude Include="Sources\SkillState.h" />
+>>>>>>> Stashed changes
   </ItemGroup>
 </Project>

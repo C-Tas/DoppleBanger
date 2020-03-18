@@ -87,5 +87,5 @@ void Application::initResources() {
 void Application::closeResources() {
 	//Faltaría el borrar los recursos que añadiesemos a posteriori
 	delete textureManager_;
-    delete equipGen_;
+    //delete equipGen_;
 }
