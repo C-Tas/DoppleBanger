@@ -11,7 +11,7 @@ Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine(); //Creación máquina de estados
-	GameState* startState = /*new MainMenuState(this)*/new VolcanicIslandState(this);
+	GameState* startState = new MainMenuState(this);
 	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
 }
 
@@ -96,5 +96,5 @@ void Application::initResources() {
 void Application::closeResources() {
 	//Faltaría el borrar los recursos que añadiesemos a posteriori
 	delete textureManager_;
-    delete equipGen_;
+	delete fontManager_;
 }
