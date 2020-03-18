@@ -21,13 +21,7 @@ private:
 
 	///<summary>Manager que gestiona las texturas </summary>
 	TextureManager* textureManager_ = nullptr;
-
-	///<summary>Manager que gestiona las fuentes de texto </summary>
 	FontManager* fontManager_ = nullptr;
-
-	///<summary>Generador de randoms</summary>
-	RandEquipGen* equipGen_ = nullptr;
-	
 	///<summary>Variables que controla el fin del bucle principal de app</summary>
 	bool appClosed_ = false;
 
@@ -50,10 +44,6 @@ private:
 	///<summary>Tiempo que ha pasado entre el frame actual y el anterior </summary>
 	double deltaTime_;
 	void updateDelta();
-
-	///<summary>Area en la que se encuentra el jugador (1 - 3 -> primera isla, 4 - 6 -> segunda isla)</summary>
-	///<summary>Esto deberia ir en el GameManager</summary>
-	int currArea_ = 1;
 
 public:
 	///<summary>Construtora de la app</summary>
@@ -84,17 +74,12 @@ public:
 	GameStateMachine* getGameStateMachine() { return machine_; };
 	///<summary>Devuelve el tiempo que ha pasado entre el frame actual y el anterior </summary>
 	double getDeltaTime() { return deltaTime_; }
-	///<summary>Frame actual </summary>
-	int getCurrArea() { return currArea_; }; //Mover a GameManager cuando tengamos
 	///<summary>Devuelve el texture manager</summary>
 	TextureManager* getTextureManager() { return textureManager_; };
 	///<summary>Devuelve el font manager</summary>
 	FontManager* getFontManager() { return fontManager_; };
 
-	///<summary>Devuelve el generador de equipamiento aleatorio </summary>
-	Equipment* genEquip() { return equipGen_->genEquip(); };
-	///<summary>Devuelve un objeto del tipo type generado aleatoriamente</summary>
-	Equipment* genEquip(equipType type) { return equipGen_->genEquip(type); };
+
 #pragma endregion
 
 	

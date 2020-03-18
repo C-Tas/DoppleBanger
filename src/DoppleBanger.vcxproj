@@ -33,6 +33,7 @@
     <ClCompile Include="Sources\Equipment.cpp" />
     <ClCompile Include="Sources\Font.cpp" />
     <ClCompile Include="Sources\FontManager.cpp" />
+    <ClCompile Include="Sources\GameManager.cpp" />
     <ClCompile Include="Sources\GameObject.cpp" />
     <ClCompile Include="Sources\GameState.cpp" />
     <ClCompile Include="Sources\GameStateMachine.cpp" />
@@ -77,8 +78,6 @@
     <ClInclude Include="Sources\Dynamic.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\Equipment.h" />
-    <ClInclude Include="Sources\Font.h" />
-    <ClInclude Include="Sources\FontManager.h" />
     <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />

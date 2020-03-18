@@ -4,6 +4,7 @@
 #include "ControlsState.h"
 #include "HandleEvents.h"
 #include <exception>
+#include "GameManager.h"
 
 Application::Application(GameStateMachine* state) {
 	
@@ -45,6 +46,7 @@ void Application::initSDL() {
 
 void Application::runApp() {
 	HandleEvents* input = HandleEvents::instance();
+	GameManager::instance();
 	while (!appClosed_) {
 		SDL_RenderClear(renderer_); //Clear
 		updateDelta(); //Actualizamos deltaTime
@@ -69,9 +71,6 @@ void Application::updateDelta()
 }
 
 void Application::initResources() {
-	//Inicializar generacion aleatoria de objetos
-	equipGen_ = new RandEquipGen(this);
-
 	//Crear e inicializar textureManager
 	textureManager_ = new TextureManager();
 	textureManager_->init();
@@ -97,6 +96,5 @@ void Application::initResources() {
 void Application::closeResources() {
 	//Faltaría el borrar los recursos que añadiesemos a posteriori
 	delete textureManager_;
-	delete fontManager_;
     delete equipGen_;
 }
