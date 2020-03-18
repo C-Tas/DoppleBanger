@@ -79,6 +79,10 @@ void Application::initResources() {
 	fontManager_ = new FontManager();
 	fontManager_->init();
 
+	//Crear e inicializar audioManager
+	audioManager_ = new AudioManager();
+	audioManager_->init();
+
 	//Creacion de las texturas
 	for (auto& image : Resources::imageRoutes) {
 		textureManager_->loadFromImg(image.textureId, renderer_, image.filename);
@@ -89,6 +93,22 @@ void Application::initResources() {
 	for (auto& font : Resources::fontsRoutes) {
 		fontManager_->loadFont(font.id, font.fileName, font.size);
 		cout << "Creada fuente: " << font.id << endl;
+	}
+
+	//Creación de mensajes
+	for (auto& txtmsg : Resources::messages_) {
+		textureManager_->loadFromText(txtmsg.id, renderer_, txtmsg.msg,
+			fontManager_->getFont(txtmsg.fontId), txtmsg.color);
+	}
+
+	//Creación de los efectos de sonido
+	for (auto& sound : Resources::soundRoutes) {
+		audioManager_->loadSound(sound.audioId, sound.filename);
+	}
+
+	//Creación de la música
+	for (auto& music : Resources::musicRoutes) {
+		audioManager_->loadMusic(music.id, music.fileName);
 	}
 }
 

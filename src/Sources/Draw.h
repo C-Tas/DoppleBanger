@@ -43,11 +43,27 @@ protected:
 	virtual ~Draw() {}; //Destructora de Draw
 
 public:
+	//Para construir un background
+	Draw(Application* app, Texture* texture) : GameObject(app, Vector2D(0, 0),
+		Vector2D(app->getWindowWidth(), app->getWindowHeight()))
+		, texture_(texture) {
+		frame_ = SDL_Rect({ 0, 0, (int)scale_.getX(), (int)scale_.getY() });
+		destiny_ = SDL_Rect({ 0,0,0,0 });
+	};
+	//Para construir un texto
+	Draw(Application* app, Texture* texture, SDL_Rect dest)
+		:GameObject(app, Vector2D({ (double)dest.x, (double)dest.y }), 
+			Vector2D({ (double)dest.w,(double)dest.h })), texture_(texture) {
+		destiny_ = SDL_Rect({ 0,0,0,0 });
+		frame_ = SDL_Rect({ 0, 0, (int)scale_.getX(), (int)scale_.getY() });
+	};
+
 	//<metodo comun para renderizar tanto imagenes con un solo frame como con varios"
 	const virtual void draw() {
 		if (numberFrames_ <= 0) texture_->render(getDestiny(), SDL_FLIP_NONE); else {
 			texture_->render(getDestiny(), frame_); }};
 	//<summary>cambia el frame </summary>
+	virtual bool update() { return false; };
 	virtual void updateFrame() { frame_.x = (frame_.x + frame_.w) % (numberFrames_*frame_.w); };
 	//Devuelve la posicion "visual" del objeto
 	//Cuando se mueva un objeto no se mira su posicion superior izquierda, sino sus pies.

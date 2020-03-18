@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <SDL.h>
 
 using namespace std;
 
@@ -24,14 +25,23 @@ public:
 		Scene2,
 		Scene3,
 		TextBox,
+		MenuFondo,
 
 		//Personajes
-		Dragon
+		Dragon,
+		
+		//Textos
+		PlayText,
+		ExitText,
+		ControlsText,
+		LoadText,
+		CreditsText
+
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
 	enum AudioId : int{
-		
+		MainTheme
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
@@ -65,6 +75,14 @@ public:
 		int size;
 	};
 
+	//Struct para definir los textos
+	struct TextMsgInfo {
+		TextureId id;
+		string msg;
+		SDL_Color color;
+		FontId fontId;
+	};
+
 	///<summary>Vector con las rutas de las imagenes a cargar</summary>
 	static vector<ImageInfo> imageRoutes;
 
@@ -76,4 +94,7 @@ public:
 	
 	///<summary>Vector con las rutas de las fuentes a cargar</summary>
 	static vector<FontInfo> fontsRoutes;
+
+	//Vector con los textos
+	static vector<TextMsgInfo> messages_; // initialized in .cpp
 };

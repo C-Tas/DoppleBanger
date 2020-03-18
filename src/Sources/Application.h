@@ -5,7 +5,10 @@
 #include "RandEquipGen.h"
 #include "TextureManager.h"
 #include "FontManager.h"
+#include "AudioManager.h"
 #include "checkML.h"
+
+
 using namespace std;
 
 class Application
@@ -22,6 +25,8 @@ private:
 	///<summary>Manager que gestiona las texturas </summary>
 	TextureManager* textureManager_ = nullptr;
 	FontManager* fontManager_ = nullptr;
+	//Manager que gestiona los música y sonidos
+	AudioManager* audioManager_ = nullptr;
 	///<summary>Variables que controla el fin del bucle principal de app</summary>
 	bool appClosed_ = false;
 
@@ -78,7 +83,8 @@ public:
 	TextureManager* getTextureManager() { return textureManager_; };
 	///<summary>Devuelve el font manager</summary>
 	FontManager* getFontManager() { return fontManager_; };
-
+	//Devuelve el audioManager
+	AudioManager* getAudioManager() { return audioManager_; };
 
 #pragma endregion
 
