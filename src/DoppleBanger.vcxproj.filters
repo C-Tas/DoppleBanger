@@ -40,8 +40,8 @@
     <ClCompile Include="Sources\Font.cpp" />
     <ClCompile Include="Sources\FontManager.cpp" />
     <ClCompile Include="Sources\SDL_macros.cpp" />
-    <ClCompile Include="Sources\TextBoxManager.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -85,7 +85,7 @@
     <ClInclude Include="Sources\Font.h" />
     <ClInclude Include="Sources\FontManager.h" />
     <ClInclude Include="Sources\SDL_macros.h" />
-    <ClInclude Include="Sources\TextBoxManager.h" />
     <ClInclude Include="Sources\Clon.h" />
+    <ClInclude Include="Sources\TextBox.h" />
   </ItemGroup>
 </Project>
