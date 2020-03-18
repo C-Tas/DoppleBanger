@@ -5,7 +5,7 @@
 using namespace std;
 struct Equipments
 {
-	InventoryButton* helmet_ = nullptr;
+	
 	InventoryButton* armor_ = nullptr;
 	InventoryButton* boots_ = nullptr;
 	InventoryButton* gloves_ = nullptr;
@@ -44,6 +44,7 @@ private:
 	
 public:
 	Inventory(Application* app = nullptr);
+	virtual ~Inventory() {};
 	void addToInventory(Equipment* ob);
 	virtual void draw() const;//Métodos que faltan por definir y por eso dan fallo de link
 	virtual void update();//Métodos que faltan por definir y por eso dan fallo de link
@@ -52,11 +53,6 @@ public:
 	void deleteObj();
 	void forwardList();
 	void backList();
-	
-	
-
-	
-
 	
 
 };

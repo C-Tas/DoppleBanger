@@ -1,6 +1,7 @@
 #include "Inventory.h"
+#include "Equipment.h"
 //includes de prueba
-#include "Gloves.h"
+//#include "Gloves.h"
 #include "Player.h"
 using namespace std;
 //callbacks
@@ -43,6 +44,7 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 1300,100 }, Vector2D{ 50,50 }, callExit);
 	addUpdateList(exitButton_);
 	addRenderList(exitButton_);
+
 	#ifdef _DEBUG
 	cout << "creamos el objeto" << endl;
 	string nombre = "guantes1";
@@ -58,6 +60,12 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	Gloves* guante6= new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
 
 	addToInventory(guante0);
+	addToInventory(guante1);
+	addToInventory(guante2);
+	addToInventory(guante3);
+	addToInventory(guante4);
+	addToInventory(guante5);
+	addToInventory(guante6);
 
 	#endif
 
@@ -75,13 +83,22 @@ void Inventory::equippedObj() {
 		if (typeid(*select_->getObject()) == typeid(Gloves)) {
 			equiparAux(equipment_.gloves_);
 		}
-		/*else if (typeid(*sellect_->getObject()) == typeid(boots)) {
+		else if (typeid(*select_->getObject()) == typeid(Armor)) {
+			equiparAux(equipment_.armor_);
+		}
+		else if (typeid(*select_->getObject()) == typeid(Sword)) {
+			equiparAux(equipment_.sword_);
+		}
+		else if (typeid(*select_->getObject()) == typeid(Boots)) {
 			equiparAux(equipment_.boots_);
-		}*/
-
+		}
+		else if (typeid(*select_->getObject()) == typeid(Gun)) {
+			equiparAux(equipment_.gun_);
+		}
+		
 		// Una vez Equipado el nuevo objeto, lo activamos y lo eliminamos de la lista
 		select_->Enable(true);
-		//select_->getObject()->equip();
+		select_->getObject()->equip();
 		InventoryList_.erase(select_->getIterator());
 
 	}
@@ -96,10 +113,19 @@ void Inventory::deleteObj() {
 			if (typeid(*select_->getObject()) == typeid(Gloves)) {
 				equipment_.gloves_ = nullptr;
 			}
+			else if (typeid(*select_->getObject()) == typeid(Armor)) {
+				equipment_.armor_ = nullptr;
+			}
+			else if (typeid(*select_->getObject()) == typeid(Sword)) {
+				equipment_.sword_ = nullptr;
+			}
+			else if (typeid(*select_->getObject()) == typeid(Boots)) {
+				equipment_.boots_ = nullptr;
+			}
+			else if (typeid(*select_->getObject()) == typeid(Gun)) {
+				equipment_.gun_ = nullptr;
+			}
 
-			//etc aun no existe ningun objeto
-
-			
 		}
 		//lo borramos de la lista
 		else {InventoryList_.erase(select_->getIterator());}
@@ -130,7 +156,7 @@ void Inventory::equiparAux(InventoryButton* &but) {
 	//Si ya hay un objeto equipado
 	if (but != nullptr) {
 	//desequipamos el objeto actual
-		//but->getObject()->remove();
+		but->getObject()->remove();
 		but->Enable(false);
 		InventoryButton* aux = but;
 		//El objeto desequipado lo devolvemos al final de la lista
@@ -155,7 +181,7 @@ void Inventory::forwardList() {
 void Inventory::backList() {
 	int aux = advanced;
 	aux -= 1;
-	if ((aux * VIEW_LIST) >= 1) {
+	if ((aux * VIEW_LIST) >= 0) {
 		advanced = aux;
 		advance(ListPos, -VIEW_LIST);//retrocedemos el iterador
 	}
@@ -190,7 +216,7 @@ void Inventory::draw()const {
 		int j = 0;
 		while (j < VIEW_LIST / 2 && aux != InventoryList_.end()) {
 			auxOb = *aux;
-			auxOb->setPos(Vector2D{ double(x + 100),double(y + (i * 100)) });
+			auxOb->setPos(Vector2D{ double(x + 100),double(y + (j * 100)) });
 			auxOb->draw();//desreferenciamos el puntero
 			aux++;
 			j++;
@@ -234,9 +260,7 @@ void Inventory::update() {
 	if (equipment_.gun_ != nullptr) {
 		equipment_.gun_->update();
 	}
-	if (equipment_.helmet_ != nullptr) {
-		equipment_.helmet_->update();
-	}
+	
 	if (equipment_.sword_ != nullptr) {
 		equipment_.sword_->update();
 	}
