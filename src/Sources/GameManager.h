@@ -5,7 +5,7 @@
 #include <list>
 #include "Equipment.h"
 #include "RandEquipGen.h"
-#include "Vector2D.h"
+#include <vector>
 
 
 using namespace std;
@@ -29,6 +29,11 @@ enum class spentPoints : int {
 	 Precision = 1,
 	 Melee,
 	 Ghost
+};
+
+enum class missions : int {
+	nombreMision = 0,
+	//Poner aqui nombre de las misiones
 };
 
 
@@ -56,15 +61,17 @@ private:
 	list<Item>* stash_ = nullptr;
 	///<summary>Generador de randoms</summary>
 	RandEquipGen equipGen_ = RandEquipGen(this);
-	//Vector que representa las misiones secundarias
-	vector<bool> secMission = vector<bool>(NUM_MISION);
+	//Vector que representa las misiones secundarias completadas
+	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
+	//Vector que representa las misiones secundarias empezadas
+	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
 	//Pendiente de guardar y cargar
 public:
 	//Constructor vacío
 	GameManager() {
 		currIsland_ = Island::CaribeanA;
 		for (int i = 0; i < NUM_MISION; i++) {
-			secMission[i] = false;
+			missionsComplete[i] = false;
 		}
 	}
 	//Destructor
@@ -105,7 +112,9 @@ public:
 	//Devuelve los puntos gastados en la rama fantasma
 	const spentPoints getGhostPoints() { return ghost_; };
 	//Devuelve true si la misión ha sido pasada
-	const bool isThatMissionPass(int mission) { return secMission[mission]; };
+	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };
+	//Devuelve true si la misión está empezada
+	const bool isThatMissionStarted(missions mission) { return missionsStarted[(int)mission]; };
 #pragma endregion
 
 #pragma region setters
@@ -122,8 +131,10 @@ public:
 	inline void setMeleePoints(int value) { melee_ = (spentPoints)value; };
 	//Asigna los puntos gastados a la rama Ghost
 	inline void setGhostPoints(int value) { ghost_ = (spentPoints)value; };
-	//Desbloquea una misión secundaria
-	inline void setSecMission(int mission) { secMission[mission] = true; };
+	//Completa una misión secundaria
+	inline void setCompleteMission(missions mission) { missionsComplete[(int)mission] = true; };
+	//Empieza una misión secundaria
+	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
 #pragma endregion
 };
 

@@ -78,6 +78,7 @@
     <ClInclude Include="Sources\Dynamic.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\Equipment.h" />
+    <ClInclude Include="Sources\GameManager.h" />
     <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
