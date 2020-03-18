@@ -3,7 +3,7 @@
 #include "TextBox.h"
 
 class NPC : public Collider {
-protected:
+private:
 	TextBox txtBox;
 public:
 	NPC(Application* app, SDL_Rect collisionArea, Texture* texture, Point2D pos, Vector2D scale) :
@@ -15,5 +15,7 @@ public:
 
 	///<summary>Lleva la animación del NPC</summary>
 	virtual bool update() { /**/ return false; };
+	///<summary>Renderiza la animación idle del NPC</summary>
+	virtual void draw() const { texture_->render(destiny_, frame_); };
 	virtual void onCollider() {};
 };
