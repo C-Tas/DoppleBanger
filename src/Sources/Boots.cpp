@@ -1,14 +1,14 @@
 #include "Boots.h"
 #include "Player.h"
 
-void Boots::equip()
+void Boots::equip(Player* player)
 {
-	player_->addMoveSpeed(speed_);
-	player_->addArmor(armor_);
+	player->addMoveSpeed(speed_);
+	player->addArmor(armor_);
 }
 
-void Boots::remove()
+void Boots::remove(Player* player)
 {
-	player_->removeMoveSpeed(speed_);
-	player_->removeArmor(armor_);
+	player->removeMoveSpeed(speed_);
+	player->removeArmor(armor_);
 }

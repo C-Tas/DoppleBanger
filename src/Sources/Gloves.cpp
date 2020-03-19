@@ -1,14 +1,14 @@
 #include "Gloves.h"
 #include "Player.h"
 
-void Gloves::equip()
+void Gloves::equip(Player* player)
 {
-	player_->addCrit(crit_);
-	player_->addArmor(armor_);
+	player->addCrit(crit_);
+	player->addArmor(armor_);
 }
 
-void Gloves::remove()
+void Gloves::remove(Player* player)
 {
-	player_->removeCrit(crit_);
-	player_->removeArmor(armor_);
+	player->removeCrit(crit_);
+	player->removeArmor(armor_);
 }

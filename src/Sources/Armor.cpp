@@ -1,14 +1,14 @@
 #include "Armor.h"
 #include "Player.h"
 
-void Armor::equip()
+void Armor::equip(Player* player)
 {
-	player_->addHealth(health_);
-	player_->addArmor(armor_);
+	player->addHealth(health_);
+	player->addArmor(armor_);
 }
 
-void Armor::remove()
+void Armor::remove(Player* player)
 {
-	player_->removeHealth(health_);
-	player_->removeArmor(armor_);
+	player->removeHealth(health_);
+	player->removeArmor(armor_);
 }

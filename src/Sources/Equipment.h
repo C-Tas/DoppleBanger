@@ -25,11 +25,11 @@ public:
 		Item(texture, name, desc, price, 1), type_(type) { };
 	virtual ~Equipment() {}; //Destructora generica
 
-
 	InventoryButton* getButton() { return inventoryButton_; }
 	void setButton(InventoryButton* but) { inventoryButton_ = but; }
-	virtual void equip() = 0;
-	virtual void remove() = 0;
+
+	virtual void equip(Player* player) = 0;
+	virtual void remove(Player* player) = 0;
 	virtual void writeStats() = 0;
 
 };

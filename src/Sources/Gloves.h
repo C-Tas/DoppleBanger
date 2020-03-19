@@ -6,20 +6,19 @@ class Gloves : public Equipment
 {
 private:
 	equipType type_;
-	Player* player_ = nullptr;
 	int crit_ = 0;
 	int armor_ = 0;
 
 public:
-	Gloves(Player* player, Texture* texture, string name, string desc, double price, int crit, int armor, equipType type) :
-		Equipment(texture, name, desc, price, type), player_(player), crit_(crit), armor_(armor), type_(type) {};
+	Gloves(Texture* texture, string name, string desc, double price, int crit, int armor) :
+		Equipment(texture, name, desc, price, Gloves_), crit_(crit), armor_(armor), type_(Gloves_) {};
 	virtual ~Gloves() {};
 
 	//Equipar dicho equipamiento
-	virtual void equip();
+	virtual void equip(Player* player);
 
 	//Desequiparlo y perder sus stats
-	virtual void remove();
+	virtual void remove(Player* player);
 
 	virtual void writeStats() {
 		std::cout << type_ << "\n";
