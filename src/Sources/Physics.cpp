@@ -103,7 +103,10 @@ namespace Physics
 	bool RectRect(float _rx1, float _ry1, float _rw1, float _rh1, float _rx2, float _ry2, float _rw2, float _rh2)
 	{
 		//probamos
-		if (_rx1 + _rw1 / 2 >= _rx2 - _rw2 / 2 && _rx1 - _rw1 / 2 <= _rx2 + _rw2 / 2 && _ry1 + _rh1 / 2 >= _ry2 - _rh2 / 2 && _ry1 - _rh1 / 2 <= _ry2 + _rh2 / 2)
+		if (_rx1 + _rw1 / 2 >= _rx2 - _rw2 / 2 && 
+			_rx1 - _rw1 / 2 <= _rx2 + _rw2 / 2 && 
+			_ry1 + _rh1 / 2 >= _ry2 - _rh2 / 2 &&
+			_ry1 - _rh1 / 2 <= _ry2 + _rh2 / 2)
 			return true;
 
 		return false;

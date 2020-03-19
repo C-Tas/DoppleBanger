@@ -37,10 +37,16 @@ void TestCollisionState::update()
 		cout << "Colisión del método collides" << endl;
 	}
 
-	if (RectRect(objectCollider2_->getPosX(), objectCollider2_->getPosY(), objectCollider2_->getScaleX(), objectCollider2_->getScaleY(),
-		player_->getPosX(), player_->getPosY(), player_->getScaleX(), player_->getScaleY())) {
+	//Objeto 2 y player. Colisión rectángulo rectángulo. Hay que pasarle el centro de cada objeto en la posición (los dos primeros parámetros)
+	//En el resto de métodos de Physics supongo que hay que pasar el centro del objeto también, no lo he probado con todos
+	if (RectRect(objectCollider2_->getPosX() + objectCollider2_->getScaleX() / 2, objectCollider2_->getPosY() + objectCollider2_->getScaleY()/2,
+		objectCollider2_->getScaleX(), objectCollider2_->getScaleY(),
+		player_->getPosX() + player_->getScaleX()/2, player_->getPosY() + player_->getScaleY() / 2, 
+		player_->getScaleX(), player_->getScaleY())) {
 		player_->stop();
 		objectCollider2_->onCollider();
 		cout << "Colisión RectRect de Physics" << endl;
-	}
+	} 
+
+	//Testear con las demás colisiones disponibles en Physics y en Collisions
 }
