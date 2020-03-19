@@ -96,6 +96,7 @@
     <ClInclude Include="Sources\SaveLoadState.h" />
     <ClInclude Include="Sources\SDL_macros.h" />
     <ClInclude Include="Sources\SelectLevelState.h" />
+    <ClInclude Include="Sources\Skill.h" />
     <ClInclude Include="Sources\SRandBasedGenerator.h" />
     <ClInclude Include="Sources\SpookyIslandState.h" />
     <ClInclude Include="Sources\StashState.h" />
