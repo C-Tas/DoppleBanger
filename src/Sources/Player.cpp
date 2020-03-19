@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "Resources.h"
+#include "SDL_macros.h"
+#include "TextBoxManager.h"
 
 void Player::init()
 {
@@ -31,6 +33,7 @@ bool Player::update()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 	}
+
 	return false;
 }
 

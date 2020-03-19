@@ -1,9 +1,12 @@
 #include "RandEquipGen.h"
 #include "Application.h"
 #include "Resources.h"
+#include "GameManager.h"
+
 
 RandEquipGen::RandEquipGen(Application* app) : app_(app)
 {
+	gameManager_ = GameManager::instance();
 	rn_ = SRandBasedGenerator();
 }
 
@@ -15,16 +18,13 @@ Equipment* RandEquipGen::genEquip()
 
 Equipment* RandEquipGen::genEquip(equipType type)
 {
-	Equipment* obj;
-	int area = app_->getCurrArea(); //Se usa el nivel actual como variable
-
-	//Aquí visual me hizo declararlo todo a parte o no compilaba
+	//Aquï¿½ visual me hizo declararlo todo a parte o no compilaba
 	int ad, health, armor, price, crit, speed;
 	double meleeRate, distRate;
-
-	//Hay que revisar mucho las fórmulas
-	//Cada variable es un número aleatorio entre dos numeros multiplicados por el nivel actual
-	//Nótese que ciertos parámetros del equipamiento son placeholders
+	
+	Equipment* obj;
+	
+	int area = gameManager_->getCurrIsland();
 	switch (type)
 	{
 	//Vida y armadura
@@ -43,7 +43,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		obj = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Botas", "helloWorld", price, speed, armor);
 		break;
 
-	//Crítico y armadura
+	//Crï¿½tico y armadura
 	case Gloves_:
 		crit = rn_.nextInt(3 * area, 8 * area);
 		armor = rn_.nextInt(1 * area, 3 * area);
@@ -60,7 +60,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		obj = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Espada", "helloWorld", price, ad, meleeRate, type);
 		break;
 
-	//Mas daño que la espada
+	//Mas daï¿½o que la espada
 	case Saber_:
 		ad = rn_.nextInt(6 * area, 17 * area);
 		meleeRate = rn_.nextInt(1 * area, 4 * area);
@@ -69,7 +69,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		break;
 
 	//Ap y velocidad de disparo
-	//Dispara en linea recta con mas daño y alcance que la escopeta
+	//Dispara en linea recta con mas daï¿½o y alcance que la escopeta
 	case Pistol_:
 		ad = rn_.nextInt(5 * area, 16 * area);
 		distRate = rn_.nextInt(2 * area, 4 * area);
@@ -77,7 +77,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		obj = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pistola", "helloWorld", price, ad, distRate, type);
 		break;
 
-	//Dispara en are recta con menos daño y alcance que la escopeta
+	//Dispara en are recta con menos daï¿½o y alcance que la escopeta
 	case Shotgun_:
 		ad = rn_.nextInt(3 * area, 13 * area);
 		distRate = rn_.nextInt(1 * area, 2 * area);

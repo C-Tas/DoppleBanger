@@ -1,9 +1,11 @@
 #include "Application.h"
 #include "MainMenuState.h"
 #include "SelectLevelState.h"
+#include "ControlsState.h"
 #include "HandleEvents.h"
 #include "Inventory.h"
 #include <exception>
+#include "GameManager.h"
 
 Application::Application(GameStateMachine* state) {
 	
@@ -15,8 +17,6 @@ Application::Application(GameStateMachine* state) {
 }
 
 Application::~Application() {
-	
-
 	delete machine_;
 	closeResources();
 
@@ -47,6 +47,7 @@ void Application::initSDL() {
 
 void Application::runApp() {
 	HandleEvents* input = HandleEvents::instance();
+	GameManager::instance();
 	while (!appClosed_) {
 		SDL_RenderClear(renderer_); //Clear
 		updateDelta(); //Actualizamos deltaTime
@@ -71,16 +72,44 @@ void Application::updateDelta()
 }
 
 void Application::initResources() {
-	//Inicializar generacion aleatoria de objetos
-	equipGen_ = new RandEquipGen(this);
 	//Crear e inicializar textureManager
 	textureManager_ = new TextureManager();
 	textureManager_->init();
+
+	//Crear e inicializar fontManager
+	fontManager_ = new FontManager();
+	fontManager_->init();
+
+	//Crear e inicializar audioManager
+	audioManager_ = new AudioManager();
+	audioManager_->init();
 
 	//Creacion de las texturas
 	for (auto& image : Resources::imageRoutes) {
 		textureManager_->loadFromImg(image.textureId, renderer_, image.filename);
 		cout << "Creada textura de: " << image.textureId << endl;
+	}
+
+	//Creación de las fuentes
+	for (auto& font : Resources::fontsRoutes) {
+		fontManager_->loadFont(font.id, font.fileName, font.size);
+		cout << "Creada fuente: " << font.id << endl;
+	}
+
+	//Creación de mensajes
+	for (auto& txtmsg : Resources::messages_) {
+		textureManager_->loadFromText(txtmsg.id, renderer_, txtmsg.msg,
+			fontManager_->getFont(txtmsg.fontId), txtmsg.color);
+	}
+
+	//Creación de los efectos de sonido
+	for (auto& sound : Resources::soundRoutes) {
+		audioManager_->loadSound(sound.audioId, sound.filename);
+	}
+
+	//Creación de la música
+	for (auto& music : Resources::musicRoutes) {
+		audioManager_->loadMusic(music.id, music.fileName);
 	}
 }
 
@@ -88,5 +117,6 @@ void Application::initResources() {
 void Application::closeResources() {
 	//Faltaría el borrar los recursos que añadiesemos a posteriori
 	delete textureManager_;
-    delete equipGen_;
+	delete fontManager_;
+	delete audioManager_;
 }
