@@ -12,7 +12,7 @@ Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine(); //Creación máquina de estados
-	GameState* startState = /*new MainMenuState(this)*/new VolcanicIslandState(this);
+	GameState* startState = new MainMenuState(this)/*new VolcanicIslandState(this)*/;
 	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
 }
 

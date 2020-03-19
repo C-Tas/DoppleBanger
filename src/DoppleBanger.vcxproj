@@ -27,6 +27,7 @@
     <ClCompile Include="Sources\Clon.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
     <ClCompile Include="Sources\ControlsState.cpp" />
+    <ClCompile Include="Sources\Crab.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
     <ClCompile Include="Sources\Dynamic.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="Sources\Clon.h" />
     <ClInclude Include="Sources\Collider.h" />
     <ClInclude Include="Sources\ControlsState.h" />
+    <ClInclude Include="Sources\Crab.h" />
     <ClInclude Include="Sources\CreditsState.h" />
     <ClInclude Include="Sources\Draw.h" />
     <ClInclude Include="Sources\Dynamic.h" />
