@@ -27,6 +27,8 @@ private:
 	FontManager* fontManager_ = nullptr;
 	//Manager que gestiona los música y sonidos
 	AudioManager* audioManager_ = nullptr;
+	///<summary>Generador de randoms</summary>
+	RandEquipGen* equipGen_ = nullptr;
 	///<summary>Variables que controla el fin del bucle principal de app</summary>
 	bool appClosed_ = false;
 
@@ -85,7 +87,10 @@ public:
 	FontManager* getFontManager() { return fontManager_; };
 	//Devuelve el audioManager
 	AudioManager* getAudioManager() { return audioManager_; };
-
+	///<summary>Devuelve el generador de equipamiento aleatorio </summary>
+	Equipment* genEquip() { return equipGen_->genEquip(); };
+	///<summary>Devuelve un objeto del tipo type generado aleatoriamente</summary>
+	Equipment* genEquip(equipType type) { return equipGen_->genEquip(type); };
 #pragma endregion
 
 	

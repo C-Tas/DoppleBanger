@@ -11,7 +11,7 @@
 
 using namespace std;
 class Item;
-using lista = list<Item>*;
+using lista = list<Item*>;
 
 //Enumerados que representan la última isla desbloqueada
 enum class Island : int {
@@ -57,11 +57,9 @@ private:
 	//Puntos de hazaña gastados de la rama ghost
 	spentPoints ghost_ = spentPoints::Ghost;
 	//Puntero a la lista de item del inventario
-	list<Item>* inventory_ = nullptr;
+	list<Item*> inventory_;
 	//Puntero a la lista de items del alijo
-	list<Item>* stash_ = nullptr;
-	///<summary>Generador de randoms</summary>
-	RandEquipGen equipGen_ = RandEquipGen(this);
+	list<Item*> stash_;
 	//Vector que representa las misiones secundarias completadas
 	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
@@ -77,7 +75,8 @@ public:
 	}
 	//Destructor
 	~GameManager() {
-		inventory_, stash_ = nullptr;
+		for (Item* ob : inventory_)delete ob;
+		for (Item* ob : stash_)delete ob;
 	}
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {
@@ -102,10 +101,6 @@ public:
 	const int getAchievementPoints() { return achievementPoints_; };
 	//Devuelve la actual isla
 	const int getCurrIsland() { return (int)currIsland_; };
-	///<summary>Devuelve el generador de equipamiento aleatorio </summary>
-	Equipment* genEquip() { return equipGen_.genEquip(); };
-	///<summary>Devuelve un objeto del tipo type generado aleatoriamente</summary>
-	Equipment* genEquip(equipType type) { return equipGen_.genEquip(type); };
 	//Devuelve los puntos gastados en la rama presición
 	const spentPoints getPresicionPoints() { return precision_; };
 	//Devuelve los puntos gastados en la rama melee
