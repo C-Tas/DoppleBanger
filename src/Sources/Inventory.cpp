@@ -51,13 +51,13 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	string desc = "duantes1";
 	Player* player = nullptr;
 	
-	Gloves* guante0 = new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
-	Gloves* guante1 = new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
-	Gloves* guante2 = new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
-	Gloves* guante3 = new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
-	Gloves* guante4 = new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
-	Gloves* guante5= new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
-	Gloves* guante6= new Gloves(player, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10, equipType::Gloves_);
+	Gloves* guante0 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10);
+	Gloves* guante1 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10);
+	Gloves* guante2 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10);
+	Gloves* guante3 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10);
+	Gloves* guante4 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10);
+	Gloves* guante5= new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10);
+	Gloves* guante6= new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10);
 
 	addToInventory(guante0);
 	addToInventory(guante1);
@@ -98,7 +98,9 @@ void Inventory::equippedObj() {
 		
 		// Una vez Equipado el nuevo objeto, lo activamos y lo eliminamos de la lista
 		select_->Enable(true);
-		select_->getObject()->equip();
+
+		//Recibe player
+		//select_->getObject()->equip();
 		InventoryList_.erase(select_->getIterator());
 
 	}
@@ -156,7 +158,9 @@ void Inventory::equiparAux(InventoryButton* &but) {
 	//Si ya hay un objeto equipado
 	if (but != nullptr) {
 	//desequipamos el objeto actual
-		but->getObject()->remove();
+
+		//Recibe player
+		//but->getObject()->remove();
 		but->Enable(false);
 		InventoryButton* aux = but;
 		//El objeto desequipado lo devolvemos al final de la lista
