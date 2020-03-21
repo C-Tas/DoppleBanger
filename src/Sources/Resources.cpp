@@ -2,21 +2,21 @@
 
 vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Interfaces
-	{MenuFondo, "../Sources/assets/Interfaces/menuFondo.png"},
-	{BotonMenu, "../Sources/assets/botonMenu.png"},
-	{ Timon, "../Sources/assets/timon.png" },
-	{ GoControls, "../Sources/assets/botonControles.png"},
-	{ BackButton, "../Sources/assets/volver.png"},
-	{ Controls, "../Sources/assets/controles.png"},
-	{ InventaryMenu, "../Sources/assets/InventarioFondo.png" },
-	{ Scene1, "../Sources/assets/Scene1.png"},
-	{ Scene2, "../Sources/assets/Scene2.png"},
-	{ Scene3, "../Sources/assets/Scene3.png"},
-	{ TextBox, "../Sources/assets/whiteRectangle.png" },
+	{MenuFondo, "../Sources/assets/interfaces/menuFondo.png"},
+	{BotonMenu, "../Sources/assets/botones/botonMenu.png"},
+	{ Timon, "../Sources/assets/player/timon.png" },
+	{ GoControls, "../Sources/assets/botones/botonControles.png"},
+	{ BackButton, "../Sources/assets/botones/volver.png"},
+	{ Controls, "../Sources/assets/interfaces/controles.png"},
+	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
+	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
+	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
+	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
+	{ TextBox, "../Sources/assets/interfaces/textBoxBg.png" },
 	//Sprites
-	{ Roca, "../Sources/assets/roca.png" },
+	{ Roca, "../Sources/assets/colisionables/roca.png" },
 	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
-	{Dragon,"../Sources/assets/dragon.png"}
+	{Dragon,"../Sources/assets/enemigos/dragon.png"}
 	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 };
 

@@ -1,12 +1,12 @@
 #pragma once
 #include "GameState.h"
-class PauseState :
-	public GameState
+class PauseState : public GameState
 {
 private:
+	void initState();
 public:
 	///<summary>Constructora PauseState</summary>
-	PauseState(Application* app = nullptr) :GameState(app) {};
+	PauseState(Application* app = nullptr);
 	///<summary>Destructora</summary>
 	virtual ~PauseState() {};
 	///<summary>Vuelve a playState (pop)</summary>
