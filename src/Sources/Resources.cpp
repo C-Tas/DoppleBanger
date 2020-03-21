@@ -1,23 +1,27 @@
 #include "Resources.h"
 
 vector<Resources::ImageInfo> Resources::imageRoutes{
-	//Interfaces
-	{MenuFondo, "../Sources/assets/interfaces/menuFondo.png"},
-	{BotonMenu, "../Sources/assets/botones/botonMenu.png"},
+	//Botones
 	{ Timon, "../Sources/assets/player/timon.png" },
+	{BotonMenu, "../Sources/assets/botones/botonMenu.png"},
 	{ GoControls, "../Sources/assets/botones/botonControles.png"},
 	{ BackButton, "../Sources/assets/botones/volver.png"},
+	{Resume, "../Sources/assets/botones/resume.png"},
+
+	//Interfaces
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
+	{MenuFondo, "../Sources/assets/interfaces/menuFondo.png"},
 	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
 	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
 	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
 	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
 	{ TextBox, "../Sources/assets/interfaces/textBoxBg.png" },
-	//Sprites
+
+	//Personajes
 	{ Roca, "../Sources/assets/colisionables/roca.png" },
-	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
 	{Dragon,"../Sources/assets/enemigos/dragon.png"}
-	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
+
+	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{
@@ -35,7 +39,7 @@ vector <Resources::FontInfo> Resources::fontsRoutes{
 	//Para añadir nueva ruta: {FontId, "./Sources/fonts/name.ttf", size}
 };
 
-vector <Resources::TextMsgInfo> Resources::messages_{
+vector <Resources::TextMsgInfo> Resources::messages{
 
 	//Para añadir nuevo texto: {TextureId , string "mensaje", { COLOR(0xaaffffff), FontId  }
 	{ PlayText,"Nueva Partida",SDL_Color{(0,0,0,1)},RETRO },

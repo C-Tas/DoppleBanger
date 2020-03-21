@@ -56,6 +56,7 @@ private:
 	///<summary>Tiempo que ha pasado entre el frame actual y el anterior </summary>
 	double deltaTime_;
 	void updateDelta();
+	bool mute_ = false;
 
 public:
 	///<summary>Construtora de la app</summary>
@@ -67,6 +68,9 @@ public:
 #pragma region Setters
 	///<summary>Metodo que termina el bucle principal de la app</summary>
 	void endGame() { appClosed_ = true; };
+
+	///<summary>Cambia el valor de mute</summary>
+	void setMute() { mute_ = !mute_; }
 #pragma endregion
 
 #pragma region Getters
@@ -94,6 +98,8 @@ public:
 	AudioManager* getAudioManager() { return audioManager_; };
 	//Devuelve equipGen_
 	RandEquipGen* getEquipGen() { return equipGen_; }
+	//Devuelve mute
+	bool getMute() { return mute_; }
 #pragma endregion
 
 	

@@ -99,7 +99,7 @@ void Application::initResources() {
 	}
 
 	//Creación de mensajes
-	for (auto& txtmsg : Resources::messages_) {
+	for (auto& txtmsg : Resources::messages) {
 		textureManager_->loadFromText(txtmsg.id, renderer_, txtmsg.msg,
 			fontManager_->getFont(txtmsg.fontId), txtmsg.color);
 	}

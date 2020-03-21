@@ -14,24 +14,24 @@ public:
 		//Botones
 		Timon,
 		BotonMenu,
-		//Botones
 		GoControls,
 		BackButton,
-		Controls,
+		Resume,
 
 		//Fondos
+		Controls,
+		MenuFondo,
 		InventaryMenu,
 		Scene1,
 		Scene2,
 		Scene3,
 		TextBox,
-		MenuFondo,
 
 		//Personajes
 		Dragon,
 		Roca,
         
-		//Textos
+		//Textos (Añadirlo al vector messages)
 		PlayText,
 		ExitText,
 		ControlsText,
@@ -96,5 +96,5 @@ public:
 	static vector<FontInfo> fontsRoutes;
 
 	//Vector con los textos
-	static vector<TextMsgInfo> messages_; // initialized in .cpp
+	static vector<TextMsgInfo> messages; // initialized in .cpp
 };
