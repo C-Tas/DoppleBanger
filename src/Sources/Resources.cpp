@@ -14,6 +14,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Scene3, "../Sources/assets/Scene3.png"},
 	{ TextBox, "../Sources/assets/whiteRectangle.png" },
 	//Sprites
+	{ Roca, "../Sources/assets/roca.png" },
 	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
 	{Dragon,"../Sources/assets/dragon.png"}
 	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}

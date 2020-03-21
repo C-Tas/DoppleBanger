@@ -26,6 +26,7 @@
     <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
+    <ClCompile Include="Sources\Collisions.cpp" />
     <ClCompile Include="Sources\ControlsState.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
     <ClCompile Include="Sources\Dynamic.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="Sources\MainMenuState.cpp" />
     <ClCompile Include="Sources\NPC.cpp" />
     <ClCompile Include="Sources\PauseState.cpp" />
+    <ClCompile Include="Sources\Physics.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\PlayState.cpp" />
     <ClCompile Include="Sources\RandEquipGen.cpp" />
@@ -56,6 +58,8 @@
     <ClCompile Include="Sources\SpookyIslandState.cpp" />
     <ClCompile Include="Sources\StashState.cpp" />
     <ClCompile Include="Sources\StoryState.cpp" />
+    <ClCompile Include="Sources\TestCollisionState.cpp" />
+    <ClCompile Include="Sources\TestObjectCollider.cpp" />
     <ClCompile Include="Sources\TextBoxManager.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
@@ -72,6 +76,7 @@
     <ClInclude Include="Sources\checkML.h" />
     <ClInclude Include="Sources\Clon.h" />
     <ClInclude Include="Sources\Collider.h" />
+    <ClInclude Include="Sources\Collisions.h" />
     <ClInclude Include="Sources\ControlsState.h" />
     <ClInclude Include="Sources\CreditsState.h" />
     <ClInclude Include="Sources\Draw.h" />
@@ -83,6 +88,7 @@
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
     <ClInclude Include="Sources\HandleEvents.h" />
+    <ClInclude Include="Sources\Physics.h" />
     <ClInclude Include="Sources\interactuable.h" />
     <ClInclude Include="Sources\InventoryState.h" />
     <ClInclude Include="Sources\Item.h" />
@@ -102,6 +108,8 @@
     <ClInclude Include="Sources\StashState.h" />
     <ClInclude Include="Sources\Stats.h" />
     <ClInclude Include="Sources\StoryState.h" />
+    <ClInclude Include="Sources\TestCollisionState.h" />
+    <ClInclude Include="Sources\TestObjectCollider.h" />
     <ClInclude Include="Sources\TextBoxManager.h" />
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />

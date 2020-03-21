@@ -29,14 +29,14 @@ public:
 
 		//Personajes
 		Dragon,
-		
+		Roca,
+        
 		//Textos
 		PlayText,
 		ExitText,
 		ControlsText,
 		LoadText,
 		CreditsText
-
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
