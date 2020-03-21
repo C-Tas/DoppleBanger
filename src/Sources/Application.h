@@ -22,11 +22,18 @@ private:
 	///<summary>Máquina de estados</summary>
 	GameStateMachine* machine_ = nullptr;
 
+	///<summary>Generador de randoms</summary>
+	RandEquipGen* equipGen_ = nullptr;
+
 	///<summary>Manager que gestiona las texturas </summary>
 	TextureManager* textureManager_ = nullptr;
+
+	///<summary>Manager que gestiona las fuentes</summary>
 	FontManager* fontManager_ = nullptr;
+
 	//Manager que gestiona los música y sonidos
 	AudioManager* audioManager_ = nullptr;
+
 	///<summary>Variables que controla el fin del bucle principal de app</summary>
 	bool appClosed_ = false;
 
@@ -85,7 +92,8 @@ public:
 	FontManager* getFontManager() { return fontManager_; };
 	//Devuelve el audioManager
 	AudioManager* getAudioManager() { return audioManager_; };
-
+	//Devuelve equipGen_
+	RandEquipGen* getEquipGen() { return equipGen_; }
 #pragma endregion
 
 	

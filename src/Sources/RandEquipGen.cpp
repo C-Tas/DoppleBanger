@@ -1,10 +1,11 @@
 #include "RandEquipGen.h"
+#include "Application.h"
 #include "GameManager.h"
 
-
-RandEquipGen::RandEquipGen(GameManager* gm) : gameManager_(gm)
+RandEquipGen::RandEquipGen(Application* app) : app_(app)
 {
 	rn_ = SRandBasedGenerator();
+	gameManager_ = GameManager::instance(); 
 }
 
 Equipment* RandEquipGen::genEquip()

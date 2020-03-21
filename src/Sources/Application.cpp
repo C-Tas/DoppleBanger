@@ -83,6 +83,9 @@ void Application::initResources() {
 	audioManager_ = new AudioManager();
 	audioManager_->init();
 
+	///<summary>Generador de randoms</summary>
+	equipGen_ = new RandEquipGen(this);
+
 	//Creacion de las texturas
 	for (auto& image : Resources::imageRoutes) {
 		textureManager_->loadFromImg(image.textureId, renderer_, image.filename);
