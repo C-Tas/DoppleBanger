@@ -1,13 +1,10 @@
 #include "Application.h"
 #include "MainMenuState.h"
-#include "SelectLevelState.h"
-#include "ControlsState.h"
 #include "HandleEvents.h"
 #include <exception>
 #include "GameManager.h"
 
 Application::Application(GameStateMachine* state) {
-	
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine(); //Creación máquina de estados
@@ -121,4 +118,5 @@ void Application::closeResources() {
 	delete fontManager_;
 	delete textureManager_;
 	delete audioManager_;
+	delete equipGen_;
 }

@@ -17,11 +17,15 @@ public:
 		GoControls,
 		BackButton,
 		Resume,
+		MuteOn,
+		MuteOff,
+		PauseButton,
 
 		//Fondos
 		Controls,
 		MenuFondo,
 		InventaryMenu,
+		Pause,
 		Scene1,
 		Scene2,
 		Scene3,

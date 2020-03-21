@@ -3,23 +3,27 @@
 vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Botones
 	{ Timon, "../Sources/assets/player/timon.png" },
-	{BotonMenu, "../Sources/assets/botones/botonMenu.png"},
-	{ GoControls, "../Sources/assets/botones/botonControles.png"},
-	{ BackButton, "../Sources/assets/botones/volver.png"},
-	{Resume, "../Sources/assets/botones/resume.png"},
+	{ BotonMenu, "../Sources/assets/botones/botonMenu.png" },
+	{ GoControls, "../Sources/assets/botones/botonControles.png" },
+	{ BackButton, "../Sources/assets/botones/volver.png" },
+	{ Resume, "../Sources/assets/botones/resume.png" },
+	{ MuteOn, "../Sources/assets/botones/muteOn.png" },
+	{ MuteOff, "../Sources/assets/botones/muteOff.png" },
+	{ PauseButton, "../Sources/assets/botones/pauseButton.png" },
 
 	//Interfaces
-	{ Controls, "../Sources/assets/interfaces/controles.png"},
-	{MenuFondo, "../Sources/assets/interfaces/menuFondo.png"},
+	{ Controls, "../Sources/assets/interfaces/controles.png" },
+	{ MenuFondo, "../Sources/assets/interfaces/menuFondo.png" },
 	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
-	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
-	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
-	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
+	{ Pause, "../Sources/assets/interfaces/pauseFondo.png" },
+	{ Scene1, "../Sources/assets/interfaces/Scene1.png" },
+	{ Scene2, "../Sources/assets/interfaces/Scene2.png" },
+	{ Scene3, "../Sources/assets/interfaces/Scene3.png" },
 	{ TextBox, "../Sources/assets/interfaces/textBoxBg.png" },
 
 	//Personajes
 	{ Roca, "../Sources/assets/colisionables/roca.png" },
-	{Dragon,"../Sources/assets/enemigos/dragon.png"}
+	{ Dragon,"../Sources/assets/enemigos/dragon.png" }
 
 	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
 };

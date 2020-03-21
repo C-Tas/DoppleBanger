@@ -1,11 +1,12 @@
 #pragma once
 #include "GameState.h"
-class PlayState :
-	public GameState
+class PlayState : public GameState
 {
+private:
+	void initDebugPauseState(); //método para probar el PauseState
 public:
 	///<summary>Constructora PlayState</summary>
-	PlayState(Application* app=nullptr) :GameState(app) {};
+	PlayState(Application* app = nullptr) :GameState(app) { initDebugPauseState(); }
 	///<summary>Destructora</summary>
 	virtual ~PlayState() {};
 	///<summary>Ir a pauseState (push)</summary>

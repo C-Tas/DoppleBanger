@@ -5,6 +5,12 @@
 #include "SelectLevelState.h"
 #include "StashState.h"
 #pragma region ChangeState
+void PlayState::initDebugPauseState()
+{
+	Vector2D sizeButton = Vector2D(app_->getWindowWidth() / 20, (app_->getWindowHeight() / 20) * (app_->getWindowWidth() / app_->getWindowHeight()));
+	Vector2D posButton = Vector2D((app_->getWindowWidth() / 2) - sizeButton.getX(), (app_->getWindowHeight() / 2) - sizeButton.getY());
+	createButton(app_->getTextureManager()->getTexture(Resources::PauseButton), posButton, sizeButton, goToPauseState, app_);
+}
 void PlayState::goToPauseState(Application* app) {
 	app->getStateMachine()->pushState(new PauseState(app));
 
@@ -14,8 +20,8 @@ void PlayState::goToSaveGame(Application* app) {
 }
 void PlayState::goToInventoryState(Application* app) {
 	app->getStateMachine()->pushState( new InventoryState(app));
-
 }
+
 void PlayState::goToSelectState(Application* app) {
 	app->getStateMachine()->pushState( new SelectLevelState(app));
 

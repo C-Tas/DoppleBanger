@@ -13,7 +13,7 @@ public:
 	virtual bool update(); //Lleva la logica del boton
 	const virtual void draw();
 	virtual ~Button() {};
-
+	void setTexture(Texture* tx) { texture_ = tx; } //Cambia la textura del actual botón por tx
 protected:
 	CallBackOnClick* ButtonCallBack;
 

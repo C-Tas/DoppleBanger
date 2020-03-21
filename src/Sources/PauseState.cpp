@@ -37,26 +37,49 @@ PauseState::PauseState(Application* app) : GameState(app) {
 	initState();
 }
 
+void PauseState::draw() const
+{
+	SDL_Rect bgRect;
+	bgRect.x = 0; bgRect.y = 0;
+	bgRect.w = backgroundW; bgRect.h = backgroundH;
+	background_->render(bgRect);
+
+	GameState::draw();
+}
+
 void PauseState::changeMute()
 {
+	if (app_->getMute())  muteButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteOn));
+	else muteButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteOff));
 }
 
 void PauseState::initState()
 {
+	background_ = app_->getTextureManager()->getTexture(Resources::Pause);
+
 	//Creación de botones
-	Vector2D sizeButton(app_->getWindowWidth() / 6, app_->getWindowHeight() / 10);
-	Vector2D posButton(app_->getWindowWidth() / 2 - sizeButton.getX() / 2, app_->getWindowHeight() / 4 - sizeButton.getY() / 2);
+	double winWidth = app_->getWindowWidth();
+	double winHeight = app_->getWindowHeight();
+
+	Vector2D sizeButton(winWidth / 6, winHeight/ 10);
+	Vector2D posButton(winWidth / 2 - sizeButton.getX() / 2, winHeight / 4 - sizeButton.getY() / 2);
 
 	//Botón de reanudar
 	createButton(app_->getTextureManager()->getTexture(Resources::Resume), posButton, sizeButton, resume, app_);
 
 	//Botón de controles
-	posButton = posButton + Vector2D(0, app_->getWindowHeight() / 4 - sizeButton.getY() / 2);
+	posButton = posButton + Vector2D(0, winHeight / 4 - sizeButton.getY() / 2);
 	createButton(app_->getTextureManager()->getTexture(Resources::Controls), posButton, sizeButton, showControls, app_);
 
 	//Botón de menú principal
-	posButton = posButton + Vector2D(0, app_->getWindowHeight() / 4 - sizeButton.getY() / 2);
-	createButton(app_->getTextureManager()->getTexture(Resources::Controls), posButton, sizeButton, goMainMenuState, app_);
+	posButton = posButton + Vector2D(0, winHeight / 4 - sizeButton.getY() / 2);
+	createButton(app_->getTextureManager()->getTexture(Resources::BackButton), posButton, sizeButton, goMainMenuState, app_);
 	
 	//Botón de mute
+	//Se multiplica por la proporción winWidth/winHeight para hacer un cuadrado
+	sizeButton = Vector2D(winWidth / 20, (winHeight / 20) * (winWidth / winHeight));
+	posButton = Vector2D(sizeButton.getX() * 1.5, sizeButton.getY() * 1.5);
+	
+	muteButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteOff), posButton, sizeButton, muteGame);
+	addRenderUpdateLists(muteButton);
 }
