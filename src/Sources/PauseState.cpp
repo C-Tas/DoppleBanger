@@ -25,8 +25,8 @@ void goMainMenuState(Application* app) {
 /// es que se controlen en los sitios en los que se efectúan. En caso de que la música vaya a sonar por canales habrá que hacer los respectivos cambios.
 ///</summary>
 void muteGame(Application* app) {
-	if (app->getMute()) app->getAudioManager()->resumeMusic(); //Reanuda la música
-	else app->getAudioManager()->pauseMusic(); //Pausa la música
+	if (app->getMute()) app->getAudioManager()->setMusicVolume(5); //Reanuda la música
+	else app->getAudioManager()->setMusicVolume(0); //Pausa la música
 
 	app->setMute(); //Cambia el booleano que controla el mute
 	static_cast<PauseState*>(app->getGameStateMachine()->getState())->changeMute(); //Cambia la textura del botón mute del PauseState
