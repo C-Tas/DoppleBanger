@@ -15,7 +15,7 @@ private:
 	double x_, y_;
 public:
 	Vector2D() :x_(0), y_(0) {};
-	Vector2D(const Vector2D& v) : x_(v.x_), y_(v.y_) {}
+	//Vector2D(const Vector2D& v) : x_(v.x_), y_(v.y_) {}
 	Vector2D(double x, double y) : x_(x), y_(y) {};
 	virtual ~Vector2D() {}
 #pragma region Getters
@@ -25,9 +25,9 @@ public:
 #pragma endregion
 
 #pragma region Setters
-	inline void setVec(Vector2D value) { x_ = value.getX(); y_ = value.getY(); };
-	inline void setX(double x) { x_ = x; };
-	inline void setY(double y) { y_ = y; };
+	void setVec(Vector2D value) { x_ = value.getX(); y_ = value.getY(); };
+	void setX(double x) { x_ = x; };
+	void setY(double y) { y_ = y; };
 #pragma endregion
 
 #pragma region Operators																			 

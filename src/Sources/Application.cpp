@@ -3,7 +3,6 @@
 #include "SelectLevelState.h"
 #include "ControlsState.h"
 #include "HandleEvents.h"
-#include "TestCollisionState.h"
 #include <exception>
 #include "GameManager.h"
 
@@ -12,7 +11,7 @@ Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine(); //Creación máquina de estados
-	GameState* startState = new TestCollisionState(this);
+	GameState* startState = new MainMenuState(this);
 	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
 }
 
@@ -118,6 +117,5 @@ void Application::closeResources() {
 	//Faltaría el borrar los recursos que añadiesemos a posteriori
 	delete fontManager_;
 	delete textureManager_;
-	delete fontManager_;
 	delete audioManager_;
 }

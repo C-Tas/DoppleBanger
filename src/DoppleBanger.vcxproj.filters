@@ -44,8 +44,8 @@
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
     <ClCompile Include="Sources\Collisions.cpp" />
     <ClCompile Include="Sources\Physics.cpp" />
-    <ClCompile Include="Sources\TestCollisionState.cpp" />
-    <ClCompile Include="Sources\TestObjectCollider.cpp" />
+    <ClCompile Include="Sources\AudioManager.cpp" />
+    <ClCompile Include="Sources\GameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -61,8 +61,6 @@
     <ClInclude Include="Sources\Dynamic.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\Equipment.h" />
-    <ClInclude Include="Sources\Font.h" />
-    <ClInclude Include="Sources\FontManager.h" />
     <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
@@ -93,7 +91,8 @@
     <ClInclude Include="Sources\VolcanicIslandState.h" />
     <ClInclude Include="Sources\Collisions.h" />
     <ClInclude Include="Sources\Physics.h" />
-    <ClInclude Include="Sources\TestCollisionState.h" />
-    <ClInclude Include="Sources\TestObjectCollider.h" />
+    <ClInclude Include="Sources\AudioManager.h" />
+    <ClInclude Include="Sources\GameManager.h" />
+    <ClInclude Include="Sources\Skill.h" />
   </ItemGroup>
 </Project>
