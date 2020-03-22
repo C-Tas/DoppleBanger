@@ -132,6 +132,9 @@
     <ClCompile Include="Sources\SDL_macros.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Obstacle.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Application.h" />
@@ -268,6 +271,9 @@
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Skill.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Obstacle.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

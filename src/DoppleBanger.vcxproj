@@ -45,6 +45,7 @@
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\MainMenuState.cpp" />
     <ClCompile Include="Sources\NPC.cpp" />
+    <ClCompile Include="Sources\Obstacle.cpp" />
     <ClCompile Include="Sources\PauseState.cpp" />
     <ClCompile Include="Sources\Physics.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
@@ -86,6 +87,7 @@
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
     <ClInclude Include="Sources\HandleEvents.h" />
+    <ClInclude Include="Sources\Obstacle.h" />
     <ClInclude Include="Sources\Physics.h" />
     <ClInclude Include="Sources\interactuable.h" />
     <ClInclude Include="Sources\InventoryState.h" />
