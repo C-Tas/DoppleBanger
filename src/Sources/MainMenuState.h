@@ -8,6 +8,11 @@ class MainMenuState :
 {
 private:
 	Player* player_ = nullptr;
+	Draw* bg_ = nullptr;
+	double button_h= 0;
+	double button_w = 0;
+	//Diferencia entre los botones en el eje y
+	double button_dif = 0;
 
 protected:
 	///<summary>Se inicializa el menu</summary>
@@ -17,7 +22,7 @@ protected:
 
 public:
 	MainMenuState(Application* app = nullptr) :GameState(app) {initMenuState();};
-	virtual ~MainMenuState() {};
+	virtual ~MainMenuState() { };
 	///<summary>Nos lleva al estado controles</summary>
 	static void goControlState(Application* app);
 	///<summary>Nos lleva al estado creditos</summary>
@@ -26,6 +31,8 @@ public:
 	static void goLoadState(Application* app);
 	///<summary>Nos lleva al estado Story</summary>
 	static void goStoryState(Application* app);
+	//Para salir del juego
+	static void exitGame(Application* app);
 
 	//BORRAR
 	static void goSkillState(Application* app);
