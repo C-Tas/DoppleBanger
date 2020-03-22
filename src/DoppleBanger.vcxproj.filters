@@ -44,6 +44,7 @@
     <ClCompile Include="Sources\Clon.cpp" />
     <ClCompile Include="Sources\AudioManager.cpp" />
     <ClCompile Include="Sources\GameManager.cpp" />
+    <ClCompile Include="Sources\Crab.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -89,5 +90,6 @@
     <ClInclude Include="Sources\SDL_macros.h" />
     <ClInclude Include="Sources\TextBoxManager.h" />
     <ClInclude Include="Sources\GameManager.h" />
+    <ClInclude Include="Sources\Crab.h" />
   </ItemGroup>
 </Project>
