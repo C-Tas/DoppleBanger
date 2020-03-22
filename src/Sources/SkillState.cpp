@@ -15,25 +15,25 @@ void SkillState::initSkillState() {
 }
 
 void SkillState::createButtons() {
-	//RAMA 1
-	Button* b1 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 200,50 }, { 50,50 }, increasePrecisionBranch);
-	gameObjects_.push_back(b1);
-	objectsToRender_.push_back(b1);
+	//Precision Button
+	Button* precisionButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 200,50 }, { 50,50 }, increasePrecisionBranch);
+	gameObjects_.push_back(precisionButton);
+	objectsToRender_.push_back(precisionButton);
 
-	//RAMA 2
-	Button* b2 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 300,50 }, { 50,50 }, increaseMeleeBranch);
-	gameObjects_.push_back(b2);
-	objectsToRender_.push_back(b2);
+	//Melee Button
+	Button* meleeButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 300,50 }, { 50,50 }, increaseMeleeBranch);
+	gameObjects_.push_back(meleeButton);
+	objectsToRender_.push_back(meleeButton);
 
-	//RAMA 3
-	Button* b3 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 400,50 }, { 50,50 }, increaseGhostBranch);
-	gameObjects_.push_back(b3);
-	objectsToRender_.push_back(b3);
+	//Ghost Button
+	Button* ghostButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 400,50 }, { 50,50 }, increaseGhostBranch);
+	gameObjects_.push_back(ghostButton);
+	objectsToRender_.push_back(ghostButton);
 
-	//VOLVER
-	Button* b4 = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 500,150 }, { 50,50 }, backToPreviousState);
-	gameObjects_.push_back(b4);
-	objectsToRender_.push_back(b4);
+	//Back Button
+	Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 500,150 }, { 50,50 }, backToPreviousState);
+	gameObjects_.push_back(backButton);
+	objectsToRender_.push_back(backButton);
 
 #ifdef _DEBUG
 	cout << "creados los botones correctamente" << endl;
@@ -44,7 +44,6 @@ void SkillState::backToPreviousState(Application* app) {
 	app->getStateMachine()->popState();
 }
 
-//
 void SkillState::increasePrecisionBranch(Application* app) {
 	if (GameManager::instance()->getAchievementPoints() > 0 && (int)GameManager::instance()->getPresicionPoints() < 100) {
 		GameManager::instance()->setPrecisionPoints((int)GameManager::instance()->getPresicionPoints() + 1);
