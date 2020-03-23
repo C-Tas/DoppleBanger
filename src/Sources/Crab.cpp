@@ -21,5 +21,8 @@ bool Crab::update() {
 	else {
 		updateTarget();
 	}
+
+
+	changeTexture((visPos_.getX() < 200 &&visPos_.getX() > 150 &&visPos_.getY() < 500 &&visPos_.getX() > 150),1);
 	return false;
 }
