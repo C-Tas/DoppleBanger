@@ -69,6 +69,7 @@
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
+    <ClCompile Include="Sources\usable.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
   </ItemGroup>
@@ -125,6 +126,7 @@
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\Trigger.h" />
+    <ClInclude Include="Sources\usable.h" />
     <ClInclude Include="Sources\Vector2D.h" />
     <ClInclude Include="Sources\VolcanicIslandState.h" />
   </ItemGroup>

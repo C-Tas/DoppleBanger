@@ -132,6 +132,16 @@
     <ClCompile Include="Sources\SDL_macros.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Armor.cpp" />
+    <ClCompile Include="Sources\Boots.cpp" />
+    <ClCompile Include="Sources\Gloves.cpp" />
+    <ClCompile Include="Sources\Gun.cpp" />
+    <ClCompile Include="Sources\Inventory.cpp" />
+    <ClCompile Include="Sources\InventoryButton.cpp" />
+    <ClCompile Include="Sources\Sword.cpp" />
+    <ClCompile Include="Sources\usable.cpp">
+      <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Application.h" />
@@ -269,6 +279,17 @@
     </ClInclude>
     <ClInclude Include="Sources\Skill.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Armor.h" />
+    <ClInclude Include="Sources\Boots.h" />
+    <ClInclude Include="Sources\Bullet.h" />
+    <ClInclude Include="Sources\Gloves.h" />
+    <ClInclude Include="Sources\Gun.h" />
+    <ClInclude Include="Sources\Inventory.h" />
+    <ClInclude Include="Sources\InventoryButton.h" />
+    <ClInclude Include="Sources\Sword.h" />
+    <ClInclude Include="Sources\usable.h">
+      <Filter>GameObjects\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
