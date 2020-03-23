@@ -3,6 +3,7 @@
 #include "SelectLevelState.h"
 #include "ControlsState.h"
 #include "HandleEvents.h"
+#include "Inventory.h"
 #include <exception>
 #include "GameManager.h"
 
@@ -10,9 +11,9 @@ Application::Application(GameStateMachine* state) {
 	
 	initSDL();
 	initResources();
-	machine_ = new GameStateMachine(); //Creación máquina de estados
-	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
+	machine_ = new GameStateMachine();
+	//GameState* startState = new MainMenuState(this);
+	machine_->pushState(/*startState *//*new SelectLevelState(this, 3)*/ new Inventory(this));
 }
 
 Application::~Application() {
@@ -83,7 +84,7 @@ void Application::initResources() {
 	audioManager_ = new AudioManager();
 	audioManager_->init();
 
-	///<summary>Generador de randoms</summary>
+	//Crear e inicializar el generador de equipamiento aleatorio
 	equipGen_ = new RandEquipGen(this);
 
 	//Creacion de las texturas

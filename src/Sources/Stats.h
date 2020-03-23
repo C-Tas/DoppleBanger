@@ -13,7 +13,7 @@ struct Stats
 	double meleeRate_ = 0;
 	double distRate_ = 0;
 
-	Stats(int health, int mana, int manaReg, int armor, int ad, int ap, int crit, int moveSpeed, double meleeRate, double distRate) :
+	Stats(int health, int mana, double manaReg, int armor, int ad, int ap, int crit, int moveSpeed, double meleeRate, double distRate) :
 		health_(health), mana_(mana), manaReg_(manaReg), armor_(armor), ad_(ad), ap_(ap), crit_(crit), moveSpeed_(moveSpeed), meleeRate_(meleeRate), distRate_(distRate) {};
 
 	Stats() {
