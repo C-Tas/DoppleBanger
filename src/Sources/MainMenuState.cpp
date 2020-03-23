@@ -26,7 +26,8 @@ void MainMenuState::initMenuState()
 	for (int i = 0; i < 5; i++)
 	{
 		Equipment* equip = app_->genEquip();
-		player_->equip(equip);
+		//player_->equip(equip);
+		//solo se puede equipar desde el inventario
 	}
 #endif // _DEBUG
 
