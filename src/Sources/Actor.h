@@ -14,5 +14,9 @@ protected:
 	virtual ~Actor(){};
 	//<summary>Inicializa todas las stats</summary>
 	void initStats(int health, int mana, int manaReg, int armor, int ad, int ap, int crit, double moveSpeed, double meleeRate, double distRate);
+
+public:
+	///<summary>Detiene el movimiento, por ejemplo, al colisionar con un obstáculo</summary>
+	void stop() { dir_ = Vector2D(0, 0); }
 };
 

@@ -7,7 +7,6 @@ class MainMenuState :
 	public GameState
 {
 private:
-	Player* player_ = nullptr;
 	Draw* bg_ = nullptr;
 	double button_h= 0;
 	double button_w = 0;
@@ -21,8 +20,8 @@ protected:
 	void createButtons();
 
 public:
-	MainMenuState(Application* app = nullptr) :GameState(app) {initMenuState();};
-	virtual ~MainMenuState() { };
+	MainMenuState(Application* app = nullptr) :GameState(app) { initMenuState(); };
+	virtual ~MainMenuState() {};
 	///<summary>Nos lleva al estado controles</summary>
 	static void goControlState(Application* app);
 	///<summary>Nos lleva al estado creditos</summary>

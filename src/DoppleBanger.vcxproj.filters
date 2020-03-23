@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\GameStateMachine.cpp">
       <Filter>GameStateMahcine</Filter>
@@ -135,9 +134,12 @@
     <ClCompile Include="Sources\Obstacle.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Application.cpp" />
+    <ClCompile Include="Sources\CollisionCtrl.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\GameStateMachine.h">
       <Filter>GameStateMahcine</Filter>
     </ClInclude>
@@ -275,6 +277,16 @@
     </ClInclude>
     <ClInclude Include="Sources\Obstacle.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\FontManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Font.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Application.h" />
+    <ClInclude Include="Sources\CollisionCtrl.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

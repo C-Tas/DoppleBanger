@@ -26,6 +26,7 @@
     <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
+    <ClCompile Include="Sources\CollisionCtrl.cpp" />
     <ClCompile Include="Sources\Collisions.cpp" />
     <ClCompile Include="Sources\ControlsState.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="Sources\checkML.h" />
     <ClInclude Include="Sources\Clon.h" />
     <ClInclude Include="Sources\Collider.h" />
+    <ClInclude Include="Sources\CollisionCtrl.h" />
     <ClInclude Include="Sources\Collisions.h" />
     <ClInclude Include="Sources\ControlsState.h" />
     <ClInclude Include="Sources\CreditsState.h" />
@@ -82,6 +84,8 @@
     <ClInclude Include="Sources\Dynamic.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\Equipment.h" />
+    <ClInclude Include="Sources\Font.h" />
+    <ClInclude Include="Sources\FontManager.h" />
     <ClInclude Include="Sources\GameManager.h" />
     <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\GameState.h" />
