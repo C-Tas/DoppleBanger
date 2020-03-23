@@ -2,6 +2,7 @@
 
 #include "Actor.h"
 #include "HandleEvents.h"
+#include "usable.h"
 
 class Player : public Actor
 {
@@ -42,9 +43,13 @@ public:
 	//M�todos unequip no son necesarios porque nunca va a poder estar desequipado
 	//void equip(Equipment* equip);
 
+	//metodos para guardar el puntero al equipamiento
 	void equip(Armor* armor) {  armor_ = armor;  };
 	void equip(Gloves* gloves) {  gloves_ = gloves;  };
 	void equip(Boots* boots) {  boots_ = boots; };
 	void equip(Sword* sword) {  sword_ = sword;  };
 	void equip(Gun* gun) {  gun_ = gun; };
+
+	//metodos para usar las pociones
+	void usePotion(int value, potionType type);
 };

@@ -77,6 +77,30 @@ bool Player::update()
 //	}
 //}
 
+void Player::usePotion(int value, potionType type) {
+	switch (type)
+	{
+	case live_:
+		currStats_.health_ += value;
+		break;
+	case mana_:
+		currStats_.mana_ += value;
+		break;
+	case velocity_:
+		currStats_.moveSpeed_ += value;
+		break;
+	case damage_:
+		currStats_.ad_ += value;
+		break;
+	case defense_:
+		currStats_.armor_ += value;
+		break;
+	case critic_:
+		currStats_.crit_ += value;
+		break;
+	
+	}
+}
 Player::~Player()
 {
 	delete armor_;
