@@ -81,24 +81,27 @@ void Inventory::equippedObj() {
 		//comprobamos de que tipo es
 		if (typeid(*select_->getObject()) == typeid(Gloves)) {
 			equiparAux(equipment_.gloves_);
+			player_->equip(static_cast<Gloves*>(select_->getObject()));
 		}
 		else if (typeid(*select_->getObject()) == typeid(Armor)) {
 			equiparAux(equipment_.armor_);
+			player_->equip(static_cast<Armor*>(select_->getObject()));
 		}
 		else if (typeid(*select_->getObject()) == typeid(Sword)) {
 			equiparAux(equipment_.sword_);
+			player_->equip(static_cast<Sword*>(select_->getObject()));
 		}
 		else if (typeid(*select_->getObject()) == typeid(Boots)) {
 			equiparAux(equipment_.boots_);
+			player_->equip(static_cast<Boots*>(select_->getObject()));
 		}
 		else if (typeid(*select_->getObject()) == typeid(Gun)) {
 			equiparAux(equipment_.gun_);
+			player_->equip(static_cast<Gun*>(select_->getObject()));
 		}
 		
 		// Una vez Equipado el nuevo objeto, lo activamos y lo eliminamos de la lista
 		select_->Enable(true);
-
-		//Recibe player
 		select_->getObject()->equip(player_);
 		inventoryList_.erase(select_->getIterator());
 
@@ -158,7 +161,7 @@ void Inventory::equiparAux(InventoryButton* &but) {
 	if (but != nullptr) {
 	//desequipamos el objeto actual
 
-		//Recibe player
+		
 		but->getObject()->remove(player_);
 		but->Enable(false);
 		InventoryButton* aux = but;

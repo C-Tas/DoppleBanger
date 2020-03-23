@@ -40,11 +40,11 @@ public:
 
 	//Método que desequipa al jugador y equipa un nuevo objeto
 	//Métodos unequip no son necesarios porque nunca va a poder estar desequipado
-	void equip(Equipment* equip);
+	//void equip(Equipment* equip);
 
-	/*void equip(Armor* armor) { armor_->remove(this); armor_ = armor; armor_->equip(this); };
-	void equip(Gloves* gloves) { gloves_->remove(this); gloves_ = gloves; gloves_->equip(this); };
-	void equip(Boots* boots) { boots_->remove(this); boots_ = boots; boots_->equip(this); };
-	void equip(Sword* sword) { sword_->remove(this); sword_ = sword; sword_->equip(this); };
-	void equip(Gun* gun) { gun_->remove(this); gun_ = gun; gun_->equip(this); };*/
+	void equip(Armor* armor) {  armor_ = armor;  };
+	void equip(Gloves* gloves) {  gloves_ = gloves;  };
+	void equip(Boots* boots) {  boots_ = boots; };
+	void equip(Sword* sword) {  sword_ = sword;  };
+	void equip(Gun* gun) {  gun_ = gun; };
 };
