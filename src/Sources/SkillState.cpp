@@ -2,6 +2,7 @@
 #include "Button.h"
 #include "Texture.h"
 #include "GameManager.h"
+#include "InventoryState.h"
 
 void SkillState::initSkillState() {
 	#ifdef _DEBUG
@@ -11,29 +12,37 @@ void SkillState::initSkillState() {
 	cout << "MELEE " << (int)GameManager::instance()->getMeleePoints() << " PUNTOS" << endl;
 	cout << "GHOST " << (int)GameManager::instance()->getGhostPoints() << " PUNTOS" << endl;
 	#endif
+	bg_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillMenu));
+	objectsToRender_.push_back(bg_);
+	gameObjects_.push_back(bg_);
 	createButtons();
 }
 
 void SkillState::createButtons() {
 	//Precision Button
-	Button* precisionButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 200,50 }, { 50,50 }, increasePrecisionBranch);
+	Button* precisionButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeGreen), { 770,375 }, { 50,50 }, increasePrecisionBranch);
 	gameObjects_.push_back(precisionButton);
 	objectsToRender_.push_back(precisionButton);
 
 	//Melee Button
-	Button* meleeButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 300,50 }, { 50,50 }, increaseMeleeBranch);
+	Button* meleeButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeYellow), { 770,525 }, { 50,50 }, increaseMeleeBranch);
 	gameObjects_.push_back(meleeButton);
 	objectsToRender_.push_back(meleeButton);
 
 	//Ghost Button
-	Button* ghostButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 400,50 }, { 50,50 }, increaseGhostBranch);
+	Button* ghostButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeBlue), { 770,675 }, { 50,50 }, increaseGhostBranch);
 	gameObjects_.push_back(ghostButton);
 	objectsToRender_.push_back(ghostButton);
 
 	//Back Button
-	Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 500,150 }, { 50,50 }, backToPreviousState);
+	Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), { 1439,214 }, { 60,53 }, backToPreviousState);
 	gameObjects_.push_back(backButton);
 	objectsToRender_.push_back(backButton);
+
+	//Inventary Button
+	Button* inventaryButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), { 175,80 }, { 50,50 }, goToInventaryState);
+	gameObjects_.push_back(inventaryButton);
+	objectsToRender_.push_back(inventaryButton);
 
 #ifdef _DEBUG
 	cout << "creados los botones correctamente" << endl;
@@ -42,6 +51,11 @@ void SkillState::createButtons() {
 
 void SkillState::backToPreviousState(Application* app) {
 	app->getStateMachine()->popState();
+}
+
+void SkillState::goToInventaryState(Application* app) {
+	cout << "Cambia a inventoryState" << endl;
+	//app->getStateMachine()->changeState(new InventoryState(app));
 }
 
 void SkillState::increasePrecisionBranch(Application* app) {

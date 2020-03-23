@@ -7,7 +7,7 @@
 #include "Texture.h"
 #include "SDL_macros.h"
 
-//BORRAR
+//Provisional
 #include "SkillState.h"
 
 using namespace std;
@@ -97,12 +97,15 @@ void MainMenuState::createButtons() {
 	objectsToRender_.push_back(exitText);
 	gameObjects_.push_back(exitText);
 
-	//BORRAR
+	//Provisional
 	Button* skillButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BotonMenu),
-		{ 100,100 },
+		{ 1150,770 },
 		{ button_w,button_h }, goSkillState);
 	gameObjects_.push_back(skillButton);
 	objectsToRender_.push_back(skillButton);
+	Draw* skillText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::SkillText), skillButton->getDestiny());
+	objectsToRender_.push_back(skillText);
+	gameObjects_.push_back(skillText);
 
 
 #ifdef _DEBUG
@@ -127,7 +130,7 @@ void MainMenuState::exitGame(Application* app) {
 	app->endGame();
 }
 
-//BORRAR
+//Provisional
 void MainMenuState::goSkillState(Application* app) {
 	app->getStateMachine()->pushState(new SkillState(app));
 }

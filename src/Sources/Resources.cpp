@@ -7,8 +7,15 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Timon, "../Sources/assets/player/timon.png" },
 	{ GoControls, "../Sources/assets/botones/botonControles.png"},
 	{ BackButton, "../Sources/assets/botones/volver.png"},
+	{ ButtonX, "../Sources/assets/botones/botonX.png"},
+	{ ButtonUpgradeGreen, "../Sources/assets/botones/UpgradeButtonGreen.png"},
+	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},
+	{ ButtonUpgradeBlue, "../Sources/assets/botones/UpgradeButtonBlue.png"},
+	{ ButtonUpgradeYellow, "../Sources/assets/botones/UpgradeButtonYellow.png"},
+
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
 	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
+	{ SkillMenu, "../Sources/assets/interfaces/HabilidadesFondo.png" },
 	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
 	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
 	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
@@ -43,4 +50,5 @@ vector <Resources::TextMsgInfo> Resources::messages_{
 	{ ControlsText,"Controles",SDL_Color{(0,0,0,1)},RETRO },
 	{ LoadText,"Cargar Partida",SDL_Color{(0,0,0,1)},RETRO },
 	{ CreditsText,"Créditos",SDL_Color{(0,0,0,1)},RETRO },
+	{ SkillText,"SkillMenu",SDL_Color{(0,0,0,1)},RETRO },
 };

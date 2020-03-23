@@ -34,6 +34,6 @@ public:
 	//Para salir del juego
 	static void exitGame(Application* app);
 
-	//BORRAR
+	//Provisional
 	static void goSkillState(Application* app);
 };

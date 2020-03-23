@@ -4,6 +4,9 @@
 class SkillState :
 	public GameState
 {
+private:
+	Draw* bg_ = nullptr;
+
 protected:
 	///<summary>Se inicializa el skill state</summary>
 	void initSkillState();
@@ -18,6 +21,8 @@ public:
 
 	///<summary>Metodo para pasar a los botones de este estado, vuelve al anterior</summary>
 	static void backToPreviousState(Application* app);
+	///<summary>Metodo para pasar InventoryState</summary>
+	static void goToInventaryState(Application* app);
 	///<summary>Invierte un punto de hazaña en la rama Precision</summary>
 	static void increasePrecisionBranch(Application* app);
 	///<summary>Invierte un punto de hazaña en la rama Melee</summary>

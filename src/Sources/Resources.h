@@ -18,9 +18,15 @@ public:
 		GoControls,
 		BackButton,
 		Controls,
+		ButtonX,
+		ButtonUpgradeGreen,
+		ButtonUpgradeRed,
+		ButtonUpgradeBlue,
+		ButtonUpgradeYellow,
 
 		//Fondos
 		InventaryMenu,
+		SkillMenu,
 		Scene1,
 		Scene2,
 		Scene3,
@@ -36,7 +42,8 @@ public:
 		ExitText,
 		ControlsText,
 		LoadText,
-		CreditsText
+		CreditsText,
+		SkillText
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
