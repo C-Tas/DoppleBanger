@@ -11,7 +11,8 @@ private:
 	int actualTarget_;
 	///<summary>actualiza el objetivo al que se dirige</summary>
 	void updateTarget() { actualTarget_ = (actualTarget_ + 1) % targetsVector_.size(); }
-
+	///<summary>devuelve si ataca o no</summary>
+	bool attack();
 public:
 	virtual bool update();
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores ser?n los puestos, si se le pasan valores los editara</summary>

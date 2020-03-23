@@ -23,6 +23,13 @@ bool Crab::update() {
 	}
 
 
-	changeTexture((visPos_.getX() < 200 &&visPos_.getX() > 150 &&visPos_.getY() < 500 &&visPos_.getX() > 150),1);
+	changeTexture(attack(),1);
 	return false;
+}
+bool Crab::attack() { 
+	if (visPos_.getX() < 200 && visPos_.getX() > 150 && visPos_.getY() < 500 && visPos_.getX() > 150) {
+		doDamage();
+		return true;
+	}
+	return false; 
 }
