@@ -28,7 +28,7 @@ void callExit(Application* app){
 	app->getStateMachine()->popState();
 }
 
-Inventory::Inventory(Application* app) :GameState(app) {
+Inventory::Inventory(Application* app, Player* player) :GameState(app), player_(player) {
 	deleteButton_ = new Button(app, dynamic_cast<GameState*>(this),app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 50,500 }, Vector2D{ 50,50 },callDeleteObject);
 	addUpdateList(deleteButton_);
 	addRenderList(deleteButton_);
@@ -49,7 +49,6 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	cout << "creamos el objeto" << endl;
 	string nombre = "guantes1";
 	string desc = "duantes1";
-	Player* player = nullptr;
 	
 	Gloves* guante0 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10);
 	Gloves* guante1 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), nombre, desc, 20.0, 10, 10);
@@ -100,8 +99,8 @@ void Inventory::equippedObj() {
 		select_->Enable(true);
 
 		//Recibe player
-		//select_->getObject()->equip();
-		InventoryList_.erase(select_->getIterator());
+		select_->getObject()->equip(player_);
+		inventoryList_.erase(select_->getIterator());
 
 	}
 
@@ -130,7 +129,7 @@ void Inventory::deleteObj() {
 
 		}
 		//lo borramos de la lista
-		else {InventoryList_.erase(select_->getIterator());}
+		else {inventoryList_.erase(select_->getIterator());}
 		//Eliminamos el objeto
 		delete select_;
 		select_ = nullptr;
@@ -143,11 +142,11 @@ void Inventory::addToInventory(Equipment* ob) {
 	//le asignamos al objeto su boton
 	ob->setButton(b);
 	//Añadimos el boton a la lista y le asignamos un iterador con su posicion
-	list <InventoryButton*>::iterator it = InventoryList_.insert(InventoryList_.end(), b);
+	list <InventoryButton*>::iterator it = inventoryList_.insert(inventoryList_.end(), b);
 	b->setIterator(it);
 	//comprobamos si es el primer objeto de la lista
-	if (it == InventoryList_.begin()) {
-		ListPos = InventoryList_.begin();//iniciamos el puntero
+	if (it == inventoryList_.begin()) {
+		ListPos = inventoryList_.begin();//iniciamos el puntero
 	}
 
 
@@ -160,11 +159,11 @@ void Inventory::equiparAux(InventoryButton* &but) {
 	//desequipamos el objeto actual
 
 		//Recibe player
-		//but->getObject()->remove();
+		but->getObject()->remove(player_);
 		but->Enable(false);
 		InventoryButton* aux = but;
 		//El objeto desequipado lo devolvemos al final de la lista
-		list <InventoryButton*>::iterator it = InventoryList_.insert(InventoryList_.end(), aux);
+		list <InventoryButton*>::iterator it = inventoryList_.insert(inventoryList_.end(), aux);
 		aux->setIterator(it);
 	}
 	//equipamos el nuevo objeto
@@ -175,7 +174,7 @@ void Inventory::equiparAux(InventoryButton* &but) {
 void Inventory::forwardList() {
 	int aux = advanced;
 	aux += 1;
-	if ((aux * VIEW_LIST)<= InventoryList_.size()){
+	if ((aux * VIEW_LIST)<= inventoryList_.size()){
 		advanced = aux;
 		advance(ListPos, VIEW_LIST);//avanzamos el iterador
 	}
@@ -198,7 +197,7 @@ void Inventory::draw()const {
 //#endif
 	GameState::draw();//dibujamos todos los botones normales
 	//Despues dibujaremos SOLO los botones de la lista que salen por pantalla
-	if (!InventoryList_.empty()) {
+	if (!inventoryList_.empty()) {
 		list<InventoryButton*>::iterator aux = ListPos;
 		InventoryButton* auxOb = nullptr;
 		// posiciones estandar de los botones
@@ -206,7 +205,7 @@ void Inventory::draw()const {
 		int y = 200;
 		int i = 0;
 		//dibujamos los objetos de la primera columna
-		while (i < VIEW_LIST / 2 && aux != InventoryList_.end()) {
+		while (i < VIEW_LIST / 2 && aux != inventoryList_.end()) {
 			//#ifdef _DEBUG
 			//		cout << "entramos en el bucle" << endl;
 			//#endif
@@ -218,7 +217,7 @@ void Inventory::draw()const {
 		}
 		//dibujamos los objetos de la segunda colmna
 		int j = 0;
-		while (j < VIEW_LIST / 2 && aux != InventoryList_.end()) {
+		while (j < VIEW_LIST / 2 && aux != inventoryList_.end()) {
 			auxOb = *aux;
 			auxOb->setPos(Vector2D{ double(x + 100),double(y + (j * 100)) });
 			auxOb->draw();//desreferenciamos el puntero
@@ -240,12 +239,12 @@ void Inventory::update() {
 	//Actualizamos los objetos normales
 	GameState::update();
 	//comprobamos si la lista del inventario no esta vacia, si no lo esta se actualizan los objetos de la lista
-	if (!InventoryList_.empty()) {
+	if (!inventoryList_.empty()) {
 		list<InventoryButton*>::iterator aux = ListPos;
 		InventoryButton* auxOb = nullptr;
 		int i = 0;
 		//Actualizaremos SOLO los botones de la lista que salen por pantalla
-		while(i < VIEW_LIST && aux!= InventoryList_.end()){
+		while(i < VIEW_LIST && aux!= inventoryList_.end()){
 			auxOb = *aux;
 			auxOb->update();//desreferenciamos el puntero
 			aux++;
