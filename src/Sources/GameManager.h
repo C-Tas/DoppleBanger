@@ -16,8 +16,8 @@ using lista = list<InventoryButton*>;
 
 //Enumerados que representan la �ltima isla desbloqueada
 enum class Island : int {
-	CaribeanA		= 0,
-	CaribeanB		= 1,
+	CaribeanA		= 1,
+	CaribeanB		= 2,
 	CaribeanC		= 3,
 	CaribeanBoss	= 4,
 	SpookyA			= 5,
