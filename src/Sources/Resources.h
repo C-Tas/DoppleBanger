@@ -26,6 +26,7 @@ public:
 		Scene3,
 		TextBox,
 		MenuFondo,
+		Barco,
 
 		//Personajes
 		Dragon,

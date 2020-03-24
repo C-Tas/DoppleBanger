@@ -2,8 +2,8 @@
 
 vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Interfaces
-	{MenuFondo, "../Sources/assets/interfaces/menuFondo.png"},
-	{BotonMenu, "../Sources/assets/botones/botonMenu.png"},
+	{ MenuFondo, "../Sources/assets/interfaces/menuFondo.png"},
+	{ BotonMenu, "../Sources/assets/botones/botonMenu.png"},
 	{ Timon, "../Sources/assets/player/timon.png" },
 	{ GoControls, "../Sources/assets/botones/botonControles.png"},
 	{ BackButton, "../Sources/assets/botones/volver.png"},
