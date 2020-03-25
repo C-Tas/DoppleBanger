@@ -6,8 +6,8 @@
 #include "Button.h"
 #include "Texture.h"
 #include "SDL_macros.h"
-
 using namespace std;
+
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
 {
@@ -21,7 +21,7 @@ void MainMenuState::initMenuState()
 		cout << "\n";
 	}*/
 
-	SDL_Rect playerCollision; playerCollision.x = 0; playerCollision.y = 0; playerCollision.w = 0; playerCollision.h = 0;
+	SDL_Rect playerCollision; playerCollision.x = 50; playerCollision.y = 50; playerCollision.w = 100; playerCollision.h = 100;
 	player_ = new Player(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D(50, 50), Vector2D(100, 100), playerCollision);
 
 	addUpdateList(player_);
@@ -43,7 +43,6 @@ void MainMenuState::initMenuState()
 
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
-
 }
 
 void MainMenuState::createButtons() {
@@ -98,6 +97,17 @@ void MainMenuState::createButtons() {
 #ifdef _DEBUG
 	cout << "creados los botones correctamente"<<endl;
 #endif
+}
+
+void MainMenuState::update() {	//Update temporal
+	GameState::update(); //Para el update de os objetos
+	if (SDL_HasIntersection(&player_->getCollider(), &npc_->getCollider())) {	//El textBox se genera cuando haya colisión con el npc
+		//Genera textBox
+		npc_->getTextBox().dialogElderMan(0);	
+		
+		//El GameState se encarga de llevar que misiones secundarias están desbloqueadas,
+		//así como si se viaja a una isla por primera vez.
+	}
 }
 #pragma endregion
 #pragma region Cambios de estados

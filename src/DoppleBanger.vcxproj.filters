@@ -6,6 +6,7 @@
     <ClCompile Include="Sources\GameStateMachine.cpp">
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
+    
     <ClCompile Include="Sources\GameState.cpp">
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
@@ -105,7 +106,7 @@
     <ClCompile Include="Sources\SRandBasedGenerator.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\TextBoxManager.cpp">
+    <ClCompile Include="Sources\TextBox.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Sources\TextureManager.cpp">
@@ -134,6 +135,7 @@
     </ClCompile>
     <ClCompile Include="Sources\ShipState.cpp" />
   </ItemGroup>
+  
   <ItemGroup>
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -238,7 +240,7 @@
     <ClInclude Include="Sources\SRandBasedGenerator.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\TextBoxManager.h">
+    <ClInclude Include="Sources\TextBox.h">
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Sources\TextureManager.h">

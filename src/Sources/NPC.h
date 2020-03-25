@@ -1,15 +1,21 @@
 #pragma once
-#include "Actor.h"
-class NPC : public Actor
-{
-public:
-	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores serï¿½n los puestos, si se le pasan valores los editara</summary>
-	NPC(Application* app = nullptr, Texture* texture = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0,0 }, SDL_Rect collisionArea = { 0,0,0,0 }, SDL_Rect frame = {0,0,0,0},int numberFrames=0) :Actor(app, texture, pos, scale, collisionArea,frame,numberFrames) {};
-	//<summary>Constructor por copia</summary>
-	NPC(NPC& other) :Actor(other.app_, other.texture_, other.pos_, other.scale_, other.collisionArea_) {};
-	//<summary>Constructor por movimiento<summary>
-	NPC(NPC&& other)noexcept :Actor(other.app_, other.texture_, other.pos_, other.scale_, other.collisionArea_) {};
-	//<summary>Destructor</summary>
-	virtual~NPC() {};
-};
+#include "Collider.h"
+#include "TextBox.h"
 
+class NPC : public Collider {
+private:
+	TextBox txtBox;
+public:
+	NPC(Application* app, SDL_Rect collisionArea, Texture* texture, Point2D pos, Vector2D scale) :
+		Collider(app, collisionArea, texture, pos, scale), txtBox(TextBox(app)) {};
+	virtual ~NPC() {};
+
+	///<summary>Devuelve la caja de texto, hay que llamar al diálogo que se quiera</summary>
+	TextBox getTextBox() { return txtBox; };
+
+	///<summary>Lleva la animación del NPC</summary>
+	virtual bool update() { /**/ return false; };
+	///<summary>Renderiza la animación idle del NPC</summary>
+	virtual void draw() const { texture_->render(destiny_, frame_); };
+	virtual void onCollider() {};
+};
