@@ -28,7 +28,7 @@ bool Crab::update() {
 }
 bool Crab::attack() { 
 	if (visPos_.getX() < 200 && visPos_.getX() > 150 && visPos_.getY() < 500 && visPos_.getX() > 150) {
-		doDamage();
+		doDamage();//falta definir en enemy
 		return true;
 	}
 	return false; 
