@@ -21,6 +21,8 @@ public:
 	Crab(Crab& other) :Enemy(other.app_, other.textures_, other.pos_, other.scale_, other.collisionArea_) { currStats_ = other.currStats_; };
 	//<summary>Constructor por movimiento<summary>
 	Crab(Crab&& other)noexcept :Enemy(other.app_, other.textures_, other.pos_, other.scale_, other.collisionArea_) { currStats_ = other.currStats_; };
+
+	~Crab() {};
 };
 
 

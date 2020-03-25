@@ -9,7 +9,7 @@ bool Crab::update() {
 #endif // _DEBUG
 
 	//Margen de 2 pixeles
-	if (visPos_.getX() < obj_.getX() - 2 ||
+	/*if (visPos_.getX() < obj_.getX() - 2 ||
 		visPos_.getX() > obj_.getX() + 2 ||
 		visPos_.getY() < obj_.getY() - 2 ||
 		visPos_.getX() > obj_.getX() + 2)
@@ -23,7 +23,7 @@ bool Crab::update() {
 	}
 
 
-	changeTexture(attack(),1);
+	changeTexture(attack(),1);*/
 	return false;
 }
 bool Crab::attack() { 

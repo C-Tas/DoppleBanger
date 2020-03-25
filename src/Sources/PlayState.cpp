@@ -4,6 +4,47 @@
 #include "InventoryState.h"
 #include "SelectLevelState.h"
 #include "StashState.h"
+
+void PlayState::update() {
+	checkPlayerActions();
+	//Update de todos los objetos. En los botones que cambian estado devuelve true para dejar de updatear los objetos
+	//de ese estado
+	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+		if ((*it)->update())return;
+	}
+}
+
+void PlayState::addEnemy(Enemy* obj) {
+	//Push front porque a suponiendo que dos enemigos se superpongan y se haga click en ellos para atacar,
+	//se renderizan en un orden (el de objectsToRender) y por lo cual las comprobaciones deben hacerse en el contrario.
+	enemies_.push_front(obj);
+	addRenderUpdateLists(obj);
+}
+
+void PlayState::checkPlayerActions() {
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
+	{
+		Enemy* obj; obj = checkAttack();
+		if (obj != nullptr) player_->attack(obj);
+		//else if NPC
+		else player_->move(eventHandler_->getMousePos());
+	}
+}
+
+Enemy* PlayState::checkAttack() {
+	bool found = false;
+	Enemy* obj = nullptr;
+	Vector2D mousePos = eventHandler_->getMousePos();
+	SDL_Point mouse = { 0, 0 }; mouse.x = mousePos.getX(); mouse.y = mousePos.getY();
+	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
+		if (SDL_PointInRect(&mouse, &(*it)->getCollider())) {
+			obj = (*it);
+			found = true;
+		}
+	}
+	return obj;
+}
+
 #pragma region ChangeState
 void PlayState::goToPauseState(Application* app) {
 	app->getStateMachine()->pushState(new PauseState(app));

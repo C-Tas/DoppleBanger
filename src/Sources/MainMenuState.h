@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "Crab.h" //Include temporal
 #include "Player.h" //Include temporal
 #include "Equipment.h" //Include temporal
 
@@ -8,6 +9,7 @@ class MainMenuState :
 {
 private:
 	Player* player_ = nullptr;
+	Crab* crab_ = nullptr;
 
 protected:
 	///<summary>Se inicializa el menu</summary>

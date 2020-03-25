@@ -19,6 +19,6 @@ protected:
 ///<summary>Destructor de la clase Actor</summary>
 	virtual ~Actor(){};
 	//<summary>Inicializa todas las stats</summary>
-	void initStats(int health, int mana, int manaReg, int armor, int ad, int ap, int crit, double moveSpeed, double meleeRate, double distRate);
+	void initStats(int health, int mana, int manaReg, int armor, int ad, int ap, int crit, int range, double moveSpeed, double meleeRate, double distRate);
 };
 
