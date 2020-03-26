@@ -41,6 +41,7 @@ private:
 	void printInformation() {};
 	void printPlayerInfo(){};
 	void equiparAux(InventoryButton* &but);
+	void equipPotionAux();
 	
 	
 	

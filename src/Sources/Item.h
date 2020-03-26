@@ -26,4 +26,8 @@ public:
 	Texture* getItemTexture() { return itemTexture_; };
 	double getItemQuantity() { return itemQuantity_; };
 	double getItemPrice() { return itemPrice_; };
+
+
+	virtual void equip(Player* player) = 0;
+	virtual void remove(Player* player) = 0;
 };

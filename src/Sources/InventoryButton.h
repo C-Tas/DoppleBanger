@@ -1,6 +1,7 @@
 #pragma once
 #include "Button.h"
-#include "Equipment.h"
+//#include "Equipment.h"
+#include "Item.h"
 #include <list>
 using namespace std;
 using CallBackOnClickInventory = void(GameState* state, InventoryButton* button);
@@ -11,14 +12,14 @@ class InventoryButton: public Button
 {
 private:
 	list <InventoryButton*> ::iterator inventoryIterator_ ;
-	Equipment* object_;
+	Item* object_;
 	bool equipped = false;
 	CallBackOnClickInventory* callBackInventory_;
 	
 
 public:
 
-	InventoryButton(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, Equipment* ob, CallBackOnClickInventory* callBack);
+	InventoryButton(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, Item* ob, CallBackOnClickInventory* callBack);
 	virtual bool update();
 	bool isEquipped() { return equipped; }
 	void Enable(bool e) { equipped = e; }
@@ -30,7 +31,7 @@ public:
 
 	//Object
 	void setObject(Equipment* ob) { object_ = ob; }
-	Equipment* getObject() { return object_; }
+	Item* getObject() { return object_; }
 
 
 

@@ -18,6 +18,8 @@ public:
 
 	//Metodo que se llama para usar la pocion
 	void use(Player* player);
+	virtual void equip(Player* player) {};
+	virtual void remove(Player* player) {};
 
 
 

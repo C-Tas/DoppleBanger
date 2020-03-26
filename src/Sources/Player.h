@@ -59,6 +59,8 @@ public:
 	void equip(Boots* boots) { equip_.boots_ = boots; };
 	void equip(Sword* sword) { equip_.sword_ = sword;  };
 	void equip(Gun* gun) { equip_.gun_ = gun; };
+	void equipPotion1(usable* pot) { equip_.potion1_ = pot; }
+	void equipPotion2(usable* pot) { equip_.potion2_ = pot; }
 
 	//metodos para usar las pociones
 	void usePotion(int value, potionType type);

@@ -90,29 +90,46 @@ void Inventory::selectObject(InventoryButton* ob) {
 }
 
 void Inventory::equippedObj() {
-	//comprobamos si hay un objeto seleccionado
-	if (select_ != nullptr) {
-		//comprobamos de que tipo es
-		if (typeid(*select_->getObject()) == typeid(Gloves)) {
-			equiparAux(equipment_.gloves_);
-			player_->equip(static_cast<Gloves*>(select_->getObject()));
+	//comprobamos si hay un objeto seleccionado y que no se trate de un objeto ya equipado
+	if (select_ != nullptr && !select_->isEquipped()) {
+		//comprobamos si se trata de un equipment
+		if (typeid(*select_->getObject()) == typeid(Equipment)) {
+
+			//comprobamos de que tipo es
+			if (typeid(*select_->getObject()) == typeid(Gloves)) {
+				equiparAux(equipment_.gloves_);
+				player_->equip(static_cast<Gloves*>(select_->getObject()));
+
+			}
+			else if (typeid(*select_->getObject()) == typeid(Armor)) {
+				equiparAux(equipment_.armor_);
+				player_->equip(static_cast<Armor*>(select_->getObject()));
+			}
+			else if (typeid(*select_->getObject()) == typeid(Sword)) {
+				equiparAux(equipment_.sword_);
+				player_->equip(static_cast<Sword*>(select_->getObject()));
+			}
+			else if (typeid(*select_->getObject()) == typeid(Boots)) {
+				equiparAux(equipment_.boots_);
+				player_->equip(static_cast<Boots*>(select_->getObject()));
+			}
+			else if (typeid(*select_->getObject()) == typeid(Gun)) {
+				equiparAux(equipment_.gun_);
+				player_->equip(static_cast<Gun*>(select_->getObject()));
+			}
+
+			select_->Enable(true);
+			select_->getObject()->equip(player_);
+			inventoryList_->erase(select_->getIterator());
 		}
-		else if (typeid(*select_->getObject()) == typeid(Armor)) {
-			equiparAux(equipment_.armor_);
-			player_->equip(static_cast<Armor*>(select_->getObject()));
+		//si se trata de un usable
+		else {
+			equipPotionAux();
+			select_->Enable(true);
+			inventoryList_->erase(select_->getIterator());
+
 		}
-		else if (typeid(*select_->getObject()) == typeid(Sword)) {
-			equiparAux(equipment_.sword_);
-			player_->equip(static_cast<Sword*>(select_->getObject()));
-		}
-		else if (typeid(*select_->getObject()) == typeid(Boots)) {
-			equiparAux(equipment_.boots_);
-			player_->equip(static_cast<Boots*>(select_->getObject()));
-		}
-		else if (typeid(*select_->getObject()) == typeid(Gun)) {
-			equiparAux(equipment_.gun_);
-			player_->equip(static_cast<Gun*>(select_->getObject()));
-		}
+		
 		
 		// Una vez Equipado el nuevo objeto, lo activamos y lo eliminamos de la lista
 		select_->Enable(true);
@@ -125,7 +142,7 @@ void Inventory::equippedObj() {
 void Inventory::deleteObj() {
 	//Comprobamos si hay algun elemento seleccionado
 	if (select_ != nullptr) {
-		// comprobamos si se trata de un objeto equipado o de uno de la lista
+		// comprobamos que no se trate de un elemento equipado
 		if (!select_->isEquipped()) {
 			
 			if (select_->getIterator() == ListPos)++ListPos;
@@ -172,6 +189,20 @@ void Inventory::equiparAux(InventoryButton* &but) {
 	//equipamos el nuevo objeto
 	but= select_; 
 }
+void Inventory::equipPotionAux() {
+	//Si ya hay un objeto equipado
+	if (equipment_.potion1_ == nullptr) {
+		
+		equipment_.potion1_ = select_;
+		player_->equipPotion1(static_cast<usable*>(select_->getObject()));
+	
+	}
+	else if (equipment_.potion2_ == nullptr) {
+		equipment_.potion2_ = select_;
+		player_->equipPotion2(static_cast<usable*>(select_->getObject()));
+	}
+	
+}
 
 //boton que avanza en la lista para mostrar los siguientes elementos, en este caso avazara el iterador
 void Inventory::forwardList() {
@@ -191,9 +222,7 @@ void Inventory::backList() {
 		advanced = aux;
 		advance(ListPos, -VIEW_LIST);//retrocedemos el iterador
 	}
-
 }
-
 void Inventory::draw()const {
 //#ifdef _DEBUG
 //	cout << "entramos en draw" << endl;
@@ -269,6 +298,12 @@ void Inventory::update() {
 	
 	if (equipment_.sword_ != nullptr) {
 		equipment_.sword_->update();
+	}
+	if (equipment_.potion1_ != nullptr) {
+		equipment_.potion1_->update();
+	}
+	if (equipment_.potion2_ != nullptr) {
+		equipment_.potion2_->update();
 	}
 
 	
