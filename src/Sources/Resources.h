@@ -12,26 +12,37 @@ public:
 	///<summary>Enum para las distintas imagenes del juego</summary>
 	enum TextureId : int {
 		//Botones
-		Timon,
 		BotonMenu,
-		//Botones
 		GoControls,
 		BackButton,
-		Controls,
 
 		//Fondos
+		MenuFondo,
 		InventaryMenu,
+		Controls,
 		Scene1,
 		Scene2,
 		Scene3,
 		TextBox,
-		MenuFondo,
-		Barco,
+		Ship,
+		Table,
+		Map1,
+		Map2,
+		Map3,
+		Caribbean,
+		Spooky,
+		Volcanic,
 
 		//Personajes
+		Timon,
 		Dragon,
+        PirateFront,
+
+		//Colsionable
 		Roca,
-        
+		Stash,
+		ShipDoor,
+
 		//Textos
 		PlayText,
 		ExitText,
@@ -42,7 +53,10 @@ public:
 
 	///<summary>Enum para las distintos audios del juego</summary>
 	enum AudioId : int{
+		//Música
 		MainTheme
+
+		//Efectos de sonido
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

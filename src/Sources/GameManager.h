@@ -132,6 +132,3 @@ public:
 	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
 #pragma endregion
 };
-
-
-

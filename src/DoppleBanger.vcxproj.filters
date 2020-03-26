@@ -132,7 +132,12 @@
     <ClCompile Include="Sources\SDL_macros.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\ShipState.cpp" />
+    <ClCompile Include="Sources\ShipState.cpp">
+      <Filter>GameStateMahcine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ShipObject.cpp">
+      <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Application.h" />
@@ -271,7 +276,12 @@
     <ClInclude Include="Sources\Skill.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\ShipState.h" />
+    <ClInclude Include="Sources\ShipState.h">
+      <Filter>GameStateMahcine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ShipObject.h">
+      <Filter>GameObjects\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

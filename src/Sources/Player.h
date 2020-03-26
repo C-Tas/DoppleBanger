@@ -29,6 +29,12 @@ public:
 		eventHandler_ = HandleEvents::instance();
 		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
+	///<summary>Constructor por copia</summary>
+	Player(const Player& other) : Actor(other.app_, other.texture_, other.pos_, other.scale_, other.collisionArea_){
+		eventHandler_ = HandleEvents::instance();
+		currStats_ = other.currStats_;
+	};
+
 	~Player() { texture_ = nullptr; };
 	virtual bool update();
 	virtual void onCollider() {};
