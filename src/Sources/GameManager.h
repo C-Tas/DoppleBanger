@@ -11,7 +11,7 @@
 
 using namespace std;
 class Item;
-using lista = list<Item*>;
+using lista = list<InventoryButton*>*;
 
 //Enumerados que representan la �ltima isla desbloqueada
 enum class Island : int {
@@ -57,9 +57,9 @@ private:
 	//Puntos de haza�a gastados de la rama ghost
 	spentPoints ghost_ = spentPoints::Ghost;
 	//Puntero a la lista de item del inventario
-	list<Item*> inventory_;
+	list<InventoryButton*>* inventory_ = new list<InventoryButton*>;
 	//Puntero a la lista de items del alijo
-	list<Item*> stash_;
+	list<InventoryButton*>* stash_= new list<InventoryButton*>;
 	//Vector que representa las misiones secundarias completadas
 	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
@@ -75,8 +75,10 @@ public:
 	}
 	//Destructor
 	~GameManager() {
-		for (Item* ob : inventory_)delete ob;
-		for (Item* ob : stash_)delete ob;
+		for (InventoryButton* ob : *inventory_)delete ob;
+		for (InventoryButton* ob : *stash_)delete ob;
+		delete inventory_;
+		delete stash_;
 	}
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {

@@ -10,11 +10,11 @@ void Player::init()
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
-	armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pechera", "helloWorld", 10, 10, 10); armor_->writeStats(); //Prueba
-	gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Guantes", "helloWorld", 10, 10, 10); gloves_->writeStats(); //Prueba
-	boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Botas", "helloWorld", 10, 10, 10); boots_->writeStats(); //Prueba
-	sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Sable", "helloWorld", 10, 10, 10, Saber_); sword_->writeStats(); //Prueba
-	gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pistola", "helloWorld", 10, 10, 10, Pistol_); gun_->writeStats(); //Prueba
+	equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pechera", "helloWorld", 10, 10, 10); equip_.armor_->writeStats(); //Prueba
+	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Guantes", "helloWorld", 10, 10, 10); equip_.gloves_->writeStats(); //Prueba
+	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Botas", "helloWorld", 10, 10, 10); equip_.boots_->writeStats(); //Prueba
+	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Sable", "helloWorld", 10, 10, 10, Saber_); equip_.sword_->writeStats(); //Prueba
+	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
 }
 
 bool Player::update()
@@ -22,6 +22,22 @@ bool Player::update()
 	updateVisPos();
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 		move(eventHandler_->getMousePos());
+
+	//para utilizar las pociones
+	if (eventHandler_->isKeyDown(SDLK_1)) {
+		if (equip_.potion1_ != nullptr) {
+			equip_.potion1_->use(this);
+			delete equip_.potion1_;
+			equip_.potion1_ = nullptr;
+		}
+	}
+	if (eventHandler_->isKeyDown(SDLK_2)) {
+		if (equip_.potion2_ != nullptr) {
+			equip_.potion2_->use(this);
+			delete equip_.potion2_;
+			equip_.potion2_ = nullptr;
+		}
+	}
 
 	//Margen de 2 pixeles
 	if (visPos_.getX() < obj_.getX() - 2 ||
@@ -103,9 +119,9 @@ void Player::usePotion(int value, potionType type) {
 }
 Player::~Player()
 {
-	delete armor_;
-	delete gloves_;
-	delete boots_;
-	delete sword_;
-	delete gun_;
+	delete equip_.armor_;
+	delete equip_.gloves_;
+	delete equip_.boots_;
+	delete equip_.sword_;
+	delete equip_.gun_;
 }

@@ -3,8 +3,8 @@
 #include "Equipment.h"
 #include <list>
 using namespace std;
-//using CallBackOnClickInventory = void(GameState* state, InventoryButton* button);
-using CallBackOnClickInventory = void(GameState * state, Equipment * ob);
+using CallBackOnClickInventory = void(GameState* state, InventoryButton* button);
+//using CallBackOnClickInventory = void(GameState * state, Equipment * ob);
 
 
 class InventoryButton: public Button

@@ -9,8 +9,8 @@ using namespace std;
 //	dynamic_cast<Inventory*>(state)->selectObject(button);
 //}
 
-void callSelectObject(GameState * state, Equipment* ob) {
-		dynamic_cast<Inventory*>(state)->selectObject(ob->getButton());
+void callSelectObject(GameState * state, InventoryButton* but) {
+		dynamic_cast<Inventory*>(state)->selectObject(but);
 	}
 void callDeleteObject(GameState* state) {
 	dynamic_cast<Inventory*>(state)->deleteObj();
@@ -112,30 +112,17 @@ void Inventory::deleteObj() {
 	//Comprobamos si hay algun elemento seleccionado
 	if (select_ != nullptr) {
 		// comprobamos si se trata de un objeto equipado o de uno de la lista
-		if (select_->isEquipped()) {
-			//comprobamos de que tipo es
-			if (typeid(*select_->getObject()) == typeid(Gloves)) {
-				equipment_.gloves_ = nullptr;
-			}
-			else if (typeid(*select_->getObject()) == typeid(Armor)) {
-				equipment_.armor_ = nullptr;
-			}
-			else if (typeid(*select_->getObject()) == typeid(Sword)) {
-				equipment_.sword_ = nullptr;
-			}
-			else if (typeid(*select_->getObject()) == typeid(Boots)) {
-				equipment_.boots_ = nullptr;
-			}
-			else if (typeid(*select_->getObject()) == typeid(Gun)) {
-				equipment_.gun_ = nullptr;
-			}
+		if (!select_->isEquipped()) {
+			
+			if (select_->getIterator() == ListPos)++ListPos;
+			inventoryList_.erase(select_->getIterator());
+			//Eliminamos el objeto
+			delete select_;
+			select_ = nullptr;
 
 		}
 		//lo borramos de la lista
-		else {inventoryList_.erase(select_->getIterator());}
-		//Eliminamos el objeto
-		delete select_;
-		select_ = nullptr;
+		
 	}
 }
 
@@ -143,7 +130,6 @@ void Inventory::addToInventory(Equipment* ob) {
 	//creamos un boton
 	InventoryButton* b = new InventoryButton(app_,this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 300,400 }, Vector2D{ 50,50 },ob, callSelectObject);
 	//le asignamos al objeto su boton
-	ob->setButton(b);
 	//Añadimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = inventoryList_.insert(inventoryList_.end(), b);
 	b->setIterator(it);

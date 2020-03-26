@@ -1,7 +1,7 @@
 #pragma once
 #include "Item.h"
-#include "Player.h"
-
+//#include "Player.h"
+class Player;
 
 const enum potionType { live_, mana_, velocity_, damage_, defense_, critic_ };
 
@@ -17,7 +17,7 @@ public:
 	virtual ~usable() {}; //Destructora 
 
 	//Metodo que se llama para usar la pocion
-	void use(Player* player) { player->usePotion(value_, type_); }
+	void use(Player* player);
 
 
 

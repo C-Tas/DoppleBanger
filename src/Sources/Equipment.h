@@ -17,7 +17,7 @@ protected:
 	Stats modifiers_;
 	Player* player_;
 	Inventory* inventory_;
-	InventoryButton* inventoryButton_;
+	
 
 public:
 	//Crea un item equipable del tipo dado
@@ -25,8 +25,7 @@ public:
 		Item(texture, name, desc, price, 1), type_(type) { };
 	virtual ~Equipment() {}; //Destructora generica
 
-	InventoryButton* getButton() { return inventoryButton_; }
-	void setButton(InventoryButton* but) { inventoryButton_ = but; }
+	
 
 	virtual void equip(Player* player) = 0;
 	virtual void remove(Player* player) = 0;

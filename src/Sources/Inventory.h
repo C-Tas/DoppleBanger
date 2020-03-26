@@ -11,6 +11,8 @@ struct Equipments
 	InventoryButton* gloves_ = nullptr;
 	InventoryButton* sword_ = nullptr;
 	InventoryButton* gun_ = nullptr;
+	InventoryButton* potion1_ = nullptr;
+	InventoryButton* potion2_ = nullptr;
 
 };
 
@@ -19,7 +21,7 @@ class Inventory: public GameState
 {
 private:
 	Texture* background_;
-	list<InventoryButton*> inventoryList_;
+	list<InventoryButton*>* inventoryList_;
 	Button* deleteButton_;// boton para eliminar un elemento del inventario
 	Button* equippedButton_; // boton para equipar un elemento al jugador
 	Button* advanceButton_; // boton para que se muestren los siguientes elementos de la lista
@@ -37,6 +39,7 @@ private:
 	//metodos privados
 	
 	void printInformation() {};
+	void printPlayerInfo(){};
 	void equiparAux(InventoryButton* &but);
 	
 	
