@@ -21,11 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Sources\AudioManager.cpp" />
-=======
-    <ClCompile Include="Sources\Bullet.cpp" />
->>>>>>> shooting_player
     <ClCompile Include="Sources\Button.cpp" />
     <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
@@ -73,11 +69,7 @@
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
-<<<<<<< HEAD
     <ClInclude Include="Sources\AudioManager.h" />
-=======
-    <ClInclude Include="Sources\Bullet.h" />
->>>>>>> shooting_player
     <ClInclude Include="Sources\Button.h" />
     <ClInclude Include="Sources\CaribbeanIslandState.h" />
     <ClInclude Include="Sources\checkML.h" />

@@ -42,7 +42,7 @@ void MainMenuState::initMenuState()
 	app_->getAudioManager()->setMusicVolume(5);
 
 	//Cargamos un objeto con el fondo(tipo Draw)
-	//createButtons();
+	createButtons();
 }
 
 void MainMenuState::createButtons() {

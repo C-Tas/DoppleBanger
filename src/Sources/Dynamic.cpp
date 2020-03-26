@@ -4,7 +4,8 @@ void Dynamic::move(Point2D target)
 {
 	//establecemos el objetivo para poder parar al llegar
 	obj_.setVec(target);
-	dir_.setX(obj_.getX() - pos_.getX());
-	dir_.setY(obj_.getY() - pos_.getY());
+	//establecemos la direccion
+	dir_.setX(target.getX() - visPos_.getX());
+	dir_.setY(target.getY() - visPos_.getY());
 	dir_.normalize();
 }

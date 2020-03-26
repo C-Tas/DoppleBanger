@@ -72,8 +72,6 @@ public:
 #pragma region Getters
 	///<summary>Devuelve maquina de estados</summary>
 	GameStateMachine* getStateMachine() { return machine_; };
-	///<summary>Devuelve el estado actual</summary>
-	GameState* getCurrState() { return machine_->getState(); };
 	///<summary>Devuelve si se esta procesando el bucle principal de la  </summary>
 	bool isRunning() { return !appClosed_; };
 	///<summary>Devuelve ancho de la ventana</summary>
@@ -84,6 +82,8 @@ public:
 	SDL_Window* getWindow() { return window_; };
 	///<summary>Devuelve renderer </summary>
 	SDL_Renderer* getRenderer() { return renderer_; };
+	///<summary>Devuelve maquina de estados</summary>
+	GameStateMachine* getGameStateMachine() { return machine_; };
 	///<summary>Devuelve el tiempo que ha pasado entre el frame actual y el anterior </summary>
 	double getDeltaTime() { return deltaTime_; }
 	///<summary>Devuelve el texture manager</summary>
