@@ -3,3 +3,5 @@
 
 void usable::use(Player* player)
 { player->usePotion(value_, type_); }
+
+
