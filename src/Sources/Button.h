@@ -14,7 +14,6 @@ public:
 	Button(Application* app,Texture* texture,Vector2D pos, Vector2D scale, CallBackOnClick* callBack);
 	Button(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu);
 	virtual bool update();
-	const virtual void draw();
 	virtual ~Button() {};
 
 protected:

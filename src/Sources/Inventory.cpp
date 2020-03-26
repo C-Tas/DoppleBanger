@@ -5,9 +5,9 @@
 #include "Player.h"
 using namespace std;
 //callbacks
-//void callSelectObject(GameState* state, InventoryButton* button) {
-//	dynamic_cast<Inventory*>(state)->selectObject(button);
-//}
+void callSelectObject(GameState* state, InventoryButton* button) {
+	dynamic_cast<Inventory*>(state)->selectObject(button);
+}
 
 void callSelectObject(GameState * state, Equipment* ob) {
 		dynamic_cast<Inventory*>(state)->selectObject(ob->getButton());

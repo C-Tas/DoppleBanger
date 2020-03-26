@@ -3,8 +3,8 @@
 #include "Equipment.h"
 #include <list>
 using namespace std;
-//using CallBackOnClickInventory = void(GameState* state, InventoryButton* button);
-using CallBackOnClickInventory = void(GameState * state, Equipment * ob);
+using CallBackOnClickInventory = void(GameState* state, InventoryButton* button);
+//using CallBackOnClickInventory = void(GameState * state, Equipment * ob);
 
 
 class InventoryButton: public Button
@@ -20,9 +20,10 @@ public:
 
 	InventoryButton(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, Equipment* ob, CallBackOnClickInventory* callBack);
 	virtual bool update();
+	const virtual void draw() { Button::draw(); };
 	bool isEquipped() { return equipped; }
 	void Enable(bool e) { equipped = e; }
-	virtual ~InventoryButton() {};
+	virtual ~InventoryButton() { delete object_;};
 
 	//iterator
 	void setIterator(list <InventoryButton*> ::iterator iterator) { inventoryIterator_ = iterator; }

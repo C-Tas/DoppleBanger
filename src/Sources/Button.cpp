@@ -23,7 +23,3 @@ bool Button::update() {
 	else return false;
 
 }
-
-const void Button::draw()  {
-	texture_->render(destiny_, SDL_FLIP_NONE);
-}
