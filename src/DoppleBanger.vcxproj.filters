@@ -104,9 +104,6 @@
     <ClCompile Include="Sources\SRandBasedGenerator.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\TextBoxManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\TextureManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
@@ -136,6 +133,10 @@
     </ClCompile>
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\CollisionCtrl.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Bullet.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,9 +243,6 @@
     <ClInclude Include="Sources\SRandBasedGenerator.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\TextBoxManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\TextureManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
@@ -286,6 +284,10 @@
     </ClInclude>
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\CollisionCtrl.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Bullet.h" />
+    <ClInclude Include="Sources\TextBox.h">
       <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -61,7 +61,7 @@
     <ClCompile Include="Sources\SpookyIslandState.cpp" />
     <ClCompile Include="Sources\StashState.cpp" />
     <ClCompile Include="Sources\StoryState.cpp" />
-    <ClCompile Include="Sources\TextBoxManager.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
@@ -114,7 +114,7 @@
     <ClInclude Include="Sources\StashState.h" />
     <ClInclude Include="Sources\Stats.h" />
     <ClInclude Include="Sources\StoryState.h" />
-    <ClInclude Include="Sources\TextBoxManager.h" />
+    <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\Trigger.h" />

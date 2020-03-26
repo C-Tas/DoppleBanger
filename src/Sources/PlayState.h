@@ -18,7 +18,7 @@ public:
 	///<summary>Constructora PlayState</summary>
 	PlayState(Application* app = nullptr) : GameState(app) { initPlayState(); };
 	///<summary>Destructora</summary>
-	virtual ~PlayState() { delete collisionCtrl_; };
+	virtual ~PlayState() { };
 
 	///<summary>Inicializa los elementos del PlayState</summary>
 	void initPlayState();
