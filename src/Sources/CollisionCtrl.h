@@ -12,7 +12,15 @@
 
 
 class CollisionCtrl {
-private:
+public:
+	enum NPCsNames : int {
+		ElderMan = 0,
+		Merchant,
+		Chef,
+		Morty,
+		Parrot
+	};
+
 	enum ShipObjectsNames : int {
 		Stash = 0,
 		Door,
@@ -20,31 +28,8 @@ private:
 		Exit
 	};
 
-	struct ShipObjectsInfo {
-		ShipObjectsNames id;
-		//ShipObject* object;
-		bool click = false;
-	};
-	
-	Player* player_ = nullptr;
-
-	//Islas
-	NPC* npc_ = nullptr;	//El NPC no necesita ser una lista, hay como mucho uno por zona
-	list<Obstacle*> obstacles_;
-	list<Enemy*> enemies_;
-	//list<Chest*> chests_;
-	//list<Bullet*> playerBullets_;
-	//list<Bullet*> enemyBullets_;
-	list<Trigger*> triggers_;
-
-	//Barco
-	list<NPC*> npcs_;	//Para los NPCs desbloqueados del barco
-	vector<ShipObjectsInfo> shipObjects_;
-
-	static unique_ptr<CollisionCtrl> instance_;
-
-public:
-	CollisionCtrl() {};	//Todos los elementos de colisión deben pasarse con los setters
+	///<summary>Constructora, todos los elementos de colisión deben pasarse con los setters</summary>
+	CollisionCtrl() {};
 	~CollisionCtrl() {};
 
 	///<summary>Instanciamos el CollisionCtrl o creamos uno</summary>
@@ -55,8 +40,9 @@ public:
 		return instance_.get();
 	}
 
-	///<summary>Comprueba las colisiones</summary>
+	///<summary>Comprueba las colisiones necesarias para las islas</summary>
 	void islandCollisions();
+	///<summary>Comprueba las colisiones necesarias en el barco</summary>
 	void shipCollisions();
 
 #pragma region Removes
@@ -64,6 +50,8 @@ public:
 	void removeNPC() { npc_ = nullptr; };
 	///<summary>Quita un enemigo de la lista</summary>
 	void removeEnemy(Enemy* enem) { enemies_.remove(enem); };
+	///<summary>Quita un cofre de la lista (cuando se abre)</summary>
+	//void removeChest(Chest* chest) { chests_.remove(chest); };
 	///<summary>Quita una bala de la lista</summary>
 	//void removePlayerBullet(Bullet* bullet) { playerBullets_.remove(bullet); };
 	///<summary>Quita una bala de la lista</summary>
@@ -75,8 +63,10 @@ public:
 #pragma region Setters
 	///<summary>Setea el player</summary>
 	void setPlayer(Player* player) { player_ = player; };
-	///<summary>Setea el NPC de la zona</summary>
-	void setNPC(NPC* npc) { npc_ = npc; };
+
+	//Islas
+	///<summary>Setea el NPC bloqueado de la zona de la isla</summary>
+	void setLockNPC(NPC* npc) { npc_ = npc; };
 	///<summary>Vacía la lista de obstáculos para setear una nueva</summary>
 	void setObstacles(list<Obstacle*> obstacles) { obstacles_.clear(); obstacles_ = obstacles; };
 	///<summary>Vacía la lista de enemigos para setear una nueva</summary>
@@ -91,21 +81,43 @@ public:
 	//void setNewEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); }
 	///<summary>Añade un nuevo trigger</summary>
 	void setTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
-	///<summary>Guarda el alijo</summary>
-	//void setStash(ShipObject* stash) { shipObjects_[Stash].object = stash; };
-	///<summary>Guarda la puerta</summary>
-	//void setDoor(ShipObject* door) { shipObjects_[Door].object = door; };
-	///<summary>Guarda el timón</summary>
-	//void setWheel(ShipObject* wheel) { shipObjects_[Wheel].object = wheel; };
-	///<summary>Guarda el timón</summary>
-	//void setExit(ShipObject* exit) { shipObjects_[Exit].object = exit; };
-	///<summary>Indica si el alijo ha sido pulsado o no</summary>
-	void setStashClick(bool click) { shipObjects_[Stash].click = click; };
-	///<summary>Indica si la puerta ha sido pulsada o no</summary>
-	void setDoorClick(bool click) { shipObjects_[Door].click = click; };
-	///<summary>Indica si el timón ha sido pulsado o no</summary>
-	void setWheelClick(bool click) { shipObjects_[Wheel].click = click; };
-	///<summary>Indica si la salida ha sido pulsado o no</summary>
-	void setExitClick(bool click) { shipObjects_[Exit].click = click; };
+
+	//Barco
+	///<summary>Guarda un nuevo NPC desbloqueado a la lista (para el barco)</summary>
+	void setUnlockNPC(NPCsNames name, NPC* npc) { npcs_[name].object = npc; };
+	///<summary>Indica si el objeto del barco ha sido pulsado o no</summary>
+	void setShipObjectClick(ShipObjectsNames name, bool click) { shipObjects_[name].click = click; };
+	///<summary>Guarda un elemento del barco</summary>
+	//void setShipObject(ShipObjectsNames name, ShipObject* ob) { shipObjects_[name].object = ob; };
+
 #pragma endregion
+
+private:	//Private está abajo porque necesitan enum del público
+	struct NPCsInfo {
+		NPCsNames id;
+		NPC* object;
+	};
+
+	struct ShipObjectsInfo {
+		ShipObjectsNames id;
+		//ShipObject* object;
+		bool click = false;	//Determina si el objeto ha sido pulsado
+	};
+
+	Player* player_ = nullptr;
+
+	//Islas
+	NPC* npc_ = nullptr;	//El NPC en la isla no necesita ser una lista, hay como mucho uno por zona
+	list<Obstacle*> obstacles_;
+	list<Enemy*> enemies_;
+	//list<Chest*> chests_;
+	//list<Bullet*> playerBullets_;
+	//list<Bullet*> enemyBullets_;
+	list<Trigger*> triggers_;
+
+	//Barco
+	vector<NPCsInfo> npcs_;	//Para los NPCs desbloqueados del barco (si no está desbloqueado será nullptr)
+	vector<ShipObjectsInfo> shipObjects_;
+
+	static unique_ptr<CollisionCtrl> instance_;
 };

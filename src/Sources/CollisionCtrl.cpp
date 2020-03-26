@@ -20,6 +20,7 @@ void CollisionCtrl::islandCollisions() {
 			}
 		}
 	}
+
 	//Colisión enemigo con jugador o con balas del jugador
 	for (auto enem : enemies_) {
 		if (Collisions::collides(enem->getPos(), enem->getScaleX(), enem->getScaleY(),
@@ -35,26 +36,22 @@ void CollisionCtrl::islandCollisions() {
 		//	}
 		//}
 	}
+
 	//Colisión cofres con jugador
 	//for (auto chest : chests_) {
 	//	if (Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
 	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 	//		chest->onCollider();
+	//		removeChest(chest);
 	//	}
 	//}
+
 	//Colisión bala del enemigo con jugador
 	//for (auto bullet : enemyBullets_) {
 	//	if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 	//		player_.receiveDamge(bullet.getDamage());
 	//		removeEnemyBullet(bullet);
-	//	}
-	//}
-	//Colisión bala del jugador con enemigo
-	//for (auto bullets : playerBullets_) {
-	//	if (Collisions::collides(bullets->getPos(), bullets->getScaleX(), bullets->getScaleY(),
-	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-	//		/*Se llama al método correspondiente*/
 	//	}
 	//}
 }
@@ -68,24 +65,50 @@ void CollisionCtrl::shipCollisions() {	//Está comentado porque falta añadir la c
     //        if (ob.click) {
     //            ob.click = false;
     //            switch (ob.id) {
-    //            case Stash:
-    //                ob.object->onColliderStash();
-    //                break;
-    //            case Door:
-    //                ob.object->onColliderDoor();
-    //                break;
-    //            case Wheel:
-    //                ob.object->onColliderWheel(GameManager::instance()->getCurrIsland());
-    //                break;
-    //            case Exit:
-    //                ob.object->onColliderExit();
-    //                break;
+	//            case Stash:
+	//                ob.object->onColliderStash();
+	//                break;
+	//            case Door:
+	//                ob.object->onColliderDoor();
+	//                break;
+	//            case Wheel:
+	//                ob.object->onColliderWheel(GameManager::instance()->getCurrIsland());
+	//                break;
+	//            case Exit:
+	//                ob.object->onColliderExit();
+	//                break;
     //            }
     //        }
     //    }
     //}
 
 	//Colisión con los NPCs desbloqueados
+	for (auto npc : npcs_) {
+		if (npc.object != nullptr) {
+			if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
+				npc.object->getPosX() + npc.object->getScaleX() / 2, npc.object->getPosY() + npc.object->getScaleY() / 2, npc.object->getScaleX(), npc.object->getScaleY() / 10)) {
+				player_->stop();
+
+	            switch (npc.id) {
+	            case ElderMan:
+	                //npc.object->getTextBox().dialogElderMan(-1);
+	                break;
+	            case Merchant:
+					//npc.object->getTextBox().dialogMerchant();
+	                break;
+	            case Chef:
+					//npc.object->getTextBox().dialogChef();
+	                break;
+	            case Morty:
+					//npc.object->getTextBox().dialogMorty();
+	                break;
+				case Parrot:
+					//npc.object->getTextBox().dialogParrot();
+					break;
+				}
+			}
+		}
+	}
 }
 
 //Enemigos --
@@ -96,4 +119,4 @@ void CollisionCtrl::shipCollisions() {	//Está comentado porque falta añadir la c
 //Triggers
 
 //ShipObject --
-//NPC
+//NPC --
