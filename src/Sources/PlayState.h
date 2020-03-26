@@ -23,7 +23,7 @@ public:
 	///<summary>Inicializa los elementos del PlayState</summary>
 	void initPlayState();
 	///<summary>Llama al update del CollisionManager</summary>
-	virtual void update() { collisionCtrl_->update(); GameState::update(); };
+	virtual void update() { collisionCtrl_->islandCollisions(); GameState::update(); };
 	///<summary>Ir a pauseState (push)</summary>
 	static void goToPauseState(Application* app);
 	///<summary>Ir a SaveGameState (push)</summary>

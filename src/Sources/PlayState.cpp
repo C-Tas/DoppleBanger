@@ -28,7 +28,10 @@ void PlayState::initPlayState() {
 		addRenderList(ob);
 	}
 
-	collisionCtrl_ = new CollisionCtrl(player_, obstacles_, enemies_);
+	collisionCtrl_ = CollisionCtrl::instance();
+	collisionCtrl_->setPlayer(player_);
+	collisionCtrl_->setObstacles(obstacles_);
+	/*Seteamos todo lo necesario (enemigos, objetos, NPCs, etc)*/
 }
 
 #pragma region ChangeState
