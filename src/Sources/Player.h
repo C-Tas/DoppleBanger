@@ -1,11 +1,15 @@
 #pragma once
 #include "Actor.h"
 #include "HandleEvents.h"
+#include "Bullet.h"
 
 class Player : public Actor
 {
 private:
+	double lastShot = 0; //Momento del último disparo
 	HandleEvents* eventHandler_ = nullptr;
+
+	void shoot(Vector2D dir);
 
 //<summary>Estadisticas del jugador</summary>
 #pragma region consts
