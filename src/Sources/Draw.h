@@ -69,9 +69,26 @@ public:
 	//Cuando se mueva un objeto no se mira su posicion superior izquierda, sino sus pies.
 	void updateVisPos() { visPos_.setVec(Vector2D(pos_.getX() + (scale_.getX() / 2), pos_.getY() + (scale_.getY() * 0.8))); }; //Actualiza la posicion visual del objeto
 
-
 #pragma region getters
-//Devuelve el rectangulo destino
+	//Dada una posición le resta el offset del objeto que invoca el método
+	//de tal forma que si este se mueve a la dicha posición queda centrado en ella
+	Vector2D getCenter(Vector2D pos)
+	{
+		Vector2D center;
+		center.setX(pos.getX() - (scale_.getX() / 2));
+		center.setY(pos.getY() - (scale_.getY() / 2));
+		return center;
+	}
+	//Dada una posición le resta el offset del objeto que invoca el método
+	//de tal forma que si este se mueve a la dicha posición queda con "los pies" colocados en ella
+	Vector2D getVisPos(Vector2D pos)
+	{
+		Vector2D vis;
+		vis.setX(pos.getX() - (scale_.getX() / 2));
+		vis.setY(pos.getY() - (scale_.getY() * 0.8));
+		return vis;
+	}
+	//Devuelve el rectangulo destino
 	const virtual SDL_Rect getDestiny() {
 		destiny_.x = (int)pos_.getX();
 		destiny_.y = (int)pos_.getY();

@@ -6,6 +6,7 @@ class Player : public Actor
 {
 private:
 	HandleEvents* eventHandler_ = nullptr;
+	double lastShot = 0; //Momento del último disparo
 
 //<summary>Estadisticas del jugador</summary>
 #pragma region consts
@@ -30,5 +31,7 @@ public:
 	};
 	~Player() { texture_ = nullptr; };
 	virtual bool update();
+	void shoot(Vector2D dir);
+	virtual void stop() { dir_ = Vector2D(0,0); }
 	virtual void onCollider() { /*Colisión con enemigo*/ };
 };

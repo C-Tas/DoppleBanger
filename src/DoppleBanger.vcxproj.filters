@@ -1,12 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\GameStateMachine.cpp">
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
-    
     <ClCompile Include="Sources\GameState.cpp">
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
@@ -106,7 +104,7 @@
     <ClCompile Include="Sources\SRandBasedGenerator.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\TextBox.cpp">
+    <ClCompile Include="Sources\TextBoxManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Sources\TextureManager.cpp">
@@ -133,11 +131,15 @@
     <ClCompile Include="Sources\SDL_macros.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\ShipState.cpp" />
+    <ClCompile Include="Sources\Obstacle.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Application.cpp" />
+    <ClCompile Include="Sources\CollisionCtrl.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
-  
   <ItemGroup>
-    <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\GameStateMachine.h">
       <Filter>GameStateMahcine</Filter>
     </ClInclude>
@@ -240,7 +242,7 @@
     <ClInclude Include="Sources\SRandBasedGenerator.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\TextBox.h">
+    <ClInclude Include="Sources\TextBoxManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Sources\TextureManager.h">
@@ -273,7 +275,19 @@
     <ClInclude Include="Sources\Skill.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\ShipState.h" />
+    <ClInclude Include="Sources\Obstacle.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\FontManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Font.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Application.h" />
+    <ClInclude Include="Sources\CollisionCtrl.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

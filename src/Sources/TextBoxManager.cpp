@@ -1,4 +1,4 @@
-#include "TextBox.h"
+#include "TextBoxManager.h"
 #include "HandleEvents.h"
 #include "Resources.h"
 #include "SDL_macros.h"
@@ -10,7 +10,7 @@
 //Cada objeto llama a su correspondiente descripción, cuando el estado abierto se lo indique,
 //pasándo la posición en la que se sitúa la descripción de dicho estado.
 
-void TextBox::initDialog() {
+void TextBoxManager::initDialog() {
 	//Generamos la caja donde irá el texto
 	dest.w = app_->getWindowWidth();
 	dest.h = app_->getWindowHeight() / 4;
@@ -20,11 +20,11 @@ void TextBox::initDialog() {
 	whiteRect->render(dest);
 
 	//Comentario al final de la caja de texto
-	Texture pressAnyKey(app_->getRenderer(), "Aléjate para dejar de hablar >>", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x99999999) });
+	Texture pressAnyKey(app_->getRenderer(), "Pulse cualquier tecla >>", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x99999999) });
 	pressAnyKey.render(app_->getWindowWidth() - pressAnyKey.getWidth() - lineSpacing, app_->getWindowHeight() - pressAnyKey.getHeight() - lineSpacing);
 }
 
-void TextBox::initDescription(Point2D pos) {
+void TextBoxManager::initDescription(Point2D pos) {
 	//Caja donde se representa el texto de las descripciones
 	dest.w = app_->getWindowWidth() / 4;
 	dest.h = app_->getWindowHeight() / 7;
@@ -33,8 +33,7 @@ void TextBox::initDescription(Point2D pos) {
 }
 
 #pragma region Diálogos
-void TextBox::dialogElderMan(int isle) {
-	initDialog();
+void TextBoxManager::dialogElderMan(int isle) {
 	//Viaje a la isla caribeña
 	if (isle == 0) {
 		Texture text(app_->getRenderer(), "Frase 1...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -57,12 +56,10 @@ void TextBox::dialogElderMan(int isle) {
 	}
 }
 
-void TextBox::dialogMerchant() {
-	initDialog();
+void TextBoxManager::dialogMerchant() {
 }
 
-void TextBox::dialogChef(bool unlock) {
-	initDialog();
+void TextBoxManager::dialogChef(bool unlock) {
 	//Diálogo del chef cuando lo hemos desbloqueado
 	if (unlock) {
 
@@ -73,8 +70,7 @@ void TextBox::dialogChef(bool unlock) {
 	}
 }
 
-void TextBox::dialogMorty(bool unlock) {
-	initDialog();
+void TextBoxManager::dialogMorty(bool unlock) {
 	//Diálogo de Morty cuando lo hemos desbloqueado
 	if (unlock) {
 
@@ -85,7 +81,7 @@ void TextBox::dialogMorty(bool unlock) {
 	}
 }
 
-void TextBox::dialogParrot() {
+void TextBoxManager::dialogParrot() {
 	//El loro gerera una frase aleatoria cada vez que se habla con él
 	int rnd = rand() % 5;
 	if (rnd == 0) {
@@ -105,11 +101,10 @@ void TextBox::dialogParrot() {
 	}
 }
 
-void TextBox::dialogKraken(bool defeated) {
-	initDialog();
+void TextBoxManager::dialogKraken(bool defeated) {
 	//Al comenzar la batalla
 	if (!defeated) {
-		
+
 	}
 	//Al derrotar al Kraken
 	else {
@@ -117,8 +112,7 @@ void TextBox::dialogKraken(bool defeated) {
 	}
 }
 
-void TextBox::dialogMagordito(bool defeated) {
-	initDialog();
+void TextBoxManager::dialogMagordito(bool defeated) {
 	//Al comenzar la batalla
 	if (!defeated) {
 
@@ -129,8 +123,7 @@ void TextBox::dialogMagordito(bool defeated) {
 	}
 }
 
-void TextBox::dialogCleon(bool defeated) {
-	initDialog();
+void TextBoxManager::dialogCleon(bool defeated) {
 	//Al comenzar la batalla
 	if (!defeated) {
 
@@ -143,49 +136,49 @@ void TextBox::dialogCleon(bool defeated) {
 #pragma endregion
 
 #pragma region Descripciones
-void TextBox::armorCaribbean() {
+void TextBoxManager::armorCaribbean() {
 }
 
-void TextBox::armorSpooky() {
+void TextBoxManager::armorSpooky() {
 }
 
-void TextBox::glovesCaribbean() {
+void TextBoxManager::glovesCaribbean() {
 }
 
-void TextBox::glovesSpooky() {
+void TextBoxManager::glovesSpooky() {
 }
 
-void TextBox::bootsCaribbean() {
+void TextBoxManager::bootsCaribbean() {
 }
 
-void TextBox::bootsSpooky() {
+void TextBoxManager::bootsSpooky() {
 }
 
-void TextBox::swordCaribbean() {
+void TextBoxManager::swordCaribbean() {
 }
 
-void TextBox::swordSpooky() {
+void TextBoxManager::swordSpooky() {
 }
 
-void TextBox::saberCaribbean() {
+void TextBoxManager::saberCaribbean() {
 }
 
-void TextBox::saberSpooky() {
+void TextBoxManager::saberSpooky() {
 }
 
-void TextBox::pistolCaribbean() {
+void TextBoxManager::pistolCaribbean() {
 }
 
-void TextBox::pistolSpooky() {
+void TextBoxManager::pistolSpooky() {
 }
 
-void TextBox::blunderbussCaribbean() {
+void TextBoxManager::blunderbussCaribbean() {
 }
 
-void TextBox::blunderbussSpooky() {
+void TextBoxManager::blunderbussSpooky() {
 }
 
-void TextBox::lifePotion() {
+void TextBoxManager::lifePotion() {
 	Texture text(app_->getRenderer(), "Poción de vida:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
@@ -199,7 +192,7 @@ void TextBox::lifePotion() {
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
 }
 
-void TextBox::manaPotion() {
+void TextBoxManager::manaPotion() {
 	Texture text(app_->getRenderer(), "Poción de maná:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
@@ -210,7 +203,7 @@ void TextBox::manaPotion() {
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
-void TextBox::velocityPotion() {
+void TextBoxManager::velocityPotion() {
 	Texture text(app_->getRenderer(), "Poción de velocidad:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
@@ -224,7 +217,7 @@ void TextBox::velocityPotion() {
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
 }
 
-void TextBox::damagePotion() {
+void TextBoxManager::damagePotion() {
 	Texture text(app_->getRenderer(), "Poción de daño:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
@@ -238,7 +231,7 @@ void TextBox::damagePotion() {
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
 }
 
-void TextBox::defensePotion() {
+void TextBoxManager::defensePotion() {
 	Texture text(app_->getRenderer(), "Poción de defensa:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
@@ -249,7 +242,7 @@ void TextBox::defensePotion() {
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
-void TextBox::criticPotion() {
+void TextBoxManager::criticPotion() {
 	Texture text(app_->getRenderer(), "Poción de crítico:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 

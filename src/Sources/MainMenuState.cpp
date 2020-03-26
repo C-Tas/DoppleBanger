@@ -6,8 +6,8 @@
 #include "Button.h"
 #include "Texture.h"
 #include "SDL_macros.h"
-using namespace std;
 
+using namespace std;
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
 {
@@ -93,17 +93,6 @@ void MainMenuState::createButtons() {
 #ifdef _DEBUG
 	cout << "creados los botones correctamente"<<endl;
 #endif
-}
-
-void MainMenuState::update() {	//Update temporal
-	GameState::update(); //Para el update de os objetos
-	if (SDL_HasIntersection(&player_->getCollider(), &npc_->getCollider())) {	//El textBox se genera cuando haya colisión con el npc
-		//Genera textBox
-		npc_->getTextBox().dialogElderMan(0);	
-		
-		//El GameState se encarga de llevar que misiones secundarias están desbloqueadas,
-		//así como si se viaja a una isla por primera vez.
-	}
 }
 #pragma endregion
 #pragma region Cambios de estados

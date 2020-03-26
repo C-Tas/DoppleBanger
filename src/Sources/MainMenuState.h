@@ -18,8 +18,6 @@ protected:
 	void initMenuState();
 	///<summary>crea los 4 botones necesarios del main menu</summary>
 	void createButtons();
-	
-	void update();	//De momento es temporal
 
 public:
 	MainMenuState(Application* app = nullptr) :GameState(app) { initMenuState(); };
