@@ -62,4 +62,7 @@ public:
 
 	//metodos para usar las pociones
 	void usePotion(int value, potionType type);
+
+	//metodos para coger la info del player
+	playerEquipment& const getInfoEquip() { return equip_; }
 };

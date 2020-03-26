@@ -124,4 +124,6 @@ Player::~Player()
 	delete equip_.boots_;
 	delete equip_.sword_;
 	delete equip_.gun_;
+	delete equip_.potion1_;
+	delete equip_.potion2_;
 }
