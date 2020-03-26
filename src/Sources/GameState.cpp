@@ -41,3 +41,16 @@ void GameState::addRenderUpdateLists(Draw* obj) {
 	addUpdateList(obj);
 	addRenderList(obj);
 }
+
+void GameState::removeUpdateList(GameObject* obj) {
+	gameObjects_.remove(obj);
+}
+
+void GameState::removeRenderList(Draw* obj) {
+	objectsToRender_.remove(obj);
+}
+
+void GameState::removeRenderUpdateLists(Draw* obj) {
+	removeUpdateList(obj);
+	removeRenderList(obj);
+}

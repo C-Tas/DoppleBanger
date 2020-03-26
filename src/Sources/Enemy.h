@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+
 using namespace std;
 class Enemy : public Actor
 {
@@ -7,7 +8,7 @@ protected:
 	//<summary>Metodo para hacer daño hay que editarlo</summary>
 	void doDamage() {};
 	//<summary>Metodo que mata a este enemigo</summary>
-	void kill() {};
+	void die();
 
 public:
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores ser�n los puestos, si se le pasan valores los editara</summary>
@@ -27,7 +28,7 @@ public:
 	//<summary>Metodo que resta vida al enemigo. Si es cero o menor, lo mata</summary>
 	void takeDamage(int dmg) {
 		currStats_.health_ -= dmg;
-		if (currStats_.health_ <= 0) cout << "muerto";
+		if (currStats_.health_ <= 0) die();
 	};
 };
 

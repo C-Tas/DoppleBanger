@@ -21,6 +21,13 @@ void PlayState::addEnemy(Enemy* obj) {
 	addRenderUpdateLists(obj);
 }
 
+void PlayState::removeEnemy(Enemy* obj) {
+	//Push front porque a suponiendo que dos enemigos se superpongan y se haga click en ellos para atacar,
+	//se renderizan en un orden (el de objectsToRender) y por lo cual las comprobaciones deben hacerse en el contrario.
+	enemies_.remove(obj);
+	removeRenderUpdateLists(obj);
+}
+
 void PlayState::checkPlayerActions() {
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 	{
