@@ -1,5 +1,4 @@
 #pragma once
-
 #include "SDL.h"
 #include "GameStateMachine.h"
 #include "RandEquipGen.h"
@@ -8,13 +7,11 @@
 #include "AudioManager.h"
 #include "checkML.h"
 
-
 using namespace std;
 
 class Application
 {
 private:
-
 	///<summary>Variables basicas de SDL</summary>
 	SDL_Window* window_ = nullptr;
 	SDL_Renderer* renderer_ = nullptr;
@@ -90,9 +87,9 @@ public:
 	TextureManager* getTextureManager() { return textureManager_; };
 	///<summary>Devuelve el font manager</summary>
 	FontManager* getFontManager() { return fontManager_; };
-	//Devuelve el audioManager
+	///<summary>Devuelve el audioManager</summary>
 	AudioManager* getAudioManager() { return audioManager_; };
-	//Devuelve equipGen_
+	///<summary>Devuelve equipGen_</summary>
 	RandEquipGen* getEquipGen() { return equipGen_; }
 #pragma endregion
 

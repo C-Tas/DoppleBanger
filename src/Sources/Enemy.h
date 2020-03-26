@@ -17,8 +17,8 @@ public:
 	//<summary>Destructor</summary>
 	virtual ~Enemy() {};
 	//<summary>Metodo que llevará la logica de nuestros enemigos cada enemigo tiene un comportamiento diferente por los que lo unico común es el cambio del frame de la animación </summary>
-	virtual bool update() { updateFrame();return false; };
-	virtual void onCollider() {};
+	virtual bool update() { updateFrame(); return false; };
+	virtual void onCollider() { /*Colisión con jugador*/ };
 	//<summary>Metodo que renderizará nuestro enemigos, (se ha hecho suponiendo que todos tienen animación </summary>
 	virtual void draw() const { texture_->render(destiny_, frame_); };
 

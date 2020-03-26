@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "Resources.h"
 #include "SDL_macros.h"
+#include "TextBoxManager.h"
+#include "GameState.h"
 
 bool Player::update()
 {

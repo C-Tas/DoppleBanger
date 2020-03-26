@@ -21,11 +21,6 @@ void MainMenuState::initMenuState()
 		cout << "\n";
 	}*/
 
-	SDL_Rect playerCollision; playerCollision.x = 50; playerCollision.y = 50; playerCollision.w = 100; playerCollision.h = 100;
-	player_ = new Player(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D(50, 50), Vector2D(100, 100), playerCollision);
-
-	addUpdateList(player_);
-	addRenderList(player_);
 #ifdef _DEBUG
 	cout << "MainMenuState" << endl;
 #endif // _DEBUG
@@ -43,6 +38,7 @@ void MainMenuState::initMenuState()
 
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
+
 }
 
 void MainMenuState::createButtons() {
