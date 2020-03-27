@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Actor.h"
 #include "HandleEvents.h"
 #include "Clon.h"
@@ -9,6 +8,7 @@ class Player : public Actor
 private:
 	Clon* clon_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
+	double lastShot = 0; //Momento del último disparo
 
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region abilities
@@ -47,5 +47,7 @@ public:
 	};
 	~Player() {};
 	virtual bool update();
-	virtual void onCollider() {};
+	void shoot(Vector2D dir);
+	virtual void stop() { dir_ = Vector2D(0,0); }
+	virtual void onCollider() { /*Colisión con enemigo*/ };
 };

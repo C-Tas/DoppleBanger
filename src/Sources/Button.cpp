@@ -3,7 +3,7 @@
 
 //Texture* texture, SDL_Rect* destiny, Point2D pos, Vector2D scale)
 Button::Button(Application* app,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack)
-	: Draw(app,texture, SDL_Rect({(int)pos.getX(),(int)pos.getY(),(int)scale.getX(),(int)scale.getY()}), pos, scale), ButtonCallBack(callBack){};
+	: Draw(app,texture, pos, scale, SDL_Rect({ (int)pos.getX(),(int)pos.getY(),(int)scale.getX(),(int)scale.getY() })), ButtonCallBack(callBack){};
 
 bool Button::update() {
 	HandleEvents* input = HandleEvents::instance();

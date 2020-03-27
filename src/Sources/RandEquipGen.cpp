@@ -1,9 +1,11 @@
 #include "RandEquipGen.h"
 #include "Application.h"
+#include "GameManager.h"
 
 RandEquipGen::RandEquipGen(Application* app) : app_(app)
 {
 	rn_ = SRandBasedGenerator();
+	gameManager_ = GameManager::instance(); 
 }
 
 Equipment* RandEquipGen::genEquip()
@@ -15,7 +17,8 @@ Equipment* RandEquipGen::genEquip()
 Equipment* RandEquipGen::genEquip(equipType type)
 {
 	Equipment* obj = new Equipment(type);
-	int area = app_->getCurrArea();
+	
+	int area = gameManager_->getCurrIsland();
 	switch (type)
 	{
 	//Vida y armadura

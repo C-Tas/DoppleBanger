@@ -1,8 +1,7 @@
 #include "Texture.h"
+#include "Font.h"
 #include <SDL_image.h>
-
 #include <iostream>
-
 using namespace std;
 
 Texture::Texture() : texture_(nullptr), renderer_(nullptr), width_(0), height_(0) {
@@ -12,11 +11,10 @@ Texture::Texture(SDL_Renderer* renderer, const string& fileName) : texture_(null
 	loadFromImg(renderer, fileName);
 }
 
-//Texture::Texture(SDL_Renderer* renderer, const string& text, const Font* font,
-//	const SDL_Color& color) :
-//	texture_(nullptr), width_(0), height_(0) {
-//	loadFromText(renderer, text, font, color);
-//}
+Texture::Texture(SDL_Renderer* renderer, const string& text, const Font* font, const SDL_Color& color) :
+	texture_(nullptr), width_(0), height_(0) {
+	loadFromText(renderer, text, font, color);
+}
 
 Texture::~Texture() {
 	close();
@@ -49,24 +47,24 @@ bool Texture::loadFromImg(SDL_Renderer* renderer, const string& fileName) {
 	return texture_ != nullptr;
 }
 
-//bool Texture::loadFromText(SDL_Renderer* renderer, const string& text, const Font* font,
-//	const SDL_Color& color) {
-//	SDL_Surface* textSurface = font->renderText(text, color);
-//	if (textSurface != nullptr) {
-//		close();
-//		texture_ = SDL_CreateTextureFromSurface(renderer, textSurface);
-//		if (texture_ != nullptr) {
-//			width_ = textSurface->w;
-//			height_ = textSurface->h;
-//		}
-//		SDL_FreeSurface(textSurface);
-//	}
-//	else {
-//		throw "Couldn't create text: " + text;
-//	}
-//	renderer_ = renderer;
-//	return texture_ != nullptr;
-//}
+bool Texture::loadFromText(SDL_Renderer* renderer, const string& text, const Font* font,
+	const SDL_Color& color) {
+	SDL_Surface* textSurface = font->renderText(text, color);
+	if (textSurface != nullptr) {
+		close();
+		texture_ = SDL_CreateTextureFromSurface(renderer, textSurface);
+		if (texture_ != nullptr) {
+			width_ = textSurface->w;
+			height_ = textSurface->h;
+		}
+		SDL_FreeSurface(textSurface);
+	}
+	else {
+		throw "No se puede cargar el texto: " + text;
+	}
+	renderer_ = renderer;
+	return texture_ != nullptr;
+}
 
 void Texture::render(int x, int y) const {
 	SDL_Rect dest;

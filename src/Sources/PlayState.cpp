@@ -4,6 +4,36 @@
 #include "InventoryState.h"
 #include "SelectLevelState.h"
 #include "StashState.h"
+
+void PlayState::initPlayState() {
+	//Creación del player
+	SDL_Rect playerCollision; playerCollision.x = 50; playerCollision.y = 50; playerCollision.w = 100; playerCollision.h = 100;
+	player_ = new Player(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon),
+		Vector2D(playerCollision.x, playerCollision.y), Vector2D(100, 100), playerCollision);
+
+	addUpdateList(player_);
+	addRenderList(player_);
+
+	//Creación de dos obstáculos de prueba
+	SDL_Rect objCollision; objCollision.x = 300; objCollision.y = 100; objCollision.w = 100; objCollision.h = 50;
+	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Roca),
+		Vector2D(objCollision.x, objCollision.y), Vector2D(objCollision.w, objCollision.h)));
+
+	objCollision.x = 600; objCollision.y = 400;
+	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Roca),
+		Vector2D(objCollision.x, objCollision.y), Vector2D(objCollision.w, objCollision.h)));
+
+	for (auto ob : obstacles_) {
+		addUpdateList(ob);
+		addRenderList(ob);
+	}
+
+	collisionCtrl_ = CollisionCtrl::instance();
+	collisionCtrl_->setPlayer(player_);
+	collisionCtrl_->setObstacles(obstacles_);
+	/*Seteamos todo lo necesario (enemigos, objetos, NPCs, etc)*/
+}
+
 #pragma region ChangeState
 void PlayState::goToPauseState(Application* app) {
 	app->getStateMachine()->pushState(new PauseState(app));

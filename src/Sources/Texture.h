@@ -1,9 +1,7 @@
 #pragma once
-
 #include <SDL.h>
-//#include "Font.h"
+#include "Font.h"
 #include <string>
-
 using namespace std;
 
 class Texture {
@@ -16,8 +14,7 @@ private:
 public:
 	Texture();
 	Texture(SDL_Renderer* renderer, const string& fileName);
-	/*Texture(SDL_Renderer* renderer, const string& text, const Font* font,
-		const SDL_Color& color);*/
+	Texture(SDL_Renderer* renderer, const string& text, const Font* font, const SDL_Color& color);
 	virtual ~Texture();
 
 	inline int getWidth() {
@@ -36,8 +33,7 @@ public:
 	bool loadFromImg(SDL_Renderer* renderer, const string& fileName);
 
 	//Carga las texturas a partir de un texto con una fuente
-	/*bool loadFromText(SDL_Renderer* renderer, const string& text, const Font* font,
-		const SDL_Color& color = { 0, 0, 0, 255 });*/
+	bool loadFromText(SDL_Renderer* renderer, const string& text, const Font* font, const SDL_Color& color = { 0, 0, 0, 255 });
 
 	//Renderiza en posiciones directamente
 	void render(int x, int y) const;
