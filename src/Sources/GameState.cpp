@@ -1,4 +1,5 @@
 #include "GameState.h"
+
 GameState::~GameState() {
 	//Borra todos los objetos de la lista de gameObjects
 	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
@@ -32,15 +33,6 @@ void GameState::update() {
 
 	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
 		if ((*it)->update())return;
-	}
-
-	//Se eliminan los objetos que se han a�adido a la lista de objectsToErase
-	for (auto it = objectsToErase_.begin(); it != objectsToErase_.end(); ++it) {
-		gameObjects_.remove(*it);
-
-		//Si hereda de Draw tambien se quita de la lista de renders
-		if (dynamic_cast<Draw*>(*it) != nullptr)
-			objectsToRender_.remove(static_cast<Draw*>(*it));
 	}
 }
 

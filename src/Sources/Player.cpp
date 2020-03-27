@@ -16,7 +16,7 @@ bool Player::update()
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && ((SDL_GetTicks() - clonTime_) / 1000) > clonCooldown_)
 	{
 		clon_ = new Clon(app_, eventHandler_->getMousePos(), currStats_.ad_, currStats_.meleeRate_, liberation_, explotion_, scale_);
-		app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
+		app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
 		clonTime_ = SDL_GetTicks();
 	}
 

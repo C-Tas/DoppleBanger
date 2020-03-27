@@ -135,9 +135,11 @@
     <ClCompile Include="Sources\CollisionCtrl.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Bullet.cpp" />
     <ClCompile Include="Sources\TextBox.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Bullet.cpp">
+      <Filter>GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -286,9 +288,11 @@
     <ClInclude Include="Sources\CollisionCtrl.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\TextBox.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Bullet.h">
+      <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

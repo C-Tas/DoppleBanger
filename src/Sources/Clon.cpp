@@ -14,5 +14,5 @@ bool Clon::update()
 
 void Clon::die()
 {
-	app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
+	app_->getStateMachine()->getState()->removeRenderUpdateLists(this);
 }

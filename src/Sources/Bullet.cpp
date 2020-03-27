@@ -18,7 +18,7 @@ bool Bullet::update()
 
 	//Si se le ha acabado el tiempo de vida o se ha chocado con algo
 	if ((currTime_ - initTime_) / 1000 > lifeSpan_) //|| colisión con paredes)
-		app_->getCurrState()->addObjectsToErase(this);
+		app_->getCurrState()->removeRenderUpdateLists(this);
 
 	else {
 		double delta = app_->getDeltaTime();
