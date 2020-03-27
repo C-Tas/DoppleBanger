@@ -8,7 +8,7 @@
 
 class PlayState : public GameState
 {
-private:
+protected:
 	CollisionCtrl* collisionCtrl_ = nullptr;
 	Player* player_ = nullptr;
 	list<Obstacle*> obstacles_;
@@ -23,7 +23,7 @@ public:
 	///<summary>Inicializa los elementos del PlayState</summary>
 	void initPlayState();
 	///<summary>Llama al update del CollisionManager</summary>
-	virtual void update() { collisionCtrl_->islandCollisions(); GameState::update(); };
+	virtual void update();
 	///<summary>Ir a pauseState (push)</summary>
 	static void goToPauseState(Application* app);
 	///<summary>Ir a SaveGameState (push)</summary>

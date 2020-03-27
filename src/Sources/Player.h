@@ -9,10 +9,7 @@ class Player : public Actor
 private:
 	bool attacking = false;
 
-	//Variables relacionadas con los cooldowns
-	double lastAttack = 0;
-	double meleeCooldown = 0;
-	Enemy* objective = nullptr;
+	Enemy* objective_ = nullptr;
 	Clon* clon_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
 
@@ -24,9 +21,10 @@ private:
 
 //<summary>Variables de los cooldowns del jugador</summary>
 #pragma region cooldowns
-	double shotTime_ = 0; //Momento del �ltimo disparo
 	double clonCooldown_ = 5;
-	double clonTime_ = 0;
+	double clonTime_ = 0; //Momento del último clon
+	double meleeTime_ = 0; //Momento del último ataque
+	double shotTime_ = 0; //Momento del �ltimo disparo
 #pragma endregion
 
 //<summary>Estadisticas del jugador</summary>

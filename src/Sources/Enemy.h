@@ -26,6 +26,8 @@ public:
 	virtual void draw() const { texture_->render(destiny_, frame_); };
 
 	//<summary>Metodo que resta vida al enemigo. Si es cero o menor, lo mata</summary>
+	bool isAlive() { return (currStats_.health_ > 0); };
+	//<summary>Metodo que resta vida al enemigo. Si es cero o menor, lo mata</summary>
 	void takeDamage(int dmg) {
 		currStats_.health_ -= dmg;
 		if (currStats_.health_ <= 0) die();

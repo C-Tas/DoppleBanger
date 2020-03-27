@@ -9,7 +9,6 @@
 bool Player::update()
 {
 	updateVisPos();
-	if (meleeCooldown <= currStats_.meleeRate_) meleeCooldown = (SDL_GetTicks() - lastAttack) / 1000;
 
 	//Si se pulsa la Q y se ha acabado el cooldown y se está a rango
 	//Hago un if dentro de otro if ya que como el de dentro tiene que hacer cálculos, estos solo se hagan
@@ -42,11 +41,11 @@ bool Player::update()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 	}
-	else if (attacking && meleeCooldown > currStats_.meleeRate_)
+	//Se comprueba que el enemigo esté vivo porque puede dar a errores
+	else if (attacking && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->isAlive())
 	{
-		objective->takeDamage(currStats_.ad_);
-		meleeCooldown = 0;
-		lastAttack = SDL_GetTicks();
+		objective_->takeDamage(currStats_.ad_);
+		meleeTime_ = SDL_GetTicks();
 	}
 
 	return false;
@@ -79,7 +78,7 @@ void Player::move(Point2D target)
 
 void Player::attack(Enemy* obj)
 {
-	objective = obj;
+	objective_ = obj;
 	move(obj->getVisPos());
 	attacking = true;
 }

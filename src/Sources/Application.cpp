@@ -121,6 +121,6 @@ void Application::closeResources() {
 	//Faltaría el borrar los recursos que añadiesemos a posteriori
 	delete fontManager_;
 	delete textureManager_;
-	delete fontManager_;
-   // delete equipGen_;
+	delete audioManager_;
+    delete equipGen_;
 }
