@@ -11,15 +11,6 @@ using namespace std;
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
 {
-	//meter botones etc..
-
-	//Comprobaci�n del generador aleatorio de equipamiento
-	/*for (int i = 0; i < 5; i++)
-	{
-		Equipment* equip = app_->genEquip();
-		equip->writeStats();
-		cout << "\n";
-	}*/
 
 #ifdef _DEBUG
 	cout << "MainMenuState" << endl;

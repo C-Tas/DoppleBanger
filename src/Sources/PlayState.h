@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameState.h"
 #include "CollisionCtrl.h"
 #include "Player.h"
@@ -35,5 +35,14 @@ public:
 	///<summary>Ir a StashState (push)</summary>
 	static void goToStashState(Application* app);
 	//falta otro cambio
+
+	///<summary>A�ade un objeto a la lista enemies_, objectsToRender y gameObjects_</summary>
+	void addEnemy(Enemy* obj);
+	///<summary>Quita un objeto a la lista enemies_, objectsToRender y gameObjects_</summary>
+	void removeEnemy(Enemy* obj);
+	///<summary>Comprueba las posibles acciones del jugador</summary>
+	void checkPlayerActions();
+	///<summary>Comprueba si el jugador ha hecho click en algún enemigo, y de ser el caso, devuelve el que se renderiza el último</summary>
+	Enemy* checkAttack();
 };
 

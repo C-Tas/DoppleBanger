@@ -1,7 +1,9 @@
 #pragma once
 #include<stack>
 #include "checkML.h"
+
 class GameState;
+class PlayState;
 
 using namespace std;
 class GameStateMachine

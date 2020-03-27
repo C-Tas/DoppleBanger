@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "Crab.h" //Include temporal
 #include "Player.h" //Include temporal
 #include "Equipment.h" //Include temporal
 
@@ -12,6 +13,8 @@ private:
 	double button_w = 0;
 	//Diferencia entre los botones en el eje y
 	double button_dif = 0;
+	Player* player_ = nullptr;
+	Crab* crab_ = nullptr;
 
 protected:
 	///<summary>Se inicializa el menu</summary>

@@ -8,10 +8,8 @@
 
 bool Player::update()
 {
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
-		Vector2D dir = eventHandler_->getMousePos();
-		move(getVisPos(dir));
-	}
+	updateVisPos();
+	if (meleeCooldown <= currStats_.meleeRate_) meleeCooldown = (SDL_GetTicks() - lastAttack) / 1000;
 
 	//Si se pulsa la Q y se ha acabado el cooldown y se está a rango
 	//Hago un if dentro de otro if ya que como el de dentro tiene que hacer cálculos, estos solo se hagan
@@ -32,15 +30,23 @@ bool Player::update()
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
 		shoot(eventHandler_->getMousePos());
 
-	//Margen de 2 pixeles
-	if (pos_.getX() < obj_.getX() - 2 ||
-		pos_.getX() > obj_.getX() + 2 ||
-		pos_.getY() < obj_.getY() - 2 ||
-		pos_.getX() > obj_.getX() + 2)
+	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
+	int margin = 2; if (attacking) margin = currStats_.range_;
+
+	if (visPos_.getX() < obj_.getX() - margin ||
+		visPos_.getX() > obj_.getX() + margin ||
+		visPos_.getY() < obj_.getY() - margin ||
+		visPos_.getX() > obj_.getX() + margin)
 	{
 		double delta = app_->getDeltaTime();
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
+	}
+	else if (attacking && meleeCooldown > currStats_.meleeRate_)
+	{
+		objective->takeDamage(currStats_.ad_);
+		meleeCooldown = 0;
+		lastAttack = SDL_GetTicks();
 	}
 
 	return false;
@@ -58,4 +64,22 @@ void Player::shoot(Vector2D dir)
 
 	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), shootPos, dir, currStats_.ad_);
 	app_->getCurrState()->addRenderUpdateLists(bullet);
+}
+
+void Player::move(Point2D target)
+{
+	attacking = false;
+	//establecemos el objetivo para poder parar al llegar
+	obj_.setVec(target);
+	//establecemos la direccion
+	dir_.setX(target.getX() - visPos_.getX());
+	dir_.setY(target.getY() - visPos_.getY());
+	dir_.normalize();
+}
+
+void Player::attack(Enemy* obj)
+{
+	objective = obj;
+	move(obj->getVisPos());
+	attacking = true;
 }

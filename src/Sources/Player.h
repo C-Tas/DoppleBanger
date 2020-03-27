@@ -2,10 +2,17 @@
 #include "Actor.h"
 #include "HandleEvents.h"
 #include "Clon.h"
+#include "Enemy.h"
 
 class Player : public Actor
 {
 private:
+	bool attacking = false;
+
+	//Variables relacionadas con los cooldowns
+	double lastAttack = 0;
+	double meleeCooldown = 0;
+	Enemy* objective = nullptr;
 	Clon* clon_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
 
@@ -17,7 +24,7 @@ private:
 
 //<summary>Variables de los cooldowns del jugador</summary>
 #pragma region cooldowns
-	double shotTime_ = 0; //Momento del último disparo
+	double shotTime_ = 0; //Momento del ï¿½ltimo disparo
 	double clonCooldown_ = 5;
 	double clonTime_ = 0;
 #pragma endregion
@@ -28,9 +35,10 @@ private:
 	const int MANA = 100;
 	const double MANA_REG = 1;
 	const int ARMOR = 10;
-	const int AD = 0;
+	const int AD = 20;
 	const int AP = 0;
 	const int CRIT = 0;
+	const int RANGE = 300;
 	const double MOVE_SPEED = 100;
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 5;
@@ -40,14 +48,16 @@ private:
 
 public:
 //Constructora de player
-	Player(Application* app, Texture* texture, Vector2D pos, Vector2D scale, SDL_Rect collisionArea) :
+	Player(Application* app, vector<Texture*> texture, Vector2D pos, Vector2D scale, SDL_Rect collisionArea) :
 		Actor(app, texture, pos, scale, collisionArea) {
 		eventHandler_ = HandleEvents::instance();
-		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
 	~Player() {};
 	virtual bool update();
 	void shoot(Vector2D dir);
 	virtual void stop() { dir_ = Vector2D(0,0); }
-	virtual void onCollider() { /*Colisión con enemigo*/ };
+	virtual void onCollider() { /*Colisiï¿½n con enemigo*/ };
+	void move(Point2D target);
+	void attack(Enemy* obj);
 };

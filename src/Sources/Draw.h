@@ -97,6 +97,7 @@ public:
 		destiny_.h = (int)scale_.getY();
 		return destiny_;
 	};
+	Point2D getVisPos() { return visPos_; };
 #pragma endregion
 
 
