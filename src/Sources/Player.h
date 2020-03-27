@@ -8,7 +8,6 @@ class Player : public Actor
 private:
 	Clon* clon_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
-	double lastShot = 0; //Momento del último disparo
 
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region abilities
@@ -18,6 +17,7 @@ private:
 
 //<summary>Variables de los cooldowns del jugador</summary>
 #pragma region cooldowns
+	double shotTime_ = 0; //Momento del último disparo
 	double clonCooldown_ = 5;
 	double clonTime_ = 0;
 #pragma endregion
@@ -35,7 +35,7 @@ private:
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 5;
 
-	const double CLON_SPAWN_RANGE = 100;
+	const double CLON_SPAWN_RANGE = 700;
 #pragma endregion
 
 public:

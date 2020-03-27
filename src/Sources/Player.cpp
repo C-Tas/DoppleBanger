@@ -13,15 +13,23 @@ bool Player::update()
 		move(getVisPos(dir));
 	}
 
+	//Si se pulsa la Q y se ha acabado el cooldown y se está a rango
+	//Hago un if dentro de otro if ya que como el de dentro tiene que hacer cálculos, estos solo se hagan
+	//cuando ya se han cumplido previamente las dos condiciones anteriores.
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && ((SDL_GetTicks() - clonTime_) / 1000) > clonCooldown_)
 	{
-		clon_ = new Clon(app_, eventHandler_->getMousePos(), currStats_.ad_, currStats_.meleeRate_, liberation_, explotion_, scale_);
-		app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
-		clonTime_ = SDL_GetTicks();
+		Vector2D dist = Vector2D(eventHandler_->getMousePos().getX() - pos_.getX(), eventHandler_->getMousePos().getY() - pos_.getY());
+		if (dist.magnitude() <= CLON_SPAWN_RANGE)
+		{
+			clon_ = new Clon(app_, getVisPos(eventHandler_->getMousePos()), currStats_.ad_, currStats_.meleeRate_, liberation_, explotion_, scale_);
+			app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
+			clonTime_ = SDL_GetTicks();
+		}
+		
 	}
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && (SDL_GetTicks() - lastShot) / 1000 > currStats_.distRate_)
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
 		shoot(eventHandler_->getMousePos());
 
 	//Margen de 2 pixeles
@@ -41,7 +49,7 @@ bool Player::update()
 void Player::shoot(Vector2D dir)
 {
 	//Se actualiza el momento del �ltimo disparo
-	lastShot = SDL_GetTicks();
+	shotTime_ = SDL_GetTicks();
 
 	//Se calcula la posici�n desde la cual se dispara la bala
 	Vector2D shootPos;
