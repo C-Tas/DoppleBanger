@@ -21,20 +21,20 @@ void CollisionCtrl::islandCollisions() {
 		}
 	}
 	//Colisión enemigo con jugador o con balas del jugador
-	for (auto enem : enemies_) {
-		if (Collisions::collides(enem->getPos(), enem->getScaleX(), enem->getScaleY(),
-			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-			enem->onCollider();
-			player_->onCollider();
-		}
-		//for (auto bullet : playerBullets_) {
-		//	if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
-		//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-		//		enem.receiveDamge(bullets.getDamage());
-		//		removePlayerBullet(bullet);
-		//	}
-		//}
-	}
+	//for (auto enem : enemies_) {
+	//	if (Collisions::collides(enem->getPos(), enem->getScaleX(), enem->getScaleY(),
+	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+	//		enem->onCollider();
+	//		player_->onCollider();
+	//	}
+	//	//for (auto bullet : playerBullets_) {
+	//	//	if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+	//	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+	//	//		enem.receiveDamge(bullets.getDamage());
+	//	//		removePlayerBullet(bullet);
+	//	//	}
+	//	//}
+	//}
 	//Colisión cofres con jugador
 	//for (auto chest : chests_) {
 	//	if (Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),

@@ -36,10 +36,10 @@ private:
 	const int AD = 20;
 	const int AP = 0;
 	const int CRIT = 0;
-	const int RANGE = 300;
+	const int RANGE = 50;
 	const double MOVE_SPEED = 100;
 	const double MELEE_RATE = 1;
-	const double DIST_RATE = 5;
+	const double DIST_RATE = 2;
 
 	const double CLON_SPAWN_RANGE = 700;
 #pragma endregion
@@ -54,7 +54,6 @@ public:
 	~Player() {};
 	virtual bool update();
 	void shoot(Vector2D dir);
-	virtual void stop() { dir_ = Vector2D(0,0); }
 	virtual void onCollider() { /*Colisi�n con enemigo*/ };
 	void move(Point2D target);
 	void attack(Enemy* obj);

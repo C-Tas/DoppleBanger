@@ -28,6 +28,10 @@ bool Player::update()
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
 		shoot(eventHandler_->getMousePos());
+	else if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+		Vector2D dir = eventHandler_->getMousePos();
+		move(getVisPos(dir));
+	}
 
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
 	int margin = 2; if (attacking) margin = currStats_.range_;
