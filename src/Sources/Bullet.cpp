@@ -1,4 +1,6 @@
 #include "Bullet.h"
+#include "Enemy.h"
+#include "PlayState.h"
 
 void Bullet::init(Vector2D pos, Vector2D dir)
 {
@@ -25,7 +27,12 @@ bool Bullet::update()
 		pos_.setX(pos_.getX() + (dir_.getX() * (speed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (speed_ * delta)));
 
-		//Check collisions
+		Enemy* obj = static_cast<PlayState*>(app_->getStateMachine()->getState())->collidesWithEnemy(pos_, scale_);
+		if (obj != nullptr)
+		{
+			obj->takeDamage(damage_);
+			app_->getStateMachine()->getState()->removeRenderUpdateLists(this);
+		}
 	}
 
 	return false;

@@ -46,5 +46,7 @@ public:
 	Enemy* checkAttack();
 	///<summary>Encuentra al enemigo más cercano a una posición</summary>
 	Enemy* findClosestEnemy(Point2D pos);
+	///<summary>Comprueba colisiones con los enemigos y devuelve el primer enemigo en caso de haber colisión</summary>
+	Enemy* collidesWithEnemy(Point2D pos, Vector2D scale);
 };
 

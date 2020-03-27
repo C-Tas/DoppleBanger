@@ -4,6 +4,7 @@
 #include "InventoryState.h"
 #include "SelectLevelState.h"
 #include "StashState.h"
+#include "Collisions.h"
 
 void PlayState::initPlayState() {
 	//Creaci�n del player
@@ -83,6 +84,20 @@ Enemy* PlayState::findClosestEnemy(Point2D pos) {
 		if (abs(Vector2D((*it)->getPos().getX() - pos.getX(), (*it)->getPos().getY() - pos.getY()).magnitude()) <
 			abs(Vector2D(obj->getPos().getX() - pos.getX(), obj->getPos().getY() - pos.getY()).magnitude()))
 			obj = (*it);
+
+	return obj;
+}
+
+Enemy* PlayState::collidesWithEnemy(Point2D pos, Vector2D scale) {
+	bool found = false;
+	Enemy* obj = nullptr;
+	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
+		if (Collisions::collides(pos, scale.getX(), scale.getY(), (*it)->getPos(), (*it)->getScaleX(), (*it)->getScaleY()))
+		{
+			obj = (*it);
+			found = true;
+		}
+	}
 
 	return obj;
 }

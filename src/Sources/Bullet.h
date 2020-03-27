@@ -6,7 +6,7 @@
 class Bullet : public Dynamic
 {
 public:
-	Bullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, int damage, double lifeSpan = 2, double speed = 100, Vector2D scale = { 20, 20 }) :
+	Bullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, int damage, double lifeSpan = 2, double speed = 1000, Vector2D scale = { 20, 20 }) :
 		Dynamic(app, texture, pos, scale, {(int)pos.getX(), (int)pos.getY(), (int)scale.getX(), (int)scale.getY()}), damage_(damage), lifeSpan_(lifeSpan), speed_(speed) {
 		init(pos, dir);
 	};
