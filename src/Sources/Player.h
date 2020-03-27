@@ -2,11 +2,25 @@
 
 #include "Actor.h"
 #include "HandleEvents.h"
+#include "Clon.h"
 
 class Player : public Actor
 {
 private:
+	Clon* clon_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
+
+//<summary>Variables relativas a las habilidades</summary>
+#pragma region abilities
+	int liberation_ = 0;
+	bool explotion_ = false;
+#pragma endregion
+
+//<summary>Variables de los cooldowns del jugador</summary>
+#pragma region cooldowns
+	double clonCooldown_ = 5;
+	double clonTime_ = 0;
+#pragma endregion
 
 //<summary>Estadisticas del jugador</summary>
 #pragma region consts
@@ -20,6 +34,8 @@ private:
 	const double MOVE_SPEED = 100;
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 5;
+
+	const double CLON_SPAWN_RANGE = 100;
 #pragma endregion
 
 public:
@@ -29,7 +45,7 @@ public:
 		eventHandler_ = HandleEvents::instance();
 		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	};
-	~Player() { texture_ = nullptr; };
+	~Player() {};
 	virtual bool update();
 	virtual void onCollider() {};
 };

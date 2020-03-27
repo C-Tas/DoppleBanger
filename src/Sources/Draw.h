@@ -38,9 +38,9 @@ protected:
 	Draw(const Draw&& other)noexcept : GameObject(other.app_, other.pos_, other.scale_),
 		texture_(other.texture_), destiny_(other.destiny_), frame_(other.frame_) {}; //Constructora por movimiento de Draw
 
+public:
 	virtual ~Draw() {}; //Destructora de Draw
 
-public:
 	const virtual void draw() { texture_->render(getDestiny(), SDL_FLIP_NONE); };
 	//Devuelve la posicion "visual" del objeto
 	//Cuando se mueva un objeto no se mira su posicion superior izquierda, sino sus pies.

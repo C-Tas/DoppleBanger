@@ -22,6 +22,12 @@ protected:
 	list<GameObject*> gameObjects_;
 	///<summary>Lista con todos los objetos con metodo Draw()</summary>
 	list<Draw*> objectsToRender_;
+	///<summary>Lista con todos los objetos a eliminar</summary>
+	list<GameObject*> objectsToRemove_;
+	///<summary>Lista con todos los objetos con metodo Draw() a eliminar</summary>
+	list<Draw*> rendersToRemove_;
+	///<summary>Lista con todos los objetos con método Update() y metodo Draw() a eliminar</summary>
+	list<Draw*> objRendToRemove_;
 	///<summary>Puntero a la aplicacion</summary>
 	Application* app_;
 	///<summary>Referencia al HandleEvents</summary>
@@ -44,5 +50,11 @@ public:
 	void addRenderList(Draw* obj);
 	///<summary>A�ade un objeto a las listas de objectsToRender_ y gameObjects_</summary>
 	void addRenderUpdateLists(Draw* obj);
+	///<summary>A�ade un objeto a la lista objectsToRemove_</summary>
+	void removeUpdateList(GameObject* obj);
+	///<summary>A�ade un objeto a la lista de rendersToRemove_</summary>
+	void removeRenderList(Draw* obj);
+	///<summary>A�ade un objeto a las listas de objectsToRemove_ y rendersToRemove_</summary>
+	void removeRenderUpdateLists(Draw* obj);
 };
 

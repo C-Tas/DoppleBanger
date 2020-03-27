@@ -96,7 +96,7 @@ public:
 		return isKeyUp_;
 	}
 
-	//<summary>Devuelve si la tecla ha sido pulosada</summary>
+	//<summary>Devuelve si la tecla ha sido pulsada</summary>
 	inline bool isKeyDown(SDL_Scancode key) {
 		// return kbState_[key] == 1;
 		return keyDownEvent() && kbState_[key] == 1;
