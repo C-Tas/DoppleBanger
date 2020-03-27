@@ -44,5 +44,7 @@ public:
 	void checkPlayerActions();
 	///<summary>Comprueba si el jugador ha hecho click en algún enemigo, y de ser el caso, devuelve el que se renderiza el último</summary>
 	Enemy* checkAttack();
+	///<summary>Encuentra al enemigo más cercano a una posición</summary>
+	Enemy* findClosestEnemy(Point2D pos);
 };
 

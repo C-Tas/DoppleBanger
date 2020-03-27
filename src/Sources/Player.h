@@ -15,7 +15,7 @@ private:
 
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region abilities
-	int liberation_ = 0;
+	int liberation_ = 2;
 	bool explotion_ = false;
 #pragma endregion
 

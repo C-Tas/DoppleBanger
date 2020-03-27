@@ -76,6 +76,17 @@ Enemy* PlayState::checkAttack() {
 	return obj;
 }
 
+Enemy* PlayState::findClosestEnemy(Point2D pos) {
+	Enemy* obj = nullptr;
+	auto it = enemies_.begin(); if (enemies_.begin() != enemies_.end()) { obj = (*it); ++it; }
+	for (; it != enemies_.end(); ++it)
+		if (abs(Vector2D((*it)->getPos().getX() - pos.getX(), (*it)->getPos().getY() - pos.getY()).magnitude()) <
+			abs(Vector2D(obj->getPos().getX() - pos.getX(), obj->getPos().getY() - pos.getY()).magnitude()))
+			obj = (*it);
+
+	return obj;
+}
+
 #pragma region ChangeState
 void PlayState::goToPauseState(Application* app) {
 	app->getStateMachine()->pushState(new PauseState(app));
