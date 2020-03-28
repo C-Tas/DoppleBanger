@@ -33,12 +33,15 @@ private:
 	const int STASH_VISIBLE_ELEMENTS = 2;
 
 	///Métodos privados auxiliares para los callbacks
+#pragma region privateCallbacks
 	void advanceInventoryPage();
 	void previousInventoryPage();
 	void advanceStashPage();
 	void previousStashPage();
 	void selectObject(InventoryButton* button);
 	void changeBetweenLists();
+	void deleteObject();
+#pragma endregion
 
 	///<summary>Método privado para pintar las dos listas con objetos de la forma que precisen</summary>
 	void drawList(list<InventoryButton*>*  list_, int page, const int elemsPerPage, Vector2D iniElemPos, Vector2D distanceBetween,int elementsPerRow = 1)const ;
@@ -50,16 +53,25 @@ public:
 	///<summary>Detsructora</summary>
 	virtual ~StashState() {background_ = nullptr; };
 
-	///<summary>Callbacks para los botones (Cambio de estado)</summary>
-	static void backToPrevious(Application* app);
+#pragma region Callbacks
 
 	//<summary>Callbacks para cambiar elementos de este estado</summary>
+	///<summary>Vuelta al barco</summary>
+	static void backToPrevious(Application* app);
+	///<summary>Callbacks para avanzar/retroceder las paginas del alijo/inventario </summary>
 	static void callbackAdvanceInventoryPage(GameState* state);
 	static void callbackPreviousInventoryPage(GameState* state);
 	static void callbackAdvanceStashPage(GameState* state);
 	static void callbackPreviousStashPage(GameState* state);
+	
+	///<summary>Selecciona el objeto sobre el que se hace click</summary>
 	static void callbackSelectObject(GameState* state, InventoryButton* button);
+	///<summary>Cambia de lista el objeto seleccionado</summary>
 	static void callbackChangeBetweenLists(GameState* state);
+	///<summary>Borra el objeto seleccionado</summary>
+	static void callbackDeleteObject(GameState* state);
+
+#pragma endregion
 
 	virtual void draw()const;
 	virtual void update();

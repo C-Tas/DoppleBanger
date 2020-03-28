@@ -30,6 +30,11 @@ void StashState::callbackChangeBetweenLists(GameState* state)
 	dynamic_cast<StashState*>(state)->changeBetweenLists();
 }
 
+void StashState::callbackDeleteObject(GameState* state)
+{
+	dynamic_cast<StashState*>(state)->deleteObject();
+}
+
 void StashState::draw() const
 {
 	//Dibujamos el fondo (de momento es el provisional)
@@ -49,7 +54,7 @@ void StashState::update()
 	//Update de todos los botones
 	GameState::update();
 
-	//update de los objetos que hay en pantalla
+	//update de los objetos del inventario que hay en pantalla
 	auto it = inventory_.objects_->begin();
 	advance(it, inventory_.page_ * INVENTORY_VISIBLE_ELEMENTS);
 	for (int i = 0; it != inventory_.objects_->end() && i < INVENTORY_VISIBLE_ELEMENTS; i++) {
@@ -57,7 +62,7 @@ void StashState::update()
 		++it;
 	}
 
-	//update de los objetos que hay en pantalla
+	//update de los objetos del alijo que hay en pantalla
 	it = stash_.objects_->begin();
 	advance(it, stash_.page_ * STASH_VISIBLE_ELEMENTS);
 	for (int i = 0; it != stash_.objects_->end() && i < STASH_VISIBLE_ELEMENTS; i++) {
@@ -83,12 +88,15 @@ void StashState::initState() {
 
 	//Botón para cambiar el objeto de una lista a otra
 	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D(1500, 300), Vector2D(50, 50), callbackChangeBetweenLists));
+	//Botón para eliminar el objeto seleccionado
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D(1500, 550), Vector2D(50, 50), callbackDeleteObject));
 
 	//Botón de volver al estado anterior
 	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D(1500, 50), Vector2D(50, 50), backToPrevious));
 
 	GameManager* gm = GameManager::instance();
 
+	//Cogemos la referencia de las listas que hay en GameManager
 	stash_.objects_ = gm->getStash();
 	inventory_.objects_ = gm->getInventory();
 
@@ -161,16 +169,36 @@ void StashState::changeBetweenLists()
 		
 		//Una vez sabemos a cual, lo intercambiamos de lista
 		if (it == inventory_.objects_->end()) {
-			it = inventory_.objects_->insert(inventory_.objects_->end(), selected_);//Insertamos en la otra
+			it = inventory_.objects_->insert(inventory_.objects_->end(), selected_);//Insertamos en la otra lista
 			stash_.objects_->erase(selected_->getIterator()); //Lo quitamos de la inicial
 			selected_->setIterator(it);//actualizamos iterador
 			
 		}
 		else {
-			it = stash_.objects_->insert(stash_.objects_->end(), selected_);//Insertamos en la otra
+			it = stash_.objects_->insert(stash_.objects_->end(), selected_);//Insertamos en la otra lista
 			inventory_.objects_->erase(selected_->getIterator());//Lo quitamos
 			selected_->setIterator(it);//actualizamos iterador
 		}
+	}
+}
+
+void StashState::deleteObject()
+{
+	//Comprobamos si hay algún elemento seleccionado
+	if (selected_ != nullptr) {
+
+		//Buscamos si el objeto selected está en la lista del inventario
+		auto it = find(inventory_.objects_->begin(), inventory_.objects_->end(), selected_);
+
+		//Quitamos el objeto de la lista en la que se encuentra
+		if (it == inventory_.objects_->end()) stash_.objects_->erase(selected_->getIterator());
+		else inventory_.objects_->erase(selected_->getIterator());
+
+		//Borramos el objeto
+		delete selected_;
+		//Ponemos el puntero a null para evitar posibles errores
+		selected_ = nullptr;
+
 	}
 }
 
