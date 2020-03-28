@@ -16,7 +16,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Sprites
 	{ Roca, "../Sources/assets/colisionables/roca.png" },
 	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
-	{Dragon,"../Sources/assets/enemigos/dragon.png"}
+	{Dragon,"../Sources/assets/enemigos/dragon.png"},
+	{MonkeyCoco,"../Sources/assets/enemigos/MonkeyCoco.png"}
 	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 };
 

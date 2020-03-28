@@ -7,6 +7,8 @@
 #include "RandEquipGen.h"
 #include <vector>
 #include "checkML.h"
+#include "Player.h"
+#include "Clon.h"
 
 
 using namespace std;
@@ -64,7 +66,13 @@ private:
 	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
 	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
+	
+	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
+	Player* player_ = nullptr;
+	//Puntero al clon
+	Clon* clon_ = nullptr;
 	//Pendiente de guardar y cargar
+
 public:
 	//Constructor vacío
 	GameManager() {
@@ -110,6 +118,14 @@ public:
 	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };
 	//Devuelve true si la misión está empezada
 	const bool isThatMissionStarted(missions mission) { return missionsStarted[(int)mission]; };
+	
+	//Revisar
+	//Devuelve la posición del player
+	const Point2D getPlayerPos() { return player_->getPos(); };
+	//Devuelve al jugador
+	Player* getPlayer() { return player_; };
+	//Devuelve al clon
+	Clon* getClon() { return clon_; };
 #pragma endregion
 
 #pragma region setters
@@ -130,6 +146,13 @@ public:
 	inline void setCompleteMission(missions mission) { missionsComplete[(int)mission] = true; };
 	//Empieza una misión secundaria
 	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
+
+	//Asigna al puntero de player
+	inline void setPlayer(Player* player) { player_ = player; };
+	//Asigna al puntero de clon
+	inline void setClon(Clon* clon) { clon_ = clon; };
+	//borra al clon
+	inline void deleteClon() { clon_ = nullptr; };
 #pragma endregion
 };
 

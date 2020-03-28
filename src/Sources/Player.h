@@ -24,12 +24,13 @@ private:
 
 public:
 //Constructora de player
-	Player(Application* app, Texture* texture, Vector2D pos, Vector2D scale, SDL_Rect collisionArea) :
-		Actor(app, texture, pos, scale, collisionArea) {
-		eventHandler_ = HandleEvents::instance();
-		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	Player(Application* app, Vector2D pos, Vector2D scale) :
+		Actor(app, pos, scale) {
+		initObject();
 	};
 	~Player() { texture_ = nullptr; };
+
+	virtual void initObject();
 	virtual bool update();
 	virtual void onCollider() {};
 	virtual void stop() { dir_ = Vector2D(0, 0); }

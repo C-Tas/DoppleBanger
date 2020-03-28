@@ -10,10 +10,10 @@ bool Player::update()
 		move(eventHandler_->getMousePos());
 
 	//Margen de 2 pixeles
-	if (visPos_.getX() < obj_.getX() - 2 ||
-		visPos_.getX() > obj_.getX() + 2 ||
-		visPos_.getY() < obj_.getY() - 2 ||
-		visPos_.getX() > obj_.getX() + 2)
+	if (visPos_.getX() < target_.getX() - 2 ||
+		visPos_.getX() > target_.getX() + 2 ||
+		visPos_.getY() < target_.getY() - 2 ||
+		visPos_.getX() > target_.getX() + 2)
 	{
 		double delta = app_->getDeltaTime();
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
@@ -21,4 +21,9 @@ bool Player::update()
 	}
 
 	return false;
+}
+
+void Player::initObject() {
+	eventHandler_ = HandleEvents::instance();
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }

@@ -8,7 +8,7 @@ const double DURATION_ = 2; //En segundos
 class Clon : public Draw
 {
 public:
-	//Liberation es el nivel de la habilidad liberación: 0 no se tiene, 1 nivel 1, 2 nivel 2.
+	/*//Liberation es el nivel de la habilidad liberación: 0 no se tiene, 1 nivel 1, 2 nivel 2.
 	Clon(Application* app, Point2D pos, int ad, int meleeRate, int liberation, Vector2D scale) :
 		Draw(app, app->getTextureManager()->getTexture(Resources::TextureId::Timon), pos, scale) { init(ad, meleeRate, liberation); };
 	~Clon() {};
@@ -30,6 +30,6 @@ private:
 		duration_ = DURATION_;
 		ad_ = (ad / 2) * lib;
 		meleeRate = (meleeRate / 2) * lib;
-	};
+	};*/
 };
 

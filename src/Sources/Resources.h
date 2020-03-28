@@ -30,6 +30,7 @@ public:
 		//Personajes
 		Dragon,
 		Roca,
+		MonkeyCoco,
         
 		//Textos
 		PlayText,
