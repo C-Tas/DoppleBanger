@@ -9,8 +9,6 @@ struct Container {
 	list<InventoryButton*>* objects_;
 	///<summary>"Página" del inventario en la que nos encontramos(es decir, en la que están los objetos del inventario que vemos en la interfaz)</summary>
 	int page_ = 0;
-	///<summary>iterador al primero objeto de la página del inventario en la que nos encontramos</summary>
-	list<InventoryButton*>::iterator listPos_;
 };
 
 class StashState :
@@ -40,9 +38,10 @@ private:
 	void advanceStashPage();
 	void previousStashPage();
 	void selectObject(InventoryButton* button);
+	void changeBetweenLists();
 
 	///<summary>Método privado para pintar las dos listas con objetos de la forma que precisen</summary>
-	void drawList(list<InventoryButton*>*  list_, list<InventoryButton*>::iterator it , const int elemsPerPage, Vector2D iniElemPos, Vector2D distanceBetween,int elementsPerRow = 1)const ;
+	void drawList(list<InventoryButton*>*  list_, int page, const int elemsPerPage, Vector2D iniElemPos, Vector2D distanceBetween,int elementsPerRow = 1)const ;
 
 
 public:
@@ -60,6 +59,7 @@ public:
 	static void callbackAdvanceStashPage(GameState* state);
 	static void callbackPreviousStashPage(GameState* state);
 	static void callbackSelectObject(GameState* state, InventoryButton* button);
+	static void callbackChangeBetweenLists(GameState* state);
 
 	virtual void draw()const;
 	virtual void update();
