@@ -1,8 +1,8 @@
 #pragma once
-
 #include "Collider.h"
 #include "Resources.h"
 #include "Enemy.h"
+class Player;
 
 const double DURATION_ = 2; //En segundos
 
@@ -10,8 +10,7 @@ class Clon : public Draw
 {
 public:
 	//Liberation es el nivel de la habilidad liberación: 0 no se tiene, 1 nivel 1, 2 nivel 2.
-	Clon(Application* app, Point2D pos, int ad, int meleeRate, int range, int liberation, bool explotion, Vector2D scale) : range_(range), explotion_(explotion),
-		Draw(app, app->getTextureManager()->getTexture(Resources::TextureId::Timon), pos, scale) { init(ad, meleeRate, liberation); };
+	Clon(Application* app, Point2D pos, Vector2D scale, Player* player) : Draw(app, pos, scale), player_(player) { initObject(); }
 	~Clon() {};
 
 	bool update();
@@ -30,7 +29,8 @@ private:
 	double meleeTime_ = 0; //Ticks cuando se atacó por última vez
 	double duration_ = 0; //Duración del clon
 
-	Enemy* objective_ = nullptr;
+	Actor* objective_ = nullptr;
+	Player* player_ = nullptr;
 
 	void init(int ad, int meleeRate, int lib) {
 		spawnTime_ = SDL_GetTicks();
@@ -39,6 +39,7 @@ private:
 		meleeRate = (meleeRate / 2) * lib;
 	};
 
+	virtual void initObject();
 	void die();
 };
 

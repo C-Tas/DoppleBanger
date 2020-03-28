@@ -8,9 +8,7 @@
 
 void PlayState::initPlayState() {
 	//Creaci�n del player
-	SDL_Rect playerCollision; playerCollision.x = 300; playerCollision.y = 400; playerCollision.w = 100; playerCollision.h = 100;
-	player_ = new Player(app_, { app_->getTextureManager()->getTexture(Resources::TextureId::Timon) },
-		Vector2D(playerCollision.x, playerCollision.y), Vector2D(100, 100), playerCollision);
+	player_ = new Player(app_,	Vector2D(300, 400), Vector2D(100, 100));
 	addRenderUpdateLists(player_);
 
 	//Creaci�n de dos obst�culos de prueba

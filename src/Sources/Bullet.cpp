@@ -30,7 +30,7 @@ bool Bullet::update()
 		Enemy* obj = static_cast<PlayState*>(app_->getStateMachine()->getState())->collidesWithEnemy(pos_, scale_);
 		if (obj != nullptr)
 		{
-			obj->takeDamage(damage_);
+			obj->reciveDmg(damage_);
 			app_->getStateMachine()->getState()->removeRenderUpdateLists(this);
 		}
 	}

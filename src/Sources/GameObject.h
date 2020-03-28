@@ -12,20 +12,20 @@ class GameObject
 protected:
 	Vector2D pos_, scale_;
 	Application* app_ = nullptr;
-
-protected:
 	//<summary>constructor vac�o</summary>
 	GameObject() : pos_({ 0,0 }), scale_(0, 0) {};
 	//<summary>constructor con par�metros</summary>
-	GameObject(Application* app, Vector2D pos, Vector2D scale) : app_(app), pos_(pos), scale_(scale) {};
-
+	GameObject(Application* app, Vector2D pos, Vector2D scale)
+		: app_(app), pos_(pos), scale_(scale) {};
 	//<summary>constructor por cop�a</summary>
-	GameObject(const GameObject& other) : pos_(other.pos_), scale_(other.scale_), app_(other.app_) {};
+	GameObject(const GameObject& other)
+		: pos_(other.pos_), app_(other.app_), scale_(other.scale_) {};
 	//<summary>constructor por movimiento</summary>
-	GameObject(const GameObject&& other)noexcept : pos_(other.pos_), scale_(other.scale_), app_(other.app_) {};
-
+	GameObject(const GameObject&& other)noexcept
+		: pos_(other.pos_), app_(other.app_), scale_(other.scale_) {};
+	virtual void initObject() = 0;
 public:
-//<summary>umetodo abstracto que lleva la logica del juego</summary>
+	//<summary>umetodo abstracto que lleva la logica del juego</summary>
 	virtual bool update() = 0;
 #pragma region Getters
 	//<summary>Devuelve la posicon del objeto</summary>
@@ -40,7 +40,17 @@ public:
 	inline const double getScaleX() { return scale_.getX(); }
 	//<summary>Devuelve la Y de la pos del objeto</summary>
 	inline const double getScaleY() { return scale_.getY(); }
+	//Dada una posición le resta el offset del objeto que invoca el método
+	//de tal forma que si este se mueve a la dicha posición queda centrado en ella
+	Vector2D getCenter(Vector2D pos)
+	{
+		Vector2D center;
+		center.setX(pos.getX() - (scale_.getX() / 2));
+		center.setY(pos.getY() - (scale_.getY() / 2));
+		return center;
+	}
 #pragma endregion
+
 #pragma region Setter
 	//set
 	//<summary>Setea la X de la pos del objeto</summary>
@@ -56,6 +66,5 @@ public:
 	//<summary>Setea la escala de la pos del objeto</summary>
 	inline void setScale(Vector2D newPos) { scale_.setVec(newPos); }
 #pragma endregion
-virtual ~GameObject(){};
+	virtual ~GameObject() {};
 };
-

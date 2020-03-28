@@ -14,7 +14,7 @@ private:
 	//Diferencia entre los botones en el eje y
 	double button_dif = 0;
 	Player* player_ = nullptr;
-	Crab* crab_ = nullptr;
+	//Crab* crab_ = nullptr;
 
 protected:
 	///<summary>Se inicializa el menu</summary>
