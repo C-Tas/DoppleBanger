@@ -60,6 +60,7 @@
     <ClCompile Include="Sources\SelectLevelState.cpp" />
     <ClCompile Include="Sources\SRandBasedGenerator.cpp" />
     <ClCompile Include="Sources\SpookyIslandState.cpp" />
+    <ClCompile Include="Sources\ShipObject.cpp" />
     <ClCompile Include="Sources\StashState.cpp" />
     <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Sources\Skill.h" />
     <ClInclude Include="Sources\SRandBasedGenerator.h" />
     <ClInclude Include="Sources\SpookyIslandState.h" />
+    <ClInclude Include="Sources\ShipObject.h" />
     <ClInclude Include="Sources\StashState.h" />
     <ClInclude Include="Sources\Stats.h" />
     <ClInclude Include="Sources\StoryState.h" />

@@ -26,8 +26,6 @@ public:
 	virtual void update();
 	///<summary>Ir a pauseState (push)</summary>
 	static void goToPauseState(Application* app);
-	///<summary>Ir a SaveGameState (push)</summary>
-	static void goToSaveGame(Application* app);
 	///<summary>Ir a InventoryState (push)</summary>
 	static void goToInventoryState(Application* app);
 	///<summary>Ir a SelectLevelState (push)</summary>

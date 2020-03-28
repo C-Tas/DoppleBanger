@@ -53,6 +53,11 @@ public:
 	};
 	~Player() {};
 
+	};
+		currStats_ = other.currStats_;
+		eventHandler_ = HandleEvents::instance();
+	Player(const Player& other) : Actor(other.app_, other.texture_, other.pos_, other.scale_, other.collisionArea_){
+	///<summary>Constructor por copia</summary>
 	virtual bool update();
 	void shoot(Vector2D dir);
 	virtual void onCollider() { /*Colisi�n con enemigo*/ };

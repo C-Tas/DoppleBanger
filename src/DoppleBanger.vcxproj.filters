@@ -141,6 +141,12 @@
     <ClCompile Include="Sources\Bullet.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\ShipState.cpp">
+      <Filter>GameStateMahcine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ShipObject.cpp">
+      <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -293,6 +299,12 @@
     </ClInclude>
     <ClInclude Include="Sources\Bullet.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ShipState.h">
+      <Filter>GameStateMahcine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ShipObject.h">
+      <Filter>GameObjects\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
