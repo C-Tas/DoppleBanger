@@ -47,7 +47,7 @@ public:
 
 #pragma region Removes
 	///<summary>Quita las colisiones con el NPC (si el NPC se desbloquea y deja de aparecer en la isla)</summary>
-	void removeNPC() { npc_ = nullptr; };
+	void removeNPC() { npc_.object = nullptr; };
 	///<summary>Quita un enemigo de la lista</summary>
 	void removeEnemy(Enemy* enem) { enemies_.remove(enem); };
 	///<summary>Quita un cofre de la lista (cuando se abre)</summary>
@@ -66,7 +66,7 @@ public:
 
 	//Islas
 	///<summary>Setea el NPC bloqueado de la zona de la isla</summary>
-	void setLockNPC(NPC* npc) { npc_ = npc; };
+	void setLockNPC(NPCsNames name, NPC* npc) { npc_ = NPCsInfo(name, npc); };
 	///<summary>Vacía la lista de obstáculos para setear una nueva</summary>
 	void setObstacles(list<Obstacle*> obstacles) { obstacles_.clear(); obstacles_ = obstacles; };
 	///<summary>Vacía la lista de enemigos para setear una nueva</summary>
@@ -84,7 +84,7 @@ public:
 
 	//Barco
 	///<summary>Guarda un nuevo NPC desbloqueado a la lista (para el barco)</summary>
-	void setUnlockNPC(NPCsNames name, NPC* npc) { npcs_[name].object = npc; };
+	void setUnlockNPC(NPCsNames name, NPC* npc) { npcs_.push_back(NPCsInfo(name, npc)); };
 	///<summary>Indica si el objeto del barco ha sido pulsado o no</summary>
 	void setShipObjectClick(ShipObjectsNames name, bool click) { shipObjects_[name].click = click; };
 	///<summary>Guarda un elemento del barco</summary>
@@ -95,7 +95,10 @@ public:
 private:	//Private está abajo porque necesitan enum del público
 	struct NPCsInfo {
 		NPCsNames id;
-		NPC* object;
+		NPC* object = nullptr;
+
+		NPCsInfo() {};
+		NPCsInfo(NPCsNames i, NPC* ob) { id = i; object = ob; };
 	};
 
 	struct ShipObjectsInfo {
@@ -107,7 +110,7 @@ private:	//Private está abajo porque necesitan enum del público
 	Player* player_ = nullptr;
 
 	//Islas
-	NPC* npc_ = nullptr;	//El NPC en la isla no necesita ser una lista, hay como mucho uno por zona
+	NPCsInfo npc_;	//El NPC en la isla no necesita ser una lista, hay como mucho uno por zona
 	list<Obstacle*> obstacles_;
 	list<Enemy*> enemies_;
 	//list<Chest*> chests_;
@@ -116,7 +119,7 @@ private:	//Private está abajo porque necesitan enum del público
 	list<Trigger*> triggers_;
 
 	//Barco
-	vector<NPCsInfo> npcs_;	//Para los NPCs desbloqueados del barco (si no está desbloqueado será nullptr)
+	vector<NPCsInfo> npcs_;
 	vector<ShipObjectsInfo> shipObjects_;
 
 	static unique_ptr<CollisionCtrl> instance_;
