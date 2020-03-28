@@ -1,4 +1,5 @@
 #pragma once
+#include "HandleEvents.h"
 #include "Player.h"
 #include "NPC.h"
 #include "Obstacle.h"
@@ -29,7 +30,7 @@ public:
 	};
 
 	///<summary>Constructora, todos los elementos de colisión deben pasarse con los setters</summary>
-	CollisionCtrl() {};
+	CollisionCtrl() { input_ = HandleEvents::instance(); };
 	~CollisionCtrl() {};
 
 	///<summary>Instanciamos el CollisionCtrl o creamos uno</summary>
@@ -85,10 +86,10 @@ public:
 	//Barco
 	///<summary>Guarda un nuevo NPC desbloqueado a la lista (para el barco)</summary>
 	void setUnlockNPC(NPCsNames name, NPC* npc) { npcs_.push_back(NPCsInfo(name, npc)); };
-	///<summary>Indica si el objeto del barco ha sido pulsado o no</summary>
-	void setShipObjectClick(ShipObjectsNames name, bool click) { shipObjects_[name].click = click; };
-	///<summary>Guarda un elemento del barco</summary>
-	//void setShipObject(ShipObjectsNames name, ShipObject* ob) { shipObjects_[name].object = ob; };
+	///<summary>Guarda los elementos del barco</summary>
+	//void setShipObjects(ShipObject* stash, ShipObject* door, ShipObject* wheel, ShipObject* exit) { 
+	//		shipObjects_.push_back(ShipObjectsInfo(Stash, stash)); shipObjects_.push_back(ShipObjectsInfo(Door, door)); 
+	//		shipObjects_.push_back(ShipObjectsInfo(Wheel, wheel)); shipObjects_.push_back(ShipObjectsInfo(Exit, exit)); };
 
 #pragma endregion
 
@@ -104,8 +105,13 @@ private:	//Private está abajo porque necesitan enum del público
 	struct ShipObjectsInfo {
 		ShipObjectsNames id;
 		//ShipObject* object;
-		bool click = false;	//Determina si el objeto ha sido pulsado
+		bool click = false;
+
+		ShipObjectsInfo() {};
+		//ShipObjectsInfo(ShipObjectsNames i, ShipObject* ob) { id = i; object = ob; };
 	};
+
+	HandleEvents* input_ = nullptr;	//Para controlar si los objetos han sido clickados
 
 	Player* player_ = nullptr;
 

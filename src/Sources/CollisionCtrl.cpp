@@ -110,12 +110,30 @@ void CollisionCtrl::islandCollisions() {
 }
 
 void CollisionCtrl::shipCollisions() {	//Está comentado porque falta añadir la clase ShipObject
+	Vector2D mousePos = input_->getMousePos();	//Guardamos la posición del ratón
+	//Comprobamos si se ha hecho click
+	if (input_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+		SDL_Point mouse = { (int)mousePos.getX(), (int)mousePos.getY() };
+		//Las ponemos todas a false por si no se ha pulsado ninguno de los objetos
+		shipObjects_[Stash].click = false;
+		shipObjects_[Door].click = false;
+		shipObjects_[Wheel].click = false;
+		shipObjects_[Exit].click = false;
+
+		//Si se ha clickado alguna, se pone en true
+		//if (SDL_PointInRect(&mouse, &shipObjects_[Stash].object->getDestiny())) shipObjects_[Stash].click = true;
+		//else if (SDL_PointInRect(&mouse, &shipObjects_[Door].object->getDestiny())) shipObjects_[Door].click = true;
+		//else if (SDL_PointInRect(&mouse, &shipObjects_[Wheel].object->getDestiny())) shipObjects_[Wheel].click = true;
+		//else if (SDL_PointInRect(&mouse, &shipObjects_[Exit].object->getDestiny())) shipObjects_[Exit].click = true;
+	}
+
 	//Colisión con los objetos del barco
     //for (auto ob : shipObjects_) {
     //    if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
     //        ob.object->getPosX() + ob.object->getWidth() / 2, ob.object->getPosY() + ob.object->getHeight() / 2, ob.object->getScaleX(), ob.object->getScaleY())) {
     //        player_->stop();
-    //        if (ob.click) {
+	//
+    //        if (ob.click) {	//Si el objeto en concreto había sido pulsado
     //            ob.click = false;
     //            switch (ob.id) {
 	//            case Stash:
