@@ -40,6 +40,7 @@ private:
 	};
 
 	virtual void initObject();
+	virtual void initAnim() {};
 	void die();
 };
 

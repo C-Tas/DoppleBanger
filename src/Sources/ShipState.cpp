@@ -1,55 +1,79 @@
 #include "ShipState.h"
 #include "Player.h"
 #include "ShipObject.h"
-#include "Trigger.h"
 #include "Collisions.h"
 #include "CaribbeanIslandState.h"
 #include "SpookyIslandState.h"
 #include "VolcanicIslandState.h"
 #include "GameManager.h"
+#include "SelectLevelState.h"
+#include "SaveLoadState.h"
+#include "StashState.h"
 
-void goIsland(Application* app, int island) {
-	if(island == 1) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
-	else if(island == 2) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
-	else if (island == 3) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
+
+#pragma region CallBacks
+//Callback para cambiar de GameState e ir a la isla actual
+void goIsland(Application* app) {
+	GameManager* gm = GameManager::instance();
+	if(gm->getCurrIsland() == Island::CaribeanA) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
+	else if(gm->getCurrIsland() == Island::SpookyA) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
+	else if (gm->getCurrIsland() == Island::Volcanic) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
 }
+//Callback del alijo para ir al menú de alijo
+void goStashState(Application* app) {
+	app->getGameStateMachine()->pushState(new StashState(app));
+}
+//Callback del mapa
+void goMap(Application* app) {
+	GameManager* gm = GameManager::instance();
+	app->getGameStateMachine()->pushState(new SelectLevelState(app));
+}
+//Callback para ir al menú de guardado
+void goSaveState(Application* app) {
+	app->getGameStateMachine()->pushState(new SaveLoadState(app, false));
+}
+#pragma endregion
+
 void ShipState::initState()
 {
-	background_ = app_->getTextureManager()->getTexture(Resources::Ship);
+	collisionCtrl_ = CollisionCtrl::instance();
+	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Ship));
+	addRenderUpdateLists(background_);
 
 	SDL_Rect destRect; //Rectángulo para los objetos
 
 	//Creación del alijo
 	destRect.w = wStash; destRect.h = hStash;
 	destRect.x = app_->getWindowWidth() / 2; destRect.y = app_->getWindowHeight() * 2 / 5;
-	stash_ = new ShipObject(app_, destRect, app_->getTextureManager()->getTexture(Resources::Stash),
-		Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h));
+	stash_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h), 
+		app_->getTextureManager()->getTexture(Resources::Stash), goStashState);
 	addRenderUpdateLists(stash_);
 
 	//Creación de la trampilla
 	destRect.w = wDoor; destRect.h = hDoor;
 	destRect.x = (app_->getWindowWidth() / 2) - wDoor * 1.5; destRect.y = app_->getWindowHeight() * 2 / 5 + hWheel / 2;
-	door_ = new ShipObject(app_, destRect, app_->getTextureManager()->getTexture(Resources::ShipDoor),
-		Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h));
+	door_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
+		app_->getTextureManager()->getTexture(Resources::ShipDoor), goSaveState);
 	addRenderUpdateLists(door_);
 
 	//Creación del timón
 	destRect.w = wWheel; destRect.h = hWheel;
 	destRect.x = (app_->getWindowWidth() / 2) - wWheel / 2; destRect.y = app_->getWindowHeight() / 7;
-	wheel_ = new ShipObject(app_, destRect, app_->getTextureManager()->getTexture(Resources::Timon),
-		Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h));
+	wheel_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
+		app_->getTextureManager()->getTexture(Resources::Wheel), goMap);
 	addRenderUpdateLists(wheel_);
 	
-	//Creación del trigger para ir a una isla
+	//Creación de la salida
 	destRect.w = wExit; destRect.h = hExit;
 	destRect.x = app_->getWindowWidth() - wExit; destRect.y = app_->getWindowHeight() * 2 / 3;
-	GameManager::instance()->setIsland(2); //Para probar con distintas islas poner otro número
-	exit_ = new Trigger(app_, destRect, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.w),
-		goIsland, player_, GameManager::instance()->getCurrIsland());
-	addUpdateList(exit_);
+	exit_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
+		app_->getTextureManager()->getTexture(Resources::ExitShip), goIsland);
+	addRenderUpdateLists(exit_);
 
 
-	//Siempre se añade el último para que se renderice por encima de los demás objetos
+	////Siempre se añade el último para que se renderice por encima de los demás objetos
+	playerEntry_ = Vector2D((app_->getWindowWidth() - wPlayer * 2), ((app_->getWindowHeight() * 3 / 4) - hPlayer));
+	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
 	addRenderUpdateLists(player_);
 }
 
@@ -57,10 +81,8 @@ void ShipState::update()
 {
 	PlayState::update();
 
-	//Esta región está diseñada para testear y puede ser usada para código definitivo en caso de que sea útil
-#pragma region Testeo
 	HandleEvents* input = HandleEvents::instance();
-	
+
 	Vector2D aux = input->getMousePos(); //Guardas la posicion del raton
 
 	//Comprueba si se ha hecho click en los objetos para habilitar su evento de colisión
@@ -85,11 +107,11 @@ void ShipState::update()
 	//Colisiones con los objetos del barco
 	//Alijo
 	if (RectRect(player_->getPos().getX() + wPlayer / 2, player_->getPos().getY() + hPlayer / 2, player_->getScaleX(), player_->getScaleY() / 10,
-		stash_->getPos().getX() + wStash / 2, stash_->getPos().getY() + hStash / 2, stash_->getScaleX(), stash_->getScaleY())) { 
+		stash_->getPos().getX() + wStash / 2, stash_->getPos().getY() + hStash / 2, stash_->getScaleX(), stash_->getScaleY())) {
 		player_->stop();
 		if (stashClick) {
 			stashClick = false;
-			stash_->onColliderStash();
+			stash_->onCollider();
 		}
 	}
 
@@ -99,25 +121,24 @@ void ShipState::update()
 		player_->stop();
 		if (doorClick) {
 			doorClick = false;
-			door_->onColliderDoor();
+			door_->onCollider();
 		}
 	}
 
 	//Timón
 	if (RectRect(player_->getPos().getX() + wPlayer / 2, player_->getPos().getY() + hPlayer / 2, player_->getScaleX(), player_->getScaleY() / 10,
-		wheel_->getPos().getX() + wWheel/ 2, wheel_->getPos().getY() + hWheel/ 2, wheel_->getScaleX(), wheel_->getScaleY())) {
+		wheel_->getPos().getX() + wWheel / 2, wheel_->getPos().getY() + hWheel / 2, wheel_->getScaleX(), wheel_->getScaleY())) {
 		player_->stop();
 		if (wheelClick) {
 			wheelClick = false;
 			//Para cambiar de isla
-			wheel_->onColliderWheel(GameManager::instance()->getCurrIsland()); //Hay que pasarle el número de islas desbloqueadas
+			wheel_->onCollider();
 		}
 	}
 
 	//Trigger de salida
 	if (RectRect(player_->getPos().getX() + wPlayer / 2, player_->getPos().getY() + hPlayer / 2, player_->getScaleX(), player_->getScaleY(),
 		exit_->getPos().getX() + wExit / 2, exit_->getPos().getY() + hExit / 2, exit_->getScaleX(), exit_->getScaleY())) {
-		exit_->onOverlap();
+		exit_->onCollider();
 	}
-#pragma endregion
 }

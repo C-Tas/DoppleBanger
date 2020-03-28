@@ -68,7 +68,7 @@ public:
 
 #pragma region Getters
 	///<summary>Devuelve maquina de estados</summary>
-	GameStateMachine* getStateMachine() { return machine_; };
+	GameStateMachine* getGameStateMachine() { return machine_; };
 	///<summary>Devuelve el estado actual</summary>
 	GameState* getCurrState() { return machine_->getState(); };
 	///<summary>Devuelve si se esta procesando el bucle principal de la  </summary>

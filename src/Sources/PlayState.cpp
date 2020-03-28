@@ -7,35 +7,33 @@
 #include "Collisions.h"
 
 void PlayState::initPlayState() {
-	//Creaci�n del player
-	player_ = new Player(app_,	Vector2D(300, 400), Vector2D(100, 100));
-	addRenderUpdateLists(player_);
+
 
 	//Creaci�n de dos obst�culos de prueba
-	SDL_Rect objCollision; objCollision.x = 300; objCollision.y = 100; objCollision.w = 100; objCollision.h = 50;
-	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Roca),
+	/*SDL_Rect objCollision; objCollision.x = 300; objCollision.y = 100; objCollision.w = 100; objCollision.h = 50;
+	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Rock),
 		Vector2D(objCollision.x, objCollision.y), Vector2D(objCollision.w, objCollision.h)));
 
 	objCollision.x = 600; objCollision.y = 400;
-	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Roca),
+	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Rock),
 		Vector2D(objCollision.x, objCollision.y), Vector2D(objCollision.w, objCollision.h)));
 
 	for (auto ob : obstacles_) {
 		addUpdateList(ob);
 		addRenderList(ob);
-	}
+	}*/
 
 	collisionCtrl_ = CollisionCtrl::instance();
 	collisionCtrl_->setPlayer(player_);
-	collisionCtrl_->setObstacles(obstacles_);
+	//collisionCtrl_->setObstacles(obstacles_);
 	/*Seteamos todo lo necesario (enemigos, objetos, NPCs, etc)*/
 }
 
 
 void PlayState::update() {
-	collisionCtrl_->islandCollisions();
+	//collisionCtrl_->islandCollisions();
 	GameState::update();
-	checkPlayerActions();
+	//checkPlayerActions();
 }
 
 void PlayState::addEnemy(Enemy* obj) {
@@ -52,15 +50,15 @@ void PlayState::removeEnemy(Enemy* obj) {
 	removeRenderUpdateLists(obj);
 }
 
-void PlayState::checkPlayerActions() {
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
-	{
-		Enemy* obj; obj = checkAttack();
-		if (obj != nullptr) player_->attack(obj);
-		//else if NPC
-		else player_->move(eventHandler_->getMousePos());
-	}
-}
+//void PlayState::checkPlayerActions() {
+//	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
+//	{
+//		Enemy* obj; obj = checkAttack();
+//		if (obj != nullptr) player_->attack(obj);
+//		//else if NPC
+//		else player_->move(eventHandler_->getMousePos());
+//	}
+//}
 
 Enemy* PlayState::checkAttack() {
 	bool found = false;
@@ -103,23 +101,12 @@ Enemy* PlayState::collidesWithEnemy(Point2D pos, Vector2D scale) {
 
 #pragma region ChangeState
 void PlayState::goToPauseState(Application* app) {
-	app->getStateMachine()->pushState(new PauseState(app));
+	app->getGameStateMachine()->pushState(new PauseState(app));
 }
 
 void PlayState::goToInventoryState(Application* app) {
-	app->getStateMachine()->pushState( new InventoryState(app));
+	app->getGameStateMachine()->pushState( new InventoryState(app));
 
-}
-void PlayState::draw() const
-{
-	SDL_Rect destRect;
-	destRect.x = 0; destRect.y = 0;
-	destRect.w = app_->getWindowWidth();
-	destRect.h = app_->getWindowHeight();
-
-	background_->render(destRect);
-
-	GameState::draw();
 }
 #pragma endregion
 

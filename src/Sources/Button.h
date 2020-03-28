@@ -16,9 +16,9 @@ public:
 	virtual ~Button() {};
 
 	virtual bool update(); //Lleva la logica del boton
-	const virtual void draw();
 
 protected:
 	CallBackOnClick* cbClick_;
-	virtual void initObject() {};
+	virtual void initObject();
+	virtual void initAnim() {};
 };

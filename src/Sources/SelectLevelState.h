@@ -8,13 +8,11 @@ class SelectLevelState :
 	public GameState
 {
 public:
-	SelectLevelState(Application* app, int islandUnlocked = 1);
+	SelectLevelState(Application* app);
 	virtual ~SelectLevelState() {};
 
 	void draw() const;
 private: 
-	int islandsUnlocked_ = 1; //<summary>La primera por defecto siempre est� desbloqueada</summary>
-
 #pragma region Testeo
 	Texture* map = nullptr;
 	Texture* table = nullptr;

@@ -27,11 +27,11 @@ bool Bullet::update()
 		pos_.setX(pos_.getX() + (dir_.getX() * (speed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (speed_ * delta)));
 
-		Enemy* obj = static_cast<PlayState*>(app_->getStateMachine()->getState())->collidesWithEnemy(pos_, scale_);
+		Enemy* obj = static_cast<PlayState*>(app_->getGameStateMachine()->getState())->collidesWithEnemy(pos_, scale_);
 		if (obj != nullptr)
 		{
 			obj->reciveDmg(damage_);
-			app_->getStateMachine()->getState()->removeRenderUpdateLists(this);
+			app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
 		}
 	}
 

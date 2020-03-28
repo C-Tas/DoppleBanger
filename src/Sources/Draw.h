@@ -8,6 +8,16 @@
 class Draw : public GameObject
 {
 protected:
+	struct  Anim
+	{
+		int numberFrames_;		// Número de frames totales
+		int numberFramesRow_;	// Número de frames por fila 
+		uint widthFrame_;		// Ancho del frame
+		uint heightFrame_;		// Alto del frame
+		Anim(int numberFrames, int numberFramesRow, uint widthFrame, uint heightFrame) :
+		numberFrames_(numberFrames), numberFramesRow_(numberFramesRow), widthFrame_(widthFrame), heightFrame_(heightFrame) {}
+	};
+	Anim currAnim {0,0,0,0};
 	//Textura del objeto
 	Texture* texture_ = nullptr;
 	//Rect del render
@@ -17,7 +27,6 @@ protected:
 	//Pies de un objeto
 	Vector2D visPos_{ 0,0 };
 	//Numero de frames que tiene la animación
-	int numberFrames_ = 0;
 	//Constructora vacia de Draw
 	Draw() {};
 	//Constructora con argumentos de Draw
@@ -39,7 +48,7 @@ protected:
 		destiny_.w = (int)scale_.getX();
 		destiny_.h = (int)scale_.getY();
 	};
-
+	virtual void initAnim() {};
 public:
 	//Para construir un background
 	Draw(Application* app, Texture* texture) :
@@ -57,21 +66,21 @@ public:
 
 	//<metodo comun para renderizar tanto imagenes con un solo frame como con varios"
 	const virtual void draw() {
-		if (numberFrames_ <= 0) texture_->render(getDestiny(), SDL_FLIP_NONE);
+		if (currAnim.numberFrames_ <= 0) texture_->render(getDestiny(), SDL_FLIP_NONE);
 		else  texture_->render(getDestiny(), frame_);
 	};
 
 	//<summary>cambia el frame </summary>
 	virtual bool update() { return false; };
 	//Cambia al siguiente frame
-	virtual void updateFrame() { frame_.x = (frame_.x + frame_.w) % (numberFrames_ * frame_.w); };
+	virtual void updateFrame() { frame_.x = (frame_.x + frame_.w) % (currAnim.numberFrames_ * frame_.w); };
 	//Devuelve la posicion "visual" del objeto
 	//Cuando se mueva un objeto no se mira su posicion superior izquierda, sino sus pies.
 	void updateVisPos() { visPos_.setVec(Vector2D(pos_.getX() + (scale_.getX() / 2), pos_.getY() + (scale_.getY() * 0.8))); }; //Actualiza la posicion visual del objeto
 
 #pragma region getters
 //Devuelve el rectangulo destino
-	const virtual SDL_Rect getDestiny() {
+	const virtual SDL_Rect& getDestiny() {
 		destiny_.x = (int)pos_.getX();
 		destiny_.y = (int)pos_.getY();
 		destiny_.w = (int)scale_.getX();

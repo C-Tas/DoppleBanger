@@ -12,12 +12,13 @@ public:
 	///<summary>Enum para las distintas imagenes del juego</summary>
 	enum TextureId : int {
 		//Botones
-		BotonMenu,
+		MenuButton,
 		GoControls,
 		BackButton,
+		SkipButton,
 
 		//Fondos
-		MenuFondo,
+		MenuBackground,
 		InventaryMenu,
 		Controls,
 		Scene1,
@@ -34,14 +35,21 @@ public:
 		Volcanic,
 
 		//Personajes
-		Timon,
 		Dragon,
-        PirateFront,
+        PlayerFront,
+		MonkeyFront,
 
-		//Colsionable
-		Roca,
+		//Animaciones
+		CrabAttack,
+
+		//Interactuables
+		Wheel,
 		Stash,
 		ShipDoor,
+		ExitShip,
+
+		//Colsionable
+		Rock,
 
 		//Textos
 		PlayText,

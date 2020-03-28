@@ -32,8 +32,10 @@ protected:
 
 	//Inicializa al actor
 	virtual void initObject() {};
+	virtual void initAnim() {};
 	//<summary>Inicializa todas las stats</summary>
-	void initStats(double health, double mana, double manaReg, double armor, double ad, double ap, double crit, double range, double moveSpeed, double meleeRate, double distRate);
+	void initStats(double health, double mana, double manaReg, double armor, double ad, double ap, 
+		double crit, double range, double moveSpeed, double meleeRate, double distRate);
 
 public:
 	//Método para gestionar el daño recibido 

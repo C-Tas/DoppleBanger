@@ -3,19 +3,14 @@
 #include "StashState.h"
 #include "SaveLoadState.h"
 #include "SelectLevelState.h"
+#include "GameManager.h"
 
-void ShipObject::onColliderStash()
+void ShipObject::onCollider()
 {
-	app_->getGameStateMachine()->pushState(new StashState(app_));
+	cb_(app_); //Llama al callback
 }
 
-void ShipObject::onColliderDoor()
+void ShipObject::initObject()
 {
-	app_->getGameStateMachine()->pushState(new SaveLoadState(app_, false));
-}
 
-void ShipObject::onColliderWheel(int island)
-{
-	app_->getGameStateMachine()->pushState(new SelectLevelState(app_, island));
 }
-

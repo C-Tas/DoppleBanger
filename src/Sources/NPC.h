@@ -7,7 +7,10 @@ private:
 	TextBox txtBox;
 
 	const int NUM_FRAMES = 0;	//0 temporal
+
+protected:
 	virtual void initObject();
+	virtual void initAnim();
 
 public:
 	NPC(Application* app, SDL_Rect collisionArea, Texture* texture, Point2D pos, Vector2D scale) :

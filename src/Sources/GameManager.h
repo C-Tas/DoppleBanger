@@ -22,8 +22,9 @@ enum class Island : int {
 	SpookyA			= 5,
 	SpookyB			= 6,
 	SpookyC			= 7,
-	SpookyBoos		= 8,
-	Volcanic		= 9
+	SpookyD			= 8,
+	SpookyBoos		= 9,
+	Volcanic		= 10
 };
 
 enum class spentPoints : int {
@@ -47,6 +48,8 @@ private:
 	//Cantidad de oro que genera en un nivel
 	int currGold_ = 0;
 	//Enum de la última isla desbloqueada
+	int unlockedIslands_;
+	//Enum de la isla actual
 	Island currIsland_;
 	//Puntos de hazaña
 	int achievementPoints_ = 0;
@@ -68,7 +71,7 @@ private:
 public:
 	//Constructor vacío
 	GameManager() {
-		currIsland_ = Island::CaribeanA;
+		unlockedIslands_ = 0;
 		for (int i = 0; i < NUM_MISION; i++) {
 			missionsComplete[i] = false;
 		}
@@ -87,7 +90,7 @@ public:
 	GameManager(GameManager&) = delete;
 	GameManager& operator=(const GameManager&) = delete;
 	//Inicializa el oro, la actual isla y los puntos de hazaña
-	inline void initGameManager(int currGold, Island currIsland, int achievementPoints);
+	inline void initGameManager(int currGold, int unlockedIslands, int achievementPoints);
 
 #pragma region getters
 	//Devuelve el inventario
@@ -98,8 +101,10 @@ public:
 	const int getGold() { return currGold_; };
 	//Devuelve los puntos de hazaña
 	const int getAchievementPoints() { return achievementPoints_; };
-	//Devuelve la actual isla
-	const int getCurrIsland() { return (int)currIsland_; };
+	//Devuelve el número de islas desbloqueadas
+	const int getUnlockedIslands() { return unlockedIslands_; };
+	//Devuelve la isla actual
+	const Island getCurrIsland() { return currIsland_; }
 	//Devuelve los puntos gastados en la rama presición
 	const spentPoints getPresicionPoints() { return precision_; };
 	//Devuelve los puntos gastados en la rama melee
@@ -118,8 +123,9 @@ public:
 	//Asigna el puntero al alijo
 	inline void setStashPointer(lista stash) { stash_ = stash; };
 	//Asigna a la ultima isla desbloqueada
-	inline void setIsland(Island island) { currIsland_ = island; };
-	inline void setIsland(int island) { currIsland_ = (Island)island; };
+	inline void setUnlockedIslands(int island) { unlockedIslands_ = island; };
+	//Asigna la nueva isla actual
+	inline void setCurrIsland(Island newIsland) { currIsland_ = newIsland; }
 	//Asigna los puntos gastados a la rama precision
 	inline void setPrecisionPoints(int value) { precision_ = (spentPoints)value; };
 	//Asigna los puntos gastados a la rama melee

@@ -7,20 +7,24 @@ class Trigger;
 
 class ShipState : public PlayState
 {
+public:
+	///<summary> Constructora del barco</summary>
+	ShipState(Application* app) : PlayState(app) { initState(); }
+	virtual ~ShipState() {}
+	
+	void update();
+
 private:
-	void initState();
+	ShipObject* stash_ = nullptr;//Alijo
+	ShipObject* door_ = nullptr; //Trampilla
+	ShipObject* wheel_ = nullptr;//Timón
+	ShipObject* exit_ = nullptr; //Salida
+	Draw* background_ = nullptr; //Fondo
 
-#pragma region Testeo
-	ShipObject* stash_ = nullptr;
-	ShipObject* door_ = nullptr;
-	ShipObject* wheel_ = nullptr;
-	Trigger* exit_ = nullptr;
-
-	SDL_Point mouse; //Para guardar la posición del clik del ratón
+	SDL_Point mouse; //Para guardar la posición del clik del ratón  
 	bool stashClick = false; //Para saber si se ha pulsado el objeto
 	bool doorClick = false;
 	bool wheelClick = false; 
-#pragma endregion	
 
 	//Dimensiones de las entidades
 	const uint wStash = app_->getWindowWidth() / 7;
@@ -32,12 +36,11 @@ private:
 	const uint wWheel = app_->getWindowWidth() / 11;
 	const uint hWheel = app_->getWindowHeight() / 5;
 
-	const uint wExit = app_->getWindowWidth() / 30;
-	const uint hExit = app_->getWindowHeight() / 5;
-public:
-	///<summary> Constructora del barco</summary>
-	ShipState(Application* app) : PlayState(app) { initState(); }
-	virtual ~ShipState() {}
-	
-	void update();
+	const uint wExit = app_->getWindowWidth() / 15;
+	const uint hExit = app_->getWindowHeight() / 3;
+
+	const uint wPlayer = app_->getWindowWidth() / 25;
+	const uint hPlayer = app_->getWindowHeight() / 10;
+
+	void initState();
 };

@@ -75,7 +75,7 @@ void CollisionCtrl::shipCollisions() {	//Está comentado porque falta añadir la c
     //                ob.object->onColliderDoor();
     //                break;
     //            case Wheel:
-    //                ob.object->onColliderWheel(GameManager::instance()->getCurrIsland());
+    //                ob.object->onColliderWheel();
     //                break;
     //            case Exit:
     //                ob.object->onColliderExit();

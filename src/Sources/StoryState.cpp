@@ -1,7 +1,8 @@
 #include "StoryState.h"
-#include "PlayState.h"
+#include "ShipState.h"
+
 void StoryState::goToGame(Application* app) {
-	app->getStateMachine()->changeState(new PlayState(app));
+	app->getGameStateMachine()->changeState(new ShipState(app));
 }
 
 void StoryState::draw() const {
@@ -44,6 +45,6 @@ void StoryState::initState() {
 	scenes.push({ 2000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene1) });
 
 	//Botón para saltarse la secuencia de escenas
-	createButton(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), { 10,10 }, { 50,50 }, goToGame, app_);
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkipButton), { 10,10 }, { 50,50 }, goToGame);
 }
 

@@ -3,6 +3,7 @@
 #include "Vector2D.h"
 #include "SDL.h"
 #include "checkML.h"
+#include "Resources.h"
 
 using namespace std;
 using uint = unsigned int;

@@ -8,12 +8,6 @@
 
 class PlayState : public GameState
 {
-protected:
-	CollisionCtrl* collisionCtrl_ = nullptr;
-	Player* player_ = nullptr;
-	list<Obstacle*> obstacles_;
-	list<Enemy*> enemies_;
-
 public:
 	///<summary>Constructora PlayState</summary>
 	PlayState(Application* app = nullptr) : GameState(app) { initPlayState(); };
@@ -46,5 +40,13 @@ public:
 	Enemy* findClosestEnemy(Point2D pos);
 	///<summary>Comprueba colisiones con los enemigos y devuelve el primer enemigo en caso de haber colisión</summary>
 	Enemy* collidesWithEnemy(Point2D pos, Vector2D scale);
+
+protected:
+	Point2D playerEntry_ = Vector2D(0, 0);
+
+	CollisionCtrl* collisionCtrl_ = nullptr;
+	Player* player_ = nullptr;
+	list<Obstacle*> obstacles_;
+	list<Enemy*> enemies_;
 };
 

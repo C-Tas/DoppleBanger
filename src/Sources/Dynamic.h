@@ -25,4 +25,5 @@ protected:
 	//<summary>Destructor de Dynamic</summary>	
 	virtual ~Dynamic() {};
 	virtual void initObject() {};
+	virtual void initAnim() {};
 };

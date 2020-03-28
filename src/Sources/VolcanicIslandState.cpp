@@ -3,17 +3,17 @@
 
 void VolcanicIslandState::initState()
 {
-	background_ = app_->getTextureManager()->getTexture(Resources::Caribbean);
+	//background_ = app_->getTextureManager()->getTexture(Resources::Caribbean);
 
-	Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::BackButton),
-		Vector2D(app_->getWindowWidth() / 2, app_->getWindowHeight() / 2), Vector2D(300, 300), backShipVolcanic);
-	addRenderUpdateLists(backButton);
+	//Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::BackButton),
+	//	Vector2D(app_->getWindowWidth() / 2, app_->getWindowHeight() / 2), Vector2D(300, 300), backShipVolcanic);
+	//addRenderUpdateLists(backButton);
 
-	Enemy* dragon = new Enemy(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), { 0,0 }, { 120,120 }, { 0,0,0,0 }, {}, { 0,0,144,133 }, 3);
-	addRenderUpdateLists(dragon);
+	//Enemy* dragon = new Enemy(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), { 0,0 }, { 120,120 }, { 0,0,0,0 }, {}, { 0,0,144,133 }, 3);
+	//addRenderUpdateLists(dragon);
 
-	//Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
-	addRenderUpdateLists(player_);
+	////Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
+	//addRenderUpdateLists(player_);
 }
 
 VolcanicIslandState::VolcanicIslandState(Application* app): PlayState(app)

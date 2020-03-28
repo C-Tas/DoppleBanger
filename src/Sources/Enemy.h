@@ -16,6 +16,8 @@ protected:
 
 	//Inicializa al Enemy
 	virtual void initObject() {};
+	//Inicializa las animaciones
+	virtual void initAnim() {};
 	virtual bool update() { return false; };
 	virtual void onCollider() {};
 	//<summary>Metodo que mata a este enemigo</summary>

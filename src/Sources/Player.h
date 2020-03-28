@@ -26,7 +26,7 @@ private:
 	double shotTime_ = 0; //Momento del �ltimo disparo
 #pragma endregion
 
-//<summary>Estadisticas del jugador</summary>
+//<summary>Estadisticas iniciales del jugador</summary>
 #pragma region consts
 	const double HEALTH = 100;
 	const double MANA = 100;
@@ -53,15 +53,15 @@ public:
 	};
 	~Player() {};
 
-	};
-		currStats_ = other.currStats_;
-		eventHandler_ = HandleEvents::instance();
-	Player(const Player& other) : Actor(other.app_, other.texture_, other.pos_, other.scale_, other.collisionArea_){
 	///<summary>Constructor por copia</summary>
+	Player(const Player& other) : Actor(other.app_, other.pos_, other.scale_) {
+		eventHandler_ = HandleEvents::instance();
+	};
+
 	virtual bool update();
 	void shoot(Vector2D dir);
 	virtual void onCollider() { /*Colisi�n con enemigo*/ };
-	void move(Point2D target);
+	//void move(Point2D target);
 	void attack(Enemy* obj);
 	const int getLiberation() { return liberation_; };
 	const bool getExplotion() { return explotion_; };

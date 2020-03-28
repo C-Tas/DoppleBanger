@@ -2,7 +2,7 @@
 
 //Calback del botón "Volver"
 void backToPreviousState(Application* app) {
-	app->getStateMachine()->popState(); //Vuelve al estado previo
+	app->getGameStateMachine()->popState(); //Vuelve al estado previo
 }
 
 void ControlsState::initState() {
@@ -11,7 +11,7 @@ void ControlsState::initState() {
 	//Posición y tamaño en función del tamaño de la ventana
 	Vector2D scaleButton(app_->getWindowWidth() / 20, app_->getWindowHeight() / 20);
 	Vector2D posButton(scaleButton.getX(), scaleButton.getY());
-	createButton(app_->getTextureManager()->getTexture(Resources::BackButton), posButton, scaleButton, backToPreviousState, app_); //Botón "Volver"
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), posButton, scaleButton, backToPreviousState); //Botón "Volver"
 }
 
 //Se redefine el método draw para que renderice los objetos y para que renderice la imagen de los controles

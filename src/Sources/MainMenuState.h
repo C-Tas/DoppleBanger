@@ -4,8 +4,7 @@
 #include "Player.h" //Include temporal
 #include "Equipment.h" //Include temporal
 
-class MainMenuState :
-	public GameState
+class MainMenuState : public GameState
 {
 private:
 	Draw* bg_ = nullptr;

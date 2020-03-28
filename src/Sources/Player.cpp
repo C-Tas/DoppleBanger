@@ -19,7 +19,7 @@ bool Player::update()
 		if (dist.magnitude() <= CLON_SPAWN_RANGE)
 		{
 			clon_ = new Clon(app_, getVisPos(eventHandler_->getMousePos()), scale_, this);
-			app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
+			app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
 			clonTime_ = SDL_GetTicks();
 		}
 		
@@ -56,7 +56,7 @@ bool Player::update()
 }
 
 void Player::initObject() {
-	//texture_ = app_->getTextureManager()->getTexture(Resources::Player);
+	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	eventHandler_ = HandleEvents::instance();
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
@@ -71,20 +71,20 @@ void Player::shoot(Vector2D dir)
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 	shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), shootPos, dir, currStats_.meleeDmg_);
+	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.meleeDmg_);
 	app_->getCurrState()->addRenderUpdateLists(bullet);
 }
 
-void Player::move(Point2D target)
-{
-	attacking = false;
-	//establecemos el objetivo para poder parar al llegar
-	target_.setVec(target);
-	//establecemos la direccion
-	dir_.setX(target.getX() - visPos_.getX());
-	dir_.setY(target.getY() - visPos_.getY());
-	dir_.normalize();
-}
+//void Player::move(Point2D target)
+//{
+//	attacking = false;
+//	//establecemos el objetivo para poder parar al llegar
+//	target_.setVec(target);
+//	//establecemos la direccion
+//	dir_.setX(target.getX() - visPos_.getX());
+//	dir_.setY(target.getY() - visPos_.getY());
+//	dir_.normalize();
+//}
 
 void Player::attack(Enemy* obj)
 {

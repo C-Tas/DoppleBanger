@@ -44,7 +44,7 @@ void GameState::draw() const {
 void GameState::handleEvents() {
 	eventHandler_->update();
 }
-void GameState::createButton(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack, Application* app) {
+void GameState::createButton(Application* app, Texture* texture, Point2D pos, Vector2D scale, CallBackOnClick* callBack) {
 	Button* button = new Button(app,texture, pos, scale, callBack); //Crea boton
 	addRenderUpdateLists(button); //Lo mete en las listas de objetos y de dibujado
 }

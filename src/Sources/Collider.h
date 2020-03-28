@@ -29,6 +29,7 @@ protected:
 	///<summary>Método abstracto a redefinir en los hijos de Collider</summary>
 	virtual void onCollider() = 0;
 	virtual void initObject() {};
+	virtual void initAnim() {};
 
 public:
 	///<summary>Devuelve el rect con el area de colisiones</summary>

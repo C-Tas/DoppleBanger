@@ -5,9 +5,13 @@
 #include "GameManager.h"
 #include "Button.h"
 
+void backShip(Application* app) {
+	app->getGameStateMachine()->popState();
+}
+
 //Le dice al GameManager a qué isla queremos ir
-void goToIsland(Application* app, int island) {
-	GameManager::instance()->setIsland(island);
+void goToIsland(Application* app, Island island) {
+	GameManager::instance()->setCurrIsland(island);
 	app->getGameStateMachine()->popState();
 }
 
@@ -23,22 +27,25 @@ void SelectLevelState::draw() const
 	map->render(destRect);
 }
 
-SelectLevelState::SelectLevelState(Application* app, int islandUnlocked ) 
-	:GameState(app), islandsUnlocked_(islandUnlocked) {
+SelectLevelState::SelectLevelState(Application* app) 
+	:GameState(app){
 	initState();
 }
 
 void SelectLevelState::initState() {
 	
-	Button* newIslandButton;
+	//Button* newIslandButton;
 
 #pragma region Testeo
+	GameManager* gm = GameManager::instance();
 	table = app_->getTextureManager()->getTexture(Resources::Table);
-	if (islandsUnlocked_ == 1) map = app_->getTextureManager()->getTexture(Resources::Map1);
-	else if(islandsUnlocked_ == 2)  map = app_->getTextureManager()->getTexture(Resources::Map2);
-	else if (islandsUnlocked_ == 3)  map = app_->getTextureManager()->getTexture(Resources::Map3);
+	if (gm->getUnlockedIslands() == 0) map = app_->getTextureManager()->getTexture(Resources::Map1);
+	else if(gm->getUnlockedIslands() == 1)  map = app_->getTextureManager()->getTexture(Resources::Map2);
+	else if (gm->getUnlockedIslands() == 2)  map = app_->getTextureManager()->getTexture(Resources::Map3);
 #pragma endregion
 
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), Vector2D(100, 100),
+		Vector2D(100, 100), backShip);
 	////Bucle que genera los botones para pasar a las distintas islas según el numero que hayan sido desbloqueadas
 	//for (int i = 0; i < functions_.size() && i < islandsUnlocked_; i++) {
 	//	newIslandButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon),
