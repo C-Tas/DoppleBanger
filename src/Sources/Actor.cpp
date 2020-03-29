@@ -5,8 +5,8 @@ void Actor::initStats(double health, double mana, double manaReg, double armor, 
 {
 	currStats_ = Stats(health, mana, manaReg, armor, ad, ap, crit, range, moveSpeed, meleeRate, distRate);
 }
-
-//A falta de definir la gestión del daño en función de la armadura
+ 
+//A falta de definir la gestiï¿½n del daï¿½o en funciï¿½n de la armadura
 void Actor::reciveDmg(int damage) {
 	double finalDamage = (currStats_.armor_ * damage) / 100;
 	currStats_.health_ -= finalDamage;

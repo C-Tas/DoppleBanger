@@ -38,7 +38,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ExitShip, "../Sources/assets/colisionables/exitShip.png" },
 
 	//Colisionable
-	{ Rock, "../Sources/assets/colisionables/roca.png" }
+	{ Rock, "../Sources/assets/colisionables/roca.png" },
+	{ Coco ,"../Sources/assets/Colisionables/coco.png" }
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{

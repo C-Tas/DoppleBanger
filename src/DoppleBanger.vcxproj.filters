@@ -148,6 +148,9 @@
     <ClCompile Include="Sources\Trigger.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\MonkeyCoco.cpp">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -307,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="Sources\Trigger.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MonkeyCoco.h">
+      <Filter>GameObjects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

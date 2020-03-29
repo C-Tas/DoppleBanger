@@ -116,11 +116,10 @@ void Application::initResources() {
 	}
 }
 
-
+//Elimina los recursos
 void Application::closeResources() {
-	//Faltaría el borrar los recursos que añadiesemos a posteriori
+	delete equipGen_;
+	delete audioManager_;
 	delete fontManager_;
 	delete textureManager_;
-	delete audioManager_;
-    delete equipGen_;
 }

@@ -7,6 +7,8 @@
 #include "Texture.h"
 #include "SDL_macros.h"
 
+#include "Clon.h"
+
 using namespace std;
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
@@ -20,8 +22,9 @@ void MainMenuState::initMenuState()
 	button_h = app_->getWindowHeight() / 10;
 	button_w = app_->getWindowWidth() / 6;
 	bg_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground));
-	objectsToRender_.push_back(bg_);
-	gameObjects_.push_back(bg_);
+	addRenderUpdateLists(bg_);
+
+
 
 	//Cargamos música de fondo
 	app_->getAudioManager()->playMusic(Resources::MainTheme, -1);

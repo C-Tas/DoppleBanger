@@ -8,6 +8,7 @@ protected:
 	//<summary>Lugar al que tiene que llegar</summary>	
 	Point2D target_{ 0,0 };
 
+
 	//<summary>Constructor vacio de la clase Dynamic</summary>	
 	Dynamic() {};
 	//<summary>Constructor  de la clase Dynamic</summary>	
@@ -19,6 +20,7 @@ protected:
 	//<summary>Constructor  por movimiento de la clase Dynamic</summary>	
 	Dynamic(Dynamic&& other)noexcept : Collider(other.app_, other.pos_, other.scale_),
 		dir_(other.dir_), target_(other.target_) {};
+
 	//<summary>Destructor de Dynamic</summary>	
 	virtual ~Dynamic() {};
 
@@ -26,5 +28,5 @@ protected:
 	virtual void initAnim() {};
 public:
 	//<summary>Establece la direccion del movimiento</summary>	
-	virtual void move(Point2D target) {};
+	virtual void move(Point2D target);
 };

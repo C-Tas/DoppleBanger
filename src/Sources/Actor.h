@@ -49,4 +49,6 @@ public:
 	const STATE getState() { return currState_; };
 	//Detiene el movimiento
 	void stop() { dir_ = Vector2D(0, 0); };
+	//Cambia al enemigo al que está atacando
+	inline void changeAgro(Draw* newEnemy) { currEnemy_ = newEnemy; };
 };

@@ -56,7 +56,9 @@ public:
 		ExitText,
 		ControlsText,
 		LoadText,
-		CreditsText
+		CreditsText,
+		//proyectiles
+		Coco
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
