@@ -21,7 +21,7 @@ protected:
 		dir_(other.dir_), target_(other.target_) {};
 
 	//<summary>Establece la direccion del movimiento</summary>	
-	void move(Point2D target);
+	//void move(Point2D target);
 	//<summary>Destructor de Dynamic</summary>	
 	virtual ~Dynamic() {};
 	virtual void initObject() {};

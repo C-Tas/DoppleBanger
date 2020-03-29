@@ -61,7 +61,7 @@ public:
 	virtual bool update();
 	void shoot(Vector2D dir);
 	virtual void onCollider() { /*Colisi�n con enemigo*/ };
-	//void move(Point2D target);
+	void move(Point2D target);
 	void attack(Enemy* obj);
 	const int getLiberation() { return liberation_; };
 	const bool getExplotion() { return explotion_; };

@@ -33,7 +33,7 @@ void PlayState::initPlayState() {
 void PlayState::update() {
 	//collisionCtrl_->islandCollisions();
 	GameState::update();
-	//checkPlayerActions();
+	checkPlayerActions();
 }
 
 void PlayState::addEnemy(Enemy* obj) {
@@ -50,15 +50,15 @@ void PlayState::removeEnemy(Enemy* obj) {
 	removeRenderUpdateLists(obj);
 }
 
-//void PlayState::checkPlayerActions() {
-//	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
-//	{
-//		Enemy* obj; obj = checkAttack();
-//		if (obj != nullptr) player_->attack(obj);
-//		//else if NPC
-//		else player_->move(eventHandler_->getMousePos());
-//	}
-//}
+void PlayState::checkPlayerActions() {
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
+	{
+		Enemy* obj; obj = checkAttack();
+		if (obj != nullptr) player_->attack(obj);
+		//else if NPC
+		else player_->move(eventHandler_->getMousePos());
+	}
+}
 
 Enemy* PlayState::checkAttack() {
 	bool found = false;
