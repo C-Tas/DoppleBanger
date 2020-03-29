@@ -3,20 +3,21 @@
 #include "Texture.h"
 #include "Vector2D.h"
 
-class TextBoxManager {
+class TextBox {
 protected:
 	Application* app_ = nullptr;
 	SDL_Rect dest; //Posición de la caja de texto, inicializada en init()
 	const int lineSpacing = 30;	//Interlineado y márgenes del texto
 
 public:
+	TextBox() {};
 	///<summary>Constructora del textBox de diálogo</summary>
-	TextBoxManager(Application* app) : app_(app) { initDialog(); };
+	TextBox(Application* app) : app_(app) {};
 	///<summary>Constructora del textBox de descripción</summary>
-	TextBoxManager(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
-	~TextBoxManager() {};
+	TextBox(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
+	~TextBox() {};
 
-	///<summary>Carga el textBox de diálogo inicial, se llama desde la constructora</summary>
+	///<summary>Carga el textBox de diálogo inicial</summary>
 	void initDialog();
 
 	///<summary>Carga el textBox de descripción inicial, se llama desde la constructora</summary>

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "SDL.h"
 #include "GameStateMachine.h"
 #include "RandEquipGen.h"
@@ -8,13 +7,11 @@
 #include "AudioManager.h"
 #include "checkML.h"
 
-
 using namespace std;
 
 class Application
 {
 private:
-
 	///<summary>Variables basicas de SDL</summary>
 	SDL_Window* window_ = nullptr;
 	SDL_Renderer* renderer_ = nullptr;
@@ -38,8 +35,8 @@ private:
 	bool appClosed_ = false;
 
 	///<summary>Constantes con las dimensiones de la ventana </summary>
-	static const int winWidth_ = 1600;
-	static const int winHeight_ = 900;
+	static const int winWidth_ = 1920;
+	static const int winHeight_ = 1080;
 
 	///<summary>Metodo que inicializa SDL</summary>
 	void initSDL();
@@ -71,7 +68,9 @@ public:
 
 #pragma region Getters
 	///<summary>Devuelve maquina de estados</summary>
-	GameStateMachine* getStateMachine() { return machine_; };
+	GameStateMachine* getGameStateMachine() { return machine_; };
+	///<summary>Devuelve el estado actual</summary>
+	GameState* getCurrState() { return machine_->getState(); };
 	///<summary>Devuelve si se esta procesando el bucle principal de la  </summary>
 	bool isRunning() { return !appClosed_; };
 	///<summary>Devuelve ancho de la ventana</summary>
@@ -82,17 +81,15 @@ public:
 	SDL_Window* getWindow() { return window_; };
 	///<summary>Devuelve renderer </summary>
 	SDL_Renderer* getRenderer() { return renderer_; };
-	///<summary>Devuelve maquina de estados</summary>
-	GameStateMachine* getGameStateMachine() { return machine_; };
 	///<summary>Devuelve el tiempo que ha pasado entre el frame actual y el anterior </summary>
 	double getDeltaTime() { return deltaTime_; }
 	///<summary>Devuelve el texture manager</summary>
 	TextureManager* getTextureManager() { return textureManager_; };
 	///<summary>Devuelve el font manager</summary>
 	FontManager* getFontManager() { return fontManager_; };
-	//Devuelve el audioManager
+	///<summary>Devuelve el audioManager</summary>
 	AudioManager* getAudioManager() { return audioManager_; };
-	//Devuelve equipGen_
+	///<summary>Devuelve equipGen_</summary>
 	RandEquipGen* getEquipGen() { return equipGen_; }
 #pragma endregion
 

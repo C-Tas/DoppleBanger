@@ -1,18 +1,19 @@
 #pragma once
 #include "GameState.h"
+#include "Crab.h" //Include temporal
 #include "Player.h" //Include temporal
 #include "Equipment.h" //Include temporal
 
-class MainMenuState :
-	public GameState
+class MainMenuState : public GameState
 {
 private:
-	Player* player_ = nullptr;
 	Draw* bg_ = nullptr;
 	double button_h= 0;
 	double button_w = 0;
 	//Diferencia entre los botones en el eje y
 	double button_dif = 0;
+	Player* player_ = nullptr;
+	//Crab* crab_ = nullptr;
 
 protected:
 	///<summary>Se inicializa el menu</summary>
@@ -21,8 +22,8 @@ protected:
 	void createButtons();
 
 public:
-	MainMenuState(Application* app = nullptr) :GameState(app) {initMenuState();};
-	virtual ~MainMenuState() { };
+	MainMenuState(Application* app = nullptr) :GameState(app) { initMenuState(); };
+	virtual ~MainMenuState() {};
 	///<summary>Nos lleva al estado controles</summary>
 	static void goControlState(Application* app);
 	///<summary>Nos lleva al estado creditos</summary>

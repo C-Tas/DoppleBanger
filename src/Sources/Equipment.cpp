@@ -22,8 +22,8 @@ void Equipment::writeStats()
 		break;
 	}
 
-	std::cout << modifiers_.ad_ << "\n";
-	std::cout << modifiers_.ap_ << "\n";
+	std::cout << modifiers_.meleeDmg_ << "\n";
+	std::cout << modifiers_.distDmg_ << "\n";
 	std::cout << modifiers_.health_ << "\n";
 	std::cout << modifiers_.armor_ << "\n";
 	std::cout << modifiers_.moveSpeed_ << "\n";

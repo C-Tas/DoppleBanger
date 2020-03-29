@@ -2,7 +2,9 @@
 #include "MainMenuState.h"
 #include "SelectLevelState.h"
 #include "ControlsState.h"
+#include"VolcanicIslandState.h"
 #include "HandleEvents.h"
+#include "ShipState.h"
 #include <exception>
 #include "GameManager.h"
 
@@ -46,7 +48,6 @@ void Application::initSDL() {
 
 void Application::runApp() {
 	HandleEvents* input = HandleEvents::instance();
-	GameManager::instance();
 	while (!appClosed_) {
 		SDL_RenderClear(renderer_); //Clear
 		updateDelta(); //Actualizamos deltaTime
@@ -121,4 +122,6 @@ void Application::closeResources() {
 	delete audioManager_;
 	delete fontManager_;
 	delete textureManager_;
+	delete audioManager_;
+    delete equipGen_;
 }

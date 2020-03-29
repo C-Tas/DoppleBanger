@@ -4,25 +4,109 @@
 #include "InventoryState.h"
 #include "SelectLevelState.h"
 #include "StashState.h"
+#include "Collisions.h"
+
+void PlayState::initPlayState() {
+
+
+	//Creaci�n de dos obst�culos de prueba
+	/*SDL_Rect objCollision; objCollision.x = 300; objCollision.y = 100; objCollision.w = 100; objCollision.h = 50;
+	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Rock),
+		Vector2D(objCollision.x, objCollision.y), Vector2D(objCollision.w, objCollision.h)));
+
+	objCollision.x = 600; objCollision.y = 400;
+	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Rock),
+		Vector2D(objCollision.x, objCollision.y), Vector2D(objCollision.w, objCollision.h)));
+
+	for (auto ob : obstacles_) {
+		addUpdateList(ob);
+		addRenderList(ob);
+	}*/
+
+	collisionCtrl_ = CollisionCtrl::instance();
+	collisionCtrl_->setPlayer(player_);
+	//collisionCtrl_->setObstacles(obstacles_);
+	/*Seteamos todo lo necesario (enemigos, objetos, NPCs, etc)*/
+}
+
+
+void PlayState::update() {
+	//collisionCtrl_->islandCollisions();
+	GameState::update();
+	checkPlayerActions();
+}
+
+void PlayState::addEnemy(Enemy* obj) {
+	//Push front porque a suponiendo que dos enemigos se superpongan y se haga click en ellos para atacar,
+	//se renderizan en un orden (el de objectsToRender) y por lo cual las comprobaciones deben hacerse en el contrario.
+	enemies_.push_front(obj);
+	addRenderUpdateLists(obj);
+}
+
+void PlayState::removeEnemy(Enemy* obj) {
+	//Push front porque a suponiendo que dos enemigos se superpongan y se haga click en ellos para atacar,
+	//se renderizan en un orden (el de objectsToRender) y por lo cual las comprobaciones deben hacerse en el contrario.
+	enemies_.remove(obj);
+	removeRenderUpdateLists(obj);
+}
+
+void PlayState::checkPlayerActions() {
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
+	{
+		Enemy* obj; obj = checkAttack();
+		if (obj != nullptr) player_->attack(obj);
+		//else if NPC
+		else player_->move(eventHandler_->getMousePos());
+	}
+}
+
+Enemy* PlayState::checkAttack() {
+	bool found = false;
+	Enemy* obj = nullptr;
+	Vector2D mousePos = eventHandler_->getMousePos();
+	SDL_Point mouse = { 0, 0 }; mouse.x = mousePos.getX(); mouse.y = mousePos.getY();
+	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
+		if (SDL_PointInRect(&mouse, &(*it)->getCollider())) {
+			obj = (*it);
+			found = true;
+		}
+	}
+	return obj;
+}
+
+Enemy* PlayState::findClosestEnemy(Point2D pos) {
+	Enemy* obj = nullptr;
+	auto it = enemies_.begin(); if (enemies_.begin() != enemies_.end()) { obj = (*it); ++it; }
+	for (; it != enemies_.end(); ++it)
+		if (abs(Vector2D((*it)->getPos().getX() - pos.getX(), (*it)->getPos().getY() - pos.getY()).magnitude()) <
+			abs(Vector2D(obj->getPos().getX() - pos.getX(), obj->getPos().getY() - pos.getY()).magnitude()))
+			obj = (*it);
+
+	return obj;
+}
+
+Enemy* PlayState::collidesWithEnemy(Point2D pos, Vector2D scale) {
+	bool found = false;
+	Enemy* obj = nullptr;
+	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
+		if (Collisions::collides(pos, scale.getX(), scale.getY(), (*it)->getPos(), (*it)->getScaleX(), (*it)->getScaleY()))
+		{
+			obj = (*it);
+			found = true;
+		}
+	}
+
+	return obj;
+}
+
 #pragma region ChangeState
 void PlayState::goToPauseState(Application* app) {
-	app->getStateMachine()->pushState(new PauseState(app));
+	app->getGameStateMachine()->pushState(new PauseState(app));
+}
 
-}
-void PlayState::goToSaveGame(Application* app) {
-	app->getStateMachine()->pushState(new SaveLoadState(app, false)); //TRUE => LOAD //FALSE => SAVE
-}
 void PlayState::goToInventoryState(Application* app) {
-	app->getStateMachine()->pushState( new InventoryState(app));
+	app->getGameStateMachine()->pushState( new InventoryState(app));
 
-}
-void PlayState::goToSelectState(Application* app) {
-	app->getStateMachine()->pushState( new SelectLevelState(app));
-
-}
-void PlayState::goToStashState(Application* app)
-{
-	app->getStateMachine()->pushState( new StashState(app));
 }
 #pragma endregion
 

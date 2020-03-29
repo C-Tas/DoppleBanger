@@ -1,11 +1,12 @@
 #pragma once
 #include "GameState.h"
-class StashState :
-	public GameState
+class StashState : public GameState
 {
+private:
+	void initState();
+
 public:
-	StashState(Application* app = nullptr) : GameState(app) {};
+	StashState(Application* app = nullptr) : GameState(app) { initState(); };
 	virtual ~StashState() {};
-	void backToPrevious();
 };
 

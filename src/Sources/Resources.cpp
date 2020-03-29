@@ -1,26 +1,45 @@
 #include "Resources.h"
 
+//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 vector<Resources::ImageInfo> Resources::imageRoutes{
-	//Interfaces
-	{MenuFondo, "../Sources/assets/interfaces/menuFondo.png"},
-	{BotonMenu, "../Sources/assets/botones/botonMenu.png"},
-	{ Timon, "../Sources/assets/player/timon.png" },
-	{ GoControls, "../Sources/assets/botones/botonControles.png"},
-	{ BackButton, "../Sources/assets/botones/volver.png"},
-	{ Controls, "../Sources/assets/interfaces/controles.png"},
-	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
-	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
-	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
-	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
-	{ TextBox, "../Sources/assets/interfaces/textBoxBg.png" },
-	//Sprites
-	{ Roca, "../Sources/assets/colisionables/roca.png" },
-	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
-	{Dragon,"../Sources/assets/enemigos/dragon.png"},
-	{MonkeyCoco,"../Sources/assets/enemigos/MonkeyCoco.png"},
-	{Coco ,"../Sources/assets/Colisionables/Coco.png" }
+	//Botones
+	{ MenuButton, "../Sources/assets/botones/botonMenu.png" },
+	{ GoControls, "../Sources/assets/botones/botonControles.png" },
+	{ BackButton, "../Sources/assets/botones/volver.png" },
+	{ SkipButton, "../Sources/assets/botones/skipButton.png" },
 
-	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
+	//Interfaces
+	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
+	{ InventaryMenu, "../Sources/assets/interfaces/inventarioFondo.png" },
+	{ Controls, "../Sources/assets/interfaces/controles.png" },
+	{ Scene1, "../Sources/assets/interfaces/Scene1.png" },
+	{ Scene2, "../Sources/assets/interfaces/Scene2.png" },
+	{ Scene3, "../Sources/assets/interfaces/Scene3.png" },
+	{ TextBox, "../Sources/assets/interfaces/textBoxBg.png" },
+	{ Ship, "../Sources/assets/interfaces/barco.png" },
+	{ Table, "../Sources/assets/interfaces/mesa.png" },
+	{ Map1, "../Sources/assets/interfaces/mapa1.png" },
+	{ Map2, "../Sources/assets/interfaces/mapa2.png" },
+	{ Map3, "../Sources/assets/interfaces/mapa3.png" },
+	{ Caribbean, "../Sources/assets/interfaces/caribe.png" },
+	{ Spooky, "../Sources/assets/interfaces/fantasmal.png" },
+	{ Volcanic, "../Sources/assets/interfaces/volcan.png" },
+
+	//Sprites
+	{ Dragon,"../Sources/assets/enemigos/dragon.png"},
+	{ PlayerFront, "../Sources/assets/player/frontal.png"},
+	{ CrabAttack, "../Sources/assets/enemigos/crab/crab_attack.png" },
+	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
+
+	//Interactuables
+	{ Wheel, "../Sources/assets/player/timon.png" },
+	{ Stash, "../Sources/assets/colisionables/alijo.png" },
+	{ ShipDoor, "../Sources/assets/colisionables/trampilla.png"},
+	{ ExitShip, "../Sources/assets/colisionables/exitShip.png" },
+
+	//Colisionable
+	{ Rock, "../Sources/assets/colisionables/roca.png" }
+	{Coco ,"../Sources/assets/Colisionables/Coco.png" }
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{

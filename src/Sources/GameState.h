@@ -22,6 +22,12 @@ protected:
 	list<GameObject*> gameObjects_;
 	///<summary>Lista con todos los objetos con metodo Draw()</summary>
 	list<Draw*> objectsToRender_;
+	///<summary>Lista con todos los objetos a eliminar</summary>
+	list<GameObject*> objectsToRemove_;
+	///<summary>Lista con todos los objetos con metodo Draw() a eliminar</summary>
+	list<Draw*> rendersToRemove_;
+	///<summary>Lista con todos los objetos con método Update() y metodo Draw() a eliminar</summary>
+	list<Draw*> objRendToRemove_;
 	///<summary>Puntero a la aplicacion</summary>
 	Application* app_;
 	///<summary>Referencia al HandleEvents</summary>
@@ -37,12 +43,19 @@ public:
 	///<summary>Maneja los eventos de todos los objetos en la lista de objectEvents_</summary>
 	///<summary>A�ade un objeto a la lista de gameObjects</summary>
 	virtual void handleEvents();//Ejecuta los eventos de los objetos objectEvents_
-	virtual void createButton(Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack,Application* app);
+	virtual void createButton(Application* app, Texture* texture, Point2D pos, Vector2D scale, CallBackOnClick* callBack);
+
 	///<summary>A�ade un objeto a la lista de gameObjects</summary>
 	void addUpdateList(GameObject* obj);
 	///<summary>A�ade un objeto a la lista de objectsToRender_</summary>
 	void addRenderList(Draw* obj);
 	///<summary>A�ade un objeto a las listas de objectsToRender_ y gameObjects_</summary>
 	void addRenderUpdateLists(Draw* obj);
+	///<summary>A�ade un objeto a la lista objectsToRemove_</summary>
+	void removeUpdateList(GameObject* obj);
+	///<summary>A�ade un objeto a la lista de rendersToRemove_</summary>
+	void removeRenderList(Draw* obj);
+	///<summary>A�ade un objeto a las listas de objectsToRemove_ y rendersToRemove_</summary>
+	void removeRenderUpdateLists(Draw* obj);
 };
 

@@ -1,26 +1,49 @@
 #pragma once
-
 #include "Actor.h"
 #include "HandleEvents.h"
+#include "Clon.h"
 
 class Player : public Actor
 {
 private:
+	bool attacking = false;
+
+	Actor* objective_ = nullptr;
+	Clon* clon_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
 
-//<summary>Estadisticas del jugador</summary>
+//<summary>Variables relativas a las habilidades</summary>
+#pragma region abilities
+	int liberation_ = 2;	//Nivel de la habilidad del clon
+	bool explotion_ = false;	//Si tiene la habilidad activada
+#pragma endregion
+
+//<summary>Variables de los cooldowns del jugador</summary>
+#pragma region cooldowns
+	double clonCooldown_ = 5;
+	double clonTime_ = 0; //Momento del último clon
+	double meleeTime_ = 0; //Momento del último ataque
+	double shotTime_ = 0; //Momento del �ltimo disparo
+#pragma endregion
+
+//<summary>Estadisticas iniciales del jugador</summary>
 #pragma region consts
-	const int HEALTH = 100;
-	const int MANA = 100;
+	const double HEALTH = 100;
+	const double MANA = 100;
 	const double MANA_REG = 1;
-	const int ARMOR = 10;
-	const int AD = 0;
-	const int AP = 0;
-	const int CRIT = 0;
+	const double ARMOR = 10;
+	const double AD = 20;
+	const double AP = 0;
+	const double CRIT = 0;
+	const double RANGE = 50;
 	const double MOVE_SPEED = 100;
 	const double MELEE_RATE = 1;
-	const double DIST_RATE = 5;
+	const double DIST_RATE = 2;
+
+	const double CLON_SPAWN_RANGE = 700;
 #pragma endregion
+
+	virtual void initObject();
 
 public:
 //Constructora de player
@@ -28,10 +51,19 @@ public:
 		Actor(app, pos, scale) {
 		initObject();
 	};
-	~Player() { texture_ = nullptr; };
+	~Player() {};
 
-	virtual void initObject();
+	///<summary>Constructor por copia</summary>
+	Player(const Player& other) : Actor(other.app_, other.pos_, other.scale_) {
+		eventHandler_ = HandleEvents::instance();
+	};
+
 	virtual bool update();
-	virtual void onCollider() {};
-	virtual void stop() { dir_ = Vector2D(0, 0); }
+	void shoot(Vector2D dir);
+	virtual void onCollider() { /*Colisi�n con enemigo*/ };
+	void move(Point2D target);
+	void attack(Enemy* obj);
+	const int getLiberation() { return liberation_; };
+	const bool getExplotion() { return explotion_; };
+	const Stats& getStats() { return currStats_; };
 };

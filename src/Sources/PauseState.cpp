@@ -13,15 +13,15 @@ void PauseState::initState()
 	
 }
 void PauseState::goControlState(Application* app) {
-	app->getStateMachine()->pushState( new ControlsState(app));
+	app->getGameStateMachine()->pushState( new ControlsState(app));
 };
 
 void PauseState::goMainMenuState(Application* app) {
-	app->getStateMachine()->clearAllStateExceptFirst();
+	app->getGameStateMachine()->clearAllStateExceptFirst();
 };
 
 
 void PauseState::backToGameState(Application* app) {
-	app->getStateMachine()->popState();
+	app->getGameStateMachine()->popState();
 
 }
