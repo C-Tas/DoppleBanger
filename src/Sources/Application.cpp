@@ -2,6 +2,7 @@
 #include "MainMenuState.h"
 #include "SelectLevelState.h"
 #include "ControlsState.h"
+#include "StashState.h"
 #include "HandleEvents.h"
 #include "Inventory.h"
 #include <exception>
@@ -12,8 +13,9 @@ Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine();
-	//GameState* startState = new MainMenuState(this);
-	machine_->pushState(/*startState *//*new SelectLevelState(this, 3)*/ new Inventory(this));
+	GameState* startState = new MainMenuState(this);
+	machine_->pushState(startState /*new SelectLevelState(this, 3)*/ /*new StashState(this)*/);
+	machine_->pushState(new StashState(this));
 }
 
 Application::~Application() {
@@ -122,4 +124,5 @@ void Application::closeResources() {
 	delete fontManager_;
 	delete textureManager_;
 	delete audioManager_;
+	delete equipGen_;
 }

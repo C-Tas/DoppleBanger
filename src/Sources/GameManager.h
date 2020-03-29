@@ -59,8 +59,12 @@ private:
 	spentPoints ghost_ = spentPoints::Ghost;
 	//Puntero a la lista de item del inventario
 	list<InventoryButton*>* inventory_ = new list<InventoryButton*>;
+	//Cantidad de dinero almacenada en el inventario
+	int inventoryGold = 300;
 	//Puntero a la lista de items del alijo
 	list<InventoryButton*>* stash_ = new list<InventoryButton*>;
+	//Cantidad de dinero almacenada en el alijo
+	int stashGold = 1000;
 	//Vector que representa las misiones secundarias completadas
 	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
@@ -115,6 +119,10 @@ public:
 	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };
 	//Devuelve true si la misi�n est� empezada
 	const bool isThatMissionStarted(missions mission) { return missionsStarted[(int)mission]; };
+	//Devuelve el dinero del inventario
+	const int getInventoryGold() { return inventoryGold; }
+	//Devuelve el dinero del alijo
+	const int getStashGold() { return stashGold; }
 #pragma endregion
 
 #pragma region setters
@@ -135,6 +143,14 @@ public:
 	inline void setCompleteMission(missions mission) { missionsComplete[(int)mission] = true; };
 	//Empieza una misi�n secundaria
 	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
+	//Añade(+) /Quita(-) dinero del inventario
+	inline void addInventoryGold(int money) { inventoryGold += money; }
+	////Añade(+) /Quita(-) dinero del alijo
+	inline void addStashGold(int money) { stashGold += money; }
+	///Asigna money como cantidad de dinero en el inventario
+	inline void setInventoryGold(int money) { inventoryGold = money; }
+	///Asigna money como cantidad de dinero en el alijo
+	inline void setStashGold(int money) { stashGold = money; }
 #pragma endregion
 };
 

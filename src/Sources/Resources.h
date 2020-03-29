@@ -36,7 +36,9 @@ public:
 		ExitText,
 		ControlsText,
 		LoadText,
-		CreditsText
+		CreditsText,
+		StashMoneyText,
+		InventoryMoneyText
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

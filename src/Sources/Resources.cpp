@@ -43,4 +43,6 @@ vector <Resources::TextMsgInfo> Resources::messages_{
 	{ ControlsText,"Controles",SDL_Color{(0,0,0,1)},RETRO },
 	{ LoadText,"Cargar Partida",SDL_Color{(0,0,0,1)},RETRO },
 	{ CreditsText,"Créditos",SDL_Color{(0,0,0,1)},RETRO },
+	{InventoryMoneyText, "Dinero inventario:", SDL_Color({255,255,255,1}), RETRO},
+	{StashMoneyText, "Dinero alijo:",  SDL_Color({255,255,255,1}), RETRO}
 };
