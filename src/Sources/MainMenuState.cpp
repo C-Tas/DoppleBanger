@@ -7,7 +7,6 @@
 #include "Texture.h"
 #include "SDL_macros.h"
 
-#include "MonkeyCoco.h"
 #include "Clon.h"
 
 using namespace std;
@@ -23,11 +22,9 @@ void MainMenuState::initMenuState()
 	button_h = app_->getWindowHeight() / 10;
 	button_w = app_->getWindowWidth() / 6;
 	bg_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground));
-	objectsToRender_.push_back(bg_);
+	addRenderUpdateLists(bg_);
 
-	MonkeyCoco* monito = new MonkeyCoco(app_, { 50,50 });
-	gameObjects_.push_back(monito);
-	objectsToRender_.push_back(monito);
+
 
 	//Cargamos música de fondo
 	app_->getAudioManager()->playMusic(Resources::MainTheme, -1);

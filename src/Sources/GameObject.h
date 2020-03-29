@@ -53,7 +53,6 @@ public:
 #pragma endregion
 
 #pragma region Setter
-	//set
 	//<summary>Setea la X de la pos del objeto</summary>
 	inline void setPosX(double x) { pos_.setX(x); }
 	//<summary>Setea la Y de la pos del objeto</summary>

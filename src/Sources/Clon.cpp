@@ -2,7 +2,7 @@
 #include "PlayState.h"
 #include "Player.h"
 
-/*bool Clon::update()
+bool Clon::update()
 {
 	if ((SDL_GetTicks() - spawnTime_) / 1000 < duration_) {
 		if (ad_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DIYING || Vector2D(abs(objective_->getPosX() - pos_.getX()), abs(objective_->getPosY() - pos_.getY())).magnitude() > range_))

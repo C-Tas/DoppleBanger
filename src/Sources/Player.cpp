@@ -5,6 +5,7 @@
 #include "GameState.h"
 #include "Bullet.h"
 #include "GameState.h"
+#include "GameManager.h"
 
 bool Player::update()
 {
@@ -56,6 +57,7 @@ bool Player::update()
 }
 
 void Player::initObject() {
+	GameManager::instance()->setPlayer(this);
 	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	eventHandler_ = HandleEvents::instance();
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);

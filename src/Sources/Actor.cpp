@@ -11,9 +11,3 @@ void Actor::reciveDmg(int damage) {
 	double finalDamage = (currStats_.armor_ * damage) / 100;
 	currStats_.health_ -= finalDamage;
 }
-
-//A falta de definir la gesti�n del da�o en funci�n de la armadura
-void Actor::reciveDmg(int damage) {
-	double finalDamage = (currStats_.armor_ * damage) / 100;
-	currStats_.health_ -= finalDamage;
-}

@@ -122,6 +122,4 @@ void Application::closeResources() {
 	delete audioManager_;
 	delete fontManager_;
 	delete textureManager_;
-	delete audioManager_;
-    delete equipGen_;
 }
