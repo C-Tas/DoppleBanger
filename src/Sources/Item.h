@@ -2,8 +2,6 @@
 #include "Texture.h"
 
 
-
-
 class Item
 {
 private:

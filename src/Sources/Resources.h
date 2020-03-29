@@ -17,6 +17,7 @@ public:
 		//Botones
 		GoControls,
 		BackButton,
+		ForwardButton,
 		Controls,
 
 		//Fondos

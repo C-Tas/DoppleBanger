@@ -27,6 +27,7 @@ private:
 	Sword* sword_ = nullptr;
 	Gun* gun_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
+	int money_;
 
 	void init();
 
@@ -47,4 +48,6 @@ public:
 	void equip(Boots* boots) {  boots_ = boots; };
 	void equip(Sword* sword) {  sword_ = sword;  };
 	void equip(Gun* gun) {  gun_ = gun; };
+	void addMoney(int money) { money_ += money; };
+	int getMoney() { return money_; };
 };

@@ -99,7 +99,6 @@ void Inventory::equippedObj() {
 			equiparAux(equipment_.gun_);
 			player_->equip(static_cast<Gun*>(select_->getObject()));
 		}
-		
 		// Una vez Equipado el nuevo objeto, lo activamos y lo eliminamos de la lista
 		select_->Enable(true);
 		select_->getObject()->equip(player_);
@@ -151,8 +150,6 @@ void Inventory::addToInventory(Equipment* ob) {
 	if (it == inventoryList_.begin()) {
 		ListPos = inventoryList_.begin();//iniciamos el puntero
 	}
-
-
 }
 
 // este metodo desequipa el objeto si esta equipado y equipa el nuevo objeto

@@ -7,6 +7,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Timon, "../Sources/assets/timon.png" },
 	{ GoControls, "../Sources/assets/botonControles.png"},
 	{ BackButton, "../Sources/assets/volver.png"},
+	{ ForwardButton, "../Sources/assets/seguir.png"},
 	{ Controls, "../Sources/assets/controles.png"},
 	{ InventaryMenu, "../Sources/assets/InventarioFondo.png" },
 	{ Scene1, "../Sources/assets/Scene1.png"},

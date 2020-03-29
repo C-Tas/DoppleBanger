@@ -6,6 +6,7 @@
 #include "Inventory.h"
 #include <exception>
 #include "GameManager.h"
+#include "ShopState.h"
 
 Application::Application(GameStateMachine* state) {
 	
@@ -13,7 +14,7 @@ Application::Application(GameStateMachine* state) {
 	initResources();
 	machine_ = new GameStateMachine();
 	//GameState* startState = new MainMenuState(this);
-	machine_->pushState(/*startState *//*new SelectLevelState(this, 3)*/ new Inventory(this));
+	machine_->pushState(/*startState *//*new SelectLevelState(this, 3)*/ new ShopState(this, new Player(this, getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D(0,0), Vector2D(1, 1), SDL_Rect())));
 }
 
 Application::~Application() {

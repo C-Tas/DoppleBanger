@@ -18,7 +18,6 @@ protected:
 	Player* player_;
 	Inventory* inventory_;
 	InventoryButton* inventoryButton_;
-
 public:
 	//Crea un item equipable del tipo dado
 	Equipment(Texture* texture, string name, string desc, double price, equipType type) : 
@@ -31,5 +30,4 @@ public:
 	virtual void equip(Player* player) = 0;
 	virtual void remove(Player* player) = 0;
 	virtual void writeStats() = 0;
-
 };
