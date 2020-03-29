@@ -25,7 +25,7 @@ bool MonkeyCoco ::update() {
 	return false;
 }
 
-void MonkeyCoco::animator() {
+void MonkeyCoco::changeAnim() {
 	switch (currState_)
 	{
 	case STATE::ATTACKING:

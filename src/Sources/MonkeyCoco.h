@@ -38,7 +38,7 @@ private:
 	//Último ataque
 	Uint32 lastHit = 0;
 	//Gestiona las diferentes animaciones que tiene el monkeyCoco
-	void animator();
+	void changeAnim();
 public:
 	virtual bool update();
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores ser?n los puestos, si se le pasan valores los editara</summary>

@@ -17,7 +17,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Roca, "../Sources/assets/colisionables/roca.png" },
 	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
 	{Dragon,"../Sources/assets/enemigos/dragon.png"},
-	{MonkeyCoco,"../Sources/assets/enemigos/MonkeyCoco.png"}
+	{MonkeyCoco,"../Sources/assets/enemigos/MonkeyCoco.png"},
+	{Coco ,"../Sources/assets/Colisionables/Coco.png" }
+
 	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
 };
 
