@@ -8,6 +8,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ BackButton, "../Sources/assets/botones/volver.png" },
 	{ SkipButton, "../Sources/assets/botones/skipButton.png" },
 
+	{ MuteOn, "../Sources/assets/botones/muteOn.png" },
+	{ MuteOff, "../Sources/assets/botones/muteOff.png" },
+	{ Resume, "../Sources/assets/botones/resume.png" },
 	//Interfaces
 	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
 	{ InventaryMenu, "../Sources/assets/interfaces/inventarioFondo.png" },
@@ -57,7 +60,7 @@ vector <Resources::FontInfo> Resources::fontsRoutes{
 	//Para añadir nueva ruta: {FontId, "./Sources/fonts/name.ttf", size}
 };
 
-vector <Resources::TextMsgInfo> Resources::messages_{
+vector <Resources::TextMsgInfo> Resources::messages{
 
 	//Para añadir nuevo texto: {TextureId , string "mensaje", { COLOR(0xaaffffff), FontId  }
 	{ PlayText,"Nueva Partida",SDL_Color{(0,0,0,1)},RETRO },

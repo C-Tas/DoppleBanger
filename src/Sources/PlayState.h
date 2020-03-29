@@ -8,6 +8,8 @@
 
 class PlayState : public GameState
 {
+private:
+	void initDebugPauseState(); //m�todo para probar el PauseState
 public:
 	///<summary>Constructora PlayState</summary>
 	PlayState(Application* app = nullptr) : GameState(app) { initPlayState(); };

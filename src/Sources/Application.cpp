@@ -1,15 +1,10 @@
 #include "Application.h"
 #include "MainMenuState.h"
-#include "SelectLevelState.h"
-#include "ControlsState.h"
-#include"VolcanicIslandState.h"
 #include "HandleEvents.h"
-#include "ShipState.h"
 #include <exception>
 #include "GameManager.h"
 
 Application::Application(GameStateMachine* state) {
-	
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine(); //Creación máquina de estados
@@ -100,7 +95,7 @@ void Application::initResources() {
 	}
 
 	//Creación de mensajes
-	for (auto& txtmsg : Resources::messages_) {
+	for (auto& txtmsg : Resources::messages) {
 		textureManager_->loadFromText(txtmsg.id, renderer_, txtmsg.msg,
 			fontManager_->getFont(txtmsg.fontId), txtmsg.color);
 	}

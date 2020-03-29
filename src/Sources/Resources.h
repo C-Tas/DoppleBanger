@@ -16,11 +16,15 @@ public:
 		GoControls,
 		BackButton,
 		SkipButton,
+		MuteOff,
+		MuteOn,
+		Resume,
 
 		//Fondos
 		MenuBackground,
 		InventaryMenu,
 		Controls,
+		Pause,
 		Scene1,
 		Scene2,
 		Scene3,
@@ -121,5 +125,5 @@ public:
 	static vector<FontInfo> fontsRoutes;
 
 	//Vector con los textos
-	static vector<TextMsgInfo> messages_; // initialized in .cpp
+	static vector<TextMsgInfo> messages; // initialized in .cpp
 };
