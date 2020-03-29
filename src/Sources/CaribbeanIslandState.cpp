@@ -5,22 +5,27 @@
 void backShipCaribbean(Application* app) {
 	app->getGameStateMachine()->changeState(new ShipState(app));
 }
+
 void CaribbeanIslandState::initState()
 {
-	//background_ = app_->getTextureManager()->getTexture(Resources::Caribbean);
+	collisionCtrl_ = CollisionCtrl::instance();
+	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
+	addRenderUpdateLists(background_);
 
-	//Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::BackButton),
-	//	Vector2D(app_->getWindowWidth() / 2, app_->getWindowHeight() / 2), Vector2D(300, 300), backShipCaribbean);
-	//addRenderUpdateLists(backButton);
-
-	////Siempre se añade el último para que se renderice por encima de los demás objetos
-	//addRenderUpdateLists(player_);
+	//Siempre se añade el último para que se renderice por encima de los demás objetos
+	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
+	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
+	addRenderUpdateLists(player_);
 }
 
-CaribbeanIslandState::CaribbeanIslandState(Application* app): PlayState(app) {
-	initState();
-
-	#ifdef _DEBUG
-	printf("CaribbeanIsland");
-	#endif
+void CaribbeanIslandState::createCrab(int numCrabs)
+{
+	int wHalfWin = app_->getWindowWidth() / 2;
+	int hHalfWin = app_->getWindowHeight() / 2;
+	//Crab* newCrab;
+	Vector2D pos;
+	for (int i = 0; i < numCrabs; i++) {
+		pos.setVec(Vector2D(rand() % wHalfWin * 2 + wHalfWin, rand() % hHalfWin * 2 + hHalfWin));
+		//newCrab = new Crab(app_, pos, Vector2D(wCrab, hCrab));
+	}
 }

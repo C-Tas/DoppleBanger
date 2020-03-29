@@ -9,6 +9,7 @@ enum class STATE
 	ATTACKING,
 	IDLE,
 	DIYING,
+	MOVING
 };
 
 
@@ -19,7 +20,9 @@ protected:
 	Stats currStats_;
 	//Emun que representa el actual estado del personaje
 	STATE currState_ = STATE::IDLE;
-
+	//Target objetivo para atacar. Enemy también puede ser el player.
+	//Es el enemigo visto desde la entidad
+	Draw* currEnemy = nullptr;
 	//Constructor vacío
 	Actor() {};
 	///<summary>Constructor de la clase Actor</summary>
@@ -38,6 +41,8 @@ protected:
 		double crit, double range, double moveSpeed, double meleeRate, double distRate);
 
 public:
+	//<summary>Establece la direccion del movimiento</summary>	
+	virtual void move(Point2D target) {};
 	//Método para gestionar el daño recibido 
 	void reciveDmg(int damage);
 	//Devuelve el estado actual del actor

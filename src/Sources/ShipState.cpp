@@ -1,22 +1,22 @@
 #include "ShipState.h"
+#include "GameManager.h"
 #include "Player.h"
 #include "ShipObject.h"
-#include "Collisions.h"
 #include "CaribbeanIslandState.h"
 #include "SpookyIslandState.h"
 #include "VolcanicIslandState.h"
-#include "GameManager.h"
 #include "SelectLevelState.h"
 #include "SaveLoadState.h"
 #include "StashState.h"
 
+#include "Collisions.h" //Provisional
 
 #pragma region CallBacks
 //Callback para cambiar de GameState e ir a la isla actual
 void goIsland(Application* app) {
 	GameManager* gm = GameManager::instance();
-	if(gm->getCurrIsland() == Island::CaribeanA) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
-	else if(gm->getCurrIsland() == Island::SpookyA) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
+	if(gm->getCurrIsland() == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
+	else if(gm->getCurrIsland() == Island::Spooky) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
 	else if (gm->getCurrIsland() == Island::Volcanic) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
 }
 //Callback del alijo para ir al menú de alijo
@@ -70,17 +70,18 @@ void ShipState::initState()
 		app_->getTextureManager()->getTexture(Resources::ExitShip), goIsland);
 	addRenderUpdateLists(exit_);
 
-
 	////Siempre se añade el último para que se renderice por encima de los demás objetos
 	playerEntry_ = Vector2D((app_->getWindowWidth() - wPlayer * 2), ((app_->getWindowHeight() * 3 / 4) - hPlayer));
 	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
 	addRenderUpdateLists(player_);
 }
 
+
 void ShipState::update()
 {
 	PlayState::update();
 
+#pragma region ColisionesProvisional
 	HandleEvents* input = HandleEvents::instance();
 
 	Vector2D aux = input->getMousePos(); //Guardas la posicion del raton
@@ -96,6 +97,9 @@ void ShipState::update()
 		}
 		else if (SDL_PointInRect(&mouse, &wheel_->getDestiny())) {
 			wheelClick = true;
+		}
+		else if (SDL_PointInRect(&mouse, &exit_->getDestiny())) {
+			exitClick = true;
 		}
 		else {
 			stashClick = false;
@@ -139,6 +143,10 @@ void ShipState::update()
 	//Trigger de salida
 	if (RectRect(player_->getPos().getX() + wPlayer / 2, player_->getPos().getY() + hPlayer / 2, player_->getScaleX(), player_->getScaleY(),
 		exit_->getPos().getX() + wExit / 2, exit_->getPos().getY() + hExit / 2, exit_->getScaleX(), exit_->getScaleY())) {
-		exit_->onCollider();
+		if (exitClick) {
+			exitClick = false;
+			exit_->onCollider();
+		}
 	}
+#pragma endregion
 }

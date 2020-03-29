@@ -39,9 +39,9 @@ void SelectLevelState::initState() {
 #pragma region Testeo
 	GameManager* gm = GameManager::instance();
 	table = app_->getTextureManager()->getTexture(Resources::Table);
-	if (gm->getUnlockedIslands() == 0) map = app_->getTextureManager()->getTexture(Resources::Map1);
-	else if(gm->getUnlockedIslands() == 1)  map = app_->getTextureManager()->getTexture(Resources::Map2);
-	else if (gm->getUnlockedIslands() == 2)  map = app_->getTextureManager()->getTexture(Resources::Map3);
+	if (gm->getUnlockedIslands() == Island::Caribbean) map = app_->getTextureManager()->getTexture(Resources::Map1);
+	else if(gm->getUnlockedIslands() == Island::Spooky)  map = app_->getTextureManager()->getTexture(Resources::Map2);
+	else if (gm->getUnlockedIslands() == Island::Volcanic)  map = app_->getTextureManager()->getTexture(Resources::Map3);
 #pragma endregion
 
 	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), Vector2D(100, 100),

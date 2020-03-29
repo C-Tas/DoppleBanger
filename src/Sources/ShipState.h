@@ -19,12 +19,15 @@ private:
 	ShipObject* door_ = nullptr; //Trampilla
 	ShipObject* wheel_ = nullptr;//Timón
 	ShipObject* exit_ = nullptr; //Salida
-	Draw* background_ = nullptr; //Fondo
 
-	SDL_Point mouse; //Para guardar la posición del clik del ratón  
-	bool stashClick = false; //Para saber si se ha pulsado el objeto
+	//Para guardar la posición del clik del ratón  
+	SDL_Point mouse; 
+
+	//Para saber si se ha pulsado el objeto
+	bool stashClick = false; 
 	bool doorClick = false;
 	bool wheelClick = false; 
+	bool exitClick = false;
 
 	//Dimensiones de las entidades
 	const uint wStash = app_->getWindowWidth() / 7;

@@ -18,7 +18,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 {
 	Equipment* obj = new Equipment(type);
 	
-	int area = gameManager_->getUnlockedIslands();
+	int area = (int)gameManager_->getUnlockedIslands();
 	switch (type)
 	{
 	//Vida y armadura

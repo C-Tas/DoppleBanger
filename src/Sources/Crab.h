@@ -4,6 +4,20 @@
 
 class Crab : public Enemy
 {
+public:
+	virtual bool update();
+	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores ser?n los puestos, si se le pasan valores los editara</summary>
+	Crab(Application* app, Point2D pos, Vector2D scale) : Enemy(app, pos, scale) { initObject(); }
+	//<summary>Constructor por copia</summary>
+	Crab(Crab& other) :Enemy(other.app_, other.pos_, other.scale_) { initAnim(); };
+	//<summary>Constructor por movimiento<summary>
+	Crab(Crab&& other)noexcept :Enemy(other.app_, other.pos_, other.scale_) { initAnim(); };
+
+	//<summary>Establece la direccion del movimiento</summary>	
+	virtual void move(Point2D target);
+	//Asigna los vectores
+	inline void setPositions(vector<Vector2D> targets) { targetsVector_ = targets; };
+
 private:
 	//Dimensiones de collisionArea
 	const int W_COLLISION = scale_.getX() * 0.5;
@@ -16,7 +30,7 @@ private:
 	const int W_CLIP_ATK = 70;
 	const int H_CLIP_ATK = 45;
 	//Animaciones
-	Anim attackAnim{ 0,0,0,0 };
+	Anim attackAnim_{ 0,0,0,0 };
 #pragma endregion
 	//<summary>Estadisticas del cangrejo</summary>
 #pragma region ConstStats
@@ -45,15 +59,5 @@ private:
 	virtual void initObject();
 	//Crea las animaciones
 	virtual void initAnim();
-public:
-	virtual bool update();
-	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores ser?n los puestos, si se le pasan valores los editara</summary>
-	Crab(Application* app, Point2D pos, Vector2D scale) : Enemy(app, pos, scale) { initObject(); }
-	//<summary>Constructor por copia</summary>
-	Crab(Crab& other) :Enemy(other.app_, other.pos_, other.scale_) { initAnim(); };
-	//<summary>Constructor por movimiento<summary>
-	Crab(Crab&& other)noexcept :Enemy(other.app_, other.pos_, other.scale_) { initAnim(); };
 
-	//Asigna los vectores
-	inline void setPositions(vector<Vector2D> targets) { targetsVector_ = targets; };
 };

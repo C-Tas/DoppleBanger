@@ -21,7 +21,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Map1, "../Sources/assets/interfaces/mapa1.png" },
 	{ Map2, "../Sources/assets/interfaces/mapa2.png" },
 	{ Map3, "../Sources/assets/interfaces/mapa3.png" },
-	{ Caribbean, "../Sources/assets/interfaces/caribe.png" },
+	{ CaribbeanMap, "../Sources/assets/interfaces/caribe.png" },
 	{ Spooky, "../Sources/assets/interfaces/fantasmal.png" },
 	{ Volcanic, "../Sources/assets/interfaces/volcan.png" },
 

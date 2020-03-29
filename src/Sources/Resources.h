@@ -30,7 +30,7 @@ public:
 		Map1,
 		Map2,
 		Map3,
-		Caribbean,
+		CaribbeanMap,
 		Spooky,
 		Volcanic,
 

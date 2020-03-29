@@ -75,16 +75,16 @@ void Player::shoot(Vector2D dir)
 	app_->getCurrState()->addRenderUpdateLists(bullet);
 }
 
-//void Player::move(Point2D target)
-//{
-//	attacking = false;
-//	//establecemos el objetivo para poder parar al llegar
-//	target_.setVec(target);
-//	//establecemos la direccion
-//	dir_.setX(target.getX() - visPos_.getX());
-//	dir_.setY(target.getY() - visPos_.getY());
-//	dir_.normalize();
-//}
+void Player::move(Point2D target)
+{
+	attacking = false;
+	//establecemos el objetivo para poder parar al llegar
+	target_.setVec(target);
+	//establecemos la direccion
+	dir_.setX(target.getX() - visPos_.getX());
+	dir_.setY(target.getY() - visPos_.getY());
+	dir_.normalize();
+}
 
 void Player::attack(Enemy* obj)
 {
