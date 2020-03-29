@@ -5,6 +5,31 @@
 unique_ptr<CollisionCtrl> CollisionCtrl::instance_;
 
 void CollisionCtrl::islandCollisions() {
+	//Quitamos a los enemigos de la lista
+	for (auto it = enemiesToErase_.begin(); it != enemiesToErase_.end(); ++it) {
+		enemies_.remove(*it);
+	}
+	enemiesToErase_.clear();
+	//Quitamos a los cofres de la lista
+	//for (auto it = chestsToErase_.begin(); it != chestsToErase_.end(); ++it) {
+	//	chests_.remove(*it);
+	//}
+	//chestsToErase_.clear();
+	//Quitamos a las balas de las listas
+	//for (auto it = playerBulletsToErase_.begin(); it != playerBulletsToErase_.end(); ++it) {
+	//	playerBullets_.remove(*it);
+	//}
+	//playerBulletsToErase_.clear();
+	//for (auto it = enemyBulletsToErase_.begin(); it != enemyBulletsToErase_.end(); ++it) {
+	//	enemyBullets_.remove(*it);
+	//}
+	//enemyBulletsToErase_.clear();
+	//Quitamos a los triggers de la lista
+	for (auto it = triggersToErase_.begin(); it != triggersToErase_.end(); ++it) {
+		triggers_.remove(*it);
+	}
+	triggersToErase_.clear();
+
 	//Colisiones con obstáculos
 	for (auto ob : obstacles_) {
 		//Con jugador
@@ -96,8 +121,8 @@ void CollisionCtrl::islandCollisions() {
 	//	if (Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
 	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 	//		chest->onCollider();
-	//		removeChest(chest);
-	//	}
+	//		removeChest(chest);	//Para que no pueda volver a abrirse el mismo cofre
+	//	}++
 	//}
 
 	//Jugador con triggers

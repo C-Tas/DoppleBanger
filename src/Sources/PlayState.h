@@ -36,4 +36,3 @@ public:
 	static void goToStashState(Application* app);
 	//falta otro cambio
 };
-

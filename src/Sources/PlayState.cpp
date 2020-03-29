@@ -30,7 +30,6 @@ void PlayState::initPlayState() {
 
 	collisionCtrl_ = CollisionCtrl::instance();
 	collisionCtrl_->setPlayer(player_);
-	collisionCtrl_->setObstacles(obstacles_);
 	/*Seteamos todo lo necesario (enemigos, objetos, NPCs, etc)*/
 }
 

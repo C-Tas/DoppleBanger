@@ -11,7 +11,6 @@
 #include <list>
 #include <vector>
 
-
 class CollisionCtrl {
 public:
 	enum NPCsNames : int {
@@ -39,53 +38,56 @@ public:
 			instance_.reset(new CollisionCtrl());
 		}
 		return instance_.get();
-	}
+	};
 
 	///<summary>Comprueba las colisiones necesarias para las islas</summary>
 	void islandCollisions();
 	///<summary>Comprueba las colisiones necesarias en el barco</summary>
 	void shipCollisions();
 
-#pragma region Removes
+#pragma region Remove
 	///<summary>Quita las colisiones con el NPC (si el NPC se desbloquea y deja de aparecer en la isla)</summary>
 	void removeNPC() { npc_.object = nullptr; };
 	///<summary>Quita un enemigo de la lista</summary>
-	void removeEnemy(Enemy* enem) { enemies_.remove(enem); };
+	void removeEnemy(Enemy* enem) { enemiesToErase_.push_back(enem); };
 	///<summary>Quita un cofre de la lista (cuando se abre)</summary>
-	//void removeChest(Chest* chest) { chests_.remove(chest); };
+	//void removeChest(Chest* chest) { chestsToErase_.push_back(chest); };
 	///<summary>Quita una bala de la lista</summary>
-	//void removePlayerBullet(Bullet* bullet) { playerBullets_.remove(bullet); };
+	//void removePlayerBullet(Bullet* bullet) { playerBulletsToErase_.push_back(bullet); };
 	///<summary>Quita una bala de la lista</summary>
-	//void removeEnemyBullet(Bullet* bullet) { enemyBullets_.remove(bullet); };
+	//void removeEnemyBullet(Bullet* bullet) { enemyBulletsToErase_.push_back(bullet); };
 	///<summary>Quita un trigger de la lista</summary>
-	void removeTrigger(Trigger* trigger) { triggers_.remove(trigger); };
+	void removeTrigger(Trigger* trigger) { triggersToErase_.push_back(trigger); };
+
+	///<summary>Vacía todas las listas (para los cambios de zona)</summary>
+	void clearList() { npc_.object = nullptr; obstacles_.clear(); enemies_.clear();
+		/*chests_.clear();*/ triggers_.clear(); enemiesToErase_.clear(); /*chestsToErase_.clear();*/
+		/*playerBulletsToErase_.clear();*/ /*enemyBulletsToErase_.clear();*/ triggersToErase_.clear(); };
 #pragma endregion
 
-#pragma region Setters
+#pragma region Add
 	///<summary>Setea el player</summary>
 	void setPlayer(Player* player) { player_ = player; };
 
 	//Islas
 	///<summary>Setea el NPC bloqueado de la zona de la isla</summary>
 	void setLockNPC(NPCsNames name, NPC* npc) { npc_ = NPCsInfo(name, npc); };
-	///<summary>Vacía la lista de obstáculos para setear una nueva</summary>
-	void setObstacles(list<Obstacle*> obstacles) { obstacles_.clear(); obstacles_ = obstacles; };
-	///<summary>Vacía la lista de enemigos para setear una nueva</summary>
-	void setEnemies(list<Enemy*> enems) { enemies_.clear(); enemies_ = enems; };
-	///<summary>Setea nuevos enemigos sin borrar los anteriores (para Magordito)</summary>
-	void setMoreEnemies(list<Enemy*> enems) { enemies_.merge(enems); }
+	///<summary>Añade un nuevo obstáculo</summary>
+	void addObstacle(Obstacle* obstacle) { obstacles_.push_back(obstacle); };
+	///<summary>Añade un nuevo enemigo</summary>
+	void addEnemy(Enemy* enem) { enemies_.push_back(enem); };
 	///<summary>Vacía la lista de cofres y setea los nuevos</summary>
-	//void setChests(list<Chest*> chests) { chests_.clear(); chests_ = chests; };
+	//void addChest(Chest* chest) { chests_.push_back(chest); };
 	///<summary>Añade una nueva bala a la lista</summary>
-	//void setNewPlayerBullet(Bullet* bullet) { playerBullets_.push_back(bullet); }
+	//void addPlayerBullet(Bullet* bullet) { playerBullets_.push_back(bullet); };
 	///<summary>Añade una nueva bala a la lista</summary>
-	//void setNewEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); }
+	//void addEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); };
 	///<summary>Añade un nuevo trigger</summary>
-	void setTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
+	void addTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
 
 	//Barco
 	///<summary>Guarda un nuevo NPC desbloqueado a la lista (para el barco)</summary>
-	void setUnlockNPC(NPCsNames name, NPC* npc) { npcs_.push_back(NPCsInfo(name, npc)); };
+	void addUnlockNPC(NPCsNames name, NPC* npc) { npcs_.push_back(NPCsInfo(name, npc)); };
 	///<summary>Guarda los elementos del barco</summary>
 	//void setShipObjects(ShipObject* stash, ShipObject* door, ShipObject* wheel, ShipObject* exit) { 
 	//		shipObjects_.push_back(ShipObjectsInfo(Stash, stash)); shipObjects_.push_back(ShipObjectsInfo(Door, door)); 
@@ -123,6 +125,12 @@ private:	//Private está abajo porque necesitan enum del público
 	//list<Bullet*> playerBullets_;
 	//list<Bullet*> enemyBullets_;
 	list<Trigger*> triggers_;
+
+	list<Enemy*> enemiesToErase_;
+	//list<Chest*> chestsToErase_;
+	//list<Bullet*> playerBulletsToErase_;
+	//list<Bullet*> enemyBulletsToErase_;
+	list<Trigger*> triggersToErase_;
 
 	//Barco
 	vector<NPCsInfo> npcs_;

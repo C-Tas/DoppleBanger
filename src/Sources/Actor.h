@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Dynamic.h"
 #include "Stats.h"
 
@@ -19,4 +18,3 @@ public:
 	///<summary>Detiene el movimiento, por ejemplo, al colisionar con un obstáculo</summary>
 	void stop() { dir_ = Vector2D(0, 0); }
 };
-
