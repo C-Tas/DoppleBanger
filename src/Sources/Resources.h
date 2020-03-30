@@ -19,12 +19,13 @@ public:
 		MuteOff,
 		MuteOn,
 		Resume,
+		RestartGame,
 
 		//Fondos
 		MenuBackground,
 		InventaryMenu,
 		Controls,
-		Pause,
+		PauseBackground,
 		Scene1,
 		Scene2,
 		Scene3,
@@ -37,6 +38,8 @@ public:
 		CaribbeanMap,
 		Spooky,
 		Volcanic,
+		GameOver,
+		Win,
 
 		//Personajes
 		Dragon,

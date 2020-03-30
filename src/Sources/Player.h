@@ -5,6 +5,29 @@
 
 class Player : public Actor
 {
+public:
+	//Constructora de player
+	Player(Application* app, Vector2D pos, Vector2D scale) :
+		Actor(app, pos, scale) {
+		initObject();
+	};
+	~Player() {};
+
+	///<summary>Constructor por copia</summary>
+	Player(const Player& other) : Actor(other.app_, other.pos_, other.scale_) {
+		eventHandler_ = HandleEvents::instance();
+	};
+
+	virtual bool update();
+	void shoot(Vector2D dir);
+	virtual void onCollider();
+	//<summary>Establece la direccion del movimiento</summary>	
+	virtual void move(Point2D target);
+	void attack(Enemy* obj);
+	const int getLiberation() { return liberation_; };
+	const bool getExplotion() { return explotion_; };
+	const Stats& getStats() { return currStats_; };
+	virtual void die() { currState_ = STATE::DIYING; }
 private:
 	bool attacking = false;
 
@@ -28,43 +51,23 @@ private:
 
 //<summary>Estadisticas iniciales del jugador</summary>
 #pragma region consts
-	const double HEALTH = 100;
+	const double HEALTH = 1000;
 	const double MANA = 100;
 	const double MANA_REG = 1;
 	const double ARMOR = 10;
 	const double AD = 20;
-	const double AP = 0;
+	const double AP = 1000;
 	const double CRIT = 0;
-	const double RANGE = 50;
-	const double MOVE_SPEED = 100;
+	const double MELEE_RANGE = 50;
+	const double DIST_RANGE = 0;
+	const double MOVE_SPEED = 300;
 	const double MELEE_RATE = 1;
-	const double DIST_RATE = 2;
+	const double DIST_RATE = 1;
 
 	const double CLON_SPAWN_RANGE = 700;
 #pragma endregion
 
 	virtual void initObject();
 
-public:
-//Constructora de player
-	Player(Application* app, Vector2D pos, Vector2D scale) :
-		Actor(app, pos, scale) {
-		initObject();
-	};
-	~Player() {};
 
-	///<summary>Constructor por copia</summary>
-	Player(const Player& other) : Actor(other.app_, other.pos_, other.scale_) {
-		eventHandler_ = HandleEvents::instance();
-	};
-
-	virtual bool update();
-	void shoot(Vector2D dir);
-	virtual void onCollider() { /*Colisi�n con enemigo*/ };
-	//<summary>Establece la direccion del movimiento</summary>	
-	virtual void move(Point2D target);
-	void attack(Enemy* obj);
-	const int getLiberation() { return liberation_; };
-	const bool getExplotion() { return explotion_; };
-	const Stats& getStats() { return currStats_; };
 };

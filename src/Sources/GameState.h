@@ -15,9 +15,9 @@ using namespace std;
 using uint = unsigned int;
 
 using CallBackOnClick = void(Application * App);
+
 class GameState
 {
-
 public:
 	GameState(Application* app = nullptr) : app_(app) { eventHandler_ = HandleEvents::instance(); };
 	virtual ~GameState();
@@ -60,5 +60,7 @@ protected:
 	HandleEvents* eventHandler_;
 	//Background
 	Draw* background_ = nullptr;
+
+	virtual void initState() = 0;
 };
 

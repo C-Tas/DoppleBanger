@@ -19,7 +19,10 @@ private:
 	///<summary>Máquina de estados</summary>
 	GameStateMachine* machine_ = nullptr;
 
-	///<summary>Generador de randoms</summary>
+	///<summary> Generador de randoms</summary>
+	SRandBasedGenerator* random_ = nullptr;
+
+	///<summary>Generador de objetos aleatorios</summary>
 	RandEquipGen* equipGen_ = nullptr;
 
 	///<summary>Manager que gestiona las texturas </summary>
@@ -35,8 +38,8 @@ private:
 	bool appClosed_ = false;
 
 	///<summary>Constantes con las dimensiones de la ventana </summary>
-	static const int winWidth_ = 1920;
-	static const int winHeight_ = 1080;
+	static const int winWidth_ = 1600;
+	static const int winHeight_ = 800;
 
 	///<summary>Metodo que inicializa SDL</summary>
 	void initSDL();
@@ -95,6 +98,8 @@ public:
 	AudioManager* getAudioManager() { return audioManager_; };
 	///<summary>Devuelve equipGen_</summary>
 	RandEquipGen* getEquipGen() { return equipGen_; }
+	///<summary>Devuelve el random_</summary>
+	SRandBasedGenerator* getRandom() { return random_; }
 	//Devuelve mute
 	bool getMute() { return mute_; }
 #pragma endregion

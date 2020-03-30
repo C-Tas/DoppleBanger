@@ -46,8 +46,8 @@ public:
 	Vector2D getCenter(Vector2D pos)
 	{
 		Vector2D center;
-		center.setX(pos.getX() - (scale_.getX() / 2));
-		center.setY(pos.getY() - (scale_.getY() / 2));
+		center.setX(pos.getX() + (scale_.getX() / 2));
+		center.setY(pos.getY() + (scale_.getY() / 2));
 		return center;
 	}
 #pragma endregion

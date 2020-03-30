@@ -9,6 +9,7 @@
 //#include "ShipObject.h"
 #include <list>
 #include <vector>
+#include "Bullet.h"
 
 
 class CollisionCtrl {
@@ -31,10 +32,10 @@ private:
 	//Islas
 	NPC* npc_ = nullptr;	//El NPC no necesita ser una lista, hay como mucho uno por zona
 	list<Obstacle*> obstacles_;
-	list<Enemy*> enemies_;
 	//list<Chest*> chests_;
-	//list<Bullet*> playerBullets_;
-	//list<Bullet*> enemyBullets_;
+	list<Enemy*> enemies_;
+	list<Bullet*> playerBullets_;
+	list<Bullet*> enemyBullets_;
 	list<Trigger*> triggers_;
 
 	//Barco
@@ -58,7 +59,35 @@ public:
 	///<summary>Comprueba las colisiones</summary>
 	void islandCollisions();
 	void shipCollisions();
-
+#pragma region Testeo, se borrará
+	inline void addEnemy(Enemy* enemy) {
+		enemies_.push_back(enemy);
+	}
+	inline void addEnemyBullet(Bullet* bullet) {
+		enemyBullets_.push_back(bullet);
+	}
+	inline void addPlayerBullet(Bullet* bullet) {
+		playerBullets_.push_back(bullet);
+	}
+	void clearLists() {
+		player_ = nullptr;
+		npc_ = nullptr;
+		obstacles_.clear();
+		enemies_.clear();
+		playerBullets_.clear();
+		enemyBullets_.clear();
+		triggers_.clear();
+		npcs_.clear();
+		//shipObjects_.clear();
+	}
+	list <Bullet*> enemyBulletsToErase_;
+	list <Bullet*> playerBulletsToErase_;
+	list <Enemy*> enemiesToErase_;
+	bool enemiesEmpty() { return enemies_.empty(); }
+	void addEnemyBulletToErase(Bullet* bullet) { enemyBulletsToErase_.push_back(bullet); }
+	void addPlayerBulletToErase(Bullet* bullet) { playerBulletsToErase_.push_back(bullet); }
+	void addEnemiesToErase(Enemy* enemy) { enemiesToErase_.push_back(enemy); }
+#pragma endregion
 #pragma region Removes
 	///<summary>Quita las colisiones con el NPC (si el NPC se desbloquea y deja de aparecer en la isla)</summary>
 	void removeNPC() { npc_ = nullptr; };

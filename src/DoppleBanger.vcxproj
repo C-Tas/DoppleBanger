@@ -33,6 +33,7 @@
     <ClCompile Include="Sources\Crab.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
     <ClCompile Include="Sources\Dynamic.cpp" />
+    <ClCompile Include="Sources\EndState.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
     <ClCompile Include="Sources\Equipment.cpp" />
     <ClCompile Include="Sources\Font.cpp" />
@@ -71,6 +72,7 @@
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
+    <ClCompile Include="Sources\WinState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -89,6 +91,7 @@
     <ClInclude Include="Sources\CreditsState.h" />
     <ClInclude Include="Sources\Draw.h" />
     <ClInclude Include="Sources\Dynamic.h" />
+    <ClInclude Include="Sources\EndState.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\Equipment.h" />
     <ClInclude Include="Sources\Font.h" />
@@ -128,6 +131,7 @@
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\Vector2D.h" />
     <ClInclude Include="Sources\VolcanicIslandState.h" />
+    <ClInclude Include="Sources\WinState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

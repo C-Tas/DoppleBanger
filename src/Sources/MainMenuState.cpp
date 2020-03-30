@@ -11,7 +11,7 @@
 
 using namespace std;
 #pragma region Inicializacion
-void MainMenuState::initMenuState()
+void MainMenuState::initState()
 {
 
 #ifdef _DEBUG

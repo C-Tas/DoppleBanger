@@ -17,12 +17,12 @@ private:
 
 protected:
 	///<summary>Se inicializa el menu</summary>
-	void initMenuState();
+	virtual void initState();
 	///<summary>crea los 4 botones necesarios del main menu</summary>
 	void createButtons();
 
 public:
-	MainMenuState(Application* app = nullptr) :GameState(app) { initMenuState(); };
+	MainMenuState(Application* app = nullptr) :GameState(app) { initState(); };
 	virtual ~MainMenuState() {};
 	///<summary>Nos lleva al estado controles</summary>
 	static void goControlState(Application* app);

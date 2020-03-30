@@ -34,7 +34,6 @@ void GameState::update() {
 	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
 		if ((*it)->update())return;
 	}
-
 }
 
 

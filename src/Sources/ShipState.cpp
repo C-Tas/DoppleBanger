@@ -75,11 +75,6 @@ void ShipState::initState()
 	playerEntry_ = Vector2D((app_->getWindowWidth() - wPlayer * 2), ((app_->getWindowHeight() * 3 / 4) - hPlayer));
 	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
 	addRenderUpdateLists(player_);
-
-	//Creaci�n del mono
-	MonkeyCoco* monito = new MonkeyCoco(app_, { (double)app_->getWindowWidth() / 2,(double)app_->getWindowHeight() / 2 });
-	addRenderUpdateLists(monito);
-
 }
 
 

@@ -6,18 +6,16 @@
 #include "Enemy.h"
 #include <list>
 
+class CollisionCtrl;
+
 class PlayState : public GameState
 {
-private:
-	void initDebugPauseState(); //m�todo para probar el PauseState
 public:
 	///<summary>Constructora PlayState</summary>
-	PlayState(Application* app = nullptr) : GameState(app) { initPlayState(); };
+	PlayState(Application* app = nullptr) : GameState(app) { initState(); };
 	///<summary>Destructora</summary>
 	virtual ~PlayState() { };
 
-	///<summary>Inicializa los elementos del PlayState</summary>
-	void initPlayState();
 	///<summary>Llama al update del CollisionManager</summary>
 	virtual void update();
 	///<summary>Ir a pauseState (push)</summary>
@@ -45,10 +43,12 @@ public:
 
 protected:
 	Point2D playerEntry_ = Vector2D(0, 0);
-
+	//Singleton de colisiones
 	CollisionCtrl* collisionCtrl_ = nullptr;
 	Player* player_ = nullptr;
 	list<Obstacle*> obstacles_;
 	list<Enemy*> enemies_;
+
+	virtual void initState() { collisionCtrl_ = CollisionCtrl::instance(); }
 };
 

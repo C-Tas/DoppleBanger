@@ -27,11 +27,12 @@ protected:
 	virtual ~Collider() {};
 
 	///<summary>Método abstracto a redefinir en los hijos de Collider</summary>
-	virtual void onCollider() = 0;
 	virtual void initObject() {};
 	virtual void initAnim() {};
 
 public:
+	//Realiza una acción al detectar una colisión
+	virtual void onCollider() = 0;
 	///<summary>Devuelve el rect con el area de colisiones</summary>
 	const SDL_Rect getCollider() { return collisionArea_; };
 	///<summary>Establece el rect de colisiones con el valor de newRect</summary>

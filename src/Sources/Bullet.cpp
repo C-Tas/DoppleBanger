@@ -19,21 +19,16 @@ bool Bullet::update()
 	currTime_ = SDL_GetTicks();
 
 	//Si se le ha acabado el tiempo de vida o se ha chocado con algo
-	if ((currTime_ - initTime_) / 1000 > lifeSpan_) //|| colisión con paredes)
-		app_->getCurrState()->removeRenderUpdateLists(this);
-
-	else {
+	//if ((currTime_ - initTime_) / 1000 > lifeSpan_) { //|| colisión con paredes)
+	//	if (enemyBullet_) CollisionCtrl::instance()->addEnemyBulletToErase(this);
+	//	else CollisionCtrl::instance()->addPlayerBulletToErase(this);
+	//	app_->getCurrState()->removeRenderUpdateLists(this);
+	//}
+	//else {
 		double delta = app_->getDeltaTime();
 		pos_.setX(pos_.getX() + (dir_.getX() * (speed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (speed_ * delta)));
-
-		Enemy* obj = static_cast<PlayState*>(app_->getGameStateMachine()->getState())->collidesWithEnemy(pos_, scale_);
-		if (obj != nullptr)
-		{
-			obj->reciveDmg(damage_);
-			app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
-		}
-	}
+	//}
 
 	return false;
 }

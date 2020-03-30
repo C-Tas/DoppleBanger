@@ -5,6 +5,8 @@
 unique_ptr<CollisionCtrl> CollisionCtrl::instance_;
 
 void CollisionCtrl::islandCollisions() {
+	
+
 	//Colisiones con obstáculos
 	for (auto ob : obstacles_) {
 		if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
@@ -19,22 +21,44 @@ void CollisionCtrl::islandCollisions() {
 				(ob)->onCollider();
 			}
 		}
+		for (auto bullet : enemyBullets_) {
+			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
+				(ob)->onCollider();
+				addEnemyBulletToErase(bullet);
+				bullet->onCollider();
+			}
+		}
+		for (auto bullet : playerBullets_) {
+			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
+				(ob)->onCollider();
+				addPlayerBulletToErase(bullet);
+				bullet->onCollider();
+			}
+		}
 	}
+
 	//Colisión enemigo con jugador o con balas del jugador
-	//for (auto enem : enemies_) {
-	//	if (Collisions::collides(enem->getPos(), enem->getScaleX(), enem->getScaleY(),
-	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-	//		enem->onCollider();
-	//		player_->onCollider();
-	//	}
-	//	//for (auto bullet : playerBullets_) {
-	//	//	if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
-	//	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-	//	//		enem.receiveDamge(bullets.getDamage());
-	//	//		removePlayerBullet(bullet);
-	//	//	}
-	//	//}
-	//}
+	for (auto enem : enemies_) {
+		if (Collisions::collides(enem->getPos(), enem->getScaleX(), enem->getScaleY(),
+			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+			enem->onCollider();
+			player_->onCollider();
+		}
+		for (auto bullet : playerBullets_) {
+			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+				enem->getPos(), enem->getScaleX(), enem->getScaleY())) {
+				if (enem->reciveDmg(bullet->getDamage())) {
+					addEnemiesToErase(enem);
+					enem->onCollider();
+					enem->die();
+				}
+				addPlayerBulletToErase(bullet);
+				bullet->onCollider();
+			}
+		}
+	}
 	//Colisión cofres con jugador
 	//for (auto chest : chests_) {
 	//	if (Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
@@ -42,21 +66,31 @@ void CollisionCtrl::islandCollisions() {
 	//		chest->onCollider();
 	//	}
 	//}
+
 	//Colisión bala del enemigo con jugador
-	//for (auto bullet : enemyBullets_) {
-	//	if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
-	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-	//		player_.receiveDamge(bullet.getDamage());
-	//		removeEnemyBullet(bullet);
-	//	}
-	//}
-	//Colisión bala del jugador con enemigo
-	//for (auto bullets : playerBullets_) {
-	//	if (Collisions::collides(bullets->getPos(), bullets->getScaleX(), bullets->getScaleY(),
-	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-	//		/*Se llama al método correspondiente*/
-	//	}
-	//}
+	for (auto bullet : enemyBullets_) {
+		if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+			if(player_->reciveDmg(bullet->getDamage())) player_->die();
+			addEnemyBulletToErase(bullet);
+			bullet->onCollider();
+		}
+	}
+
+	for (auto it = enemyBulletsToErase_.begin(); it != enemyBulletsToErase_.end(); ++it) {
+		enemyBullets_.remove(*it);
+	}
+	enemyBulletsToErase_.clear();
+
+	for (auto it = playerBulletsToErase_.begin(); it != playerBulletsToErase_.end(); ++it) {
+		playerBullets_.remove(*it);
+	}
+	playerBulletsToErase_.clear();
+
+	for (auto it = enemiesToErase_.begin(); it != enemiesToErase_.end(); ++it) {
+		enemies_.remove(*it);
+	}
+	enemiesToErase_.clear();
 }
 
 void CollisionCtrl::shipCollisions() {	//Está comentado porque falta añadir la clase ShipObject

@@ -5,9 +5,12 @@ class InventoryState :
 {
 public:
 //<summary>Constructora generica</summary>
-	InventoryState(Application* app) :GameState(app) {};
+	InventoryState(Application* app) :GameState(app) { initState(); };
 	virtual ~InventoryState() {};
 	//<summary>Elimina el estado</summary>
 	void goToGame();
+
+protected:
+	virtual void initState() {};
 };
 

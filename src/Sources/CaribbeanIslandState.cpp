@@ -1,10 +1,30 @@
 #include "CaribbeanIslandState.h"
 #include "Player.h"
 #include "ShipState.h"
+#include "MonkeyCoco.h"
+#include "EndState.h"
+#include "WinState.h"
 
 void backShipCaribbean(Application* app) {
 	app->getGameStateMachine()->changeState(new ShipState(app));
 }
+
+void CaribbeanIslandState::update()
+{
+	if (kills >= numMonkeys_) {
+		collisionCtrl_->clearLists();
+		app_->getGameStateMachine()->changeState(new WinState(app_));
+	}
+	else if (player_->getStats().health_ > 0) {
+		collisionCtrl_->islandCollisions();
+		PlayState::update();
+	}
+	else {
+		collisionCtrl_->clearLists();
+		app_->getGameStateMachine()->changeState(new EndState(app_));
+	}
+}
+
 
 void CaribbeanIslandState::initState()
 {
@@ -12,20 +32,23 @@ void CaribbeanIslandState::initState()
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
 	addRenderUpdateLists(background_);
 
+	createMonkey(numMonkeys_);
+
 	//Siempre se añade el último para que se renderice por encima de los demás objetos
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
 	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
 	addRenderUpdateLists(player_);
 }
 
-void CaribbeanIslandState::createCrab(int numCrabs)
+void CaribbeanIslandState::createMonkey(int numMonkeys)
 {
-	int wHalfWin = app_->getWindowWidth() / 2;
-	int hHalfWin = app_->getWindowHeight() / 2;
-	//Crab* newCrab;
+	int wWin = app_->getWindowWidth();
+	int hWin = app_->getWindowHeight();
+	MonkeyCoco* newMonkey;
 	Vector2D pos;
-	for (int i = 0; i < numCrabs; i++) {
-		pos.setVec(Vector2D(rand() % wHalfWin * 2 + wHalfWin, rand() % hHalfWin * 2 + hHalfWin));
-		//newCrab = new Crab(app_, pos, Vector2D(wCrab, hCrab));
+	for (int i = 0; i < numMonkeys; i++) {
+		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
+		newMonkey = new MonkeyCoco(app_, pos, Vector2D(wMonkey, hMonkey));
+		addRenderUpdateLists(newMonkey);
 	}
 }

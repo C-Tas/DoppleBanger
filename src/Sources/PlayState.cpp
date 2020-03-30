@@ -5,35 +5,13 @@
 #include "SelectLevelState.h"
 #include "StashState.h"
 #include "Collisions.h"
-
-void PlayState::initPlayState() {
-
-
-	//Creaci�n de dos obst�culos de prueba
-	/*SDL_Rect objCollision; objCollision.x = 300; objCollision.y = 100; objCollision.w = 100; objCollision.h = 50;
-	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Rock),
-		Vector2D(objCollision.x, objCollision.y), Vector2D(objCollision.w, objCollision.h)));
-
-	objCollision.x = 600; objCollision.y = 400;
-	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Rock),
-		Vector2D(objCollision.x, objCollision.y), Vector2D(objCollision.w, objCollision.h)));
-
-	for (auto ob : obstacles_) {
-		addUpdateList(ob);
-		addRenderList(ob);
-	}*/
-
-	collisionCtrl_ = CollisionCtrl::instance();
-	collisionCtrl_->setPlayer(player_);
-	//collisionCtrl_->setObstacles(obstacles_);
-	/*Seteamos todo lo necesario (enemigos, objetos, NPCs, etc)*/
-}
-
+#include "PauseState.h"
+#include "EndState.h"
 
 void PlayState::update() {
 	//collisionCtrl_->islandCollisions();
-	GameState::update();
-	checkPlayerActions();
+		GameState::update();
+		checkPlayerActions();
 }
 
 void PlayState::addEnemy(Enemy* obj) {
@@ -51,12 +29,16 @@ void PlayState::removeEnemy(Enemy* obj) {
 }
 
 void PlayState::checkPlayerActions() {
+	
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 	{
 		Enemy* obj; obj = checkAttack();
 		if (obj != nullptr) player_->attack(obj);
 		//else if NPC
 		else player_->move(eventHandler_->getMousePos());
+	}
+	else if (eventHandler_->isKeyDown(SDLK_p)) {
+		app_->getGameStateMachine()->pushState(new PauseState(app_));
 	}
 }
 

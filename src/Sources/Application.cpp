@@ -79,7 +79,10 @@ void Application::initResources() {
 	audioManager_ = new AudioManager();
 	audioManager_->init();
 
-	///<summary>Generador de randoms</summary>
+	//Generador de randoms
+	random_ = new SRandBasedGenerator();
+
+	///<summary>Generador de equipo aleatorio</summary>
 	equipGen_ = new RandEquipGen(this);
 
 	//Creacion de las texturas
@@ -114,6 +117,7 @@ void Application::initResources() {
 //Elimina los recursos
 void Application::closeResources() {
 	delete equipGen_;
+	delete random_;
 	delete audioManager_;
 	delete fontManager_;
 	delete textureManager_;

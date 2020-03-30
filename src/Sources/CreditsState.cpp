@@ -5,7 +5,7 @@ void CreditsState::backToPreviousState(Application* app) {
 	app->getGameStateMachine()->popState();
 }
 
-void CreditsState::initCreditState() {
+void CreditsState::initState() {
 	cout << "Estas en creditState \n";
 	Button* b = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuButton),
 		{ double(app_->getWindowWidth() / 2),double(app_->getWindowHeight() / 2) - 400 }, { 500,500 }, backToPreviousState);

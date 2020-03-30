@@ -27,6 +27,8 @@ protected:
 	virtual void initObject() {};
 	virtual void initAnim() {};
 public:
+	//Realiza una acción al detectar una colisión
+	virtual void onCollider() {};
 	//<summary>Establece la direccion del movimiento</summary>	
 	virtual void move(Point2D target);
 };

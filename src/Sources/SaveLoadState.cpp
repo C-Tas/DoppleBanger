@@ -11,7 +11,7 @@ void SaveLoadState::goToGame(){
 }
 //mirar
 void SaveLoadState::goToMainMenu() {
-	app_->getGameStateMachine()->changeState(	new MainMenuState(app_));
+	app_->getGameStateMachine()->changeState(new MainMenuState(app_));
 	//AGUS
 	//app_->getStateMachine()->changeState(	MainMenuState(app_));
 

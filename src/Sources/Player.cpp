@@ -6,6 +6,7 @@
 #include "Bullet.h"
 #include "GameState.h"
 #include "GameManager.h"
+#include "CollisionCtrl.h"
 
 bool Player::update()
 {
@@ -52,7 +53,10 @@ bool Player::update()
 		objective_->reciveDmg(currStats_.meleeDmg_);
 		meleeTime_ = SDL_GetTicks();
 	}
-
+	if (currState_ == STATE::DIYING) {
+		//Tendría que hacer la animación de muerte
+		return true;
+	}
 	return false;
 }
 
@@ -60,7 +64,8 @@ void Player::initObject() {
 	GameManager::instance()->setPlayer(this);
 	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	eventHandler_ = HandleEvents::instance();
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	CollisionCtrl::instance()->setPlayer(this);
 }
 
 void Player::shoot(Vector2D dir)
@@ -73,8 +78,15 @@ void Player::shoot(Vector2D dir)
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 	shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.meleeDmg_);
+	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.distDmg_, false);
 	app_->getCurrState()->addRenderUpdateLists(bullet);
+	CollisionCtrl::instance()->addPlayerBullet(bullet);
+}
+
+void Player::onCollider()
+{
+	move(Vector2D(-dir_.getX(), -dir_.getY())); //Rebote
+	stop(); //Para
 }
 
 void Player::move(Point2D target)

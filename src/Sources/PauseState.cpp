@@ -5,17 +5,17 @@
 #pragma region CallBacks
 ///<summary>Reanuda la partida actual</summary>
 void resume(Application* app) {
-	app->getStateMachine()->popState();
+	app->getGameStateMachine()->popState();
 }
 
 ///<summary>Muestra los controles</summary>
 void showControls(Application* app) {
-	app->getStateMachine()->pushState(new ControlsState(app));
+	app->getGameStateMachine()->pushState(new ControlsState(app));
 }
 
 ///<summary>Vuelve al men� principal sin guardar partida</summary>
 void goMainMenuState(Application* app) {
-	app->getStateMachine()->clearAllStateExceptFirst();
+	app->getGameStateMachine()->clearAllStateExceptFirst();
 }
 
 ///<summary>
@@ -37,16 +37,6 @@ PauseState::PauseState(Application* app) : GameState(app) {
 	initState();
 }
 
-void PauseState::draw() const
-{
-	SDL_Rect bgRect;
-	bgRect.x = 0; bgRect.y = 0;
-	bgRect.w = backgroundW; bgRect.h = backgroundH;
-	background_->render(bgRect);
-
-	GameState::draw();
-}
-
 void PauseState::changeMute()
 {
 	if (app_->getMute())  muteButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteOn));
@@ -55,7 +45,8 @@ void PauseState::changeMute()
 
 void PauseState::initState()
 {
-	background_ = app_->getTextureManager()->getTexture(Resources::Pause);
+	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::PauseBackground));
+	addRenderUpdateLists(background_);
 
 	//Creaci�n de botones
 	double winWidth = app_->getWindowWidth();
@@ -65,15 +56,15 @@ void PauseState::initState()
 	Vector2D posButton(winWidth / 2 - sizeButton.getX() / 2, winHeight / 4 - sizeButton.getY() / 2);
 
 	//Bot�n de reanudar
-	createButton(app_->getTextureManager()->getTexture(Resources::Resume), posButton, sizeButton, resume, app_);
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::Resume), posButton, sizeButton, resume);
 
 	//Bot�n de controles
 	posButton = posButton + Vector2D(0, winHeight / 4 - sizeButton.getY() / 2);
-	createButton(app_->getTextureManager()->getTexture(Resources::Controls), posButton, sizeButton, showControls, app_);
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::Controls), posButton, sizeButton, showControls);
 
 	//Bot�n de men� principal
 	posButton = posButton + Vector2D(0, winHeight / 4 - sizeButton.getY() / 2);
-	createButton(app_->getTextureManager()->getTexture(Resources::BackButton), posButton, sizeButton, goMainMenuState, app_);
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), posButton, sizeButton, goMainMenuState);
 	
 	//Bot�n de mute
 	//Se multiplica por la proporci�n winWidth/winHeight para hacer un cuadrado

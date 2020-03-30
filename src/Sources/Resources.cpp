@@ -7,14 +7,16 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ GoControls, "../Sources/assets/botones/botonControles.png" },
 	{ BackButton, "../Sources/assets/botones/volver.png" },
 	{ SkipButton, "../Sources/assets/botones/skipButton.png" },
-
+	{ RestartGame, "../Sources/assets/botones/restartGame.png" },
 	{ MuteOn, "../Sources/assets/botones/muteOn.png" },
 	{ MuteOff, "../Sources/assets/botones/muteOff.png" },
 	{ Resume, "../Sources/assets/botones/resume.png" },
+
 	//Interfaces
 	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
 	{ InventaryMenu, "../Sources/assets/interfaces/inventarioFondo.png" },
 	{ Controls, "../Sources/assets/interfaces/controles.png" },
+	{ PauseBackground, "../Sources/assets/interfaces/pauseFondo.png" },
 	{ Scene1, "../Sources/assets/interfaces/Scene1.png" },
 	{ Scene2, "../Sources/assets/interfaces/Scene2.png" },
 	{ Scene3, "../Sources/assets/interfaces/Scene3.png" },
@@ -27,6 +29,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ CaribbeanMap, "../Sources/assets/interfaces/caribe.png" },
 	{ Spooky, "../Sources/assets/interfaces/fantasmal.png" },
 	{ Volcanic, "../Sources/assets/interfaces/volcan.png" },
+	{ GameOver, "../Sources/assets/interfaces/gameOver.png" },
+	{ Win, "../Sources/assets/interfaces/win.png" },
 
 	//Sprites
 	{ Dragon,"../Sources/assets/enemigos/dragon.png"},

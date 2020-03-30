@@ -41,7 +41,8 @@ private:
 	const double AD = 1000;
 	const double AP = 0;
 	const double CRIT = 0;
-	const double RANGE = 50;
+	const double MELEE_RANGE = 50;
+	const double DIST_RANGE = 0;
 	const double MOVE_SPEED = 100;
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 2;
