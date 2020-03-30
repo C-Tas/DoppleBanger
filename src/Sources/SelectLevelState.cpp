@@ -4,6 +4,7 @@
 #include "VolcanicIslandState.h"
 #include "GameManager.h"
 #include "Button.h"
+#include "Draw.h"
 
 void backShip(Application* app) {
 	app->getGameStateMachine()->popState();
@@ -13,18 +14,6 @@ void backShip(Application* app) {
 void goToIsland(Application* app, Island island) {
 	GameManager::instance()->setCurrIsland(island);
 	app->getGameStateMachine()->popState();
-}
-
-void SelectLevelState::draw() const
-{
-	GameState::draw();
-
-	SDL_Rect destRect;
-	destRect.x = 0; destRect.y = 0;
-	destRect.w = app_->getWindowWidth();
-	destRect.h = app_->getWindowHeight();
-	table->render(destRect);
-	map->render(destRect);
 }
 
 SelectLevelState::SelectLevelState(Application* app) 
@@ -38,10 +27,12 @@ void SelectLevelState::initState() {
 
 #pragma region Testeo
 	GameManager* gm = GameManager::instance();
-	table = app_->getTextureManager()->getTexture(Resources::Table);
-	if (gm->getUnlockedIslands() == Island::Caribbean) map = app_->getTextureManager()->getTexture(Resources::Map1);
-	else if(gm->getUnlockedIslands() == Island::Spooky)  map = app_->getTextureManager()->getTexture(Resources::Map2);
-	else if (gm->getUnlockedIslands() == Island::Volcanic)  map = app_->getTextureManager()->getTexture(Resources::Map3);
+	table_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Table));
+	addRenderUpdateLists(table_);
+	if (gm->getUnlockedIslands() == Island::Caribbean) map_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Map1));
+	else if(gm->getUnlockedIslands() == Island::Spooky)  map_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Map2));
+	else if (gm->getUnlockedIslands() == Island::Volcanic)  map_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Map3));
+	addRenderUpdateLists(map_);
 #pragma endregion
 
 	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), Vector2D(100, 100),

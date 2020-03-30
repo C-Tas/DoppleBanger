@@ -83,7 +83,7 @@ private:
 public:
 	//Constructor vacío
 	GameManager() {
-		unlockedIslands_ = Island::Caribbean;
+		unlockedIslands_ = Island::Volcanic;
 		for (int i = 0; i < NUM_MISION; i++) {
 			missionsComplete[i] = false;
 		}

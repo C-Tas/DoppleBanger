@@ -11,11 +11,10 @@ public:
 	SelectLevelState(Application* app);
 	virtual ~SelectLevelState() {};
 
-	void draw() const;
 private: 
 #pragma region Testeo
-	Texture* map = nullptr;
-	Texture* table = nullptr;
+	Draw* map_ = nullptr;
+	Draw* table_ = nullptr;
 #pragma endregion
 
 	///<summary>M�todo privado para iniciar el estado</summary>
