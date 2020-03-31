@@ -14,6 +14,7 @@ protected:
 		int numberFramesRow_;	// Número de frames por fila 
 		uint widthFrame_;		// Ancho del frame
 		uint heightFrame_;		// Alto del frame
+		int frameRate_;			// FPS
 		Anim(int numberFrames, int numberFramesRow, uint widthFrame, uint heightFrame) :
 		numberFrames_(numberFrames), numberFramesRow_(numberFramesRow), widthFrame_(widthFrame), heightFrame_(heightFrame) {}
 	};

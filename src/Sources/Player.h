@@ -27,7 +27,7 @@ public:
 	const int getLiberation() { return liberation_; };
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
-	virtual void die() { currState_ = STATE::DIYING; }
+	virtual void die() { currState_ = STATE::DYING; }
 private:
 	bool attacking = false;
 

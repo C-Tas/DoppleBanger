@@ -8,7 +8,7 @@ enum class STATE
 {
 	ATTACKING,
 	IDLE,
-	DIYING,
+	DYING,
 	MOVING
 };
 

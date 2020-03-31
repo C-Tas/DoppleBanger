@@ -11,7 +11,7 @@ bool Crab::update() {
 	if (currState_ == STATE::ATTACKING) {
 		
 	}
-	else if (currState_ == STATE::DIYING) {
+	else if (currState_ == STATE::DYING) {
 		return true;
 	}
 	else if (currState_ == STATE::IDLE) {

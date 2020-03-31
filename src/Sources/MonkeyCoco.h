@@ -19,7 +19,7 @@ public:
 
 	virtual void initObject();
 	virtual void onCollider();
-	virtual void die() { currState_ = STATE::DIYING; };
+	virtual void die() { currState_ = STATE::DYING; };
 private:
 	//Último ataque
 	Uint32 lastHit = 0;

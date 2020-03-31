@@ -48,12 +48,12 @@ bool Player::update()
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 	}
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
-	else if (attacking && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DIYING)
+	else if (attacking && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DYING)
 	{
 		objective_->reciveDmg(currStats_.meleeDmg_);
 		meleeTime_ = SDL_GetTicks();
 	}
-	if (currState_ == STATE::DIYING) {
+	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte
 		return true;
 	}

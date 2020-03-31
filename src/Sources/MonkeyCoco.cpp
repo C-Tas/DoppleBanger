@@ -18,7 +18,7 @@ bool MonkeyCoco ::update() {
 	case STATE::ATTACKING:
 		estado = "ataque";
 		break;
-		case STATE::DIYING:
+		case STATE::DYING:
 		estado = "muriendo";
 		break;
 		case STATE::IDLE:
@@ -39,7 +39,7 @@ bool MonkeyCoco ::update() {
 #endif // _DEBUG
 	
 	//Si el mono ha muerto
-	if (currState_ == STATE::DIYING) {
+	if (currState_ == STATE::DYING) {
 		//collisionManager::instance()->removeEnemy(this);
 		//Tendría que hacer la animación de muerte
 		CollisionCtrl::instance()->addEnemiesToErase(this);
@@ -106,6 +106,7 @@ void MonkeyCoco::initObject() {
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)BOX_COLLISION.getX(),(int)BOX_COLLISION.getY() });
 	CollisionCtrl::instance()->addEnemy(this);
 	//Falta el frame y animaciones
+	
 }
 
 //Esto es un apaño, se eliminara cuando este completa la gestión de muertes
