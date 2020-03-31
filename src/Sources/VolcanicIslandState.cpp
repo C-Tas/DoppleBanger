@@ -6,6 +6,6 @@ VolcanicIslandState::VolcanicIslandState(Application* app): PlayState(app)
 #ifdef _DEBUG
 	printf("VolcanicIsland");
 #endif // _DEBUG
-	Crab* crab = new Crab(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), { 0,0 }, { 120,120 }, { 0,0,0,0 }, {}, { 0,0,144,133 }, 3, { {420,120},{58,360},{0,0} },3);
-	addRenderUpdateLists(crab);
+	Crab* dragon = new Crab(app_, { app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), app_->getTextureManager()->getTexture(Resources::TextureId::Timon) }, { 0,0 }, { 120,120 }, { 0,0,120,120 }, { 1,0,0,0,0,0,0,0,100,0,0 }, { 0,0,144,133 }, { 3,1 }, { {450,60},{200,200},{50,60} });
+	addEnemy(dragon);
 }

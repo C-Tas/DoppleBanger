@@ -109,7 +109,7 @@ bool AudioManager::loadMusic(int tag, const string& fileName) {
 	}
 }
 
-void AudioManager::playMusic(int tag, int loops) {
+void AudioManager::playMusic(int tag, int loops = -1) {
 	Mix_Music* music = music_[tag];
 	if (music != nullptr) {
 		Mix_PlayMusic(music, loops);

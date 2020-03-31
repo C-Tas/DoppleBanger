@@ -12,7 +12,7 @@ Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine(); //Creación máquina de estados
-	GameState* startState = new MainMenuState(this)/*new VolcanicIslandState(this)*/;
+	GameState* startState = new MainMenuState(this);
 	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
 }
 
@@ -80,6 +80,13 @@ void Application::initResources() {
 	fontManager_ = new FontManager();
 	fontManager_->init();
 
+	//Crear e inicializar audioManager
+	audioManager_ = new AudioManager();
+	audioManager_->init();
+
+	///<summary>Generador de randoms</summary>
+	equipGen_ = new RandEquipGen(this);
+
 	//Creacion de las texturas
 	for (auto& image : Resources::imageRoutes) {
 		textureManager_->loadFromImg(image.textureId, renderer_, image.filename);
@@ -91,11 +98,29 @@ void Application::initResources() {
 		fontManager_->loadFont(font.id, font.fileName, font.size);
 		cout << "Creada fuente: " << font.id << endl;
 	}
+
+	//Creación de mensajes
+	for (auto& txtmsg : Resources::messages_) {
+		textureManager_->loadFromText(txtmsg.id, renderer_, txtmsg.msg,
+			fontManager_->getFont(txtmsg.fontId), txtmsg.color);
+	}
+
+	//Creación de los efectos de sonido
+	for (auto& sound : Resources::soundRoutes) {
+		audioManager_->loadSound(sound.audioId, sound.filename);
+	}
+
+	//Creación de la música
+	for (auto& music : Resources::musicRoutes) {
+		audioManager_->loadMusic(music.id, music.fileName);
+	}
 }
 
 
 void Application::closeResources() {
 	//Faltaría el borrar los recursos que añadiesemos a posteriori
+	delete fontManager_;
 	delete textureManager_;
-   // delete equipGen_;
+	delete audioManager_;
+    delete equipGen_;
 }

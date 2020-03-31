@@ -10,7 +10,7 @@ protected:
 	///<summary>Constructor por defecto</summary>
 	Collider() : collisionArea_({0,0,0,0}) {};
 	///<summary>Constructor de collider</summary>
-	Collider(Application* app, SDL_Rect collisionArea, Texture* texture, Point2D pos, Vector2D scale, SDL_Rect frame = {0,0,0,0}, int numberFrames=0) :
+	Collider(Application* app, SDL_Rect collisionArea, Texture* texture, Point2D pos, Vector2D scale, SDL_Rect frame = {0,0,0,0}, int numberFrames = 0) :
 		Draw(app, texture, pos, scale,frame,numberFrames), collisionArea_(collisionArea) {};
 
 	///<summary>Constructor por copia</summary

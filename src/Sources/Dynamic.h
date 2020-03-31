@@ -16,9 +16,11 @@ protected:
 	Dynamic(Dynamic& other): dir_(other.dir_),obj_(other.obj_) {};
 	//<summary>Constructor  por movimiento de la clase Dynamic</summary>	
 	Dynamic(Dynamic&& other)noexcept : dir_(other.dir_),obj_(other.obj_) {};
-	//<summary>Establece la direccion del movimiento</summary>	
-	void move(Point2D target);
 	//<summary>Destructor de Dynamic</summary>	
 	virtual ~Dynamic(){};
+
+public:
+	//<summary>Establece la direccion del movimiento</summary>	
+	void move(Point2D target);
 };
 

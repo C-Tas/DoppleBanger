@@ -1,38 +1,5 @@
 #include "Vector2D.h"
 #pragma region Operators
-Vector2D Vector2D:: operator+(const Vector2D& v)const{
-	Vector2D r;
-	r.x_ = this->x_ + v.x_;
-	r.y_ = this->y_ + v.y_;
-	return r;
-}
-
-Vector2D Vector2D:: operator-(const Vector2D& v) const{
-	Vector2D r;
-	r.x_ = this->x_ - v.x_;
-	r.y_ = this->y_ - v.y_;
-	return r;
-}
-Vector2D Vector2D:: operator*(double d) const {
-	Vector2D r;
-	r.x_ = this->x_ *d;
-	r.y_ = this->y_ *d;
-	return r;
-}
-Vector2D Vector2D::operator=(const Vector2D& v)const {
-	Vector2D r;
-	r.x_ = v.x_;
-	r.y_ = v.y_;
-	return r;
-}
-bool Vector2D::operator==(const Vector2D& v) const
-{
-	return (x_==v.x_ && y_ ==v.y_);
-}
-bool Vector2D::operator!=(const Vector2D& v) const
-{
-	return !(x_ == v.x_ && y_ == v.y_);
-}
 void Vector2D::normalize() {
 	double mag = magnitude();
 	if (mag > 0.0) {
@@ -40,12 +7,44 @@ void Vector2D::normalize() {
 		y_ = y_ / mag;
 	}
 }
-double Vector2D::magnitude() const
-{	
-	return sqrt(pow(x_, 2) + pow(y_, 2));
-}
-double Vector2D::angle() const
+
+double Vector2D::angle(const Vector2D& v) const
 {
-	return atan(y_/x_);
+	double a2 = atan2(v.getX(), v.getY());
+	double a1 = atan2(x_, y_);
+	double sign = a1 > a2 ? 1 : -1;
+	double angle = a1 - a2;
+	double K = -sign * M_PI * 2;
+	angle = (abs(K + angle) < abs(angle)) ? K + angle : angle;
+	return angle * 180. / M_PI;
+}
+Vector2D Vector2D::rotate(double degrees) const
+{
+	Vector2D r;
+
+	degrees = fmod(degrees, 360.0);
+	if (degrees > 180.0) {
+		degrees = degrees - 360.0;
+	}
+	else if (degrees <= -180.0) {
+		degrees = 360.0 + degrees;
+	}
+
+	SDL_assert(degrees >= -180.0 && degrees <= 180.0); //Comprobación assert para los errores.
+
+	double angle = degrees * M_PI / 180.0;
+	double sine = sin(angle);
+	double cosine = cos(angle);
+
+	//rotation matix
+	double matrix[2][2] = { { cosine, -sine }, { sine, cosine } };
+
+	double x = x_;
+	double y = y_;
+
+	r.x_ = matrix[0][0] * x + matrix[0][1] * y;
+	r.y_ = matrix[1][0] * x + matrix[1][1] * y;
+
+	return r;
 }
 #pragma endregion
