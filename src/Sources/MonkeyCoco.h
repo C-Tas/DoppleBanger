@@ -21,7 +21,8 @@ public:
 	virtual void onCollider();
 	virtual void die() { currState_ = STATE::DIYING; };
 private:
-
+	//Último ataque
+	Uint32 lastHit = 0;
 	//Estadisticas para inicializar al monkeyCoco
 	#pragma region consts
 	const double HEALTH = 100;
@@ -32,7 +33,7 @@ private:
 	const double DIST_DMG = 100;
 	const double CRIT = 0;
 	const double MELEE_RANGE = 20;
-	const double DIST_RANGE = 500;
+	const double DIST_RANGE = 250;
 	const double MOVE_SPEED = 100;
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 1500;
@@ -49,8 +50,8 @@ private:
 	bool isClonInRange();
 	//Ataque del monkeyCoco
 	void attack();
-	//Último ataque
-	Uint32 lastHit = 0;
 	//Gestiona las diferentes animaciones que tiene el monkeyCoco
-	void changeAnim();
+	void changeAnim(Anim& newAnim);
+	//Devuelve true si el target está dentro del rango de ataque
+	bool onRange();
 };

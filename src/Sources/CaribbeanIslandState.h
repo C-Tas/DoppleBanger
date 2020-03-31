@@ -27,7 +27,7 @@ protected:
 
 	//Lista de los enemigos de la isla
 	list<Enemy*> enemies_;
-	const int numMonkeys_ = 6; //Número de cangrejos que sea van a crear
+	const int numMonkeys_ = 1; //Número de cangrejos que sea van a crear
 	int kills = 0; //Kills del state para saber si se gana
 
 	virtual void initState();

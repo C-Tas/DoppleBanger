@@ -1,6 +1,7 @@
 #include "Clon.h"
 #include "PlayState.h"
 #include "Player.h"
+#include "GameManager.h"
 
 bool Clon::update()
 {
@@ -21,15 +22,22 @@ bool Clon::update()
 }
 
 void Clon::initObject() {
+	GameManager::instance()->setClon(this);
+	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	spawnTime_ = SDL_GetTicks();
 	duration_ = DURATION_;
 	meleeRate_ = (player_->getStats().meleeRange_ / 2) * player_->getLiberation();
 	explotion_ = player_->getExplotion();
-	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	ad_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
 }
 
 void Clon::die()
 {
+	GameManager* gm = GameManager::instance();
+	for (auto enemy : agredEnemys_) {
+		enemy->changeAgro(nullptr);
+	}
+	agredEnemys_.clear();
+	gm->setClon(nullptr);
 	app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
 }

@@ -2,6 +2,8 @@
 #include "Collider.h"
 #include "Resources.h"
 #include "Enemy.h"
+#include <list>
+
 class Player;
 
 const double DURATION_ = 2; //En segundos
@@ -10,7 +12,8 @@ class Clon : public Draw
 {
 public:
 	//Liberation es el nivel de la habilidad liberaci�n: 0 no se tiene, 1 nivel 1, 2 nivel 2.
-	Clon(Application* app, Point2D pos, Vector2D scale, Player* player) : Draw(app, pos, scale), player_(player) { initObject(); }
+	Clon(Application* app, Point2D pos, Vector2D scale, Player* player) : 
+		Draw(app, pos, scale), player_(player) { initObject(); }
 	~Clon() {};
 
 	bool update();
@@ -18,6 +21,8 @@ public:
 
 	void changeDuration(double dur) { duration_ = dur; } //En caso de que se pueda modificar la duraci�n
 	void explode() { die(); }; //Crea una explosi�n y mata al clon (lo deletea)
+	//Agrega un enemigo que está agred
+	inline void addAgredEnemy(Enemy* enemy) { agredEnemys_.push_back(enemy); }
 
 private:
 	int ad_ = 0;
@@ -31,6 +36,8 @@ private:
 
 	Actor* objective_ = nullptr;
 	Player* player_ = nullptr;
+	//Lista de enemigos que están atacando al clon
+	list<Enemy*> agredEnemys_;
 
 	void init(int ad, int meleeRate, int lib) {
 		spawnTime_ = SDL_GetTicks();

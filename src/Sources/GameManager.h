@@ -73,11 +73,12 @@ private:
 	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
 	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
+
 	
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
-	Player* player_ = nullptr;
+	Draw* player_ = nullptr;
 	//Puntero al clon
-	Clon* clon_ = nullptr;
+	Draw* clon_ = nullptr;
 	//Pendiente de guardar y cargar
 
 public:
@@ -132,9 +133,9 @@ public:
 	//Devuelve la posición del player
 	const Point2D getPlayerPos() { return player_->getPos(); };
 	//Devuelve al jugador
-	Player* getPlayer() { return player_; };
+	Draw* getPlayer() { return player_; };
 	//Devuelve al clon
-	Clon* getClon() { return clon_; };
+	Draw* getClon() { return clon_; };
 #pragma endregion
 
 #pragma region setters
@@ -158,9 +159,9 @@ public:
 	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
 
 	//Asigna al puntero de player
-	inline void setPlayer(Player* player) { player_ = player; };
+	inline void setPlayer(Draw* player) { player_ = player; };
 	//Asigna al puntero de clon
-	inline void setClon(Clon* clon) { clon_ = clon; };
+	inline void setClon(Draw* clon) { clon_ = clon; };
 	//borra al clon
 	inline void deleteClon() { clon_ = nullptr; };
 #pragma endregion
