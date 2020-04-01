@@ -49,7 +49,7 @@ private:
 	//Enum de la última isla desbloqueada
 	Island currIsland_;
 	//Puntos de hazaña
-	int achievementPoints_ = 50;
+	int achievementPoints_ = 350;
 	//Puntos de hazaña gastados en la rama precisión
 	spentPoints precision_ = spentPoints::Precision;
 	//Puntos de hazaña gastados e la rama melee

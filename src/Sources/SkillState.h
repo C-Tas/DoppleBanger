@@ -6,12 +6,20 @@ class SkillState :
 {
 private:
 	Draw* bg_ = nullptr;
+	Draw* emptyBars_ [3] = { nullptr, nullptr, nullptr };	//Los marcos de las barras
+	Draw* bars_ [3] = { nullptr, nullptr, nullptr };		//El relleno de las Barras
+
+	virtual void update();
 
 protected:
 	///<summary>Se inicializa el skill state</summary>
 	void initSkillState();
-	///<summary>crea los 4 botones necesarios del skill state</summary>
+	///<summary>Crea los 4 botones necesarios del skill state</summary>
 	void createButtons();
+	///<summary>Crea las 3 barras de las ramas</summary>
+	void createBars();
+	///<summary>Actualiza el relleno de la barra</summary>
+	void updateBars();
 
 public:
 	///<summary>Constructora de CreditsState</summary>

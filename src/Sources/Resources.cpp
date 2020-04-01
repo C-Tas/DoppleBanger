@@ -12,6 +12,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},
 	{ ButtonUpgradeBlue, "../Sources/assets/botones/UpgradeButtonBlue.png"},
 	{ ButtonUpgradeYellow, "../Sources/assets/botones/UpgradeButtonYellow.png"},
+	{ GreenBar, "../Sources/assets/botones/greenBar.png"},
+	{ BlueBar, "../Sources/assets/botones/blueBar.png"},
+	{ YellowBar, "../Sources/assets/botones/yellowBar.png"},
+	{ RedBar, "../Sources/assets/botones/redBar.png"},
+	{ EmptyBar, "../Sources/assets/botones/emptyBar.png"},
 
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
 	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },

@@ -23,6 +23,11 @@ public:
 		ButtonUpgradeRed,
 		ButtonUpgradeBlue,
 		ButtonUpgradeYellow,
+		GreenBar,
+		BlueBar,
+		YellowBar,
+		RedBar,
+		EmptyBar,
 
 		//Fondos
 		InventaryMenu,
