@@ -18,6 +18,25 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ RedBar, "../Sources/assets/botones/redBar.png"},
 	{ EmptyBar, "../Sources/assets/botones/emptyBar.png"},
 
+	//Skills
+	{ SkillExplosionC, "../Sources/assets/skills/explosionHab.png"},
+	{ SkillExplosionBN, "../Sources/assets/skills/explosionHabBN.png"},
+	{ SkillGolpeFuerteC, "../Sources/assets/skills/golpeFuerteHab.png"},
+	{ SkillGolpeFuerteBN, "../Sources/assets/skills/golpeFuerteHabBN.png"},
+	{ SkillInvencibleC, "../Sources/assets/skills/invencibleHab.png"},
+	{ SkillInvencibleBN, "../Sources/assets/skills/invencibleHabBN.png"},
+	{ SkillLiberationC, "../Sources/assets/skills/liberacionHab.png"},
+	{ SkillLiberationBN, "../Sources/assets/skills/liberacionHabBN.png"},
+	{ SkillPerforanteC, "../Sources/assets/skills/perforanteHab.png"},
+	{ SkillPerforanteBN, "../Sources/assets/skills/perforanteHabBN.png"},
+	{ SkillRaudoC, "../Sources/assets/skills/raudoHab.png"},
+	{ SkillRaudoBN, "../Sources/assets/skills/raudoHabBN.png"},
+	{ SkillReboteC, "../Sources/assets/skills/reboteHab.png"},
+	{ SkillReboteBN, "../Sources/assets/skills/reboteHabBN.png"},
+	{ SkillTorbellinoC, "../Sources/assets/skills/torbellinoHab.png"},
+	{ SkillTorbellinoBN, "../Sources/assets/skills/torbellinoHabBN.png"},
+
+
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
 	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
 	{ SkillMenu, "../Sources/assets/interfaces/HabilidadesFondo.png" },

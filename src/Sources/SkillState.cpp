@@ -4,45 +4,49 @@
 #include "GameManager.h"
 #include "InventoryState.h"
 
-
-void SkillState::update()
-{
-	GameState::update();
-	updateBars();
-	//updateSkillS();
-}
-
 void SkillState::initSkillState() {
-	#ifdef _DEBUG
+	////QUITA EL COMENTARIO PARA DEBUGUEAR | LAS SKILLS SE DESBLOQUEAN EN 33,66 Y 100 PUNTOS EN LA RAMA
+	//GameManager::instance()->setPrecisionPoints(65);
+	//GameManager::instance()->setMeleePoints(32);
+	//GameManager::instance()->setGhostPoints(99);
+
+	#ifdef _DEBUG	//PARA DEBUG
 	cout << "SKILLTATE" << endl;
 	cout << "TIENES " << GameManager::instance()->getAchievementPoints() << " PUNTOS" << endl;
 	cout << "PRECISION " << (int)GameManager::instance()->getPresicionPoints() << " PUNTOS" << endl;
 	cout << "MELEE " << (int)GameManager::instance()->getMeleePoints() << " PUNTOS" << endl;
 	cout << "GHOST " << (int)GameManager::instance()->getGhostPoints() << " PUNTOS" << endl;
 	#endif
+
 	bg_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillMenu));
-	objectsToRender_.push_back(bg_);
-	gameObjects_.push_back(bg_);
+	addRenderList(bg_);
+
 	createButtons();
+	createTexts();
 	createBars();
+	createSkillsIcons();
+}
+
+void SkillState::update()
+{
+	updateBars();
+	updateSkillsIcons();
+	updateTexts();
+	GameState::update();
 }
 
 void SkillState::createBars() {
 	//PrecisionBar
-	bars_[0] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::GreenBar), { 190, 390, 530, 20 });		// 150 es la distancia entre las barras
-	//bars_[0]->setDestiny(*SDL_Rect({ 190, 390, 430, 90 }));
-	objectsToRender_.push_back(bars_[0]);
-	gameObjects_.push_back(bars_[0]);
+	bars_[0] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::GreenBar), { 190, 390, 530, 20 });		
+	addRenderList(bars_[0]);
 
 	//MeleeBar
-	bars_[1] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::YellowBar), { 190, 540, 530, 20 });		// 150 es la distancia entre las barras
-	objectsToRender_.push_back(bars_[1]);
-	gameObjects_.push_back(bars_[1]);
+	bars_[1] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::YellowBar), { 190, 540, 530, 20 });		
+	addRenderList(bars_[1]);
 
 	//GhostBar
-	bars_[2] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BlueBar), { 190, 690, 530, 20 });		// 150 es la distancia entre las barras
-	objectsToRender_.push_back(bars_[2]);
-	gameObjects_.push_back(bars_[2]);
+	bars_[2] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BlueBar), { 190, 690, 530, 20 });			
+	addRenderList(bars_[2]);
 
 	updateBars();
 
@@ -50,8 +54,7 @@ void SkillState::createBars() {
 	//No me deja usar emptyBars_.size(), por eso está el 3 a pelo
 	for (int i = 0; i < 3; i++) {
 		emptyBars_[i] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EmptyBar), { 190, 390 + i * 150, 530, 20 });		// 150 es la distancia entre las barras
-		objectsToRender_.push_back(emptyBars_[i]);
-		gameObjects_.push_back(emptyBars_[i]);
+		addRenderList(emptyBars_[i]);
 	}
 }
 
@@ -60,13 +63,13 @@ void SkillState::updateBars() {
 		SDL_Rect aux = bars_[i]->getDestiny();
 		switch (i)
 		{
-		case 0:
+		case 0:	//Barra verde
 			aux.w = (530 * (int)GameManager::instance()->getPresicionPoints() / 100);
 			break;
-		case 1:
+		case 1:	//Barra amarilla
 			aux.w = (530 * (int)GameManager::instance()->getMeleePoints() / 100);
 			break;
-		case 2:
+		case 2:	//Barra azul
 			aux.w = (530 * (int)GameManager::instance()->getGhostPoints() / 100);
 			break;
 		default:
@@ -76,31 +79,96 @@ void SkillState::updateBars() {
 	}
 }
 
+void SkillState::createSkillsIcons()
+{
+	//Precision Skills
+	skillsIcons_[0][0] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteBN), { 330, 352, 70, 40 });
+	skillsIcons_[0][1] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoBN), { 502, 352, 70, 40 });
+	skillsIcons_[0][2] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteBN), { 684, 352, 70, 40 });
+	//Melee Skills
+	skillsIcons_[1][0] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteBN), { 330, 502, 70, 40 });
+	skillsIcons_[1][1] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleBN), { 502, 502, 70, 40 });
+	skillsIcons_[1][2] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoBN), { 684, 502, 70, 40 });
+	//Ghost Skills
+	skillsIcons_[2][0] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN), { 330, 652, 70, 40 });
+	skillsIcons_[2][1] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionBN), { 502, 652, 70, 40 });
+	skillsIcons_[2][2] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN), { 684, 652, 70, 40 });
+
+	//Los metemos en la lista de objetos a renderizar y actualizar
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			addRenderList(skillsIcons_[i][j]);
+		}
+	}
+
+}
+
+void SkillState::updateSkillsIcons()
+{
+	//Precision Skills
+	if ((int)GameManager::instance()->getPresicionPoints() >= 33) {
+		skillsIcons_[0][0]->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC));
+		if ((int)GameManager::instance()->getPresicionPoints() >= 66) {
+			skillsIcons_[0][1]->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC));
+			if ((int)GameManager::instance()->getPresicionPoints() >= 100) {
+				skillsIcons_[0][2]->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC));
+			}
+		}
+	}
+
+	//Melee Skills
+	if ((int)GameManager::instance()->getMeleePoints() >= 33) {
+		skillsIcons_[1][0]->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC));
+		if ((int)GameManager::instance()->getMeleePoints() >= 66) {
+			skillsIcons_[1][1]->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC));
+			if ((int)GameManager::instance()->getMeleePoints() >= 100) {
+				skillsIcons_[1][2]->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC));
+			}
+		}
+	}
+
+	//Ghost Skills
+	if ((int)GameManager::instance()->getGhostPoints() >= 33) {
+		skillsIcons_[2][0]->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC));
+		if ((int)GameManager::instance()->getGhostPoints() >= 66) {
+			skillsIcons_[2][1]->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC));
+			if ((int)GameManager::instance()->getGhostPoints() >= 100) {
+				skillsIcons_[2][2]->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC));
+			}
+		}
+	}
+}
+
+void SkillState::createTexts() {
+	totalPoints_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::RedBar), { 1270, 250, 100, 40 });
+	addRenderUpdateLists(totalPoints_);
+}
+
+void SkillState::updateTexts()
+{
+
+}
+
 void SkillState::createButtons() {
 	//Precision Button
 	Button* precisionButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeGreen), { 770,375 }, { 50,50 }, increasePrecisionBranch);
-	gameObjects_.push_back(precisionButton);
-	objectsToRender_.push_back(precisionButton);
+	addRenderUpdateLists(precisionButton);
 
 	//Melee Button
 	Button* meleeButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeYellow), { 770,525 }, { 50,50 }, increaseMeleeBranch);
-	gameObjects_.push_back(meleeButton);
-	objectsToRender_.push_back(meleeButton);
+	addRenderUpdateLists(meleeButton);
 
 	//Ghost Button
 	Button* ghostButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeBlue), { 770,675 }, { 50,50 }, increaseGhostBranch);
-	gameObjects_.push_back(ghostButton);
-	objectsToRender_.push_back(ghostButton);
+	addRenderUpdateLists(ghostButton);
 
 	//Back Button
 	Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), { 1439,214 }, { 60,53 }, backToPreviousState);
-	gameObjects_.push_back(backButton);
-	objectsToRender_.push_back(backButton);
+	addRenderUpdateLists(backButton);
 
 	//Inventary Button
 	Button* inventaryButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), { 175,80 }, { 50,50 }, goToInventaryState);
-	gameObjects_.push_back(inventaryButton);
-	objectsToRender_.push_back(inventaryButton);
+	addRenderUpdateLists(inventaryButton);
 }
 
 void SkillState::backToPreviousState(Application* app) {
@@ -116,7 +184,7 @@ void SkillState::increasePrecisionBranch(Application* app) {
 	if (GameManager::instance()->getAchievementPoints() > 0 && (int)GameManager::instance()->getPresicionPoints() < 100) {	//Comprueba que tenga puntos de hazaña que invertir y que la rama no tenga ya 100 puntos (máximo)
 		GameManager::instance()->setPrecisionPoints((int)GameManager::instance()->getPresicionPoints() + 1);				//Aumenta en uno los puntos de esta rama
 		GameManager::instance()->setArchievementPoints(GameManager::instance()->getAchievementPoints() - 1);				//Reduce en uno los puntos de hazaña
-		cout << "PRECISION " << (int)GameManager::instance()->getPresicionPoints() << " PUNTOS" << endl;
+		cout << "PRECISION " << (int)GameManager::instance()->getPresicionPoints() << " PUNTOS" << endl; //PARA DEBUG
 	}
 	cout << "TE QUEDAN " << (int)GameManager::instance()->getAchievementPoints() << " PUNTOS" << endl;
 };

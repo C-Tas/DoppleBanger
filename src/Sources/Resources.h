@@ -29,6 +29,24 @@ public:
 		RedBar,
 		EmptyBar,
 
+		//Skills
+		SkillExplosionC,
+		SkillExplosionBN,
+		SkillGolpeFuerteC,
+		SkillGolpeFuerteBN,
+		SkillInvencibleC,
+		SkillInvencibleBN,
+		SkillLiberationC,
+		SkillLiberationBN,
+		SkillPerforanteC,
+		SkillPerforanteBN,
+		SkillRaudoC,
+		SkillRaudoBN,
+		SkillReboteC,
+		SkillReboteBN,
+		SkillTorbellinoC,
+		SkillTorbellinoBN,
+
 		//Fondos
 		InventaryMenu,
 		SkillMenu,

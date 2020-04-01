@@ -8,18 +8,33 @@ private:
 	Draw* bg_ = nullptr;
 	Draw* emptyBars_ [3] = { nullptr, nullptr, nullptr };	//Los marcos de las barras
 	Draw* bars_ [3] = { nullptr, nullptr, nullptr };		//El relleno de las Barras
+	Draw* totalPoints_ = nullptr;		//Puntos totales de hazaña
+	Draw* skillsIcons_[3][3] = { { nullptr, nullptr, nullptr } ,{ nullptr, nullptr, nullptr } ,{ nullptr, nullptr, nullptr } };
+	//He puesto todo iniciado a nullptr porque lo he visto así en otros sitios, aunque no lo veo necesario
 
 	virtual void update();
 
 protected:
 	///<summary>Se inicializa el skill state</summary>
 	void initSkillState();
+
 	///<summary>Crea los 4 botones necesarios del skill state</summary>
 	void createButtons();
+
 	///<summary>Crea las 3 barras de las ramas</summary>
 	void createBars();
 	///<summary>Actualiza el relleno de la barra</summary>
 	void updateBars();
+
+	///<summary>Crea los iconos de las skills</summary>
+	void createSkillsIcons();
+	///<summary>Actualiza los iconos de las skills</summary>
+	void updateSkillsIcons();
+
+	///<summary>Crea el texto de los puntos totales</summary>
+	void createTexts();
+	///<summary>Actualiza los textossummary>
+	void updateTexts();
 
 public:
 	///<summary>Constructora de CreditsState</summary>
