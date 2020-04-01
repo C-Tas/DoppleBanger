@@ -30,7 +30,7 @@ private:
 	const int W_CLIP_ATK = 70;
 	const int H_CLIP_ATK = 45;
 	//Animaciones
-	Anim attackAnim_{ 0,0,0,0 };
+	Anim attackAnim_{ 0,0,0,0 ,0,"" };
 #pragma endregion
 	//<summary>Estadisticas del cangrejo</summary>
 #pragma region ConstStats

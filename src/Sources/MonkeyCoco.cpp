@@ -5,53 +5,24 @@
 #include "Bullet.h"
 #include "CollisionCtrl.h"
 #include "CaribbeanIslandState.h"
-
 #include <string>
 
 
 
 bool MonkeyCoco ::update() {
 #ifdef _DEBUG
-	string estado;
-	switch (currState_)
-	{
-	case STATE::ATTACKING:
-		estado = "ataque";
-		break;
-		case STATE::DYING:
-		estado = "muriendo";
-		break;
-		case STATE::IDLE:
-		estado = "parado";
-		break;
-		case STATE::MOVING:
-			estado = "Moviendose";
-			break;
-	default:
-		break;
-	}
-	cout << estado << endl;
-	/*if (currEnemy_ != nullptr){
-		cout << "( " << currEnemy_->getPos().getX() << " , " << currEnemy_->getPos().getY() << " )" << endl;
-		cout << "( " << pos_.getX() << " , " <<pos_.getY() << " )" << endl;
 
-	}*/
 #endif // _DEBUG
 	
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
-		//collisionManager::instance()->removeEnemy(this);
-		//Tendría que hacer la animación de muerte
+		//Tendría que hacer la animación de muerte?
 		CollisionCtrl::instance()->addEnemiesToErase(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
-	//Si no tengo enemigo al que atacar me quedo en modo IDLE
-	if (currEnemy_ == nullptr) {
-		currState_ = STATE::IDLE;
-	}
-	//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el player
-	if (currState_ == STATE::IDLE && (isPlayerInRange() || isClonInRange())) {
+	//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
+	if (currState_ == STATE::IDLE && getEnemy()) {
 		currState_ = STATE::ATTACKING;
 	}
 	//Si el mono tiene enemigo y puede atacar
@@ -59,24 +30,35 @@ bool MonkeyCoco ::update() {
 		//Si el mono tiene un enemigo y lo tiene a rango
 		if (onRange()) {
 			lastHit = SDL_GetTicks();
+			changeAnim(attackAnim_);
 			attack();
 		}
-		//Si no tiene enemigo al que atacar, se pone en modo IDLE
+		//Tengo enemigo como abjetivo, pero no a rango, busco si hay otro cerca para atacar
+		else if(getEnemy())
+		{
+			lastHit = SDL_GetTicks();
+			changeAnim(attackAnim_);
+			attack();
+		}
+		//Tengo enemigo pero no a rango
 		else
 		{
 			currState_ == STATE::IDLE;
+			changeAnim(idleAnim_);
 			currEnemy_ = nullptr;
 		}
 	}
+	updateAnim();
 	return false;
 }
 
+//Devuelve true si el enemigo que tengo está a rango
 bool MonkeyCoco::onRange() {
 	if (currEnemy_ == nullptr) {
 		return false;
 	}
 	SDL_Rect rangeAttack = { getPosX(),getPosY(),currStats_.distRange_ * 2, currStats_.distRange_ * 2 };
-	if (currEnemy_ != nullptr && SDL_HasIntersection(&currEnemy_->getDestiny(), &rangeAttack)) {
+	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
 		return true;
 	}
 	else
@@ -85,9 +67,31 @@ bool MonkeyCoco::onRange() {
 	}
 }
 
-//Cambia la actual animación del mono
+//Inicializa todas las animaciones
+void MonkeyCoco::initAnims()
+{
+	//Para la animación de ataque
+	attackAnim_ = Anim(NUM_FRAMES_ATK,NUM_FRAMES_ROW_ATK,W_FRAME_ATK,H_FRAME_ATK,FRAME_RATE_ATK,NAME_ATK);
+	//Para la animación de caminar
+	walkAnim_ = Anim(NUM_FRAMES_MOV,NUM_FRAMES_ROW_MOV,W_FRAME_MOV,H_FRAME_MOV,FRAME_RATE_MOV,NAME_MOV);
+	//Para la animación de parado
+	idleAnim_ = Anim(NUM_FRAMES_IDLE,NUM_FRAMES_ROW_ADLE,W_FRAME_IDLE,H_FRAME_IDLE,FRAME_RATE_IDLE,NAME_IDLE);
+}
+
+//Actualiza la animación en función del frameRate de la actual animación
+void MonkeyCoco::updateAnim()
+{
+	if (currAnim_.frameRate_ <= SDL_GetTicks() - lasFrame_) {
+		lasFrame_ = SDL_GetTicks();
+		frame_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)currAnim_.widthFrame_,(int)currAnim_.heightFrame_ });
+	}
+}
+
+//Cambia la actual animación del mono si no la tiene "equipada"
 void MonkeyCoco::changeAnim(Anim& newAnim) {
-	currAnim_ = newAnim;
+	if (newAnim.name_ != currAnim_.name_) {
+		currAnim_ = newAnim;
+	}
 }
 
 //Se encarga de crear el coco en dirección al enemigo
@@ -105,8 +109,7 @@ void MonkeyCoco::initObject() {
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)BOX_COLLISION.getX(),(int)BOX_COLLISION.getY() });
 	CollisionCtrl::instance()->addEnemy(this);
-	//Falta el frame y animaciones
-	
+	initAnim();
 }
 
 //Esto es un apaño, se eliminara cuando este completa la gestión de muertes
@@ -115,39 +118,53 @@ void MonkeyCoco::onCollider()
 	dynamic_cast<CaribbeanIslandState*>(app_->getCurrState())->addKills();
 }
 
-//Devuelve true si el jugador está en el rango de ataque del monkeyCoco y lo asigna a currEnemy_ si es así
-bool MonkeyCoco::isPlayerInRange() {
+//Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_
+bool MonkeyCoco::getEnemy() {
+	auto gm = GameManager::instance();
+	Vector2D playerPos = isPlayerInRange();
+	Vector2D clonPos = isClonInRange();
+	if (playerPos == Vector2D{ -1,-1 } && clonPos == Vector2D{ -1,-1 }) {
+		return false;
+		currEnemy_ = nullptr;
+	}
+	
+	Vector2D closesetEnemy;
+	closesetEnemy = pos_.getClosest(playerPos,clonPos);
+	closesetEnemy == playerPos ? currEnemy_ = gm->getPlayer() : currEnemy_ = gm->getClon();
+	return true;
+}
+
+//Devuelve la posición del player si está a rango 
+Vector2D MonkeyCoco::isPlayerInRange() {
 	GameManager* gm = GameManager::instance();
-	if (gm->getPlayer() == nullptr) { return false; }
+	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
 
 	Point2D playerPos = gm->getPlayerPos();
 	if (currEnemy_ == nullptr &&
 		playerPos.getX() <= pos_.getX() + currStats_.distRange_ && playerPos.getX() >= pos_.getX() - currStats_.distRange_
 		&& playerPos.getY() <= pos_.getY() + currStats_.distRange_ && playerPos.getY() >= pos_.getY() - currStats_.distRange_) {
-		changeAgro(gm->getPlayer());
-		return true;
+		return playerPos;
 	}
 	else
 	{
-		return false;
+		return  { -1,-1 };
 	}	
 }
 
-//Devuelve true si el clon está en el rango de ataque del monkeyCoco y lo asigna a currEnemy_ si es así
-bool MonkeyCoco::isClonInRange() {
+//Devuelve la posición del clon si está a rango
+Vector2D MonkeyCoco::isClonInRange() {
 	GameManager* gm = GameManager::instance();
-	if (gm->getClon() == nullptr) { return false; }
+	if (gm->getClon() == nullptr) {  return { -1,-1 }; }
 
 	Point2D clonPos = gm->getClon()->getPos();
 	if (currEnemy_ == nullptr && 
 		clonPos.getX() <= pos_.getX() + currStats_.distRange_ && clonPos.getX() >= pos_.getX() - currStats_.distRange_
 		&& clonPos.getY() <= pos_.getY() + currStats_.distRange_ && clonPos.getY() >= pos_.getY() - currStats_.distRange_){
-		changeAgro(gm->getClon());
 		static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
-		return true;
+		return clonPos;
 	}
 	else
 	{
-		return false;
+		return { -1,-1 };
 	}
 }

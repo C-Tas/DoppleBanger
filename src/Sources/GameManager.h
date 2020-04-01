@@ -76,9 +76,9 @@ private:
 
 	
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
-	Draw* player_ = nullptr;
+	GameObject* player_ = nullptr;
 	//Puntero al clon
-	Draw* clon_ = nullptr;
+	GameObject* clon_ = nullptr;
 	//Pendiente de guardar y cargar
 
 public:
@@ -133,9 +133,9 @@ public:
 	//Devuelve la posición del player
 	const Point2D getPlayerPos() { return player_->getPos(); };
 	//Devuelve al jugador
-	Draw* getPlayer() { return player_; };
+	GameObject* getPlayer() { return player_; };
 	//Devuelve al clon
-	Draw* getClon() { return clon_; };
+	GameObject* getClon() { return clon_; };
 #pragma endregion
 
 #pragma region setters
@@ -159,9 +159,9 @@ public:
 	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
 
 	//Asigna al puntero de player
-	inline void setPlayer(Draw* player) { player_ = player; };
+	inline void setPlayer(GameObject* player) { player_ = player; };
 	//Asigna al puntero de clon
-	inline void setClon(Draw* clon) { clon_ = clon; };
+	inline void setClon(GameObject* clon) { clon_ = clon; };
 	//borra al clon
 	inline void deleteClon() { clon_ = nullptr; };
 #pragma endregion

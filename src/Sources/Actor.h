@@ -22,7 +22,7 @@ protected:
 	STATE currState_ = STATE::IDLE;
 	//Target objetivo para atacar. Enemy también puede ser el player.
 	//Es el enemigo visto desde la entidad
-	Draw* currEnemy_ = nullptr;
+	GameObject* currEnemy_ = nullptr;
 	//Constructor vacío
 	Actor() {};
 	///<summary>Constructor de la clase Actor</summary>
@@ -54,6 +54,6 @@ public:
 	//Detiene el movimiento
 	void stop() { dir_ = Vector2D(0, 0); };
 	//Cambia al enemigo al que está atacando
-	inline void changeAgro(Draw* newEnemy) { currEnemy_ = newEnemy; };
+	inline void changeAgro(GameObject* newEnemy) { currEnemy_ = newEnemy; };
 
 };

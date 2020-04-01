@@ -14,11 +14,13 @@ protected:
 		int numberFramesRow_;	// Número de frames por fila 
 		uint widthFrame_;		// Ancho del frame
 		uint heightFrame_;		// Alto del frame
-		int frameRate_;			// FPS
-		Anim(int numberFrames, int numberFramesRow, uint widthFrame, uint heightFrame) :
-		numberFrames_(numberFrames), numberFramesRow_(numberFramesRow), widthFrame_(widthFrame), heightFrame_(heightFrame) {}
+		int frameRate_;			// Velocidad a la que se cambia de frames
+		string name_;
+		Anim(int numberFrames, int numberFramesRow, uint widthFrame, uint heightFrame, int frames,string name) :
+		numberFrames_(numberFrames), numberFramesRow_(numberFramesRow), widthFrame_(widthFrame),
+			heightFrame_(heightFrame), frameRate_(frames),name_(name) {}
 	};
-	Anim currAnim_ {0,0,0,0};
+	Anim currAnim_ {0,0,0,0,0,""};
 	//Textura del objeto
 	Texture* texture_ = nullptr;
 	//Rect del render
@@ -101,7 +103,11 @@ public:
 
 #pragma region setters
 	void setFrame(SDL_Rect frame) { frame_ = frame; }; //Asigna el frame
-	void setDestiny(SDL_Rect destiny) { destiny_ = destiny; }; //Asigna el rectangulo de destino
+	//Asigna el rectangulo de destino
+	void setDestiny(SDL_Rect destiny) {
+		destiny_ = destiny; 
+		scale_.setVec({ (double)destiny.w,(double)destiny.h });
+	}; 
 	void setTexture(Texture* texture) { texture_ = texture; }; //Asigna la textura
 #pragma endregion
 };
