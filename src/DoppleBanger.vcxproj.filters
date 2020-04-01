@@ -141,6 +141,8 @@
     <ClCompile Include="Sources\Bullet.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Crab.cpp" />
+    <ClCompile Include="Sources\Pumpkin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -294,6 +296,8 @@
     <ClInclude Include="Sources\Bullet.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Crab.h" />
+    <ClInclude Include="Sources\Pumpkin.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

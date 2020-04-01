@@ -53,6 +53,7 @@
     <ClCompile Include="Sources\Physics.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\PlayState.cpp" />
+    <ClCompile Include="Sources\Pumpkin.cpp" />
     <ClCompile Include="Sources\RandEquipGen.cpp" />
     <ClCompile Include="Sources\Resources.cpp" />
     <ClCompile Include="Sources\SaveLoadState.cpp" />
@@ -105,6 +106,7 @@
     <ClInclude Include="Sources\PauseState.h" />
     <ClInclude Include="Sources\Player.h" />
     <ClInclude Include="Sources\PlayState.h" />
+    <ClInclude Include="Sources\Pumpkin.h" />
     <ClInclude Include="Sources\RandEquipGen.h" />
     <ClInclude Include="Sources\Resources.h" />
     <ClInclude Include="Sources\SaveLoadState.h" />
