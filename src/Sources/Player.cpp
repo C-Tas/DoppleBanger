@@ -28,16 +28,14 @@ bool Player::update()
 		if (equip_.potion1_ != nullptr) {
 			PotionTime1 = SDL_GetTicks();
 			equip_.potion1_->use(this);
-			delete equip_.potion1_;
-			equip_.potion1_ = nullptr;
+		
 		}
 	}
 	if (eventHandler_->isKeyDown(SDLK_2)) {
 		if (equip_.potion2_ != nullptr) {
 			PotionTime2 = SDL_GetTicks();
 			equip_.potion2_->use(this);
-			delete equip_.potion2_;
-			equip_.potion2_ = nullptr;
+			
 		}
 	}
 	//comprobamos si hay que desactivar las pociones
