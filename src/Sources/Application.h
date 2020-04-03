@@ -31,6 +31,9 @@ private:
 	//Manager que gestiona los música y sonidos
 	AudioManager* audioManager_ = nullptr;
 
+	///<summary>Manager que gestiona el inventario, las skills y las islas desbloqueadas</summary>
+	GameManager* gameManager_ = nullptr;
+
 	///<summary>Variables que controla el fin del bucle principal de app</summary>
 	bool appClosed_ = false;
 
@@ -87,10 +90,12 @@ public:
 	TextureManager* getTextureManager() { return textureManager_; };
 	///<summary>Devuelve el font manager</summary>
 	FontManager* getFontManager() { return fontManager_; };
-	///<summary>Devuelve el audioManager</summary>
+	//Devuelve el audioManager
 	AudioManager* getAudioManager() { return audioManager_; };
-	///<summary>Devuelve equipGen_</summary>
+	//Devuelve equipGen_
 	RandEquipGen* getEquipGen() { return equipGen_; }
+	///<summary>Devuelve el GameManager</summary>
+	GameManager* getGameManager() { return gameManager_; }
 #pragma endregion
 
 	

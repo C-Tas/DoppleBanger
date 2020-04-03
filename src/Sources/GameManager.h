@@ -13,23 +13,23 @@ using namespace std;
 class Item;
 using lista = list<Item>*;
 
-//Enumerados que representan la última isla desbloqueada
+//Enumerados que representan la ï¿½ltima isla desbloqueada
 enum class Island : int {
 	CaribeanA		= 0,
 	CaribeanB		= 1,
-	CaribeanC		= 3,
-	CaribeanBoss	= 4,
-	SpookyA			= 5,
-	SpookyB			= 6,
-	SpookyC			= 7,
-	SpookyBoos		= 8,
-	Volcanic		= 9
+	CaribeanC		= 2,
+	CaribeanBoss	= 3,
+	SpookyA			= 4,
+	SpookyB			= 5,
+	SpookyC			= 6,
+	SpookyBoos		= 7,
+	Volcanic		= 8
 };
 
 enum class spentPoints : int {
-	 Precision = 1,
-	 Melee,
-	 Ghost
+	 Precision = 0,
+	 Melee = 0,
+	 Ghost = 0
 };
 
 enum class missions : int {
@@ -46,15 +46,15 @@ private:
 	static unique_ptr<GameManager> instance_;
 	//Cantidad de oro que genera en un nivel
 	int currGold_ = 0;
-	//Enum de la última isla desbloqueada
+	//Enum de la ï¿½ltima isla desbloqueada
 	Island currIsland_;
-	//Puntos de hazaña
-	int achievementPoints_ = 0;
-	//Puntos de hazaña gastados en la rama precisión
+	//Puntos de hazaï¿½a
+	int achievementPoints_ = 350;
+	//Puntos de hazaï¿½a gastados en la rama precisiï¿½n
 	spentPoints precision_ = spentPoints::Precision;
-	//Puntos de hazaña gastados e la rama melee
+	//Puntos de hazaï¿½a gastados e la rama melee
 	spentPoints melee_ = spentPoints::Melee;
-	//Puntos de hazaña gastados de la rama ghost
+	//Puntos de hazaï¿½a gastados de la rama ghost
 	spentPoints ghost_ = spentPoints::Ghost;
 	//Puntero a la lista de item del inventario
 	list<Item>* inventory_ = nullptr;
@@ -66,7 +66,7 @@ private:
 	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
 	//Pendiente de guardar y cargar
 public:
-	//Constructor vacío
+	//Constructor vacï¿½o
 	GameManager() {
 		currIsland_ = Island::CaribeanA;
 		for (int i = 0; i < NUM_MISION; i++) {
@@ -86,7 +86,7 @@ public:
 	}
 	GameManager(GameManager&) = delete;
 	GameManager& operator=(const GameManager&) = delete;
-	//Inicializa el oro, la actual isla y los puntos de hazaña
+	//Inicializa el oro, la actual isla y los puntos de hazaï¿½a
 	inline void initGameManager(int currGold, Island currIsland, int achievementPoints);
 
 #pragma region getters
@@ -96,19 +96,19 @@ public:
 	const lista getStash() { return stash_; };
 	//Devuelve el oro conseguido
 	const int getGold() { return currGold_; };
-	//Devuelve los puntos de hazaña
+	//Devuelve los puntos de hazaï¿½a
 	const int getAchievementPoints() { return achievementPoints_; };
 	//Devuelve la actual isla
 	const int getCurrIsland() { return (int)currIsland_; };
-	//Devuelve los puntos gastados en la rama presición
+	//Devuelve los puntos gastados en la rama presiciï¿½n
 	const spentPoints getPresicionPoints() { return precision_; };
 	//Devuelve los puntos gastados en la rama melee
 	const spentPoints getMeleePoints() { return melee_; };
 	//Devuelve los puntos gastados en la rama fantasma
 	const spentPoints getGhostPoints() { return ghost_; };
-	//Devuelve true si la misión ha sido pasada
+	//Devuelve true si la misiï¿½n ha sido pasada
 	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };
-	//Devuelve true si la misión está empezada
+	//Devuelve true si la misiï¿½n estï¿½ empezada
 	const bool isThatMissionStarted(missions mission) { return missionsStarted[(int)mission]; };
 #pragma endregion
 
@@ -120,15 +120,17 @@ public:
 	//Asigna a la ultima isla desbloqueada
 	inline void setIsland(Island island) { currIsland_ = island; };
 	inline void setIsland(int island) { currIsland_ = (Island)island; };
+	//Asigna los archievement points
+	inline void setArchievementPoints(int value) { achievementPoints_ = value; }
 	//Asigna los puntos gastados a la rama precision
 	inline void setPrecisionPoints(int value) { precision_ = (spentPoints)value; };
 	//Asigna los puntos gastados a la rama melee
 	inline void setMeleePoints(int value) { melee_ = (spentPoints)value; };
 	//Asigna los puntos gastados a la rama Ghost
 	inline void setGhostPoints(int value) { ghost_ = (spentPoints)value; };
-	//Completa una misión secundaria
+	//Completa una misiï¿½n secundaria
 	inline void setCompleteMission(missions mission) { missionsComplete[(int)mission] = true; };
-	//Empieza una misión secundaria
+	//Empieza una misiï¿½n secundaria
 	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
 #pragma endregion
 };

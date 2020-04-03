@@ -11,7 +11,6 @@ using namespace std;
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
 {
-
 #ifdef _DEBUG
 	cout << "MainMenuState" << endl;
 #endif // _DEBUG
@@ -29,6 +28,7 @@ void MainMenuState::initMenuState()
 
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
+
 }
 
 void MainMenuState::createButtons() {

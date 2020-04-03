@@ -18,9 +18,38 @@ public:
 		GoControls,
 		BackButton,
 		Controls,
+		ButtonX,
+		ButtonUpgradeGreen,
+		ButtonUpgradeRed,
+		ButtonUpgradeBlue,
+		ButtonUpgradeYellow,
+		GreenBar,
+		BlueBar,
+		YellowBar,
+		RedBar,
+		EmptyBar,
+
+		//Skills
+		SkillExplosionC,
+		SkillExplosionBN,
+		SkillGolpeFuerteC,
+		SkillGolpeFuerteBN,
+		SkillInvencibleC,
+		SkillInvencibleBN,
+		SkillLiberationC,
+		SkillLiberationBN,
+		SkillPerforanteC,
+		SkillPerforanteBN,
+		SkillRaudoC,
+		SkillRaudoBN,
+		SkillReboteC,
+		SkillReboteBN,
+		SkillTorbellinoC,
+		SkillTorbellinoBN,
 
 		//Fondos
 		InventaryMenu,
+		SkillMenu,
 		Scene1,
 		Scene2,
 		Scene3,
@@ -36,7 +65,8 @@ public:
 		ExitText,
 		ControlsText,
 		LoadText,
-		CreditsText
+		CreditsText,
+		SkillText
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

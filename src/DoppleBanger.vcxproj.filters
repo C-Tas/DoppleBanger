@@ -132,6 +132,7 @@
       <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Application.cpp" />
+      <Filter>GameStateMahcine</Filter>
     <ClCompile Include="Sources\CollisionCtrl.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
