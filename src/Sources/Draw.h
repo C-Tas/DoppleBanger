@@ -57,7 +57,7 @@ public:
 		initObject();
 	}
 
-	//Para construir un texto
+	//Para construir un texto y elementos del HUD
 	Draw(Application* app, Texture* texture, SDL_Rect dest) :
 		GameObject(app, Vector2D((double)dest.x, (double)dest.y), Vector2D((double)dest.w, (double)dest.h)), texture_(texture), destiny_(dest) {};
 	

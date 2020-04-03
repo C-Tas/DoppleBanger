@@ -32,6 +32,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ GameOver, "../Sources/assets/interfaces/gameOver.png" },
 	{ Win, "../Sources/assets/interfaces/win.png" },
 
+	//HUD
+	{  WheelHUD, "../Sources/assets/hud/timonHUD.png" },
+	{  RopeHUD,	"../Sources/assets/hud/lazoHUD.png" },
+	{  SkillsHUD, "../Sources/assets/hud/skillsHUD.png" },
+
 	//Sprites
 	{ Dragon,"../Sources/assets/enemigos/dragon.png"},
 	{ PlayerFront, "../Sources/assets/player/frontal.png"},

@@ -43,6 +43,7 @@
     <ClCompile Include="Sources\GameState.cpp" />
     <ClCompile Include="Sources\GameStateMachine.cpp" />
     <ClCompile Include="Sources\HandleEvents.cpp" />
+    <ClCompile Include="Sources\HUD.cpp" />
     <ClCompile Include="Sources\interactuable.cpp" />
     <ClCompile Include="Sources\InventoryState.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
@@ -101,6 +102,7 @@
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
     <ClInclude Include="Sources\HandleEvents.h" />
+    <ClInclude Include="Sources\HUD.h" />
     <ClInclude Include="Sources\Obstacle.h" />
     <ClInclude Include="Sources\MonkeyCoco.h" />
     <ClInclude Include="Sources\Physics.h" />

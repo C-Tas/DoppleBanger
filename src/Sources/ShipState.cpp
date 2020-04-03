@@ -37,7 +37,6 @@ void goSaveState(Application* app) {
 
 void ShipState::initState()
 {
-	collisionCtrl_ = CollisionCtrl::instance();
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Ship));
 	addRenderUpdateLists(background_);
 
@@ -75,6 +74,8 @@ void ShipState::initState()
 	playerEntry_ = Vector2D((app_->getWindowWidth() - wPlayer * 2), ((app_->getWindowHeight() * 3 / 4) - hPlayer));
 	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
 	addRenderUpdateLists(player_);
+
+	PlayState::initState();
 }
 
 

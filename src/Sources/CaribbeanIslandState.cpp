@@ -28,7 +28,6 @@ void CaribbeanIslandState::update()
 
 void CaribbeanIslandState::initState()
 {
-	collisionCtrl_ = CollisionCtrl::instance();
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
 	addRenderUpdateLists(background_);
 
@@ -38,6 +37,8 @@ void CaribbeanIslandState::initState()
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
 	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
 	addRenderUpdateLists(player_);
+
+	PlayState::initState();
 }
 
 void CaribbeanIslandState::createMonkey(int numMonkeys)

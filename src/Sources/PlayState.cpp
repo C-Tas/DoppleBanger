@@ -7,6 +7,7 @@
 #include "Collisions.h"
 #include "PauseState.h"
 #include "EndState.h"
+#include "HUD.h"
 
 void PlayState::update() {
 	//collisionCtrl_->islandCollisions();
@@ -79,6 +80,11 @@ Enemy* PlayState::collidesWithEnemy(Point2D pos, Vector2D scale) {
 	}
 
 	return obj;
+}
+
+void PlayState::initState() { 
+	HUD* hud = new HUD(app_);
+	addRenderUpdateLists(hud);
 }
 
 #pragma region ChangeState

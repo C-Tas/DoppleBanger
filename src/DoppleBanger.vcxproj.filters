@@ -155,6 +155,9 @@
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
     <ClCompile Include="Sources\WinState.cpp" />
+    <ClCompile Include="Sources\HUD.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -322,6 +325,9 @@
       <Filter>GameStateMahcine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\WinState.h" />
+    <ClInclude Include="Sources\HUD.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

@@ -41,6 +41,11 @@ public:
 		GameOver,
 		Win,
 
+		//HUD
+		WheelHUD,
+		RopeHUD,
+		SkillsHUD,
+
 		//Personajes
 		Dragon,
         PlayerFront,
