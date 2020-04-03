@@ -24,4 +24,3 @@ void ControlsState::draw() const
 	controlRect.w = controlsW; controlRect.h = controlsH;
 	controlsImage_->render(controlRect);
 }
-}
