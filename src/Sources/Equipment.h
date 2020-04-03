@@ -4,8 +4,8 @@
 #include "Stats.h"
 #include <iostream>
 
-class Player;
-class Inventory;
+
+
 class InventoryButton;
 
 const enum equipType { Armor_, Boots_, Gloves_, Sword_, Saber_, Pistol_, Shotgun_ };
@@ -15,10 +15,7 @@ class Equipment : public Item
 protected:
 	equipType type_;
 	Stats modifiers_;
-	Player* player_;
-	Inventory* inventory_;
 	
-
 public:
 	//Crea un item equipable del tipo dado
 	Equipment(Texture* texture, string name, string desc, double price, equipType type) : 

@@ -39,6 +39,9 @@ private:
 	
 	playerEquipment equip_;
 	HandleEvents* eventHandler_ = nullptr;
+	int PotionTime1 =0;//Variable auxiliar para comprobar la duracion de la pocion1
+	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
+	void desactivePotion();
 	void init();
 
 public:
@@ -64,6 +67,7 @@ public:
 
 	//metodos para usar las pociones
 	void usePotion(int value, potionType type);
+
 
 	//metodos para coger la info del player
 	playerEquipment& const getInfoEquip() { return equip_; }

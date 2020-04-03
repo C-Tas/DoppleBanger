@@ -26,6 +26,7 @@ bool Player::update()
 	//para utilizar las pociones
 	if (eventHandler_->isKeyDown(SDLK_1)) {
 		if (equip_.potion1_ != nullptr) {
+			PotionTime1 = SDL_GetTicks();
 			equip_.potion1_->use(this);
 			delete equip_.potion1_;
 			equip_.potion1_ = nullptr;
@@ -33,11 +34,14 @@ bool Player::update()
 	}
 	if (eventHandler_->isKeyDown(SDLK_2)) {
 		if (equip_.potion2_ != nullptr) {
+			PotionTime2 = SDL_GetTicks();
 			equip_.potion2_->use(this);
 			delete equip_.potion2_;
 			equip_.potion2_ = nullptr;
 		}
 	}
+	//comprobamos si hay que desactivar las pociones
+	desactivePotion();
 
 	//Margen de 2 pixeles
 	if (visPos_.getX() < obj_.getX() - 2 ||
@@ -53,45 +57,7 @@ bool Player::update()
 	return false;
 }
 
-//void Player::equip(Equipment* equip)
-//{
-//	//Se distingue el tipo del equipamiento, se desequipa el actual y se equipa el nuevo
-//	if (dynamic_cast<Armor*>(equip) != nullptr) {
-//		armor_->remove(this);
-//		delete armor_; //Para que la prueba no deje basura
-//		armor_ = static_cast<Armor*>(equip);
-//		armor_->equip(this);
-//		armor_->writeStats(); //Prueba
-//	}
-//	else if (dynamic_cast<Gloves*>(equip) != nullptr) {
-//		gloves_->remove(this);
-//		delete gloves_; //Para que la prueba no deje basura
-//		gloves_ = static_cast<Gloves*>(equip);
-//		gloves_->equip(this);
-//		gloves_->writeStats(); //Prueba
-//	}
-//	else if (dynamic_cast<Boots*>(equip) != nullptr) {
-//		boots_->remove(this);
-//		delete boots_; //Para que la prueba no deje basura
-//		boots_ = static_cast<Boots*>(equip);
-//		boots_->equip(this);
-//		boots_->writeStats(); //Prueba
-//	}
-//	else if (dynamic_cast<Sword*>(equip) != nullptr) {
-//		sword_->remove(this);
-//		delete sword_; //Para que la prueba no deje basura
-//		sword_ = static_cast<Sword*>(equip);
-//		sword_->equip(this);
-//		sword_->writeStats(); //Prueba
-//	}
-//	else {
-//		gun_->remove(this);
-//		delete gun_; //Para que la prueba no deje basura
-//		gun_ = static_cast<Gun*>(equip);
-//		gun_->equip(this);
-//		gun_->writeStats(); //Prueba
-//	}
-//}
+
 
 void Player::usePotion(int value, potionType type) {
 	switch (type)
@@ -116,6 +82,40 @@ void Player::usePotion(int value, potionType type) {
 		break;
 	
 	}
+}
+void Player::desactivePotion(){
+	//Pocion1
+	//Si la pocion uno esta usada
+	if (equip_.potion1_ != nullptr && equip_.potion1_->isUsed()  ) {
+		//si es de efecto permanente la borramos
+		if (equip_.potion1_->getDuration() <= -1) {
+			delete equip_.potion1_;
+			equip_.potion1_ = nullptr;
+		}
+		//Si no, miramos si ha pasado el tiempo de duracion
+		else if ((SDL_GetTicks() - PotionTime1) >= equip_.potion1_->getDuration()) {
+			usePotion(-(equip_.potion1_->getValue()), equip_.potion1_->getType());//quitamos el valor de la pocion
+			delete equip_.potion1_;// eliminamos la pocion
+			equip_.potion1_ = nullptr;
+		}
+	}
+	//Pocion2
+	//Si la pocion uno esta usada
+	if (equip_.potion2_ != nullptr && equip_.potion2_->isUsed()) {
+		//si es de efecto permanente la borramos
+		if (equip_.potion2_->getDuration() <= -1) {
+			delete equip_.potion2_;
+			equip_.potion2_ = nullptr;
+		}
+		//Si no, miramos si ha pasado el tiempo de duracion
+		else if ((SDL_GetTicks() - PotionTime2) >= equip_.potion2_->getDuration()) {
+			usePotion(-(equip_.potion1_->getValue()), equip_.potion2_->getType());//quitamos el valor de la pocion
+			delete equip_.potion2_;// eliminamos la pocion
+			equip_.potion2_ = nullptr;
+		}
+	}
+	
+
 }
 Player::~Player()
 {
