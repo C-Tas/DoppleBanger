@@ -2,6 +2,7 @@
 #include "InventoryButton.h"
 #include "GameState.h"
 #include <list>
+
 using namespace std;
 struct Equipments
 {
@@ -20,7 +21,7 @@ struct Equipments
 class Inventory: public GameState
 {
 private:
-	Texture* background_;
+	Texture* background_ ;
 	list<InventoryButton*>* inventoryList_;
 	Button* deleteButton_;// boton para eliminar un elemento del inventario
 	Button* equippedButton_; // boton para equipar un elemento al jugador
@@ -46,7 +47,7 @@ private:
 	
 	
 public:
-	Inventory(Application* app , Player* player = nullptr);
+	Inventory(Application* app );
 	virtual ~Inventory() {};
 	void addToInventory(Equipment* ob);
 	virtual void draw() const;

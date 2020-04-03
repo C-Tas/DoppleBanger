@@ -11,6 +11,7 @@
 
 using namespace std;
 class Item;
+class Player;
 using lista = list<InventoryButton*>*;
 
 //Enumerados que representan la �ltima isla desbloqueada
@@ -65,6 +66,7 @@ private:
 	//Vector que representa las misiones secundarias empezadas
 	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
 	//Pendiente de guardar y cargar
+
 public:
 	//Constructor vac�o
 	GameManager() {

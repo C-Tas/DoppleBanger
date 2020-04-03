@@ -4,6 +4,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Interfaces
 	{MenuFondo, "../Sources/assets/interfaces/menuFondo.png"},
 	{BotonMenu, "../Sources/assets/botones/botonMenu.png"},
+	{CloseButton, "../Sources/assets/botones/Boton_Salir.png"},
+	{RightArrow,"../Sources/assets/botones/flecha_derecha.png"},
+	{LeftArrow, "../Sources/assets/botones/flecha_izquierda.png"},
+	{EquippedButton, "../Sources/assets/botones/Equipar_Boton.png"},
+	{DeleteButton, "../Sources/assets/botones/Borrar_Boton.png"},
 	{ Timon, "../Sources/assets/player/timon.png" },
 	{ GoControls, "../Sources/assets/botones/botonControles.png"},
 	{ BackButton, "../Sources/assets/botones/volver.png"},

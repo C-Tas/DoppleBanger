@@ -28,27 +28,40 @@ void callExit(Application* app){
 	app->getStateMachine()->popState();
 }
 
-Inventory::Inventory(Application* app, Player* player) :GameState(app), player_(player) {
-	deleteButton_ = new Button(app, dynamic_cast<GameState*>(this),app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 50,500 }, Vector2D{ 50,50 },callDeleteObject);
-	addUpdateList(deleteButton_);
-	addRenderList(deleteButton_);
-	equippedButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 50,700 }, Vector2D{ 50,50 },callEquipedObject);
-	addUpdateList(equippedButton_);
-	addRenderList(equippedButton_);
-	advanceButton_ = new Button(app,this,app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 700,100 }, Vector2D{ 50,50 }, callForwardList);
-	addUpdateList(advanceButton_);
-	addRenderList(advanceButton_);
-	gobackButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 500,100 }, Vector2D{ 50,50 }, callBackList);
-	addUpdateList(gobackButton_);
-	addRenderList(gobackButton_);
-	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 1300,100 }, Vector2D{ 50,50 }, callExit);
-	addUpdateList(exitButton_);
-	addRenderList(exitButton_);
+Inventory::Inventory(Application* app) :GameState(app) {
+	background_ = app_->getTextureManager()->getTexture(Resources::InventaryMenu);
+	Vector2D auxpos = Vector2D{ 12 * (double)(app_->getWindowWidth() / 14), 14 * (double)(app_->getWindowHeight() / 17) };
+	Vector2D auxSize = Vector2D{ (double)(app_->getWindowWidth() / 27),  (double)(app_->getWindowWidth() / 27) };
+	deleteButton_ = new Button(app, dynamic_cast<GameState*>(this),app_->getTextureManager()->getTexture(Resources::DeleteButton), auxpos, auxSize,callDeleteObject);
+	addRenderUpdateLists(deleteButton_);
+
+	auxpos = Vector2D{ 12 * (double)(app_->getWindowWidth() / 14), 9 * (double)(app_->getWindowHeight() / 12) };
+	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 27),  (double)(app_->getWindowWidth() / 27) };
+	equippedButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::EquippedButton), auxpos, auxSize,callEquipedObject);
+	addRenderUpdateLists(equippedButton_);
+
+	auxpos = Vector2D{ 10 * (double)(app_->getWindowWidth() / 12), 3* (double)(app_->getWindowHeight() / 10) };
+	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 30),  (double)(app_->getWindowWidth() / 30) };
+	advanceButton_ = new Button(app,this,app_->getTextureManager()->getTexture(Resources::RightArrow), auxpos, auxSize, callForwardList);
+	addRenderUpdateLists(advanceButton_);
+
+	auxpos = Vector2D{ 8 * (double)(app_->getWindowWidth() / 13), 3 * (double)(app_->getWindowHeight() / 10) };
+	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 30),  (double)(app_->getWindowWidth() / 30) };
+	gobackButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::LeftArrow), auxpos, auxSize, callBackList);
+	addRenderUpdateLists(gobackButton_);
+
+	//app_->getWindowWidth(), app_->getWindowHeight() 
+	 auxpos = Vector2D{ 8*(double)(app_->getWindowWidth() /9), 2*(double)(app_->getWindowHeight()/9)};
+	 auxSize = Vector2D{ (double)(app_->getWindowWidth() / 25),  (double)(app_->getWindowWidth() / 25) };
+	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::CloseButton), auxpos, auxSize, callExit);
+	addRenderUpdateLists(exitButton_);
 
 	//Cogemos la lista de objetos del gameManager
 	GameManager* gameManager_ = GameManager::instance();
 	inventoryList_ = gameManager_->getInventory();
 	//Cogemos los objetos equpados de player
+	// en principio habria que coger el player de gameManager
+	player_ = new Player(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 50,50 }, Vector2D{ 50,50 }, SDL_Rect{ 100,100,100,100 });
 	playerEquipment aux = player_->getInfoEquip();
 
 	if (aux.armor_ != nullptr) equipment_.armor_ = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.armor_, callSelectObject);
@@ -227,6 +240,8 @@ void Inventory::draw()const {
 //#ifdef _DEBUG
 //	cout << "entramos en draw" << endl;
 //#endif
+	//dibujamos el fondo
+	background_->render(SDL_Rect{ 0,0,app_->getWindowWidth(), app_->getWindowHeight() });
 	GameState::draw();//dibujamos todos los botones normales
 	//Despues dibujaremos SOLO los botones de la lista que salen por pantalla
 	if (!inventoryList_->empty()) {

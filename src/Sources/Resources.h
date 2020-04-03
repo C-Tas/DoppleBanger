@@ -18,6 +18,11 @@ public:
 		GoControls,
 		BackButton,
 		Controls,
+		CloseButton,
+		RightArrow,
+		LeftArrow,
+		EquippedButton,
+		DeleteButton,
 
 		//Fondos
 		InventaryMenu,
