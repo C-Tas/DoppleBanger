@@ -28,9 +28,15 @@ private:
 	///<summary>Puntero al boton seleccionado</summary>
 	InventoryButton* selected_ = nullptr;
 	///<summary>Número de elementos del inventario que se ven por pantalla</summary>
-	const int INVENTORY_VISIBLE_ELEMENTS = 2;
+	const int INVENTORY_VISIBLE_ELEMENTS = 4;
 	///<summary>Número de elementos del alijo que se ven por pantalla</summary>
-	const int STASH_VISIBLE_ELEMENTS = 2;
+	const int STASH_VISIBLE_ELEMENTS = 8;
+	///<summary>Puntero a la textura con el texto del dinero del alijo</summary>
+	Texture* stashMoneyTex_ = nullptr;
+	///<summary>Puntero a la textura con el texto del dinero del inventario</summary>
+	Texture* inventoryMoneyTex_ = nullptr;
+	///<summary>Puntero a la textura con la descripcion del objeto seleccionado</summary>
+	Texture* selectedObjectDescription_ = nullptr;
 
 	///<summary>Método para inicializar el estado. Se le llama desde la constructora</summary>
 	void initState();
@@ -58,6 +64,8 @@ private:
 	int nOfDigits(int n) const;
 	///<summary>Método para volver a la página anterior si se borra/cambia el ultimo elemento del alijo/inventario</summary>
 	void selectedIsLastElement(Container & list_, int nVisibleElements);
+	///<summary>Método auxiliar para actualizar los valores en los textos del dinero al cambiarlos</summary>
+	void moneyChange();
 
 
 public:
