@@ -33,7 +33,7 @@ bool MonkeyCoco ::update() {
 			changeAnim(attackAnim_);
 			attack();
 		}
-		//Tengo enemigo como abjetivo, pero no a rango, busco si hay otro cerca para atacar
+		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
 		else if(getEnemy())
 		{
 			lastHit = SDL_GetTicks();
@@ -124,8 +124,8 @@ bool MonkeyCoco::getEnemy() {
 	Vector2D playerPos = isPlayerInRange();
 	Vector2D clonPos = isClonInRange();
 	if (playerPos == Vector2D{ -1,-1 } && clonPos == Vector2D{ -1,-1 }) {
-		return false;
 		currEnemy_ = nullptr;
+		return false;
 	}
 	
 	Vector2D closesetEnemy;
