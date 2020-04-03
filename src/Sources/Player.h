@@ -27,7 +27,7 @@ private:
 	Sword* sword_ = nullptr;
 	Gun* gun_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
-	int money_;
+	int money_ = 0;
 
 	void init();
 

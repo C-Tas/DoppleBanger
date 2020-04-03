@@ -37,46 +37,6 @@ bool Player::update()
 	return false;
 }
 
-//void Player::equip(Equipment* equip)
-//{
-//	//Se distingue el tipo del equipamiento, se desequipa el actual y se equipa el nuevo
-//	if (dynamic_cast<Armor*>(equip) != nullptr) {
-//		armor_->remove(this);
-//		delete armor_; //Para que la prueba no deje basura
-//		armor_ = static_cast<Armor*>(equip);
-//		armor_->equip(this);
-//		armor_->writeStats(); //Prueba
-//	}
-//	else if (dynamic_cast<Gloves*>(equip) != nullptr) {
-//		gloves_->remove(this);
-//		delete gloves_; //Para que la prueba no deje basura
-//		gloves_ = static_cast<Gloves*>(equip);
-//		gloves_->equip(this);
-//		gloves_->writeStats(); //Prueba
-//	}
-//	else if (dynamic_cast<Boots*>(equip) != nullptr) {
-//		boots_->remove(this);
-//		delete boots_; //Para que la prueba no deje basura
-//		boots_ = static_cast<Boots*>(equip);
-//		boots_->equip(this);
-//		boots_->writeStats(); //Prueba
-//	}
-//	else if (dynamic_cast<Sword*>(equip) != nullptr) {
-//		sword_->remove(this);
-//		delete sword_; //Para que la prueba no deje basura
-//		sword_ = static_cast<Sword*>(equip);
-//		sword_->equip(this);
-//		sword_->writeStats(); //Prueba
-//	}
-//	else {
-//		gun_->remove(this);
-//		delete gun_; //Para que la prueba no deje basura
-//		gun_ = static_cast<Gun*>(equip);
-//		gun_->equip(this);
-//		gun_->writeStats(); //Prueba
-//	}
-//}
-
 Player::~Player()
 {
 	delete armor_;
