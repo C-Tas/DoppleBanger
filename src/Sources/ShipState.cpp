@@ -14,23 +14,26 @@
 
 #pragma region CallBacks
 //Callback para cambiar de GameState e ir a la isla actual
-void goIsland(Application* app) {
+void ShipState::goIsland(Application* app)
+{
 	GameManager* gm = GameManager::instance();
-	if(gm->getCurrIsland() == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
-	else if(gm->getCurrIsland() == Island::Spooky) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
+	if (gm->getCurrIsland() == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
+	else if (gm->getCurrIsland() == Island::Spooky) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
 	else if (gm->getCurrIsland() == Island::Volcanic) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
 }
 //Callback del alijo para ir al men� de alijo
-void goStashState(Application* app) {
+void ShipState::goStashState(Application* app)
+{
 	app->getGameStateMachine()->pushState(new StashState(app));
 }
 //Callback del mapa
-void goMap(Application* app) {
-	GameManager* gm = GameManager::instance();
+void ShipState::goMap(Application* app)
+{
 	app->getGameStateMachine()->pushState(new SelectLevelState(app));
 }
-//Callback para ir al men� de guardado
-void goSaveState(Application* app) {
+//Callback para ir al menu de guardado
+void ShipState::goSaveState(Application* app)
+{
 	app->getGameStateMachine()->pushState(new SaveLoadState(app, false));
 }
 #pragma endregion
@@ -44,38 +47,39 @@ void ShipState::initState()
 	SDL_Rect destRect; //Rect�ngulo para los objetos
 
 	//Creaci�n del alijo
-	destRect.w = wStash; destRect.h = hStash;
+	destRect.w = W_STASH; destRect.h = H_STASH;
 	destRect.x = app_->getWindowWidth() / 2; destRect.y = app_->getWindowHeight() * 2 / 5;
 	stash_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h), 
 		app_->getTextureManager()->getTexture(Resources::Stash), goStashState);
 	addRenderUpdateLists(stash_);
 
 	//Creaci�n de la trampilla
-	destRect.w = wDoor; destRect.h = hDoor;
-	destRect.x = (app_->getWindowWidth() / 2) - wDoor * 1.5; destRect.y = app_->getWindowHeight() * 2 / 5 + hWheel / 2;
+	destRect.w = W_DOOR; destRect.h = H_DOOR;
+	destRect.x = (app_->getWindowWidth() / 2) - W_DOOR * 1.5; destRect.y = app_->getWindowHeight() * 2 / 5 + H_WHEEL / 2;
 	door_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::ShipDoor), goSaveState);
 	addRenderUpdateLists(door_);
 
 	//Creaci�n del tim�n
-	destRect.w = wWheel; destRect.h = hWheel;
-	destRect.x = (app_->getWindowWidth() / 2) - wWheel / 2; destRect.y = app_->getWindowHeight() / 7;
+	destRect.w = W_WHEEL; destRect.h = H_WHEEL;
+	destRect.x = (app_->getWindowWidth() / 2) - W_WHEEL / 2; destRect.y = app_->getWindowHeight() / 7;
 	wheel_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::Wheel), goMap);
 	addRenderUpdateLists(wheel_);
 	
 	//Creaci�n de la salida
-	destRect.w = wExit; destRect.h = hExit;
-	destRect.x = app_->getWindowWidth() - wExit; destRect.y = app_->getWindowHeight() * 2 / 3;
+	destRect.w = W_EXIT; destRect.h = H_EXIT;
+	destRect.x = app_->getWindowWidth() - W_EXIT; destRect.y = app_->getWindowHeight() * 2 / 3;
 	exit_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::ExitShip), goIsland);
 	addRenderUpdateLists(exit_);
 
 	////Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
-	playerEntry_ = Vector2D((app_->getWindowWidth() - wPlayer * 2), ((app_->getWindowHeight() * 3 / 4) - hPlayer));
-	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
+	playerEntry_ = Vector2D((app_->getWindowWidth() - W_PLAYER * 2), ((app_->getWindowHeight() * 3 / 4) - H_PLAYER));
+	player_ = new Player(app_, playerEntry_, Vector2D(W_PLAYER, H_PLAYER));
 	addRenderUpdateLists(player_);
 }
+
 
 
 void ShipState::update()
@@ -111,8 +115,8 @@ void ShipState::update()
 
 	//Colisiones con los objetos del barco
 	//Alijo
-	if (RectRect(player_->getPos().getX() + wPlayer / 2, player_->getPos().getY() + hPlayer / 2, player_->getScaleX(), player_->getScaleY() / 10,
-		stash_->getPos().getX() + wStash / 2, stash_->getPos().getY() + hStash / 2, stash_->getScaleX(), stash_->getScaleY())) {
+	if (RectRect(player_->getPos().getX() + W_PLAYER / 2, player_->getPos().getY() + H_PLAYER / 2, player_->getScaleX(), player_->getScaleY() / 10,
+		stash_->getPos().getX() + W_STASH / 2, stash_->getPos().getY() + H_STASH / 2, stash_->getScaleX(), stash_->getScaleY())) {
 		player_->stop();
 		if (stashClick) {
 			stashClick = false;
@@ -121,8 +125,8 @@ void ShipState::update()
 	}
 
 	//Trampilla
-	if (RectRect(player_->getPos().getX() + wPlayer / 2, player_->getPos().getY() + hPlayer / 2, player_->getScaleX(), player_->getScaleY() / 10,
-		door_->getPos().getX() + wDoor / 2, door_->getPos().getY() + hDoor / 2, door_->getScaleX(), door_->getScaleY())) {
+	if (RectRect(player_->getPos().getX() + W_PLAYER / 2, player_->getPos().getY() + H_PLAYER / 2, player_->getScaleX(), player_->getScaleY() / 10,
+		door_->getPos().getX() + W_DOOR / 2, door_->getPos().getY() + H_DOOR / 2, door_->getScaleX(), door_->getScaleY())) {
 		player_->stop();
 		if (doorClick) {
 			doorClick = false;
@@ -131,8 +135,8 @@ void ShipState::update()
 	}
 
 	//Tim�n
-	if (RectRect(player_->getPos().getX() + wPlayer / 2, player_->getPos().getY() + hPlayer / 2, player_->getScaleX(), player_->getScaleY() / 10,
-		wheel_->getPos().getX() + wWheel / 2, wheel_->getPos().getY() + hWheel / 2, wheel_->getScaleX(), wheel_->getScaleY())) {
+	if (RectRect(player_->getPos().getX() + W_PLAYER / 2, player_->getPos().getY() + H_PLAYER / 2, player_->getScaleX(), player_->getScaleY() / 10,
+		wheel_->getPos().getX() + W_WHEEL / 2, wheel_->getPos().getY() + H_WHEEL / 2, wheel_->getScaleX(), wheel_->getScaleY())) {
 		player_->stop();
 		if (wheelClick) {
 			wheelClick = false;
@@ -142,8 +146,8 @@ void ShipState::update()
 	}
 
 	//Trigger de salida
-	if (RectRect(player_->getPos().getX() + wPlayer / 2, player_->getPos().getY() + hPlayer / 2, player_->getScaleX(), player_->getScaleY(),
-		exit_->getPos().getX() + wExit / 2, exit_->getPos().getY() + hExit / 2, exit_->getScaleX(), exit_->getScaleY())) {
+	if (RectRect(player_->getPos().getX() + W_PLAYER / 2, player_->getPos().getY() + H_PLAYER / 2, player_->getScaleX(), player_->getScaleY(),
+		exit_->getPos().getX() + W_EXIT / 2, exit_->getPos().getY() + H_EXIT / 2, exit_->getScaleX(), exit_->getScaleY())) {
 		if (exitClick) {
 			exitClick = false;
 			exit_->onCollider();

@@ -20,7 +20,9 @@ bool Player::update()
 		Vector2D dist = Vector2D(eventHandler_->getMousePos().getX() - pos_.getX(), eventHandler_->getMousePos().getY() - pos_.getY());
 		if (dist.magnitude() <= CLON_SPAWN_RANGE)
 		{
-			clon_ = new Clon(app_, getVisPos(eventHandler_->getMousePos()), scale_, this);
+			Vector2D posClon;
+			posClon = Vector2D(eventHandler_->getMousePos().getX() - (scale_.getX() / 2), eventHandler_->getMousePos().getY() - (scale_.getY() / 2));
+			clon_ = new Clon(app_, posClon, scale_, this);
 			app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
 			clonTime_ = SDL_GetTicks();
 		}
@@ -30,13 +32,9 @@ bool Player::update()
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
 		shoot(eventHandler_->getMousePos());
-	else if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
-		Vector2D dir = eventHandler_->getMousePos();
-		move(getVisPos(dir));
-	}
 
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
-	int margin = 2; if (attacking) margin = currStats_.meleeRange_;
+	int margin = 2; if (attacking_) margin = currStats_.meleeRange_;
 
 	if (visPos_.getX() < target_.getX() - margin ||
 		visPos_.getX() > target_.getX() + margin ||
@@ -48,9 +46,11 @@ bool Player::update()
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 	}
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
-	else if (attacking && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DYING)
+	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DYING)
 	{
+		cout << "Ataca" << endl;
 		objective_->reciveDmg(currStats_.meleeDmg_);
+		if (objective_->getState() == STATE::DYING) move(visPos_);
 		meleeTime_ = SDL_GetTicks();
 	}
 	if (currState_ == STATE::DYING) {
@@ -78,9 +78,9 @@ void Player::shoot(Vector2D dir)
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 	shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.distDmg_, false);
+	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.distDmg_, false,
+		BULLET_LIFE, BULLET_VEL, Vector2D(W_H_BULLET, W_H_BULLET));
 	app_->getCurrState()->addRenderUpdateLists(bullet);
-	CollisionCtrl::instance()->addPlayerBullet(bullet);
 }
 
 void Player::onCollider()
@@ -91,7 +91,7 @@ void Player::onCollider()
 
 void Player::move(Point2D target)
 {
-	attacking = false;
+	attacking_ = false;
 	//establecemos el objetivo para poder parar al llegar
 	target_.setVec(target);
 	//establecemos la direccion
@@ -103,6 +103,6 @@ void Player::move(Point2D target)
 void Player::attack(Enemy* obj)
 {
 	objective_ = obj;
-	move(obj->getVisPos(objective_->getPos()));
-	attacking = true;
+	move(obj->getVisPos());
+	attacking_ = true;
 }

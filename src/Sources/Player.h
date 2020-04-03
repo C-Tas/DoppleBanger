@@ -29,44 +29,51 @@ public:
 	const Stats& getStats() { return currStats_; };
 	virtual void die() { currState_ = STATE::DYING; }
 private:
-	bool attacking = false;
-
+	uint lastMeleeHit_ = 0;
+	bool attacking_ = false;
 	Actor* objective_ = nullptr;
 	Clon* clon_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
 
 //<summary>Variables relativas a las habilidades</summary>
-#pragma region abilities
+#pragma region Abilities
 	int liberation_ = 2;	//Nivel de la habilidad del clon
 	bool explotion_ = false;	//Si tiene la habilidad activada
 #pragma endregion
 
 //<summary>Variables de los cooldowns del jugador</summary>
-#pragma region cooldowns
-	double clonCooldown_ = 5;
+#pragma region Cooldowns
+	double clonCooldown_ = 2;
 	double clonTime_ = 0; //Momento del último clon
 	double meleeTime_ = 0; //Momento del último ataque
 	double shotTime_ = 0; //Momento del �ltimo disparo
 #pragma endregion
 
 //<summary>Estadisticas iniciales del jugador</summary>
-#pragma region consts
-	const double HEALTH = 1000;
-	const double MANA = 100;
-	const double MANA_REG = 1;
-	const double ARMOR = 10;
-	const double AD = 20;
-	const double AP = 1000;
-	const double CRIT = 0;
-	const double MELEE_RANGE = 50;
-	const double DIST_RANGE = 0;
-	const double MOVE_SPEED = 300;
-	const double MELEE_RATE = 1;
-	const double DIST_RATE = 1;
+#pragma region Stats
+	const double HEALTH = 1000;		//Vida
+	const double MANA = 100;		//Mana
+	const double MANA_REG = 1;		//Regeneración de maná por segundo
+	const double ARMOR = 10;		//Armadura
+	const double AD = 1000;			//Daño a melee
+	const double AP = 1000;			//Daño a distancia y de las habilidades
+	const double CRIT = 0;			//Crítico
+	const double MELEE_RANGE = 20;	//Rango del ataque a melee
+	const double DIST_RANGE = 0;	//Rango del ataque a distancia
+	const double MOVE_SPEED = 300;	//Velocidad de movimiento
+	const double MELEE_RATE = 1;	//Velocidad del ataque a melee en segundos
+	const double DIST_RATE = 1;		//Velocidad del ataque a distancia en segundos
 
-	const double CLON_SPAWN_RANGE = 700;
+	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
 
+//<summary>Constantes iniciales del jugador</summary>
+#pragma region Constantes
+	//Balas
+	const uint W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
+	const double BULLET_VEL = 1000;							//Velocidad de la bala
+	const double BULLET_LIFE = 4;							//Vida de la bala, en segundo
+#pragma endregion
 	virtual void initObject();
 
 

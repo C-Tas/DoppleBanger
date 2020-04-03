@@ -8,9 +8,11 @@ void Actor::initStats(double health, double mana, double manaReg, double armor, 
 }
  
 //A falta de definir la gesti�n del da�o en funci�n de la armadura
-bool Actor::reciveDmg(int damage) {
+void Actor::reciveDmg(int damage) {
 	/*double finalDamage = (currStats_.armor_ * damage) / 100;
 	currStats_.health_ -= finalDamage;*/
 	currStats_.health_ -= damage;
-	return currStats_.health_ <= 0;
+	if (currStats_.health_ <= 0) {
+		this->die();
+	}
 }

@@ -22,10 +22,6 @@ public:
 	static void goToPauseState(Application* app);
 	///<summary>Ir a InventoryState (push)</summary>
 	static void goToInventoryState(Application* app);
-	///<summary>Ir a SelectLevelState (push)</summary>
-	static void goToSelectState(Application* app);
-	///<summary>Ir a StashState (push)</summary>
-	static void goToStashState(Application* app);
 	//falta otro cambio
 
 	///<summary>A�ade un objeto a la lista enemies_, objectsToRender y gameObjects_</summary>

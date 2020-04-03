@@ -8,10 +8,17 @@
 #include "PauseState.h"
 #include "EndState.h"
 
+
+
 void PlayState::update() {
-	//collisionCtrl_->islandCollisions();
+	if (player_->getState() == STATE::DYING) { //Comprobamos que el player haya muerto para cambiar de estado
+		collisionCtrl_->clearLists();
+		app_->getGameStateMachine()->changeState(new EndState(app_));
+	}
+	else {
 		GameState::update();
 		checkPlayerActions();
+	}
 }
 
 void PlayState::addEnemy(Enemy* obj) {
@@ -25,7 +32,6 @@ void PlayState::removeEnemy(Enemy* obj) {
 	//Push front porque a suponiendo que dos enemigos se superpongan y se haga click en ellos para atacar,
 	//se renderizan en un orden (el de objectsToRender) y por lo cual las comprobaciones deben hacerse en el contrario.
 	enemies_.remove(obj);
-	removeRenderUpdateLists(obj);
 }
 
 void PlayState::checkPlayerActions() {
@@ -63,20 +69,6 @@ Enemy* PlayState::findClosestEnemy(Point2D pos) {
 		if (abs(Vector2D((*it)->getPos().getX() - pos.getX(), (*it)->getPos().getY() - pos.getY()).magnitude()) <
 			abs(Vector2D(obj->getPos().getX() - pos.getX(), obj->getPos().getY() - pos.getY()).magnitude()))
 			obj = (*it);
-
-	return obj;
-}
-
-Enemy* PlayState::collidesWithEnemy(Point2D pos, Vector2D scale) {
-	bool found = false;
-	Enemy* obj = nullptr;
-	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
-		if (Collisions::collides(pos, scale.getX(), scale.getY(), (*it)->getPos(), (*it)->getScaleX(), (*it)->getScaleY()))
-		{
-			obj = (*it);
-			found = true;
-		}
-	}
 
 	return obj;
 }

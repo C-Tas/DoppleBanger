@@ -13,11 +13,12 @@ bool MonkeyCoco ::update() {
 #ifdef _DEBUG
 
 #endif // _DEBUG
-	
+	updateVisPos();
+
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte?
-		CollisionCtrl::instance()->addEnemiesToErase(this);
+		//Cuando acabe la animación, lo mata
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
@@ -29,14 +30,12 @@ bool MonkeyCoco ::update() {
 	if (currState_ == STATE::ATTACKING && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
 		//Si el mono tiene un enemigo y lo tiene a rango
 		if (onRange()) {
-			lastHit = SDL_GetTicks();
 			changeAnim(attackAnim_);
 			attack();
 		}
 		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
 		else if(getEnemy())
 		{
-			lastHit = SDL_GetTicks();
 			changeAnim(attackAnim_);
 			attack();
 		}
@@ -47,6 +46,7 @@ bool MonkeyCoco ::update() {
 			changeAnim(idleAnim_);
 			currEnemy_ = nullptr;
 		}
+		lastHit = SDL_GetTicks();
 	}
 	updateAnim();
 	return false;
@@ -96,10 +96,10 @@ void MonkeyCoco::changeAnim(Anim& newAnim) {
 
 //Se encarga de crear el coco en dirección al enemigo
 void MonkeyCoco::attack() {
+	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
 	Bullet* coco = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
-		getCenter(pos_), currEnemy_->getPos(), currStats_.distDmg_, true);
+		getCenter(pos_), dir, currStats_.distDmg_, true, COCO_LIFE, COCO_VEL, Vector2D(W_H_COCO, W_H_COCO));
 	app_->getCurrState()->addRenderUpdateLists(coco);
-	CollisionCtrl::instance()->addEnemyBullet(coco);
 }
 
 //Inicializa al monkeyCoco
@@ -107,16 +107,15 @@ void MonkeyCoco::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
-	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)BOX_COLLISION.getX(),(int)BOX_COLLISION.getY() });
+	boxCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
+	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)boxCollision_.getX(),(int)boxCollision_.getY() });
 	CollisionCtrl::instance()->addEnemy(this);
 	initAnim();
 }
 
 //Esto es un apaño, se eliminara cuando este completa la gestión de muertes
 void MonkeyCoco::onCollider()
-{
-	dynamic_cast<CaribbeanIslandState*>(app_->getCurrState())->addKills();
-}
+{}
 
 //Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_
 bool MonkeyCoco::getEnemy() {

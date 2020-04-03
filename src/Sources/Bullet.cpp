@@ -12,32 +12,23 @@ void Bullet::init(Vector2D pos, Vector2D dir)
 
 	//Se corrige la dirección para que la bala vaya centrada
 	move(dir);
+	if (enemyBullet_) CollisionCtrl::instance()->addEnemyBullet(this);
+	else CollisionCtrl::instance()->addPlayerBullet(this);
 }
 
 bool Bullet::update()
 {
 	currTime_ = SDL_GetTicks();
 
-	//Si se le ha acabado el tiempo de vida o se ha chocado con algo
-	//if ((currTime_ - initTime_) / 1000 > lifeSpan_) { //|| colisión con paredes)
-	//	if (enemyBullet_) CollisionCtrl::instance()->addEnemyBulletToErase(this);
-	//	else CollisionCtrl::instance()->addPlayerBulletToErase(this);
-	//	app_->getCurrState()->removeRenderUpdateLists(this);
-	//}
-	//else {
+	//Si se le ha acabado el tiempo de vida
+	if ((currTime_ - initTime_) / 1000 > lifeSpan_) { 
+		app_->getCurrState()->removeRenderUpdateLists(this);
+	}
+	else {
 		double delta = app_->getDeltaTime();
 		pos_.setX(pos_.getX() + (dir_.getX() * (speed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (speed_ * delta)));
-	//}
+	}
 
 	return false;
-}
-
-void Bullet::move(Point2D target)
-{
-	//establecemos el objetivo para poder parar al llegar
-	target_.setVec(target);
-	dir_.setX(target_.getX() - getCenter(pos_).getX());
-	dir_.setY(target_.getY() - getCenter(pos_).getY());
-	dir_.normalize();
 }

@@ -15,13 +15,14 @@ public:
 	void update();
 
 private:
+	//Para guardar la posición del clik del ratón  
+	SDL_Point mouse; 
+
+	#pragma region ShipObjects
 	ShipObject* stash_ = nullptr;//Alijo
 	ShipObject* door_ = nullptr; //Trampilla
 	ShipObject* wheel_ = nullptr;//Timón
 	ShipObject* exit_ = nullptr; //Salida
-
-	//Para guardar la posición del clik del ratón  
-	SDL_Point mouse; 
 
 	//Para saber si se ha pulsado el objeto
 	bool stashClick = false; 
@@ -30,20 +31,27 @@ private:
 	bool exitClick = false;
 
 	//Dimensiones de las entidades
-	const uint wStash = app_->getWindowWidth() / 7;
-	const uint hStash = app_->getWindowHeight() / 6;
+	const uint W_STASH = app_->getWindowWidth() / 7;
+	const uint H_STASH = app_->getWindowHeight() / 6;
 
-	const uint wDoor = app_->getWindowWidth() / 8;
-	const uint hDoor = app_->getWindowHeight() / 8;
+	const uint W_DOOR = app_->getWindowWidth() / 8;
+	const uint H_DOOR = app_->getWindowHeight() / 8;
 
-	const uint wWheel = app_->getWindowWidth() / 11;
-	const uint hWheel = app_->getWindowHeight() / 5;
+	const uint W_WHEEL = app_->getWindowWidth() / 11;
+	const uint H_WHEEL = app_->getWindowHeight() / 5;
 
-	const uint wExit = app_->getWindowWidth() / 15;
-	const uint hExit = app_->getWindowHeight() / 3;
+	const uint W_EXIT = app_->getWindowWidth() / 15;
+	const uint H_EXIT = app_->getWindowHeight() / 3;
 
-	const uint wPlayer = app_->getWindowWidth() / 25;
-	const uint hPlayer = app_->getWindowHeight() / 10;
+	const uint W_PLAYER = app_->getWindowWidth() / 25;
+	const uint H_PLAYER = app_->getWindowHeight() / 10;
+	#pragma endregion
 
 	void initState();
+	#pragma region Callbacks
+	static void goIsland(Application* app);
+	static void goStashState(Application* app);
+	static void goMap(Application* app);
+	static void goSaveState(Application* app);
+	#pragma endregion
 };

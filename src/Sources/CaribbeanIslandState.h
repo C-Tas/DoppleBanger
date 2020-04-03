@@ -12,7 +12,6 @@ public:
 
 	virtual void update();
 
-
 #pragma region Provisional
 	void createMonkey(int numMonkeys);
 	void addKills() { kills += 1; }
@@ -25,9 +24,7 @@ protected:
 	const uint wMonkey = app_->getWindowWidth() / 20;
 	const uint hMonkey = app_->getWindowHeight() / 15;
 
-	//Lista de los enemigos de la isla
-	list<Enemy*> enemies_;
-	const int numMonkeys_ = 1; //Número de cangrejos que sea van a crear
+	const int numMonkeys_ = 1; //Número de monos que sea van a crear
 	int kills = 0; //Kills del state para saber si se gana
 
 	virtual void initState();

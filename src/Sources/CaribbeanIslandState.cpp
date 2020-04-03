@@ -2,12 +2,8 @@
 #include "Player.h"
 #include "ShipState.h"
 #include "MonkeyCoco.h"
-#include "EndState.h"
 #include "WinState.h"
 
-void backShipCaribbean(Application* app) {
-	app->getGameStateMachine()->changeState(new ShipState(app));
-}
 
 void CaribbeanIslandState::update()
 {
@@ -15,13 +11,9 @@ void CaribbeanIslandState::update()
 		collisionCtrl_->clearLists();
 		app_->getGameStateMachine()->changeState(new WinState(app_));
 	}
-	else if (player_->getStats().health_ > 0) {
+	else {
 		collisionCtrl_->islandCollisions();
 		PlayState::update();
-	}
-	else {
-		collisionCtrl_->clearLists();
-		app_->getGameStateMachine()->changeState(new EndState(app_));
 	}
 }
 
@@ -49,6 +41,6 @@ void CaribbeanIslandState::createMonkey(int numMonkeys)
 	for (int i = 0; i < numMonkeys; i++) {
 		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
 		newMonkey = new MonkeyCoco(app_, pos, Vector2D(wMonkey, hMonkey));
-		addRenderUpdateLists(newMonkey);
+		addEnemy(newMonkey);
 	}
 }

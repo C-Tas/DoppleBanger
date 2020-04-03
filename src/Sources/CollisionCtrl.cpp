@@ -5,7 +5,21 @@
 unique_ptr<CollisionCtrl> CollisionCtrl::instance_;
 
 void CollisionCtrl::islandCollisions() {
-	
+
+	for (auto it = enemyBulletsToErase_.begin(); it != enemyBulletsToErase_.end(); ++it) {
+		enemyBullets_.remove(*it);
+	}
+	enemyBulletsToErase_.clear();
+
+	for (auto it = playerBulletsToErase_.begin(); it != playerBulletsToErase_.end(); ++it) {
+		playerBullets_.remove(*it);
+	}
+	playerBulletsToErase_.clear();
+
+	for (auto it = enemiesToErase_.begin(); it != enemiesToErase_.end(); ++it) {
+		enemies_.remove(*it);
+	}
+	enemiesToErase_.clear();
 
 	//Colisiones con obstáculos
 	for (auto ob : obstacles_) {
@@ -44,16 +58,13 @@ void CollisionCtrl::islandCollisions() {
 		if (Collisions::collides(enem->getPos(), enem->getScaleX(), enem->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			enem->onCollider();
-			player_->onCollider();
+			//Cuando el jugador colisiona con el enemigo recibe daño
+			//Falta añadir el método correspondiente
 		}
 		for (auto bullet : playerBullets_) {
 			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 				enem->getPos(), enem->getScaleX(), enem->getScaleY())) {
-				if (enem->reciveDmg(bullet->getDamage())) {
-					addEnemiesToErase(enem);
-					enem->onCollider();
-					enem->die();
-				}
+				enem->reciveDmg(bullet->getDamage());
 				addPlayerBulletToErase(bullet);
 				bullet->onCollider();
 			}
@@ -71,26 +82,11 @@ void CollisionCtrl::islandCollisions() {
 	for (auto bullet : enemyBullets_) {
 		if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-			if(player_->reciveDmg(bullet->getDamage())) player_->die();
+			player_->reciveDmg(bullet->getDamage());
 			addEnemyBulletToErase(bullet);
 			bullet->onCollider();
 		}
 	}
-
-	for (auto it = enemyBulletsToErase_.begin(); it != enemyBulletsToErase_.end(); ++it) {
-		enemyBullets_.remove(*it);
-	}
-	enemyBulletsToErase_.clear();
-
-	for (auto it = playerBulletsToErase_.begin(); it != playerBulletsToErase_.end(); ++it) {
-		playerBullets_.remove(*it);
-	}
-	playerBulletsToErase_.clear();
-
-	for (auto it = enemiesToErase_.begin(); it != enemiesToErase_.end(); ++it) {
-		enemies_.remove(*it);
-	}
-	enemiesToErase_.clear();
 }
 
 void CollisionCtrl::shipCollisions() {	//Está comentado porque falta añadir la clase ShipObject

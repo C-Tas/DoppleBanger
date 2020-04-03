@@ -46,9 +46,9 @@ public:
 	//<summary>Establece la direccion del movimiento</summary>	
 	virtual void move(Point2D target) {};
 	//Método para gestionar el daño recibido 
-	virtual bool reciveDmg(int damage);
+	virtual void reciveDmg(int damage);
 	//Método para matar
-	virtual void die() {};
+	virtual void die() { currState_ = STATE::DYING; };
 	//Devuelve el estado actual del actor
 	const STATE getState() { return currState_; };
 	//Detiene el movimiento

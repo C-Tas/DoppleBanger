@@ -18,7 +18,6 @@ public:
 	virtual bool update();
 	virtual void initObject();
 	virtual void onCollider();
-	virtual void die() { currState_ = STATE::DYING; };
 private:
 	//Último ataque
 	Uint32 lastHit = 0;
@@ -52,9 +51,13 @@ private:
 	const uint H_FRAME_IDLE = 200;
 	const int FRAME_RATE_IDLE = 100;
 	const string NAME_IDLE = "idle";
+	//Proyectil
+	const uint W_H_COCO = app_->getWindowHeight() / 40;		//Tamaño del coco
+	const double COCO_VEL = 700;							//Velocidad del coco
+	const double COCO_LIFE = 3;								//Vida del proyectil en segundos
 	#pragma endregion
 	//Estadisticas para inicializar al monkeyCoco
-	#pragma region consts
+	#pragma region Stats
 	const double HEALTH = 100;
 	const double MANA = 100;
 	const double MANA_REG = 1;
@@ -66,10 +69,10 @@ private:
 	const double DIST_RANGE = 250;
 	const double MOVE_SPEED = 100;
 	const double MELEE_RATE = 1;
-	const double DIST_RATE = 1500;
+	const double DIST_RATE = 2500;
 #pragma endregion
 	//Vector que representa el alto y ancho de la caja de colisiones
-	const Point2D BOX_COLLISION;
+	Point2D boxCollision_;
 	//Entero que representa la cantidad de frames que tiene para las animaciones
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet

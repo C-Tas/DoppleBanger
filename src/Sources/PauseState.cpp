@@ -4,17 +4,17 @@
 
 #pragma region CallBacks
 ///<summary>Reanuda la partida actual</summary>
-void resume(Application* app) {
+void PauseState::resume(Application* app)
+{
 	app->getGameStateMachine()->popState();
 }
-
 ///<summary>Muestra los controles</summary>
-void showControls(Application* app) {
+void PauseState::showControls(Application* app) {
 	app->getGameStateMachine()->pushState(new ControlsState(app));
 }
 
 ///<summary>Vuelve al men� principal sin guardar partida</summary>
-void goMainMenuState(Application* app) {
+void PauseState::goMainMenuState(Application* app) {
 	app->getGameStateMachine()->clearAllStateExceptFirst();
 }
 
@@ -24,7 +24,7 @@ void goMainMenuState(Application* app) {
 /// de tal manera que al darle playChannel(...) con loop = 0 estos se activan. Por ello, la forma de que los efectos de sonido no suenen
 /// es que se controlen en los sitios en los que se efect�an. En caso de que la m�sica vaya a sonar por canales habr� que hacer los respectivos cambios.
 ///</summary>
-void muteGame(Application* app) {
+void PauseState::muteGame(Application* app) {
 	if (app->getMute()) app->getAudioManager()->setMusicVolume(5); //Reanuda la m�sica
 	else app->getAudioManager()->setMusicVolume(0); //Pausa la m�sica
 
@@ -71,6 +71,7 @@ void PauseState::initState()
 	sizeButton = Vector2D(winWidth / 20, (winHeight / 20) * (winWidth / winHeight));
 	posButton = Vector2D(sizeButton.getX() * 1.5, sizeButton.getY() * 1.5);
 	
-	muteButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteOff), posButton, sizeButton, muteGame);
+	if (!app_->getMute()) muteButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteOff), posButton, sizeButton, muteGame);
+	else muteButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteOn), posButton, sizeButton, muteGame);
 	addRenderUpdateLists(muteButton);
 }

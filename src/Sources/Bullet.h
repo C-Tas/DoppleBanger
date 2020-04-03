@@ -6,7 +6,8 @@
 class Bullet : public Dynamic
 {
 public:
-	Bullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, int damage, double lifeSpan = 2, double speed = 1000, Vector2D scale = { 20, 20 }, bool enemyBullet = false) :
+	Bullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, int damage, bool enemyBullet = false,
+		double lifeSpan = 2, double speed = 1000, Vector2D scale = { 20, 20 }) :
 		Dynamic(app, pos, scale), damage_(damage), lifeSpan_(lifeSpan), speed_(speed), enemyBullet_(enemyBullet) {
 		texture_ = texture;
 		collisionArea_ = { (int)pos.getX(), (int)pos.getY(), (int)scale.getX(), (int)scale.getY() };
@@ -28,6 +29,4 @@ private:
 	bool enemyBullet_ = false;
 
 	virtual void initObject() {};
-	//<summary>Establece la direccion del movimiento</summary>	
-	virtual void move(Point2D target);
 };
