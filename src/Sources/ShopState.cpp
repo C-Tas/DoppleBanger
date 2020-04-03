@@ -221,6 +221,7 @@ void ShopState::sellObj()
 {
 	if (select_ != nullptr && select_->getId() == 0)
 	{
+		if (select_->getIterator() == ListPos)++ListPos;
 		select_->Enable(true);
 		player_->addMoney(select_->getObject()->getItemPrice());
 		inventoryList_.erase(select_->getIterator());
@@ -276,6 +277,7 @@ void ShopState::buyObj()
 {
 	if (select_ != nullptr && player_->getMoney() >= select_->getObject()->getItemPrice() && select_->getId() == 1)
 	{
+		if (select_->getIterator() == shopListPos)++shopListPos;
 		select_->Enable(true);
 		player_->addMoney(-select_->getObject()->getItemPrice());
 		addToInventory(select_->getObject());
