@@ -63,8 +63,8 @@ void StashState::draw() const
 
 	//Dibujamos los objetos visibles en el inventario y en el alijo
 	//Primer vector determina donde se posiciona el primer objeto y el segundo la distancia en x e y entre objetos
-	drawList(stash_.objects_, stash_.page_, STASH_VISIBLE_ELEMENTS, Vector2D(app_->getWindowWidth() / 9, (app_->getWindowHeight() / 3) + (app_->getWindowHeight()/10)), Vector2D((app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8)), 2);
-	drawList(inventory_.objects_, inventory_.page_, INVENTORY_VISIBLE_ELEMENTS, Vector2D((app_->getWindowWidth()/2) + 55, (app_->getWindowHeight() / 3) + (app_->getWindowHeight() / 10)), Vector2D((app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8)), 2);
+	drawList(stash_.objects_, stash_.page_, STASH_VISIBLE_ELEMENTS, Vector2D(app_->getWindowWidth() / 9, (double)(app_->getWindowHeight() / 3) + (app_->getWindowHeight()/10)), Vector2D((app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8)), 2);
+	drawList(inventory_.objects_, inventory_.page_, INVENTORY_VISIBLE_ELEMENTS, Vector2D(((double)(app_->getWindowWidth()/2)) + 55, (double)(app_->getWindowHeight() / 3) + (app_->getWindowHeight() / 10)), Vector2D((app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8)), 2);
 
 	//Escribimos la información del boton seleccionado
 	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render({850, 675, 100, 50});
@@ -97,27 +97,27 @@ void StashState::initState() {
 	background_ = app_->getTextureManager()->getTexture(Resources::TextureId::StashMenu);
 
 	//Botón de avanzar la página del inventario
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D(1225, 299), Vector2D(75, 75), callbackAdvanceInventoryPage));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D((56 * (app_->getWindowWidth() / 70)), ARROW_ROW), Vector2D(BUTTON_SIZE,BUTTON_SIZE), callbackAdvanceInventoryPage));
 	//Botón de volver a la página anterior del inventario
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(957, 299), Vector2D(75, 75), callbackPreviousInventoryPage));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(43 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousInventoryPage));
 	
 	//Botón de avanzar la página del alijo
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D(490, 299), Vector2D(75, 75), callbackAdvanceStashPage));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D(22 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceStashPage));
 	//Botón de volver a la página anterior del alijo
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(315, 299), Vector2D(75, 75), callbackPreviousStashPage));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D((14 * (app_->getWindowWidth() / 70))+10, ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousStashPage));
 
 	//Botón para cambiar el objeto de una lista a otra
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton), Vector2D(1430, 603), Vector2D(75, 75), callbackChangeBetweenLists));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 6 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackChangeBetweenLists));
 	//Botón para eliminar el objeto seleccionado
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton), Vector2D(1430, 703), Vector2D(75, 75), callbackDeleteObject));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 7 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
 
 	//Botón de volver al estado anterior
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CloseButton), Vector2D(1431, 200), Vector2D(75, 75), backToPrevious));
+	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CloseButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 2*(app_->getWindowHeight()/9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), backToPrevious));
 
 	//Boton para pasar el dinero del alijo al inventario
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D(168, 235), Vector2D(75, 75), callbackAddMoneyToInventary));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((7 * (app_->getWindowWidth() / 70)), MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToInventary));
 	//Boton para pasar el dinero del inventario al alijo
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D(835, 235), Vector2D(75, 75), callbackAddMoneyToStash));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((37 * (app_->getWindowWidth() / 70))+10,MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToStash));
 
 	GameManager* gm = GameManager::instance();
 
@@ -130,8 +130,8 @@ void StashState::initState() {
 	inventory_.money_ = gm->getInventoryGold();
 
 	//Posición de los textos del alijo e inventario
-	stash_.moneyText = { 500, 245, 20,50 }; //width es el ancho de cada número 
-	inventory_.moneyText = { 1260,245, 20,50 };
+	stash_.moneyText = { 5*(app_->getWindowWidth()/16), MONEY_BUTTON_ROW+15, FONT_WIDTH,FONT_HEIGHT }; //width es el ancho de cada número 
+	inventory_.moneyText = { 8*(app_->getWindowWidth()/10)-10,MONEY_BUTTON_ROW+15, FONT_WIDTH,FONT_HEIGHT };
 
 	//Texturas con texto
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));

@@ -37,6 +37,18 @@ private:
 	Texture* inventoryMoneyTex_ = nullptr;
 	///<summary>Puntero a la textura con la descripcion del objeto seleccionado</summary>
 	Texture* selectedObjectDescription_ = nullptr;
+	///<summary>Tamaño de los botones</summary>
+	const int BUTTON_SIZE = 0.75*(app_->getWindowHeight()/9);
+	///<summary>Posición en y en la que se pintan las flechas para avanzar/retroceder en el inventario/alijo </summary>
+	const int ARROW_ROW = (16*(app_->getWindowHeight()/50))+8;
+	///<summary>Posición en y en la que se pintan los botones para mover el dinero entre el inventario/alijo</summary>
+	const int MONEY_BUTTON_ROW = 13* (app_->getWindowHeight() / 50);
+	///<summary>Posición en x en la que se pintan los botones de cerrar alijo, borrar objeto y cambiar de lista</summary>
+	const int FUNCTIONALITY_BUTTONS_COLUMN = (9 * (app_->getWindowWidth() / 10))-13;
+	///<summary>Ancho en píxeles de un caracter</summary>
+	const int FONT_WIDTH = (int)(app_->getWindowWidth()/60);
+	///<summary>Alto en píxeles de un caracter</summary>
+	const int FONT_HEIGHT = (int)(1.7*FONT_WIDTH);
 
 	///<summary>Método para inicializar el estado. Se le llama desde la constructora</summary>
 	void initState();
