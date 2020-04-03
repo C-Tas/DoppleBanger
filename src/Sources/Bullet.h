@@ -28,4 +28,6 @@ private:
 	bool enemyBullet_ = false;
 
 	virtual void initObject() {};
+	//<summary>Establece la direccion del movimiento</summary>	
+	virtual void move(Point2D target);
 };

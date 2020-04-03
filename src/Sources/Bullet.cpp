@@ -11,7 +11,7 @@ void Bullet::init(Vector2D pos, Vector2D dir)
 	pos_.setY(pos_.getY() - (scale_.getY() / 2));
 
 	//Se corrige la dirección para que la bala vaya centrada
-	move(getCenter(dir));
+	move(dir);
 }
 
 bool Bullet::update()
@@ -31,4 +31,13 @@ bool Bullet::update()
 	//}
 
 	return false;
+}
+
+void Bullet::move(Point2D target)
+{
+	//establecemos el objetivo para poder parar al llegar
+	target_.setVec(target);
+	dir_.setX(target_.getX() - getCenter(pos_).getX());
+	dir_.setY(target_.getY() - getCenter(pos_).getY());
+	dir_.normalize();
 }
