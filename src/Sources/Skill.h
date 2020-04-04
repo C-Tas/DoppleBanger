@@ -9,6 +9,8 @@ class Skill
 private:
 	SkillType type_;
 	SkillBranch branch_;
+	double lastTimeUsed_;
+	double cooldown_;
 public:
 	///<summary>Constructora</summary>
 	Skill(SkillType type, SkillBranch branch) : type_(type), branch_(branch) {};
@@ -17,7 +19,10 @@ public:
 	virtual ~Skill() {};
 	///<summary>Método a redefinir en las clases hijas. Define que hace la skill (si es activa) 
 	///o los atributos que aumenta (si es pasiva) </summary>
-	virtual void action() = 0;
+	//virtual void action() = 0;
+
+	//Temporal para comprobar que funciona
+	virtual void action() { cout << "Skill que hace cosas" << endl; }
 
 #pragma region getters
 	///<summary>Devuelve si la skill es una pasiva o una activa</summary>

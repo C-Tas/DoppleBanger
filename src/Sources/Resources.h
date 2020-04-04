@@ -28,6 +28,7 @@ public:
 		YellowBar,
 		RedBar,
 		EmptyBar,
+		EquippedSkill,
 
 		//Skills
 		SkillExplosionC,

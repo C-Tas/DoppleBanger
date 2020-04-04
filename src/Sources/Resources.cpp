@@ -17,6 +17,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ YellowBar, "../Sources/assets/botones/yellowBar.png"},
 	{ RedBar, "../Sources/assets/botones/redBar.png"},
 	{ EmptyBar, "../Sources/assets/botones/emptyBar.png"},
+	{EquippedSkill, "../Sources/assets/botones/EquippedSkill.png"},
 
 	//Skills
 	{ SkillExplosionC, "../Sources/assets/skills/explosionHab.png"},

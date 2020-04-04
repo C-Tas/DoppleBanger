@@ -12,16 +12,16 @@ using namespace std;
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
 {
-#ifdef _DEBUG
-	cout << "\n" << "---------------" << "\n";
-	//Comprobaci�n del generador aleatorio de equipamiento
-	//El primer valor es el tipo de equipamiento, y se puede ver en el struct equipType en Equipment.h
-	for (int i = 0; i < 5; i++)
-	{
-		Equipment* equip = app_->genEquip();
-		player_->equip(equip);
-	}
-#endif // _DEBUG
+//#ifdef _DEBUG
+//	cout << "\n" << "---------------" << "\n";
+//	//Comprobaci�n del generador aleatorio de equipamiento
+//	//El primer valor es el tipo de equipamiento, y se puede ver en el struct equipType en Equipment.h
+//	for (int i = 0; i < 5; i++)
+//	{
+//		Equipment* equip = app_->genEquip();
+//		player_->equip(equip);
+//	}
+//#endif // _DEBUG
 
 	//Fondo de la escena
 	button_h = app_->getWindowHeight() / 10;

@@ -3,15 +3,21 @@
 #include "HandleEvents.h"
 #include "Clon.h"
 #include "Enemy.h"
+#include "Skill.h"
+#include <array>
+
 
 class Player : public Actor
 {
 private:
 	bool attacking = false;
-
 	Enemy* objective_ = nullptr;
 	Clon* clon_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
+	
+	///<summary>Número máximo de skills equipables</summary>
+	static const int MAX_SKILLS = 3;
+	array<Skill*, MAX_SKILLS> skillsEquiped_ = {nullptr, nullptr, nullptr};
 
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region abilities
@@ -44,8 +50,7 @@ private:
 	const double CLON_SPAWN_RANGE = 700;
 #pragma endregion
 
-private:
-	//Equipamiento del jugador
+//Equipamiento del jugador
 	Armor* armor_ = nullptr;
 	Gloves* gloves_ = nullptr;
 	Boots* boots_ = nullptr;
@@ -73,4 +78,15 @@ public:
 	//M�todo que desequipa al jugador y equipa un nuevo objeto
 	//M�todos unequip no son necesarios porque nunca va a poder estar desequipado
 	void equip(Equipment* equip);
+
+#pragma region SkillsEquipped
+	Skill* getSkillEquipped(int key) { return skillsEquiped_[key]; }
+	void setSkillAt(int key, Skill* skill) { 
+#ifdef _DEBUG
+		cout << "Skill asignada a la tecla " << (int)key << endl;
+#endif // _DEBUG 
+		delete skillsEquiped_[key]; skillsEquiped_[key] = skill; 
+	}
+#pragma endregion
+
 };

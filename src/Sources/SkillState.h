@@ -1,5 +1,8 @@
 #pragma once
 #include "GameState.h"
+#include "SkillButton.h"
+
+enum class Keys :int { Q, W, E };
 
 class SkillState :
 	public GameState
@@ -9,10 +12,12 @@ private:
 	Draw* emptyBars_ [3] = { nullptr, nullptr, nullptr };	//Los marcos de las barras
 	Draw* bars_ [3] = { nullptr, nullptr, nullptr };		//El relleno de las Barras
 	Draw* totalPoints_ = nullptr;		//Puntos totales de hazaña
-	Draw* skillsIcons_[3][3] = { { nullptr, nullptr, nullptr } ,{ nullptr, nullptr, nullptr } ,{ nullptr, nullptr, nullptr } };
+	SkillButton* skillsIcons_[3][3] = { { nullptr, nullptr, nullptr } ,{ nullptr, nullptr, nullptr } ,{ nullptr, nullptr, nullptr } };
 	//He puesto todo iniciado a nullptr porque lo he visto así en otros sitios, aunque no lo veo necesario
 
 	virtual void update();
+	Player* player_ = nullptr;
+	SkillButton* selected_ = nullptr;
 
 protected:
 	///<summary>Se inicializa el skill state</summary>
@@ -35,6 +40,11 @@ protected:
 	void createTexts();
 	///<summary>Actualiza los textossummary>
 	void updateTexts();
+	///<summary>Método para seleccionar un boton</summary>
+	void setSelectedSkillButton(SkillButton* button);
+	///<summary>Método auxiliar para el callback de equipar la skill a las teclas</summary>
+	///0->q, 1->w, 2->e
+	void equipSelectedSkill(Keys key);
 
 public:
 	///<summary>Constructora de CreditsState</summary>
@@ -52,5 +62,7 @@ public:
 	static void increaseMeleeBranch(Application* app);
 	///<summary>Invierte un punto de hazaña en la rama Ghost</summary>
 	static void increaseGhostBranch(Application* app);
+	///<summary>Asigna como objeto seleccionado el boton sobre el que se hace click</summary>
+	static void selectSkill(Application* app, SkillButton* button);
 };
 
