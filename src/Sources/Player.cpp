@@ -39,7 +39,7 @@ bool Player::update()
 	if (visPos_.getX() < target_.getX() - margin ||
 		visPos_.getX() > target_.getX() + margin ||
 		visPos_.getY() < target_.getY() - margin ||
-		visPos_.getX() > target_.getX() + margin)
+		visPos_.getY() > target_.getY() + margin)
 	{
 		double delta = app_->getDeltaTime();
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
