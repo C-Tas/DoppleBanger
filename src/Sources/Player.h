@@ -38,13 +38,19 @@ private:
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
 	int liberation_ = 2;	//Nivel de la habilidad del clon
-	bool explotion_ = false;	//Si tiene la habilidad activada
+	bool explotion_ = false;	//Si tiene la habilidad desbloqueada
+	bool explotionAct_ = false;	//Si tiene la habilidad activada
+	bool empowered_ = true;		//Si tiene la habilidad desbloqueada
+	bool empoweredAct_ = false;		//Si tiene la habilidad activada
+	double empoweredBonus_ = 1.5;	//Bonus porcentual del daño
 #pragma endregion
 
 //<summary>Variables de los cooldowns del jugador</summary>
 #pragma region Cooldowns
 	double clonCooldown_ = 2;
 	double clonTime_ = 0; //Momento del último clon
+	double empoweredCooldown_ = 4;
+	double empoweredTime_ = 0; //Momento del último ataque potenciado
 	double meleeTime_ = 0; //Momento del último ataque
 	double shotTime_ = 0; //Momento del �ltimo disparo
 #pragma endregion
@@ -55,7 +61,7 @@ private:
 	const double MANA = 100;		//Mana
 	const double MANA_REG = 1;		//Regeneración de maná por segundo
 	const double ARMOR = 10;		//Armadura
-	const double AD = 1000;			//Daño a melee
+	const double AD = 40;			//Daño a melee
 	const double AP = 1000;			//Daño a distancia y de las habilidades
 	const double CRIT = 0;			//Crítico
 	const double MELEE_RANGE = 20;	//Rango del ataque a melee
@@ -75,6 +81,4 @@ private:
 	const double BULLET_LIFE = 4;							//Vida de la bala, en segundo
 #pragma endregion
 	virtual void initObject();
-
-
 };

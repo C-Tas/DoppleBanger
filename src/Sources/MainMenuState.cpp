@@ -13,7 +13,6 @@ using namespace std;
 #pragma region Inicializacion
 void MainMenuState::initState()
 {
-
 #ifdef _DEBUG
 	cout << "MainMenuState" << endl;
 #endif // _DEBUG
