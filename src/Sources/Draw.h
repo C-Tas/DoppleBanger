@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include <iostream>
 
+
 class Draw : public GameObject
 {
 protected:

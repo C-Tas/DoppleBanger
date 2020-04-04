@@ -3,8 +3,6 @@
 #include "HandleEvents.h"
 #include <exception>
 #include "GameManager.h"
-#include <GL/freeglut.h>
-#include <glm.hpp>
 
 Application::Application(GameStateMachine* state) {
 	initSDL();
@@ -30,22 +28,6 @@ Application::~Application() {
 }
 
 void Application::initSDL() {
-	int argc = 0;
-	glutInit(&argc, nullptr);
-
-	glutInitContextVersion(3, 3);
-	glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);  // GLUT_CORE_PROFILE
-	glutInitContextFlags(GLUT_DEBUG);		// GLUT_FORWARD_COMPATIBLE
-
-	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
-
-	glutInitWindowSize(winWidth_, winHeight_);   // window size
-	//glutInitWindowPosition (140, 140);
-
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH /*| GLUT_STENCIL*/); // RGBA colors, double buffer, depth buffer and stencil buffer   
-
-	glutCreateWindow("IG1App");  // with its associated OpenGL context, return window's identifier 
-
 	int winX, winY; // PosiciOn de la ventana
 	winX = winY = SDL_WINDOWPOS_CENTERED;
 	// InicializaciOn del sistema, ventana y renderer
