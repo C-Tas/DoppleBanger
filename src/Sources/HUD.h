@@ -1,6 +1,8 @@
 #pragma once
 #include "Draw.h"
 #include <list>
+#include <GL/freeglut.h>
+#include <glm.hpp>
 
 class HUD : public Draw
 {
@@ -9,13 +11,25 @@ public:
 	~HUD();
 
 	const virtual void draw();
-	virtual bool update() { return false; };
+	virtual bool update();
 
 private:
 	list<Draw*> elementsHUD_; //Lista de los elementos del HUD
 	Draw* wheel_ = nullptr; //Timon
 	Draw* rope_ = nullptr; //Cuerda
 	Draw* skills_ = nullptr; //Skills y objetos
+
+	GLuint mPrimitive = GL_TRIANGLES;
+	GLuint mNumVertices = 0;
+	vector<glm::dvec3> vVertices;
+	vector<glm::dvec4> vColors;
+	glm::dmat4 mModelMat;
+	glm::dmat4 mViewMat = glm::dmat4(1.0);
+	glm::dvec4 mColor;
+
+	glm::dvec3 mEye = { 0.0, 0.0, 500.0 };
+	glm::dvec3 mLook = { 0.0, 0.0, 0.0 };
+	glm::dvec3 mUp = { 0.0, 1.0, 0.0 };
 
 #pragma region Constantes
 	//Timon
