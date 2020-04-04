@@ -16,7 +16,7 @@ private:
 
 public:
 	usable(Texture* texture, string name, string desc, double price, potionType type, int value, int time) :
-		Item(texture, name, desc, price, 1), type_(type) , value_(value), time_(time){ };
+		Item(texture, name, desc, price), type_(type) , value_(value), time_(time){ };
 
 	virtual ~usable() {}; //Destructora 
 
@@ -29,8 +29,5 @@ public:
 	int getValue() { return value_; }
 	potionType getType() { return type_; }
 	bool isUsed() { return used_; }
-
-
-
 };
 

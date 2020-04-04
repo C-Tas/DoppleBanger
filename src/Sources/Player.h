@@ -39,7 +39,7 @@ private:
 	
 	playerEquipment equip_;
 	HandleEvents* eventHandler_ = nullptr;
-	int PotionTime1 =0;//Variable auxiliar para comprobar la duracion de la pocion1
+	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
 	void desactivePotion();
 	void init();
@@ -52,10 +52,6 @@ public:
 	virtual bool update();
 	virtual void onCollider() {};
 
-	//M�todo que desequipa al jugador y equipa un nuevo objeto
-	//M�todos unequip no son necesarios porque nunca va a poder estar desequipado
-	//void equip(Equipment* equip);
-
 	//metodos para guardar el puntero al equipamiento
 	void equip(Armor* armor) {  equip_.armor_ = armor;  };
 	void equip(Gloves* gloves) { equip_.gloves_ = gloves;  };
@@ -67,7 +63,6 @@ public:
 
 	//metodos para usar las pociones
 	void usePotion(int value, potionType type);
-
 
 	//metodos para coger la info del player
 	playerEquipment& const getInfoEquip() { return equip_; }

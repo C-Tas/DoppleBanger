@@ -28,14 +28,12 @@ bool Player::update()
 		if (equip_.potion1_ != nullptr) {
 			PotionTime1 = SDL_GetTicks();
 			equip_.potion1_->use(this);
-		
 		}
 	}
 	if (eventHandler_->isKeyDown(SDLK_2)) {
 		if (equip_.potion2_ != nullptr) {
 			PotionTime2 = SDL_GetTicks();
 			equip_.potion2_->use(this);
-			
 		}
 	}
 	//comprobamos si hay que desactivar las pociones
@@ -54,8 +52,6 @@ bool Player::update()
 
 	return false;
 }
-
-
 
 void Player::usePotion(int value, potionType type) {
 	switch (type)
@@ -78,7 +74,6 @@ void Player::usePotion(int value, potionType type) {
 	case critic_:
 		currStats_.crit_ += value;
 		break;
-	
 	}
 }
 void Player::desactivePotion(){
@@ -112,8 +107,6 @@ void Player::desactivePotion(){
 			equip_.potion2_ = nullptr;
 		}
 	}
-	
-
 }
 Player::~Player()
 {
