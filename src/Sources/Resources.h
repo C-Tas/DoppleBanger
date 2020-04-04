@@ -50,6 +50,7 @@ public:
 		//Fondos
 		InventaryMenu,
 		SkillMenu,
+		StashMenu,
 		Scene1,
 		Scene2,
 		Scene3,
@@ -66,6 +67,16 @@ public:
 		ControlsText,
 		LoadText,
 		CreditsText,
+		StashMoneyText,
+		InventoryMoneyText,
+
+		//Botones
+		ForwardArrow,
+		BackwardsArrow,
+		TrashButton,
+		ChangeButton,
+		CloseButton,
+		MoneyButton,
 		SkillText
 	};
 

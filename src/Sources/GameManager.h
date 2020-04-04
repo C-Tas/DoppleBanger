@@ -4,6 +4,7 @@
 #include <iostream>
 #include <list>
 #include "Equipment.h"
+#include "InventoryButton.h"
 #include "RandEquipGen.h"
 #include <vector>
 #include "checkML.h"
@@ -11,19 +12,19 @@
 
 using namespace std;
 class Item;
-using lista = list<Item>*;
+using lista = list<InventoryButton*>*;
 
 //Enumerados que representan la �ltima isla desbloqueada
 enum class Island : int {
-	CaribeanA		= 0,
-	CaribeanB		= 1,
-	CaribeanC		= 2,
-	CaribeanBoss	= 3,
-	SpookyA			= 4,
-	SpookyB			= 5,
-	SpookyC			= 6,
-	SpookyBoos		= 7,
-	Volcanic		= 8
+	CaribeanA		= 1,
+	CaribeanB		= 2,
+	CaribeanC		= 3,
+	CaribeanBoss	= 4,
+	SpookyA			= 5,
+	SpookyB			= 6,
+	SpookyC			= 7,
+	SpookyBoos		= 8,
+	Volcanic		= 9
 };
 
 enum class spentPoints : int {
@@ -57,9 +58,13 @@ private:
 	//Puntos de haza�a gastados de la rama ghost
 	spentPoints ghost_ = spentPoints::Ghost;
 	//Puntero a la lista de item del inventario
-	list<Item>* inventory_ = nullptr;
+	list<InventoryButton*>* inventory_ = new list<InventoryButton*>;
+	//Cantidad de dinero almacenada en el inventario
+	int inventoryGold = 300;
 	//Puntero a la lista de items del alijo
-	list<Item>* stash_ = nullptr;
+	list<InventoryButton*>* stash_ = new list<InventoryButton*>;
+	//Cantidad de dinero almacenada en el alijo
+	int stashGold = 1000;
 	//Vector que representa las misiones secundarias completadas
 	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
@@ -75,7 +80,11 @@ public:
 	}
 	//Destructor
 	~GameManager() {
-		inventory_, stash_ = nullptr;
+		for (InventoryButton* ob : *inventory_)delete ob;
+		for (InventoryButton* ob : *stash_)delete ob;
+
+		delete inventory_;
+		delete stash_;
 	}
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {
@@ -110,6 +119,10 @@ public:
 	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };
 	//Devuelve true si la misi�n est� empezada
 	const bool isThatMissionStarted(missions mission) { return missionsStarted[(int)mission]; };
+	//Devuelve el dinero del inventario
+	const int getInventoryGold() { return inventoryGold; }
+	//Devuelve el dinero del alijo
+	const int getStashGold() { return stashGold; }
 #pragma endregion
 
 #pragma region setters
@@ -132,6 +145,14 @@ public:
 	inline void setCompleteMission(missions mission) { missionsComplete[(int)mission] = true; };
 	//Empieza una misi�n secundaria
 	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
+	//Añade(+) /Quita(-) dinero del inventario
+	inline void addInventoryGold(int money) { inventoryGold += money; }
+	////Añade(+) /Quita(-) dinero del alijo
+	inline void addStashGold(int money) { stashGold += money; }
+	///Asigna money como cantidad de dinero en el inventario
+	inline void setInventoryGold(int money) { inventoryGold = money; }
+	///Asigna money como cantidad de dinero en el alijo
+	inline void setStashGold(int money) { stashGold = money; }
 #pragma endregion
 };
 

@@ -92,6 +92,10 @@ public:
 	FontManager* getFontManager() { return fontManager_; };
 	//Devuelve el audioManager
 	AudioManager* getAudioManager() { return audioManager_; };
+	///<summary>Devuelve el generador de equipamiento aleatorio </summary>
+	Equipment* genEquip() { return equipGen_->genEquip(); };
+	///<summary>Devuelve un objeto del tipo type generado aleatoriamente</summary>
+	Equipment* genEquip(equipType type) { return equipGen_->genEquip(type); };
 	//Devuelve equipGen_
 	RandEquipGen* getEquipGen() { return equipGen_; }
 	///<summary>Devuelve el GameManager</summary>

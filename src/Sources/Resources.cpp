@@ -40,6 +40,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
 	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
 	{ SkillMenu, "../Sources/assets/interfaces/HabilidadesFondo.png" },
+	{StashMenu, "../Sources/assets/interfaces/AlijoFondo.png"},
 	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
 	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
 	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
@@ -47,8 +48,17 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Sprites
 	{ Roca, "../Sources/assets/colisionables/roca.png" },
 	//Para añadir nueva ruta: {TextureId, "../Sources/assets/name.png-jpg..."}
-	{Dragon,"../Sources/assets/enemigos/dragon.png"}
+	{Dragon,"../Sources/assets/enemigos/dragon.png"},
 	//Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
+
+	//Botones
+	{ForwardArrow, "../Sources/assets/botones/FowardArrowButton.png"},
+	{BackwardsArrow, "../Sources/assets/botones/BackwardsArrowButton.png"},
+	{TrashButton, "../Sources/assets/botones/TrashButton.png"},
+	{ChangeButton, "../Sources/assets/botones/ChangeButton.png"},
+	{CloseButton, "../Sources/assets/botones/CloseButton.png"},
+	{MoneyButton, "../Sources/assets/botones/MoneyButton.png"},
+
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{
@@ -75,4 +85,6 @@ vector <Resources::TextMsgInfo> Resources::messages_{
 	{ LoadText,"Cargar Partida",SDL_Color{(0,0,0,1)},RETRO },
 	{ CreditsText,"Créditos",SDL_Color{(0,0,0,1)},RETRO },
 	{ SkillText,"SkillMenu",SDL_Color{(0,0,0,1)},RETRO },
+	{InventoryMoneyText, "Dinero inventario:", SDL_Color({255,255,255,1}), RETRO},
+	{StashMoneyText, "Dinero alijo:",  SDL_Color({255,255,255,1}), RETRO}
 };
