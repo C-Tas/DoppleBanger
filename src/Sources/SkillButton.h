@@ -1,6 +1,7 @@
 #pragma once
 #include "Button.h"
 #include "HandleEvents.h"
+#include "GameManager.h"
 
 class SkillButton: public Button
 {
@@ -10,11 +11,12 @@ protected:
 	bool unlocked_ = false;
 	CallBackOnClickSkill* callbackSkill_ = nullptr;
 	HandleEvents* handleEvents_;
+	SkillNames id;
 
 public: 
-	SkillButton(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickSkill* callBack):
-		Button(app, texture, pos, scale, nullptr) {
-		callbackSkill_ = callBack; handleEvents_ = HandleEvents::instance();
+	SkillButton(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickSkill* callBack, SkillNames name, bool unlocked = false):
+		Button(app, texture, pos, scale, nullptr), unlocked_(unlocked) {
+		callbackSkill_ = callBack; handleEvents_ = HandleEvents::instance(); id = name;
 	}
 
 	virtual ~SkillButton() {};
@@ -23,6 +25,7 @@ public:
 #pragma region Getters
 	bool isAsigned() { return asign_; }
 	bool isUnlocked() { return unlocked_; }
+	SkillNames getSkillId() { return id; }
 #pragma endregion
 
 #pragma region Setters

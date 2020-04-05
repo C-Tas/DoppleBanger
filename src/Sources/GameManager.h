@@ -38,6 +38,36 @@ enum class missions : int {
 	//Poner aqui nombre de las misiones
 };
 
+//Nombre de cada una de las habilidades del jugador
+enum class SkillNames : int {
+
+	//Enums auxiliares para las pasivas y para las habilidades que no están equipadas
+	Unequipped,
+	Pasiva,
+
+	//Ataque melee
+	GolpeFuerte,
+	Torbellino,
+
+	//Ataquea distancia
+	DisparoPerforante,
+	Rebote,
+
+	//Clon
+	Clon,
+	Explosion,
+	
+};
+
+//Enum para identificar las teclas de las habilidades
+enum class SkillEquiped : int {
+	Q,
+	W,
+	E,
+	R
+};
+
+
 
 class GameManager {
 private:
@@ -69,6 +99,8 @@ private:
 	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
 	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
+	//Vector que contiene las habilidades equipadas
+	vector<SkillNames> skillsEquiped = {SkillNames::Unequipped,SkillNames::Unequipped,SkillNames::Unequipped,SkillNames::Clon };
 	//Pendiente de guardar y cargar
 public:
 	//Constructor vac�o
@@ -123,6 +155,16 @@ public:
 	const int getInventoryGold() { return inventoryGold; }
 	//Devuelve el dinero del alijo
 	const int getStashGold() { return stashGold; }
+	//Devuele la habilidad equipada
+	const SkillNames getSkillEquiped(SkillEquiped& skill) { return skillsEquiped[(int)skill]; }
+	//Devuelve la tecla en la que está equipada la habilidad
+	const SkillEquiped getEquippedSkillKey(SkillNames skill) { int i = 0; 
+		while (i < skillsEquiped.size() && skillsEquiped[i] != skill)i++;
+		return (SkillEquiped)i;
+	}
+	//Devuelve el vector de skills
+	const vector<SkillNames>& getAllSkillsEquipped() { return skillsEquiped; }
+	
 #pragma endregion
 
 #pragma region setters
@@ -153,6 +195,8 @@ public:
 	inline void setInventoryGold(int money) { inventoryGold = money; }
 	///Asigna money como cantidad de dinero en el alijo
 	inline void setStashGold(int money) { stashGold = money; }
+	//Actualiza la habilidad equipada
+	inline void setSkillEquiped(SkillNames newSkill, SkillEquiped key) { skillsEquiped[(int)key] = newSkill; }
 #pragma endregion
 };
 
