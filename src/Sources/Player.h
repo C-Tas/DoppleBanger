@@ -81,12 +81,9 @@ public:
 
 #pragma region SkillsEquipped
 	Skill* getSkillEquipped(int key) { return skillsEquiped_[key]; }
-	void setSkillAt(int key, Skill* skill) { 
-#ifdef _DEBUG
-		cout << "Skill asignada a la tecla " << (int)key << endl;
-#endif // _DEBUG 
-		delete skillsEquiped_[key]; skillsEquiped_[key] = skill; 
-	}
+	void setSkillAt(int key, Skill* skill) { delete skillsEquiped_[key]; skillsEquiped_[key] = skill; }
+	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquiped_; }
+
 #pragma endregion
 
 };

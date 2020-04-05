@@ -38,24 +38,32 @@ enum class missions : int {
 	//Poner aqui nombre de las misiones
 };
 
+#pragma region Skills
+
+///Tipos de Skills que puede haber
+enum class SkillType { Active, Pasive };
+
 //Nombre de cada una de las habilidades del jugador
 enum class SkillNames : int {
 
 	//Enums auxiliares para las pasivas y para las habilidades que no están equipadas
 	Unequipped,
-	Pasiva,
 
 	//Ataque melee
 	GolpeFuerte,
+	Invencible,
 	Torbellino,
 
 	//Ataquea distancia
 	DisparoPerforante,
+	Raudo,
 	Rebote,
 
 	//Clon
 	Clon,
+	LiberacionI,
 	Explosion,
+	LiberacionII,
 	
 };
 
@@ -66,7 +74,7 @@ enum class SkillEquiped : int {
 	E,
 	R
 };
-
+#pragma endregion
 
 
 class GameManager {
@@ -100,7 +108,9 @@ private:
 	//Vector que representa las misiones secundarias empezadas
 	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
 	//Vector que contiene las habilidades equipadas
-	vector<SkillNames> skillsEquiped = {SkillNames::Unequipped,SkillNames::Unequipped,SkillNames::Unequipped,SkillNames::Clon };
+	vector<SkillNames> skillsEquiped_ = {SkillNames::Unequipped,SkillNames::Unequipped,SkillNames::Unequipped,SkillNames::Clon };
+	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
+	vector<bool> skillsUnlocked_ = { false, false ,false, false, false, false, false, true, false, false, false }; //Clon inicializada por defecto
 	//Pendiente de guardar y cargar
 public:
 	//Constructor vac�o
@@ -156,14 +166,20 @@ public:
 	//Devuelve el dinero del alijo
 	const int getStashGold() { return stashGold; }
 	//Devuele la habilidad equipada
-	const SkillNames getSkillEquiped(SkillEquiped& skill) { return skillsEquiped[(int)skill]; }
+	const SkillNames getSkillEquiped(SkillEquiped& skill) { return skillsEquiped_[(int)skill]; }
 	//Devuelve la tecla en la que está equipada la habilidad
 	const SkillEquiped getEquippedSkillKey(SkillNames skill) { int i = 0; 
-		while (i < skillsEquiped.size() && skillsEquiped[i] != skill)i++;
+		while (i < skillsEquiped_.size() && skillsEquiped_[i] != skill)i++;
 		return (SkillEquiped)i;
 	}
 	//Devuelve el vector de skills
-	const vector<SkillNames>& getAllSkillsEquipped() { return skillsEquiped; }
+	const vector<SkillNames>& getAllSkillsEquipped() { return skillsEquiped_; }
+	//Devuelve si la skill está desbloqueda
+	const bool isSkillUnlocked(SkillNames skill) { return skillsUnlocked_[(int)skill]; }
+	//Devuelve si la skill está equipada
+	const bool isSkillAsign(SkillNames skill) { int i = 0; 
+		while (i < skillsEquiped_.size() && skillsEquiped_[i] != skill)i++; 
+		return !i == skillsEquiped_.size(); }
 	
 #pragma endregion
 
@@ -196,7 +212,9 @@ public:
 	///Asigna money como cantidad de dinero en el alijo
 	inline void setStashGold(int money) { stashGold = money; }
 	//Actualiza la habilidad equipada
-	inline void setSkillEquiped(SkillNames newSkill, SkillEquiped key) { skillsEquiped[(int)key] = newSkill; }
+	inline void setSkillEquiped(SkillNames newSkill, SkillEquiped key) { skillsEquiped_[(int)key] = newSkill; }
+	//Marca como desbloqueda la skill que pases como parámetro
+	inline void setSkillUnlocked(SkillNames skill) { skillsUnlocked_[(int)skill] = true; }
 #pragma endregion
 };
 

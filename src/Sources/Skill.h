@@ -1,7 +1,7 @@
 #pragma once
+#include "GameManager.h"
 
-enum SkillType { Active, Pasive };
-enum SkillBranch { Physical, Distance, Ghost };
+enum class SkillBranch { Physical, Distance, Ghost };
 
 class Skill
 {
@@ -13,7 +13,7 @@ private:
 	double cooldown_;
 public:
 	///<summary>Constructora</summary>
-	Skill(SkillType type, SkillBranch branch) : type_(type), branch_(branch) {};
+	Skill(SkillType type, SkillBranch branch) : type_(type),  branch_(branch) {};
 
 	///<summary>Destructora</summary>
 	virtual ~Skill() {};
@@ -26,7 +26,7 @@ public:
 
 #pragma region getters
 	///<summary>Devuelve si la skill es una pasiva o una activa</summary>
-	SkillType getSkillType() { return type_; };
+	//SkillType getSkillType() { return type_; };
 	///<summary>Devuelve a que rama de habilidad pertenece esta skill</summary>
 	SkillBranch getSkillBranch() { return branch_; };
 #pragma endregion

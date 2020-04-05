@@ -13,14 +13,13 @@ void SkillState::initSkillState() {
 
 	#ifdef _DEBUG	//PARA DEBUG
 	cout << "SKILLTATE" << endl;
-	cout << "TIENES " << GameManager::instance()->getAchievementPoints() << " PUNTOS" << endl;
-	cout << "PRECISION " << (int)GameManager::instance()->getPresicionPoints() << " PUNTOS" << endl;
-	cout << "MELEE " << (int)GameManager::instance()->getMeleePoints() << " PUNTOS" << endl;
-	cout << "GHOST " << (int)GameManager::instance()->getGhostPoints() << " PUNTOS" << endl;
+	cout << "TIENES " << gameManager_->getAchievementPoints() << " PUNTOS" << endl;
+	cout << "PRECISION " << (int)gameManager_->getPresicionPoints() << " PUNTOS" << endl;
+	cout << "MELEE " << (int)gameManager_->getMeleePoints() << " PUNTOS" << endl;
+	cout << "GHOST " << (int)gameManager_->getGhostPoints() << " PUNTOS" << endl;
 	#endif
 
 	bg_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillMenu));
-	addRenderList(bg_);
 
 	createButtons();
 	createTexts();
@@ -31,7 +30,6 @@ void SkillState::initSkillState() {
 void SkillState::update()
 {
 	updateBars();
-	//updateSkillsIcons();
 	updateTexts();
 	GameState::update();
 }
@@ -65,13 +63,13 @@ void SkillState::updateBars() {
 		switch (i)
 		{
 		case 0:	//Barra verde
-			aux.w = (530 * (int)GameManager::instance()->getPresicionPoints() / 100);
+			aux.w = (530 * (int)gameManager_->getPresicionPoints() / 100);
 			break;
 		case 1:	//Barra amarilla
-			aux.w = (530 * (int)GameManager::instance()->getMeleePoints() / 100);
+			aux.w = (530 * (int)gameManager_->getMeleePoints() / 100);
 			break;
 		case 2:	//Barra azul
-			aux.w = (530 * (int)GameManager::instance()->getGhostPoints() / 100);
+			aux.w = (530 * (int)gameManager_->getGhostPoints() / 100);
 			break;
 		default:
 			break;
@@ -82,18 +80,38 @@ void SkillState::updateBars() {
 
 void SkillState::createSkillsIcons()
 {	
+	Texture* auxTexture;
+
 	//Precision Skills
-	auto it1 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteBN), { 330, 352},{ 70, 40 }, selectSkill, SkillNames::DisparoPerforante));
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoBN), { 502, 352 }, { 70, 40 }, selectSkill, SkillNames::Pasiva));
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteBN), { 684, 352 }, { 70, 40 }, selectSkill, SkillNames::Rebote));
+	///Comprobamos si la habilidad esta desbloqueda, según si está o no, usamos una textura u otra
+	auxTexture = (!gameManager_->isSkillUnlocked(SkillNames::DisparoPerforante)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC);
+	auto it1 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 330, 352},{ 70, 40 }, selectSkill, SkillNames::DisparoPerforante, SkillType::Active));
+
+	auxTexture = (!gameManager_->isSkillUnlocked(SkillNames::Raudo)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 352 }, { 70, 40 }, selectSkill, SkillNames::Raudo, SkillType::Pasive));
+	
+	auxTexture = (!gameManager_->isSkillUnlocked(SkillNames::Rebote)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 352 }, { 70, 40 }, selectSkill, SkillNames::Rebote, SkillType::Active));
+	
 	//Melee Skills
-	auto it2 = skillsIcons_.insert(skillsIcons_.end(), new SkillButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteBN), { 330, 502 }, { 70, 40 }, selectSkill, SkillNames::GolpeFuerte));
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleBN), { 502, 502 }, { 70, 40 }, selectSkill, SkillNames::Pasiva));
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoBN), { 684, 502 }, { 70, 40 }, selectSkill, SkillNames::Torbellino));
+	auxTexture = (!gameManager_->isSkillUnlocked(SkillNames::GolpeFuerte)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC);
+	auto it2 = skillsIcons_.insert(skillsIcons_.end(), new SkillButton(app_, auxTexture, { 330, 502 }, { 70, 40 }, selectSkill, SkillNames::GolpeFuerte, SkillType::Active));
+	
+	auxTexture = (!gameManager_->isSkillUnlocked(SkillNames::Invencible)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 502 }, { 70, 40 }, selectSkill, SkillNames::Invencible, SkillType::Pasive));
+	
+	auxTexture = (!gameManager_->isSkillUnlocked(SkillNames::Torbellino)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 502 }, { 70, 40 }, selectSkill, SkillNames::Torbellino, SkillType::Active));
+	
 	//Ghost Skills
-	auto it3 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN), { 330, 652 }, { 70, 40 }, selectSkill, SkillNames::Pasiva));
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionBN), { 502, 652 }, { 70, 40 }, selectSkill, SkillNames::Explosion));
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN), { 684, 652 }, { 70, 40 }, selectSkill, SkillNames::Pasiva));
+	auxTexture = (!gameManager_->isSkillUnlocked(SkillNames::LiberacionI)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
+	auto it3 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 330, 652 }, { 70, 40 }, selectSkill, SkillNames::LiberacionI, SkillType::Pasive));
+
+	auxTexture = (!gameManager_->isSkillUnlocked(SkillNames::Explosion)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 652 }, { 70, 40 }, selectSkill, SkillNames::Explosion, SkillType::Active));
+	
+	auxTexture = (!gameManager_->isSkillUnlocked(SkillNames::LiberacionII)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 652 }, { 70, 40 }, selectSkill, SkillNames::LiberacionII, SkillType::Pasive));
 
 	skillsTypeIterator[0] = it1;
 	skillsTypeIterator[1] = it2;
@@ -134,6 +152,10 @@ void SkillState::updateTexts()
 void SkillState::setSelectedSkillButton(SkillButton* button)
 {
 	selected_ = button;
+	if (selectedRectangle == nullptr)selectedRectangle = new Draw(app_, app_->getTextureManager()->getTexture(Resources::RedBar), SDL_Rect{ (int)button->getPosX() - 10, (int)button->getPosY() - 10, (int)button->getScaleX() + 20, (int)button->getScaleY() + 20 });
+	else {
+		selectedRectangle->setPos(Vector2D(button->getPosX() - 10, button->getPosY() - 10));
+	}
 #ifdef _DEBUG
 	cout << "Cambio de seleccion en el skill state" << endl;
 #endif // _DEBUG
@@ -141,86 +163,86 @@ void SkillState::setSelectedSkillButton(SkillButton* button)
 
 void SkillState::equipSelectedSkill(SkillEquiped key)
 {
-	GameManager* gm = GameManager::instance();
-	//Si no está asignada, no hay ninguna en esa tecla y no es una pasiva
-	if (!selected_->isAsigned()&& gm->getSkillEquiped(key) == SkillNames::Unequipped && selected_->getSkillId() != SkillNames::Pasiva) {
-		selected_->setAsigned(true);
-		gm->setSkillEquiped(selected_->getSkillId(), key);
-	}
-	//Si está equipada pero la tecla en la que queremos equipar está libre
-	else if (selected_->isAsigned() && selected_->getSkillId() != SkillNames::Pasiva && gm->getSkillEquiped(key) == SkillNames::Unequipped) {
+	if (selected_ != nullptr && selected_->isUnlocked()) {
+		//Si no está asignada, no hay ninguna en esa tecla y no es una pasiva
+		if (!selected_->isAsigned() && gameManager_->getSkillEquiped(key) == SkillNames::Unequipped && selected_->getSkillType() != SkillType::Pasive) {
+			selected_->setAsigned(true);
+			gameManager_->setSkillEquiped(selected_->getSkillId(), key);
+		}
+		//Si está equipada pero la tecla en la que queremos equipar está libre
+		else if (selected_->isAsigned() && selected_->getSkillType() != SkillType::Pasive && gameManager_->getSkillEquiped(key) == SkillNames::Unequipped) {
 
-		SkillEquiped aux = gm->getEquippedSkillKey(selected_->getSkillId());
-		gm->setSkillEquiped(SkillNames::Unequipped, aux);
-		gm->setSkillEquiped(selected_->getSkillId(), key);
-	}
-	//La tecla en la que queremos asignar no está libre
-	else if (selected_->getSkillId() != SkillNames::Pasiva && gm->getSkillEquiped(key) != SkillNames::Unequipped){
-		SkillNames aux = gm->getSkillEquiped(key);
-		//Buscamos el botón que asigna dicha skill
-		auto it = skillsIcons_.begin();
-		while (it != skillsIcons_.end() && aux != (*it)->getSkillId())++it;
+			SkillEquiped aux = gameManager_->getEquippedSkillKey(selected_->getSkillId());
+			gameManager_->setSkillEquiped(SkillNames::Unequipped, aux);
+			gameManager_->setSkillEquiped(selected_->getSkillId(), key);
+		}
+		//La tecla en la que queremos asignar no está libre
+		else if (selected_->getSkillType() != SkillType::Pasive && gameManager_->getSkillEquiped(key) != SkillNames::Unequipped) {
+			SkillNames aux = gameManager_->getSkillEquiped(key);
+			//Buscamos el botón que asigna dicha skill
+			auto it = skillsIcons_.begin();
+			while (it != skillsIcons_.end() && aux != (*it)->getSkillId())++it;
 
-		///Si la skill que queremos introducir está ya asignada a una tecla
-		if (selected_->isAsigned()) {
-			//Buscamos en cual estaba asignada
-			SkillEquiped changingKey = gm->getEquippedSkillKey((selected_)->getSkillId());
-			//Equipamos la skill seleccionada en la tecla correspondiente
-			gm->setSkillEquiped(selected_->getSkillId(), key);
-			//Reasignamos la skill que estaba en la tecla q a la tecla en la que se encontraba 
-			gm->setSkillEquiped((*it)->getSkillId(), changingKey);
+			///Si la skill que queremos introducir está ya asignada a una tecla
+			if (selected_->isAsigned()) {
+				//Buscamos en cual estaba asignada
+				SkillEquiped changingKey = gameManager_->getEquippedSkillKey((selected_)->getSkillId());
+				//Equipamos la skill seleccionada en la tecla correspondiente
+				gameManager_->setSkillEquiped(selected_->getSkillId(), key);
+				//Reasignamos la skill que estaba en la tecla q a la tecla en la que se encontraba 
+				gameManager_->setSkillEquiped((*it)->getSkillId(), changingKey);
+
+			}
+			///Si la skill que queremos introducir no está asignada
+			else {
+				//Cuando lo encontramos, marcamos esa skill como no equipada
+				(*it)->setAsigned(false);
+				//Actualizamos vector de skills equipadas
+				gameManager_->setSkillEquiped(selected_->getSkillId(), key);
+				selected_->setAsigned(true);
+			}
 
 		}
-		///Si la skill que queremos introducir no está asignada
-		else {
-			//Cuando lo encontramos, marcamos esa skill como no equipada
-			(*it)->setAsigned(false);
-			//Actualizamos vector de skills equipadas
-			gm->setSkillEquiped(selected_->getSkillId(), key);
-		}
-		
 	}
 }
 
-void SkillState::meelePointsActualized()
+void SkillState::meleePointsActualized()
 {
-	GameManager* gm = GameManager::instance();
 	auxPointsActualized(skillsTypeIterator[1], app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC),
-		app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC),(int)gm->getMeleePoints());
+		app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC),(int)gameManager_->getMeleePoints());
 
 }
 
 void SkillState::distancePointsActualized()
 {
-	GameManager* gm = GameManager::instance();
 	auxPointsActualized(skillsTypeIterator[0], app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC),
-		app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC), (int)gm->getPresicionPoints());
+		app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC), (int)gameManager_->getPresicionPoints());
 }
 
 void SkillState::ghostPointsActualized()
 {
-	GameManager* gm = GameManager::instance();
 	auxPointsActualized(skillsTypeIterator[2], app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC),
-		app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC), (int)gm->getGhostPoints());
+		app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC), (int)gameManager_->getGhostPoints());
 }
 
 void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* t1, Texture* t2, Texture* t3, int points)
 {
-	GameManager* gm = GameManager::instance();
-
 	if (points >= 33 && !(*aux)->isUnlocked()) {
 		(*aux)->setTexture(t1);
 		(*aux)->setUnlocked(true);
+		gameManager_->setSkillUnlocked((*aux)->getSkillId());
 	}
 	++aux;
 	if (points >= 66 && !(*aux)->isUnlocked()) {
 		(*aux)->setTexture(t2);
 		(*aux)->setUnlocked(true);
+		gameManager_->setSkillUnlocked((*aux)->getSkillId());
 	}
 	++aux;
 	if (points >= 100 && !(*aux)->isUnlocked()) {
 		(*aux)->setTexture(t3);
 		(*aux)->setUnlocked(true);
+		gameManager_->setSkillUnlocked((*aux)->getSkillId());
 	}
 }
 
@@ -232,8 +254,17 @@ Texture* SkillState::getTextureFromSkill(SkillNames name)const
 	case SkillNames::Unequipped:
 		tex = nullptr;
 		break;
-	case SkillNames::Pasiva:
-		tex = nullptr;
+	case SkillNames::Invencible:
+		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC);
+		break;
+	case SkillNames::Raudo:
+		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC);
+		break;
+	case SkillNames::LiberacionI:
+		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
+		break;
+	case SkillNames::LiberacionII:
+		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
 		break;
 	case SkillNames::GolpeFuerte:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC);
@@ -263,8 +294,69 @@ Texture* SkillState::getTextureFromSkill(SkillNames name)const
 
 void SkillState::draw() const
 {
+	//Estos dos objetos van fuera porque quiero que siempre se pinten los primeros
+	bg_->draw();
+	if (selectedRectangle != nullptr) selectedRectangle->draw();
 	GameState::draw();
+
 	updateSkillsIcons();
+}
+
+void SkillState::setPlayerSkills()
+{
+	if (player_ != nullptr) {
+		auto playerSkills = player_->getSkillsArray();
+		for (Skill* ob : playerSkills)delete ob;
+		Skill* aux;
+		for (int i = 0; i < gameManager_->getAllSkillsEquipped().size() - 1; i++) {
+			playerSkills[i] = createSkill((SkillNames)i);
+		}
+	}
+}
+
+Skill* SkillState::createSkill(SkillNames name)
+{
+	Skill* skill;
+	switch (name)
+	{
+	case SkillNames::Unequipped:
+		skill = nullptr;
+		break;
+	case SkillNames::GolpeFuerte:
+		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		break;
+	case SkillNames::Invencible:
+		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		break;
+	case SkillNames::Torbellino:
+		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		break;
+	case SkillNames::DisparoPerforante:
+		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		break;
+	case SkillNames::Raudo:
+		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		break;
+	case SkillNames::Rebote:
+		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		break;
+	case SkillNames::Clon:
+		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		break;
+	case SkillNames::LiberacionI:
+		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		break;
+	case SkillNames::Explosion:
+		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		break;
+	case SkillNames::LiberacionII:
+		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		break;
+	default:
+		skill = nullptr;
+		break;
+	}
+	return skill;
 }
 
 void SkillState::createButtons() {
@@ -289,9 +381,9 @@ void SkillState::createButtons() {
 	addRenderUpdateLists(inventaryButton);
 
 	///Botones en los que aparecerá la skillEquipada
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 940,690 }, { 113,113 }, assingToQKey));
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 1067,690 }, { 113,113 }, assingToWKey));
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 1194,690 }, { 113,113 }, assingToEKey));
+	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 940,693 }, { 110,110 }, assingToQKey));
+	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 1067,693 }, { 110,110 }, assingToWKey));
+	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 1194,693 }, { 110,110 }, assingToEKey));
 
 }
 
@@ -299,7 +391,11 @@ SkillState::~SkillState()
 {
 	for (int i = 0; i < 3; i++)delete emptyBars_[i];
 	for (int i = 0; i < 3; i++)delete bars_[i];
-	delete bg_;
+	delete bg_; delete selectedRectangle;
+
+	//Cuando se borran todos los objetos del estado, asignamos las nuevas skills
+	//al player
+	setPlayerSkills();
 }
 
 void SkillState::backToPreviousState(Application* app) {
@@ -325,7 +421,7 @@ void SkillState::increaseMeleeBranch(Application* app) {
 	if (GameManager::instance()->getAchievementPoints() > 0 && (int)GameManager::instance()->getMeleePoints() < 100) {
 		GameManager::instance()->setMeleePoints((int)GameManager::instance()->getMeleePoints() + 1);
 		GameManager::instance()->setArchievementPoints(GameManager::instance()->getAchievementPoints() - 1);
-		dynamic_cast<SkillState*>(app->getCurrState())->meelePointsActualized();
+		dynamic_cast<SkillState*>(app->getCurrState())->meleePointsActualized();
 		cout << "MELEE " << (int)GameManager::instance()->getMeleePoints() << " PUNTOS" << endl;
 	}
 	cout << "TE QUEDAN " << (int)GameManager::instance()->getAchievementPoints() << " PUNTOS" << endl;
