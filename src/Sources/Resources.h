@@ -45,6 +45,7 @@ public:
 		WheelHUD,
 		RopeHUD,
 		SkillsHUD,
+		CooldownHUD,
 		ExplosionIcon,
 		GolpeFuerteIcon,
 		InvencibleIcon,

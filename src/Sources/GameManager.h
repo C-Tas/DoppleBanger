@@ -1,5 +1,4 @@
 #pragma once
-
 #include <memory>
 #include <iostream>
 #include <list>
@@ -8,10 +7,9 @@
 #include <vector>
 #include "checkML.h"
 #include "Player.h"
-#include "Clon.h"
 #include "Skill.h"
+#include "Clon.h"
 #include "HUD.h"
-
 
 using namespace std;
 class Item;

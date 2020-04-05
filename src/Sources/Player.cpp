@@ -24,7 +24,6 @@ bool Player::update()
 			app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
 			clonTime_ = SDL_GetTicks();
 		}
-		
 	}
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown

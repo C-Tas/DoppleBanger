@@ -3,12 +3,17 @@
 enum SkillType { Active, Pasive };
 enum SkillBranch { Physical, Distance, Ghost };
 
-class Skill
-{
-
+class Skill {
 private:
 	SkillType type_;
 	SkillBranch branch_;
+
+protected:
+	//Tiempo de cooldown de la habilidad (inicializarla en cada hija)
+	double cooldown_ = 0;
+	//Determina si el cooldown está actualmente activo o no
+	bool cooldownActive_ = false;
+
 public:
 	///<summary>Constructora</summary>
 	Skill(SkillType type, SkillBranch branch) : type_(type), branch_(branch) {};
@@ -24,6 +29,8 @@ public:
 	SkillType getSkillType() { return type_; };
 	///<summary>Devuelve a que rama de habilidad pertenece esta skill</summary>
 	SkillBranch getSkillBranch() { return branch_; };
+	///<summary>Devuelve si el cooldown está activado o no</summary>
+	bool getCooldownActive() { return cooldownActive_; };
 #pragma endregion
 	
 };
