@@ -10,21 +10,6 @@ using uint = unsigned int;
 
 class GameObject
 {
-protected:
-	Vector2D pos_, scale_;
-	Application* app_ = nullptr;
-	//<summary>constructor vac�o</summary>
-	GameObject() : pos_({ 0,0 }), scale_(0, 0) {};
-	//<summary>constructor con par�metros</summary>
-	GameObject(Application* app, Vector2D pos, Vector2D scale)
-		: app_(app), pos_(pos), scale_(scale) {};
-	//<summary>constructor por cop�a</summary>
-	GameObject(const GameObject& other)
-		: pos_(other.pos_), app_(other.app_), scale_(other.scale_) {};
-	//<summary>constructor por movimiento</summary>
-	GameObject(const GameObject&& other)noexcept
-		: pos_(other.pos_), app_(other.app_), scale_(other.scale_) {};
-	virtual void initObject() = 0;
 public:
 	//<summary>umetodo abstracto que lleva la logica del juego</summary>
 	virtual bool update() = 0;
@@ -67,4 +52,20 @@ public:
 	inline void setScale(Vector2D newPos) { scale_.setVec(newPos); }
 #pragma endregion
 	virtual ~GameObject() {};
+
+protected:
+	Vector2D pos_, scale_;
+	Application* app_ = nullptr;
+	//<summary>constructor vac�o</summary>
+	GameObject() : pos_({ 0,0 }), scale_(0, 0) {};
+	//<summary>constructor con par�metros</summary>
+	GameObject(Application* app, Vector2D pos, Vector2D scale)
+		: app_(app), pos_(pos), scale_(scale) {};
+	//<summary>constructor por cop�a</summary>
+	GameObject(const GameObject& other)
+		: pos_(other.pos_), app_(other.app_), scale_(other.scale_) {};
+	//<summary>constructor por movimiento</summary>
+	GameObject(const GameObject&& other)noexcept
+		: pos_(other.pos_), app_(other.app_), scale_(other.scale_) {};
+	virtual void initObject() = 0;
 };

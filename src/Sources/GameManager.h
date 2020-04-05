@@ -9,6 +9,8 @@
 #include "checkML.h"
 #include "Player.h"
 #include "Clon.h"
+#include "Skill.h"
+#include "HUD.h"
 
 
 using namespace std;
@@ -44,6 +46,47 @@ enum class missions : int {
 	//Poner aqui nombre de las misiones
 };
 
+//Nombre de cada una de las habilidades del jugador
+enum class SkillName : int {
+	Unequipped,
+
+	//Ataque melee
+	GolpeFuerte,
+	Torbellino,
+
+	//Ataquea distancia
+	DisparoPerforante,
+	Rebote,
+
+	//Clon
+	Clon,
+	Explosion
+};
+
+enum class ObjectName : int {
+	Unequipped,
+
+	//Pociones
+	Health,
+	Mana,
+	Speed,
+	Armor,
+	Dmg,
+	Crit
+};
+
+//Enum para identificar las teclas de las habilidades
+enum class SkillKey : int {
+	Q,
+	W,
+	E
+};
+
+//Enum para identificar las teclas de los objetos
+enum class ObjectKey : int {
+	One,
+	Two
+};
 
 class GameManager {
 private:
@@ -73,12 +116,16 @@ private:
 	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
 	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
-
-	
+	//Vector que contiene las habilidades equipadas
+	vector<SkillName> skillsEquipped = vector<SkillName>(4);
+	//Vector que contiene los objetos equipados
+	vector<ObjectName> objectsEquipped = vector<ObjectName>(2);
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
 	Draw* player_ = nullptr;
 	//Puntero al clon
 	Draw* clon_ = nullptr;
+	//Puntero al HUD
+	HUD* hud_ = nullptr;
 	//Pendiente de guardar y cargar
 
 public:
@@ -87,6 +134,12 @@ public:
 		unlockedIslands_ = Island::Volcanic;
 		for (int i = 0; i < NUM_MISION; i++) {
 			missionsComplete[i] = false;
+		}
+		for (int i = 0; i < 4; i++) {
+			skillsEquipped[i] = SkillName::Rebote;
+		}
+		for (int i = 0; i < 2; i++) {
+			objectsEquipped[i] = ObjectName::Crit;
 		}
 	}
 	//Destructor
@@ -128,7 +181,10 @@ public:
 	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };
 	//Devuelve true si la misión está empezada
 	const bool isThatMissionStarted(missions mission) { return missionsStarted[(int)mission]; };
-	
+	//Devuele la habilidad equipada
+	const SkillName getSkillEquipped(int skill) { return skillsEquipped[skill]; }
+	//Devuelve el objeto equipado
+	const ObjectName getObjectEquipped(int object) { return objectsEquipped[object]; }
 	//Revisar
 	//Devuelve la posición del player
 	const Point2D getPlayerPos() { return player_->getPos(); };
@@ -157,11 +213,16 @@ public:
 	inline void setCompleteMission(missions mission) { missionsComplete[(int)mission] = true; };
 	//Empieza una misión secundaria
 	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
-
+	//Actualiza la habilidad equipada en el HUD y en el vector, no es inline por el HUD
+	void setSkillEquiped(SkillName newSkill, SkillKey key);
+	//Actualiza el objeto equipado en el HUD y en el vector, no es inline por el HUD
+	void setObjectEquipped(ObjectName newObject, ObjectKey key);
 	//Asigna al puntero de player
 	inline void setPlayer(Draw* player) { player_ = player; };
 	//Asigna al puntero de clon
 	inline void setClon(Draw* clon) { clon_ = clon; };
+	//Asigna el puntero de hud
+	inline void setHUD(HUD* hud) { hud_ = hud; }
 	//borra al clon
 	inline void deleteClon() { clon_ = nullptr; };
 #pragma endregion

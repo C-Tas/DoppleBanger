@@ -141,7 +141,6 @@
     <ClCompile Include="Sources\ShipObject.cpp">
       <Filter>GameObjects\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Crab.cpp" />
     <ClCompile Include="Sources\ShipState.cpp">
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
@@ -157,6 +156,21 @@
     <ClCompile Include="Sources\WinState.cpp" />
     <ClCompile Include="Sources\HUD.cpp">
       <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_gfx\SDL2_framerate.cpp">
+      <Filter>SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_gfx\SDL2_gfxPrimitives.cpp">
+      <Filter>SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_gfx\SDL2_imageFilter.cpp">
+      <Filter>SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_gfx\SDL2_rotozoom.cpp">
+      <Filter>SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Crab.cpp">
+      <Filter>GameObjects\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -311,7 +325,6 @@
     <ClInclude Include="Sources\ShipObject.h">
       <Filter>GameObjects\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Crab.h" />
     <ClInclude Include="Sources\ShipState.h">
       <Filter>GameStateMahcine</Filter>
     </ClInclude>
@@ -327,6 +340,9 @@
     <ClInclude Include="Sources\WinState.h" />
     <ClInclude Include="Sources\HUD.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Crab.h">
+      <Filter>GameObjects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -350,6 +366,9 @@
     </Filter>
     <Filter Include="Tools">
       <UniqueIdentifier>{06ef5a17-8315-4334-a756-1e91f63a7fa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL_gfx">
+      <UniqueIdentifier>{af832b6e-25fd-4f01-ab1c-db404ba0f52c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

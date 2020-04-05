@@ -6,3 +6,15 @@ void GameManager::initGameManager(int currGold, Island unlockedIslands, int achi
 	unlockedIslands_ = unlockedIslands;
 	achievementPoints_ = achievementPoints;
 }
+
+void GameManager::setSkillEquiped(SkillName newSkill, SkillKey key)
+{
+	skillsEquipped[(int)key] = newSkill;
+	hud_->updateSkillKey((int)key);
+}
+
+void GameManager::setObjectEquipped(ObjectName newObject, ObjectKey key)
+{
+	objectsEquipped[(int)key] = newObject;
+	hud_->updateObjectKey((int)key);
+}

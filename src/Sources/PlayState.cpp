@@ -83,6 +83,7 @@ Enemy* PlayState::collidesWithEnemy(Point2D pos, Vector2D scale) {
 }
 
 void PlayState::initState() { 
+	collisionCtrl_ = CollisionCtrl::instance();
 	HUD* hud = new HUD(app_);
 	addRenderUpdateLists(hud);
 }
