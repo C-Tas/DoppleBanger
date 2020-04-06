@@ -38,8 +38,8 @@ private:
 	bool appClosed_ = false;
 
 	///<summary>Constantes con las dimensiones de la ventana </summary>
-	static const int winWidth_ = 1600;
-	static const int winHeight_ = 900;
+	static const int winWidth_ = 1200;
+	static const int winHeight_ = 600;
 
 	///<summary>Metodo que inicializa SDL</summary>
 	void initSDL();

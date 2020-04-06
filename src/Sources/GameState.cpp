@@ -36,8 +36,6 @@ void GameState::update() {
 	}
 }
 
-
-
 void GameState::draw() const {
 	for (auto it = objectsToRender_.begin(); it != objectsToRender_.end(); ++it) {
 		(*it)->draw();

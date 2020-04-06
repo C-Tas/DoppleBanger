@@ -15,6 +15,7 @@ public:
 
 #pragma region Provisional
 	void createMonkey(int numMonkeys);
+	void createPirates(int numPirates);
 	void addKills() { kills += 1; }
 #pragma endregion
 protected:
@@ -28,6 +29,7 @@ protected:
 	//Lista de los enemigos de la isla
 	list<Enemy*> enemies_;
 	const int numMonkeys_ = 1; //Número de cangrejos que sea van a crear
+	const int numPirates_ = 1;
 	int kills = 0; //Kills del state para saber si se gana
 
 	virtual void initState();

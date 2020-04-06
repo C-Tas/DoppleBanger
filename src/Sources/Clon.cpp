@@ -23,7 +23,7 @@ bool Clon::update()
 
 void Clon::initObject() {
 	GameManager::instance()->setClon(this);
-	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
+	texture_ = app_->getTextureManager()->getTexture(Resources::Rojo);
 	spawnTime_ = SDL_GetTicks();
 	duration_ = DURATION_;
 	meleeRate_ = (player_->getStats().meleeRange_ / 2) * player_->getLiberation();
@@ -35,7 +35,7 @@ void Clon::die()
 {
 	GameManager* gm = GameManager::instance();
 	for (auto enemy : agredEnemys_) {
-		enemy->changeAgro(nullptr);
+		enemy->lostAgro();
 	}
 	agredEnemys_.clear();
 	gm->setClon(nullptr);

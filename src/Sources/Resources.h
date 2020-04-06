@@ -45,6 +45,8 @@ public:
 		Dragon,
         PlayerFront,
 		MonkeyFront,
+		Rojo,
+		Azul,
 
 		//Animaciones
 		CrabAttack,
@@ -71,9 +73,10 @@ public:
 	///<summary>Enum para las distintos audios del juego</summary>
 	enum AudioId : int{
 		//Música
-		MainTheme
+		MainTheme,
 
 		//Efectos de sonido
+		Agro
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

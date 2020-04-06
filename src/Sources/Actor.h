@@ -9,7 +9,16 @@ enum class STATE
 	ATTACKING,
 	IDLE,
 	DYING,
-	MOVING
+	FOLLOWING,
+	PATROLLING,
+};
+
+//Enumerado para representar la dirección a la que mira una entidad
+enum class DIR {
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
 };
 
 
@@ -23,6 +32,8 @@ protected:
 	//Target objetivo para atacar. Enemy también puede ser el player.
 	//Es el enemigo visto desde la entidad
 	GameObject* currEnemy_ = nullptr;
+	//Actual dirección a la que mira la entidad
+	DIR currDir_ = DIR::RIGHT;
 	//Constructor vacío
 	Actor() {};
 	///<summary>Constructor de la clase Actor</summary>
@@ -55,5 +66,4 @@ public:
 	void stop() { dir_ = Vector2D(0, 0); };
 	//Cambia al enemigo al que está atacando
 	inline void changeAgro(GameObject* newEnemy) { currEnemy_ = newEnemy; };
-
 };

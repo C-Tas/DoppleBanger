@@ -14,3 +14,4 @@ bool Actor::reciveDmg(int damage) {
 	currStats_.health_ -= damage;
 	return currStats_.health_ <= 0;
 }
+

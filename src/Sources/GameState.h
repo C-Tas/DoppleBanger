@@ -43,6 +43,7 @@ public:
 	///<summary>A�ade un objeto a las listas de objectsToRemove_ y rendersToRemove_</summary>
 	void removeRenderUpdateLists(Draw* obj);
 
+
 protected:
 	///<summary>Lista con todos los objetos</summary>
 	list<GameObject*> gameObjects_;
