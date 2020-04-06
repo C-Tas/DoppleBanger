@@ -18,6 +18,16 @@ public:
 		GoControls,
 		BackButton,
 		Controls,
+		CloseButton,
+		RightArrow,
+		LeftArrow,
+		EquippedButton,
+		DeleteButton,
+		ForwardArrow,
+		BackwardsArrow,
+		TrashButton,
+		ChangeButton,
+		MoneyButton,
 
 		//Fondos
 		InventaryMenu,
@@ -41,13 +51,7 @@ public:
 		StashMoneyText,
 		InventoryMoneyText,
 
-		//Botones
-		ForwardArrow,
-		BackwardsArrow,
-		TrashButton,
-		ChangeButton,
-		CloseButton,
-		MoneyButton,
+		
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

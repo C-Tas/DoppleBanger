@@ -5,14 +5,15 @@
 #include "HandleEvents.h"
 #include <exception>
 #include "GameManager.h"
+#include "Inventory.h"
 
 Application::Application(GameStateMachine* state) {
 	
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine();
-	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState);
+	//GameState* startState = new MainMenuState(this);
+	machine_->pushState(new Inventory(this));
 }
 
 Application::~Application() {

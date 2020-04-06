@@ -3,6 +3,7 @@
 #include "Resources.h"
 #include "GameManager.h"
 
+
 RandEquipGen::RandEquipGen(Application* app) : app_(app)
 {
 	gameManager_ = GameManager::instance();

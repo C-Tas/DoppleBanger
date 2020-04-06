@@ -3,10 +3,13 @@
 vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Interfaces
 	{MenuFondo, "../Sources/assets/interfaces/menuFondo.png"},
-	{BotonMenu, "../Sources/assets/botones/botonMenu.png"},
+	
+	
+	{RightArrow,"../Sources/assets/botones/flecha_derecha.png"},
+	{LeftArrow, "../Sources/assets/botones/flecha_izquierda.png"},
+	{DeleteButton, "../Sources/assets/botones/Borrar_Boton.png"},
 	{ Timon, "../Sources/assets/player/timon.png" },
 	{ GoControls, "../Sources/assets/botones/botonControles.png"},
-	{ BackButton, "../Sources/assets/botones/volver.png"},
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
 	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
 	{StashMenu, "../Sources/assets/interfaces/AlijoFondo.png"},
@@ -25,8 +28,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{BackwardsArrow, "../Sources/assets/botones/BackwardsArrowButton.png"},
 	{TrashButton, "../Sources/assets/botones/TrashButton.png"},
 	{ChangeButton, "../Sources/assets/botones/ChangeButton.png"},
-	{CloseButton, "../Sources/assets/botones/CloseButton.png"},
 	{MoneyButton, "../Sources/assets/botones/MoneyButton.png"},
+	{CloseButton, "../Sources/assets/botones/Boton_Salir.png"},
+	{ BackButton, "../Sources/assets/botones/volver.png"},
+	{EquippedButton, "../Sources/assets/botones/Equipar_Boton.png"},
+	{BotonMenu, "../Sources/assets/botones/botonMenu.png"},
 
 };
 

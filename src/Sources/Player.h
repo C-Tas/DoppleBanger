@@ -3,6 +3,22 @@
 #include "HandleEvents.h"
 #include "Clon.h"
 #include "Enemy.h"
+#include "usable.h"
+
+struct playerEquipment
+{
+	//Equipamiento del jugador
+	Armor* armor_ = nullptr;
+	Gloves* gloves_ = nullptr;
+	Boots* boots_ = nullptr;
+	Sword* sword_ = nullptr;
+	Gun* gun_ = nullptr;
+	
+	usable* potion1_ = nullptr;
+	usable* potion2_ = nullptr;
+	
+
+};
 
 class Player : public Actor
 {
@@ -44,14 +60,10 @@ private:
 	const double CLON_SPAWN_RANGE = 700;
 #pragma endregion
 
-private:
-	//Equipamiento del jugador
-	Armor* armor_ = nullptr;
-	Gloves* gloves_ = nullptr;
-	Boots* boots_ = nullptr;
-	Sword* sword_ = nullptr;
-	Gun* gun_ = nullptr;
-
+	playerEquipment equip_;
+	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
+	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
+	void desactivePotion();
 	void init();
 
 public:
@@ -67,7 +79,20 @@ public:
 	void move(Point2D target);
 	void attack(Enemy* obj);
 	virtual void stop() { dir_ = Vector2D(0, 0); }
-	//M�todo que desequipa al jugador y equipa un nuevo objeto
-	//M�todos unequip no son necesarios porque nunca va a poder estar desequipado
-	void equip(Equipment* equip);
+	
+
+	//metodos para guardar el puntero al equipamiento
+	void equip(Armor* armor) {  equip_.armor_ = armor;  };
+	void equip(Gloves* gloves) { equip_.gloves_ = gloves;  };
+	void equip(Boots* boots) { equip_.boots_ = boots; };
+	void equip(Sword* sword) { equip_.sword_ = sword;  };
+	void equip(Gun* gun) { equip_.gun_ = gun; };
+	void equipPotion1(usable* pot) { equip_.potion1_ = pot; }
+	void equipPotion2(usable* pot) { equip_.potion2_ = pot; }
+
+	//metodos para usar las pociones
+	void usePotion(int value, potionType type);
+
+	//metodos para coger la info del player
+	playerEquipment& const getInfoEquip() { return equip_; }
 };
