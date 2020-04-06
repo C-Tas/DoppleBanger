@@ -37,6 +37,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{  RopeHUD,	"../Sources/assets/hud/lazoHUD.png" },
 	{  SkillsHUD, "../Sources/assets/hud/skillsHUD.png" },
 	{  CooldownHUD, "../Sources/assets/hud/cooldownHUD.png" },
+	{  ManaHUD, "../Sources/assets/hud/mana.png" },
 	{  ExplosionIcon, "../Sources/assets/hud/iconos/explosion.png" },
 	{  GolpeFuerteIcon, "../Sources/assets/hud/iconos/golpeFuerte.png" },
 	{  InvencibleIcon, "../Sources/assets/hud/iconos/invencible.png" },

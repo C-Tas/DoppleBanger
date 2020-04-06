@@ -70,12 +70,11 @@ void ShipState::initState()
 		app_->getTextureManager()->getTexture(Resources::ExitShip), goIsland);
 	addRenderUpdateLists(exit_);
 
-	////Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
-	playerEntry_ = Vector2D((app_->getWindowWidth() - wPlayer * 2), ((app_->getWindowHeight() * 3 / 4) - hPlayer));
-	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
-	addRenderUpdateLists(player_);
-
 	PlayState::initState();
+
+	playerEntry_ = Vector2D((app_->getWindowWidth() - wPlayer * 2), ((app_->getWindowHeight() * 3 / 4) - hPlayer));
+	player_->setPos(playerEntry_);
+	player_->setScale(Vector2D(wPlayer, hPlayer));
 }
 
 

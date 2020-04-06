@@ -23,6 +23,8 @@ bool Player::update()
 			clon_ = new Clon(app_, getVisPos(eventHandler_->getMousePos()), scale_, this);
 			app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
 			clonTime_ = SDL_GetTicks();
+			//Restamos el maná de la creación del clon
+			decreaseMana(clon_->getCost());
 		}
 	}
 

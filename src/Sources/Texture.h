@@ -52,5 +52,4 @@ public:
 	void render(const SDL_Rect& dest, double angle) const;
 
 	void close();
-
 };

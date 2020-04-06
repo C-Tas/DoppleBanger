@@ -33,12 +33,12 @@ void CaribbeanIslandState::initState()
 
 	createMonkey(numMonkeys_);
 
-	//Siempre se añade el último para que se renderice por encima de los demás objetos
-	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
-	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
-	addRenderUpdateLists(player_);
-
 	PlayState::initState();
+
+	//Posición inicial en la escena, ánimo
+	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
+	player_->setPos(playerEntry_);
+	player_->setScale(Vector2D(wPlayer, hPlayer));
 }
 
 void CaribbeanIslandState::createMonkey(int numMonkeys)

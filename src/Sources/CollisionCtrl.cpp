@@ -5,8 +5,6 @@
 unique_ptr<CollisionCtrl> CollisionCtrl::instance_;
 
 void CollisionCtrl::islandCollisions() {
-	
-
 	//Colisiones con obstáculos
 	for (auto ob : obstacles_) {
 		if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),

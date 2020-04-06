@@ -7,6 +7,12 @@ void GameManager::initGameManager(int currGold, Island unlockedIslands, int achi
 	achievementPoints_ = achievementPoints;
 }
 
+void GameManager::setSkillCooldown(bool cooldown, SkillKey key)
+{
+	skillsCooldown[(int)key] = cooldown;
+	hud_->setSkillCooldown(cooldown, (int)key);
+}
+
 void GameManager::setSkillEquiped(SkillName newSkill, SkillKey key)
 {
 	skillsEquipped[(int)key] = newSkill;

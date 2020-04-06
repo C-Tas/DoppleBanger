@@ -16,6 +16,8 @@ public:
 	void updateSkillKey(int key);
 	//Actualiza la textura asignada a la tecla
 	void updateObjectKey(int key);
+	//Actualiza el estado del cooldown
+	void setSkillCooldown(bool cooldown, int key);
 
 private:
 	list<Draw*> elementsHUD_;	//Lista de los elementos del HUD
@@ -39,6 +41,15 @@ private:
 	#pragma region Vida y mana
 	Texture* life_ = nullptr;		//Textura de la vida
 	SDL_Rect clipLife_;				//Contenido de vida
+	Sint16 xMana_ = 0;				//Coordenada x del centro de la circunferencia
+	Sint16 yMana_ = 0;				//Coordenada y del centro de la circunferencia
+	Sint16 endMana_ = 270;			//Punto donde termina de pintar la circunferencia
+	double propLife_ = 1.0;			//Proporción de vida
+	double propMana_ = 1.0;			//Proporción del maná
+	double currentLife_ = 0.0;		//Vida actual
+	double currentMana_ = 0.0;		//Maná actual
+	double maxLife_ = 0.0;			//Vida máxima
+	double maxMana_ = 0.0;			//Maná máximo
 	#pragma endregion
 	
 	#pragma region Constantes
@@ -53,9 +64,13 @@ private:
 	//Skills
 	const uint W_SKILLS = app_->getWindowWidth() * 5 / 13;
 	const uint H_SKILLS = app_->getWindowHeight() / 10;
+
+	//Vida
+	const uint W_H_LIFE = app_->getWindowHeight() / 7;
+	const Sint16 START_MANA = 90;			//Punto donde empieza a pintar la circunferencia
+	const Sint16 MAX_DEGREES_MANA = 180;	//Grados máximos del arco de maná
 	#pragma endregion
 
-	int endLife = 270;
 	//Inicializa el objeto
 	virtual void initObject();
 	//Crea el fondo del HUD

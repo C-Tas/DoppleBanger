@@ -1,27 +1,19 @@
 #include "HUD.h"
 #include "SDL2_gfxPrimitives.h"
-#include "SDL2_rotozoom.h"
 #include "SDL_macros.h"
 #include "GameManager.h"
-#include "SDL.h"
 #include <array>
-#include <SDL_image.h>
-#include <string>
 
-HUD::~HUD()
-{
+HUD::~HUD() {
 	for (auto it = elementsHUD_.begin(); it != elementsHUD_.end(); ++it) {
 		delete(*it);
 	}
 	elementsHUD_.clear();
 }
 
-const void HUD::draw()
-{
-	//270 * currMana / maxMana;
-	//
-	/*filledPieRGBA(app_->getRenderer(), (app_->getWindowWidth() / 10), app_->getWindowHeight() * 6 / 7, W_WHEEL / 2, 90, endLife, 0, 0, 255, 255);
-	filledPieRGBA(app_->getRenderer(), (app_->getWindowWidth() / 10), app_->getWindowHeight() * 6 / 7, W_WHEEL / 2, 270, endLife, 255, 80, 15, 255);*/
+const void HUD::draw() {
+	filledPieRGBA(app_->getRenderer(), xMana_, yMana_, W_WHEEL / 2, START_MANA, endMana_, 36, 113, 163, 255);
+
 	for (auto it = elementsHUD_.begin(); it != elementsHUD_.end(); ++it) {
 		(*it)->draw();
 	}
@@ -35,6 +27,7 @@ const void HUD::draw()
 	int i = 0;
 	for (i = 0; i < 4; i++) {
 		if (icons[i] != nullptr) {
+			//if (boolCooldown[i]) monedaPlata->render();
 			icons[i]->render(iconRect);
 		}
 		//Actualiza el rect
@@ -55,18 +48,30 @@ const void HUD::draw()
 	iconRect.y = app_->getWindowHeight() * 15 / 18;
 	Texture points(app_->getRenderer(), to_string(gm_->getAchievementPoints()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	points.render(iconRect.x - points.getWidth()/2, iconRect.y);
+
+	//Contenedor de vida
+	iconRect.x = app_->getWindowWidth() / 16;
+	iconRect.y = (app_->getWindowHeight() * 10 / 13) + (W_H_LIFE * (1 - propLife_));
+	iconRect.w = W_H_LIFE;
+	iconRect.h = W_H_LIFE * propLife_;
+	life_->render(iconRect, clipLife_);
+
+	//Texture* mana = app_->getTextureManager()->getTexture(Resources::ManaHUD);
 }
 
-bool HUD::update()
-{
-	/*if (endLife >= 360) endLife = 1;
-	else if (endLife >= 90) endLife = 270;
-	endLife += 0.25 * app_->getDeltaTime();*/
+bool HUD::update() {
+	currentLife_ = dynamic_cast<Player*>(gm_->getPlayer())->getStats().health_;
+	propLife_ = currentLife_ / maxLife_;
+	clipLife_.h = life_->getHeight() * propLife_; //vidaAct * AltTotal / VidaMax
+	clipLife_.y = life_->getHeight() - clipLife_.h;
+
+	currentMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getStats().mana_;
+	propMana_ = currentMana_ / maxMana_;
+	endMana_ = (MAX_DEGREES_MANA * propMana_) + START_MANA;	//Proporción de vida para el arco del maná
 	return false;
 }
 
-void HUD::updateSkillKey(int key)
-{
+void HUD::updateSkillKey(int key) {
 	switch (key)
 	{
 	case (int)SkillKey::Q:
@@ -81,8 +86,7 @@ void HUD::updateSkillKey(int key)
 	}
 }
 
-void HUD::updateObjectKey(int key)
-{
+void HUD::updateObjectKey(int key) {
 	switch (key)
 	{
 	case (int)ObjectKey::One:
@@ -94,8 +98,21 @@ void HUD::updateObjectKey(int key)
 	}
 }
 
-void HUD::initObject()
-{
+void HUD::setSkillCooldown(bool cooldown, int key) {
+	switch (key) {
+	case (int)SkillKey::Q:
+		//qCooldown_ = cooldown;
+		break;
+	case (int)SkillKey::W:
+		break;
+	case (int)SkillKey::E:
+		break;
+	default:
+		break;
+	}
+}
+
+void HUD::initObject() {
 	//Inicialización del GameManager
 	gm_ = GameManager::instance();
 	SDL_Rect destRect;
@@ -104,7 +121,7 @@ void HUD::initObject()
 	//Timon
 	destRect.w = W_WHEEL; destRect.h = H_WHEEL;
 	destRect.x = (app_->getWindowWidth() / 10) - W_WHEEL / 2;
-	destRect.y = app_->getWindowHeight() * 5 / 7;
+	destRect.y = (app_->getWindowHeight() * 11 / 13) - H_WHEEL / 2;
 	createBg(app_->getTextureManager()->getTexture(Resources::WheelHUD), destRect);
 
 	//Cuerda
@@ -134,16 +151,19 @@ void HUD::initObject()
 	clipLife_.y = 0;
 	clipLife_.w = life_->getWidth();
 	clipLife_.h = life_->getHeight();
+	maxLife_ = dynamic_cast<Player*>(gm_->getPlayer())->getMaxHealth();
+
+	xMana_ = app_->getWindowWidth() / 10;
+	yMana_ = app_->getWindowHeight() * 11 / 13;
+	maxMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getMaxMana();
 }
 
-void HUD::createBg(Texture* tx, const SDL_Rect& destRect)
-{
+void HUD::createBg(Texture* tx, const SDL_Rect& destRect) {
 	Draw* background = new Draw(app_, tx, destRect);
 	elementsHUD_.push_back(background);
 }
 
-Texture* HUD::createSkillIcon(int key)
-{
+Texture* HUD::createSkillIcon(int key) {
 	switch ((int)gm_->getSkillEquipped(key))
 	{
 	case (int)SkillName::Unequipped:
@@ -169,8 +189,7 @@ Texture* HUD::createSkillIcon(int key)
 	return nullptr;
 }
 
-Texture* HUD::createObjectIcon(int key)
-{
+Texture* HUD::createObjectIcon(int key) {
 	switch ((int)gm_->getObjectEquipped(key))
 	{
 	case (int)ObjectName::Unequipped:

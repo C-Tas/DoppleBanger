@@ -49,6 +49,8 @@ public:
 	virtual bool reciveDmg(int damage);
 	//Método para matar
 	virtual void die() {};
+	//Método para gestionar el gasto del maná
+	virtual void decreaseMana(int mana) { currStats_.mana_ -= mana; };
 	//Devuelve el estado actual del actor
 	const STATE getState() { return currState_; };
 	//Detiene el movimiento

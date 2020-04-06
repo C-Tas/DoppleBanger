@@ -114,6 +114,8 @@ private:
 	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
 	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
+	//Vector de cooldowns de las habilidades equipadas
+	vector<bool> skillsCooldown = vector<bool>(4);
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped = vector<SkillName>(4);
 	//Vector que contiene los objetos equipados
@@ -134,6 +136,7 @@ public:
 			missionsComplete[i] = false;
 		}
 		for (int i = 0; i < 4; i++) {
+			skillsCooldown[i] = false;
 			skillsEquipped[i] = SkillName::Rebote;
 		}
 		for (int i = 0; i < 2; i++) {
@@ -179,10 +182,12 @@ public:
 	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };
 	//Devuelve true si la misión está empezada
 	const bool isThatMissionStarted(missions mission) { return missionsStarted[(int)mission]; };
+	//Devuelve si está activo el cooldown de la habilidad
+	const bool getSkillCooldown(int skill) { return skillsCooldown[skill]; };
 	//Devuele la habilidad equipada
-	const SkillName getSkillEquipped(int skill) { return skillsEquipped[skill]; }
+	const SkillName getSkillEquipped(int skill) { return skillsEquipped[skill]; };
 	//Devuelve el objeto equipado
-	const ObjectName getObjectEquipped(int object) { return objectsEquipped[object]; }
+	const ObjectName getObjectEquipped(int object) { return objectsEquipped[object]; };
 	//Revisar
 	//Devuelve la posición del player
 	const Point2D getPlayerPos() { return player_->getPos(); };
@@ -211,6 +216,8 @@ public:
 	inline void setCompleteMission(missions mission) { missionsComplete[(int)mission] = true; };
 	//Empieza una misión secundaria
 	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
+	//Actualiza el estado del cooldown, no es inline por el HUD
+	void setSkillCooldown(bool cooldown, SkillKey key);
 	//Actualiza la habilidad equipada en el HUD y en el vector, no es inline por el HUD
 	void setSkillEquiped(SkillName newSkill, SkillKey key);
 	//Actualiza el objeto equipado en el HUD y en el vector, no es inline por el HUD

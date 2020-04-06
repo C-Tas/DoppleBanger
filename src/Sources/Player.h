@@ -27,7 +27,9 @@ public:
 	const int getLiberation() { return liberation_; };
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
-	virtual void die() { currState_ = STATE::DIYING; }
+	const double getMaxHealth() { return HEALTH; };
+	const double getMaxMana() { return MANA; };
+	virtual void die() { currState_ = STATE::DIYING; };
 private:
 	bool attacking = false;
 
