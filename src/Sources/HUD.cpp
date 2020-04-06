@@ -55,8 +55,6 @@ const void HUD::draw() {
 	iconRect.w = W_H_LIFE;
 	iconRect.h = W_H_LIFE * propLife_;
 	life_->render(iconRect, clipLife_);
-
-	//Texture* mana = app_->getTextureManager()->getTexture(Resources::ManaHUD);
 }
 
 bool HUD::update() {
@@ -68,6 +66,7 @@ bool HUD::update() {
 	currentMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getStats().mana_;
 	propMana_ = currentMana_ / maxMana_;
 	endMana_ = (MAX_DEGREES_MANA * propMana_) + START_MANA;	//Proporción de vida para el arco del maná
+	if (endMana_ <= 90) endMana_ = 90;
 	return false;
 }
 
