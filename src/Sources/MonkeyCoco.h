@@ -19,14 +19,18 @@ public:
 	virtual void initObject();
 	virtual void onCollider();
 private:
-	//Último ataque
-	Uint32 lastHit = 0;
-	//Último frame de animación
-	Uint32 lasFrame_ = 0;
 	//Diferentes animaciones del mono
 	Anim attackAnim_ = { 0,0,0,0,0 ,""};
 	Anim walkAnim_ = { 0,0,0,0,0,"" };
 	Anim idleAnim_ = { 0,0,0,0,0,"" };
+
+
+	//Ataque del monkeyCoco
+	void attack();
+	//Inicializa las animaciones
+	void initAnims();
+
+
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)
 	#pragma region Constantes
@@ -71,26 +75,4 @@ private:
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 2500;
 #pragma endregion
-	//Vector que representa el alto y ancho de la caja de colisiones
-	Point2D boxCollision_;
-	//Entero que representa la cantidad de frames que tiene para las animaciones
-	const int NUM_FRAMES = 0;
-	//Frame para renderizar dentro de un spritesheet
-	const SDL_Rect FIRST_FRAME = { 0,0,0,0 };
-	//Determina si el jugador está dentro del rango de ataque del monkeyCoco
-	Vector2D isPlayerInRange();
-	//Determina si el clon está dentro del rango de ataque del monkeyCoco
-	Vector2D isClonInRange();
-	//Ataque del monkeyCoco
-	void attack();
-	//Gestiona las diferentes animaciones que tiene el monkeyCoco
-	void changeAnim(Anim& newAnim);
-	//Devuelve true si el target está dentro del rango de ataque
-	bool onRange();
-	//Inicializa todas las animaciones
-	void initAnims();
-	//Actualiza la actual animación
-	void updateAnim();
-	//Busca y actualiza al enemigo que atacar
-	bool getEnemy();
 };

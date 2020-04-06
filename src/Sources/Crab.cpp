@@ -36,14 +36,12 @@ void Crab::move(Point2D target)
 		updateTarget();
 	}
 }
-bool Crab::attack() { 
+void Crab::attack() { 
 	if (visPos_.getX() < 200 && visPos_.getX() > 150 && visPos_.getY() < 500 && visPos_.getX() > 150) {
 		//doDamage();//falta definir en enemy
 		currState_ = STATE::ATTACKING;
 		currAnim_ = attackAnim_;
-		return true;
 	}
-	return false; 
 }
 
 void Crab::initObject()

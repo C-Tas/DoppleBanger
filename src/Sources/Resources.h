@@ -45,6 +45,7 @@ public:
 		Dragon,
         PlayerFront,
 		MonkeyFront,
+		Kraken,
 
 		//Animaciones
 		CrabAttack,

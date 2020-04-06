@@ -37,6 +37,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PlayerFront, "../Sources/assets/player/frontal.png"},
 	{ CrabAttack, "../Sources/assets/enemigos/crab/crab_attack.png" },
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
+	{ Kraken, "../Sources/assets/enemigos/kraken/kraken.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
