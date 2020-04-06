@@ -85,7 +85,6 @@ vector <Resources::FontInfo> Resources::fontsRoutes{
 };
 
 vector <Resources::TextMsgInfo> Resources::messages{
-
 	//Para añadir nuevo texto: {TextureId , string "mensaje", { COLOR(0xaaffffff), FontId  }
 	{ PlayText,"Nueva Partida",SDL_Color{(0,0,0,1)},RETRO },
 	{ ExitText,"Salir",SDL_Color{(0,0,0,1)},RETRO },

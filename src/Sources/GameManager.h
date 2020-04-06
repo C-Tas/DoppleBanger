@@ -99,7 +99,7 @@ private:
 	//Enum de la isla actual
 	Island currIsland_ = Island::Caribbean;
 	//Puntos de hazaña
-	int achievementPoints_ = 0;
+	int achievementPoints_ = 100;
 	//Puntos de hazaña gastados en la rama precisión
 	spentPoints precision_ = spentPoints::Precision;
 	//Puntos de hazaña gastados e la rama melee

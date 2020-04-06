@@ -35,6 +35,12 @@ private:
 	Texture* one_ = nullptr;		//Tecla asignada al objeto
 	Texture* two_ = nullptr;		//Tecla asignada al objeto
 	#pragma endregion
+
+	#pragma region Vida y mana
+	Texture* life_ = nullptr;		//Textura de la vida
+	SDL_Rect clipLife_;				//Contenido de vida
+	#pragma endregion
+	
 	#pragma region Constantes
 	//Timon
 	const uint W_WHEEL = app_->getWindowWidth() * 3 / 19;
@@ -59,4 +65,3 @@ private:
 	//Crea las texturas para los objetos
 	Texture* createObjectIcon(int key);
 };
-

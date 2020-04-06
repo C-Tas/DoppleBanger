@@ -1,8 +1,12 @@
 #include "HUD.h"
 #include "SDL2_gfxPrimitives.h"
 #include "SDL2_rotozoom.h"
-#include <array>
+#include "SDL_macros.h"
 #include "GameManager.h"
+#include "SDL.h"
+#include <array>
+#include <SDL_image.h>
+#include <string>
 
 HUD::~HUD()
 {
@@ -45,11 +49,12 @@ const void HUD::draw()
 		//Actualiza el rect
 		iconRect.x += DISTANCE_BTW_ICON;
 	}
-	//filledCircleRGBA(app_->getRenderer(),  400, 100, 0, 87, 255);
-	//filledCircleRGBA(app_->getRenderer(), app_->getWindowWidth() / 2, app_->getWindowHeight(), 200, 207, 0, 15, 255);
-	//roundedRectangleRGBA(app_->getRenderer(), 200, 400, 600, 500, 7, 207, 0, 15, 255);
-	//arcRGBA(app_->getRenderer(), app_->getWindowWidth() / 2, app_->getWindowHeight() / 2, 400, 90, 270, 255, 0, 15, 255);
-	//arcRGBA(app_->getRenderer(), app_->getWindowWidth() / 2, app_->getWindowHeight() / 2, 200, 90, 270, 255, 0, 15, 255);
+
+	//Para los puntos de hazaña
+	iconRect.x = app_->getWindowWidth() * 9 / 10;
+	iconRect.y = app_->getWindowHeight() * 15 / 18;
+	Texture points(app_->getRenderer(), to_string(gm_->getAchievementPoints()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	points.render(iconRect.x - points.getWidth()/2, iconRect.y);
 }
 
 bool HUD::update()
@@ -93,10 +98,9 @@ void HUD::initObject()
 {
 	//Inicialización del GameManager
 	gm_ = GameManager::instance();
-
-	//Creacion del fondo del HUD
 	SDL_Rect destRect;
 
+	//Creacion del fondo del HUD
 	//Timon
 	destRect.w = W_WHEEL; destRect.h = H_WHEEL;
 	destRect.x = (app_->getWindowWidth() / 10) - W_WHEEL / 2;
@@ -123,6 +127,13 @@ void HUD::initObject()
 	r_ = app_->getTextureManager()->getTexture(Resources::MonkeyFront); icons.push_back(r_);
  	one_ = createObjectIcon((int)ObjectKey::One); icons.push_back(one_);
 	two_ = createObjectIcon((int)ObjectKey::Two); icons.push_back(two_);
+
+	//Inicializamos la vida al máximo
+	life_ = app_->getTextureManager()->getTexture(Resources::CooldownHUD);
+	clipLife_.x = 0;
+	clipLife_.y = 0;
+	clipLife_.w = life_->getWidth();
+	clipLife_.h = life_->getHeight();
 }
 
 void HUD::createBg(Texture* tx, const SDL_Rect& destRect)

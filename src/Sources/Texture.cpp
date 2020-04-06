@@ -16,6 +16,11 @@ Texture::Texture(SDL_Renderer* renderer, const string& text, const Font* font, c
 	loadFromText(renderer, text, font, color);
 }
 
+Texture::Texture(SDL_Renderer* renderer, SDL_Surface* src, SDL_Rect* srcRect, SDL_Surface* dest, SDL_Rect* destRect) :
+	texture_(nullptr), width_(0), height_(0) {
+	loadFromSurface(renderer, src, srcRect, dest, destRect);
+}
+
 Texture::~Texture() {
 	close();
 }
@@ -61,6 +66,27 @@ bool Texture::loadFromText(SDL_Renderer* renderer, const string& text, const Fon
 	}
 	else {
 		throw "No se puede cargar el texto: " + text;
+	}
+	renderer_ = renderer;
+	return texture_ != nullptr;
+}
+
+bool Texture::loadFromSurface(SDL_Renderer* renderer, SDL_Surface* src, SDL_Rect* srcRect, SDL_Surface* dest, SDL_Rect* destRect)
+{
+	if (SDL_BlitSurface(src, srcRect, dest, destRect) == 0) {
+		if (dest != nullptr) {
+			close(); // destruye la textura actual para sustituirla
+			texture_ = SDL_CreateTextureFromSurface(renderer, dest);
+			if (texture_ != nullptr) {
+				width_ = dest->w;
+				height_ = dest->h;
+			}
+			SDL_FreeSurface(dest);
+			//SDL_FreeSurface(src);
+		}
+		else {
+			throw "No se ha podido hacer BlitSurface";
+		}
 	}
 	renderer_ = renderer;
 	return texture_ != nullptr;
