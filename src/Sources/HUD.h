@@ -36,6 +36,8 @@ private:
 	Texture* r_ = nullptr;			//Tecla asignada a la habilidad
 	Texture* one_ = nullptr;		//Tecla asignada al objeto
 	Texture* two_ = nullptr;		//Tecla asignada al objeto
+	Texture* cdBg_ = nullptr;		//Background del cooldown
+	vector<bool> cdKeys;			//Vector del estado del cooldown de las habilidades
 	#pragma endregion
 
 	#pragma region Vida y mana

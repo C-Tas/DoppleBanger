@@ -77,7 +77,8 @@ enum class ObjectName : int {
 enum class SkillKey : int {
 	Q,
 	W,
-	E
+	E,
+	R
 };
 
 //Enum para identificar las teclas de los objetos

@@ -12,7 +12,7 @@ class PlayState : public GameState
 {
 public:
 	///<summary>Constructora PlayState</summary>
-	PlayState(Application* app = nullptr) : GameState(app) { initState(); };
+	PlayState(Application* app = nullptr) : GameState(app) {};
 	///<summary>Destructora</summary>
 	virtual ~PlayState() { };
 

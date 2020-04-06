@@ -27,7 +27,7 @@ const void HUD::draw() {
 	int i = 0;
 	for (i = 0; i < 4; i++) {
 		if (icons[i] != nullptr) {
-			//if (boolCooldown[i]) monedaPlata->render();
+			if (cdKeys[i]) cdBg_->render(iconRect);
 			icons[i]->render(iconRect);
 		}
 		//Actualiza el rect
@@ -101,13 +101,16 @@ void HUD::updateObjectKey(int key) {
 void HUD::setSkillCooldown(bool cooldown, int key) {
 	switch (key) {
 	case (int)SkillKey::Q:
-		//qCooldown_ = cooldown;
+		cdKeys[key] = cooldown;
 		break;
 	case (int)SkillKey::W:
+		cdKeys[key] = cooldown;
 		break;
 	case (int)SkillKey::E:
+		cdKeys[key] = cooldown;
 		break;
-	default:
+	case (int)SkillKey::R:
+		cdKeys[key] = cooldown;
 		break;
 	}
 }
@@ -115,9 +118,11 @@ void HUD::setSkillCooldown(bool cooldown, int key) {
 void HUD::initObject() {
 	//Inicialización del GameManager
 	gm_ = GameManager::instance();
+	gm_->setHUD(this);
 	SDL_Rect destRect;
 
 	//Creacion del fondo del HUD
+	#pragma region Background
 	//Timon
 	destRect.w = W_WHEEL; destRect.h = H_WHEEL;
 	destRect.x = (app_->getWindowWidth() / 10) - W_WHEEL / 2;
@@ -135,6 +140,8 @@ void HUD::initObject() {
 	destRect.x = (app_->getWindowWidth() / 2) - W_SKILLS / 2;
 	destRect.y = app_->getWindowHeight() * 6 / 7;
 	createBg(app_->getTextureManager()->getTexture(Resources::SkillsHUD), destRect);
+	#pragma endregion
+	#pragma region Skills&Objects
 	//Aisgna la textura a la tecla correspondiente y se añaden al vector
 	q_ = createSkillIcon((int)SkillKey::Q); icons.push_back(q_);
 	w_ = createSkillIcon((int)SkillKey::W);	icons.push_back(w_);
@@ -144,7 +151,12 @@ void HUD::initObject() {
 	r_ = app_->getTextureManager()->getTexture(Resources::MonkeyFront); icons.push_back(r_);
  	one_ = createObjectIcon((int)ObjectKey::One); icons.push_back(one_);
 	two_ = createObjectIcon((int)ObjectKey::Two); icons.push_back(two_);
-
+	cdBg_ = app_->getTextureManager()->getTexture(Resources::CooldownHUD);
+	for (int i = 0; i < 4; i++) {
+		cdKeys.push_back(false);
+	}
+	#pragma endregion
+	#pragma region Life&Mana
 	//Inicializamos la vida al máximo
 	life_ = app_->getTextureManager()->getTexture(Resources::CooldownHUD);
 	clipLife_.x = 0;
@@ -156,6 +168,7 @@ void HUD::initObject() {
 	xMana_ = app_->getWindowWidth() / 10;
 	yMana_ = app_->getWindowHeight() * 11 / 13;
 	maxMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getMaxMana();
+	#pragma endregion
 }
 
 void HUD::createBg(Texture* tx, const SDL_Rect& destRect) {
