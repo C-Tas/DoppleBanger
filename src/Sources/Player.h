@@ -72,7 +72,7 @@ private:
 	//Balas
 	const uint W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
 	const double BULLET_VEL = 1000;							//Velocidad de la bala
-	const double BULLET_LIFE = 4;							//Vida de la bala, en segundo
+	const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
 #pragma endregion
 	virtual void initObject();
 

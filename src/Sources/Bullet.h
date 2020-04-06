@@ -6,9 +6,9 @@
 class Bullet : public Dynamic
 {
 public:
-	Bullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, int damage, bool enemyBullet = false,
+	Bullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, int damage,
 		double lifeSpan = 2, double speed = 1000, Vector2D scale = { 20, 20 }) :
-		Dynamic(app, pos, scale), damage_(damage), lifeSpan_(lifeSpan), speed_(speed), enemyBullet_(enemyBullet) {
+		Dynamic(app, pos, scale), damage_(damage), lifeSpan_(lifeSpan), speed_(speed) {
 		texture_ = texture;
 		collisionArea_ = { (int)pos.getX(), (int)pos.getY(), (int)scale.getX(), (int)scale.getY() };
 		init(pos, dir);

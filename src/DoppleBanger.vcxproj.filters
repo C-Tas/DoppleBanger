@@ -154,6 +154,9 @@
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
     <ClCompile Include="Sources\WinState.cpp" />
+    <ClCompile Include="Sources\EnemyPirate.cpp">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClCompile>
     <ClCompile Include="Sources\Crab.cpp">
       <Filter>GameObjects\Enemies</Filter>
     </ClCompile>
@@ -323,6 +326,9 @@
       <Filter>GameStateMahcine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\WinState.h" />
+    <ClInclude Include="Sources\EnemyPirate.h">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClInclude>
     <ClInclude Include="Sources\Crab.h">
       <Filter>GameObjects\Enemies</Filter>
     </ClInclude>

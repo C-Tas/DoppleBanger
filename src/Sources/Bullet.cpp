@@ -12,8 +12,6 @@ void Bullet::init(Vector2D pos, Vector2D dir)
 
 	//Se corrige la dirección para que la bala vaya centrada
 	move(dir);
-	if (enemyBullet_) CollisionCtrl::instance()->addEnemyBullet(this);
-	else CollisionCtrl::instance()->addPlayerBullet(this);
 }
 
 bool Bullet::update()

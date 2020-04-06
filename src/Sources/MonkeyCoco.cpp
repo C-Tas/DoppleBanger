@@ -48,6 +48,7 @@ bool MonkeyCoco ::update() {
 		}
 		lastHit = SDL_GetTicks();
 	}
+	
 	updateAnim();
 	return false;
 }
@@ -57,7 +58,8 @@ bool MonkeyCoco::onRange() {
 	if (currEnemy_ == nullptr) {
 		return false;
 	}
-	SDL_Rect rangeAttack = { getPosX(),getPosY(),currStats_.distRange_ * 2, currStats_.distRange_ * 2 };
+	SDL_Rect rangeAttack = { getPosX() - currStats_.meleeRange_ - (getScaleX() / 2)  ,
+	getPosY() - currStats_.meleeRange_ - (getScaleY() / 2),currStats_.meleeRange_ * 2, currStats_.meleeRange_ * 2 };;
 	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
 		return true;
 	}
@@ -98,11 +100,12 @@ void MonkeyCoco::changeAnim(Anim& newAnim) {
 void MonkeyCoco::attack() {
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
 	Bullet* coco = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
-		getCenter(pos_), dir, currStats_.distDmg_, true, COCO_LIFE, COCO_VEL, Vector2D(W_H_COCO, W_H_COCO));
+		getCenter(pos_), dir, currStats_.distDmg_, COCO_LIFE, COCO_VEL, Vector2D(W_H_COCO, W_H_COCO));
 	app_->getCurrState()->addRenderUpdateLists(coco);
+	CollisionCtrl::instance()->addEnemyBullet(coco);
 }
 
-//Inicializa al monkeyCoco
+//Inicializa al mono
 void MonkeyCoco::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
@@ -113,9 +116,11 @@ void MonkeyCoco::initObject() {
 	initAnim();
 }
 
-//Esto es un apaño, se eliminara cuando este completa la gestión de muertes
+//Gestión de las colisiones
 void MonkeyCoco::onCollider()
-{}
+{
+
+}
 
 //Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_
 bool MonkeyCoco::getEnemy() {
@@ -133,6 +138,11 @@ bool MonkeyCoco::getEnemy() {
 	return true;
 }
 
+void MonkeyCoco::lostAgro()
+{
+	currEnemy_ = nullptr;
+}
+
 //Devuelve la posición del player si está a rango 
 Vector2D MonkeyCoco::isPlayerInRange() {
 	GameManager* gm = GameManager::instance();
@@ -140,8 +150,8 @@ Vector2D MonkeyCoco::isPlayerInRange() {
 
 	Point2D playerPos = gm->getPlayerPos();
 	if (currEnemy_ == nullptr &&
-		playerPos.getX() <= pos_.getX() + currStats_.distRange_ && playerPos.getX() >= pos_.getX() - currStats_.distRange_
-		&& playerPos.getY() <= pos_.getY() + currStats_.distRange_ && playerPos.getY() >= pos_.getY() - currStats_.distRange_) {
+		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + currStats_.distRange_ && playerPos.getX() >= pos_.getX() - (getScaleX() / 2) - currStats_.distRange_
+		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + currStats_.distRange_ && playerPos.getY() >= pos_.getY() - (getScaleY() / 2) - currStats_.distRange_) {
 		return playerPos;
 	}
 	else
@@ -156,9 +166,9 @@ Vector2D MonkeyCoco::isClonInRange() {
 	if (gm->getClon() == nullptr) {  return { -1,-1 }; }
 
 	Point2D clonPos = gm->getClon()->getPos();
-	if (currEnemy_ == nullptr && 
-		clonPos.getX() <= pos_.getX() + currStats_.distRange_ && clonPos.getX() >= pos_.getX() - currStats_.distRange_
-		&& clonPos.getY() <= pos_.getY() + currStats_.distRange_ && clonPos.getY() >= pos_.getY() - currStats_.distRange_){
+	if (currEnemy_ == nullptr &&
+		clonPos.getX() <= pos_.getX() + (getScaleX() / 2) + currStats_.distRange_ && clonPos.getX() >= pos_.getX() - (getScaleX() / 2) - currStats_.distRange_
+		&& clonPos.getY() <= pos_.getY() + (getScaleY() / 2) + currStats_.distRange_ && clonPos.getY() >= pos_.getY() - (getScaleY() / 2) - currStats_.distRange_) {
 		static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
 		return clonPos;
 	}

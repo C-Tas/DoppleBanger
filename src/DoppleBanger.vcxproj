@@ -35,6 +35,7 @@
     <ClCompile Include="Sources\Dynamic.cpp" />
     <ClCompile Include="Sources\EndState.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
+    <ClCompile Include="Sources\EnemyPirate.cpp" />
     <ClCompile Include="Sources\Equipment.cpp" />
     <ClCompile Include="Sources\Font.cpp" />
     <ClCompile Include="Sources\FontManager.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Sources\Dynamic.h" />
     <ClInclude Include="Sources\EndState.h" />
     <ClInclude Include="Sources\Enemy.h" />
+    <ClInclude Include="Sources\EnemyPirate.h" />
     <ClInclude Include="Sources\Equipment.h" />
     <ClInclude Include="Sources\Font.h" />
     <ClInclude Include="Sources\FontManager.h" />

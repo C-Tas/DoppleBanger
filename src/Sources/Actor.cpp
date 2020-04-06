@@ -16,3 +16,4 @@ void Actor::reciveDmg(int damage) {
 		this->die();
 	}
 }
+

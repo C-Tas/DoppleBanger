@@ -37,6 +37,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PlayerFront, "../Sources/assets/player/frontal.png"},
 	{ CrabAttack, "../Sources/assets/enemigos/crab/crab_attack.png" },
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
+	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
+	{ Azul, "../Sources/assets/enemigos/azul.png" },
+
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
@@ -50,6 +53,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{
+		{Agro ,"../Sources/assets/efectos_sonido/agro.mp3" }
+
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 };
 

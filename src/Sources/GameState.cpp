@@ -27,6 +27,7 @@ void GameState::update() {
 	for (auto it = objRendToRemove_.begin(); it != objRendToRemove_.end(); ++it) {
 		gameObjects_.remove(*it);
 		objectsToRender_.remove(*it);
+		delete (*it);
 	}
 	objRendToRemove_.clear();
 
@@ -34,8 +35,6 @@ void GameState::update() {
 		if ((*it)->update())return;
 	}
 }
-
-
 
 void GameState::draw() const {
 	for (auto it = objectsToRender_.begin(); it != objectsToRender_.end(); ++it) {

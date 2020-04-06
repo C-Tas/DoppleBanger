@@ -2,12 +2,14 @@
 #include "Player.h"
 #include "ShipState.h"
 #include "MonkeyCoco.h"
+#include "EnemyPirate.h"
+#include "EndState.h"
 #include "WinState.h"
 
 
 void CaribbeanIslandState::update()
 {
-	if (kills >= numMonkeys_) {
+	if (enemies_.empty()) {
 		collisionCtrl_->clearLists();
 		app_->getGameStateMachine()->changeState(new WinState(app_));
 	}
@@ -25,8 +27,9 @@ void CaribbeanIslandState::initState()
 	addRenderUpdateLists(background_);
 
 	createMonkey(numMonkeys_);
+	createPirates(numPirates_);
 
-	//Siempre se añade el último para que se renderice por encima de los demás objetos
+	//Siempre se aï¿½ade el ï¿½ltimo para que se renderice por encima de los demï¿½s objetos
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
 	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
 	addRenderUpdateLists(player_);
@@ -42,5 +45,23 @@ void CaribbeanIslandState::createMonkey(int numMonkeys)
 		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
 		newMonkey = new MonkeyCoco(app_, pos, Vector2D(wMonkey, hMonkey));
 		addEnemy(newMonkey);
+	}
+}
+
+void CaribbeanIslandState::createPirates(int numPirates)
+{
+	int wWin = app_->getWindowWidth();
+	int hWin = app_->getWindowHeight();
+	vector<Point2D> patrol;
+	patrol.push_back({ (double)app_->getRandom()->nextInt(200,app_->getWindowWidth() - 200) , (double)app_->getRandom()->nextInt(200,app_->getWindowHeight() - 200) });
+	patrol.push_back({ (double)app_->getRandom()->nextInt(200,app_->getWindowWidth() - 200) , (double)app_->getRandom()->nextInt(200,app_->getWindowHeight() - 200) });
+	patrol.push_back({ (double)app_->getRandom()->nextInt(200,app_->getWindowWidth() - 200) , (double)app_->getRandom()->nextInt(200,app_->getWindowHeight() - 200) });
+
+	EnemyPirate* newPirate;
+	Vector2D pos;
+	for (int i = 0; i < numPirates; i++) {
+		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
+		newPirate = new EnemyPirate(app_, pos, Vector2D(wMonkey, hMonkey), patrol);
+		addEnemy(newPirate);
 	}
 }

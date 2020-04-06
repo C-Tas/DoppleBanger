@@ -1,31 +1,49 @@
 #pragma once
 #include "Enemy.h"
-#include <vector>
-
-class MonkeyCoco : public Enemy
+class EnemyPirate :
+	public Enemy
 {
 public:
-	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores ser?n los puestos, si se le pasan valores los editara</summary>
-	MonkeyCoco(Application* app = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0, 0 })
-		:Enemy(app, pos, scale) {
+	EnemyPirate(Application* app = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0, 0 },
+		vector<Point2D> patrol = { {0,0} }) :
+		Enemy(app, pos, scale), patrol_(patrol) {
 		initObject();
 	};
-	//<summary>Constructor por copia</summary>
-	MonkeyCoco(MonkeyCoco& other) :Enemy(other.app_, other.pos_) { initObject(); };
-	//<summary>Constructor por movimiento<summary>
-	MonkeyCoco(MonkeyCoco&& other)noexcept :Enemy(other.app_, other.pos_) { initObject(); };
+	EnemyPirate(EnemyPirate& other):Enemy(other.app_,other.pos_,other.scale_) { initObject(); };
+	EnemyPirate(EnemyPirate&& other)noexcept :Enemy(other.app_, other.pos_, other.scale_) { initObject(); };
 
 	virtual bool update();
 	virtual void initObject();
 	virtual void onCollider();
-	virtual ~MonkeyCoco() {};
+	virtual void die() { currState_ = STATE::DYING; };
+	virtual void move(Vector2D pos);
+	virtual  ~EnemyPirate() {};
+
 private:
-	//Último ataque
-	Uint32 lastHit = 0;
+
+	//Puntos del mapa donde va a patrullar
+	vector<Point2D> patrol_;
+	//Punto que representa dentro del vector de patrulla
+	int currTarget_ = 0;
+	//Enum que representa los diferentes estados de ataque del pirata
+	enum class ATK_STATUS
+	{
+		MELEE,RANGE
+	};
+	//Estado de ataque actual del pirata
+	ATK_STATUS currAtackStatus_ = ATK_STATUS::RANGE;
+	//Último ataque a distancia
+	Uint32 lastRangeHit_ = 0;
+	//Último ataque a melee
+	Uint32 lastMeleeHit_ = 0;
 	//Último frame de animación
-	Uint32 lasFrame_ = 0;
-	//Diferentes animaciones del mono
-	Anim attackAnim_ = { 0,0,0,0,0 ,""};
+	Uint32 lastFrame_ = 0;
+	//Tiempo que el pirata pasa parado cuando llega a un target
+	Uint32 idleTime_ = 1000;
+	//Tiempo 
+	uint lastIdleTime = 0;
+	//Diferentes animaciones del pirata
+	Anim attackAnim_ = { 0,0,0,0,0 ,"" };
 	Anim walkAnim_ = { 0,0,0,0,0,"" };
 	Anim idleAnim_ = { 0,0,0,0,0,"" };
 	//Constantes para crear las diferentes animaciones 
@@ -52,28 +70,24 @@ private:
 	const uint H_FRAME_IDLE = 200;
 	const int FRAME_RATE_IDLE = 100;
 	const string NAME_IDLE = "idle";
-	//Proyectil
-	const uint W_H_COCO = app_->getWindowHeight() / 40;		//Tamaño del coco
-	const double COCO_VEL = 700;							//Velocidad del coco
-	const double COCO_LIFE = 3;								//Vida del proyectil en segundos
-	#pragma endregion
-	//Estadisticas para inicializar al monkeyCoco
-	#pragma region Stats
-	const double HEALTH = 100;
-	const double MANA = 100;
-	const double MANA_REG = 1;
-	const double ARMOR = 10;
-	const double MELEE_DMG = 0;
-	const double DIST_DMG = 100;
-	const double CRIT = 0;
-	const double MELEE_RANGE = 20;
-	const double DIST_RANGE = 250;
-	const double MOVE_SPEED = 100;
-	const double MELEE_RATE = 1;
-	const double DIST_RATE = 2500;
 #pragma endregion
+	//Estadisticas para inicializar al monkeyCoco
+	#pragma region consts
+	const double HEALTH = 1000;
+	const double MANA = 100;
+	const double MANA_REG = 100;
+	const double ARMOR = 10;
+	const double MELEE_DMG = 1;
+	const double DIST_DMG = 1;
+	const double CRIT = 2000;
+	const double MELEE_RANGE = 50;
+	const double DIST_RANGE = 75;
+	const double MOVE_SPEED = 250;
+	const double MELEE_RATE = 1500;
+	const double DIST_RATE = 1500;
+	#pragma endregion
 	//Vector que representa el alto y ancho de la caja de colisiones
-	Point2D boxCollision_;
+	const Point2D BOX_COLLISION;
 	//Entero que representa la cantidad de frames que tiene para las animaciones
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet
@@ -94,6 +108,9 @@ private:
 	void updateAnim();
 	//Busca y actualiza al enemigo que atacar
 	bool getEnemy();
-	//Cuando pierde el agro
+	//Cuando pierde agro del enemigo
 	virtual void lostAgro();
+	//Genera la posición a la que se mueve el pirata en función de su rango 
+	void selectTarget();
 };
+

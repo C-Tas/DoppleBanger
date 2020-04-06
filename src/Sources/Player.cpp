@@ -78,9 +78,10 @@ void Player::shoot(Vector2D dir)
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 	shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.distDmg_, false,
+	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.distDmg_,
 		BULLET_LIFE, BULLET_VEL, Vector2D(W_H_BULLET, W_H_BULLET));
 	app_->getCurrState()->addRenderUpdateLists(bullet);
+	CollisionCtrl::instance()->addPlayerBullet(bullet);
 }
 
 void Player::onCollider()
