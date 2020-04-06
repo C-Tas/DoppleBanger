@@ -166,7 +166,7 @@ public:
 	//Devuelve el dinero del alijo
 	const int getStashGold() { return stashGold; }
 	//Devuele la habilidad equipada
-	const SkillNames getSkillEquiped(SkillEquiped& skill) { return skillsEquiped_[(int)skill]; }
+	const SkillNames getSkillEquiped(SkillEquiped skill) { return skillsEquiped_[(int)skill]; }
 	//Devuelve la tecla en la que está equipada la habilidad
 	const SkillEquiped getEquippedSkillKey(SkillNames skill) { int i = 0; 
 		while (i < skillsEquiped_.size() && skillsEquiped_[i] != skill)i++;

@@ -81,7 +81,7 @@ public:
 
 #pragma region SkillsEquipped
 	Skill* getSkillEquipped(int key) { return skillsEquiped_[key]; }
-	void setSkillAt(int key, Skill* skill) { delete skillsEquiped_[key]; skillsEquiped_[key] = skill; }
+	void setSkillAt(int key, Skill* skill) { if(skillsEquiped_[key]!= nullptr)delete skillsEquiped_[key]; skillsEquiped_[key] = skill; }
 	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquiped_; }
 
 #pragma endregion

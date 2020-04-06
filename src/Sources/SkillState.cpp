@@ -305,11 +305,8 @@ void SkillState::draw() const
 void SkillState::setPlayerSkills()
 {
 	if (player_ != nullptr) {
-		auto playerSkills = player_->getSkillsArray();
-		for (Skill* ob : playerSkills)delete ob;
-		Skill* aux;
-		for (int i = 0; i < gameManager_->getAllSkillsEquipped().size() - 1; i++) {
-			playerSkills[i] = createSkill((SkillNames)i);
+		for (int i = 0; i < gameManager_->getAllSkillsEquipped().size() - 1; i++) {//-i pq la del clon siempre está equipada por defecto
+			player_->setSkillAt(i, createSkill(gameManager_->getSkillEquiped((SkillEquiped)i)));
 		}
 	}
 }
