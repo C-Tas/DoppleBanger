@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
+    <ClCompile Include="Sources\Armor.cpp" />
+    <ClCompile Include="Sources\Boots.cpp" />
     <ClCompile Include="Sources\AudioManager.cpp" />
     <ClCompile Include="Sources\Bullet.cpp" />
     <ClCompile Include="Sources\Button.cpp" />
@@ -41,8 +43,12 @@
     <ClCompile Include="Sources\GameObject.cpp" />
     <ClCompile Include="Sources\GameState.cpp" />
     <ClCompile Include="Sources\GameStateMachine.cpp" />
+    <ClCompile Include="Sources\Gloves.cpp" />
+    <ClCompile Include="Sources\Gun.cpp" />
     <ClCompile Include="Sources\HandleEvents.cpp" />
     <ClCompile Include="Sources\interactuable.cpp" />
+    <ClCompile Include="Sources\Inventory.cpp" />
+    <ClCompile Include="Sources\InventoryButton.cpp" />
     <ClCompile Include="Sources\InventoryState.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\main.cpp" />
@@ -63,6 +69,8 @@
     <ClCompile Include="Sources\StashState.cpp" />
     <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\Sword.cpp" />
+    <ClCompile Include="Sources\TextBoxManager.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
@@ -72,6 +80,9 @@
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
+    <ClInclude Include="Sources\Armor.h" />
+    <ClInclude Include="Sources\Boots.h" />
+    <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\AudioManager.h" />
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\Button.h" />
@@ -94,10 +105,14 @@
     <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\GameState.h" />
     <ClInclude Include="Sources\GameStateMachine.h" />
+    <ClInclude Include="Sources\Gloves.h" />
+    <ClInclude Include="Sources\Gun.h" />
     <ClInclude Include="Sources\HandleEvents.h" />
     <ClInclude Include="Sources\Obstacle.h" />
     <ClInclude Include="Sources\Physics.h" />
     <ClInclude Include="Sources\interactuable.h" />
+    <ClInclude Include="Sources\Inventory.h" />
+    <ClInclude Include="Sources\InventoryButton.h" />
     <ClInclude Include="Sources\InventoryState.h" />
     <ClInclude Include="Sources\Item.h" />
     <ClInclude Include="Sources\MainMenuState.h" />
@@ -117,6 +132,8 @@
     <ClInclude Include="Sources\Stats.h" />
     <ClInclude Include="Sources\StoryState.h" />
     <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\Sword.h" />
+    <ClInclude Include="Sources\TextBoxManager.h" />
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\Trigger.h" />

@@ -44,17 +44,30 @@ private:
 	const double CLON_SPAWN_RANGE = 700;
 #pragma endregion
 
+private:
+	//Equipamiento del jugador
+	Armor* armor_ = nullptr;
+	Gloves* gloves_ = nullptr;
+	Boots* boots_ = nullptr;
+	Sword* sword_ = nullptr;
+	Gun* gun_ = nullptr;
+
+	void init();
+
 public:
 //Constructora de player
 	Player(Application* app, vector<Texture*> texture, Vector2D pos, Vector2D scale, SDL_Rect collisionArea) :
 		Actor(app, texture, pos, scale, collisionArea) {
-		eventHandler_ = HandleEvents::instance();
-		initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+		init();
 	};
-	~Player() {};
+	~Player();
 	virtual bool update();
 	void shoot(Vector2D dir);
 	virtual void onCollider() { /*Colisi�n con enemigo*/ };
 	void move(Point2D target);
 	void attack(Enemy* obj);
+	virtual void stop() { dir_ = Vector2D(0, 0); }
+	//M�todo que desequipa al jugador y equipa un nuevo objeto
+	//M�todos unequip no son necesarios porque nunca va a poder estar desequipado
+	void equip(Equipment* equip);
 };

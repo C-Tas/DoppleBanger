@@ -1,7 +1,11 @@
 #pragma once
 
-#include "Equipment.h"
 #include "SRandBasedGenerator.h"
+#include "Armor.h"
+#include "Boots.h"
+#include "Gloves.h"
+#include "Gun.h"
+#include "Sword.h"
 
 class GameManager;
 class Application;

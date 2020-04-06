@@ -8,14 +8,10 @@
 #include "SDL_macros.h"
 
 using namespace std;
+
 #pragma region Inicializacion
 void MainMenuState::initMenuState()
 {
-
-#ifdef _DEBUG
-	cout << "MainMenuState" << endl;
-#endif // _DEBUG
-
 	//Fondo de la escena
 	button_h = app_->getWindowHeight() / 10;
 	button_w = app_->getWindowWidth() / 6;

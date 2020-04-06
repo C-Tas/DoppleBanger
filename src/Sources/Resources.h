@@ -21,6 +21,7 @@ public:
 
 		//Fondos
 		InventaryMenu,
+		StashMenu,
 		Scene1,
 		Scene2,
 		Scene3,
@@ -36,7 +37,17 @@ public:
 		ExitText,
 		ControlsText,
 		LoadText,
-		CreditsText
+		CreditsText,
+		StashMoneyText,
+		InventoryMoneyText,
+
+		//Botones
+		ForwardArrow,
+		BackwardsArrow,
+		TrashButton,
+		ChangeButton,
+		CloseButton,
+		MoneyButton,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

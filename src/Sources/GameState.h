@@ -10,6 +10,7 @@
 #include "Button.h"
 #include <list>
 #include "checkML.h"
+#include "GameManager.h"
 
 using namespace std;
 using uint = unsigned int;
@@ -32,9 +33,11 @@ protected:
 	Application* app_;
 	///<summary>Referencia al HandleEvents</summary>
 	HandleEvents* eventHandler_;
+	///<summary>Referencia al gameManager</summary>
+	GameManager* gameManager_;
 
 public:
-	GameState(Application* app = nullptr) : app_(app) { eventHandler_ = HandleEvents::instance(); };
+	GameState(Application* app = nullptr) : app_(app) { eventHandler_ = HandleEvents::instance(); gameManager_ = GameManager::instance(); };
 	virtual ~GameState();
 	///<summary>Renderiza todos los objetos en la lista de objectToRender_</summary>
 	virtual void draw() const;//Renderiza todos los objetos en la lista de objectToRender_

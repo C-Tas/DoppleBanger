@@ -2,7 +2,6 @@
 #include "MainMenuState.h"
 #include "SelectLevelState.h"
 #include "ControlsState.h"
-#include"VolcanicIslandState.h"
 #include "HandleEvents.h"
 #include <exception>
 #include "GameManager.h"
@@ -11,9 +10,9 @@ Application::Application(GameStateMachine* state) {
 	
 	initSDL();
 	initResources();
-	machine_ = new GameStateMachine(); //Creación máquina de estados
+	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
+	machine_->pushState(startState);
 }
 
 Application::~Application() {
@@ -84,7 +83,7 @@ void Application::initResources() {
 	audioManager_ = new AudioManager();
 	audioManager_->init();
 
-	///<summary>Generador de randoms</summary>
+	//Crear e inicializar el generador de equipamiento aleatorio
 	equipGen_ = new RandEquipGen(this);
 
 	//Creacion de las texturas
@@ -122,5 +121,5 @@ void Application::closeResources() {
 	delete fontManager_;
 	delete textureManager_;
 	delete audioManager_;
-    delete equipGen_;
+	delete equipGen_;
 }
