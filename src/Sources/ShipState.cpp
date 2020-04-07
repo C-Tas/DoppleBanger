@@ -78,6 +78,8 @@ void ShipState::initState()
 	playerEntry_ = Vector2D((app_->getWindowWidth() - W_PLAYER * 2), ((app_->getWindowHeight() * 3 / 4) - H_PLAYER));
 	player_ = new Player(app_, playerEntry_, Vector2D(W_PLAYER, H_PLAYER));
 	addRenderUpdateLists(player_);
+
+	startInstance_ = SDL_GetTicks();
 }
 
 
@@ -111,6 +113,12 @@ void ShipState::update()
 			doorClick = false;
 			wheelClick = false;
 		}
+	}
+
+	if (!songActive && pirateSingers_ <= SDL_GetTicks() - startInstance_) {
+		app_->getAudioManager()->playMusic(Resources::ShipSingers, -1);
+		songActive = true;
+
 	}
 
 	//Colisiones con los objetos del barco

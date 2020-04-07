@@ -45,6 +45,9 @@ public:
 		Dragon,
         PlayerFront,
 		MonkeyFront,
+		WolfFront,
+
+		//gizmos
 		Rojo,
 		Azul,
 
@@ -74,9 +77,15 @@ public:
 	enum AudioId : int{
 		//Música
 		MainTheme,
+		ShipSingers,
 
 		//Efectos de sonido
-		Agro
+		Agro,
+
+		//Efectos para el lobo
+		WolfHowl,
+		WolfAttack,
+		WolfDie
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

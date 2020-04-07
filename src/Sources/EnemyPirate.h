@@ -20,11 +20,10 @@ public:
 	virtual  ~EnemyPirate() {};
 
 private:
-
 	//Puntos del mapa donde va a patrullar
 	vector<Point2D> patrol_;
 	//Punto que representa dentro del vector de patrulla
-	int currTarget_ = 0;
+	int currPatrol_ = 0;
 	//Enum que representa los diferentes estados de ataque del pirata
 	enum class ATK_STATUS
 	{

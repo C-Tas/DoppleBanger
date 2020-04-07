@@ -37,6 +37,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PlayerFront, "../Sources/assets/player/frontal.png"},
 	{ CrabAttack, "../Sources/assets/enemigos/crab/crab_attack.png" },
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
+	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
 	{ Azul, "../Sources/assets/enemigos/azul.png" },
 
@@ -53,13 +54,20 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{
-		{Agro ,"../Sources/assets/efectos_sonido/agro.mp3" }
+	{Agro ,"../Sources/assets/efectos_sonido/agro.mp3" },
+	{WolfHowl ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
+	{WolfAttack ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
+	{WolfDie ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" }
+
 
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 };
 
 vector <Resources::MusicInfo> Resources::musicRoutes{
-	{MainTheme ,"../Sources/assets/music/mainTheme.mp3" }
+	{MainTheme ,"../Sources/assets/music/mainTheme.mp3" },
+	{ShipSingers ,"../Sources/assets/music/ShipSingers.mp3" }
+
+
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 };
 
