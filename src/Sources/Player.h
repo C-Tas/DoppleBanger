@@ -6,6 +6,7 @@
 #include "Skill.h"
 #include <array>
 
+class WhirlwindSkill;
 
 class Player : public Actor
 {
@@ -49,6 +50,9 @@ private:
 
 	const double CLON_SPAWN_RANGE = 700;
 #pragma endregion
+
+	//Prueba del torbellino
+	WhirlwindSkill* skill_;
 
 //Equipamiento del jugador
 	Armor* armor_ = nullptr;

@@ -5,6 +5,7 @@
 #include "SelectLevelState.h"
 #include "StashState.h"
 #include "Collisions.h"
+#include "Crab.h"
 
 void PlayState::initPlayState() {
 	//Creaci�n del player
@@ -27,9 +28,21 @@ void PlayState::initPlayState() {
 		addRenderList(ob);
 	}
 
+	enemies_.push_back(new Crab(app_, { app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), app_->getTextureManager()->getTexture(Resources::TextureId::Timon) }, { 0,20 }, { 120,120 }, { 0,20,120,120 }, { 1,0,0,0,0,0,0,0,100,0,0 }, { 0,0,144,133 }, { 3,1 }, { {450,60},{200,200},{50,60} }));
+	enemies_.push_back(new Crab(app_, { app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), app_->getTextureManager()->getTexture(Resources::TextureId::Timon) }, { 0,150 }, { 120,120 }, { 0,150,120,120 }, { 1,0,0,0,0,0,0,0,100,0,0 }, { 0,0,144,133 }, { 3,1 }, { {450,60},{200,200},{50,60} }));
+	enemies_.push_back(new Crab(app_, { app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), app_->getTextureManager()->getTexture(Resources::TextureId::Timon) }, { 0,280 }, { 120,120 }, { 0,280,120,120 }, { 1,0,0,0,0,0,0,0,100,0,0 }, { 0,0,144,133 }, { 3,1 }, { {450,60},{200,200},{50,60} }));
+
+	for (auto ob : enemies_) {
+		addUpdateList(ob);
+		addRenderList(ob);
+	}
+
+	//Pruebas para el torbellino
+
 	collisionCtrl_ = CollisionCtrl::instance();
 	collisionCtrl_->setPlayer(player_);
 	collisionCtrl_->setObstacles(obstacles_);
+	collisionCtrl_->setEnemies(enemies_);
 	/*Seteamos todo lo necesario (enemigos, objetos, NPCs, etc)*/
 }
 

@@ -6,11 +6,12 @@ enum class SkillBranch { Physical, Distance, Ghost };
 class Skill
 {
 
-private:
+protected:
 	SkillType type_;
 	SkillBranch branch_;
-	double lastTimeUsed_;
-	double cooldown_;
+	double lastTimeUsed_ = 0;
+	double cooldown_ = 0;
+
 public:
 	///<summary>Constructora</summary>
 	Skill(SkillType type, SkillBranch branch) : type_(type),  branch_(branch) {};

@@ -124,5 +124,6 @@
     <ClInclude Include="Sources\Vector2D.h" />
     <ClInclude Include="Sources\VolcanicIslandState.h" />
     <ClInclude Include="Sources\SkillButton.h" />
+    <ClInclude Include="Sources\WhirlwindSkill.h" />
   </ItemGroup>
 </Project>

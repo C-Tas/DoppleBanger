@@ -1,5 +1,6 @@
 #include "StoryState.h"
 #include "PlayState.h"
+
 void StoryState::goToGame(Application* app) {
 	app->getStateMachine()->changeState(new PlayState(app));
 }

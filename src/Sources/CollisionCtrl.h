@@ -58,6 +58,7 @@ public:
 	///<summary>Comprueba las colisiones</summary>
 	void islandCollisions();
 	void shipCollisions();
+	list<Enemy*> getEnemiesInArea(Point2D center, int radius);
 
 #pragma region Removes
 	///<summary>Quita las colisiones con el NPC (si el NPC se desbloquea y deja de aparecer en la isla)</summary>

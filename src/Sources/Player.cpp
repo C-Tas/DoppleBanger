@@ -5,9 +5,12 @@
 #include "GameState.h"
 #include "Bullet.h"
 #include "GameState.h"
+#include "WhirlwindSkill.h"
 
 void Player::init()
 {
+	skill_ = new WhirlwindSkill(this);
+
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
 	armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pechera", "helloWorld", 10, 10, 10); armor_->writeStats(); //Prueba
@@ -20,6 +23,9 @@ void Player::init()
 bool Player::update()
 {
 	updateVisPos();
+
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_W))
+		skill_->action();
 
 	//Si se pulsa la Q y se ha acabado el cooldown y se está a rango
 	//Hago un if dentro de otro if ya que como el de dentro tiene que hacer cálculos, estos solo se hagan
@@ -139,6 +145,9 @@ void Player::equip(Equipment* equip)
 
 Player::~Player()
 {
+	//Temporal para no dejar basura
+	delete skill_;
+
 	delete armor_;
 	delete gloves_;
 	delete boots_;
