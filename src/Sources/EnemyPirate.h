@@ -15,7 +15,6 @@ public:
 	virtual bool update();
 	virtual void initObject();
 	virtual void onCollider();
-	virtual void die() { currState_ = STATE::DYING; };
 	virtual void move(Vector2D pos);
 	virtual  ~EnemyPirate() {};
 
@@ -76,8 +75,8 @@ private:
 	const double MANA = 100;
 	const double MANA_REG = 100;
 	const double ARMOR = 10;
-	const double MELEE_DMG = 1;
-	const double DIST_DMG = 1;
+	const double MELEE_DMG = 0;
+	const double DIST_DMG = 0;
 	const double CRIT = 2000;
 	const double MELEE_RANGE = 50;
 	const double DIST_RANGE = 75;

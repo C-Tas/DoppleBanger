@@ -82,7 +82,7 @@ bool EnemyPirate::update() {
 		}
 	}
 	if (currState_ == STATE::IDLE && idleTime_ <= (SDL_GetTicks() -  lastIdleTime)) {
-		currState_ = STATE::PATROLLING;;
+		currState_ = STATE::PATROLLING;
 		target_ = patrol_[currPatrol_];
 	}
 	//Si el pirata está en patrulla

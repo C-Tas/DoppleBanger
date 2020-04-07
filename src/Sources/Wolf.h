@@ -15,7 +15,6 @@ public:
 	virtual bool update();
 	virtual void initObject();
 	virtual void onCollider();
-	virtual void die() { currState_ = STATE::DYING; };
 	virtual void move(Vector2D pos);
 	virtual  ~Wolf() {};
 

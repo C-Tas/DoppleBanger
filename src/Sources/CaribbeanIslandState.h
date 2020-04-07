@@ -28,7 +28,7 @@ protected:
 
 	const int numMonkeys_ = 1;
 	const int numPirates_ = 2;
-	const int numWolves = 1;
+	const int numWolves = 3;
 
 	virtual void initState();
 };
