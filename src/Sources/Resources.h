@@ -46,7 +46,7 @@ public:
 		RopeHUD,
 		SkillsHUD,
 		CooldownHUD,
-		ManaHUD,
+		LifeHUD,
 		ExplosionIcon,
 		GolpeFuerteIcon,
 		InvencibleIcon,

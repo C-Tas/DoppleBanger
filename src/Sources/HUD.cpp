@@ -23,15 +23,20 @@ const void HUD::draw() {
 	//Posición inicial de los primeros iconos
 	iconRect.x = app_->getWindowWidth() * 8 / 25; 
 	iconRect.y = app_->getWindowHeight() * 15 / 17;
+	cdRect_.x = (app_->getWindowWidth() / 2) - W_SKILLS / 2;
+
 	//Se reccorre el vector de las teclas para renderizarlas encima del HUD en caso de que hubiera textura
 	int i = 0;
 	for (i = 0; i < 4; i++) {
 		if (icons[i] != nullptr) {
-			if (cdKeys[i]) cdBg_->render(iconRect);
+			if (cdKeys[i]) cdBg_->render(cdRect_);
 			icons[i]->render(iconRect);
 		}
 		//Actualiza el rect
-		if(i < 3) iconRect.x += DISTANCE_BTW_ICON;
+		if (i < 3) {
+			iconRect.x += DISTANCE_BTW_ICON;
+			cdRect_.x += DISTANCE_BTW_ICON;
+		}
 	}
 	//Resposicionamiento de los iconos
 	iconRect.x += app_->getWindowWidth() / 10.4;
@@ -50,8 +55,8 @@ const void HUD::draw() {
 	points.render(iconRect.x - points.getWidth()/2, iconRect.y);
 
 	//Contenedor de vida
-	iconRect.x = app_->getWindowWidth() / 16;
-	iconRect.y = (app_->getWindowHeight() * 10 / 13) + (W_H_LIFE * (1 - propLife_));
+	iconRect.x = app_->getWindowWidth() * 2 / 31;
+	iconRect.y = (app_->getWindowHeight() * 7 / 9) + (W_H_LIFE * (1 - propLife_));
 	iconRect.w = W_H_LIFE;
 	iconRect.h = W_H_LIFE * propLife_;
 	life_->render(iconRect, clipLife_);
@@ -140,24 +145,27 @@ void HUD::initObject() {
 	destRect.y = app_->getWindowHeight() * 6 / 7;
 	createBg(app_->getTextureManager()->getTexture(Resources::SkillsHUD), destRect);
 	#pragma endregion
+
 	#pragma region Skills&Objects
 	//Aisgna la textura a la tecla correspondiente y se añaden al vector
 	q_ = createSkillIcon((int)SkillKey::Q); icons.push_back(q_);
 	w_ = createSkillIcon((int)SkillKey::W);	icons.push_back(w_);
 	e_ = createSkillIcon((int)SkillKey::E);	icons.push_back(e_);
-			//Todavía no se ha hecho el icono del clon para las habilidades, así que se usa el timón provisionalmente
+			//Todavía no se ha hecho el icono del clon para las habilidades, así que se usa el mono provisionalmente
 			//r_ = app_->getTextureManager()->getTexture(Resources::ClonIcon);
 	r_ = app_->getTextureManager()->getTexture(Resources::MonkeyFront); icons.push_back(r_);
  	one_ = createObjectIcon((int)ObjectKey::One); icons.push_back(one_);
 	two_ = createObjectIcon((int)ObjectKey::Two); icons.push_back(two_);
+
 	cdBg_ = app_->getTextureManager()->getTexture(Resources::CooldownHUD);
 	for (int i = 0; i < 4; i++) {
 		cdKeys.push_back(false);
 	}
 	#pragma endregion
+
 	#pragma region Life&Mana
 	//Inicializamos la vida al máximo
-	life_ = app_->getTextureManager()->getTexture(Resources::CooldownHUD);
+	life_ = app_->getTextureManager()->getTexture(Resources::LifeHUD);
 	clipLife_.x = 0;
 	clipLife_.y = 0;
 	clipLife_.w = life_->getWidth();
@@ -167,6 +175,10 @@ void HUD::initObject() {
 	xMana_ = app_->getWindowWidth() / 10;
 	yMana_ = app_->getWindowHeight() * 11 / 13;
 	maxMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getMaxMana();
+
+	//Tamaño del cooldown
+	cdRect_.w = cdRect_.h = app_->getWindowWidth() * 2 / 35;
+	cdRect_.y = app_->getWindowHeight() * 6 / 7;
 	#pragma endregion
 }
 
