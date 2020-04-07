@@ -24,6 +24,7 @@ public:
 	//<summary>Establece la direccion del movimiento</summary>	
 	virtual void move(Point2D target);
 	void attack(Enemy* obj);
+	void shout();
 	const int getLiberation() { return liberation_; };
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };

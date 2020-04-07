@@ -29,6 +29,8 @@ bool Player::update()
 		
 	}
 
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_TAB)) shout();
+
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
 		shoot(eventHandler_->getMousePos());
@@ -105,4 +107,9 @@ void Player::attack(Enemy* obj)
 	objective_ = obj;
 	move(obj->getVisPos());
 	attacking_ = true;
+}
+
+void Player::shout()
+{
+	app_->getAudioManager()->playChannel(Resources::Shout, 0, 1);
 }

@@ -51,6 +51,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 
 vector<Resources::SoundInfo> Resources::soundRoutes{
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
+	{Shout, "../Sources/assets/efectos_sonido/temparr.wav"}
 };
 
 vector <Resources::MusicInfo> Resources::musicRoutes{
