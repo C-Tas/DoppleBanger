@@ -41,8 +41,8 @@ const void HUD::draw() {
 	//Resposicionamiento de los iconos
 	iconRect.x += app_->getWindowWidth() / 10.4;
 	for (int j = i; j < ICON_AMOUNT; j++) {
-		if (icons[i] != nullptr) {
-			icons[i]->render(iconRect);
+		if (icons[j] != nullptr) {
+			icons[j]->render(iconRect);
 		}
 		//Actualiza el rect
 		iconRect.x += DISTANCE_BTW_ICON;
@@ -72,6 +72,11 @@ bool HUD::update() {
 	propMana_ = currentMana_ / maxMana_;
 	endMana_ = (MAX_DEGREES_MANA * propMana_) + START_MANA;	//Proporción de vida para el arco del maná
 	if (endMana_ <= 90) endMana_ = 90;
+
+	//Para eliminar un objeto cuando se usa
+	HandleEvents* event = HandleEvents::instance();
+	if (event->isKeyDown(SDL_SCANCODE_1) && icons[4] != nullptr) icons[4] = nullptr;
+	if (event->isKeyDown(SDL_SCANCODE_2) && icons[5] != nullptr) icons[5] = nullptr;
 	return false;
 }
 

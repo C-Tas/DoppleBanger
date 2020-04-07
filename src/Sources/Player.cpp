@@ -27,7 +27,7 @@ bool Player::update()
 			decreaseMana(clon_->getCost());
 			GameManager::instance()->setSkillCooldown(true, SkillKey::Q);
 		}
-	}else if(((SDL_GetTicks() - clonTime_) / 1000) > clonCooldown_) GameManager::instance()->setSkillCooldown(false, SkillKey::Q);
+	} else if(GameManager::instance()->getSkillCooldown((int)SkillKey::Q) && ((SDL_GetTicks() - clonTime_) / 1000) > clonCooldown_) GameManager::instance()->setSkillCooldown(false, SkillKey::Q);
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
