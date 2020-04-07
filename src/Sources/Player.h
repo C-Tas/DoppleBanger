@@ -28,6 +28,9 @@ public:
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
 	virtual void die() { currState_ = STATE::DYING; }
+
+	//Aumenta la cadencia de tiro del player
+	void activeSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 private:
 	uint lastMeleeHit_ = 0;
 	bool attacking_ = false;
@@ -39,6 +42,7 @@ private:
 #pragma region Abilities
 	int liberation_ = 2;	//Nivel de la habilidad del clon
 	bool explotion_ = false;	//Si tiene la habilidad activada
+	const int RANGE_SPEED = 1000;	//Velocidad extra para el pistolero raudo (a falta de equilibrado)
 #pragma endregion
 
 //<summary>Variables de los cooldowns del jugador</summary>
