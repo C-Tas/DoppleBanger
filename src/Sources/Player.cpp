@@ -107,3 +107,10 @@ void Player::attack(Enemy* obj)
 	move(obj->getVisPos());
 	attacking_ = true;
 }
+
+void Player::activeInvincible()
+{
+	currStats_.crit_ += CRIT_INV;
+	currStats_.meleeDmg_ += DMG_INV;
+	currStats_.distDmg_ += DMG_INV;
+}

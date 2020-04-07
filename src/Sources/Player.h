@@ -28,6 +28,10 @@ public:
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
 	virtual void die() { currState_ = STATE::DYING; }
+
+	//habilidades
+	//activa la pasiva invencible y aplica los efectos de esta
+	void activeInvincible();
 private:
 	uint lastMeleeHit_ = 0;
 	bool attacking_ = false;
@@ -39,6 +43,8 @@ private:
 #pragma region Abilities
 	int liberation_ = 2;	//Nivel de la habilidad del clon
 	bool explotion_ = false;	//Si tiene la habilidad activada
+	const int CRIT_INV = 20;	//Crítico agregado al player después de activar invencible( a falta de equilibrado)
+	const int DMG_INV = 20;		//Daño agregado al player después de activar invencible( a falta de equilibrado)
 #pragma endregion
 
 //<summary>Variables de los cooldowns del jugador</summary>
@@ -75,6 +81,4 @@ private:
 	const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
 #pragma endregion
 	virtual void initObject();
-
-
 };
