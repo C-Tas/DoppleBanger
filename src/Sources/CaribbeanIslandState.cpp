@@ -3,6 +3,7 @@
 #include "ShipState.h"
 #include "MonkeyCoco.h"
 #include "EnemyPirate.h"
+#include "Wolf.h"
 #include "EndState.h"
 #include "WinState.h"
 
@@ -28,6 +29,7 @@ void CaribbeanIslandState::initState()
 
 	createMonkey(numMonkeys_);
 	createPirates(numPirates_);
+	createWolves(numWolves);
 
 	//Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
@@ -63,5 +65,23 @@ void CaribbeanIslandState::createPirates(int numPirates)
 		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
 		newPirate = new EnemyPirate(app_, pos, Vector2D(wMonkey, hMonkey), patrol);
 		addEnemy(newPirate);
+	}
+}
+
+void CaribbeanIslandState::createWolves(int numWolves)
+{
+	int wWin = app_->getWindowWidth();
+	int hWin = app_->getWindowHeight();
+	vector<Point2D> patrol;
+	patrol.push_back({ (double)app_->getRandom()->nextInt(200,app_->getWindowWidth() - 200) , (double)app_->getRandom()->nextInt(200,app_->getWindowHeight() - 200) });
+	patrol.push_back({ (double)app_->getRandom()->nextInt(200,app_->getWindowWidth() - 200) , (double)app_->getRandom()->nextInt(200,app_->getWindowHeight() - 200) });
+	patrol.push_back({ (double)app_->getRandom()->nextInt(200,app_->getWindowWidth() - 200) , (double)app_->getRandom()->nextInt(200,app_->getWindowHeight() - 200) });
+
+	Wolf* newWolf;
+	Vector2D pos;
+	for (int i = 0; i < numWolves; i++) {
+		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
+		newWolf = new Wolf(app_, pos, Vector2D(wMonkey, hMonkey), patrol);
+		addEnemy(newWolf);
 	}
 }

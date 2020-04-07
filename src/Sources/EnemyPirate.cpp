@@ -82,8 +82,8 @@ bool EnemyPirate::update() {
 		}
 	}
 	if (currState_ == STATE::IDLE && idleTime_ <= (SDL_GetTicks() -  lastIdleTime)) {
-		currState_ = STATE::PATROLLING;;
-		target_ = patrol_[currTarget_];
+		currState_ = STATE::PATROLLING;
+		target_ = patrol_[currPatrol_];
 	}
 	//Si el pirata está en patrulla
 	if (currState_ == STATE::PATROLLING) {
@@ -95,12 +95,12 @@ bool EnemyPirate::update() {
 		if (SDL_HasIntersection(&pos,&targetPos)) {
 			currState_ = STATE::IDLE;
 			lastIdleTime = SDL_GetTicks();
-			if (currTarget_ == patrol_.size() - 1) {
-				currTarget_ = 0;
+			if (currPatrol_ == patrol_.size() - 1) {
+				currPatrol_ = 0;
 			}
 			else
 			{
-				currTarget_++;
+				currPatrol_++;
 			}
 		}
 	}

@@ -17,7 +17,12 @@ public:
 
 	void init(Vector2D pos, Vector2D dir);
 	bool update();
-	void onCollider() { app_->getCurrState()->removeRenderUpdateLists(this); }; //Cuando colisiona elimina la bala
+	void onCollider() { 
+		if (!deleting) {
+			deleting = true;
+			app_->getCurrState()->removeRenderUpdateLists(this);
+		}; 
+	}
 	const int getDamage() { return damage_; }
 
 private:
@@ -27,6 +32,7 @@ private:
 	double speed_ = 0;
 	int damage_ = 0;
 	bool enemyBullet_ = false;
+	bool deleting = false;
 
 	virtual void initObject() {};
 };

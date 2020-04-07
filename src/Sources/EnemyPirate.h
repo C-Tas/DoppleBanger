@@ -15,16 +15,14 @@ public:
 	virtual bool update();
 	virtual void initObject();
 	virtual void onCollider();
-	virtual void die() { currState_ = STATE::DYING; };
 	virtual void move(Vector2D pos);
 	virtual  ~EnemyPirate() {};
 
 private:
-
 	//Puntos del mapa donde va a patrullar
 	vector<Point2D> patrol_;
 	//Punto que representa dentro del vector de patrulla
-	int currTarget_ = 0;
+	int currPatrol_ = 0;
 	//Enum que representa los diferentes estados de ataque del pirata
 	enum class ATK_STATUS
 	{
@@ -77,8 +75,8 @@ private:
 	const double MANA = 100;
 	const double MANA_REG = 100;
 	const double ARMOR = 10;
-	const double MELEE_DMG = 1;
-	const double DIST_DMG = 1;
+	const double MELEE_DMG = 0;
+	const double DIST_DMG = 0;
 	const double CRIT = 2000;
 	const double MELEE_RANGE = 50;
 	const double DIST_RANGE = 75;
