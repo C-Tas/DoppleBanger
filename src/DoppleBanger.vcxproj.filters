@@ -163,6 +163,7 @@
     <ClCompile Include="Sources\Wolf.cpp">
       <Filter>GameObjects\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\SkillState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -338,6 +339,7 @@
     <ClInclude Include="Sources\Wolf.h">
       <Filter>GameObjects\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\SkillState.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

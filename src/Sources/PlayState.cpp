@@ -1,13 +1,12 @@
-#include "PlayState.h"
-#include "PauseState.h"
-#include "SaveLoadState.h"
-#include "InventoryState.h"
-#include "SelectLevelState.h"
-#include "StashState.h"
 #include "Collisions.h"
-#include "PauseState.h"
+#include "PlayState.h"
+#include "SaveLoadState.h"
+#include "SelectLevelState.h"
 #include "EndState.h"
-
+#include "StashState.h"
+#include "InventoryState.h"
+#include "PauseState.h"
+#include "SkillState.h"
 
 
 void PlayState::update() {
@@ -46,6 +45,12 @@ void PlayState::checkPlayerActions() {
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
 	}
+	else if (eventHandler_->isKeyDown(SDLK_TAB)) {
+		app_->getGameStateMachine()->pushState(new InventoryState(app_));
+	}
+	else if (eventHandler_->isKeyDown(SDLK_a)) {
+		app_->getGameStateMachine()->pushState(new SkillState(app_));
+	}
 }
 
 Enemy* PlayState::checkAttack() {
@@ -72,17 +77,3 @@ Enemy* PlayState::findClosestEnemy(Point2D pos) {
 
 	return obj;
 }
-
-#pragma region ChangeState
-void PlayState::goToPauseState(Application* app) {
-	app->getGameStateMachine()->pushState(new PauseState(app));
-}
-
-void PlayState::goToInventoryState(Application* app) {
-	app->getGameStateMachine()->pushState( new InventoryState(app));
-
-}
-#pragma endregion
-
-//Esta podria ser una clase padre de 4 clases que sean Ship, Island0, Island1 e Island2 de tal forma que al cambiar en SelectLevelState
-// al hacer el pop de ese estado no de problemas de ejecucion al tener que cambiar la isla o hacer metodos a los que llamar

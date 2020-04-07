@@ -62,6 +62,7 @@
     <ClCompile Include="Sources\SDL_macros.cpp" />
     <ClCompile Include="Sources\SelectLevelState.cpp" />
     <ClCompile Include="Sources\ShipState.cpp" />
+    <ClCompile Include="Sources\SkillState.cpp" />
     <ClCompile Include="Sources\SRandBasedGenerator.cpp" />
     <ClCompile Include="Sources\SpookyIslandState.cpp" />
     <ClCompile Include="Sources\ShipObject.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Sources\SelectLevelState.h" />
     <ClInclude Include="Sources\ShipState.h" />
     <ClInclude Include="Sources\Skill.h" />
+    <ClInclude Include="Sources\SkillState.h" />
     <ClInclude Include="Sources\SRandBasedGenerator.h" />
     <ClInclude Include="Sources\SpookyIslandState.h" />
     <ClInclude Include="Sources\ShipObject.h" />

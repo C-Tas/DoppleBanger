@@ -7,10 +7,9 @@ public:
 //<summary>Constructora generica</summary>
 	InventoryState(Application* app) :GameState(app) { initState(); };
 	virtual ~InventoryState() {};
-	//<summary>Elimina el estado</summary>
-	void goToGame();
 
 protected:
-	virtual void initState() {};
+	virtual void initState();
+	static void goToGame(Application* app);
 };
 

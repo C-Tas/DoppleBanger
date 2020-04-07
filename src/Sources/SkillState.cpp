@@ -1,13 +1,13 @@
-#include "InventoryState.h"
+#include "SkillState.h"
 
-void InventoryState::initState()
+void SkillState::initState()
 {
-	cout << "Inventario" << endl;
+	cout << "SkillState" << endl;
 	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), Vector2D(app_->getWindowWidth() / 2, app_->getWindowHeight() / 2),
 		Vector2D(100, 100), goToGame);
 }
 
-void InventoryState::goToGame(Application* app)
+void SkillState::goToGame(Application* app)
 {
 	app->getGameStateMachine()->popState();
 }
