@@ -17,9 +17,10 @@
 void ShipState::goIsland(Application* app)
 {
 	GameManager* gm = GameManager::instance();
-	if (gm->getCurrIsland() == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
-	else if (gm->getCurrIsland() == Island::Spooky) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
-	else if (gm->getCurrIsland() == Island::Volcanic) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
+	Island currIsland = gm->getCurrIsland();
+	if (currIsland == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
+	else if (currIsland == Island::Spooky) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
+	else if (currIsland == Island::Volcanic) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
 }
 //Callback del alijo para ir al men� de alijo
 void ShipState::goStashState(Application* app)
@@ -48,34 +49,34 @@ void ShipState::initState()
 
 	//Creaci�n del alijo
 	destRect.w = W_STASH; destRect.h = H_STASH;
-	destRect.x = app_->getWindowWidth() / 2; destRect.y = app_->getWindowHeight() * 2 / 5;
-	stash_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h), 
+	destRect.x = W_WIN / 2; destRect.y = H_WIN * 2 / 5;
+	stash_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::Stash), goStashState);
 	addRenderUpdateLists(stash_);
 
 	//Creaci�n de la trampilla
 	destRect.w = W_DOOR; destRect.h = H_DOOR;
-	destRect.x = (app_->getWindowWidth() / 2) - W_DOOR * 1.5; destRect.y = app_->getWindowHeight() * 2 / 5 + H_WHEEL / 2;
+	destRect.x = (W_WIN / 2) - W_DOOR * 1.5; destRect.y = H_WIN * 2 / 5 + H_WHEEL / 2;
 	door_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::ShipDoor), goSaveState);
 	addRenderUpdateLists(door_);
 
 	//Creaci�n del tim�n
 	destRect.w = W_WHEEL; destRect.h = H_WHEEL;
-	destRect.x = (app_->getWindowWidth() / 2) - W_WHEEL / 2; destRect.y = app_->getWindowHeight() / 7;
+	destRect.x = (W_WIN / 2) - W_WHEEL / 2; destRect.y = H_WIN / 7;
 	wheel_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::Wheel), goMap);
 	addRenderUpdateLists(wheel_);
 	
 	//Creaci�n de la salida
 	destRect.w = W_EXIT; destRect.h = H_EXIT;
-	destRect.x = app_->getWindowWidth() - W_EXIT; destRect.y = app_->getWindowHeight() * 2 / 3;
+	destRect.x = W_WIN - W_EXIT; destRect.y = H_WIN * 2 / 3;
 	exit_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::ExitShip), goIsland);
 	addRenderUpdateLists(exit_);
 
 	////Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
-	playerEntry_ = Vector2D((app_->getWindowWidth() - W_PLAYER * 2), ((app_->getWindowHeight() * 3 / 4) - H_PLAYER));
+	playerEntry_ = Vector2D((W_WIN - W_PLAYER * 2), ((H_WIN * 3 / 4) - H_PLAYER));
 	player_ = new Player(app_, playerEntry_, Vector2D(W_PLAYER, H_PLAYER));
 	addRenderUpdateLists(player_);
 

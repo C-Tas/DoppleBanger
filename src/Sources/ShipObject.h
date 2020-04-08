@@ -19,6 +19,4 @@ public:
 	void onCollider();
 private:
 	CallBackChangeState* cb_ = nullptr;
-
-	virtual void initObject();
 };

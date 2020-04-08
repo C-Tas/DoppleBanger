@@ -84,8 +84,7 @@ private:
 	const double MELEE_RATE = 1500;
 	const double DIST_RATE = 1500;
 	#pragma endregion
-	//Vector que representa el alto y ancho de la caja de colisiones
-	const Point2D BOX_COLLISION;
+
 	//Entero que representa la cantidad de frames que tiene para las animaciones
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet
@@ -94,7 +93,7 @@ private:
 	Vector2D isPlayerInRange();
 	//Determina si el clon está dentro del rango de ataque del monkeyCoco
 	Vector2D isClonInRange();
-	//Ataque del monkeyCoco
+	//Ataque del pirata enemigo
 	void attack();
 	//Gestiona las diferentes animaciones que tiene el monkeyCoco
 	void changeAnim(Anim& newAnim);

@@ -36,20 +36,23 @@ private:
 	bool exitClick = false;
 
 	//Dimensiones de las entidades
-	const uint W_STASH = app_->getWindowWidth() / 7;
-	const uint H_STASH = app_->getWindowHeight() / 6;
+	const uint W_WIN = app_->getWindowWidth();
+	const uint H_WIN = app_->getWindowHeight();
 
-	const uint W_DOOR = app_->getWindowWidth() / 8;
-	const uint H_DOOR = app_->getWindowHeight() / 8;
+	const uint W_STASH = W_WIN / 7;
+	const uint H_STASH = H_WIN / 6;
 
-	const uint W_WHEEL = app_->getWindowWidth() / 11;
-	const uint H_WHEEL = app_->getWindowHeight() / 5;
+	const uint W_DOOR = W_WIN / 8;
+	const uint H_DOOR = H_WIN / 8;
 
-	const uint W_EXIT = app_->getWindowWidth() / 15;
-	const uint H_EXIT = app_->getWindowHeight() / 3;
+	const uint W_WHEEL = W_WIN / 11;
+	const uint H_WHEEL = H_WIN / 5;
 
-	const uint W_PLAYER = app_->getWindowWidth() / 25;
-	const uint H_PLAYER = app_->getWindowHeight() / 10;
+	const uint W_EXIT = W_WIN / 15;
+	const uint H_EXIT = H_WIN / 3;
+
+	const uint W_PLAYER = W_WIN / 25;
+	const uint H_PLAYER = H_WIN / 10;
 	#pragma endregion
 
 	void initState();

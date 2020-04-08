@@ -7,6 +7,10 @@ protected:
 	///<summary>Rect con el area de colisiones</summary>
 	SDL_Rect collisionArea_{ 0,0,0,0 };
 
+	//Vectores que representan el tamaño y la posición de la caja de colisiones
+	Point2D scaleCollision_;
+	Point2D posCollision_ = pos_;	//Por el momento se está igualando a pos_, es provisional
+
 	///<summary>Constructor por defecto</summary>
 	Collider() {};
 	///<summary>Constructor de collider</summary>
@@ -34,7 +38,17 @@ public:
 	//Realiza una acción al detectar una colisión
 	virtual void onCollider() = 0;
 	///<summary>Devuelve el rect con el area de colisiones</summary>
-	const SDL_Rect getCollider() { return collisionArea_; };
+	const SDL_Rect& getCollider() {
+		posCollision_ = pos_;	//Provisional -> esta línea se borrará
+		cout << pos_.getX() << "  " << pos_.getY() << endl;
+		cout << posCollision_.getX() << "  " << posCollision_.getY() << endl;
+		cout << scaleCollision_.getX() << "  " << scaleCollision_.getY() << endl;
+		collisionArea_.x = posCollision_.getX();
+		collisionArea_.y = posCollision_.getY();
+		collisionArea_.w = scaleCollision_.getX();
+		collisionArea_.h = scaleCollision_.getY();
+		return collisionArea_;
+	};
 	///<summary>Establece el rect de colisiones con el valor de newRect</summary>
 	void setCollider(SDL_Rect newRect) { collisionArea_ = newRect; };
 };

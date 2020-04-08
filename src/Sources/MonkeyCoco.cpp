@@ -110,8 +110,8 @@ void MonkeyCoco::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
-	boxCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
-	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)boxCollision_.getX(),(int)boxCollision_.getY() });
+	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
+	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	CollisionCtrl::instance()->addEnemy(this);
 	initAnim();
 }

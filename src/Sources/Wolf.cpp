@@ -42,6 +42,7 @@ bool Wolf::update() {
 	}
 	cout << state << endl;*/
 #endif // _DEBUG
+	updateVisPos();
 
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {
@@ -189,7 +190,8 @@ void Wolf::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::WolfFront));
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
-	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)BOX_COLLISION.getX(),(int)BOX_COLLISION.getY() });
+	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
+	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	rangeVision_ = 80;//numero magico
 	CollisionCtrl::instance()->addEnemy(this);
 	initAnim();

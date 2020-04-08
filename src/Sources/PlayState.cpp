@@ -33,8 +33,7 @@ void PlayState::removeEnemy(Enemy* obj) {
 	enemies_.remove(obj);
 }
 
-void PlayState::checkPlayerActions() {
-	
+void PlayState::checkPlayerActions() {	
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 	{
 		Enemy* obj; obj = checkAttack();

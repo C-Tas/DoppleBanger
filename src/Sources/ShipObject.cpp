@@ -9,8 +9,3 @@ void ShipObject::onCollider()
 {
 	cb_(app_); //Llama al callback
 }
-
-void ShipObject::initObject()
-{
-
-}

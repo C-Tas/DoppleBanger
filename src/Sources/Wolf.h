@@ -75,8 +75,7 @@ private:
 	const double MELEE_RATE = 1500;
 	const double DIST_RATE = 1500;
 #pragma endregion
-	//Vector que representa el alto y ancho de la caja de colisiones
-	const Point2D BOX_COLLISION;
+
 	//Determina si el jugador está dentro del rango de ataque del monkeyCoco
 	Vector2D isPlayerInRange();
 	//Determina si el clon está dentro del rango de ataque del monkeyCoco

@@ -72,8 +72,7 @@ private:
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 2500;
 #pragma endregion
-	//Vector que representa el alto y ancho de la caja de colisiones
-	Point2D boxCollision_;
+
 	//Entero que representa la cantidad de frames que tiene para las animaciones
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet
