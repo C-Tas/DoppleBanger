@@ -1,5 +1,7 @@
 #pragma once
+
 #include "GameManager.h"
+#include "Player.h"
 
 enum class SkillBranch { Physical, Distance, Ghost };
 
@@ -7,6 +9,7 @@ class Skill
 {
 
 protected:
+	Player* player_ = nullptr;
 	SkillType type_;
 	SkillBranch branch_;
 	double lastTimeUsed_ = 0;
@@ -14,7 +17,7 @@ protected:
 
 public:
 	///<summary>Constructora</summary>
-	Skill(SkillType type, SkillBranch branch) : type_(type),  branch_(branch) {};
+	Skill(Player* player, SkillType type, SkillBranch branch) : player_(player), type_(type),  branch_(branch) {};
 
 	///<summary>Destructora</summary>
 	virtual ~Skill() {};

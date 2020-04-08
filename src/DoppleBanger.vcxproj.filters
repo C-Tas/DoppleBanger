@@ -60,6 +60,7 @@
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
     <ClCompile Include="Sources\SkillButton.cpp" />
+    <ClCompile Include="Sources\ClonSkill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -125,5 +126,7 @@
     <ClInclude Include="Sources\VolcanicIslandState.h" />
     <ClInclude Include="Sources\SkillButton.h" />
     <ClInclude Include="Sources\WhirlwindSkill.h" />
+    <ClInclude Include="Sources\ClonSkill.h" />
+    <ClInclude Include="Sources\ClonSelfDestructSkill.h" />
   </ItemGroup>
 </Project>

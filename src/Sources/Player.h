@@ -3,10 +3,12 @@
 #include "HandleEvents.h"
 #include "Clon.h"
 #include "Enemy.h"
-#include "Skill.h"
 #include <array>
 
+class Skill;
+class ClonSkill;
 class WhirlwindSkill;
+class ClonSelfDestructSkill;
 
 class Player : public Actor
 {
@@ -23,13 +25,10 @@ private:
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region abilities
 	int liberation_ = 2;
-	bool explotion_ = false;
 #pragma endregion
 
 //<summary>Variables de los cooldowns del jugador</summary>
 #pragma region cooldowns
-	double clonCooldown_ = 5;
-	double clonTime_ = 0; //Momento del último clon
 	double meleeTime_ = 0; //Momento del último ataque
 	double shotTime_ = 0; //Momento del �ltimo disparo
 #pragma endregion
@@ -47,12 +46,12 @@ private:
 	const double MOVE_SPEED = 100;
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 2;
-
-	const double CLON_SPAWN_RANGE = 700;
 #pragma endregion
 
 	//Prueba del torbellino
-	WhirlwindSkill* skill_;
+	WhirlwindSkill* skillWhirl_;
+	ClonSkill* skillClon_;
+	ClonSelfDestructSkill* skillExplosion_;
 
 //Equipamiento del jugador
 	Armor* armor_ = nullptr;
@@ -82,6 +81,15 @@ public:
 	//M�todo que desequipa al jugador y equipa un nuevo objeto
 	//M�todos unequip no son necesarios porque nunca va a poder estar desequipado
 	void equip(Equipment* equip);
+
+	//Crea un clon. A este método lo llama solo la skill "ClonSkill"
+	void createClon();
+	//Mata al clon
+	void killClon() { clon_->die(); };
+	//Devuelve la posición del clon
+	Vector2D getClonPos() { return clon_->getPos(); };
+	//Devuelve la escala del clon
+	Vector2D getClonScale() { return clon_->getScale(); };
 
 #pragma region SkillsEquipped
 	Skill* getSkillEquipped(int key) { return skillsEquiped_[key]; }

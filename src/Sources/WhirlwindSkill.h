@@ -10,12 +10,9 @@ private:
 	const int RADIUS = 150;
 	const int BONUS = 1.3;
 	const int COOLDOWN = 5;
-	const int CAST_DELAY = 1;
-
-	Player* player_ = nullptr;
 
 public:
-	WhirlwindSkill(Player* player) : Skill(SkillType::Active, SkillBranch::Physical), player_(player) { cooldown_ = COOLDOWN; };
+	WhirlwindSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { cooldown_ = COOLDOWN; };
 	virtual ~WhirlwindSkill() {};
 
 	virtual void action() {

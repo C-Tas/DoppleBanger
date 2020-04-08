@@ -9,11 +9,11 @@ bool Clon::update()
 
 		else if (ad_ > 0 && ((SDL_GetTicks() - meleeTime_) / 1000) > meleeRate_)
 		{
+			cout << "\nClon ataca\n";
 			objective_->takeDamage(ad_);
 			meleeTime_ = SDL_GetTicks();
 		}
 	}
-	else if (explotion_) explode();
 	else die();
 
 	return false;

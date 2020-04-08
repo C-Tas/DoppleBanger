@@ -6,10 +6,14 @@
 #include "Bullet.h"
 #include "GameState.h"
 #include "WhirlwindSkill.h"
+#include "ClonSkill.h"
+#include "ClonSelfDestructSkill.h"
 
 void Player::init()
 {
-	skill_ = new WhirlwindSkill(this);
+	skillWhirl_ = new WhirlwindSkill(this);
+	skillClon_ = new ClonSkill(this);
+	skillExplosion_ = new ClonSelfDestructSkill(this);
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
@@ -25,22 +29,13 @@ bool Player::update()
 	updateVisPos();
 
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_W))
-		skill_->action();
+		skillWhirl_->action();
 
-	//Si se pulsa la Q y se ha acabado el cooldown y se está a rango
-	//Hago un if dentro de otro if ya que como el de dentro tiene que hacer cálculos, estos solo se hagan
-	//cuando ya se han cumplido previamente las dos condiciones anteriores.
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && ((SDL_GetTicks() - clonTime_) / 1000) > clonCooldown_)
-	{
-		Vector2D dist = Vector2D(eventHandler_->getMousePos().getX() - pos_.getX(), eventHandler_->getMousePos().getY() - pos_.getY());
-		if (dist.magnitude() <= CLON_SPAWN_RANGE)
-		{
-			clon_ = new Clon(app_, getVisPos(eventHandler_->getMousePos()), currStats_.ad_, currStats_.meleeRate_, currStats_.range_, liberation_, explotion_, scale_);
-			app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
-			clonTime_ = SDL_GetTicks();
-		}
-		
-	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q))
+		skillClon_->action();
+
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_E))
+		skillExplosion_->action();
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
@@ -143,10 +138,17 @@ void Player::equip(Equipment* equip)
 	}
 }
 
+void Player::createClon()
+{
+	clon_ = new Clon(app_, getVisPos(eventHandler_->getMousePos()), currStats_.ad_, currStats_.meleeRate_, currStats_.range_, liberation_, scale_);
+	app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
+}
+
 Player::~Player()
 {
 	//Temporal para no dejar basura
-	delete skill_;
+	delete skillWhirl_;
+	delete skillClon_;
 
 	delete armor_;
 	delete gloves_;
