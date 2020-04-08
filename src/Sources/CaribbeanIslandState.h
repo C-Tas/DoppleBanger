@@ -16,6 +16,7 @@ public:
 	void createMonkey(int numMonkeys);
 	void createPirates(int numPirates);
 	void createWolves(int numWolves);
+	void createSkeletons(int numSkeletons);
 	//void addKills() { kills += 1; }
 #pragma endregion
 protected:
@@ -29,6 +30,7 @@ protected:
 	const int numMonkeys_ = 1;
 	const int numPirates_ = 2;
 	const int numWolves = 3;
+	const int numSkeletons = 1;
 
 	virtual void initState();
 };

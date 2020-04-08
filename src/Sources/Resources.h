@@ -45,6 +45,7 @@ public:
         PlayerFront,
 		MonkeyFront,
 		WolfFront,
+		Skeleton,
 
 		//gizmos
 		Rojo,

@@ -8,7 +8,7 @@ public:
 	virtual void onCollider() {};
 	//<summary>Metodo que mata a este enemigo</summary>
 	virtual void die();
-	virtual void lostAgro() {};
+	virtual void lostAgro() ;
 protected:
 	//Rango de visión de la entidad
 	double rangeVision_ = 0;
@@ -27,4 +27,13 @@ protected:
 	virtual void initObject() {};
 	//Inicializa las animaciones
 	virtual void initAnim() {};
+	//Busca y actualiza al enemigo que atacar
+	bool getEnemy();
+	//Determina si el jugador está dentro del rango de ataque del monkeyCoco
+	Vector2D isPlayerInRange();
+	//Determina si el clon está dentro del rango de ataque del monkeyCoco
+	Vector2D isClonInRange();
+	
+	//Devuelve true si el target está dentro del rango de ataque
+	bool onRange();
 };

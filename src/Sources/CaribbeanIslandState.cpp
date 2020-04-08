@@ -4,6 +4,7 @@
 #include "MonkeyCoco.h"
 #include "EnemyPirate.h"
 #include "Wolf.h"
+#include "Skeleton.h"
 #include "EndState.h"
 #include "WinState.h"
 
@@ -27,9 +28,10 @@ void CaribbeanIslandState::initState()
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
 	addRenderUpdateLists(background_);
 
-	createMonkey(numMonkeys_);
-	createPirates(numPirates_);
-	createWolves(numWolves);
+	//createMonkey(numMonkeys_);
+	//createPirates(numPirates_);
+	//createWolves(numWolves);
+	createSkeletons(numSkeletons);
 
 	//Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
@@ -83,5 +85,22 @@ void CaribbeanIslandState::createWolves(int numWolves)
 		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
 		newWolf = new Wolf(app_, pos, Vector2D(wMonkey, hMonkey), patrol);
 		addEnemy(newWolf);
+	}
+}
+
+void CaribbeanIslandState:: createSkeletons(int numSkeletons) {
+	int wWin = app_->getWindowWidth();
+	int hWin = app_->getWindowHeight();
+	vector<Point2D> patrol;
+	patrol.push_back({ (double)app_->getRandom()->nextInt(200,app_->getWindowWidth() - 200) , (double)app_->getRandom()->nextInt(200,app_->getWindowHeight() - 200) });
+	patrol.push_back({ (double)app_->getRandom()->nextInt(200,app_->getWindowWidth() - 200) , (double)app_->getRandom()->nextInt(200,app_->getWindowHeight() - 200) });
+	patrol.push_back({ (double)app_->getRandom()->nextInt(200,app_->getWindowWidth() - 200) , (double)app_->getRandom()->nextInt(200,app_->getWindowHeight() - 200) });
+
+	Skeleton* newSkeleton;
+	Vector2D pos;
+	for (int i = 0; i < numSkeletons; i++) {
+		pos.setVec(Vector2D(app_->getRandom()->nextInt(0, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
+		newSkeleton = new Skeleton(app_, pos, Vector2D(wMonkey, hMonkey));
+		addEnemy(newSkeleton);
 	}
 }

@@ -39,6 +39,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
 	{ Azul, "../Sources/assets/enemigos/azul.png" },
+	{Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png"},
 
 
 	//Interactuables

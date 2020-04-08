@@ -1,6 +1,6 @@
 #include "Bullet.h"
 #include "Enemy.h"
-#include "PlayState.h"
+//#include "PlayState.h"
 
 void Bullet::init(Vector2D pos, Vector2D dir)
 {

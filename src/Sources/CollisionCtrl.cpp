@@ -83,7 +83,8 @@ void CollisionCtrl::islandCollisions() {
 		if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			player_->reciveDmg(bullet->getDamage());
-			addEnemyBulletToErase(bullet);
+			bullet->collisionDetected();
+			if (bullet->numCollisions() == 0 )addEnemyBulletToErase(bullet);
 			bullet->onCollider();
 		}
 	}

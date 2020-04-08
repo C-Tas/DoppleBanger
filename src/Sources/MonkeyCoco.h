@@ -77,22 +77,16 @@ private:
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet
 	const SDL_Rect FIRST_FRAME = { 0,0,0,0 };
-	//Determina si el jugador está dentro del rango de ataque del monkeyCoco
-	Vector2D isPlayerInRange();
-	//Determina si el clon está dentro del rango de ataque del monkeyCoco
-	Vector2D isClonInRange();
+	
 	//Ataque del monkeyCoco
 	void attack();
 	//Gestiona las diferentes animaciones que tiene el monkeyCoco
 	void changeAnim(Anim& newAnim);
-	//Devuelve true si el target está dentro del rango de ataque
-	bool onRange();
 	//Inicializa todas las animaciones
 	void initAnims();
 	//Actualiza la actual animación
 	void updateAnim();
-	//Busca y actualiza al enemigo que atacar
-	bool getEnemy();
-	//Cuando pierde el agro
-	virtual void lostAgro();
+	
+	
+	
 };

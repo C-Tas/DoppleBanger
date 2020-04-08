@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "MainMenuState.h"
+#include "CaribbeanIslandState.h"
 #include "HandleEvents.h"
 #include <exception>
 #include "GameManager.h"
@@ -8,8 +9,8 @@ Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine(); //Creación máquina de estados
-	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState /*new SelectLevelState(this, 3)*/);
+	//GameState* startState = new MainMenuState(this);
+	machine_->pushState(new CaribbeanIslandState(this));
 }
 
 Application::~Application() {
