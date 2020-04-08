@@ -17,7 +17,7 @@ public:
 
 	void init(Vector2D pos, Vector2D dir);
 	virtual bool update();
-	void onCollider() {
+	virtual void onCollider() {
 		if (collisionsBeforeDestroy_ == 0) {
 			if (!deleting) {
 				deleting = true;
