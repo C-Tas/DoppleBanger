@@ -8,5 +8,9 @@ bool SkillButton::update()
 		callbackSkill_(app_, this);
 		return true;
 	}
+	else if (SDL_PointInRect(&mouse, &getDestiny())) {
+		callbackOnPoint_(app_, id);
+		return false;
+	}
 	return false;
 }

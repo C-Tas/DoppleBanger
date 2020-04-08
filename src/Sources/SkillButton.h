@@ -6,6 +6,7 @@
 class SkillButton: public Button
 {
 using CallBackOnClickSkill = void(Application * app, SkillButton * button);
+using CallBackOnPointerOver = void(Application * app, SkillNames skill);
 protected:
 	///<summary>Bool que marca si la skill está ya asignada o no</summary>
 	bool asign_ = false;
@@ -15,6 +16,8 @@ protected:
 	SkillType type_;
 	///<summary>Callback del boton</summary>
 	CallBackOnClickSkill* callbackSkill_ = nullptr;
+	///<summary>Callback del boton cuando el cursor está sobre él</summary>
+	CallBackOnPointerOver* callbackOnPoint_ = nullptr;
 	///<summary>Referencia al handle events</summary>
 	HandleEvents* handleEvents_;
 	///<summary>identificador de la skill que representa dicho boton</summary>
@@ -23,9 +26,10 @@ protected:
 public: 
 	///<summary>Constructora de SkillButton</summary>
 	SkillButton(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickSkill* callBack, 
-		SkillNames name, SkillType type):
+		SkillNames name, SkillType type, CallBackOnPointerOver* callbackOnPoint):
 		Button(app, texture, pos, scale, nullptr), type_(type) {
 		callbackSkill_ = callBack; handleEvents_ = HandleEvents::instance(); id = name;
+		callbackOnPoint_ = callbackOnPoint;
 		unlocked_ = GameManager::instance()->isSkillUnlocked(name);
 		asign_ = GameManager::instance()->isSkillAsign(name);
 	}

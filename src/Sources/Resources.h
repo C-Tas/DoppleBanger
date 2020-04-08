@@ -71,6 +71,25 @@ public:
 		StashMoneyText,
 		InventoryMoneyText,
 
+		//Descripciones de Skills
+		LiberationIDescription,
+		LiberationIDescription2,
+		LiberationIIDescription,
+		LiberationIIDescription2,
+		ExplosionDescription,
+		ExplosionDescription2,
+		GolpeFuerteDescription,
+		GolpeFuerteDescription2,
+		InvencibleDescription,
+		InvencibleDescription2,
+		TorbellinoDescription,
+		TorbellinoDescription2,
+		PerforadorDescription,
+		PerforadorDescription2,
+		RaudoDescription,
+		ReboteDescription,
+		ReboteDescription2,
+		
 		//Botones
 		ForwardArrow,
 		BackwardsArrow,
