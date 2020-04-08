@@ -52,24 +52,38 @@ void PauseState::initState()
 	double winWidth = app_->getWindowWidth();
 	double winHeight = app_->getWindowHeight();
 
-	Vector2D sizeButton(winWidth / 6, winHeight/ 10);
-	Vector2D posButton(winWidth / 2 - sizeButton.getX() / 2, winHeight / 4 - sizeButton.getY() / 2);
+	Vector2D sizeButton(winWidth * 5 / 11, winHeight / 5);
+	Vector2D posButton(winWidth / 9 , winHeight / 4 - sizeButton.getY() / 2);
+
+	SDL_Rect textButon = { posButton.getX(),posButton.getY(), sizeButton.getX(),sizeButton.getY() };
+
 
 	//Bot�n de reanudar
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::Resume), posButton, sizeButton, resume);
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, resume);
+	Draw* resumeText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::ResumeText), textButon);
+	objectsToRender_.push_back(resumeText);
+	gameObjects_.push_back(resumeText);
 
 	//Bot�n de controles
-	posButton = posButton + Vector2D(0, winHeight / 4 - sizeButton.getY() / 2);
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::Controls), posButton, sizeButton, showControls);
+	posButton = posButton + Vector2D(0, winHeight / 4);
+	textButon.y = posButton.getY();
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, showControls);
+	Draw* controlText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::ControlsText), textButon);
+	objectsToRender_.push_back(controlText);
+	gameObjects_.push_back(controlText);
 
 	//Bot�n de men� principal
-	posButton = posButton + Vector2D(0, winHeight / 4 - sizeButton.getY() / 2);
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), posButton, sizeButton, goMainMenuState);
+	posButton = posButton + Vector2D(0, winHeight / 4 );
+	textButon.y = posButton.getY();
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, goMainMenuState);
+	Draw* mainMenuText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::MainMenuText), textButon);
+	objectsToRender_.push_back(mainMenuText);
+	gameObjects_.push_back(mainMenuText);
 	
 	//Bot�n de mute
 	//Se multiplica por la proporci�n winWidth/winHeight para hacer un cuadrado
 	sizeButton = Vector2D(winWidth / 20, (winHeight / 20) * (winWidth / winHeight));
-	posButton = Vector2D(sizeButton.getX() * 1.5, sizeButton.getY() * 1.5);
+	posButton = Vector2D(winWidth - (sizeButton.getX() * 1.5), sizeButton.getY() / 2);
 	
 	if (!app_->getMute()) muteButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteOff), posButton, sizeButton, muteGame);
 	else muteButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteOn), posButton, sizeButton, muteGame);

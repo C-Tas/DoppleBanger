@@ -114,7 +114,6 @@ void ShipState::update()
 			wheelClick = false;
 		}
 	}
-
 	if (!songActive && pirateSingers_ <= SDL_GetTicks() - startInstance_) {
 		app_->getAudioManager()->playMusic(Resources::ShipSingers, -1);
 		songActive = true;

@@ -18,7 +18,6 @@ public:
 		SkipButton,
 		MuteOff,
 		MuteOn,
-		Resume,
 		RestartGame,
 
 		//Fondos
@@ -68,7 +67,9 @@ public:
 		ExitText,
 		ControlsText,
 		LoadText,
-		CreditsText,
+		CreditsText, 
+		ResumeText,
+		MainMenuText,
 		//proyectiles
 		Coco
 	};

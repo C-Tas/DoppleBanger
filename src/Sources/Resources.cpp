@@ -10,7 +10,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ RestartGame, "../Sources/assets/botones/restartGame.png" },
 	{ MuteOn, "../Sources/assets/botones/muteOn.png" },
 	{ MuteOff, "../Sources/assets/botones/muteOff.png" },
-	{ Resume, "../Sources/assets/botones/resume.png" },
 
 	//Interfaces
 	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
@@ -84,5 +83,7 @@ vector <Resources::TextMsgInfo> Resources::messages{
 	{ ExitText,"Salir",SDL_Color{(0,0,0,1)},RETRO },
 	{ ControlsText,"Controles",SDL_Color{(0,0,0,1)},RETRO },
 	{ LoadText,"Cargar Partida",SDL_Color{(0,0,0,1)},RETRO },
-	{ CreditsText,"Créditos",SDL_Color{(0,0,0,1)},RETRO },
+	{ CreditsText,"Creditos",SDL_Color{(0,0,0,1)},RETRO },
+	{ ResumeText,"Reanudar",SDL_Color{(0,0,0,1)},RETRO },
+	{ MainMenuText,"Menu principal",SDL_Color{(0,0,0,1)},RETRO },
 };
