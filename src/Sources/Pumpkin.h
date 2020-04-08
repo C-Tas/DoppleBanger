@@ -14,6 +14,8 @@ private:
 	int radioMenor;
 	///<summary>devuelve si ataca o no</summary>
 	bool attack();
+	///<summary>Devuelve si hay un enemigo en rango y establece cual es el más cercano </summary>
+	bool isATargetInRange();
 public:
 	virtual bool update();
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores ser?n los puestos, si se le pasan valores los editara</summary>
