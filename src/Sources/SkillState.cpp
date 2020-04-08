@@ -4,6 +4,7 @@
 #include "GameManager.h"
 #include "InventoryState.h"
 #include "Player.h"
+#include "TextBox.h"
 
 void SkillState::initSkillState() {
 	////QUITA EL COMENTARIO PARA DEBUGUEAR | LAS SKILLS SE DESBLOQUEAN EN 33,66 Y 100 PUNTOS EN LA RAMA
@@ -20,7 +21,6 @@ void SkillState::initSkillState() {
 	#endif
 
 	bg_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillMenu));
-
 	createButtons();
 	createTexts();
 	createBars();
@@ -294,67 +294,58 @@ void SkillState::draw() const
 	//Estos dos objetos van fuera porque quiero que siempre se pinten los primeros
 	bg_->draw();
 	if (selectedRectangle != nullptr) selectedRectangle->draw();
-	if (textureDescription != nullptr) textureDescription->render(descriptionRect);
-	if (textureDescription2 != nullptr) textureDescription2->render({ descriptionRect.x, descriptionRect.y + 60, descriptionRect.w, descriptionRect.h });
+	changeDescriptionTexture(lastPointed);
 	totalPoints_->render({ 1270, 250, 100, 40 });
 	GameState::draw();
 
 	renderSkillsEquipped();
 }
 
-void SkillState::changeDescriptionTexture(SkillNames name){
+void SkillState::changeDescriptionTexture(SkillNames name)const
+{
+	TextBox descriptionBox(app_, Point2D(descriptionRect.x, descriptionRect.y));
 	switch (name)
 	{
 	case SkillNames::Unequipped:
-		textureDescription = nullptr;
-		textureDescription2 = nullptr;
 		break;
 	case SkillNames::GolpeFuerte:
-		textureDescription = app_->getTextureManager()->getTexture(Resources::GolpeFuerteDescription);
-		textureDescription2 = app_->getTextureManager()->getTexture(Resources::GolpeFuerteDescription2);
+		descriptionBox.GolpeFuerte();
 		break;
 	case SkillNames::Invencible:
-		textureDescription = app_->getTextureManager()->getTexture(Resources::InvencibleDescription);
-		textureDescription2 = app_->getTextureManager()->getTexture(Resources::InvencibleDescription2);
+		descriptionBox.Invencible();
 		break;
 	case SkillNames::Torbellino:
-		textureDescription = app_->getTextureManager()->getTexture(Resources::TorbellinoDescription);
-		textureDescription2 = app_->getTextureManager()->getTexture(Resources::TorbellinoDescription2);
+		descriptionBox.Torbellino();
 		break;
 	case SkillNames::DisparoPerforante:
-		textureDescription = app_->getTextureManager()->getTexture(Resources::PerforadorDescription);
-		textureDescription2 = app_->getTextureManager()->getTexture(Resources::PerforadorDescription2);
+		descriptionBox.Perforador();
 		break;
 	case SkillNames::Raudo:
-		textureDescription = app_->getTextureManager()->getTexture(Resources::RaudoDescription);
-		textureDescription2 = nullptr;
+		descriptionBox.Raudo();
 		break;
 	case SkillNames::Rebote:
-		textureDescription = app_->getTextureManager()->getTexture(Resources::ReboteDescription);
-		textureDescription2 = app_->getTextureManager()->getTexture(Resources::ReboteDescription2);
+		descriptionBox.Rebote();
 		break;
 	case SkillNames::Clon:
 		///La del clon la dejo asi pq en principio no se puede ni equipar ni desequipar
-		textureDescription = app_->getTextureManager()->getTexture(Resources::LiberationIDescription);
-		textureDescription2 = app_->getTextureManager()->getTexture(Resources::LiberationIDescription2);
 		break;
 	case SkillNames::LiberacionI:
-		textureDescription = app_->getTextureManager()->getTexture(Resources::LiberationIDescription);
-		textureDescription2 = app_->getTextureManager()->getTexture(Resources::LiberationIDescription2);
+		descriptionBox.LiberationI();
 		break;
 	case SkillNames::Explosion:
-		textureDescription = app_->getTextureManager()->getTexture(Resources::ExplosionDescription);
-		textureDescription2 = app_->getTextureManager()->getTexture(Resources::ExplosionDescription2);
+		descriptionBox.Explosion();
 		break;
 	case SkillNames::LiberacionII:
-		textureDescription = app_->getTextureManager()->getTexture(Resources::LiberationIIDescription);
-		textureDescription2 = app_->getTextureManager()->getTexture(Resources::LiberationIIDescription2);
+		descriptionBox.LiberationII();
 		break;
 	default:
-		textureDescription = nullptr;
-		textureDescription2 = nullptr;
 		break;
 	}
+}
+
+void SkillState::changeDescription(SkillNames name)
+{
+	lastPointed = name;
 }
 
 void SkillState::setPlayerSkills()
@@ -444,7 +435,7 @@ SkillState::~SkillState()
 	for (int i = 0; i < 3; i++)delete emptyBars_[i];
 	for (int i = 0; i < 3; i++)delete bars_[i];
 	delete bg_; delete selectedRectangle;
-
+	delete totalPoints_;
 	//Cuando se borran todos los objetos del estado, asignamos las nuevas skills
 	//al player
 	setPlayerSkills();
@@ -521,7 +512,7 @@ void SkillState::assingToEKey(Application* app)
 
 void SkillState::changeDescription(Application* app, SkillNames name)
 {
-	dynamic_cast<SkillState*>(app->getCurrState())->changeDescriptionTexture(name);
+	dynamic_cast<SkillState*>(app->getCurrState())->changeDescription(name);
 }
 
 

@@ -98,4 +98,19 @@ public:
 	///<summary>Descripción de la poción de crítico</summary>
 	void criticPotion();
 #pragma endregion
+
+#pragma region SkillsDescription
+	void LiberationI();
+	void LiberationII();
+	void Explosion();
+	void Raudo();
+	void GolpeFuerte();
+	void Invencible();
+	void Rebote();
+	void Perforador();
+	void Torbellino();
+
+
+#pragma endregion
+
 };

@@ -20,8 +20,8 @@ private:
 
 	//<summary>Textura que contiene la última descripcion de la última skill sobre
 	//la que se ha posicionado el cursor</summary>
-	Texture* textureDescription = nullptr;
-	Texture* textureDescription2 = nullptr;
+
+	SkillNames lastPointed = SkillNames::Unequipped;
 
 	virtual void update();
 	///<summary>Puntero a player (para actualizar las skills que tiene equipadas)</summary>
@@ -31,7 +31,7 @@ private:
 	//<summary>Si hay algún objeto seleccionado, se pintará debajo de este un recuadro para mostrar la seleccion</summary>
 	Draw* selectedRectangle = nullptr;
 	//<summary>Lugar donde se van a pintar las descripciones</summary>
-	SDL_Rect descriptionRect = { 930,380,450,40 };
+	SDL_Rect descriptionRect = { 890,350,450,40 };
 
 	///<summary>Vector con los rects de donde se pintaran las texturas de las habilidades cuando sean equipadas en los botones<summary>
 	const vector<SDL_Rect> assignButtons = { { 960,728, 68, 39 }, { 1087,728, 68,39} ,{ 1214, 728, 68, 39 }, {1341,728,68, 39} };
@@ -79,7 +79,8 @@ protected:
 	///Redefinición del método draw para dibujar las cosas en un orden específico
 	virtual void draw()const;
 
-	void changeDescriptionTexture(SkillNames name);
+	void changeDescriptionTexture(SkillNames name)const;
+	void changeDescription(SkillNames name);
 
 	///Método para cuando se vaya a destruir el estado, se actualice las skills que tiene equipadas el player
 	void setPlayerSkills();
