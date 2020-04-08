@@ -3,8 +3,7 @@
 #include "Texture.h"
 #include "SDL.h"
 #include <iostream>
-
-
+#include "Camera.h"
 
 class Draw : public GameObject
 {
@@ -61,8 +60,10 @@ public:
 
 	//<metodo comun para renderizar tanto imagenes con un solo frame como con varios"
 	const virtual void draw() {
-		if (numberFrames_ <= 0) texture_->render(getDestiny(), SDL_FLIP_NONE); else {
-			texture_->render(getDestiny(), frame_); }};
+		SDL_Rect dest = getDestiny(); dest.x = dest.x - Camera::instance()->getCamera().getX(); dest.y = dest.y - Camera::instance()->getCamera().getY();
+		if (numberFrames_ <= 0) texture_->render(dest, SDL_FLIP_NONE);
+		else texture_->render(dest, frame_);
+	};
 	//<summary>cambia el frame </summary>
 	virtual bool update() { return false; };
 	virtual void updateFrame() { frame_.x = (frame_.x + frame_.w) % (numberFrames_*frame_.w); };

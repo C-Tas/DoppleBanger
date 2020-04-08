@@ -5,7 +5,8 @@
 #include "HandleEvents.h"
 #include <exception>
 #include "GameManager.h"
-#include "Inventory.h"
+#include "PlayState.h"
+#include "StashState.h"
 
 Application::Application(GameStateMachine* state) {
 	
@@ -13,7 +14,7 @@ Application::Application(GameStateMachine* state) {
 	initResources();
 	machine_ = new GameStateMachine();
 	//GameState* startState = new MainMenuState(this);
-	machine_->pushState(new Inventory(this));
+	machine_->pushState(new StashState(this));
 }
 
 Application::~Application() {
