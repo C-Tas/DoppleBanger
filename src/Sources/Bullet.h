@@ -54,9 +54,9 @@ private:
 	#pragma region PlayerAbilities
 	bool perforate_ = false;	//Para saber si perfora
 	bool ricochet_ = false;		//Para saber si rebota
-	const int NUM_RICO = 4;		//Número de rebotes máxmo
+	const int NUM_RICO = 100;		//Número de rebotes máxmo
 	int currRico = 0;			//Número de rebotes
-	const float RADIUS = 100;	//Radio de la circunferencia de búsqueda de la bala
+	const float RADIUS = 1000;  // Radio de la circunferencia de búsqueda de la bala
 	#pragma endregion
 
 	virtual void initObject() {};

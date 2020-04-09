@@ -21,7 +21,7 @@ bool Bullet::update()
 
 	//Si se le ha acabado el tiempo de vida
 	if ((currTime_ - initTime_) / 1000 > lifeSpan_) { 
-		app_->getCurrState()->removeRenderUpdateLists(this);
+		onCollider();
 	}
 	else {
 		double delta = app_->getDeltaTime();
@@ -58,7 +58,7 @@ void Bullet::searchEnemy(list<Enemy*> enemies, Enemy* currEnemy)
 
 	//Si no ha encontrado target, se destruye la bala
 	if (!founded) {
-		app_->getCurrState()->removeRenderUpdateLists(this);
+		onCollider();
 		CollisionCtrl::instance()->addPlayerBulletToErase(this);
 	}
 	else {
