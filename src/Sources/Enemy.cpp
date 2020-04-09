@@ -4,6 +4,6 @@
 void Enemy::die()
 {
 	Actor::die();
-	CollisionCtrl::instance()->addEnemiesToErase(this);
+	CollisionCtrl::instance()->removeEnemy(this);
 	static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 }

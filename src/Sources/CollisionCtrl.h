@@ -5,12 +5,11 @@
 #include "Obstacle.h"
 #include "Enemy.h"
 //#include "Chest.h"
-//#include "Bullet.h"
+#include "Bullet.h"
 #include "Trigger.h"
-//#include "ShipObject.h"
+#include "ShipObject.h"
 #include <list>
 #include <vector>
-#include "Bullet.h"
 
 class CollisionCtrl {
 public:
@@ -54,16 +53,18 @@ public:
 	///<summary>Quita un cofre de la lista (cuando se abre)</summary>
 	//void removeChest(Chest* chest) { chestsToErase_.push_back(chest); };
 	///<summary>Quita una bala de la lista</summary>
-	//void removePlayerBullet(Bullet* bullet) { playerBulletsToErase_.push_back(bullet); };
+	void removePlayerBullet(Bullet* bullet) { playerBulletsToErase_.push_back(bullet); };
 	///<summary>Quita una bala de la lista</summary>
-	//void removeEnemyBullet(Bullet* bullet) { enemyBulletsToErase_.push_back(bullet); };
+	void removeEnemyBullet(Bullet* bullet) { enemyBulletsToErase_.push_back(bullet); };
 	///<summary>Quita un trigger de la lista</summary>
 	void removeTrigger(Trigger* trigger) { triggersToErase_.push_back(trigger); };
 
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
-	void clearList() { npc_.object = nullptr; obstacles_.clear(); enemies_.clear();
+	void clearList() {
+		npc_.object = nullptr; obstacles_.clear(); enemies_.clear();
 		/*chests_.clear();*/ triggers_.clear(); enemiesToErase_.clear(); /*chestsToErase_.clear();*/
-		/*playerBulletsToErase_.clear();*/ /*enemyBulletsToErase_.clear();*/ triggersToErase_.clear(); };
+		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
+	};
 #pragma endregion
 
 #pragma region Add
@@ -80,9 +81,9 @@ public:
 	///<summary>Vac�a la lista de cofres y setea los nuevos</summary>
 	//void addChest(Chest* chest) { chests_.push_back(chest); };
 	///<summary>A�ade una nueva bala a la lista</summary>
-	//void addPlayerBullet(Bullet* bullet) { playerBullets_.push_back(bullet); };
+	void addPlayerBullet(Bullet* bullet) { playerBullets_.push_back(bullet); };
 	///<summary>A�ade una nueva bala a la lista</summary>
-	//void addEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); };
+	void addEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); };
 	///<summary>A�ade un nuevo trigger</summary>
 	void addTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
 
@@ -90,9 +91,9 @@ public:
 	///<summary>Guarda un nuevo NPC desbloqueado a la lista (para el barco)</summary>
 	void addUnlockNPC(NPCsNames name, NPC* npc) { npcs_.push_back(NPCsInfo(name, npc)); };
 	///<summary>Guarda los elementos del barco</summary>
-	//void setShipObjects(ShipObject* stash, ShipObject* door, ShipObject* wheel, ShipObject* exit) { 
-	//		shipObjects_.push_back(ShipObjectsInfo(Stash, stash)); shipObjects_.push_back(ShipObjectsInfo(Door, door)); 
-	//		shipObjects_.push_back(ShipObjectsInfo(Wheel, wheel)); shipObjects_.push_back(ShipObjectsInfo(Exit, exit)); };
+	void addShipObjects(ShipObject* stash, ShipObject* door, ShipObject* wheel, ShipObject* exit) { 
+			shipObjects_.push_back(ShipObjectsInfo(Stash, stash)); shipObjects_.push_back(ShipObjectsInfo(Door, door)); 
+			shipObjects_.push_back(ShipObjectsInfo(Wheel, wheel)); shipObjects_.push_back(ShipObjectsInfo(Exit, exit)); };
 
 #pragma endregion
 
@@ -107,11 +108,11 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 
 	struct ShipObjectsInfo {
 		ShipObjectsNames id;
-		//ShipObject* object;
+		ShipObject* object;
 		bool click = false;
 
 		ShipObjectsInfo() {};
-		//ShipObjectsInfo(ShipObjectsNames i, ShipObject* ob) { id = i; object = ob; };
+		ShipObjectsInfo(ShipObjectsNames i, ShipObject* ob) { id = i; object = ob; };
 	};
 
 	HandleEvents* input_ = nullptr;	//Para controlar si los objetos han sido clickados
@@ -123,14 +124,14 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Obstacle*> obstacles_;
 	list<Enemy*> enemies_;
 	//list<Chest*> chests_;
-	//list<Bullet*> playerBullets_;
-	//list<Bullet*> enemyBullets_;
+	list<Bullet*> playerBullets_;
+	list<Bullet*> enemyBullets_;
 	list<Trigger*> triggers_;
 
 	list<Enemy*> enemiesToErase_;
 	//list<Chest*> chestsToErase_;
-	//list<Bullet*> playerBulletsToErase_;
-	//list<Bullet*> enemyBulletsToErase_;
+	list<Bullet*> playerBulletsToErase_;
+	list<Bullet*> enemyBulletsToErase_;
 	list<Trigger*> triggersToErase_;
 
 	//Barco

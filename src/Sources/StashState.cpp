@@ -6,6 +6,5 @@ void backToPrevious(Application* app) {
 
 void StashState::initState()
 {
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), Vector2D(app_->getWindowWidth() / 2, app_->getWindowHeight() / 2),
-		Vector2D(300, 300), backToPrevious);
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), Vector2D(0, 0), Vector2D(100, 100), backToPrevious);
 }

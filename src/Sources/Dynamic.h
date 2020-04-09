@@ -2,6 +2,20 @@
 #include "Collider.h"
 class Dynamic : public Collider
 {
+public:
+	//Realiza una acción al detectar una colisión
+	virtual void onCollider() {};
+	//<summary>Establece la direccion del movimiento</summary>	
+	virtual void move(Point2D target);
+	//Devuelve la dirección de la entidad
+	Vector2D& getDir() { return dir_; };
+	//Devuelve la componente x de la dirección
+	double getDirX() { return dir_.getX(); };
+	//Devuelve la componente y de la dirección
+	double getDirY() { return dir_.getY(); };
+
+	//Cambia el objetivo al que se mueve la entidad
+	inline void setTarget(Vector2D pos) { target_ = pos; };
 protected:
 	//<summary>Vector que representa la direccion</summary>
 	Vector2D dir_{ 0,0 };
@@ -26,9 +40,5 @@ protected:
 
 	virtual void initObject() {};
 	virtual void initAnim() {};
-public:
-	//Realiza una acción al detectar una colisión
-	virtual void onCollider() {};
-	//<summary>Establece la direccion del movimiento</summary>	
-	virtual void move(Point2D target);
+
 };

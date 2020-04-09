@@ -11,7 +11,7 @@
 void CaribbeanIslandState::update()
 {
 	if (enemies_.empty()) {
-		collisionCtrl_->clearLists();
+		collisionCtrl_->clearList();
 		app_->getGameStateMachine()->changeState(new WinState(app_));
 	}
 	else {

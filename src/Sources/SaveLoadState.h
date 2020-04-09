@@ -11,7 +11,7 @@ public:
 		initState();
 	};
 	virtual ~SaveLoadState() {};
-	void goToGame();
+	static void goToGame(Application* app);
 	void goToMainMenu();
 
 private:

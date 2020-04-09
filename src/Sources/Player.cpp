@@ -7,6 +7,7 @@
 #include "GameState.h"
 #include "GameManager.h"
 #include "CollisionCtrl.h"
+#include "Collisions.h"
 
 bool Player::update()
 {
@@ -49,7 +50,7 @@ bool Player::update()
 	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DYING)
 	{
 		cout << "Ataca" << endl;
-		objective_->reciveDmg(currStats_.meleeDmg_);
+		objective_->receiveDamage(currStats_.meleeDmg_);
 		if (objective_->getState() == STATE::DYING) move(visPos_);
 		meleeTime_ = SDL_GetTicks();
 	}
@@ -107,3 +108,50 @@ void Player::attack(Enemy* obj)
 	move(obj->getVisPos());
 	attacking_ = true;
 }
+
+void Player::jumpBack(Draw* ob)
+{
+
+	/*Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };
+	Point2D enemycenterPos = { ob->getPosX() + ob->getScaleX() / 2, ob->getPosY() + ob->getScaleY() / 2 };
+	Vector2D posToReach;
+	posToReach.setX((enemycenterPos.getX() + currStats_.distRange_) + centerPos.getX());
+	posToReach.setY((enemycenterPos.getY() + currStats_.distRange_) + centerPos.getY());
+	target_ = posToReach;
+	move(enemycenterPos);*/
+
+	//Arriba del player con abajo del ob
+	if (LineLine(pos_.getX(), pos_.getY(), pos_.getX() + scale_.getX(), pos_.getY(),
+		ob->getPosX(), ob->getPosY() + scale_.getY(), scale_.getX(), scale_.getY())) {
+		double aux = pos_.getY();
+		pos_.setY((getScaleY() / 5) + aux);
+	}
+	//Derecha 
+	/*else if (LineLine(pos_.getX(), pos_.getY(), pos_.getX() + scale_.getX(), pos_.getY(),
+		ob->getPosX(), ob->getPosY() + scale_.getY(), scale_.getX(), scale_.getY())) {
+		pos_.setY(getScaleY() / 10);
+	}
+
+
+	/*Vector2D objCenter = getCenter(ob->getPos());
+	double x = getCenter(pos_).getX();
+	double y = getCenter(pos_).getY();
+	if (x > objCenter.getX()) { //Colisiona por la derecha
+		//Rebota hacia la derecha
+		x += getScaleX() / 10; //Por ejemplo
+	}
+	else if (x < objCenter.getX()) {//Colisiona por la izquierda
+		//Rebota hacia la izquierda
+		x -= getScaleX() / 10;
+	}
+	else if(y < objCenter.getY())
+	{
+		y += getScaleY() / 10;
+	}
+	else if (y > objCenter.getY())
+	{
+		y -= getScaleY() / 10;
+	}
+	pos_.setVec({ x,y });*/
+}
+

@@ -11,7 +11,7 @@ bool Clon::update()
 
 		else if (ad_ > 0 && ((SDL_GetTicks() - meleeTime_) / 1000) > meleeRate_)
 		{
-			objective_->reciveDmg(ad_);
+			objective_->receiveDamage(ad_);
 			meleeTime_ = SDL_GetTicks();
 		}
 	}

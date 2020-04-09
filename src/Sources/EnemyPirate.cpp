@@ -200,7 +200,7 @@ void EnemyPirate::attack() {
 		lastMeleeHit_ = SDL_GetTicks();
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if(dmg != nullptr){
-			dmg->reciveDmg(currStats_.meleeDmg_);
+			dmg->receiveDamage(currStats_.meleeDmg_);
 		}
 	}
 

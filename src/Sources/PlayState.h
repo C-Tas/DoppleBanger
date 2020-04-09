@@ -45,5 +45,5 @@ protected:
 	list<Obstacle*> obstacles_;
 	list<Enemy*> enemies_;
 
-	virtual void initState() { collisionCtrl_ = CollisionCtrl::instance(); }
+	virtual void initState();
 };

@@ -28,6 +28,10 @@ public:
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
 	virtual void die() { currState_ = STATE::DYING; }
+
+	//
+	void jumpBack(Draw* ob);
+
 private:
 	uint lastMeleeHit_ = 0;
 	bool attacking_ = false;

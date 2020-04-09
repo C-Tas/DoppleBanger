@@ -11,7 +11,7 @@
 
 void PlayState::update() {
 	if (player_->getState() == STATE::DYING) { //Comprobamos que el player haya muerto para cambiar de estado
-		collisionCtrl_->clearLists();
+		collisionCtrl_->clearList();
 		app_->getGameStateMachine()->changeState(new EndState(app_));
 	}
 	else {
@@ -75,4 +75,10 @@ Enemy* PlayState::findClosestEnemy(Point2D pos) {
 			obj = (*it);
 
 	return obj;
+}
+
+void PlayState::initState()
+{
+	collisionCtrl_ = CollisionCtrl::instance();
+	player_ = new Player(app_, Vector2D(0, 0), Vector2D(0, 0));
 }

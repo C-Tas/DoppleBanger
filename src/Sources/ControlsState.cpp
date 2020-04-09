@@ -2,7 +2,7 @@
 
 //Calback del bot�n "Volver"
 void backToPreviousState(Application* app) {
-	app->getStateMachine()->popState(); //Vuelve al estado previo
+	app->getGameStateMachine()->popState(); //Vuelve al estado previo
 }
 
 void ControlsState::initState() {

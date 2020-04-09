@@ -1,12 +1,8 @@
 #include "SaveLoadState.h"
 #include "MainMenuState.h"
 
-void backShipp(Application* app) {
+void SaveLoadState::goToGame(Application* app){
 	app->getGameStateMachine()->popState();
-}
-
-void SaveLoadState::goToGame(){
-	app_->getGameStateMachine()->popState();
 
 }
 //mirar
@@ -22,6 +18,5 @@ void SaveLoadState::goToMainMenu() {
 
 void SaveLoadState::initState()
 {
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), Vector2D(app_->getWindowWidth() / 2, app_->getWindowHeight() / 2),
-		Vector2D(300, 300), backShipp);
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), Vector2D(0, 0), Vector2D(100, 100), goToGame);
 }

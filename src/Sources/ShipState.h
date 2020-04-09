@@ -29,12 +29,6 @@ private:
 	ShipObject* wheel_ = nullptr;//Timón
 	ShipObject* exit_ = nullptr; //Salida
 
-	//Para saber si se ha pulsado el objeto
-	bool stashClick = false; 
-	bool doorClick = false;
-	bool wheelClick = false; 
-	bool exitClick = false;
-
 	//Dimensiones de las entidades
 	const uint W_WIN = app_->getWindowWidth();
 	const uint H_WIN = app_->getWindowHeight();
