@@ -2,6 +2,8 @@
 
 #include "Dynamic.h"
 #include "GameState.h"
+#include <list>
+class Enemy;
 
 class Bullet : public Dynamic
 {
@@ -17,15 +19,28 @@ public:
 
 	void init(Vector2D pos, Vector2D dir);
 	bool update();
-	void onCollider() { 
+	void onCollider() {
 		if (!deleting) {
 			deleting = true;
 			app_->getCurrState()->removeRenderUpdateLists(this);
 		}; 
 	}
 	const int getDamage() { return damage_; }
+
+	#pragma region PlayerAbilities
+	//Para saber si está activada la perforación
 	const bool getPerforate() { return perforate_; };
+	//Para saber si está activado el rebote
+	const bool getRicochet() { return ricochet_; };
+	//Devuelve el número de rebotes
+	const int getNumRico() { return NUM_RICO; };
+	//Activa perforación
 	void setPerforate(bool perforate) { perforate_ = perforate; };
+	//Activa el rebote
+	void setRicochet(bool ricochet) { ricochet_ = ricochet; };
+	//Busca al siguiente enemigo en el que rebotar
+	void searchEnemy(list<Enemy*> enemies, Enemy* currEnemy);
+	#pragma endregion
 
 private:
 	double lifeSpan_ = 0; //Tiempo máximo que dura la bala
@@ -35,8 +50,14 @@ private:
 	int damage_ = 0;
 	bool enemyBullet_ = false;
 	bool deleting = false;
+
 	#pragma region PlayerAbilities
-	bool perforate_ = false;
+	bool perforate_ = false;	//Para saber si perfora
+	bool ricochet_ = false;		//Para saber si rebota
+	const int NUM_RICO = 4;		//Número de rebotes máxmo
+	int currRico = 0;			//Número de rebotes
+	const float RADIUS = 100;	//Radio de la circunferencia de búsqueda de la bala
 	#pragma endregion
+
 	virtual void initObject() {};
 };

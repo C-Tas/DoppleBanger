@@ -8,6 +8,7 @@
 #include "GameManager.h"
 #include "CollisionCtrl.h"
 #include "PerforateSkill.h"
+#include "RicochetSkill.h"
 
 bool Player::update()
 {
@@ -29,10 +30,11 @@ bool Player::update()
 		}
 		
 	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_W))
-	{
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_W)) 
 		w_->action();
-	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_E))
+		e_->action();
+
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
 		shoot(eventHandler_->getMousePos());
@@ -73,6 +75,7 @@ void Player::initObject() {
 
 	#pragma region Testeo
 	w_ = new PerforateSkill(this);
+	e_ = new RicochetSkill(this);
 	#pragma endregion
 }
 
@@ -88,10 +91,19 @@ void Player::shoot(Vector2D dir)
 
 	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.distDmg_,
 		BULLET_LIFE, BULLET_VEL, Vector2D(W_H_BULLET, W_H_BULLET));
+	//Activa perforación en la bala
 	if (perforate_) {
 		bullet->setPerforate(perforate_);
 		perforate_ = false;
 	}
+	//Activa el rebote en la bala
+	if (ricochet_)
+		bullet->setRicochet(ricochet_);
+	//Cuando se acabe el tiempo de ricochet, se pone a false
+	if (ricochet_ && (SDL_GetTicks() - lastTimeRico_) / 1000 > TIME_RICO)
+		ricochet_ = false;
+
+	//Se añade a los bucles del juegos
 	app_->getCurrState()->addRenderUpdateLists(bullet);
 	CollisionCtrl::instance()->addPlayerBullet(bullet);
 }

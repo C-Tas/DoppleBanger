@@ -26,7 +26,7 @@ protected:
 	const uint wMonkey = app_->getWindowWidth() / 20;
 	const uint hMonkey = app_->getWindowHeight() / 15;
 
-	const int numMonkeys_ = 1;
+	const int numMonkeys_ = 6;
 	const int numPirates_ = 2;
 	const int numWolves = 3;
 

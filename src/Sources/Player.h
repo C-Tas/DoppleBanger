@@ -15,6 +15,7 @@ public:
 	};
 	~Player() {
 		delete w_; w_ = nullptr;
+		delete e_; e_ = nullptr;
 	};
 
 	///<summary>Constructor por copia</summary>
@@ -31,7 +32,10 @@ public:
 	const int getLiberation() { return liberation_; };
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
+	//Activa la perforación
 	void setPerforate(bool perforate) { perforate_ = perforate; };
+	//Activa el rebote y el momento en el que se usa
+	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
 	virtual void die() { currState_ = STATE::DYING; }
 private:
 	uint lastMeleeHit_ = 0;
@@ -45,7 +49,11 @@ private:
 	int liberation_ = 2;	//Nivel de la habilidad del clon
 	bool explotion_ = false;	//Si tiene la habilidad activada
 	bool perforate_ = false;	//Para saber si el siguiente disparo perfora
-	Skill* w_ = nullptr;		//Hanilidad asignada a la w;
+	bool ricochet_ = false;		//Para saber si los disparos van a rebotar
+	const int TIME_RICO = 4;	//En segundos
+	int lastTimeRico_ = 0;		//Momento en el que se usa rebote
+	Skill* w_ = nullptr;		//Habilidad asignada a la w
+	Skill* e_ = nullptr;		//Habilidad asignada a la e
 #pragma endregion
 
 //<summary>Variables de los cooldowns del jugador</summary>

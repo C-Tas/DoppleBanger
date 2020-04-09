@@ -1,6 +1,7 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "PlayState.h"
+#include "Collisions.h"
 
 void Bullet::init(Vector2D pos, Vector2D dir)
 {
@@ -29,4 +30,40 @@ bool Bullet::update()
 	}
 
 	return false;
+}
+
+//Se le pasa la lista de enemigos actual y el currEnemy
+//es para descartarlo y que no repita target
+void Bullet::searchEnemy(list<Enemy*> enemies, Enemy* currEnemy)
+{
+	bool founded = false;						//Para saber si se encuentra target
+	Vector2D newTarget(-100, -100);				//El nuevo target
+	if (currRico < NUM_RICO) {
+		SDL_Rect enemyRect;							//Rectángulo del enemigo
+		Vector2D centerBullet = getCenter(pos_);	//Centro de la bala
+
+		for (auto it = enemies.begin(); it != enemies.end(); ++it) {
+			enemyRect = (*it)->getCollider();
+			enemyRect.x += enemyRect.w / 2;	//Centro de la x
+			enemyRect.y += enemyRect.h / 2; //Centro de la y
+
+			//Para detectar que no se el mismo enemigo que acaba de impactar y que esté dentro del radio de detección
+			if ((*it) != currEnemy && RectBall(enemyRect.x, enemyRect.y, enemyRect.w, enemyRect.h, centerBullet.getX(), centerBullet.getY(), RADIUS)) {
+				founded = true;
+				Vector2D enemyTarget(enemyRect.x, enemyRect.y);				//Posición del target encontrado
+				newTarget = target_.getClosest(enemyTarget, newTarget);	//Se mira cuál es el más cercano si el anterior o el nuevo
+			}
+		}
+	}
+
+	//Si no ha encontrado target, se destruye la bala
+	if (!founded) {
+		app_->getCurrState()->removeRenderUpdateLists(this);
+		CollisionCtrl::instance()->addPlayerBulletToErase(this);
+	}
+	else {
+		move(newTarget);		//La bala se mueve en la nueva dirección
+		currRico++;				//Se actualiza el número de rebotes que lleva
+		initTime_ = currTime_;	//Se resetea el tiempo de vida
+	}
 }

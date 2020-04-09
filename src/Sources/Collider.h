@@ -40,9 +40,6 @@ public:
 	///<summary>Devuelve el rect con el area de colisiones</summary>
 	const SDL_Rect& getCollider() {
 		posCollision_ = pos_;	//Provisional -> esta línea se borrará
-		cout << pos_.getX() << "  " << pos_.getY() << endl;
-		cout << posCollision_.getX() << "  " << posCollision_.getY() << endl;
-		cout << scaleCollision_.getX() << "  " << scaleCollision_.getY() << endl;
 		collisionArea_.x = posCollision_.getX();
 		collisionArea_.y = posCollision_.getY();
 		collisionArea_.w = scaleCollision_.getX();

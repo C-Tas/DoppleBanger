@@ -48,7 +48,7 @@ void CollisionCtrl::islandCollisions() {
 				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 				(ob)->onCollider();
 				addPlayerBulletToErase(bullet);
-				bullet->onCollider();
+				bullet->onCollider(); 
 			}
 		}
 	}
@@ -65,7 +65,10 @@ void CollisionCtrl::islandCollisions() {
 			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 				enem->getPos(), enem->getScaleX(), enem->getScaleY())) {
 				enem->reciveDmg(bullet->getDamage());
-				if (!bullet->getPerforate()) {
+				if (bullet->getRicochet()) {	//Cuando esté rebotando
+					bullet->searchEnemy(enemies_, enem);
+				}
+				else if (!bullet->getPerforate()) {	//Cuando no esté perforando
 					addPlayerBulletToErase(bullet);
 					bullet->onCollider();
 				}

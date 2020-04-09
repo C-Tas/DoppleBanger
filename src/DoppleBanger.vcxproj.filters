@@ -164,7 +164,12 @@
       <Filter>GameObjects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Sources\SkillState.cpp" />
-    <ClCompile Include="Sources\PerforateSkill.cpp" />
+    <ClCompile Include="Sources\PerforateSkill.cpp">
+      <Filter>GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\RicochetSkill.cpp">
+      <Filter>GameObjects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -341,7 +346,12 @@
       <Filter>GameObjects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Sources\SkillState.h" />
-    <ClInclude Include="Sources\PerforateSkill.h" />
+    <ClInclude Include="Sources\PerforateSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\RicochetSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">
