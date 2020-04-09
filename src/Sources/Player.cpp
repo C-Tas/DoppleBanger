@@ -59,7 +59,7 @@ bool Player::update()
 	}
 
 	//Si se ha utilizado el ataque fuerte, ataca con un bonus porcentual de daño
-	else if (empoweredAct_ && attacking_ && ((SDL_GetTicks() - empoweredTime_) / 1000) > empoweredCooldown_&& objective_->getState() != STATE::DYING)
+	else if (empoweredAct_ && attacking_ && objective_->getState() != STATE::DYING)
 	{
 #ifdef _DEBUG
 		cout << "Ataque potenciado" << endl;
