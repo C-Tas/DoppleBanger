@@ -26,8 +26,7 @@ public:
 			for (auto it = enemies.begin(); it != enemies.end(); ++it)
 				(*it)->takeDamage(player_->getAd() * BONUS);
 
-			player_->killClon();
-			lastTimeUsed_ = SDL_GetTicks();
+			if (player_->killClon()) lastTimeUsed_ = SDL_GetTicks();
 		}
 	};
 };

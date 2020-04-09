@@ -85,7 +85,13 @@ public:
 	//Crea un clon. A este método lo llama solo la skill "ClonSkill"
 	void createClon();
 	//Mata al clon
-	void killClon() { clon_->die(); };
+	bool killClon() {
+		if (clon_ != nullptr) {
+			clon_->die();
+			return true;
+		}
+		else return false;
+	};
 	//Devuelve la posición del clon
 	Vector2D getClonPos() { return clon_->getPos(); };
 	//Devuelve la escala del clon
