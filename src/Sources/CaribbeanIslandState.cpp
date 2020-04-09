@@ -7,6 +7,9 @@
 #include "EndState.h"
 #include "WinState.h"
 
+//Testeo
+#include "Magordito.h"
+
 
 void CaribbeanIslandState::update()
 {
@@ -30,11 +33,23 @@ void CaribbeanIslandState::initState()
 	createMonkey(numMonkeys_);
 	createPirates(numPirates_);
 	createWolves(numWolves);
+	createMagordito();
 
 	//Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
 	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
 	addRenderUpdateLists(player_);
+}
+
+void CaribbeanIslandState::createMagordito()
+{
+	int wWin = app_->getWindowWidth();
+	int hWin = app_->getWindowHeight();
+	Magordito* mag;
+	Vector2D pos;
+	pos.setVec(Vector2D(800, 400));
+	mag = new Magordito(app_, pos, Vector2D(app_->getWindowWidth() / 20, app_->getWindowHeight() / 8));
+	addEnemy(mag);
 }
 
 void CaribbeanIslandState::createMonkey(int numMonkeys)

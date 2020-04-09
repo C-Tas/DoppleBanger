@@ -46,6 +46,9 @@ public:
 		MonkeyFront,
 		WolfFront,
 
+		//Bosses
+		Magordito,
+
 		//gizmos
 		Rojo,
 		Azul,

@@ -37,6 +37,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ CrabAttack, "../Sources/assets/enemigos/crab/crab_attack.png" },
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
+	{ Magordito, "../Sources/assets/enemigos/magordito/Magordito.png" },
 	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
 	{ Azul, "../Sources/assets/enemigos/azul.png" },
 

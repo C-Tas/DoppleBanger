@@ -13,6 +13,7 @@ public:
 	virtual void update();
 
 #pragma region Provisional
+	void createMagordito();
 	void createMonkey(int numMonkeys);
 	void createPirates(int numPirates);
 	void createWolves(int numWolves);
@@ -32,4 +33,3 @@ protected:
 
 	virtual void initState();
 };
-
