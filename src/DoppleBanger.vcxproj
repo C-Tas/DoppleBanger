@@ -53,6 +53,7 @@
     <ClCompile Include="Sources\NPC.cpp" />
     <ClCompile Include="Sources\Obstacle.cpp" />
     <ClCompile Include="Sources\PauseState.cpp" />
+    <ClCompile Include="Sources\PerforateSkill.cpp" />
     <ClCompile Include="Sources\Physics.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\PlayState.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Sources\HandleEvents.h" />
     <ClInclude Include="Sources\Obstacle.h" />
     <ClInclude Include="Sources\MonkeyCoco.h" />
+    <ClInclude Include="Sources\PerforateSkill.h" />
     <ClInclude Include="Sources\Physics.h" />
     <ClInclude Include="Sources\interactuable.h" />
     <ClInclude Include="Sources\InventoryState.h" />

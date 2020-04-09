@@ -44,6 +44,8 @@ enum class missions : int {
 	//Poner aqui nombre de las misiones
 };
 
+//Tipos de Skills que puede haber
+enum class SkillType { Active, Pasive };
 
 class GameManager {
 private:

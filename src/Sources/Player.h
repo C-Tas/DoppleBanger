@@ -3,6 +3,8 @@
 #include "HandleEvents.h"
 #include "Clon.h"
 
+class Skill;
+
 class Player : public Actor
 {
 public:
@@ -11,7 +13,9 @@ public:
 		Actor(app, pos, scale) {
 		initObject();
 	};
-	~Player() {};
+	~Player() {
+		delete w_; w_ = nullptr;
+	};
 
 	///<summary>Constructor por copia</summary>
 	Player(const Player& other) : Actor(other.app_, other.pos_, other.scale_) {
@@ -27,6 +31,7 @@ public:
 	const int getLiberation() { return liberation_; };
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
+	void setPerforate(bool perforate) { perforate_ = perforate; };
 	virtual void die() { currState_ = STATE::DYING; }
 private:
 	uint lastMeleeHit_ = 0;
@@ -39,6 +44,8 @@ private:
 #pragma region Abilities
 	int liberation_ = 2;	//Nivel de la habilidad del clon
 	bool explotion_ = false;	//Si tiene la habilidad activada
+	bool perforate_ = false;	//Para saber si el siguiente disparo perfora
+	Skill* w_ = nullptr;		//Hanilidad asignada a la w;
 #pragma endregion
 
 //<summary>Variables de los cooldowns del jugador</summary>

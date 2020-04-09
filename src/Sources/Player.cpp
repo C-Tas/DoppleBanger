@@ -7,6 +7,7 @@
 #include "GameState.h"
 #include "GameManager.h"
 #include "CollisionCtrl.h"
+#include "PerforateSkill.h"
 
 bool Player::update()
 {
@@ -28,7 +29,10 @@ bool Player::update()
 		}
 		
 	}
-
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_W))
+	{
+		w_->action();
+	}
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
 		shoot(eventHandler_->getMousePos());
@@ -66,6 +70,10 @@ void Player::initObject() {
 	eventHandler_ = HandleEvents::instance();
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	CollisionCtrl::instance()->setPlayer(this);
+
+	#pragma region Testeo
+	w_ = new PerforateSkill(this);
+	#pragma endregion
 }
 
 void Player::shoot(Vector2D dir)
@@ -80,6 +88,10 @@ void Player::shoot(Vector2D dir)
 
 	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.distDmg_,
 		BULLET_LIFE, BULLET_VEL, Vector2D(W_H_BULLET, W_H_BULLET));
+	if (perforate_) {
+		bullet->setPerforate(perforate_);
+		perforate_ = false;
+	}
 	app_->getCurrState()->addRenderUpdateLists(bullet);
 	CollisionCtrl::instance()->addPlayerBullet(bullet);
 }

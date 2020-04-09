@@ -65,8 +65,10 @@ void CollisionCtrl::islandCollisions() {
 			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 				enem->getPos(), enem->getScaleX(), enem->getScaleY())) {
 				enem->reciveDmg(bullet->getDamage());
-				addPlayerBulletToErase(bullet);
-				bullet->onCollider();
+				if (!bullet->getPerforate()) {
+					addPlayerBulletToErase(bullet);
+					bullet->onCollider();
+				}
 			}
 		}
 	}

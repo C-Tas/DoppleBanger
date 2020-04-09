@@ -24,6 +24,8 @@ public:
 		}; 
 	}
 	const int getDamage() { return damage_; }
+	const bool getPerforate() { return perforate_; };
+	void setPerforate(bool perforate) { perforate_ = perforate; };
 
 private:
 	double lifeSpan_ = 0; //Tiempo máximo que dura la bala
@@ -33,6 +35,8 @@ private:
 	int damage_ = 0;
 	bool enemyBullet_ = false;
 	bool deleting = false;
-
+	#pragma region PlayerAbilities
+	bool perforate_ = false;
+	#pragma endregion
 	virtual void initObject() {};
 };
