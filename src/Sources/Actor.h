@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Dynamic.h"
 #include "Stats.h"
 

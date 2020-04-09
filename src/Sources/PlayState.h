@@ -47,4 +47,3 @@ protected:
 
 	virtual void initState() { collisionCtrl_ = CollisionCtrl::instance(); }
 };
-
