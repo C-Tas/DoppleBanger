@@ -39,7 +39,9 @@ void PlayState::checkPlayerActions() {
 		Enemy* obj; obj = checkAttack();
 		if (obj != nullptr) player_->attack(obj);
 		//else if NPC
-		else player_->move(eventHandler_->getMousePos());
+		else {
+			player_->move(eventHandler_->getMousePos());
+		}
 	}
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));

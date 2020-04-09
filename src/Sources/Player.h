@@ -27,6 +27,7 @@ public:
 	const int getLiberation() { return liberation_; };
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
+	const Vector2D getPreviousPos() { return previousPos_; }
 	virtual void die() { currState_ = STATE::DYING; }
 
 	//
@@ -38,6 +39,7 @@ private:
 	Actor* objective_ = nullptr;
 	Clon* clon_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
+	Vector2D previousPos_;
 
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities

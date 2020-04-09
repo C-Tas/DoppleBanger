@@ -166,7 +166,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			shipObjects_[i].object->getPosX() + shipObjects_[i].object->getScaleX() / 2, shipObjects_[i].object->getPosY() + 
 			shipObjects_[i].object->getScaleY() / 2, shipObjects_[i].object->getScaleX(), shipObjects_[i].object->getScaleY())) {
 			player_->stop();
-			player_->jumpBack(shipObjects_[i].object);
+			player_->setPos(player_->getPreviousPos());
 
 			//Si el objeto en concreto hab�a sido pulsado
 			if (shipObjects_[i].click) {
