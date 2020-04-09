@@ -108,7 +108,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 
 	struct ShipObjectsInfo {
 		ShipObjectsNames id;
-		ShipObject* object;
+		ShipObject* object = nullptr;
 		bool click = false;
 
 		ShipObjectsInfo() {};

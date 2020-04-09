@@ -30,9 +30,6 @@ public:
 	const Vector2D getPreviousPos() { return previousPos_; }
 	virtual void die() { currState_ = STATE::DYING; }
 
-	//
-	void jumpBack(Draw* ob);
-
 private:
 	uint lastMeleeHit_ = 0;
 	bool attacking_ = false;

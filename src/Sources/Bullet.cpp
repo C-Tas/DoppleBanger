@@ -20,7 +20,7 @@ bool Bullet::update()
 
 	//Si se le ha acabado el tiempo de vida
 	if ((currTime_ - initTime_) / 1000 > lifeSpan_) { 
-		app_->getCurrState()->removeRenderUpdateLists(this);
+		onCollider();
 	}
 	else {
 		double delta = app_->getDeltaTime();

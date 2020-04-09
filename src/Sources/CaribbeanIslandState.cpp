@@ -27,13 +27,14 @@ void CaribbeanIslandState::initState()
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
 	addRenderUpdateLists(background_);
 
-	createMonkey(numMonkeys_);
-	createPirates(numPirates_);
-	createWolves(numWolves);
+	createMonkey(NUM_MONKEYS);
+	createPirates(NUM_PIRATES);
+	createWolves(NUM_WOLVES);
 
 	//Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
-	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
-	player_ = new Player(app_, playerEntry_, Vector2D(wPlayer, hPlayer));
+	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- W_PLAYER), ((app_->getWindowHeight() * 8 / 10) - H_PLAYER));
+	player_->setPos(playerEntry_);
+	player_->setScale({ (double)W_PLAYER,(double)H_PLAYER });
 	addRenderUpdateLists(player_);
 }
 
@@ -45,7 +46,7 @@ void CaribbeanIslandState::createMonkey(int numMonkeys)
 	Vector2D pos;
 	for (int i = 0; i < numMonkeys; i++) {
 		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
-		newMonkey = new MonkeyCoco(app_, pos, Vector2D(wMonkey, hMonkey));
+		newMonkey = new MonkeyCoco(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
 		addEnemy(newMonkey);
 	}
 }
@@ -63,7 +64,7 @@ void CaribbeanIslandState::createPirates(int numPirates)
 	Vector2D pos;
 	for (int i = 0; i < numPirates; i++) {
 		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
-		newPirate = new EnemyPirate(app_, pos, Vector2D(wMonkey, hMonkey), patrol);
+		newPirate = new EnemyPirate(app_, pos, Vector2D(W_MONKEY, H_MONKEY), patrol);
 		addEnemy(newPirate);
 	}
 }
@@ -81,7 +82,7 @@ void CaribbeanIslandState::createWolves(int numWolves)
 	Vector2D pos;
 	for (int i = 0; i < numWolves; i++) {
 		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
-		newWolf = new Wolf(app_, pos, Vector2D(wMonkey, hMonkey), patrol);
+		newWolf = new Wolf(app_, pos, Vector2D(W_MONKEY, H_MONKEY), patrol);
 		addEnemy(newWolf);
 	}
 }

@@ -213,7 +213,7 @@ void EnemyPirate::initObject() {
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
-	rangeVision_ = 75;//numero magico
+	rangeVision_ = VIS_RANGE;
 	CollisionCtrl::instance()->addEnemy(this);
 	initAnim();
 }
@@ -221,6 +221,7 @@ void EnemyPirate::initObject() {
 //Esto es un apaño, se eliminara cuando este completa la gestión de muertes
 void EnemyPirate::onCollider()
 {
+
 }
 
 //Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_ DONE
@@ -236,7 +237,9 @@ bool EnemyPirate::getEnemy() {
 	Vector2D closesetEnemy;
 	closesetEnemy = pos_.getClosest(playerPos, clonPos);
 	closesetEnemy == playerPos ? currEnemy_ = gm->getPlayer() : currEnemy_ = gm->getClon();
-	app_->getAudioManager()->playChannel(Resources::AudioId::Agro, 0, 0);
+	if (!app_->getMute()) {
+		app_->getAudioManager()->playChannel(Resources::AudioId::Agro, 0, 0);
+	}
 	return true;
 }
 

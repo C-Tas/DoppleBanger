@@ -47,7 +47,9 @@ bool Wolf::update() {
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte?
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfDie, 0, 3);
+		if (!app_->getMute()) {
+			app_->getAudioManager()->playChannel(Resources::AudioId::WolfDie, 0, 3);
+		}
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
@@ -176,7 +178,9 @@ void Wolf::attack() {
 	if (currStats_.meleeRate_ <= SDL_GetTicks() - lastMeleeHit_)
 	{
 		lastMeleeHit_ = SDL_GetTicks();
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttack, 0, 1);
+		if (!app_->getMute()) {
+			app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttack, 0, 1);
+		}
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
 			dmg->receiveDamage(currStats_.meleeDmg_);
@@ -215,7 +219,9 @@ bool Wolf::getEnemy() {
 	Vector2D closesetEnemy;
 	closesetEnemy = pos_.getClosest(playerPos, clonPos);
 	closesetEnemy == playerPos ? currEnemy_ = gm->getPlayer() : currEnemy_ = gm->getClon();
-	app_->getAudioManager()->playChannel(Resources::AudioId::WolfHowl, 0, 0);
+	if (!app_->getMute()) {
+		app_->getAudioManager()->playChannel(Resources::AudioId::WolfHowl, 0, 0);
+	}
 	return true;
 }
 

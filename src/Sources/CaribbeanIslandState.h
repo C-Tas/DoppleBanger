@@ -20,15 +20,15 @@ public:
 #pragma endregion
 protected:
 	//Dimensiones de las entidades
-	const uint wPlayer = app_->getWindowWidth() / 40;
-	const uint hPlayer = app_->getWindowHeight() / 15;
+	const int W_PLAYER = app_->getWindowWidth() / 40;
+	const int H_PLAYER = app_->getWindowHeight() / 15;
 
-	const uint wMonkey = app_->getWindowWidth() / 20;
-	const uint hMonkey = app_->getWindowHeight() / 15;
+	const int W_MONKEY = app_->getWindowWidth() / 20;
+	const int H_MONKEY = app_->getWindowHeight() / 15;
 
-	const int numMonkeys_ = 1;
-	const int numPirates_ = 2;
-	const int numWolves = 3;
+	const int NUM_MONKEYS = 1;
+	const int NUM_PIRATES = 2;
+	const int NUM_WOLVES = 3;
 
 	virtual void initState();
 };

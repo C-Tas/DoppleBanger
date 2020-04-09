@@ -14,7 +14,7 @@ public:
 	///<summary>Constructora PlayState</summary>
 	PlayState(Application* app = nullptr) : GameState(app) { initState(); };
 	///<summary>Destructora</summary>
-	virtual ~PlayState() { };
+	virtual ~PlayState() {};
 
 	///<summary>Llama al update del CollisionManager</summary>
 	virtual void update();

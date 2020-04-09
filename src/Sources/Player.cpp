@@ -27,7 +27,6 @@ bool Player::update()
 			app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
 			clonTime_ = SDL_GetTicks();
 		}
-		
 	}
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
@@ -50,7 +49,6 @@ bool Player::update()
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
 	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DYING)
 	{
-		cout << "Ataca" << endl;
 		objective_->receiveDamage(currStats_.meleeDmg_);
 		if (objective_->getState() == STATE::DYING) move(visPos_);
 		meleeTime_ = SDL_GetTicks();

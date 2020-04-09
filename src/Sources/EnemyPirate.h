@@ -83,6 +83,7 @@ private:
 	const double MOVE_SPEED = 250;
 	const double MELEE_RATE = 1500;
 	const double DIST_RATE = 1500;
+	const int VIS_RANGE = 75;
 	#pragma endregion
 
 	//Entero que representa la cantidad de frames que tiene para las animaciones
