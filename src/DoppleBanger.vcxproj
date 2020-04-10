@@ -27,6 +27,7 @@
     <ClCompile Include="Sources\Bullet.cpp" />
     <ClCompile Include="Sources\Button.cpp" />
     <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
+    <ClCompile Include="Sources\Chest.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
     <ClCompile Include="Sources\CollisionCtrl.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="Sources\Button.h" />
     <ClInclude Include="Sources\CaribbeanIslandState.h" />
     <ClInclude Include="Sources\checkML.h" />
+    <ClInclude Include="Sources\Chest.h" />
     <ClInclude Include="Sources\Clon.h" />
     <ClInclude Include="Sources\Collider.h" />
     <ClInclude Include="Sources\CollisionCtrl.h" />

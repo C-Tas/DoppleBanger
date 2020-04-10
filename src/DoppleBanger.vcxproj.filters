@@ -192,6 +192,8 @@
     <ClCompile Include="Sources\TextBox.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\Chest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -400,6 +402,9 @@
     <ClInclude Include="Sources\TextBox.h">
       <Filter>Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Bullet.h" />
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\Chest.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">
