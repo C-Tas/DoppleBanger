@@ -8,16 +8,16 @@ class Player;
 
 const double DURATION_ = 2; //En segundos
 
-class Clon : public Draw
+class Clon : public Collider
 {
 public:
 	//Liberation es el nivel de la habilidad liberaci�n: 0 no se tiene, 1 nivel 1, 2 nivel 2.
 	Clon(Application* app, Point2D pos, Vector2D scale, Player* player) : 
-		Draw(app, pos, scale), player_(player) { initObject(); }
+		Collider(app, pos, scale), player_(player) { initObject(); }
 	~Clon() {};
 
 	bool update();
-	//void onCollider() {}; Eliminar si no va a heredar de collider
+	void onCollider() {};
 
 	void changeDuration(double dur) { duration_ = dur; } //En caso de que se pueda modificar la duraci�n
 	void explode() { die(); }; //Crea una explosi�n y mata al clon (lo deletea)
