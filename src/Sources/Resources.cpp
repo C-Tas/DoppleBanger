@@ -57,7 +57,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 
 	//Colisionable
 	{ Rock, "../Sources/assets/colisionables/roca.png" },
-	{ Coco ,"../Sources/assets/Colisionables/coco.png" }
+	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
+
+	//Equipables
+	{Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
+	{Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{

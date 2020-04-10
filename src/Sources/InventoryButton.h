@@ -34,7 +34,6 @@ public:
 	//Object
 	void setObject(Equipment* ob) { object_ = ob; }
 	Item* getObject() { return object_; }
-	//
-	//inline void setNewCallBack(CallBackOnClickInventory* newCallBack) { callBackInventory_ = newCallBack; };
+	void setNewCallBack(CallBackOnClickInventory* newCallBack) { callBackInventory_ = newCallBack; };
 };
 

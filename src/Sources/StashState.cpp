@@ -63,11 +63,12 @@ void StashState::draw() const
 
 	//Dibujamos los objetos visibles en el inventario y en el alijo
 	//Primer vector determina donde se posiciona el primer objeto y el segundo la distancia en x e y entre objetos
-	drawList(stash_.objects_, stash_.page_, STASH_VISIBLE_ELEMENTS, Vector2D(app_->getWindowWidth() / 9, (double)(app_->getWindowHeight() / 3) + (app_->getWindowHeight()/10)), Vector2D((app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8)), 2);
+	drawList(stash_.objects_, stash_.page_, STASH_VISIBLE_ELEMENTS, Vector2D(app_->getWindowWidth() / 9, (double)(app_->getWindowHeight() / 3) + (app_->getWindowHeight()/12)), Vector2D((app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8)), 2);
 	drawList(inventory_.objects_, inventory_.page_, INVENTORY_VISIBLE_ELEMENTS, Vector2D(((double)(app_->getWindowWidth()/2)) + 55, (double)(app_->getWindowHeight() / 3) + (app_->getWindowHeight() / 10)), Vector2D((app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8)), 2);
 
 	//Escribimos la informaci�n del boton seleccionado
-	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render({850, 675, 100, 50});
+	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render({ 7 * (app_->getWindowWidth() / 13) - 30, 6*(app_->getWindowHeight()/8)-30, 6*(app_->getWindowWidth() / 16)-20, 4*(app_->getWindowHeight()/21)});
+	
 }
 
 void StashState::update()
@@ -144,33 +145,37 @@ void StashState::initState() {
 	Gun* gun3 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu4", 0, 0, 0, Shotgun_);
 
 	
-	InventoryButton* b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel),
-		Vector2D(100, 400), Vector2D(50, 50), gun, callbackSelectObject);
+	InventoryButton* b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
+		Vector2D(100, 400), Vector2D(125, 50), gun, callbackSelectObject);
 	auto it = stash_.objects_->insert(stash_.objects_->end(),b);
 	b->setIterator(it);
-	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel),
-		Vector2D(100, 400), Vector2D(50, 50), gun1, callbackSelectObject);
+	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
+		Vector2D(100, 400), Vector2D(125, 50), gun1, callbackSelectObject);
 	it = stash_.objects_->insert(stash_.objects_->end(), b);
 	b->setIterator(it);
-	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel),
-		Vector2D(100, 400), Vector2D(50, 50), gun3, callbackSelectObject);
+	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
+		Vector2D(100, 400), Vector2D(125, 50), gun3, callbackSelectObject);
 	it = stash_.objects_->insert(stash_.objects_->end(), b);
 	b->setIterator(it);
 	
-	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel),
-		Vector2D(100, 400), Vector2D(50, 50), gun2, callbackSelectObject);
+	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
+		Vector2D(100, 400), Vector2D(125, 50), gun2, callbackSelectObject);
 	it = inventory_.objects_->insert(inventory_.objects_->end(), b);
 	b->setIterator(it);
 
 
 
 	#endif // _DEBUG
-	/*for (auto ob = inventory_.objects_->begin(); ob != inventory_.objects_->end(); ++ob) {
+	///Reasignamos el callback y el estado puesto que si se borra el antiguo stash, no se podrá seleccionar 
+	//ninguno de los objetos al no estar la función en la misma direccion de memoria
+	for (auto ob = inventory_.objects_->begin(); ob != inventory_.objects_->end(); ++ob) {
 		(*ob)->setNewCallBack(callbackSelectObject);
+		(*ob)->setCurrentState(this);
 	}
 	for (auto ob = stash_.objects_->begin(); ob != stash_.objects_->end(); ++ob) {
 		(*ob)->setNewCallBack(callbackSelectObject);
-	}*/
+		(*ob)->setCurrentState(this);
+	}
 }
 
 void StashState::endState()
