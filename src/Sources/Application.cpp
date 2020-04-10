@@ -13,8 +13,8 @@ Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine();
-	//GameState* startState = new MainMenuState(this);
-	machine_->pushState(new StashState(this));
+	GameState* startState = new MainMenuState(this);
+	machine_->pushState(startState);
 }
 
 Application::~Application() {
