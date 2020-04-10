@@ -15,6 +15,7 @@ public:
 	Button(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu);
 	virtual ~Button() {};
 	virtual bool update(); //Lleva la logica del boton
+	void setCurrentState(GameState* state) { currentState_ = state; }
 
 protected:
 	

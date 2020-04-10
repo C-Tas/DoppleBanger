@@ -165,12 +165,16 @@ void StashState::initState() {
 
 
 	#endif // _DEBUG
-	/*for (auto ob = inventory_.objects_->begin(); ob != inventory_.objects_->end(); ++ob) {
+	///Reasignamos el callback y el estado puesto que si se borra el antiguo stash, no se podrá seleccionar 
+	//ninguno de los objetos al no estar la función en la misma direccion de memoria
+	for (auto ob = inventory_.objects_->begin(); ob != inventory_.objects_->end(); ++ob) {
 		(*ob)->setNewCallBack(callbackSelectObject);
+		(*ob)->setCurrentState(this);
 	}
 	for (auto ob = stash_.objects_->begin(); ob != stash_.objects_->end(); ++ob) {
 		(*ob)->setNewCallBack(callbackSelectObject);
-	}*/
+		(*ob)->setCurrentState(this);
+	}
 }
 
 void StashState::endState()

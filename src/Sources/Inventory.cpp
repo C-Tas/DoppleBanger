@@ -95,7 +95,16 @@ Inventory::Inventory(Application* app) :GameState(app) {
 
 	
 	#endif
+
 	ListPos = inventoryList_->begin();
+
+	///Reasignamos el callback y el estado puesto que si se borra el antiguo inventario, no se podrá seleccionar 
+	//ninguno de los objetos al no estar la función en la misma direccion de memoria
+	//pasa lo mismo con el estado al que apunta el botón
+	for (auto ob = inventoryList_->begin(); ob != inventoryList_->end(); ++ob) {
+		(*ob)->setNewCallBack(callSelectObject);
+		(*ob)->setCurrentState(this);
+	}
 }
 void Inventory::selectObject(InventoryButton* ob) {
 	select_ = ob;
