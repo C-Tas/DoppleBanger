@@ -91,6 +91,7 @@ void CollisionCtrl::islandCollisions() {
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			player_->receiveDamage(bullet->getDamage());
 			removeEnemyBullet(bullet);
+			bullet->onCollider();
 		}
 	}
 
