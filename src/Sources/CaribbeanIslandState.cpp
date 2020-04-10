@@ -33,12 +33,13 @@ void CaribbeanIslandState::initState()
 
 	createMonkey(numMonkeys_);
 
-	PlayState::initState();
-
 	//Posición inicial en la escena, ánimo
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- wPlayer), ((app_->getWindowHeight() * 8 / 10) - hPlayer));
 	player_->setPos(playerEntry_);
 	player_->setScale(Vector2D(wPlayer, hPlayer));
+
+	addRenderUpdateLists(player_);
+	addRenderUpdateLists((Draw*)hud_);
 }
 
 void CaribbeanIslandState::createMonkey(int numMonkeys)

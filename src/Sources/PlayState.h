@@ -7,12 +7,13 @@
 #include <list>
 
 class CollisionCtrl;
+class HUD;
 
 class PlayState : public GameState
 {
 public:
 	///<summary>Constructora PlayState</summary>
-	PlayState(Application* app = nullptr) : GameState(app) {};
+	PlayState(Application* app = nullptr) : GameState(app) { initState(); };
 	///<summary>Destructora</summary>
 	virtual ~PlayState() { };
 
@@ -46,6 +47,7 @@ protected:
 	//Singleton de colisiones
 	CollisionCtrl* collisionCtrl_ = nullptr;
 	Player* player_ = nullptr;
+	HUD* hud_ = nullptr;
 	list<Obstacle*> obstacles_;
 	list<Enemy*> enemies_;
 

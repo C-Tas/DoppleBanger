@@ -70,11 +70,13 @@ void ShipState::initState()
 		app_->getTextureManager()->getTexture(Resources::ExitShip), goIsland);
 	addRenderUpdateLists(exit_);
 
-	PlayState::initState();
 
 	playerEntry_ = Vector2D((app_->getWindowWidth() - wPlayer * 2), ((app_->getWindowHeight() * 3 / 4) - hPlayer));
 	player_->setPos(playerEntry_);
 	player_->setScale(Vector2D(wPlayer, hPlayer));
+
+	addRenderUpdateLists(player_);
+	addRenderUpdateLists(hud_);
 }
 
 

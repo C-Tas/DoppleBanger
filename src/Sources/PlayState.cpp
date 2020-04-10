@@ -84,10 +84,8 @@ Enemy* PlayState::collidesWithEnemy(Point2D pos, Vector2D scale) {
 
 void PlayState::initState() { 
 	collisionCtrl_ = CollisionCtrl::instance();
-	player_ = new Player(app_, playerEntry_, Vector2D(0, 0));
-	addRenderUpdateLists(player_);
-	HUD* hud = new HUD(app_);
-	addRenderUpdateLists(hud);
+	player_ = new Player(app_, Vector2D(0, 0), Vector2D(0, 0));
+	hud_ = new HUD(app_);
 }
 
 #pragma region ChangeState
