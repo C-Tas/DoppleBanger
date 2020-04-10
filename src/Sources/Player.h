@@ -22,77 +22,98 @@ struct playerEquipment
 
 class Player : public Actor
 {
-private:
-	bool attacking = false;
-
-	Enemy* objective_ = nullptr;
-	Clon* clon_ = nullptr;
-	HandleEvents* eventHandler_ = nullptr;
-
-//<summary>Variables relativas a las habilidades</summary>
-#pragma region abilities
-	int liberation_ = 2;
-	bool explotion_ = false;
-#pragma endregion
-
-//<summary>Variables de los cooldowns del jugador</summary>
-#pragma region cooldowns
-	double clonCooldown_ = 5;
-	double clonTime_ = 0; //Momento del último clon
-	double meleeTime_ = 0; //Momento del último ataque
-	double shotTime_ = 0; //Momento del �ltimo disparo
-#pragma endregion
-
-//<summary>Estadisticas del jugador</summary>
-#pragma region consts
-	const int HEALTH = 100;
-	const int MANA = 100;
-	const double MANA_REG = 1;
-	const int ARMOR = 10;
-	const int AD = 20;
-	const int AP = 0;
-	const int CRIT = 0;
-	const int RANGE = 50;
-	const double MOVE_SPEED = 100;
-	const double MELEE_RATE = 1;
-	const double DIST_RATE = 2;
-
-	const double CLON_SPAWN_RANGE = 700;
-#pragma endregion
-
-	playerEquipment equip_;
-	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
-	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
-	void desactivePotion();
-	void init();
-
 public:
-//Constructora de player
-	Player(Application* app, vector<Texture*> texture, Vector2D pos, Vector2D scale, SDL_Rect collisionArea) :
-		Actor(app, texture, pos, scale, collisionArea) {
-		init();
+	//Constructora de player
+	Player(Application* app, Vector2D pos, Vector2D scale) :
+		Actor(app, pos, scale) {
+		initObject();
 	};
 	~Player();
+
+	///<summary>Constructor por copia</summary>
+	Player(const Player& other) : Actor(other.app_, other.pos_, other.scale_) {
+		eventHandler_ = HandleEvents::instance();
+	};
+
 	virtual bool update();
 	void shoot(Vector2D dir);
-	virtual void onCollider() { /*Colisi�n con enemigo*/ };
-	void move(Point2D target);
+	virtual void onCollider();
+	//<summary>Establece la direccion del movimiento</summary>	
+	virtual void move(Point2D target);
 	void attack(Enemy* obj);
-	virtual void stop() { dir_ = Vector2D(0, 0); }
-	
-
-	//metodos para guardar el puntero al equipamiento
-	void equip(Armor* armor) {  equip_.armor_ = armor;  };
-	void equip(Gloves* gloves) { equip_.gloves_ = gloves;  };
+	const int getLiberation() { return liberation_; };
+	const bool getExplotion() { return explotion_; };
+	const Stats& getStats() { return currStats_; };
+	const Vector2D getPreviousPos() { return previousPos_; }
+	virtual void die() { currState_ = STATE::DYING; }
+	//metodos para coger la info del player
+	playerEquipment& const getInfoEquip() { return equip_; }
+	void desactivePotion();
+	void init();
+	void equip(Armor* armor) { equip_.armor_ = armor; };
+	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
 	void equip(Boots* boots) { equip_.boots_ = boots; };
-	void equip(Sword* sword) { equip_.sword_ = sword;  };
+	void equip(Sword* sword) { equip_.sword_ = sword; };
 	void equip(Gun* gun) { equip_.gun_ = gun; };
 	void equipPotion1(usable* pot) { equip_.potion1_ = pot; }
 	void equipPotion2(usable* pot) { equip_.potion2_ = pot; }
 
 	//metodos para usar las pociones
 	void usePotion(int value, potionType type);
+	//metodos para guardar el puntero al equipamiento
 
-	//metodos para coger la info del player
-	playerEquipment& const getInfoEquip() { return equip_; }
+private:
+	uint lastMeleeHit_ = 0;
+	bool attacking_ = false;
+	Actor* objective_ = nullptr;
+	Clon* clon_ = nullptr;
+	HandleEvents* eventHandler_ = nullptr;
+	Vector2D previousPos_;
+
+//<summary>Variables relativas a las habilidades</summary>
+#pragma region Abilities
+	int liberation_ = 2;	//Nivel de la habilidad del clon
+	bool explotion_ = false;	//Si tiene la habilidad activada
+#pragma endregion
+
+//<summary>Variables de los cooldowns del jugador</summary>
+#pragma region Cooldowns
+	double clonCooldown_ = 2;
+	double clonTime_ = 0; //Momento del último clon
+	double meleeTime_ = 0; //Momento del último ataque
+	double shotTime_ = 0; //Momento del �ltimo disparo
+#pragma endregion
+
+//<summary>Estadisticas iniciales del jugador</summary>
+#pragma region Stats
+	const double HEALTH = 1000;		//Vida
+	const double MANA = 100;		//Mana
+	const double MANA_REG = 1;		//Regeneración de maná por segundo
+	const double ARMOR = 10;		//Armadura
+	const double AD = 1000;			//Daño a melee
+	const double AP = 1000;			//Daño a distancia y de las habilidades
+	const double CRIT = 0;			//Crítico
+	const double MELEE_RANGE = 20;	//Rango del ataque a melee
+	const double DIST_RANGE = 0;	//Rango del ataque a distancia
+	const double MOVE_SPEED = 300;	//Velocidad de movimiento
+	const double MELEE_RATE = 1;	//Velocidad del ataque a melee en segundos
+	const double DIST_RATE = 1;		//Velocidad del ataque a distancia en segundos
+
+	const double CLON_SPAWN_RANGE = 200;
+#pragma endregion
+
+//<summary>Constantes iniciales del jugador</summary>
+#pragma region Constantes
+	//Balas
+	const uint W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
+	const double BULLET_VEL = 1000;							//Velocidad de la bala
+	const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
+#pragma endregion
+	virtual void initObject();
+
+
+	playerEquipment equip_;
+	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
+	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
+
 };

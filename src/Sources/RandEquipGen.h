@@ -15,7 +15,7 @@ class RandEquipGen
 private:
 	Application* app_ = nullptr;
 	GameManager* gameManager_ = nullptr;
-	SRandBasedGenerator rn_;
+	SRandBasedGenerator* rn_;
 
 public:
 	RandEquipGen(Application* app);

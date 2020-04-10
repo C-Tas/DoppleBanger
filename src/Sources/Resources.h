@@ -12,12 +12,13 @@ public:
 	///<summary>Enum para las distintas imagenes del juego</summary>
 	enum TextureId : int {
 		//Botones
-		Timon,
-		BotonMenu,
-		//Botones
+		MenuButton,
 		GoControls,
 		BackButton,
-		Controls,
+		SkipButton,
+		MuteOff,
+		MuteOn,
+		RestartGame,
 		CloseButton,
 		RightArrow,
 		LeftArrow,
@@ -30,33 +31,76 @@ public:
 		MoneyButton,
 
 		//Fondos
+		MenuBackground,
 		InventaryMenu,
-		StashMenu,
+		Controls,
+		PauseBackground,
+		StashMenu,//
 		Scene1,
 		Scene2,
 		Scene3,
 		TextBox,
-		MenuFondo,
+		Ship,
+		Table,
+		Map1,
+		Map2,
+		Map3,
+		CaribbeanMap,
+		Spooky,
+		Volcanic,
+		GameOver,
+		Win,
 
 		//Personajes
 		Dragon,
-		Roca,
-        
+        PlayerFront,
+		MonkeyFront,
+		WolfFront,
+
+		//gizmos
+		Rojo,
+		Azul,
+
+		//Animaciones
+		CrabAttack,
+
+		//Interactuables
+		Wheel,
+		Stash,
+		ShipDoor,
+		ExitShip,
+
+		//Colsionable
+		Rock,
+
 		//Textos
 		PlayText,
 		ExitText,
 		ControlsText,
 		LoadText,
-		CreditsText,
+		CreditsText, 
+		ResumeText,
+		MainMenuText,
 		StashMoneyText,
 		InventoryMoneyText,
 
-		
+		//proyectiles
+		Coco
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
 	enum AudioId : int{
-		MainTheme
+		//Música
+		MainTheme,
+		ShipSingers,
+
+		//Efectos de sonido
+		Agro,
+
+		//Efectos para el lobo
+		WolfHowl,
+		WolfAttack,
+		WolfDie
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
@@ -111,5 +155,5 @@ public:
 	static vector<FontInfo> fontsRoutes;
 
 	//Vector con los textos
-	static vector<TextMsgInfo> messages_; // initialized in .cpp
+	static vector<TextMsgInfo> messages; // initialized in .cpp
 };

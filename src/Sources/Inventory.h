@@ -6,7 +6,6 @@
 using namespace std;
 struct Equipments
 {
-	
 	InventoryButton* armor_ = nullptr;
 	InventoryButton* boots_ = nullptr;
 	InventoryButton* gloves_ = nullptr;
@@ -14,7 +13,6 @@ struct Equipments
 	InventoryButton* gun_ = nullptr;
 	InventoryButton* potion1_ = nullptr;
 	InventoryButton* potion2_ = nullptr;
-
 };
 
 
@@ -34,7 +32,10 @@ private:
 	Equipments equipment_;
 	const int  VIEW_LIST = 6; //variable que guarda el numero de onjetos que se va a mostrar a la vez por pantalla
 	int advanced = 0;//Complamentario a listPos, gurda cuantas veces se ha avanzado o retrocedido en la lista,para actualizar el iterador
-	Player* player_;
+	Player* player_ = nullptr;
+
+	virtual void initState() {};
+
 	//const int MAX_OBJECTS;
 
 	//metodos privados

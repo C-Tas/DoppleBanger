@@ -1,19 +1,15 @@
 #include "Application.h"
 #include "MainMenuState.h"
-#include "SelectLevelState.h"
-#include "ControlsState.h"
 #include "HandleEvents.h"
 #include <exception>
 #include "GameManager.h"
-#include "Inventory.h"
 
 Application::Application(GameStateMachine* state) {
-	
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine();
 	//GameState* startState = new MainMenuState(this);
-	machine_->pushState(new Inventory(this));
+	machine_->pushState(new MainMenuState(this));
 }
 
 Application::~Application() {
@@ -47,7 +43,6 @@ void Application::initSDL() {
 
 void Application::runApp() {
 	HandleEvents* input = HandleEvents::instance();
-	GameManager::instance();
 	while (!appClosed_) {
 		SDL_RenderClear(renderer_); //Clear
 		updateDelta(); //Actualizamos deltaTime
@@ -84,7 +79,10 @@ void Application::initResources() {
 	audioManager_ = new AudioManager();
 	audioManager_->init();
 
-	//Crear e inicializar el generador de equipamiento aleatorio
+	//Generador de randoms
+	random_ = new SRandBasedGenerator();
+
+	///<summary>Generador de equipo aleatorio</summary>
 	equipGen_ = new RandEquipGen(this);
 
 	//Creacion de las texturas
@@ -100,7 +98,7 @@ void Application::initResources() {
 	}
 
 	//Creación de mensajes
-	for (auto& txtmsg : Resources::messages_) {
+	for (auto& txtmsg : Resources::messages) {
 		textureManager_->loadFromText(txtmsg.id, renderer_, txtmsg.msg,
 			fontManager_->getFont(txtmsg.fontId), txtmsg.color);
 	}
@@ -116,11 +114,11 @@ void Application::initResources() {
 	}
 }
 
-
+//Elimina los recursos
 void Application::closeResources() {
-	//Faltaría el borrar los recursos que añadiesemos a posteriori
+	delete equipGen_;
+	delete random_;
+	delete audioManager_;
 	delete fontManager_;
 	delete textureManager_;
-	delete audioManager_;
-	delete equipGen_;
 }

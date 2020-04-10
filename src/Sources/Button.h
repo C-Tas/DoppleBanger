@@ -9,23 +9,20 @@ using CallBackOnClickMenu = void(GameState* state);
 //declaracion de CallBacks
 
 class Button : public Draw
-{ 
+{
 public:
-	Button(Application* app,Texture* texture,Vector2D pos, Vector2D scale, CallBackOnClick* callBack);
+	Button(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* cbClick);
 	Button(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu);
-	virtual bool update();
 	virtual ~Button() {};
+	virtual bool update(); //Lleva la logica del boton
 
 protected:
 	
-	CallBackOnClick* ButtonCallBack = nullptr;
+	CallBackOnClick* cbClick_ = nullptr;
 	CallBackOnClickMenu* ButtonCallBackMenu = nullptr;
 	int call;
 	Application* appReference_ = nullptr;
 	GameState* currentState_ = nullptr;
-
-
-	
-
+	virtual void initObject() {};
+	virtual void initAnim() {};
 };
-

@@ -19,7 +19,10 @@ private:
 	///<summary>Máquina de estados</summary>
 	GameStateMachine* machine_ = nullptr;
 
-	///<summary>Generador de randoms</summary>
+	///<summary> Generador de randoms</summary>
+	SRandBasedGenerator* random_ = nullptr;
+
+	///<summary>Generador de objetos aleatorios</summary>
 	RandEquipGen* equipGen_ = nullptr;
 
 	///<summary>Manager que gestiona las texturas </summary>
@@ -35,8 +38,8 @@ private:
 	bool appClosed_ = false;
 
 	///<summary>Constantes con las dimensiones de la ventana </summary>
-	static const int winWidth_ = 1600;
-	static const int winHeight_ = 900;
+	static const int winWidth_ = 1200;
+	static const int winHeight_ = 600;
 
 	///<summary>Metodo que inicializa SDL</summary>
 	void initSDL();
@@ -53,6 +56,7 @@ private:
 	///<summary>Tiempo que ha pasado entre el frame actual y el anterior </summary>
 	double deltaTime_;
 	void updateDelta();
+	bool mute_ = false;
 
 public:
 	///<summary>Construtora de la app</summary>
@@ -64,11 +68,14 @@ public:
 #pragma region Setters
 	///<summary>Metodo que termina el bucle principal de la app</summary>
 	void endGame() { appClosed_ = true; };
+
+	///<summary>Cambia el valor de mute</summary>
+	void setMute() { mute_ = !mute_; }
 #pragma endregion
 
 #pragma region Getters
 	///<summary>Devuelve maquina de estados</summary>
-	GameStateMachine* getStateMachine() { return machine_; };
+	GameStateMachine* getGameStateMachine() { return machine_; };
 	///<summary>Devuelve el estado actual</summary>
 	GameState* getCurrState() { return machine_->getState(); };
 	///<summary>Devuelve si se esta procesando el bucle principal de la  </summary>
@@ -95,6 +102,10 @@ public:
 	Equipment* genEquip(equipType type) { return equipGen_->genEquip(type); };
 	//Devuelve equipGen_
 	RandEquipGen* getEquipGen() { return equipGen_; }
+	///<summary>Devuelve el random_</summary>
+	SRandBasedGenerator* getRandom() { return random_; }
+	//Devuelve mute
+	bool getMute() { return mute_; }
 #pragma endregion
 
 	

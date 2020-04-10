@@ -3,12 +3,19 @@
 class SaveLoadState :
 	public GameState
 {
-private:
-	bool isLoad_ = false; //TRUE => LOAD //FALSE => SAVE
 public:
-	SaveLoadState(Application* app, bool load) : GameState(app), isLoad_(load) { if(isLoad_) printf("LoadState"); else printf("SaveState"); };
+	SaveLoadState(Application* app, bool load) :
+		GameState(app), isLoad_(load) {
+		if (isLoad_) printf("LoadState");
+		else printf("SaveState");
+		initState();
+	};
 	virtual ~SaveLoadState() {};
-	void goToGame();
+	static void goToGame(Application* app);
 	void goToMainMenu();
+
+private:
+	void initState();
+	bool isLoad_ = false; //TRUE => LOAD //FALSE => SAVE
 };
 

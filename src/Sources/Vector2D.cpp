@@ -1,4 +1,5 @@
 #include "Vector2D.h"
+
 #pragma region Operators
 void Vector2D::normalize() {
 	double mag = magnitude();
@@ -46,5 +47,11 @@ Vector2D Vector2D::rotate(double degrees) const
 	r.y_ = matrix[1][0] * x + matrix[1][1] * y;
 
 	return r;
+}
+Vector2D Vector2D::getClosest(Vector2D& a,Vector2D& b)
+{
+	double aMagnitud = abs(Vector2D(x_ - a.x_, y_ - a.y_).magnitude());
+	double bMagnitud = abs(Vector2D(x_ - b.x_, y_ - b.y_).magnitude());
+	return aMagnitud <= bMagnitud ? a : b;
 }
 #pragma endregion

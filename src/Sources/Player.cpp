@@ -5,19 +5,22 @@
 #include "GameState.h"
 #include "Bullet.h"
 #include "GameState.h"
+#include "GameManager.h"
+#include "CollisionCtrl.h"
+#include "Collisions.h"
 
 void Player::init()
 {
 	eventHandler_ = HandleEvents::instance();
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, RANGE,MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
-	equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pechera", "helloWorld", 10, 10, 10); equip_.armor_->writeStats(); //Prueba
-	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Guantes", "helloWorld", 10, 10, 10); equip_.gloves_->writeStats(); //Prueba
-	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Botas", "helloWorld", 10, 10, 10); equip_.boots_->writeStats(); //Prueba
-	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Sable", "helloWorld", 10, 10, 10, Saber_); equip_.sword_->writeStats(); //Prueba
-	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Timon), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
+	equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pechera", "helloWorld", 10, 10, 10); equip_.armor_->writeStats(); //Prueba
+	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Guantes", "helloWorld", 10, 10, 10); equip_.gloves_->writeStats(); //Prueba
+	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Botas", "helloWorld", 10, 10, 10); equip_.boots_->writeStats(); //Prueba
+	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, Saber_); equip_.sword_->writeStats(); //Prueba
+	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
 }
 
 bool Player::update()
@@ -32,20 +35,17 @@ bool Player::update()
 		Vector2D dist = Vector2D(eventHandler_->getMousePos().getX() - pos_.getX(), eventHandler_->getMousePos().getY() - pos_.getY());
 		if (dist.magnitude() <= CLON_SPAWN_RANGE)
 		{
-			clon_ = new Clon(app_, getVisPos(eventHandler_->getMousePos()), currStats_.ad_, currStats_.meleeRate_, currStats_.range_, liberation_, explotion_, scale_);
-			app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
+			Vector2D posClon;
+			posClon = Vector2D(eventHandler_->getMousePos().getX() - (scale_.getX() / 2), eventHandler_->getMousePos().getY() - (scale_.getY() / 2));
+			clon_ = new Clon(app_, posClon, scale_, this);
+			app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
 			clonTime_ = SDL_GetTicks();
 		}
-		
 	}
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
 		shoot(eventHandler_->getMousePos());
-	else if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
-		Vector2D dir = eventHandler_->getMousePos();
-		move(getVisPos(dir));
-	}
 
 	//para utilizar las pociones
 	if (eventHandler_->isKeyDown(SDLK_1)) {
@@ -62,25 +62,39 @@ bool Player::update()
 	}
 	//comprobamos si hay que desactivar las pociones
 	desactivePotion();
+	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
+	int margin = 2; if (attacking_) margin = currStats_.meleeRange_;
 
-	//Margen de 2 pixeles
-	if (visPos_.getX() < obj_.getX() - 2 ||
-		visPos_.getX() > obj_.getX() + 2 ||
-		visPos_.getY() < obj_.getY() - 2 ||
-		visPos_.getX() > obj_.getX() + 2)
+	if (visPos_.getX() < target_.getX() - margin ||
+		visPos_.getX() > target_.getX() + margin ||
+		visPos_.getY() < target_.getY() - margin ||
+		visPos_.getY() > target_.getY() + margin)
 	{
 		double delta = app_->getDeltaTime();
+		previousPos_ = pos_;
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 	}
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
-	else if (attacking && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->isAlive())
+	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DYING)
 	{
-		objective_->takeDamage(currStats_.ad_);
+		objective_->receiveDamage(currStats_.meleeDmg_);
+		if (objective_->getState() == STATE::DYING) move(visPos_);
 		meleeTime_ = SDL_GetTicks();
 	}
-
+	if (currState_ == STATE::DYING) {
+		//Tendría que hacer la animación de muerte
+		return true;
+	}
 	return false;
+}
+
+void Player::initObject() {
+	GameManager::instance()->setPlayer(this);
+	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
+	eventHandler_ = HandleEvents::instance();
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	CollisionCtrl::instance()->setPlayer(this);
 }
 
 void Player::shoot(Vector2D dir)
@@ -93,15 +107,23 @@ void Player::shoot(Vector2D dir)
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 	shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon), shootPos, dir, currStats_.ad_);
+	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.distDmg_,
+		BULLET_LIFE, BULLET_VEL, Vector2D(W_H_BULLET, W_H_BULLET));
 	app_->getCurrState()->addRenderUpdateLists(bullet);
+	CollisionCtrl::instance()->addPlayerBullet(bullet);
+}
+
+void Player::onCollider()
+{
+	move(Vector2D(-dir_.getX(), -dir_.getY())); //Rebote
+	stop(); //Para
 }
 
 void Player::move(Point2D target)
 {
-	attacking = false;
+	attacking_ = false;
 	//establecemos el objetivo para poder parar al llegar
-	obj_.setVec(target);
+	target_.setVec(target);
 	//establecemos la direccion
 	dir_.setX(target.getX() - visPos_.getX());
 	dir_.setY(target.getY() - visPos_.getY());
@@ -112,7 +134,7 @@ void Player::attack(Enemy* obj)
 {
 	objective_ = obj;
 	move(obj->getVisPos());
-	attacking = true;
+	attacking_ = true;
 }
 
 void Player::usePotion(int value, potionType type) {
@@ -128,7 +150,7 @@ void Player::usePotion(int value, potionType type) {
 		currStats_.moveSpeed_ += value;
 		break;
 	case damage_:
-		currStats_.ad_ += value;
+		currStats_.meleeDmg_ += value;
 		break;
 	case defense_:
 		currStats_.armor_ += value;

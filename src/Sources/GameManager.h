@@ -8,6 +8,8 @@
 #include "RandEquipGen.h"
 #include <vector>
 #include "checkML.h"
+#include "Player.h"
+#include "Clon.h"
 
 
 using namespace std;
@@ -16,7 +18,7 @@ class Player;
 using lista = list<InventoryButton*>*;
 
 //Enumerados que representan la �ltima isla desbloqueada
-enum class Island : int {
+enum class Zone : int {
 	CaribeanA		= 1,
 	CaribeanB		= 2,
 	CaribeanC		= 3,
@@ -24,10 +26,15 @@ enum class Island : int {
 	SpookyA			= 5,
 	SpookyB			= 6,
 	SpookyC			= 7,
-	SpookyBoos		= 8,
-	Volcanic		= 9
+	SpookyD			= 8,
+	SpookyBoos		= 9,
+	Volcanic		= 10
 };
-
+enum class Island : int {
+	Caribbean,
+	Spooky,
+	Volcanic
+};
 enum class spentPoints : int {
 	 Precision = 1,
 	 Melee,
@@ -49,7 +56,9 @@ private:
 	//Cantidad de oro que genera en un nivel
 	int currGold_ = 0;
 	//Enum de la �ltima isla desbloqueada
-	Island currIsland_;
+	Island unlockedIslands_ = Island::Caribbean;
+	//Enum de la isla actual
+	Island currIsland_ = Island::Caribbean;
 	//Puntos de haza�a
 	int achievementPoints_ = 0;
 	//Puntos de haza�a gastados en la rama precisi�n
@@ -70,12 +79,18 @@ private:
 	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
 	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
+
+	
+	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
+	GameObject* player_ = nullptr;
+	//Puntero al clon
+	GameObject* clon_ = nullptr;
 	//Pendiente de guardar y cargar
 
 public:
 	//Constructor vac�o
 	GameManager() {
-		currIsland_ = Island::CaribeanA;
+		unlockedIslands_ = Island::Volcanic;
 		for (int i = 0; i < NUM_MISION; i++) {
 			missionsComplete[i] = false;
 		}
@@ -97,7 +112,7 @@ public:
 	GameManager(GameManager&) = delete;
 	GameManager& operator=(const GameManager&) = delete;
 	//Inicializa el oro, la actual isla y los puntos de haza�a
-	inline void initGameManager(int currGold, Island currIsland, int achievementPoints);
+	inline void initGameManager(int currGold, Island unlockedIslands, int achievementPoints);
 
 #pragma region getters
 	//Devuelve el inventario
@@ -108,8 +123,10 @@ public:
 	const int getGold() { return currGold_; };
 	//Devuelve los puntos de haza�a
 	const int getAchievementPoints() { return achievementPoints_; };
-	//Devuelve la actual isla
-	const int getCurrIsland() { return (int)currIsland_; };
+	//Devuelve el n�mero de islas desbloqueadas
+	const Island getUnlockedIslands() { return unlockedIslands_; };
+	//Devuelve la isla actual
+	const Island getCurrIsland() { return currIsland_; }
 	//Devuelve los puntos gastados en la rama presici�n
 	const spentPoints getPresicionPoints() { return precision_; };
 	//Devuelve los puntos gastados en la rama melee
@@ -120,6 +137,14 @@ public:
 	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };
 	//Devuelve true si la misi�n est� empezada
 	const bool isThatMissionStarted(missions mission) { return missionsStarted[(int)mission]; };
+	
+	//Revisar
+	//Devuelve la posici�n del player
+	const Point2D getPlayerPos() { return player_->getPos(); };
+	//Devuelve al jugador
+	GameObject* getPlayer() { return player_; };
+	//Devuelve al clon
+	GameObject* getClon() { return clon_; };
 	//Devuelve el dinero del inventario
 	const int getInventoryGold() { return inventoryGold; }
 	//Devuelve el dinero del alijo
@@ -132,8 +157,9 @@ public:
 	//Asigna el puntero al alijo
 	inline void setStashPointer(lista stash) { stash_ = stash; };
 	//Asigna a la ultima isla desbloqueada
-	inline void setIsland(Island island) { currIsland_ = island; };
-	inline void setIsland(int island) { currIsland_ = (Island)island; };
+	inline void setUnlockedIslands(Island island) { unlockedIslands_ = island; };
+	//Asigna la nueva isla actual
+	inline void setCurrIsland(Island newIsland) { currIsland_ = newIsland; }
 	//Asigna los puntos gastados a la rama precision
 	inline void setPrecisionPoints(int value) { precision_ = (spentPoints)value; };
 	//Asigna los puntos gastados a la rama melee
@@ -144,6 +170,13 @@ public:
 	inline void setCompleteMission(missions mission) { missionsComplete[(int)mission] = true; };
 	//Empieza una misi�n secundaria
 	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
+
+	//Asigna al puntero de player
+	inline void setPlayer(GameObject* player) { player_ = player; };
+	//Asigna al puntero de clon
+	inline void setClon(GameObject* clon) { clon_ = clon; };
+	//borra al clon
+	inline void deleteClon() { clon_ = nullptr; };
 	//Añade(+) /Quita(-) dinero del inventario
 	inline void addInventoryGold(int money) { inventoryGold += money; }
 	////Añade(+) /Quita(-) dinero del alijo
@@ -154,6 +187,3 @@ public:
 	inline void setStashGold(int money) { stashGold = money; }
 #pragma endregion
 };
-
-
-

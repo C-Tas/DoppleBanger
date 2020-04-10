@@ -1,10 +1,11 @@
 #pragma once
 #include "PlayState.h"
-class SpookyIslandState :
-	public PlayState
+class SpookyIslandState : public PlayState
 {
+private:
+	void initState();
 public:
-	SpookyIslandState(Application* app);
+	SpookyIslandState(Application*);
 	virtual ~SpookyIslandState() {};
 };
 

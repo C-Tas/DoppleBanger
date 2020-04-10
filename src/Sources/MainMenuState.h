@@ -4,8 +4,7 @@
 #include "Player.h" //Include temporal
 #include "Equipment.h" //Include temporal
 
-class MainMenuState :
-	public GameState
+class MainMenuState : public GameState
 {
 private:
 	Draw* bg_ = nullptr;
@@ -14,16 +13,16 @@ private:
 	//Diferencia entre los botones en el eje y
 	double button_dif = 0;
 	Player* player_ = nullptr;
-	Crab* crab_ = nullptr;
+	//Crab* crab_ = nullptr;
 
 protected:
 	///<summary>Se inicializa el menu</summary>
-	void initMenuState();
+	virtual void initState();
 	///<summary>crea los 4 botones necesarios del main menu</summary>
 	void createButtons();
 
 public:
-	MainMenuState(Application* app = nullptr) :GameState(app) { initMenuState(); };
+	MainMenuState(Application* app = nullptr) :GameState(app) { initState(); };
 	virtual ~MainMenuState() {};
 	///<summary>Nos lleva al estado controles</summary>
 	static void goControlState(Application* app);

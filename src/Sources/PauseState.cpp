@@ -1,27 +1,91 @@
 #include "PauseState.h"
-#include "MainMenuState.h"
 #include "ControlsState.h"
+#include "GameManager.h"
 
+#pragma region CallBacks
+///<summary>Reanuda la partida actual</summary>
+void PauseState::resume(Application* app)
+{
+	app->getGameStateMachine()->popState();
+}
+///<summary>Muestra los controles</summary>
+void PauseState::showControls(Application* app) {
+	app->getGameStateMachine()->pushState(new ControlsState(app));
+}
+
+///<summary>Vuelve al menï¿½ principal sin guardar partida</summary>
+void PauseState::goMainMenuState(Application* app) {
+	app->getGameStateMachine()->clearAllStateExceptFirst();
+}
+
+///<summary>
+/// Silencia/Habilita el sonido
+/// Nota: Los efectos de sonido viajan a travï¿½s de diversos canales y no se pueden silenciar. Los canales funcionan
+/// de tal manera que al darle playChannel(...) con loop = 0 estos se activan. Por ello, la forma de que los efectos de sonido no suenen
+/// es que se controlen en los sitios en los que se efectï¿½an. En caso de que la mï¿½sica vaya a sonar por canales habrï¿½ que hacer los respectivos cambios.
+///</summary>
+void PauseState::muteGame(Application* app) {
+	if (app->getMute()) app->getAudioManager()->setMusicVolume(5); //Reanuda la mï¿½sica
+	else app->getAudioManager()->setMusicVolume(0); //Pausa la mï¿½sica
+
+	app->setMute(); //Cambia el booleano que controla el mute
+	static_cast<PauseState*>(app->getGameStateMachine()->getState())->changeMute(); //Cambia la textura del botï¿½n mute del PauseState
+}
+#pragma endregion
 
 PauseState::PauseState(Application* app) : GameState(app) {
-	
-};
+	initState();
+}
+
+void PauseState::changeMute()
+{
+	if (app_->getMute())  muteButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteOn));
+	else muteButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteOff));
+}
 
 void PauseState::initState()
 {
-	//Creación de botones
+	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::PauseBackground));
+	addRenderUpdateLists(background_);
+
+	//Creaciï¿½n de botones
+	double winWidth = app_->getWindowWidth();
+	double winHeight = app_->getWindowHeight();
+
+	Vector2D sizeButton(winWidth * 5 / 11, winHeight / 5);
+	Vector2D posButton(winWidth / 9 , winHeight / 4 - sizeButton.getY() / 2);
+
+	SDL_Rect textButon = { posButton.getX(),posButton.getY(), sizeButton.getX(),sizeButton.getY() };
+
+
+	//Botï¿½n de reanudar
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, resume);
+	Draw* resumeText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::ResumeText), textButon);
+	objectsToRender_.push_back(resumeText);
+	gameObjects_.push_back(resumeText);
+
+	//Botï¿½n de controles
+	posButton = posButton + Vector2D(0, winHeight / 4);
+	textButon.y = posButton.getY();
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, showControls);
+	Draw* controlText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::ControlsText), textButon);
+	objectsToRender_.push_back(controlText);
+	gameObjects_.push_back(controlText);
+
+	//Botï¿½n de menï¿½ principal
+	posButton = posButton + Vector2D(0, winHeight / 4 );
+	textButon.y = posButton.getY();
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, goMainMenuState);
+	Draw* mainMenuText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::MainMenuText), textButon);
+	objectsToRender_.push_back(mainMenuText);
+	gameObjects_.push_back(mainMenuText);
 	
-}
-void PauseState::goControlState(Application* app) {
-	app->getStateMachine()->pushState( new ControlsState(app));
-};
-
-void PauseState::goMainMenuState(Application* app) {
-	app->getStateMachine()->clearAllStateExceptFirst();
-};
-
-
-void PauseState::backToGameState(Application* app) {
-	app->getStateMachine()->popState();
-
+	//Botï¿½n de mute
+	//Se multiplica por la proporciï¿½n winWidth/winHeight para hacer un cuadrado
+	sizeButton = Vector2D(winWidth / 20, (winHeight / 20) * (winWidth / winHeight));
+	posButton = Vector2D(winWidth - (sizeButton.getX() * 1.5), sizeButton.getY() / 2);
+	
+	if (!app_->getMute()) muteButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteOff), posButton, sizeButton, muteGame);
+	else muteButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteOn), posButton, sizeButton, muteGame);
+	addRenderUpdateLists(muteButton);
 }

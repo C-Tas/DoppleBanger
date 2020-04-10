@@ -1,43 +1,23 @@
-#include "PlayState.h"
-#include "PauseState.h"
-#include "SaveLoadState.h"
-#include "InventoryState.h"
-#include "SelectLevelState.h"
-#include "StashState.h"
 #include "Collisions.h"
-
-void PlayState::initPlayState() {
-	//Creaci�n del player
-	SDL_Rect playerCollision; playerCollision.x = 300; playerCollision.y = 400; playerCollision.w = 100; playerCollision.h = 100;
-	player_ = new Player(app_, { app_->getTextureManager()->getTexture(Resources::TextureId::Timon) },
-		Vector2D(playerCollision.x, playerCollision.y), Vector2D(100, 100), playerCollision);
-	addRenderUpdateLists(player_);
-
-	//Creaci�n de dos obst�culos de prueba
-	SDL_Rect objCollision; objCollision.x = 300; objCollision.y = 100; objCollision.w = 100; objCollision.h = 50;
-	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Roca),
-		Vector2D(objCollision.x, objCollision.y), Vector2D(objCollision.w, objCollision.h)));
-
-	objCollision.x = 600; objCollision.y = 400;
-	obstacles_.push_back(new Obstacle(app_, objCollision, app_->getTextureManager()->getTexture(Resources::TextureId::Roca),
-		Vector2D(objCollision.x, objCollision.y), Vector2D(objCollision.w, objCollision.h)));
-
-	for (auto ob : obstacles_) {
-		addUpdateList(ob);
-		addRenderList(ob);
-	}
-
-	collisionCtrl_ = CollisionCtrl::instance();
-	collisionCtrl_->setPlayer(player_);
-	collisionCtrl_->setObstacles(obstacles_);
-	/*Seteamos todo lo necesario (enemigos, objetos, NPCs, etc)*/
-}
+#include "PlayState.h"
+#include "SaveLoadState.h"
+#include "SelectLevelState.h"
+#include "EndState.h"
+#include "StashState.h"
+#include "PauseState.h"
+#include "SkillState.h"
+#include "Inventory.h"
 
 
 void PlayState::update() {
-	collisionCtrl_->islandCollisions();
-	GameState::update();
-	checkPlayerActions();
+	if (player_->getState() == STATE::DYING) { //Comprobamos que el player haya muerto para cambiar de estado
+		collisionCtrl_->clearList();
+		app_->getGameStateMachine()->changeState(new EndState(app_));
+	}
+	else {
+		GameState::update();
+		checkPlayerActions();
+	}
 }
 
 void PlayState::addEnemy(Enemy* obj) {
@@ -51,16 +31,26 @@ void PlayState::removeEnemy(Enemy* obj) {
 	//Push front porque a suponiendo que dos enemigos se superpongan y se haga click en ellos para atacar,
 	//se renderizan en un orden (el de objectsToRender) y por lo cual las comprobaciones deben hacerse en el contrario.
 	enemies_.remove(obj);
-	removeRenderUpdateLists(obj);
 }
 
-void PlayState::checkPlayerActions() {
+void PlayState::checkPlayerActions() {	
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 	{
 		Enemy* obj; obj = checkAttack();
 		if (obj != nullptr) player_->attack(obj);
 		//else if NPC
-		else player_->move(eventHandler_->getMousePos());
+		else {
+			player_->move(eventHandler_->getMousePos());
+		}
+	}
+	else if (eventHandler_->isKeyDown(SDLK_p)) {
+		app_->getGameStateMachine()->pushState(new PauseState(app_));
+	}
+	else if (eventHandler_->isKeyDown(SDLK_TAB)) {
+		app_->getGameStateMachine()->pushState(new Inventory(app_));
+	}
+	else if (eventHandler_->isKeyDown(SDLK_a)) {
+		app_->getGameStateMachine()->pushState(new SkillState(app_));
 	}
 }
 
@@ -89,41 +79,8 @@ Enemy* PlayState::findClosestEnemy(Point2D pos) {
 	return obj;
 }
 
-Enemy* PlayState::collidesWithEnemy(Point2D pos, Vector2D scale) {
-	bool found = false;
-	Enemy* obj = nullptr;
-	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
-		if (Collisions::collides(pos, scale.getX(), scale.getY(), (*it)->getPos(), (*it)->getScaleX(), (*it)->getScaleY()))
-		{
-			obj = (*it);
-			found = true;
-		}
-	}
-
-	return obj;
-}
-
-#pragma region ChangeState
-void PlayState::goToPauseState(Application* app) {
-	app->getStateMachine()->pushState(new PauseState(app));
-
-}
-void PlayState::goToSaveGame(Application* app) {
-	app->getStateMachine()->pushState(new SaveLoadState(app, false)); //TRUE => LOAD //FALSE => SAVE
-}
-void PlayState::goToInventoryState(Application* app) {
-	app->getStateMachine()->pushState( new InventoryState(app));
-
-}
-void PlayState::goToSelectState(Application* app) {
-	app->getStateMachine()->pushState( new SelectLevelState(app));
-
-}
-void PlayState::goToStashState(Application* app)
+void PlayState::initState()
 {
-	app->getStateMachine()->pushState( new StashState(app));
+	collisionCtrl_ = CollisionCtrl::instance();
+	player_ = new Player(app_, Vector2D(0, 0), Vector2D(0, 0));
 }
-#pragma endregion
-
-//Esta podria ser una clase padre de 4 clases que sean Ship, Island0, Island1 e Island2 de tal forma que al cambiar en SelectLevelState
-// al hacer el pop de ese estado no de problemas de ejecucion al tener que cambiar la isla o hacer metodos a los que llamar
