@@ -85,7 +85,11 @@ public:
 		InventoryMoneyText,
 
 		//proyectiles
-		Coco
+		Coco,
+
+		//Equipables
+		Gun1,
+		Gloves1,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
