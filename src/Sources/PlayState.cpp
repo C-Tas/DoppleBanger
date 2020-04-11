@@ -39,9 +39,7 @@ void PlayState::checkPlayerActions() {
 		Enemy* obj; obj = checkAttack();
 		if (obj != nullptr) player_->attack(obj);
 		//else if NPC
-		else {
-			player_->move(eventHandler_->getMousePos());
-		}
+		else player_->move(eventHandler_->getRelativeMousePos());
 	}
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
@@ -57,7 +55,7 @@ void PlayState::checkPlayerActions() {
 Enemy* PlayState::checkAttack() {
 	bool found = false;
 	Enemy* obj = nullptr;
-	Vector2D mousePos = eventHandler_->getMousePos();
+	Vector2D mousePos = eventHandler_->getRelativeMousePos();
 	SDL_Point mouse = { 0, 0 }; mouse.x = mousePos.getX(); mouse.y = mousePos.getY();
 	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
 		if (SDL_PointInRect(&mouse, &(*it)->getCollider())) {

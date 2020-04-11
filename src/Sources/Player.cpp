@@ -32,20 +32,22 @@ bool Player::update()
 	//cuando ya se han cumplido previamente las dos condiciones anteriores.
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && ((SDL_GetTicks() - clonTime_) / 1000) > clonCooldown_)
 	{
-		Vector2D dist = Vector2D(eventHandler_->getMousePos().getX() - pos_.getX(), eventHandler_->getMousePos().getY() - pos_.getY());
+		Vector2D dist = Vector2D(eventHandler_->getRelativeMousePos().getX() - pos_.getX(), eventHandler_->getRelativeMousePos().getY() - pos_.getY());
 		if (dist.magnitude() <= CLON_SPAWN_RANGE)
 		{
-			Vector2D posClon;
-			posClon = Vector2D(eventHandler_->getMousePos().getX() - (scale_.getX() / 2), eventHandler_->getMousePos().getY() - (scale_.getY() / 2));
-			clon_ = new Clon(app_, posClon, scale_, this);
-			app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
+			clon_ = new Clon(app_, getVisPos(eventHandler_->getRelativeMousePos()), currStats_.ad_, currStats_.meleeRate_, currStats_.range_, liberation_, explotion_, scale_);
+			app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
 			clonTime_ = SDL_GetTicks();
 		}
 	}
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
-		shoot(eventHandler_->getMousePos());
+		shoot(eventHandler_->getRelativeMousePos());
+	else if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+		Vector2D dir = eventHandler_->getRelativeMousePos();
+		move(getVisPos(dir));
+	}
 
 	//para utilizar las pociones
 	if (eventHandler_->isKeyDown(SDLK_1)) {
@@ -74,6 +76,8 @@ bool Player::update()
 		previousPos_ = pos_;
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
+		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
+		Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
 	}
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
 	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DYING)

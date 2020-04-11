@@ -4,7 +4,7 @@
 #include "SDL_macros.h"
 
 //Cada línea de los diálogos/descripciones se tiene que renderizar por separado para poder generar los saltos de línea.
-//Todo lo relacionado con textos aparece aquí y no en Resources para no sobrecargar dicha clase.
+//Lo relacionado con textos aparece aquí y no en Resources para no sobrecargar dicha clase.
 //Los NPCs y los bosses se encargan de llamar en su update a su respectivo textBox cuando corresponda,
 //y se renderiza hasta que se presione cualquier tecla y se elimine el textBox.
 //Cada objeto llama a su correspondiente descripción, cuando el estado abierto se lo indique,

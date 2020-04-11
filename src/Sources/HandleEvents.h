@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SDL.h>
-#include <array>
 #include "Vector2D.h"
+#include "Camera.h"
 
 using namespace std;
 
@@ -10,7 +10,7 @@ class HandleEvents
 {
 private:
     //<summary>impide que haya más de un puntero a esta clase</summary>
-	static unique_ptr< HandleEvents> instance_;
+	static unique_ptr<HandleEvents> instance_;
 
 	const Uint8* kbState_; //matriz de teclado, para la tecla correspondiente debuelve 1 si esta pulsada y 0 si no
 	//<summary>booleano de si la tecla esta soltada</summary>
@@ -131,8 +131,16 @@ public:
 	}
 
 	//<summary>devuelve la posicion del raton</summary>
-	inline const Vector2D& getMousePos() {
+	inline const Vector2D& getRealMousePos() {
 		return mousePos_;
+	}
+
+	//<summary>devuelve la posicion del raton</summary>
+	inline const Vector2D& getRelativeMousePos() {
+		Vector2D pos = mousePos_;
+		pos.setX(pos.getX() + Camera::instance()->getCamera().getX());
+		pos.setY(pos.getY() + Camera::instance()->getCamera().getY());
+		return pos;
 	}
 
 	//<summary>devuelve el estado del boton que le pases por paremtro</summary>

@@ -15,7 +15,7 @@ Button::Button(Application* app, GameState* state,Texture* texture, Vector2D pos
 
 bool Button::update() {
 	HandleEvents* input = HandleEvents::instance();
-	Vector2D aux = input->getMousePos(); //Guardas la posicion del raton
+	Vector2D aux = input->getRealMousePos(); //Guardas la posicion del raton
 	SDL_Point mouse = { aux.getX(), aux.getY() };
 
 	if (SDL_PointInRect(&mouse, &getDestiny()) && input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {

@@ -63,6 +63,10 @@ public:
 	Application(GameStateMachine* state=nullptr);
 	virtual ~Application(); 
 
+	///<summary>Constantes con las dimensiones de la ventana </summary>
+	static const int winWidth_ = 1600;
+	static const int winHeight_ = 900;
+
 	///<summary>Bucle principal de la aplicacion</summary>
 	void runApp();
 #pragma region Setters
@@ -90,6 +94,8 @@ public:
 	SDL_Renderer* getRenderer() { return renderer_; };
 	///<summary>Devuelve el tiempo que ha pasado entre el frame actual y el anterior </summary>
 	double getDeltaTime() { return deltaTime_; }
+
+
 	///<summary>Devuelve el texture manager</summary>
 	TextureManager* getTextureManager() { return textureManager_; };
 	///<summary>Devuelve el font manager</summary>
