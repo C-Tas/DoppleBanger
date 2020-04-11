@@ -111,7 +111,7 @@ void StashState::initState() {
 	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 7 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
 
 	//Bot�n de volver al estado anterior
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CloseButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 2*(app_->getWindowHeight()/9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), backToPrevious));
+	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 2*(app_->getWindowHeight()/9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), backToPrevious));
 
 	//Boton para pasar el dinero del alijo al inventario
 	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((7 * (app_->getWindowWidth() / 70)), MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToInventary));

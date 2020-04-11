@@ -50,7 +50,7 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	//app_->getWindowWidth(), app_->getWindowHeight() 
 	 auxpos = Vector2D{ 8*(double)(app_->getWindowWidth() /9), 2*(double)(app_->getWindowHeight()/9)};
 	 auxSize = Vector2D{ (double)(app_->getWindowWidth() / 25),  (double)(app_->getWindowWidth() / 25) };
-	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::CloseButton), auxpos, auxSize, callExit);
+	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::ButtonX), { 1439,214 }, { 60,53 }, callExit);
 	addRenderUpdateLists(exitButton_);
 
 	//Cogemos la lista de objetos del gameManager

@@ -44,12 +44,13 @@ void PlayState::checkPlayerActions() {
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
 	}
-	else if (eventHandler_->isKeyDown(SDLK_TAB)) {
+	else if (eventHandler_->isKeyDown(SDLK_c)) {
 		app_->getGameStateMachine()->pushState(new Inventory(app_));
 	}
-	else if (eventHandler_->isKeyDown(SDLK_a)) {
+	else if (eventHandler_->isKeyDown(SDLK_v)) {
 		app_->getGameStateMachine()->pushState(new SkillState(app_));
 	}
+
 }
 
 Enemy* PlayState::checkAttack() {

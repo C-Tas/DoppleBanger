@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "TextBox.h"
 #include "Skill.h"
+#include "VisualElement.h"
 
 void SkillState::initState() {
 	////QUITA EL COMENTARIO PARA DEBUGUEAR | LAS SKILLS SE DESBLOQUEAN EN 33,66 Y 100 PUNTOS EN LA RAMA
@@ -21,7 +22,7 @@ void SkillState::initState() {
 	cout << "GHOST " << (int)gm_->getGhostPoints() << " PUNTOS" << endl;
 	#endif
 
-	bg_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillMenu));
+	bg_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillMenu));
 	createButtons();
 	createTexts();
 	createBars();
@@ -39,6 +40,13 @@ void SkillState::update()
 	//Si lo est�, actualizamos cual descripcion debe mostrarse
 	if (i < assignButtons.size()) lastPointed = gm_->getSkillEquiped((SkillEquiped)i);
 	
+	if (SDL_PointInRect(&point, &goToInventary_->getDestiny())) {
+		goToInventary_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryBButton));
+	}
+	else {
+		goToInventary_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryAButton));
+	}
+
 	//update de las barras
 	updateBars();
 	//update de todos los objetos
@@ -47,15 +55,15 @@ void SkillState::update()
 
 void SkillState::createBars() {
 	//PrecisionBar
-	bars_[0] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::GreenBar), { 190, 390, 530, 20 });		
+	bars_[0] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::GreenBar), { 190, 390, 530, 20 });
 	addRenderList(bars_[0]);
 
 	//MeleeBar
-	bars_[1] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::YellowBar), { 190, 540, 530, 20 });		
+	bars_[1] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::YellowBar), { 190, 540, 530, 20 });
 	addRenderList(bars_[1]);
 
 	//GhostBar
-	bars_[2] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BlueBar), { 190, 690, 530, 20 });			
+	bars_[2] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BlueBar), { 190, 690, 530, 20 });
 	addRenderList(bars_[2]);
 
 	updateBars();
@@ -63,7 +71,7 @@ void SkillState::createBars() {
 	//Marcos de las barras
 	//No me deja usar emptyBars_.size(), por eso est� el 3 a pelo
 	for (int i = 0; i < 3; i++) {
-		emptyBars_[i] = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EmptyBar), { 190, 390 + i * 150, 530, 20 });		// 150 es la distancia entre las barras
+		emptyBars_[i] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EmptyBar), { 190, 390 + i * 150, 530, 20 });		// 150 es la distancia entre las barras
 		addRenderList(emptyBars_[i]);
 	}
 }
@@ -433,7 +441,8 @@ void SkillState::createButtons() {
 	addRenderUpdateLists(backButton);
 
 	//Inventary Button
-	Button* inventaryButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), { 175,80 }, { 50,50 }, goToInventaryState);
+	Button* inventaryButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryAButton), { 137,22 }, { 560, 121 }, goToInventaryState);
+	goToInventary_ = inventaryButton;
 	addRenderUpdateLists(inventaryButton);
 
 	///Botones en los que aparecer� la skillEquipada
@@ -459,8 +468,7 @@ void SkillState::backToPreviousState(Application* app) {
 }
 
 void SkillState::goToInventaryState(Application* app) {
-	cout << "Cambia a inventoryState" << endl;
-	//app->getStateMachine()->changeState(new InventoryState(app));
+	app->getGameStateMachine()->changeState(new Inventory(app));
 }
 
 void SkillState::increasePrecisionBranch(Application* app) {

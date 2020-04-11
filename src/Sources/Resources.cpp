@@ -18,8 +18,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ TrashButton, "../Sources/assets/botones/TrashButton.png"},
 	{ ChangeButton, "../Sources/assets/botones/ChangeButton.png"},
 	{ MoneyButton, "../Sources/assets/botones/MoneyButton.png"},
-	{ CloseButton, "../Sources/assets/botones/Boton_Salir.png"},
 	{ EquippedButton, "../Sources/assets/botones/Equipar_Boton.png"},
+	{ GoToInventoryAButton, "../Sources/assets/botones/InventoryButtonA.png"},
+	{ GoToInventoryBButton, "../Sources/assets/botones/InventoryButtonB.png"},
 
 	//Interfaces
 	//{ BotonMenu, "../Sources/assets/botones/botonMenu.png"},

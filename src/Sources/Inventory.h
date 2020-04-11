@@ -58,7 +58,5 @@ public:
 	void deleteObj();
 	void forwardList();
 	void backList();
-	
-
 };
 

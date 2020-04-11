@@ -14,7 +14,8 @@ private:
 	Draw* bg_ = nullptr;
 	Draw* emptyBars_ [3] = { nullptr, nullptr, nullptr };	//Los marcos de las barras
 	Draw* bars_ [3] = { nullptr, nullptr, nullptr };		//El relleno de las Barras
-	Texture* totalPoints_ = nullptr;		//Puntos totales de haza�a
+	Button* goToInventary_ = nullptr;
+	Texture* totalPoints_ = nullptr;		//Puntos totales de hazaña
 	list <SkillButton*> skillsIcons_;	//Botones que contienen las skills en si mismas
 	array <list<SkillButton*>::iterator, 3> skillsTypeIterator;		//array auxiliar para cuando se cambian las texturas 
 																	//al desbloquear las habilidades

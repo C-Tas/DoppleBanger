@@ -19,7 +19,6 @@ public:
 		MuteOff,
 		MuteOn,
 		RestartGame,
-		CloseButton,
 		RightArrow,
 		LeftArrow,
 		EquippedButton,
@@ -35,6 +34,8 @@ public:
 		ButtonUpgradeRed,
 		ButtonUpgradeBlue,
 		ButtonUpgradeYellow,
+		GoToInventoryAButton,
+		GoToInventoryBButton,
 
 		//BarrasPuntosHazaña
 		Controls,
