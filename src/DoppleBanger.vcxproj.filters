@@ -135,31 +135,61 @@
     <ClCompile Include="Sources\Bullet.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Armor.cpp" />
-    <ClCompile Include="Sources\Boots.cpp" />
-    <ClCompile Include="Sources\Gloves.cpp" />
-    <ClCompile Include="Sources\Gun.cpp" />
     <ClCompile Include="Sources\Inventory.cpp" />
     <ClCompile Include="Sources\InventoryButton.cpp" />
-    <ClCompile Include="Sources\Sword.cpp" />
     <ClCompile Include="Sources\usable.cpp">
       <Filter>GameObjects\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Crab.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Camera.cpp" />
-    <ClCompile Include="Sources\EndState.cpp" />
-    <ClCompile Include="Sources\EnemyPirate.cpp" />
-    <ClCompile Include="Sources\MonkeyCoco.cpp" />
-    <ClCompile Include="Sources\ShipState.cpp" />
-    <ClCompile Include="Sources\SkillState.cpp" />
-    <ClCompile Include="Sources\ShipObject.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
-    <ClCompile Include="Sources\WinState.cpp" />
-    <ClCompile Include="Sources\Wolf.cpp" />
     <ClCompile Include="Sources\VisualElement.cpp" />
+    <ClCompile Include="Sources\SkillButton.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\Crab.cpp">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\EnemyPirate.cpp">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\MonkeyCoco.cpp">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Armor.cpp">
+      <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Boots.cpp">
+      <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Gloves.cpp">
+      <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Gun.cpp">
+      <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Sword.cpp">
+      <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Wolf.cpp">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\WinState.cpp">
+      <Filter>GameStateMahcine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\SkillState.cpp">
+      <Filter>GameStateMahcine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ShipState.cpp">
+      <Filter>GameStateMahcine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\EndState.cpp">
+      <Filter>GameStateMahcine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ShipObject.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -307,35 +337,65 @@
     <ClInclude Include="Sources\Bullet.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Armor.h" />
-    <ClInclude Include="Sources\Boots.h" />
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\usable.h">
       <Filter>GameObjects\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Bullet.h" />
-    <ClInclude Include="Sources\Crab.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Camera.h" />
     <ClInclude Include="Sources\Bullet.h" />
-    <ClInclude Include="Sources\EndState.h" />
-    <ClInclude Include="Sources\EnemyPirate.h" />
-    <ClInclude Include="Sources\Gloves.h" />
-    <ClInclude Include="Sources\Gun.h" />
-    <ClInclude Include="Sources\MonkeyCoco.h" />
     <ClInclude Include="Sources\Inventory.h" />
     <ClInclude Include="Sources\InventoryButton.h" />
-    <ClInclude Include="Sources\ShipState.h" />
-    <ClInclude Include="Sources\SkillState.h" />
-    <ClInclude Include="Sources\ShipObject.h" />
-    <ClInclude Include="Sources\Sword.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Trigger.h" />
-    <ClInclude Include="Sources\WinState.h" />
-    <ClInclude Include="Sources\Wolf.h" />
     <ClInclude Include="Sources\VisualElement.h" />
+    <ClInclude Include="Sources\SkillButton.h" />
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\Crab.h">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\EnemyPirate.h">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\MonkeyCoco.h">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Armor.h">
+      <Filter>GameObjects\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Boots.h">
+      <Filter>GameObjects\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Gloves.h">
+      <Filter>GameObjects\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Gun.h">
+      <Filter>GameObjects\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Sword.h">
+      <Filter>GameObjects\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Wolf.h">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\WinState.h">
+      <Filter>GameStateMahcine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\SkillState.h">
+      <Filter>GameStateMahcine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ShipState.h">
+      <Filter>GameStateMahcine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\EndState.h">
+      <Filter>GameStateMahcine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ShipObject.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

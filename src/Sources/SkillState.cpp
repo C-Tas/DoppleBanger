@@ -230,8 +230,28 @@ void SkillState::meleePointsActualized()
 
 void SkillState::distancePointsActualized()
 {
-	auxPointsActualized(skillsTypeIterator[0], app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC),
-		app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC), (int)gm_->getPresicionPoints());
+	int points = (int)gm_->getPresicionPoints();
+	auto aux = skillsTypeIterator[0];
+	delete totalPoints_;
+	createTexts();
+	if (points >= 33 && !(*aux)->isUnlocked()) {
+		(*aux)->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC));
+		(*aux)->setUnlocked(true);
+		gm_->setSkillUnlocked((*aux)->getSkillId());
+	}
+	++aux;
+	if (points >= 66 && !(*aux)->isUnlocked()) {
+		(*aux)->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC));
+		(*aux)->setUnlocked(true);
+		gm_->setSkillUnlocked((*aux)->getSkillId());
+		player_->activeSwiftGunslinger();
+	}
+	++aux;
+	if (points >= 100 && !(*aux)->isUnlocked()) {
+		(*aux)->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC));
+		(*aux)->setUnlocked(true);
+		gm_->setSkillUnlocked((*aux)->getSkillId());
+	}
 }
 
 void SkillState::ghostPointsActualized()

@@ -48,7 +48,7 @@ void PlayState::checkPlayerActions() {
 		app_->getGameStateMachine()->pushState(new Inventory(app_));
 	}
 	else if (eventHandler_->isKeyDown(SDLK_v)) {
-		app_->getGameStateMachine()->pushState(new SkillState(app_));
+		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
 	}
 
 }
