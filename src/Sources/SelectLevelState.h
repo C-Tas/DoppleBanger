@@ -1,6 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include <array>
+#include "VisualElement.h"
 
 using CallBackOnClick = void(Application * App);
 
@@ -13,8 +14,8 @@ public:
 
 private: 
 #pragma region Testeo
-	Draw* map_ = nullptr;
-	Draw* table_ = nullptr;
+	VisualElement* map_ = nullptr;
+	VisualElement* table_ = nullptr;
 #pragma endregion
 
 	///<summary>M�todo privado para iniciar el estado</summary>

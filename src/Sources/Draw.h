@@ -27,8 +27,6 @@ protected:
 	SDL_Rect destiny_ = { 0,0,0,0 };
 	//El clip que se va a renderizar de la textura
 	SDL_Rect frame_ = { 0,0,0,0 };
-	//Pies de un objeto
-	Vector2D visPos_{ 0,0 };
 	//Numero de frames que tiene la animación
 	//Constructora vacia de Draw
 	Draw() {};
@@ -70,16 +68,14 @@ public:
 	//<metodo comun para renderizar tanto imagenes con un solo frame como con varios"
 	const virtual void draw() {
 		SDL_Rect dest = getDestiny(); dest.x = dest.x - Camera::instance()->getCamera().getX(); dest.y = dest.y - Camera::instance()->getCamera().getY();
-		if (numberFrames_ <= 0) texture_->render(dest, SDL_FLIP_NONE);
+		if (currAnim_.numberFrames_ <= 0) texture_->render(dest, SDL_FLIP_NONE);
 		else texture_->render(dest, frame_);
 	};
+	
 	//<summary>cambia el frame </summary>
 	virtual bool update() { return false; };
 	//Cambia al siguiente frame
 	virtual void updateFrame() { frame_.x = (frame_.x + frame_.w) % (currAnim_.numberFrames_ * frame_.w); };
-	//Devuelve la posicion "visual" del objeto
-	//Cuando se mueva un objeto no se mira su posicion superior izquierda, sino sus pies.
-	void updateVisPos() { visPos_.setVec(Vector2D(pos_.getX() + (scale_.getX() / 2), pos_.getY() + (scale_.getY() * 0.8))); }; //Actualiza la posicion visual del objeto
 
 #pragma region getters
 //Devuelve el rectangulo destino
@@ -92,7 +88,13 @@ public:
 	};
 	//Dada una posición le resta el offset del objeto que invoca el método
 	//de tal forma que si este se mueve a la dicha posición queda con "los pies" colocados en ella
-	Vector2D getVisPos() { return visPos_; };
+	Vector2D getVisPos(Vector2D pos)
+	{
+		Vector2D vis;
+		vis.setX(pos.getX() + (scale_.getX() / 2));
+		vis.setY(pos.getY() + (scale_.getY() * 0.8));
+		return vis;
+	}
 #pragma endregion
 
 #pragma region setters

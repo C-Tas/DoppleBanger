@@ -6,6 +6,7 @@
 #include "Button.h"
 #include "Texture.h"
 #include "SDL_macros.h"
+#include "VisualElement.h"
 
 #include "Clon.h"
 
@@ -17,7 +18,7 @@ void MainMenuState::initState()
 	//Fondo de la escena
 	button_h = app_->getWindowHeight() / 10;
 	button_w = app_->getWindowWidth() / 6;
-	bg_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground));
+	bg_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground));
 	addRenderUpdateLists(bg_);
 
 
@@ -36,7 +37,7 @@ void MainMenuState::createButtons() {
 		{ button_w  ,button_h }, goControlState);
 	gameObjects_.push_back(controlButton);
 	objectsToRender_.push_back(controlButton);
-	Draw* controlText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::ControlsText), controlButton->getDestiny());
+	VisualElement* controlText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::ControlsText), controlButton->getDestiny());
 	objectsToRender_.push_back(controlText);
 	gameObjects_.push_back(controlText);
 	//creamos el boton para ir a los creditos
@@ -45,7 +46,7 @@ void MainMenuState::createButtons() {
 		{ button_w  ,button_h }, goCreditsState);
 	gameObjects_.push_back(creditButton);
 	objectsToRender_.push_back(creditButton);
-	Draw* creditText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CreditsText), creditButton->getDestiny());
+	VisualElement* creditText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::CreditsText), creditButton->getDestiny());
 	objectsToRender_.push_back(creditText);
 	gameObjects_.push_back(creditText);
 	//creamos el boton para jugar cargando el juego del archivo de guardado
@@ -54,7 +55,7 @@ void MainMenuState::createButtons() {
 		{ button_w,button_h }, goLoadState);
 	gameObjects_.push_back(loadButton);
 	objectsToRender_.push_back(loadButton);
-	Draw* loadText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::LoadText), loadButton->getDestiny());
+	VisualElement* loadText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::LoadText), loadButton->getDestiny());
 	objectsToRender_.push_back(loadText);
 	gameObjects_.push_back(loadText);
 	//creamos el boton para jugar sin cargar el juego del archivo de guardado
@@ -63,7 +64,7 @@ void MainMenuState::createButtons() {
 		{ button_w,button_h }, goStoryState);
 	gameObjects_.push_back(playButton);
 	objectsToRender_.push_back(playButton);
-	Draw* playText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::PlayText), playButton->getDestiny());
+	VisualElement* playText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::PlayText), playButton->getDestiny());
 	objectsToRender_.push_back(playText);
 	gameObjects_.push_back(playText);
 
@@ -73,7 +74,7 @@ void MainMenuState::createButtons() {
 		{ button_w,button_h }, exitGame);
 	gameObjects_.push_back(exitButton);
 	objectsToRender_.push_back(exitButton);
-	Draw* exitText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::ExitText), exitButton->getDestiny());
+	VisualElement* exitText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::ExitText), exitButton->getDestiny());
 	objectsToRender_.push_back(exitText);
 	gameObjects_.push_back(exitText);
 

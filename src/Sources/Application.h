@@ -37,10 +37,6 @@ private:
 	///<summary>Variables que controla el fin del bucle principal de app</summary>
 	bool appClosed_ = false;
 
-	///<summary>Constantes con las dimensiones de la ventana </summary>
-	static const int winWidth_ = 1200;
-	static const int winHeight_ = 600;
-
 	///<summary>Metodo que inicializa SDL</summary>
 	void initSDL();
 	///<summary>Metodo que inicializa los recursos de la app</summary>

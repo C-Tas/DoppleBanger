@@ -27,11 +27,11 @@ void SelectLevelState::initState() {
 
 #pragma region Testeo
 	GameManager* gm = GameManager::instance();
-	table_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Table));
+	table_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::Table));
 	addRenderUpdateLists(table_);
-	if (gm->getUnlockedIslands() == Island::Caribbean) map_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Map1));
-	else if(gm->getUnlockedIslands() == Island::Spooky)  map_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Map2));
-	else if (gm->getUnlockedIslands() == Island::Volcanic)  map_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Map3));
+	if (gm->getUnlockedIslands() == Island::Caribbean) map_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::Map1));
+	else if(gm->getUnlockedIslands() == Island::Spooky)  map_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::Map2));
+	else if (gm->getUnlockedIslands() == Island::Volcanic)  map_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::Map3));
 	addRenderUpdateLists(map_);
 #pragma endregion
 

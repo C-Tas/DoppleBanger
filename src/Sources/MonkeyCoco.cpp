@@ -13,7 +13,6 @@ bool MonkeyCoco ::update() {
 #ifdef _DEBUG
 
 #endif // _DEBUG
-	updateVisPos();
 
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {

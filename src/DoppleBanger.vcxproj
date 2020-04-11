@@ -82,6 +82,7 @@
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\usable.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
+    <ClCompile Include="Sources\VisualElement.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
     <ClCompile Include="Sources\WinState.cpp" />
     <ClCompile Include="Sources\Wolf.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\usable.h" />
     <ClInclude Include="Sources\Vector2D.h" />
+    <ClInclude Include="Sources\VisualElement.h" />
     <ClInclude Include="Sources\VolcanicIslandState.h" />
     <ClInclude Include="Sources\WinState.h" />
     <ClInclude Include="Sources\Wolf.h" />

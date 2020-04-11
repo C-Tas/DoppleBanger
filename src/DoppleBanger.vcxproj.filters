@@ -149,6 +149,17 @@
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Camera.cpp" />
+    <ClCompile Include="Sources\EndState.cpp" />
+    <ClCompile Include="Sources\EnemyPirate.cpp" />
+    <ClCompile Include="Sources\MonkeyCoco.cpp" />
+    <ClCompile Include="Sources\ShipState.cpp" />
+    <ClCompile Include="Sources\SkillState.cpp" />
+    <ClCompile Include="Sources\ShipObject.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\Trigger.cpp" />
+    <ClCompile Include="Sources\WinState.cpp" />
+    <ClCompile Include="Sources\Wolf.cpp" />
+    <ClCompile Include="Sources\VisualElement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -308,6 +319,23 @@
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Camera.h" />
+    <ClInclude Include="Sources\Bullet.h" />
+    <ClInclude Include="Sources\EndState.h" />
+    <ClInclude Include="Sources\EnemyPirate.h" />
+    <ClInclude Include="Sources\Gloves.h" />
+    <ClInclude Include="Sources\Gun.h" />
+    <ClInclude Include="Sources\MonkeyCoco.h" />
+    <ClInclude Include="Sources\Inventory.h" />
+    <ClInclude Include="Sources\InventoryButton.h" />
+    <ClInclude Include="Sources\ShipState.h" />
+    <ClInclude Include="Sources\SkillState.h" />
+    <ClInclude Include="Sources\ShipObject.h" />
+    <ClInclude Include="Sources\Sword.h" />
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\Trigger.h" />
+    <ClInclude Include="Sources\WinState.h" />
+    <ClInclude Include="Sources\Wolf.h" />
+    <ClInclude Include="Sources\VisualElement.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

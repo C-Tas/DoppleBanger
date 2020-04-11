@@ -42,7 +42,6 @@ bool Wolf::update() {
 	}
 	cout << state << endl;*/
 #endif // _DEBUG
-	updateVisPos();
 
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {

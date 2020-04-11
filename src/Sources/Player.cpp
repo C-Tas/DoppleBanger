@@ -25,8 +25,6 @@ void Player::init()
 
 bool Player::update()
 {
-	updateVisPos();
-
 	//Si se pulsa la Q y se ha acabado el cooldown y se está a rango
 	//Hago un if dentro de otro if ya que como el de dentro tiene que hacer cálculos, estos solo se hagan
 	//cuando ya se han cumplido previamente las dos condiciones anteriores.
@@ -35,8 +33,8 @@ bool Player::update()
 		Vector2D dist = Vector2D(eventHandler_->getRelativeMousePos().getX() - pos_.getX(), eventHandler_->getRelativeMousePos().getY() - pos_.getY());
 		if (dist.magnitude() <= CLON_SPAWN_RANGE)
 		{
-			clon_ = new Clon(app_, getVisPos(eventHandler_->getRelativeMousePos()), currStats_.ad_, currStats_.meleeRate_, currStats_.range_, liberation_, explotion_, scale_);
-			app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
+			clon_ = new Clon(app_, getVisPos(eventHandler_->getRelativeMousePos()), scale_, this);
+			app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
 			clonTime_ = SDL_GetTicks();
 		}
 	}
@@ -62,15 +60,17 @@ bool Player::update()
 			equip_.potion2_->use(this);
 		}
 	}
+
 	//comprobamos si hay que desactivar las pociones
 	desactivePotion();
+
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
 	int margin = 2; if (attacking_) margin = currStats_.meleeRange_;
-
-	if (visPos_.getX() < target_.getX() - margin ||
-		visPos_.getX() > target_.getX() + margin ||
-		visPos_.getY() < target_.getY() - margin ||
-		visPos_.getY() > target_.getY() + margin)
+	Vector2D visPos = getVisPos(pos_);
+	if (visPos.getX() < target_.getX() - margin ||
+		visPos.getX() > target_.getX() + margin ||
+		visPos.getY() < target_.getY() - margin ||
+		visPos.getY() > target_.getY() + margin)
 	{
 		double delta = app_->getDeltaTime();
 		previousPos_ = pos_;
@@ -83,7 +83,7 @@ bool Player::update()
 	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DYING)
 	{
 		objective_->receiveDamage(currStats_.meleeDmg_);
-		if (objective_->getState() == STATE::DYING) move(visPos_);
+		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
 		meleeTime_ = SDL_GetTicks();
 	}
 	if (currState_ == STATE::DYING) {
@@ -129,15 +129,16 @@ void Player::move(Point2D target)
 	//establecemos el objetivo para poder parar al llegar
 	target_.setVec(target);
 	//establecemos la direccion
-	dir_.setX(target.getX() - visPos_.getX());
-	dir_.setY(target.getY() - visPos_.getY());
+	Vector2D visPos = getVisPos(pos_);
+	dir_.setX(target.getX() - visPos.getX());
+	dir_.setY(target.getY() - visPos.getY());
 	dir_.normalize();
 }
 
 void Player::attack(Enemy* obj)
 {
 	objective_ = obj;
-	move(obj->getVisPos());
+	move(getVisPos(obj->getPos()));
 	attacking_ = true;
 }
 

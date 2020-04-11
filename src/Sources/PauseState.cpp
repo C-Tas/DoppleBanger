@@ -1,6 +1,7 @@
 #include "PauseState.h"
 #include "ControlsState.h"
 #include "GameManager.h"
+#include "VisualElement.h"
 
 #pragma region CallBacks
 ///<summary>Reanuda la partida actual</summary>
@@ -45,7 +46,7 @@ void PauseState::changeMute()
 
 void PauseState::initState()
 {
-	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::PauseBackground));
+	background_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::PauseBackground));
 	addRenderUpdateLists(background_);
 
 	//Creaci�n de botones
@@ -60,7 +61,7 @@ void PauseState::initState()
 
 	//Bot�n de reanudar
 	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, resume);
-	Draw* resumeText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::ResumeText), textButon);
+	VisualElement* resumeText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::ResumeText), textButon);
 	objectsToRender_.push_back(resumeText);
 	gameObjects_.push_back(resumeText);
 
@@ -68,7 +69,7 @@ void PauseState::initState()
 	posButton = posButton + Vector2D(0, winHeight / 4);
 	textButon.y = posButton.getY();
 	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, showControls);
-	Draw* controlText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::ControlsText), textButon);
+	VisualElement* controlText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::ControlsText), textButon);
 	objectsToRender_.push_back(controlText);
 	gameObjects_.push_back(controlText);
 
@@ -76,7 +77,7 @@ void PauseState::initState()
 	posButton = posButton + Vector2D(0, winHeight / 4 );
 	textButon.y = posButton.getY();
 	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, goMainMenuState);
-	Draw* mainMenuText = new Draw(app_, app_->getTextureManager()->getTexture(Resources::MainMenuText), textButon);
+	VisualElement* mainMenuText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::MainMenuText), textButon);
 	objectsToRender_.push_back(mainMenuText);
 	gameObjects_.push_back(mainMenuText);
 	

@@ -138,7 +138,7 @@ void CollisionCtrl::islandCollisions() {
 }
 
 void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir la clase ShipObject
-	Vector2D mousePos = input_->getMousePos();	//Guardamos la posici�n del rat�n
+	Vector2D mousePos = input_->getRelativeMousePos();	//Guardamos la posici�n del rat�n
 	//Comprobamos si se ha hecho click
 	if (input_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
 		SDL_Point mouse = { (int)mousePos.getX(), (int)mousePos.getY() };

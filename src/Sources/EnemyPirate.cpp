@@ -42,7 +42,6 @@ bool EnemyPirate::update() {
 	}
 	cout << state << endl;*/
 #endif // _DEBUG
-	updateVisPos();
 
 	//Si el pirata ha muerto
 	if (currState_ == STATE::DYING) {
