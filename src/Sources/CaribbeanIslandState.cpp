@@ -31,6 +31,7 @@ void CaribbeanIslandState::initState()
 	createMonkey(NUM_MONKEYS);
 	createPirates(NUM_PIRATES);
 	createWolves(NUM_WOLVES);
+	createChest(NUM_CHEST);
 
 	//Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- W_PLAYER), ((app_->getWindowHeight() * 8 / 10) - H_PLAYER));

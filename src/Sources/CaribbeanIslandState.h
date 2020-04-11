@@ -33,6 +33,7 @@ protected:
 	const int NUM_MONKEYS = 1;
 	const int NUM_PIRATES = 2;
 	const int NUM_WOLVES = 3;
+	const int NUM_CHEST = 1;
 
 	virtual void initState();
 };
