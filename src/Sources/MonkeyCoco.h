@@ -25,33 +25,28 @@ private:
 	//Último frame de animación
 	Uint32 lasFrame_ = 0;
 	//Diferentes animaciones del mono
-	Anim attackAnim_ = { 0,0,0,0,0 ,""};
-	Anim walkAnim_ = { 0,0,0,0,0,"" };
-	Anim idleAnim_ = { 0,0,0,0,0,"" };
+	Anim attackAnim_ = { 0,0,0,0, false };
+	Anim walkAnim_ = { 0,0,0,0, false };
+	Anim idleAnim_ = { 0,0,0,0, false };
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)
 	#pragma region Constantes
 	//Para el ataque
 	const int NUM_FRAMES_ATK = 10;
 	const int NUM_FRAMES_ROW_ATK = 3;
-	const uint W_FRAME_ATK = 200;
-	const uint H_FRAME_ATK = 200;
+	const int W_FRAME_ATK = 200;
+	const int H_FRAME_ATK = 200;
 	const int FRAME_RATE_ATK = 100;
-	const string NAME_ATK = "attack";
 	//Para el movimiento
 	const int NUM_FRAMES_MOV = 10;
-	const int NUM_FRAMES_ROW_MOV = 3;
-	const uint W_FRAME_MOV = 200;
-	const uint H_FRAME_MOV = 200;
+	const int W_FRAME_MOV = 200;
+	const int H_FRAME_MOV = 200;
 	const int FRAME_RATE_MOV = 100;
-	const string NAME_MOV = "walk";
 	//Para estar parado
 	const int NUM_FRAMES_IDLE = 10;
-	const int NUM_FRAMES_ROW_ADLE = 3;
-	const uint W_FRAME_IDLE = 200;
-	const uint H_FRAME_IDLE = 200;
+	const int W_FRAME_IDLE = 200;
+	const int H_FRAME_IDLE = 200;
 	const int FRAME_RATE_IDLE = 100;
-	const string NAME_IDLE = "idle";
 	//Proyectil
 	const uint W_H_COCO = app_->getWindowHeight() / 40;		//Tamaño del coco
 	const double COCO_VEL = 700;							//Velocidad del coco
@@ -83,14 +78,10 @@ private:
 	Vector2D isClonInRange();
 	//Ataque del monkeyCoco
 	void attack();
-	//Gestiona las diferentes animaciones que tiene el monkeyCoco
-	void changeAnim(Anim& newAnim);
 	//Devuelve true si el target está dentro del rango de ataque
 	bool onRange();
 	//Inicializa todas las animaciones
-	void initAnims();
-	//Actualiza la actual animación
-	void updateAnim();
+	virtual void initAnims();
 	//Busca y actualiza al enemigo que atacar
 	bool getEnemy();
 	//Cuando pierde el agro

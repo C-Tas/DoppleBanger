@@ -6,6 +6,7 @@
 enum class STATE
 {
 	ATTACKING,
+	SHOOTING,
 	IDLE,
 	DYING,
 	FOLLOWING,
@@ -111,7 +112,7 @@ protected:
 
 	//Inicializa al actor
 	virtual void initObject() {};
-	virtual void initAnim() {};
+	virtual void initAnims() {};
 	//<summary>Inicializa todas las stats</summary>
 	void initStats(double health, double mana, double manaReg, double armor, double meleeDmg, double distDmg, 
 		double crit, double meleeRange, double distRange, double moveSpeed, double meleeRate, double distRate);

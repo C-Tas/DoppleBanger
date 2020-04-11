@@ -13,7 +13,7 @@ protected:
 	~Trigger() {  };
 	virtual void onOverlap() = 0;
 	virtual void initObject() = 0;
-	virtual void initAnim() = 0;
+	virtual void initAnims() = 0;
 
 public:
 	const SDL_Rect* getTriggerArea() { return &triggerArea_; };

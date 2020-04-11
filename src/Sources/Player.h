@@ -19,8 +19,6 @@ struct playerEquipment
 	
 	usable* potion1_ = nullptr;
 	usable* potion2_ = nullptr;
-	
-
 };
 
 class Player : public Actor
@@ -82,7 +80,20 @@ private:
 	Vector2D previousPos_;
 
 	array<Skill*, MAX_SKILLS> skillsEquiped_ = {nullptr, nullptr, nullptr};
+#pragma region Animaciones
+	Texture* auxTx_ = nullptr;				//Textura temporal auxiliar
+	//Disparo
+	Vector2D mouseClick_{ 0,0 };			//Vector donde se ha hecho click al disparar
+	Anim shootAnim_{ 0, 0, 0, 0, false};	//Animación de disparo
+	Texture* shootTexture_ = nullptr;		//Textura del disparo
+	const int  SHOOT_FRAMES = 5;			//Frames de la animación
+	const int W_SHOOT_FRAME = 40;			//Ancho del frame
+	const int H_SHOOT_FRAME = 60;			//Alto del frame
+	const int SHOOT_FRAME_RATE = 1;			//Frame rate
 
+	//Inicialización de las animaciones
+	virtual void initAnims();
+#pragma endregion
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
 	int liberation_ = 2;	//Nivel de la habilidad del clon
@@ -123,10 +134,7 @@ private:
 	const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
 #pragma endregion
 	virtual void initObject();
-
 	playerEquipment equip_;
 	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
-
-
 };

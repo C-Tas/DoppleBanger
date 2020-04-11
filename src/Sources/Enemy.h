@@ -26,5 +26,5 @@ protected:
 	//Inicializa al Enemy
 	virtual void initObject() {};
 	//Inicializa las animaciones
-	virtual void initAnim() {};
+	virtual void initAnims() {};
 };

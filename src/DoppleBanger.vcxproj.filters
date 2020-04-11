@@ -160,6 +160,9 @@
     <ClCompile Include="Sources\WinState.cpp" />
     <ClCompile Include="Sources\Wolf.cpp" />
     <ClCompile Include="Sources\VisualElement.cpp" />
+    <ClCompile Include="Sources\SkillButton.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\Draw.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -336,6 +339,8 @@
     <ClInclude Include="Sources\WinState.h" />
     <ClInclude Include="Sources\Wolf.h" />
     <ClInclude Include="Sources\VisualElement.h" />
+    <ClInclude Include="Sources\SkillButton.h" />
+    <ClInclude Include="Sources\TextBox.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

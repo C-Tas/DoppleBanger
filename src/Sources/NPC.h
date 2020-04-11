@@ -10,7 +10,7 @@ private:
 
 protected:
 	virtual void initObject();
-	virtual void initAnim();
+	virtual void initAnims();
 
 public:
 	NPC(Application* app, SDL_Rect collisionArea, Texture* texture, Point2D pos, Vector2D scale) :

@@ -52,12 +52,12 @@ void Crab::initObject()
 	texture_ = app_->getTextureManager()->getTexture(Resources::CrabAttack);
 	collisionArea_ = SDL_Rect{ (pos_.getX(), pos_.getY(), W_COLLISION, H_COLLISION) };
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
-	initAnim();
+	initAnims();
 }
 
-void Crab::initAnim()
+void Crab::initAnims()
 {
 	//Cambiar los números magicos
-	attackAnim_ = Anim(NUM_FRAMES_ATK, NUM_FRAMES_ATK_ROW, W_CLIP_ATK, H_CLIP_ATK, 10,"Attack");
+	attackAnim_ = Anim(NUM_FRAMES_ATK, W_CLIP_ATK, H_CLIP_ATK, 10, false);
 	//Faltan las otras animaciones
 }

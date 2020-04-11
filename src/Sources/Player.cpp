@@ -41,8 +41,15 @@ bool Player::update()
 	}
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
-		shoot(eventHandler_->getRelativeMousePos());
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_) {
+		texture_ = shootTexture_;
+		currAnim_ = shootAnim_;
+		frame_.x = 0; frame_.y = 0;
+		frame_.w = currAnim_.widthFrame_;
+		frame_.h = currAnim_.heightFrame_;
+		currState_ = STATE::SHOOTING;
+		mouseClick_ = eventHandler_->getRelativeMousePos();
+	}
 	else if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
 		Vector2D dir = eventHandler_->getRelativeMousePos();
 		move(getVisPos(dir));
@@ -91,15 +98,34 @@ bool Player::update()
 		//Tendría que hacer la animación de muerte
 		return true;
 	}
+	else if (currState_ == STATE::SHOOTING) {
+		if (currAnim_.currFrame_ == 2) //Dispara en el tercer frame
+			shoot(mouseClick_);
+		else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+			currState_ == STATE::IDLE;	//Reseteo de la animación
+			//Se debería resetear a idle, pero aún no está implementado
+			currAnim_.numberFrames_ = 0;
+			texture_ = auxTx_;
+		}
+	}
+	updateFrame();
 	return false;
 }
 
 void Player::initObject() {
-	GameManager::instance()->setPlayer(this);
-	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
+	texture_ = auxTx_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	eventHandler_ = HandleEvents::instance();
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initAnims();
+	GameManager::instance()->setPlayer(this);
 	CollisionCtrl::instance()->setPlayer(this);
+}
+
+void Player::initAnims()
+{
+	//Animación de disparo
+	shootAnim_ = Anim(SHOOT_FRAMES, W_SHOOT_FRAME, H_SHOOT_FRAME, SHOOT_FRAME_RATE, false);
+	shootTexture_ = app_->getTextureManager()->getTexture(Resources::PlayerShootAnim);
 }
 
 void Player::shoot(Vector2D dir)

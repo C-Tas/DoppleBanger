@@ -104,7 +104,7 @@ bool EnemyPirate::update() {
 			}
 		}
 	}
-	updateAnim();
+	updateFrame();
 	return false;
 }
 
@@ -162,27 +162,11 @@ bool EnemyPirate::onRange() {
 void EnemyPirate::initAnims()
 {
 	//Para la animación de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK, NUM_FRAMES_ROW_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, NAME_ATK);
+	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, false);
 	//Para la animación de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV, NUM_FRAMES_ROW_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, NAME_MOV);
+	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, true);
 	//Para la animación de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, NUM_FRAMES_ROW_ADLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, NAME_IDLE);
-}
-
-//Actualiza la animación en función del frameRate de la actual animación
-void EnemyPirate::updateAnim()
-{
-	if (currAnim_.frameRate_ <= SDL_GetTicks() - lastFrame_) {
-		lastFrame_ = SDL_GetTicks();
-		frame_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)currAnim_.widthFrame_,(int)currAnim_.heightFrame_ });
-	}
-}
-
-//Cambia la actual animación del mono si no la tiene "equipada"
-void EnemyPirate::changeAnim(Anim& newAnim) {
-	if (newAnim.name_ != currAnim_.name_) {
-		currAnim_ = newAnim;
-	}
+	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
 }
 
 //Se encarga de gestionar el ataque a melee o distancia DONE
@@ -214,7 +198,7 @@ void EnemyPirate::initObject() {
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	rangeVision_ = VIS_RANGE;
 	CollisionCtrl::instance()->addEnemy(this);
-	initAnim();
+	initAnims();
 }
 
 //Esto es un apaño, se eliminara cuando este completa la gestión de muertes

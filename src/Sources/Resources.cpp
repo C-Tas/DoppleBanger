@@ -23,8 +23,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ GoToInventoryBButton, "../Sources/assets/botones/InventoryButtonB.png"},
 
 	//Interfaces
-	//{ BotonMenu, "../Sources/assets/botones/botonMenu.png"},
-	//{ Timon, "../Sources/assets/player/timon.png" },
 	{ GoControls, "../Sources/assets/botones/botonControles.png"},
 	{ BackButton, "../Sources/assets/botones/volver.png"},
 
@@ -59,7 +57,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ SkillReboteBN, "../Sources/assets/skills/reboteHabBN.png"},
 	{ SkillTorbellinoC, "../Sources/assets/skills/torbellinoHab.png"},
 	{ SkillTorbellinoBN, "../Sources/assets/skills/torbellinoHabBN.png"},
-
 	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
 	{ PauseBackground, "../Sources/assets/interfaces/pauseFondo.png" },
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
@@ -88,6 +85,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	
+	//Animaciones
+	{ PlayerShootAnim, "../Sources/assets/player/animaciones/disparo/disparoDcha.png" },
+
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
 	{ Stash, "../Sources/assets/colisionables/alijo.png" },

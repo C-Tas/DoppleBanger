@@ -29,5 +29,5 @@ protected:
 	Application* appReference_ = nullptr;
 	GameState* currentState_ = nullptr;
 	virtual void initObject() {};
-	virtual void initAnim() {};
+	virtual void initAnims() {};
 };

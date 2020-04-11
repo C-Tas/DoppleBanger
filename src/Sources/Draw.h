@@ -11,22 +11,23 @@ protected:
 	struct  Anim
 	{
 		int numberFrames_;		// Número de frames totales
-		int numberFramesRow_;	// Número de frames por fila 
-		uint widthFrame_;		// Ancho del frame
-		uint heightFrame_;		// Alto del frame
+		int widthFrame_;		// Ancho del frame
+		int heightFrame_;		// Alto del frame
 		int frameRate_;			// Velocidad a la que se cambia de frames
-		string name_;
-		Anim(int numberFrames, int numberFramesRow, uint widthFrame, uint heightFrame, int frames,string name) :
-		numberFrames_(numberFrames), numberFramesRow_(numberFramesRow), widthFrame_(widthFrame),
-			heightFrame_(heightFrame), frameRate_(frames),name_(name) {}
+		int currFrame_ = 0;		// Frame actual
+		bool loop_;	// Para saber si se repite
+		Anim(int numberFrames, int widthFrame, int heightFrame, int frameRate, bool loop) :
+		numberFrames_(numberFrames), widthFrame_(widthFrame), heightFrame_(heightFrame), frameRate_(frameRate), loop_(loop) {}
 	};
-	Anim currAnim_ {0,0,0,0,0,""};
+	Anim currAnim_{ 0,0,0,0,false };
 	//Textura del objeto
 	Texture* texture_ = nullptr;
 	//Rect del render
 	SDL_Rect destiny_ = { 0,0,0,0 };
 	//El clip que se va a renderizar de la textura
 	SDL_Rect frame_ = { 0,0,0,0 };
+	//Último frame de animación
+	Uint32 lastFrame_ = 0;
 	//Numero de frames que tiene la animación
 	//Constructora vacia de Draw
 	Draw() {};
@@ -49,7 +50,7 @@ protected:
 		destiny_.w = (int)scale_.getX();
 		destiny_.h = (int)scale_.getY();
 	};
-	virtual void initAnim() {};
+	virtual void initAnims() {};
 public:
 	//Para construir un background
 	Draw(Application* app, Texture* texture) :
@@ -74,8 +75,10 @@ public:
 	
 	//<summary>cambia el frame </summary>
 	virtual bool update() { return false; };
+	//Cambia de animación
+	void changeAnim(const Anim& newAnim);
 	//Cambia al siguiente frame
-	virtual void updateFrame() { frame_.x = (frame_.x + frame_.w) % (currAnim_.numberFrames_ * frame_.w); };
+	virtual void updateFrame();
 
 #pragma region getters
 //Devuelve el rectangulo destino
@@ -98,7 +101,7 @@ public:
 #pragma endregion
 
 #pragma region setters
-	void setFrame(SDL_Rect frame) { frame_ = frame; }; //Asigna el frame
+	void setFrame(const SDL_Rect& frame) { frame_ = frame; }; //Asigna el frame
 	//Asigna el rectangulo de destino (modificado porque tiene que cambiar el tamaño del gameObject)
 	void setDestiny(SDL_Rect destiny) {  
 		pos_.setVec({ (double)destiny.x, (double)destiny.y });
