@@ -4,6 +4,9 @@
 #include "Clon.h"
 #include "Enemy.h"
 #include "usable.h"
+#include <array>
+
+class Skill;
 
 struct playerEquipment
 {
@@ -62,6 +65,14 @@ public:
 	void usePotion(int value, potionType type);
 	//metodos para guardar el puntero al equipamiento
 
+#pragma region SkillsEquipped
+	///<summary>Número máximo de skills equipables</summary>
+	static const int MAX_SKILLS = 3;
+	Skill* getSkillEquipped(int key) { return skillsEquiped_[key]; }
+	void setSkillAt(int key, Skill* skill) { if(skillsEquiped_[key]!= nullptr)delete skillsEquiped_[key]; skillsEquiped_[key] = skill; }
+	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquiped_; }
+#pragma endregion
+
 private:
 	uint lastMeleeHit_ = 0;
 	bool attacking_ = false;
@@ -69,6 +80,8 @@ private:
 	Clon* clon_ = nullptr;
 	HandleEvents* eventHandler_ = nullptr;
 	Vector2D previousPos_;
+
+	array<Skill*, MAX_SKILLS> skillsEquiped_ = {nullptr, nullptr, nullptr};
 
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
@@ -111,9 +124,9 @@ private:
 #pragma endregion
 	virtual void initObject();
 
-
 	playerEquipment equip_;
 	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
+
 
 };

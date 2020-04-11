@@ -68,6 +68,7 @@
     <ClCompile Include="Sources\SDL_macros.cpp" />
     <ClCompile Include="Sources\SelectLevelState.cpp" />
     <ClCompile Include="Sources\ShipState.cpp" />
+    <ClCompile Include="Sources\SkillButton.cpp" />
     <ClCompile Include="Sources\SkillState.cpp" />
     <ClCompile Include="Sources\SRandBasedGenerator.cpp" />
     <ClCompile Include="Sources\SpookyIslandState.cpp" />
@@ -94,7 +95,6 @@
     <ClInclude Include="Sources\Boots.h" />
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\AudioManager.h" />
-    <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\Button.h" />
     <ClInclude Include="Sources\Camera.h" />
     <ClInclude Include="Sources\CaribbeanIslandState.h" />
@@ -140,6 +140,7 @@
     <ClInclude Include="Sources\SelectLevelState.h" />
     <ClInclude Include="Sources\ShipState.h" />
     <ClInclude Include="Sources\Skill.h" />
+    <ClInclude Include="Sources\SkillButton.h" />
     <ClInclude Include="Sources\SkillState.h" />
     <ClInclude Include="Sources\SRandBasedGenerator.h" />
     <ClInclude Include="Sources\SpookyIslandState.h" />

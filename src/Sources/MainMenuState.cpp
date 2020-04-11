@@ -28,6 +28,7 @@ void MainMenuState::initState()
 
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
+
 }
 
 void MainMenuState::createButtons() {

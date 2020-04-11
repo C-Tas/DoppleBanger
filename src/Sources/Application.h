@@ -34,6 +34,9 @@ private:
 	//Manager que gestiona los música y sonidos
 	AudioManager* audioManager_ = nullptr;
 
+	///<summary>Manager que gestiona el inventario, las skills y las islas desbloqueadas</summary>
+	GameManager* gameManager_ = nullptr;
+
 	///<summary>Variables que controla el fin del bucle principal de app</summary>
 	bool appClosed_ = false;
 
@@ -96,7 +99,7 @@ public:
 	TextureManager* getTextureManager() { return textureManager_; };
 	///<summary>Devuelve el font manager</summary>
 	FontManager* getFontManager() { return fontManager_; };
-	///<summary>Devuelve el audioManager</summary>
+	//Devuelve el audioManager
 	AudioManager* getAudioManager() { return audioManager_; };
 	///<summary>Devuelve el generador de equipamiento aleatorio </summary>
 	Equipment* genEquip() { return equipGen_->genEquip(); };
@@ -104,11 +107,14 @@ public:
 	Equipment* genEquip(equipType type) { return equipGen_->genEquip(type); };
 	//Devuelve equipGen_
 	RandEquipGen* getEquipGen() { return equipGen_; }
+
 	///<summary>Devuelve el random_</summary>
 	SRandBasedGenerator* getRandom() { return random_; }
-	//Devuelve mute
+	///<summary>Devuelve el mute</summary>
 	bool getMute() { return mute_; }
-#pragma endregion
 
-	
+	///<summary>Devuelve el GameManager</summary>
+	GameManager* getGameManager() { return gameManager_; }
+
+#pragma endregion
 };

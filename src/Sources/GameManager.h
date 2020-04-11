@@ -36,15 +36,53 @@ enum class Island : int {
 	Volcanic
 };
 enum class spentPoints : int {
-	 Precision = 1,
-	 Melee,
-	 Ghost
+	 Precision = 0,
+	 Melee = 0,
+	 Ghost = 0
 };
 
 enum class missions : int {
 	nombreMision = 0,
 	//Poner aqui nombre de las misiones
 };
+
+#pragma region Skills
+
+///Tipos de Skills que puede haber
+enum class SkillType { Active, Pasive };
+
+//Nombre de cada una de las habilidades del jugador
+enum class SkillNames : int {
+
+	//Enums auxiliares para las pasivas y para las habilidades que no están equipadas
+	Unequipped,
+
+	//Ataque melee
+	GolpeFuerte,
+	Invencible,
+	Torbellino,
+
+	//Ataquea distancia
+	DisparoPerforante,
+	Raudo,
+	Rebote,
+
+	//Clon
+	Clon,
+	LiberacionI,
+	Explosion,
+	LiberacionII,
+	
+};
+
+//Enum para identificar las teclas de las habilidades
+enum class SkillEquiped : int {
+	Q,
+	W,
+	E,
+	R
+};
+#pragma endregion
 
 
 class GameManager {
@@ -60,7 +98,7 @@ private:
 	//Enum de la isla actual
 	Island currIsland_ = Island::Caribbean;
 	//Puntos de haza�a
-	int achievementPoints_ = 0;
+	int achievementPoints_ = 350;
 	//Puntos de haza�a gastados en la rama precisi�n
 	spentPoints precision_ = spentPoints::Precision;
 	//Puntos de haza�a gastados e la rama melee
@@ -85,6 +123,10 @@ private:
 	GameObject* player_ = nullptr;
 	//Puntero al clon
 	GameObject* clon_ = nullptr;
+	//Vector que contiene las habilidades equipadas
+	vector<SkillNames> skillsEquiped_ = {SkillNames::Unequipped,SkillNames::Unequipped,SkillNames::Unequipped,SkillNames::Clon };
+	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
+	vector<bool> skillsUnlocked_ = { false, false ,false, false, false, false, false, true, false, false, false }; //Clon inicializada por defecto
 	//Pendiente de guardar y cargar
 
 public:
@@ -149,6 +191,22 @@ public:
 	const int getInventoryGold() { return inventoryGold; }
 	//Devuelve el dinero del alijo
 	const int getStashGold() { return stashGold; }
+	//Devuele la habilidad equipada
+	const SkillNames getSkillEquiped(SkillEquiped skill) { return skillsEquiped_[(int)skill]; }
+	//Devuelve la tecla en la que está equipada la habilidad
+	const SkillEquiped getEquippedSkillKey(SkillNames skill) { int i = 0; 
+		while (i < skillsEquiped_.size() && skillsEquiped_[i] != skill)i++;
+		return (SkillEquiped)i;
+	}
+	//Devuelve el vector de skills
+	const vector<SkillNames>& getAllSkillsEquipped() { return skillsEquiped_; }
+	//Devuelve si la skill está desbloqueda
+	const bool isSkillUnlocked(SkillNames skill) { return skillsUnlocked_[(int)skill]; }
+	//Devuelve si la skill está equipada
+	const bool isSkillAsign(SkillNames skill) { int i = 0; 
+		while (i < skillsEquiped_.size() && skillsEquiped_[i] != skill)i++; 
+		return !i == skillsEquiped_.size(); }
+	
 #pragma endregion
 
 #pragma region setters
@@ -160,6 +218,9 @@ public:
 	inline void setUnlockedIslands(Island island) { unlockedIslands_ = island; };
 	//Asigna la nueva isla actual
 	inline void setCurrIsland(Island newIsland) { currIsland_ = newIsland; }
+	inline void setIsland(int island) { currIsland_ = (Island)island; };
+	//Asigna los archievement points
+	inline void setArchievementPoints(int value) { achievementPoints_ = value; }
 	//Asigna los puntos gastados a la rama precision
 	inline void setPrecisionPoints(int value) { precision_ = (spentPoints)value; };
 	//Asigna los puntos gastados a la rama melee
@@ -185,5 +246,9 @@ public:
 	inline void setInventoryGold(int money) { inventoryGold = money; }
 	///Asigna money como cantidad de dinero en el alijo
 	inline void setStashGold(int money) { stashGold = money; }
+	//Actualiza la habilidad equipada
+	inline void setSkillEquiped(SkillNames newSkill, SkillEquiped key) { skillsEquiped_[(int)key] = newSkill; }
+	//Marca como desbloqueda la skill que pases como parámetro
+	inline void setSkillUnlocked(SkillNames skill) { skillsUnlocked_[(int)skill] = true; }
 #pragma endregion
 };

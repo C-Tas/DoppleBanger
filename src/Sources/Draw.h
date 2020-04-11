@@ -99,11 +99,12 @@ public:
 
 #pragma region setters
 	void setFrame(SDL_Rect frame) { frame_ = frame; }; //Asigna el frame
-	//Asigna el rectangulo de destino
-	void setDestiny(SDL_Rect destiny) {
-		destiny_ = destiny; 
-		scale_.setVec({ (double)destiny.w,(double)destiny.h });
-	}; 
+	//Asigna el rectangulo de destino (modificado porque tiene que cambiar el tamaño del gameObject)
+	void setDestiny(SDL_Rect destiny) {  
+		pos_.setVec({ (double)destiny.x, (double)destiny.y });
+		scale_.setVec({ (double)destiny.w, (double)destiny.h }); 
+		destiny_ = destiny;
+	};
 	void setTexture(Texture* texture) { texture_ = texture; }; //Asigna la textura
 #pragma endregion
 };

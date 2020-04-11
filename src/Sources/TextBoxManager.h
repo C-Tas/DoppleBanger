@@ -3,21 +3,20 @@
 #include "Texture.h"
 #include "Vector2D.h"
 
-class TextBox {
+class TextBoxManager {
 protected:
 	Application* app_ = nullptr;
 	SDL_Rect dest; //Posición de la caja de texto, inicializada en init()
 	const int lineSpacing = 30;	//Interlineado y márgenes del texto
 
 public:
-	TextBox() {};
 	///<summary>Constructora del textBox de diálogo</summary>
-	TextBox(Application* app) : app_(app) {};
+	TextBoxManager(Application* app) : app_(app) { initDialog(); };
 	///<summary>Constructora del textBox de descripción</summary>
-	TextBox(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
-	~TextBox() {};
+	TextBoxManager(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
+	~TextBoxManager() {};
 
-	///<summary>Carga el textBox de diálogo inicial</summary>
+	///<summary>Carga el textBox de diálogo inicial, se llama desde la constructora</summary>
 	void initDialog();
 
 	///<summary>Carga el textBox de descripción inicial, se llama desde la constructora</summary>
@@ -98,31 +97,4 @@ public:
 	///<summary>Descripción de la poción de crítico</summary>
 	void criticPotion();
 #pragma endregion
-
-#pragma region SkillsDescription
-	///<summary>Descripción de la habilidad de invocar al clon</summary>
-	void Clon();
-	///<summary>Descripción de la habilidad LiberacionI del clon</summary>
-	void LiberationI();
-	///<summary>Descripción de la habilidad LiberacionII del clon</summary>
-	void LiberationII();
-	///<summary>Descripción de la habilidad Explosion del clon</summary>
-	void Explosion();
-	///<summary>Descripción de la habilidad Golpe Fuerte de la rama a melee</summary>
-	void GolpeFuerte();
-	///<summary>Descripción de la habilidad Invencible de la rama a melee</summary>
-	void Invencible();
-	///<summary>Descripción de la habilidad Torbellino de la rama a melee</summary>
-	void Torbellino();
-	///<summary>Descripción de la habilidad Raudo del disparo a distancia</summary>
-	void Raudo();
-	///<summary>Descripción de la habilidad Rebote del disparo a distancia</summary>
-	void Rebote();
-	///<summary>Descripción de la habilidad Perforador del disparo a distancia</summary>
-	void Perforador();
-	
-
-
-#pragma endregion
-
 };

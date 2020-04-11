@@ -20,7 +20,6 @@ enum class DIR {
 	LEFT
 };
 
-
 class Actor : public Dynamic
 {
 public:

@@ -8,6 +8,7 @@
 #include "GameManager.h"
 #include "CollisionCtrl.h"
 #include "Collisions.h"
+#include "Skill.h"
 
 void Player::init()
 {
@@ -165,6 +166,7 @@ void Player::usePotion(int value, potionType type) {
 		break;
 	}
 }
+
 void Player::desactivePotion(){
 	//Pocion1
 	//Si la pocion uno esta usada
