@@ -6,6 +6,8 @@ bool BoneBullet::update() {
 	if (((currTime_ - initTime_) / 1000 > lifeSpan_/2) && !returnBone) {
 		dir_ = dir_ * -1;
 		returnBone = true;
+		//cuando el hueso vuelve puede volver a hacer daño al enemigo
+		MakeDamage = true;
 	}
 	//Si se le ha acabado el tiempo de vida
 	else if ((currTime_ - initTime_) / 1000 > lifeSpan_) {

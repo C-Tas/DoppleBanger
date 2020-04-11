@@ -82,10 +82,17 @@ void CollisionCtrl::islandCollisions() {
 	for (auto bullet : enemyBullets_) {
 		if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-			player_->reciveDmg(bullet->getDamage());
-			bullet->collisionDetected();
-			if (bullet->numCollisions() == 0 )addEnemyBulletToErase(bullet);
-			bullet->onCollider();
+			// si la bala puede hacer daño al jugador
+			if (bullet->doDamage()) {
+				player_->reciveDmg(bullet->getDamage());//el jugador recibe daño
+				bullet->collisionDetected();//restamos uno al numero de golpes que puede realizar la bala
+				bullet->setDoDamage(false);// ya no puede atacar al player hasta el siguiente golpe
+			}
+			//si ya no le quedan colisiones a la bala la borramos
+			if (bullet->numCollisions() == 0 ){
+				addEnemyBulletToErase(bullet);
+				bullet->onCollider();
+			}
 		}
 	}
 }

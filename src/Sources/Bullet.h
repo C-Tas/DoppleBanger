@@ -18,17 +18,17 @@ public:
 	void init(Vector2D pos, Vector2D dir);
 	virtual bool update();
 	virtual void onCollider() {
-		if (collisionsBeforeDestroy_ == 0) {
 			if (!deleting) {
 				deleting = true;
 				app_->getCurrState()->removeRenderUpdateLists(this);
 			};
-		}
 
 	}
 	const int getDamage() { return damage_; }
 	void collisionDetected() { collisionsBeforeDestroy_--; }
 	int numCollisions() { return collisionsBeforeDestroy_; }
+	void setDoDamage(bool dmg) { MakeDamage = dmg; }
+	bool doDamage() { return MakeDamage; }
 
 
 protected:
@@ -40,6 +40,7 @@ protected:
 	bool enemyBullet_ = false;
 	bool deleting = false;
 	uint collisionsBeforeDestroy_ = 1;//Variable para aquellas balas que chac mas de una vez antes destruirse
+	bool MakeDamage = true; //variable para comprobar si tiene que atacar al jugador
 
 	virtual void initObject() {};
 };
