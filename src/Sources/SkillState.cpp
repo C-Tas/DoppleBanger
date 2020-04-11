@@ -28,8 +28,19 @@ void SkillState::initSkillState() {
 }
 
 void SkillState::update()
-{
+{	
+	//Comprobamos si el ratón está sobre alguna de las skills equipadas
+	int i = 0;
+	SDL_Point point;
+	point.x = eventHandler_->getMousePos().getX();
+	point.y = eventHandler_->getMousePos().getY();
+	while (i < assignButtons.size() && !SDL_PointInRect(&point, &assignButtons[i]))i++;
+	//Si lo está, actualizamos cual descripcion debe mostrarse
+	if (i < assignButtons.size()) lastPointed = gameManager_->getSkillEquiped((SkillEquiped)i);
+	
+	//update de las barras
 	updateBars();
+	//update de todos los objetos
 	GameState::update();
 }
 
@@ -147,7 +158,7 @@ void SkillState::createTexts() {
 void SkillState::setSelectedSkillButton(SkillButton* button)
 {
 	selected_ = button;
-	if (selectedRectangle == nullptr)selectedRectangle = new Draw(app_, app_->getTextureManager()->getTexture(Resources::RedBar), SDL_Rect{ (int)button->getPosX() - 10, (int)button->getPosY() - 10, (int)button->getScaleX() + 20, (int)button->getScaleY() + 20 });
+	if (selectedRectangle == nullptr)selectedRectangle = new Draw(app_, app_->getTextureManager()->getTexture(Resources::RedBar), SDL_Rect{ (int)button->getPosX() - 10, (int)button->getPosY() - 10, (int)button->getScaleX() + 20, (int)button->getScaleY() + 10 });
 	else {
 		selectedRectangle->setPos(Vector2D(button->getPosX() - 10, button->getPosY() - 10));
 	}
@@ -294,15 +305,16 @@ void SkillState::draw() const
 	//Estos dos objetos van fuera porque quiero que siempre se pinten los primeros
 	bg_->draw();
 	if (selectedRectangle != nullptr) selectedRectangle->draw();
+
 	changeDescriptionTexture(lastPointed);
 	totalPoints_->render({ 1270, 250, 100, 40 });
 	GameState::draw();
-
 	renderSkillsEquipped();
 }
 
 void SkillState::changeDescriptionTexture(SkillNames name)const
 {
+
 	TextBox descriptionBox(app_, Point2D(descriptionRect.x, descriptionRect.y));
 	switch (name)
 	{
@@ -327,7 +339,7 @@ void SkillState::changeDescriptionTexture(SkillNames name)const
 		descriptionBox.Rebote();
 		break;
 	case SkillNames::Clon:
-		///La del clon la dejo asi pq en principio no se puede ni equipar ni desequipar
+		descriptionBox.Clon();
 		break;
 	case SkillNames::LiberacionI:
 		descriptionBox.LiberationI();

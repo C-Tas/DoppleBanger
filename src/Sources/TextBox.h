@@ -100,15 +100,27 @@ public:
 #pragma endregion
 
 #pragma region SkillsDescription
+	///<summary>Descripción de la habilidad de invocar al clon</summary>
+	void Clon();
+	///<summary>Descripción de la habilidad LiberacionI del clon</summary>
 	void LiberationI();
+	///<summary>Descripción de la habilidad LiberacionII del clon</summary>
 	void LiberationII();
+	///<summary>Descripción de la habilidad Explosion del clon</summary>
 	void Explosion();
-	void Raudo();
+	///<summary>Descripción de la habilidad Golpe Fuerte de la rama a melee</summary>
 	void GolpeFuerte();
+	///<summary>Descripción de la habilidad Invencible de la rama a melee</summary>
 	void Invencible();
-	void Rebote();
-	void Perforador();
+	///<summary>Descripción de la habilidad Torbellino de la rama a melee</summary>
 	void Torbellino();
+	///<summary>Descripción de la habilidad Raudo del disparo a distancia</summary>
+	void Raudo();
+	///<summary>Descripción de la habilidad Rebote del disparo a distancia</summary>
+	void Rebote();
+	///<summary>Descripción de la habilidad Perforador del disparo a distancia</summary>
+	void Perforador();
+	
 
 
 #pragma endregion
