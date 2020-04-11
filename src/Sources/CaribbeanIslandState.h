@@ -1,9 +1,12 @@
 #pragma once
 #include "PlayState.h"
+#include "Chest.h"
 class Player;
 
 class CaribbeanIslandState : public PlayState
 {
+private:
+	Chest* chest_ = nullptr; //temporal
 public:
 //<summary>Constructor de la isla caribeña</summary>
 	CaribbeanIslandState(Application* app) : PlayState(app) { initState(); }
@@ -16,6 +19,7 @@ public:
 	void createMonkey(int numMonkeys);
 	void createPirates(int numPirates);
 	void createWolves(int numWolves);
+	void createChest(int numChest);
 	//void addKills() { kills += 1; }
 #pragma endregion
 protected:

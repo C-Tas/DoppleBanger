@@ -6,6 +6,7 @@
 #include "Wolf.h"
 #include "EndState.h"
 #include "WinState.h"
+#include "Chest.h"
 
 
 void CaribbeanIslandState::update()
@@ -85,4 +86,16 @@ void CaribbeanIslandState::createWolves(int numWolves)
 		newWolf = new Wolf(app_, pos, Vector2D(W_MONKEY, H_MONKEY), patrol);
 		addEnemy(newWolf);
 	}
+}
+
+void CaribbeanIslandState::createChest(int numChest) 
+{
+	int wWin = app_->getWindowWidth();
+	int hWin = app_->getWindowHeight();
+	Chest* chest;
+	Vector2D pos;
+	
+	//chest = new Chest(app_, playerCollision, app_->getTextureManager()->getTexture(Resources::TextureId::GoControls), Vector2D(200, 200), Vector2D(100, 100));
+	addUpdateList(chest_);
+	addRenderList(chest_);
 }
