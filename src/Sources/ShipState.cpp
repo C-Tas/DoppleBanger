@@ -16,6 +16,10 @@
 //Callback para cambiar de GameState e ir a la isla actual
 void ShipState::goIsland(Application* app)
 {
+	//Borramos la lista de objetos del barco del CollisionCtrl
+	CollisionCtrl::instance()->clearList();
+
+	//Viajamos a la isla correspondiente
 	GameManager* gm = GameManager::instance();
 	Island currIsland = gm->getCurrIsland();
 	if (currIsland == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));

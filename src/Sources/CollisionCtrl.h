@@ -61,9 +61,12 @@ public:
 
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
 	void clearList() {
+		//Listas de las islas
 		npc_.object = nullptr; obstacles_.clear(); enemies_.clear();
 		/*chests_.clear();*/ triggers_.clear(); enemiesToErase_.clear(); /*chestsToErase_.clear();*/
 		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
+		//Listas del barco
+		npcs_.clear(); shipObjects_.clear();
 	};
 #pragma endregion
 
