@@ -23,8 +23,29 @@ protected:
 	//<summary>Destructor</summary>
 	virtual ~Enemy() {};
 
+	//Vector que representa el alto y ancho de la caja de colisiones
+	Point2D boxCollision_;
+	//Último ataque
+	Uint32 lastHit = 0;
+	//Último frame de animación
+	Uint32 lastFrame_ = 0;
+
 	//Inicializa al Enemy
 	virtual void initObject() {};
 	//Inicializa las animaciones
-	virtual void initAnim() {};
+	virtual void initAnims() {};
+	//Ataque del monkeyCoco
+	virtual void attack() {};
+	//Gestiona las diferentes animaciones
+	virtual void changeAnim(Anim& newAnim);
+	//Actualiza la actual animación
+	virtual void updateAnim();
+	//Devuelve true si el target está dentro del rango de ataque
+	virtual bool onRange(bool melee);
+	//Busca y actualiza al enemigo que atacar
+	virtual bool getEnemy(bool melee);
+	//Determina si el jugador está dentro del rango de ataque del monkeyCoco
+	virtual Vector2D isPlayerInRange(int range);
+	//Determina si el clon está dentro del rango de ataque del monkeyCoco
+	virtual Vector2D isClonInRange(int range);
 };

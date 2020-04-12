@@ -90,6 +90,7 @@ public:
         PlayerFront,
 		MonkeyFront,
 		WolfFront,
+		Kraken,
 
 		//gizmos
 		Rojo,

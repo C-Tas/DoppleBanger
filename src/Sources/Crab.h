@@ -55,7 +55,7 @@ private:
 	///<summary>actualiza el objetivo al que se dirige</summary>
 	void updateTarget() { actualTarget_ = (actualTarget_ + 1) % targetsVector_.size(); }
 	///<summary>devuelve si ataca o no</summary>
-	bool attack();
+	void attack();
 	//Inicializa el objeto
 	virtual void initObject();
 	//Crea las animaciones

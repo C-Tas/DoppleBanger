@@ -42,9 +42,7 @@ bool Crab::attack() {
 		//doDamage();//falta definir en enemy
 		currState_ = STATE::ATTACKING;
 		currAnim_ = attackAnim_;
-		return true;
 	}
-	return false; 
 }
 
 void Crab::initObject()
@@ -57,7 +55,7 @@ void Crab::initObject()
 
 void Crab::initAnim()
 {
-	//Cambiar los números magicos
+	//Cambiar los nï¿½meros magicos
 	attackAnim_ = Anim(NUM_FRAMES_ATK, NUM_FRAMES_ATK_ROW, W_CLIP_ATK, H_CLIP_ATK, 10,"Attack");
 	//Faltan las otras animaciones
 }

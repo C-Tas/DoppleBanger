@@ -20,16 +20,20 @@ public:
 	virtual void onCollider();
 	virtual ~MonkeyCoco() {};
 private:
-	//Último ataque
-	Uint32 lastHit = 0;
-	//Último frame de animación
-	Uint32 lasFrame_ = 0;
 	//Diferentes animaciones del mono
 	Anim attackAnim_ = { 0,0,0,0,0 ,""};
 	Anim walkAnim_ = { 0,0,0,0,0,"" };
 	Anim idleAnim_ = { 0,0,0,0,0,"" };
+
+
+	//Ataque del monkeyCoco
+	void attack();
+	//Inicializa las animaciones
+	void initAnims();
+
+
 	//Constantes para crear las diferentes animaciones 
-	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)
+	//(los valores puestos no son los correctos, a falta de hacer la animaciï¿½n del mono)
 	#pragma region Constantes
 	//Para el ataque
 	const int NUM_FRAMES_ATK = 10;
@@ -53,7 +57,7 @@ private:
 	const int FRAME_RATE_IDLE = 100;
 	const string NAME_IDLE = "idle";
 	//Proyectil
-	const uint W_H_COCO = app_->getWindowHeight() / 40;		//Tamaño del coco
+	const uint W_H_COCO = app_->getWindowHeight() / 40;		//Tamaï¿½o del coco
 	const double COCO_VEL = 700;							//Velocidad del coco
 	const double COCO_LIFE = 3;								//Vida del proyectil en segundos
 	#pragma endregion
@@ -72,27 +76,4 @@ private:
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 2500;
 #pragma endregion
-
-	//Entero que representa la cantidad de frames que tiene para las animaciones
-	const int NUM_FRAMES = 0;
-	//Frame para renderizar dentro de un spritesheet
-	const SDL_Rect FIRST_FRAME = { 0,0,0,0 };
-	//Determina si el jugador está dentro del rango de ataque del monkeyCoco
-	Vector2D isPlayerInRange();
-	//Determina si el clon está dentro del rango de ataque del monkeyCoco
-	Vector2D isClonInRange();
-	//Ataque del monkeyCoco
-	void attack();
-	//Gestiona las diferentes animaciones que tiene el monkeyCoco
-	void changeAnim(Anim& newAnim);
-	//Devuelve true si el target está dentro del rango de ataque
-	bool onRange();
-	//Inicializa todas las animaciones
-	void initAnims();
-	//Actualiza la actual animación
-	void updateAnim();
-	//Busca y actualiza al enemigo que atacar
-	bool getEnemy();
-	//Cuando pierde el agro
-	virtual void lostAgro();
 };

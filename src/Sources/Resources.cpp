@@ -87,7 +87,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ CrabAttack, "../Sources/assets/enemigos/crab/crab_attack.png" },
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
-	
+	{ Kraken, "../Sources/assets/enemigos/kraken/kraken.png" },
+
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
 	{ Stash, "../Sources/assets/colisionables/alijo.png" },

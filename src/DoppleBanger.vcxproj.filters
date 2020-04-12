@@ -190,6 +190,9 @@
     <ClCompile Include="Sources\ShipObject.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Kraken.cpp">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -395,6 +398,9 @@
     </ClInclude>
     <ClInclude Include="Sources\ShipObject.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Kraken.h">
+      <Filter>GameObjects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
