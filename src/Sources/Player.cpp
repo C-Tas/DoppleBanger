@@ -26,6 +26,7 @@ void Player::init()
 
 bool Player::update()
 {
+#pragma region Player Inputs
 	//Si se pulsa la Q y se ha acabado el cooldown y se está a rango
 	//Hago un if dentro de otro if ya que como el de dentro tiene que hacer cálculos, estos solo se hagan
 	//cuando ya se han cumplido previamente las dos condiciones anteriores.
@@ -39,14 +40,18 @@ bool Player::update()
 			clonTime_ = SDL_GetTicks();
 		}
 	}
-
+	//Si se pulsa la tecla adecuada y el golpe potenciado no está en coodown
+	if (empowered_ && eventHandler_->isKeyDown(SDL_SCANCODE_W) && ((SDL_GetTicks() - empoweredTime_) / 1000) > empoweredCooldown_)
+	{
+#ifdef _DEBUG
+		cout << "Ataque potenciado se activa" << endl;
+#endif // _DEBUG
+		empoweredAct_ = true;
+	}
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
-		shoot(eventHandler_->getRelativeMousePos());
-	else if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
-		Vector2D dir = eventHandler_->getRelativeMousePos();
-		move(getVisPos(dir));
-	}
+		shoot(eventHandler_->getMousePos());
+#pragma endregion
 
 	//para utilizar las pociones
 	if (eventHandler_->isKeyDown(SDLK_1)) {
@@ -80,17 +85,35 @@ bool Player::update()
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
 		Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
 	}
+
+	//Si se ha utilizado el ataque fuerte, ataca con un bonus porcentual de daño
+	else if (empoweredAct_ && attacking_ && objective_->getState() != STATE::DYING)
+	{
+#ifdef _DEBUG
+		cout << "Ataque potenciado" << endl;
+#endif // _DEBUG
+		empoweredAct_ = false;
+		objective_->reciveDmg((int)currStats_.meleeDmg_ * empoweredBonus_);
+		if (objective_->getState() == STATE::DYING) move(visPos_);
+		empoweredTime_ = SDL_GetTicks();
+		meleeTime_ = empoweredTime_;
+	}
+
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
-	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DYING)
+	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective_->getState() != STATE::DYING)
 	{
 		objective_->receiveDamage(currStats_.meleeDmg_);
 		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
 		meleeTime_ = SDL_GetTicks();
 	}
+
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte
 		return true;
 	}
+#pragma endregion
+
+	
 	return false;
 }
 
