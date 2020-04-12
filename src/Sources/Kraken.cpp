@@ -3,8 +3,6 @@
 
 bool Kraken::update() {
 
-	updateVisPos();
-
 	//Si ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte?

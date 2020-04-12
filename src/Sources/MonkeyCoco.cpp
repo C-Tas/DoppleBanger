@@ -9,8 +9,6 @@
 
 bool MonkeyCoco ::update() {
 
-#endif // _DEBUG
-
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendr�a que hacer la animaci�n de muerte?
@@ -83,4 +81,4 @@ void MonkeyCoco::initObject() {
 
 //Gesti�n de las colisiones
 void MonkeyCoco::onCollider()
-{
+{}

@@ -42,7 +42,7 @@ void CaribbeanIslandState::createMonkey(int numMonkeys)
 {
 	int wWin = app_->getWindowWidth();
 	int hWin = app_->getWindowHeight();
-	Kraken* newMonkey;
+	MonkeyCoco* newMonkey;
 	Vector2D pos;
 	for (int i = 0; i < numMonkeys; i++) {
 		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));

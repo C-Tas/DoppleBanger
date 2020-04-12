@@ -36,7 +36,7 @@ void Crab::move(Point2D target)
 		updateTarget();
 	}
 }
-bool Crab::attack() { 
+void Crab::attack() { 
 	Vector2D visPos = getVisPos(pos_);
 	if (visPos.getX() < 200 && visPos.getX() > 150 && visPos.getY() < 500 && visPos.getX() > 150) {
 		//doDamage();//falta definir en enemy
