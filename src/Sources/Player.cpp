@@ -11,15 +11,20 @@
 #include "GameManager.h"
 #include "CollisionCtrl.h"
 #include "Collisions.h"
+#include "EmpoweredSkill.h"
 
 void Player::init()
 {
+	GameManager::instance()->setPlayer(this);
+	CollisionCtrl::instance()->setPlayer(this);
 	eventHandler_ = HandleEvents::instance();
+	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 
 	skillWhirl_ = new WhirlwindSkill(this);
 	skillClon_ = new ClonSkill(this);
 	skillExplosion_ = new ClonSelfDestructSkill(this);
+	skillEmpowered_ = new EmpoweredSkill(this);
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
@@ -32,19 +37,18 @@ void Player::init()
 
 bool Player::update()
 {
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_W))
-		skillWhirl_->action();
-
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q))
 		skillClon_->action();
+
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_W))
+		skillWhirl_->action();
 
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_E))
 		skillExplosion_->action();
 
-	if (empowered_ && eventHandler_->isKeyDown(SDL_SCANCODE_W) && ((SDL_GetTicks() - empoweredTime_) / 1000) > empoweredCooldown_)
-	{
-		empoweredAct_ = true;
-	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_R))
+		skillEmpowered_->action();
+
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
 		shoot(eventHandler_->getRelativeMousePos());
@@ -87,7 +91,7 @@ bool Player::update()
 	else if (empoweredAct_ && attacking_ && objective_->getState() != STATE::DYING)
 	{
 #ifdef _DEBUG
-		cout << "Ataque potenciado" << endl;
+		cout << "\nAtaque potenciado\n" << endl;
 #endif // _DEBUG
 		empoweredAct_ = false;
 		objective_->receiveDamage((int)currStats_.meleeDmg_ * empoweredBonus_);
@@ -99,6 +103,9 @@ bool Player::update()
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
 	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective_->getState() != STATE::DYING)
 	{
+#ifdef _DEBUG
+		cout << "\nAtaque a melee\n" << endl;
+#endif // _DEBUG
 		objective_->receiveDamage(currStats_.meleeDmg_);
 		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
 		meleeTime_ = SDL_GetTicks();
@@ -110,16 +117,7 @@ bool Player::update()
 	}
 #pragma endregion
 
-	
 	return false;
-}
-
-void Player::initObject() {
-	GameManager::instance()->setPlayer(this);
-	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
-	eventHandler_ = HandleEvents::instance();
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
-	CollisionCtrl::instance()->setPlayer(this);
 }
 
 void Player::shoot(Vector2D dir)
@@ -222,8 +220,11 @@ void Player::desactivePotion(){
 
 void Player::createClon()
 {
-	clon_ = new Clon(app_, getVisPos(eventHandler_->getMousePos()), currStats_.ad_, currStats_.meleeRate_, currStats_.range_, liberation_, scale_);
-	app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
+	Vector2D pos;
+	pos.setX(eventHandler_->getRelativeMousePos().getX() - (scale_.getX() / 2));
+	pos.setY(eventHandler_->getRelativeMousePos().getY() - (scale_.getY() * 0.8));
+	clon_ = new Clon(app_, pos, scale_, this);
+	app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
 }
 
 Player::~Player()
@@ -231,6 +232,7 @@ Player::~Player()
 	//Temporal para no dejar basura
 	delete skillWhirl_;
 	delete skillClon_;
+	delete skillExplosion_;
 
 	delete equip_.armor_;
 	delete equip_.gloves_;

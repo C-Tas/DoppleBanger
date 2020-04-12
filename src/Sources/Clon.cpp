@@ -26,7 +26,6 @@ void Clon::initObject() {
 	spawnTime_ = SDL_GetTicks();
 	duration_ = DURATION_;
 	meleeRate_ = (player_->getStats().meleeRange_ / 2) * player_->getLiberation();
-	explotion_ = player_->getExplotion();
 	ad_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
 }
 

@@ -10,36 +10,11 @@ class Skill;
 class ClonSkill;
 class WhirlwindSkill;
 class ClonSelfDestructSkill;
+class EmpoweredSkill;
 
 struct playerEquipment
 {
-private:
-	bool attacking = false;
-	Enemy* objective_ = nullptr;
-	Clon* clon_ = nullptr;
-	HandleEvents* eventHandler_ = nullptr;
-	
-	///<summary>Número máximo de skills equipables</summary>
-	static const int MAX_SKILLS = 3;
-	array<Skill*, MAX_SKILLS> skillsEquiped_ = {nullptr, nullptr, nullptr};
-
-//<summary>Variables relativas a las habilidades</summary>
-#pragma region abilities
-	int liberation_ = 2;
-#pragma endregion
-
-//<summary>Variables de los cooldowns del jugador</summary>
-#pragma region cooldowns
-	double meleeTime_ = 0; //Momento del último ataque
-	double shotTime_ = 0; //Momento del �ltimo disparo
-#pragma endregion
-	//Prueba del torbellino
-	WhirlwindSkill* skillWhirl_;
-	ClonSkill* skillClon_;
-	ClonSelfDestructSkill* skillExplosion_;
-
-//Equipamiento del jugador
-
+	//Equipamiento del jugador
 	Armor* armor_ = nullptr;
 	Gloves* gloves_ = nullptr;
 	Boots* boots_ = nullptr;
@@ -48,8 +23,6 @@ private:
 	
 	usable* potion1_ = nullptr;
 	usable* potion2_ = nullptr;
-	
-
 };
 
 class Player : public Actor
@@ -58,7 +31,7 @@ public:
 	//Constructora de player
 	Player(Application* app, Vector2D pos, Vector2D scale) :
 		Actor(app, pos, scale) {
-		initObject();
+		init();
 	};
 	~Player();
 
@@ -74,17 +47,20 @@ public:
 	virtual void move(Point2D target);
 	void attack(Enemy* obj);
 	const int getLiberation() { return liberation_; };
-	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
 	const Vector2D getPreviousPos() { return previousPos_; }
 	virtual void die() { currState_ = STATE::DYING; }
 
 	//Aumenta la cadencia de tiro del player
-	void activeSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
+	void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
+	//Activa el ataque potenciado
+	void activateEmpowered() { empoweredAct_ = true; };
 	//metodos para coger la info del player
 	playerEquipment& const getInfoEquip() { return equip_; }
+	void usePotion(int value, potionType type);
 	void desactivePotion();
 	void init();
+
 	void equip(Armor* armor) { equip_.armor_ = armor; };
 	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
 	void equip(Boots* boots) { equip_.boots_ = boots; };
@@ -117,7 +93,6 @@ public:
 #pragma endregion
 
 private:
-	uint lastMeleeHit_ = 0;
 	bool attacking_ = false;
 	Actor* objective_ = nullptr;
 	Clon* clon_ = nullptr;
@@ -126,13 +101,16 @@ private:
 
 	array<Skill*, MAX_SKILLS> skillsEquiped_ = {nullptr, nullptr, nullptr};
 
+	//Prueba del torbellino
+	WhirlwindSkill* skillWhirl_;
+	ClonSkill* skillClon_;
+	ClonSelfDestructSkill* skillExplosion_;
+	EmpoweredSkill* skillEmpowered_;
+
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
 	int liberation_ = 2;	//Nivel de la habilidad del clon
 	const int RANGE_SPEED = 1000;	//Velocidad extra para el pistolero raudo (a falta de equilibrado)
-	bool explotion_ = false;	//Si tiene la habilidad desbloqueada
-	bool explotionAct_ = false;	//Si tiene la habilidad activada
-	bool empowered_ = true;		//Si tiene la habilidad desbloqueada
 	bool empoweredAct_ = false;		//Si tiene la habilidad activada
 	double empoweredBonus_ = 1.5;	//Bonus porcentual del daño
 #pragma endregion
@@ -172,11 +150,8 @@ private:
 	const double BULLET_VEL = 1000;							//Velocidad de la bala
 	const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
 #pragma endregion
-	virtual void initObject();
 
 	playerEquipment equip_;
 	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
-
-
 };

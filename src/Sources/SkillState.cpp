@@ -244,7 +244,7 @@ void SkillState::distancePointsActualized()
 		(*aux)->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC));
 		(*aux)->setUnlocked(true);
 		gm_->setSkillUnlocked((*aux)->getSkillId());
-		player_->activeSwiftGunslinger();
+		player_->activateSwiftGunslinger();
 	}
 	++aux;
 	if (points >= 100 && !(*aux)->isUnlocked()) {

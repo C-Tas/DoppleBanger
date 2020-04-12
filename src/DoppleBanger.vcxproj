@@ -29,7 +29,6 @@
     <ClCompile Include="Sources\Camera.cpp" />
     <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
-    <ClCompile Include="Sources\ClonSkill.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
     <ClCompile Include="Sources\CollisionCtrl.cpp" />
     <ClCompile Include="Sources\Collisions.cpp" />
@@ -85,7 +84,6 @@
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\usable.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
-    <ClCompile Include="Sources\VisualElement.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
     <ClCompile Include="Sources\WinState.cpp" />
     <ClCompile Include="Sources\Wolf.cpp" />
@@ -112,6 +110,7 @@
     <ClInclude Include="Sources\CreditsState.h" />
     <ClInclude Include="Sources\Draw.h" />
     <ClInclude Include="Sources\Dynamic.h" />
+    <ClInclude Include="Sources\EmpoweredSkill.h" />
     <ClInclude Include="Sources\EndState.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\EnemyPirate.h" />

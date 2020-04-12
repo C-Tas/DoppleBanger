@@ -145,9 +145,7 @@
     <ClCompile Include="Sources\Camera.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
-    <ClCompile Include="Sources\VisualElement.cpp" />
     <ClCompile Include="Sources\SkillButton.cpp" />
-    <ClCompile Include="Sources\ClonSkill.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Crab.cpp">
       <Filter>GameObjects\Enemies</Filter>
@@ -194,6 +192,7 @@
     <ClCompile Include="Sources\Kraken.cpp">
       <Filter>GameObjects\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -406,6 +405,8 @@
     <ClInclude Include="Sources\Kraken.h">
       <Filter>GameObjects\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\EmpoweredSkill.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">
