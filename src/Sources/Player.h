@@ -31,7 +31,7 @@ public:
 	//Constructora de player
 	Player(Application* app, Vector2D pos, Vector2D scale) :
 		Actor(app, pos, scale) {
-		init();
+		initObject();
 	};
 	~Player();
 
@@ -46,6 +46,7 @@ public:
 	//<summary>Establece la direccion del movimiento</summary>	
 	virtual void move(Point2D target);
 	void attack(Enemy* obj);
+	void shout();
 	const int getLiberation() { return liberation_; };
 	const Stats& getStats() { return currStats_; };
 	const Vector2D getPreviousPos() { return previousPos_; }
@@ -59,7 +60,6 @@ public:
 	playerEquipment& const getInfoEquip() { return equip_; }
 	void usePotion(int value, potionType type);
 	void desactivePotion();
-	void init();
 
 	void equip(Armor* armor) { equip_.armor_ = armor; };
 	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
@@ -154,4 +154,5 @@ private:
 	playerEquipment equip_;
 	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
+	void initObject();
 };

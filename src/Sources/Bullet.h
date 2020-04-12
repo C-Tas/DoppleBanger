@@ -11,11 +11,11 @@ public:
 		Dynamic(app, pos, scale), damage_(damage), lifeSpan_(lifeSpan), speed_(speed) {
 		texture_ = texture;
 		collisionArea_ = { (int)pos.getX(), (int)pos.getY(), (int)scale.getX(), (int)scale.getY() };
-		init(pos, dir);
+		initObject(pos, dir);
 	};
 	~Bullet() {};
 
-	void init(Vector2D pos, Vector2D dir);
+	void initObject(Vector2D pos, Vector2D dir);
 	bool update();
 	void onCollider() { 
 		if (!deleting) {

@@ -38,7 +38,7 @@ private:
 	//Lista de enemigos que están atacando al clon
 	list<Enemy*> agredEnemys_;
 
-	void init(int ad, int meleeRate, int lib) {
+	void initObject(int ad, int meleeRate, int lib) {
 		spawnTime_ = SDL_GetTicks();
 		duration_ = DURATION_;
 		ad_ = (ad / 2) * lib;

@@ -13,7 +13,7 @@
 #include "Collisions.h"
 #include "EmpoweredSkill.h"
 
-void Player::init()
+void Player::initObject()
 {
 	GameManager::instance()->setPlayer(this);
 	CollisionCtrl::instance()->setPlayer(this);
@@ -48,6 +48,8 @@ bool Player::update()
 
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_R))
 		skillEmpowered_->action();
+
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE) && !app_->getMute()) shout();
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
@@ -233,6 +235,7 @@ Player::~Player()
 	delete skillWhirl_;
 	delete skillClon_;
 	delete skillExplosion_;
+	delete skillEmpowered_;
 
 	delete equip_.armor_;
 	delete equip_.gloves_;
@@ -241,4 +244,9 @@ Player::~Player()
 	delete equip_.gun_;
 	delete equip_.potion1_;
 	delete equip_.potion2_;
+}
+
+void Player::shout()
+{
+	app_->getAudioManager()->playChannel(Resources::Shout, 0, 1);
 }

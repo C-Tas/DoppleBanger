@@ -2,7 +2,7 @@
 #include "Enemy.h"
 #include "PlayState.h"
 
-void Bullet::init(Vector2D pos, Vector2D dir)
+void Bullet::initObject(Vector2D pos, Vector2D dir)
 {
 	initTime_ = SDL_GetTicks();
 

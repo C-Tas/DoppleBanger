@@ -14,7 +14,7 @@ FontManager::~FontManager() {
 	TTF_Quit();
 }
 
-bool FontManager::init() {
+bool FontManager::initObject() {
 	if (initialized_)
 		return false;
 

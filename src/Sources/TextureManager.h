@@ -11,7 +11,7 @@ public:
 	virtual ~TextureManager();
 
 	// supposed to be called before start using the object
-	bool init();
+	bool initObject();
 
 	Texture* getTexture(std::size_t tag){ return textures_[tag]; }
 

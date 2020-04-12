@@ -17,7 +17,7 @@ TextureManager::~TextureManager() {
 	IMG_Quit();
 }
 
-bool TextureManager::init() {
+bool TextureManager::initObject() {
 	if (initialized_)
 		return false;
 

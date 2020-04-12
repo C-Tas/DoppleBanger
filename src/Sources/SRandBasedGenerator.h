@@ -6,7 +6,7 @@ public:
 	SRandBasedGenerator();
 	SRandBasedGenerator(unsigned seed);
 	virtual ~SRandBasedGenerator();
-	void init();
+	void initObject();
 	int nextInt();
 	int nextInt(int low, int high);
 

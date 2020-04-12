@@ -69,15 +69,15 @@ void Application::updateDelta()
 void Application::initResources() {
 	//Crear e inicializar textureManager
 	textureManager_ = new TextureManager();
-	textureManager_->init();
+	textureManager_->initObject();
 
 	//Crear e inicializar fontManager
 	fontManager_ = new FontManager();
-	fontManager_->init();
+	fontManager_->initObject();
 
 	//Crear e inicializar audioManager
 	audioManager_ = new AudioManager();
-	audioManager_->init();
+	audioManager_->initObject();
 
 	//Generador de randoms
 	random_ = new SRandBasedGenerator();

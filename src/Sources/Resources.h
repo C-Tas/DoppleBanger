@@ -139,7 +139,8 @@ public:
 		//Efectos para el lobo
 		WolfHowl,
 		WolfAttack,
-		WolfDie
+		WolfDie,
+		Shout //TODO: Añadir a resources el sonido del grito.
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

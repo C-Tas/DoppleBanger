@@ -22,7 +22,7 @@ AudioManager::~AudioManager() {
 	Mix_Quit();
 }
 
-bool AudioManager::init() {
+bool AudioManager::initObject() {
 	if (initialized_)
 		return false;
 

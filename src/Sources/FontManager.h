@@ -13,7 +13,7 @@ public:
 	FontManager() {};
 	virtual ~FontManager();
 
-	bool init();
+	bool initObject();
 
 	///<summary>Devuelve la fuente correspondiente al tag (Resources::FontId::NameTag)</summary>
 	Font* getFont(size_t tag) { return fonts_[tag]; };

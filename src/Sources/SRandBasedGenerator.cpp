@@ -13,13 +13,13 @@ SRandBasedGenerator::SRandBasedGenerator() :
 
 SRandBasedGenerator::SRandBasedGenerator(unsigned seed) :
 		seed_(seed) {
-	init();
+	initObject();
 }
 
 SRandBasedGenerator::~SRandBasedGenerator() {
 }
 
-void SRandBasedGenerator::init() {
+void SRandBasedGenerator::initObject() {
 	srand(seed_);
 }
 

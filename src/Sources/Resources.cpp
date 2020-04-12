@@ -108,7 +108,8 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	{ Agro ,"../Sources/assets/efectos_sonido/agro.mp3" },
 	{ WolfHowl ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
 	{ WolfAttack ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
-	{ WolfDie ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" }
+	{ WolfDie ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" },
+	{Shout, "../Sources/assets/efectos_sonido/temparr.wav"}
 
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 };

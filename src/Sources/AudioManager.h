@@ -11,7 +11,7 @@ public:
 	~AudioManager();
 
 	//<summary>Inicializa la música y los canales, si no puede devuelve 'false'</summary>
-	bool init();
+	bool initObject();
 
 	//Efectos de sonido
 	//<summary>Carga un sonido</summary>
