@@ -23,6 +23,9 @@ void CaribbeanIslandState::update()
 
 void CaribbeanIslandState::initState()
 {
+	//Borramos la lista de objetos del CollisionCtrl
+	collisionCtrl_->clearList();
+
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
 	addRenderUpdateLists(background_);
 

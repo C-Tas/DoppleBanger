@@ -16,9 +16,6 @@
 //Callback para cambiar de GameState e ir a la isla actual
 void ShipState::goIsland(Application* app)
 {
-	//Borramos la lista de objetos del barco del CollisionCtrl
-	CollisionCtrl::instance()->clearList();
-
 	//Viajamos a la isla correspondiente
 	GameManager* gm = GameManager::instance();
 	Island currIsland = gm->getCurrIsland();
@@ -45,6 +42,9 @@ void ShipState::goSaveState(Application* app)
 
 void ShipState::initState()
 {
+	//Borramos la lista de objetos del barco del CollisionCtrl
+	collisionCtrl_->clearList();
+
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Ship));
 	addRenderUpdateLists(background_);
 
