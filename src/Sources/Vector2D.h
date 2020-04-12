@@ -46,6 +46,8 @@ public:
 	inline double angle()const { return atan(y_ / x_); }				// Ángulo entre Vector2D y (0,0)
 	double angle(const Vector2D& v) const;								// Ángulo entre dos vectores
 	Vector2D rotate(double degrees) const;								// Rotación del vector x grados
+	//Dado dos vectores2D devuelve el más cercano
+	Vector2D getClosest(Vector2D& a,Vector2D& b);
 #pragma endregion
 };
 

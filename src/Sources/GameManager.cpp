@@ -1,8 +1,8 @@
 #include "GameManager.h"
 unique_ptr<GameManager> GameManager::instance_;
 
-void GameManager::initGameManager(int currGold, Island currIsland, int achievementPoints) {
+void GameManager::initGameManager(int currGold, Island unlockedIslands, int achievementPoints) {
 	currGold_ = currGold;
-	currIsland_ = currIsland;
+	unlockedIslands_ = unlockedIslands;
 	achievementPoints_ = achievementPoints;
 }

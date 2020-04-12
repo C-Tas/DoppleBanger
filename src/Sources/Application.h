@@ -19,7 +19,10 @@ private:
 	///<summary>Máquina de estados</summary>
 	GameStateMachine* machine_ = nullptr;
 
-	///<summary>Generador de randoms</summary>
+	///<summary> Generador de randoms</summary>
+	SRandBasedGenerator* random_ = nullptr;
+
+	///<summary>Generador de objetos aleatorios</summary>
 	RandEquipGen* equipGen_ = nullptr;
 
 	///<summary>Manager que gestiona las texturas </summary>
@@ -31,12 +34,11 @@ private:
 	//Manager que gestiona los música y sonidos
 	AudioManager* audioManager_ = nullptr;
 
+	///<summary>Manager que gestiona el inventario, las skills y las islas desbloqueadas</summary>
+	GameManager* gameManager_ = nullptr;
+
 	///<summary>Variables que controla el fin del bucle principal de app</summary>
 	bool appClosed_ = false;
-
-	///<summary>Constantes con las dimensiones de la ventana </summary>
-	static const int winWidth_ = 1600;
-	static const int winHeight_ = 900;
 
 	///<summary>Metodo que inicializa SDL</summary>
 	void initSDL();
@@ -53,22 +55,30 @@ private:
 	///<summary>Tiempo que ha pasado entre el frame actual y el anterior </summary>
 	double deltaTime_;
 	void updateDelta();
+	bool mute_ = false;
 
 public:
 	///<summary>Construtora de la app</summary>
 	Application(GameStateMachine* state=nullptr);
 	virtual ~Application(); 
 
+	///<summary>Constantes con las dimensiones de la ventana </summary>
+	static const int winWidth_ = 1600;
+	static const int winHeight_ = 900;
+
 	///<summary>Bucle principal de la aplicacion</summary>
 	void runApp();
 #pragma region Setters
 	///<summary>Metodo que termina el bucle principal de la app</summary>
 	void endGame() { appClosed_ = true; };
+
+	///<summary>Cambia el valor de mute</summary>
+	void setMute() { mute_ = !mute_; }
 #pragma endregion
 
 #pragma region Getters
 	///<summary>Devuelve maquina de estados</summary>
-	GameStateMachine* getStateMachine() { return machine_; };
+	GameStateMachine* getGameStateMachine() { return machine_; };
 	///<summary>Devuelve el estado actual</summary>
 	GameState* getCurrState() { return machine_->getState(); };
 	///<summary>Devuelve si se esta procesando el bucle principal de la  </summary>
@@ -83,15 +93,28 @@ public:
 	SDL_Renderer* getRenderer() { return renderer_; };
 	///<summary>Devuelve el tiempo que ha pasado entre el frame actual y el anterior </summary>
 	double getDeltaTime() { return deltaTime_; }
+
+
 	///<summary>Devuelve el texture manager</summary>
 	TextureManager* getTextureManager() { return textureManager_; };
 	///<summary>Devuelve el font manager</summary>
 	FontManager* getFontManager() { return fontManager_; };
-	///<summary>Devuelve el audioManager</summary>
+	//Devuelve el audioManager
 	AudioManager* getAudioManager() { return audioManager_; };
-	///<summary>Devuelve equipGen_</summary>
+	///<summary>Devuelve el generador de equipamiento aleatorio </summary>
+	Equipment* genEquip() { return equipGen_->genEquip(); };
+	///<summary>Devuelve un objeto del tipo type generado aleatoriamente</summary>
+	Equipment* genEquip(equipType type) { return equipGen_->genEquip(type); };
+	//Devuelve equipGen_
 	RandEquipGen* getEquipGen() { return equipGen_; }
-#pragma endregion
 
-	
+	///<summary>Devuelve el random_</summary>
+	SRandBasedGenerator* getRandom() { return random_; }
+	///<summary>Devuelve el mute</summary>
+	bool getMute() { return mute_; }
+
+	///<summary>Devuelve el GameManager</summary>
+	GameManager* getGameManager() { return gameManager_; }
+
+#pragma endregion
 };

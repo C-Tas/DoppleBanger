@@ -3,7 +3,7 @@
 
 void Equipment::writeStats()
 {
-	switch (type_)
+	/*switch (type_)
 	{
 	case Armor:
 		std::cout << "Armor\n";
@@ -22,12 +22,12 @@ void Equipment::writeStats()
 		break;
 	}
 
-	std::cout << modifiers_.ad_ << "\n";
-	std::cout << modifiers_.ap_ << "\n";
+	std::cout << modifiers_.meleeDmg_ << "\n";
+	std::cout << modifiers_.distDmg_ << "\n";
 	std::cout << modifiers_.health_ << "\n";
 	std::cout << modifiers_.armor_ << "\n";
 	std::cout << modifiers_.moveSpeed_ << "\n";
 	std::cout << modifiers_.crit_ << "\n";
 	std::cout << modifiers_.meleeRate_ << "\n";
-	std::cout << modifiers_.distRate_ << "\n";
+	std::cout << modifiers_.distRate_ << "\n";*/
 }

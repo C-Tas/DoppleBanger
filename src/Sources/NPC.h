@@ -5,9 +5,20 @@
 class NPC : public Collider {
 private:
 	TextBox txtBox;
+
+	const int NUM_FRAMES = 0;	//0 temporal
+
+protected:
+	virtual void initObject();
+	virtual void initAnim();
+
 public:
 	NPC(Application* app, SDL_Rect collisionArea, Texture* texture, Point2D pos, Vector2D scale) :
-		Collider(app, collisionArea, texture, pos, scale), txtBox(TextBox(app)) {};
+		Collider(app, pos, scale), txtBox(TextBox(app)) {
+		collisionArea_ = collisionArea;
+		texture_ = texture;
+		initObject();
+	};
 	virtual ~NPC() {};
 
 	///<summary>Devuelve la caja de texto, hay que llamar al diálogo que se quiera</summary>

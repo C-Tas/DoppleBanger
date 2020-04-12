@@ -1,6 +1,9 @@
 #include "Enemy.h"
 #include "PlayState.h"
 
-void Enemy::die() {
-	static_cast<PlayState*>(app_->getStateMachine()->getState())->removeEnemy(this);
+void Enemy::die()
+{
+	Actor::die();
+	CollisionCtrl::instance()->removeEnemy(this);
+	static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 }

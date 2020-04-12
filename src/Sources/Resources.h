@@ -12,36 +12,133 @@ public:
 	///<summary>Enum para las distintas imagenes del juego</summary>
 	enum TextureId : int {
 		//Botones
-		Timon,
-		BotonMenu,
-		//Botones
+		MenuButton,
 		GoControls,
 		BackButton,
+		SkipButton,
+		MuteOff,
+		MuteOn,
+		RestartGame,
+		RightArrow,
+		LeftArrow,
+		EquippedButton,
+		DeleteButton,
+		ForwardArrow,
+		BackwardsArrow,
+		TrashButton,
+		ChangeButton,
+		MoneyButton,
+		SkillText,
+		ButtonX,
+		ButtonUpgradeGreen,
+		ButtonUpgradeRed,
+		ButtonUpgradeBlue,
+		ButtonUpgradeYellow,
+		GoToInventoryAButton,
+		GoToInventoryBButton,
+
+		//BarrasPuntosHazaña
 		Controls,
+		GreenBar,
+		BlueBar,
+		YellowBar,
+		RedBar,
+		EmptyBar,
+		EquippedSkill,
+
+		//SkillsIcons
+		SkillExplosionC,
+		SkillExplosionBN,
+		SkillGolpeFuerteC,
+		SkillGolpeFuerteBN,
+		SkillInvencibleC,
+		SkillInvencibleBN,
+		SkillLiberationC,
+		SkillLiberationBN,
+		SkillPerforanteC,
+		SkillPerforanteBN,
+		SkillRaudoC,
+		SkillRaudoBN,
+		SkillReboteC,
+		SkillReboteBN,
+		SkillTorbellinoC,
+		SkillTorbellinoBN,
 
 		//Fondos
+		MenuBackground,
 		InventaryMenu,
+		PauseBackground,
+		StashMenu,//
+		SkillMenu,
 		Scene1,
 		Scene2,
 		Scene3,
 		TextBox,
-		MenuFondo,
+		Ship,
+		Table,
+		Map1,
+		Map2,
+		Map3,
+		CaribbeanMap,
+		Spooky,
+		Volcanic,
+		GameOver,
+		Win,
 
 		//Personajes
 		Dragon,
-		Roca,
-        
+        PlayerFront,
+		MonkeyFront,
+		WolfFront,
+
+		//gizmos
+		Rojo,
+		Azul,
+
+		//Animaciones
+		CrabAttack,
+
+		//Interactuables
+		Wheel,
+		Stash,
+		ShipDoor,
+		ExitShip,
+
+		//Colsionable
+		Rock,
+
 		//Textos
 		PlayText,
 		ExitText,
 		ControlsText,
 		LoadText,
-		CreditsText
+		CreditsText, 
+		ResumeText,
+		MainMenuText,
+		StashMoneyText,
+		InventoryMoneyText,
+
+		//proyectiles
+		Coco,
+
+		//Equipables
+		Gun1,
+		Gloves1,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
 	enum AudioId : int{
-		MainTheme
+		//Música
+		MainTheme,
+		ShipSingers,
+
+		//Efectos de sonido
+		Agro,
+
+		//Efectos para el lobo
+		WolfHowl,
+		WolfAttack,
+		WolfDie
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
@@ -96,5 +193,5 @@ public:
 	static vector<FontInfo> fontsRoutes;
 
 	//Vector con los textos
-	static vector<TextMsgInfo> messages_; // initialized in .cpp
+	static vector<TextMsgInfo> messages; // initialized in .cpp
 };
