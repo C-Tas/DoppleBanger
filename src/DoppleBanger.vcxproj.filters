@@ -147,6 +147,7 @@
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\VisualElement.cpp" />
     <ClCompile Include="Sources\SkillButton.cpp" />
+    <ClCompile Include="Sources\ClonSkill.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Crab.cpp">
       <Filter>GameObjects\Enemies</Filter>
@@ -356,6 +357,9 @@
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\VisualElement.h" />
     <ClInclude Include="Sources\SkillButton.h" />
+    <ClInclude Include="Sources\WhirlwindSkill.h" />
+    <ClInclude Include="Sources\ClonSkill.h" />
+    <ClInclude Include="Sources\ClonSelfDestructSkill.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Crab.h">
       <Filter>GameObjects\Enemies</Filter>

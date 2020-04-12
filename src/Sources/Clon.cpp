@@ -15,7 +15,6 @@ bool Clon::update()
 			meleeTime_ = SDL_GetTicks();
 		}
 	}
-	else if (explotion_) explode();
 	else die();
 
 	return false;

@@ -7,6 +7,7 @@
 #include "PauseState.h"
 #include "SkillState.h"
 #include "Inventory.h"
+#include "Collisions.h"
 
 
 void PlayState::update() {

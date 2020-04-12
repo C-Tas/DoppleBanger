@@ -407,34 +407,34 @@ Skill* SkillState::createSkill(SkillNames name)
 		skill = nullptr;
 		break;
 	case SkillNames::GolpeFuerte:
-		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	case SkillNames::Invencible:
-		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	case SkillNames::Torbellino:
-		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	case SkillNames::DisparoPerforante:
-		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	case SkillNames::Raudo:
-		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	case SkillNames::Rebote:
-		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	case SkillNames::Clon:
-		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	case SkillNames::LiberacionI:
-		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	case SkillNames::Explosion:
-		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	case SkillNames::LiberacionII:
-		skill = new Skill(SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	default:
 		skill = nullptr;

@@ -7,10 +7,39 @@
 #include <array>
 
 class Skill;
+class ClonSkill;
+class WhirlwindSkill;
+class ClonSelfDestructSkill;
 
 struct playerEquipment
 {
-	//Equipamiento del jugador
+private:
+	bool attacking = false;
+	Enemy* objective_ = nullptr;
+	Clon* clon_ = nullptr;
+	HandleEvents* eventHandler_ = nullptr;
+	
+	///<summary>Número máximo de skills equipables</summary>
+	static const int MAX_SKILLS = 3;
+	array<Skill*, MAX_SKILLS> skillsEquiped_ = {nullptr, nullptr, nullptr};
+
+//<summary>Variables relativas a las habilidades</summary>
+#pragma region abilities
+	int liberation_ = 2;
+#pragma endregion
+
+//<summary>Variables de los cooldowns del jugador</summary>
+#pragma region cooldowns
+	double meleeTime_ = 0; //Momento del último ataque
+	double shotTime_ = 0; //Momento del �ltimo disparo
+#pragma endregion
+	//Prueba del torbellino
+	WhirlwindSkill* skillWhirl_;
+	ClonSkill* skillClon_;
+	ClonSelfDestructSkill* skillExplosion_;
+
+//Equipamiento del jugador
+
 	Armor* armor_ = nullptr;
 	Gloves* gloves_ = nullptr;
 	Boots* boots_ = nullptr;
@@ -64,9 +93,20 @@ public:
 	void equipPotion1(usable* pot) { equip_.potion1_ = pot; }
 	void equipPotion2(usable* pot) { equip_.potion2_ = pot; }
 
-	//metodos para usar las pociones
-	void usePotion(int value, potionType type);
-	//metodos para guardar el puntero al equipamiento
+	//Crea un clon. A este método lo llama solo la skill "ClonSkill"
+	void createClon();
+	//Mata al clon
+	bool killClon() {
+		if (clon_ != nullptr) {
+			clon_->die();
+			return true;
+		}
+		else return false;
+	};
+	//Devuelve la posición del clon
+	Vector2D getClonPos() { return clon_->getPos(); };
+	//Devuelve la escala del clon
+	Vector2D getClonScale() { return clon_->getScale(); };
 
 #pragma region SkillsEquipped
 	///<summary>Número máximo de skills equipables</summary>

@@ -29,6 +29,7 @@
     <ClCompile Include="Sources\Camera.cpp" />
     <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
+    <ClCompile Include="Sources\ClonSkill.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
     <ClCompile Include="Sources\CollisionCtrl.cpp" />
     <ClCompile Include="Sources\Collisions.cpp" />
@@ -101,6 +102,8 @@
     <ClInclude Include="Sources\CaribbeanIslandState.h" />
     <ClInclude Include="Sources\checkML.h" />
     <ClInclude Include="Sources\Clon.h" />
+    <ClInclude Include="Sources\ClonSelfDestructSkill.h" />
+    <ClInclude Include="Sources\ClonSkill.h" />
     <ClInclude Include="Sources\Collider.h" />
     <ClInclude Include="Sources\CollisionCtrl.h" />
     <ClInclude Include="Sources\Collisions.h" />
@@ -162,6 +165,7 @@
     <ClInclude Include="Sources\VolcanicIslandState.h" />
     <ClInclude Include="Sources\WinState.h" />
     <ClInclude Include="Sources\Wolf.h" />
+    <ClInclude Include="Sources\WhirlwindSkill.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

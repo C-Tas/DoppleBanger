@@ -197,3 +197,16 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 		}
 	}
 }
+
+list<Enemy*> CollisionCtrl::getEnemiesInArea(Point2D center, int radius)
+{
+	list<Enemy*> enemiesWithin;
+	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
+	{
+		SDL_Rect coll = (*it)->getCollider();
+		if (RectBall(coll.x + coll.w / 2, coll.y + coll.h / 2, coll.w, coll.h, center.getX(), center.getY(), radius)) {
+			enemiesWithin.push_back((*it));
+		}
+	}
+	return enemiesWithin;
+}

@@ -5,15 +5,21 @@
 #include "GameState.h"
 #include "Bullet.h"
 #include "GameState.h"
+#include "WhirlwindSkill.h"
+#include "ClonSkill.h"
+#include "ClonSelfDestructSkill.h"
 #include "GameManager.h"
 #include "CollisionCtrl.h"
 #include "Collisions.h"
-#include "Skill.h"
 
 void Player::init()
 {
 	eventHandler_ = HandleEvents::instance();
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+
+	skillWhirl_ = new WhirlwindSkill(this);
+	skillClon_ = new ClonSkill(this);
+	skillExplosion_ = new ClonSelfDestructSkill(this);
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
@@ -26,26 +32,17 @@ void Player::init()
 
 bool Player::update()
 {
-#pragma region Player Inputs
-	//Si se pulsa la Q y se ha acabado el cooldown y se está a rango
-	//Hago un if dentro de otro if ya que como el de dentro tiene que hacer cálculos, estos solo se hagan
-	//cuando ya se han cumplido previamente las dos condiciones anteriores.
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && ((SDL_GetTicks() - clonTime_) / 1000) > clonCooldown_)
-	{
-		Vector2D dist = Vector2D(eventHandler_->getRelativeMousePos().getX() - pos_.getX(), eventHandler_->getRelativeMousePos().getY() - pos_.getY());
-		if (dist.magnitude() <= CLON_SPAWN_RANGE)
-		{
-			clon_ = new Clon(app_, getVisPos(eventHandler_->getRelativeMousePos()), scale_, this);
-			app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
-			clonTime_ = SDL_GetTicks();
-		}
-	}
-	//Si se pulsa la tecla adecuada y el golpe potenciado no está en coodown
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_W))
+		skillWhirl_->action();
+
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q))
+		skillClon_->action();
+
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_E))
+		skillExplosion_->action();
+
 	if (empowered_ && eventHandler_->isKeyDown(SDL_SCANCODE_W) && ((SDL_GetTicks() - empoweredTime_) / 1000) > empoweredCooldown_)
 	{
-#ifdef _DEBUG
-		cout << "Ataque potenciado se activa" << endl;
-#endif // _DEBUG
 		empoweredAct_ = true;
 	}
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
@@ -222,8 +219,19 @@ void Player::desactivePotion(){
 		}
 	}
 }
+
+void Player::createClon()
+{
+	clon_ = new Clon(app_, getVisPos(eventHandler_->getMousePos()), currStats_.ad_, currStats_.meleeRate_, currStats_.range_, liberation_, scale_);
+	app_->getStateMachine()->getState()->addRenderUpdateLists(clon_);
+}
+
 Player::~Player()
 {
+	//Temporal para no dejar basura
+	delete skillWhirl_;
+	delete skillClon_;
+
 	delete equip_.armor_;
 	delete equip_.gloves_;
 	delete equip_.boots_;

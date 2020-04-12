@@ -20,7 +20,7 @@ public:
 	void onCollider() {};
 
 	void changeDuration(double dur) { duration_ = dur; } //En caso de que se pueda modificar la duraci�n
-	void explode() { die(); }; //Crea una explosi�n y mata al clon (lo deletea)
+	void die();
 	//Agrega un enemigo que está agred
 	inline void addAgredEnemy(Enemy* enemy) { agredEnemys_.push_back(enemy); }
 
@@ -29,7 +29,6 @@ private:
 	int cost_ = 100;
 	int range_ = 0;
 	int meleeRate_ = 0;
-	bool explotion_ = false; //�Se tiene la habilidad?
 	double spawnTime_ = 0; //Ticks cuando se le hizo spawn
 	double meleeTime_ = 0; //Ticks cuando se atac� por �ltima vez
 	double duration_ = 0; //Duraci�n del clon

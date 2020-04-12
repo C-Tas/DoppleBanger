@@ -10,19 +10,19 @@ void StoryState::draw() const {
 	//Dibujamos en toda la pantalla, tomando como origen el (0,0)
 	scenes.top().sceneTexture->render({ 0,0,app_->getWindowWidth(), app_->getWindowHeight() });
 
-	GameState::draw(); //Después, dibujamos encima los botones
+	GameState::draw(); //Despuï¿½s, dibujamos encima los botones
 }
 
 void StoryState::update() {
 
 	bool stateChanged = false; //Booleano para comprobar si ya se ha cambiado de estado
 
-	//Comprobamos si la duración de la escena ya se ha completado
+	//Comprobamos si la duraciï¿½n de la escena ya se ha completado
 	if (SDL_GetTicks() - timeSinceUpdate > scenes.top().duration) {
 		timeSinceUpdate = SDL_GetTicks();
 		//Pasamos a la siguiente
 		scenes.pop();
-		//Si ya no hay más escenas, pasamos al juego
+		//Si ya no hay mï¿½s escenas, pasamos al juego
 		if (scenes.empty()) {
 			goToGame(app_); //Go to PlayState
 			stateChanged = true;
@@ -30,7 +30,7 @@ void StoryState::update() {
 	}
 
 	//Si ya se ha acabado la secuencia de escenas, no se procesa el estado de los objetos del juego
-	//(pq estaría en PlayState ya)
+	//(pq estarï¿½a en PlayState ya)
 	if(!stateChanged)GameState::update();
 	
 }
@@ -44,7 +44,7 @@ void StoryState::initState() {
 	scenes.push({ 3000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene2) });
 	scenes.push({ 2000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene1) });
 
-	//Botón para saltarse la secuencia de escenas
+	//Botï¿½n para saltarse la secuencia de escenas
 	createButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkipButton), { 10,10 }, { 50,50 }, goToGame);
 }
 
