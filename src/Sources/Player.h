@@ -7,10 +7,6 @@
 #include <array>
 
 class Skill;
-class ClonSkill;
-class WhirlwindSkill;
-class ClonSelfDestructSkill;
-class EmpoweredSkill;
 
 struct playerEquipment
 {
@@ -32,8 +28,7 @@ public:
 	Player(Application* app, Vector2D pos, Vector2D scale) : Actor(app, pos, scale) { initObject(); };
 	~Player();
 	///<summary>Constructor por copia</summary>
-	Player(const Player& other) : Actor(other.app_, other.pos_, other.scale_), r_(other.r_), 
-		w_(other.w_), e_(other.e_), q_(other.q_) {
+	Player(const Player& other) : Actor(other.app_, other.pos_, other.scale_), skills_(other.skills_) {
 		eventHandler_ = HandleEvents::instance();
 	};
 
@@ -108,6 +103,10 @@ public:
 	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquipped_; }
 #pragma endregion
 
+	void setPerforate(bool perforate) { perforate_ = perforate; };
+	//Activa la perforación
+	//Activa el rebote y el momento en el que se usa
+	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
 private:
 	bool attacking_ = false;
 	int money_ = 0;
@@ -120,11 +119,7 @@ private:
 	array<Skill*, MAX_SKILLS> skillsEquipped_ = {nullptr, nullptr, nullptr};
 
 	//Habilidades
-	Skill* q_ = nullptr;
-	Skill* w_ = nullptr;
-	Skill* e_ = nullptr;
-	Skill* r_ = nullptr;
-	vector<Skill*> skills;
+	vector<Skill*> skills_;
 	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
@@ -132,6 +127,10 @@ private:
 	const int RANGE_SPEED = 1000;	//Velocidad extra para el pistolero raudo (a falta de equilibrado)
 	bool empoweredAct_ = false;		//Si tiene la habilidad activada
 	double empoweredBonus_ = 1.5;	//Bonus porcentual del daño
+	bool perforate_ = false;	//Para saber si el siguiente disparo perfora
+	bool ricochet_ = false;		//Para saber si los disparos van a rebotar
+	const int TIME_RICO = 4;	//En segundos
+	int lastTimeRico_ = 0;		//Momento en el que se usa rebote
 #pragma endregion
 
 //<summary>Variables de los cooldowns del jugador</summary>
@@ -160,11 +159,6 @@ private:
 	const double DIST_RATE = 1;		//Velocidad del ataque a distancia en segundos
 
 	const double CLON_SPAWN_RANGE = 200;
-#pragma endregion
-#pragma region Balas
-	const uint W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
-	const double BULLET_VEL = 1000;							//Velocidad de la bala
-	const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
 #pragma endregion
 
 	playerEquipment equip_;

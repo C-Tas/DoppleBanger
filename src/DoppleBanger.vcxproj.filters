@@ -62,9 +62,6 @@
     <ClCompile Include="Sources\NPC.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Clon.cpp">
-      <Filter>GameObjects\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\Player.cpp">
       <Filter>GameObjects\Player</Filter>
     </ClCompile>
@@ -192,6 +189,13 @@
     <ClCompile Include="SDL2_gfx\SDL2_rotozoom.cpp">
       <Filter>GameObjects\SDL_gfx</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\SkillState.cpp" />
+    <ClCompile Include="Sources\PerforateSkill.cpp">
+      <Filter>GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\RicochetSkill.cpp">
+      <Filter>GameObjects\Player</Filter>
+    </ClCompile>
     <ClCompile Include="SDL2_gfx\SDL2_imageFilter.cpp">
       <Filter>GameObjects\SDL_gfx</Filter>
     </ClCompile>
@@ -223,7 +227,14 @@
       <Filter>GameObjects\Player</Filter>
     </ClCompile>
     <ClCompile Include="Sources\TextBox.cpp" />
-    <ClCompile Include="Sources\Skill.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\Skill.cpp">
+      <Filter>GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Clon.cpp">
+      <Filter>GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\PlayerBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -289,9 +300,6 @@
     <ClInclude Include="Sources\NPC.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Clon.h">
-      <Filter>GameObjects\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\Player.h">
       <Filter>GameObjects\Player</Filter>
     </ClInclude>
@@ -347,9 +355,6 @@
       <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Stats.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Skill.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Obstacle.h">
@@ -432,6 +437,13 @@
     <ClInclude Include="Sources\HUD.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\SkillState.h" />
+    <ClInclude Include="Sources\PerforateSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\RicochetSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
     <ClInclude Include="Sources\Trigger.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
@@ -466,6 +478,14 @@
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\Skill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Clon.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\PlayerBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

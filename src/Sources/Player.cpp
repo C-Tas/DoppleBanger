@@ -1,17 +1,20 @@
 #include "Player.h"
-#include "Resources.h"
 #include "SDL_macros.h"
-#include "TextBox.h"
-#include "GameState.h"
-#include "Bullet.h"
-#include "GameState.h"
-#include "WhirlwindSkill.h"
-#include "ClonSkill.h"
-#include "ClonSelfDestructSkill.h"
 #include "GameManager.h"
 #include "CollisionCtrl.h"
 #include "Collisions.h"
+#include "GameState.h"
+#include "Resources.h"
+#include "TextBox.h"
+#include "PlayerBullet.h"
+
+//Habilidades
+#include "ClonSkill.h"
+#include "WhirlwindSkill.h"
+#include "ClonSelfDestructSkill.h"
 #include "EmpoweredSkill.h"
+#include "RicochetSkill.h"
+#include "PerforateSkill.h"
 
 void Player::initObject()
 {
@@ -22,10 +25,11 @@ void Player::initObject()
 	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 
-	q_ = new WhirlwindSkill(this); skills.push_back(q_);
-	w_ = new EmpoweredSkill(this); skills.push_back(w_);
-	e_ = new ClonSelfDestructSkill(this); skills.push_back(e_);
-	r_ = new ClonSkill(this); skills.push_back(r_);
+	//Inicialización de skills
+	skills_.push_back(new WhirlwindSkill(this));
+	skills_.push_back(new EmpoweredSkill(this));
+	skills_.push_back(new ClonSelfDestructSkill(this));
+	skills_.push_back(new ClonSkill(this));
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
@@ -40,31 +44,51 @@ bool Player::update()
 {
 	//Resetea el coolDown en el HUD
 	for (int i = 0; i < 4; i++) {
-		if (skills[i] != nullptr && cdSkills[i] && !skills[i]->isCD()) {
+		if (skills_[i] != nullptr && cdSkills[i] && !skills_[i]->isCD()) {
 			cdSkills[i] = false;
 			GameManager::instance()->setSkillCooldown(false, (SkillKey)i);
 		}
 	}
-
+	//Cuando se acabe el tiempo de ricochet, se pone a false
+	if (ricochet_ && (SDL_GetTicks() - lastTimeRico_) / 1000 > TIME_RICO) {
+		cout << "Fin rebote" << endl;
+		ricochet_ = false;
+	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q)) {
-		q_->action();
+		skills_[0]->action();
 		GameManager::instance()->setSkillCooldown(true, SkillKey::Q);
 		cdSkills[0] = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_W)) {
-		w_->action();
+		skills_[1]->action();
 		GameManager::instance()->setSkillCooldown(true, SkillKey::W);
 		cdSkills[1] = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_E)) {
-		e_->action();
+		skills_[2]->action();
 		GameManager::instance()->setSkillCooldown(true, SkillKey::E);
 		cdSkills[2] = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_R)) {
-		r_->action();
+		skills_[3]->action();
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE) && !app_->getMute()) shout();
+
+	//Para testeo
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_8)) {
+		if (skills_[0] != nullptr) delete skills_[0];
+		skills_[0] = new RicochetSkill(this);
+		cdSkills[0] = false;
+		gm_->setSkillEquiped(SkillName::Rebote, SkillKey::Q);
+		GameManager::instance()->setSkillCooldown(false, SkillKey::Q);
+	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_9)) {
+		if (skills_[1] != nullptr) delete skills_[1];
+		skills_[1] = new PerforateSkill(this);
+		cdSkills[1] = false;
+		gm_->setSkillEquiped(SkillName::DisparoPerforante, SkillKey::W);
+		GameManager::instance()->setSkillCooldown(false, SkillKey::W);
+	}
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
@@ -146,8 +170,18 @@ void Player::shoot(Vector2D dir)
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 	shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir, currStats_.distDmg_,
-		BULLET_LIFE, BULLET_VEL, Vector2D(W_H_BULLET, W_H_BULLET));
+	PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Rock),
+		shootPos, dir, currStats_.distDmg_);
+	//Activa perforación en la bala
+	if (perforate_) {
+		bullet->setPerforate(perforate_);
+		perforate_ = false;
+	}
+	//Activa el rebote en la bala
+	if (ricochet_)
+		bullet->setRicochet(ricochet_);
+
+	//Se añade a los bucles del juegos
 	app_->getCurrState()->addRenderUpdateLists(bullet);
 	CollisionCtrl::instance()->addPlayerBullet(bullet);
 }
@@ -258,10 +292,9 @@ void Player::createClon()
 Player::~Player()
 {
 	//Temporal para no dejar basura
-	delete q_;
-	delete r_;
-	delete e_;
-	delete w_;
+	for (int i = 0; i < skills_.size(); i++) {
+		delete skills_[i];
+	}
 
 	delete equip_.armor_;
 	delete equip_.gloves_;

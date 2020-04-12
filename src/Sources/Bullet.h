@@ -2,6 +2,8 @@
 
 #include "Dynamic.h"
 #include "GameState.h"
+#include <list>
+class Enemy;
 
 class Bullet : public Dynamic
 {
@@ -17,15 +19,15 @@ public:
 
 	void initObject(Vector2D pos, Vector2D dir);
 	bool update();
-	void onCollider() { 
+	void onCollider() {
 		if (!deleting) {
 			deleting = true;
 			app_->getCurrState()->removeRenderUpdateLists(this);
 		}; 
 	}
-	const int getDamage() { return damage_; }
+	const int getDamage() { return damage_; };
 
-private:
+protected:
 	double lifeSpan_ = 0; //Tiempo máximo que dura la bala
 	double initTime_ = 0; //Ticks cuando se creo la bala
 	double currTime_ = 0; //Ticks en cada update

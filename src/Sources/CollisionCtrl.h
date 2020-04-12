@@ -11,6 +11,7 @@
 #include <list>
 #include <vector>
 
+class PlayerBullet;
 class CollisionCtrl {
 public:
 	enum NPCsNames : int {
@@ -54,7 +55,7 @@ public:
 	///<summary>Quita un cofre de la lista (cuando se abre)</summary>
 	//void removeChest(Chest* chest) { chestsToErase_.push_back(chest); };
 	///<summary>Quita una bala de la lista</summary>
-	void removePlayerBullet(Bullet* bullet) { playerBulletsToErase_.push_back(bullet); };
+	void removePlayerBullet(PlayerBullet* bullet) { playerBulletsToErase_.push_back(bullet); };
 	///<summary>Quita una bala de la lista</summary>
 	void removeEnemyBullet(Bullet* bullet) { enemyBulletsToErase_.push_back(bullet); };
 	///<summary>Quita un trigger de la lista</summary>
@@ -85,7 +86,7 @@ public:
 	///<summary>Vac�a la lista de cofres y setea los nuevos</summary>
 	//void addChest(Chest* chest) { chests_.push_back(chest); };
 	///<summary>A�ade una nueva bala a la lista</summary>
-	void addPlayerBullet(Bullet* bullet) { playerBullets_.push_back(bullet); };
+	void addPlayerBullet(PlayerBullet* bullet) { playerBullets_.push_back(bullet); };
 	///<summary>A�ade una nueva bala a la lista</summary>
 	void addEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); };
 	///<summary>A�ade un nuevo trigger</summary>
@@ -128,13 +129,13 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Obstacle*> obstacles_;
 	list<Enemy*> enemies_;
 	//list<Chest*> chests_;
-	list<Bullet*> playerBullets_;
+	list<PlayerBullet*> playerBullets_;
 	list<Bullet*> enemyBullets_;
 	list<Trigger*> triggers_;
 
 	list<Enemy*> enemiesToErase_;
 	//list<Chest*> chestsToErase_;
-	list<Bullet*> playerBulletsToErase_;
+	list<PlayerBullet*> playerBulletsToErase_;
 	list<Bullet*> enemyBulletsToErase_;
 	list<Trigger*> triggersToErase_;
 

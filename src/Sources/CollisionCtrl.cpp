@@ -1,6 +1,7 @@
 #include "CollisionCtrl.h"
 #include "Collisions.h"
 #include "GameManager.h"
+#include "PlayerBullet.h"
 
 unique_ptr<CollisionCtrl> CollisionCtrl::instance_;
 
@@ -79,8 +80,13 @@ void CollisionCtrl::islandCollisions() {
 			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 				enem->getPos(), enem->getScaleX(), enem->getScaleY())) {
 				enem->receiveDamage(bullet->getDamage());
-				removePlayerBullet(bullet);
-				bullet->onCollider();
+				if (bullet->getRicochet()) {	//Cuando esté rebotando
+					bullet->searchEnemy(enemies_, enem);
+				}
+				else if (!bullet->getPerforate()) {	//Cuando no esté perforando
+					removePlayerBullet(bullet);
+					bullet->onCollider();
+				}
 			}
 		}
 	}
