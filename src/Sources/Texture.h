@@ -15,6 +15,8 @@ public:
 	Texture();
 	Texture(SDL_Renderer* renderer, const string& fileName);
 	Texture(SDL_Renderer* renderer, const string& text, const Font* font, const SDL_Color& color);
+	Texture(SDL_Renderer* renderer, SDL_Surface* src, SDL_Rect* srcRect, SDL_Surface* dest, SDL_Rect* destRect);
+
 	virtual ~Texture();
 
 	inline int getWidth() {
@@ -35,6 +37,9 @@ public:
 	//Carga las texturas a partir de un texto con una fuente
 	bool loadFromText(SDL_Renderer* renderer, const string& text, const Font* font, const SDL_Color& color = { 0, 0, 0, 255 });
 
+	//Carga texturas a partir de dos surface para hacer un blit
+	bool loadFromSurface(SDL_Renderer* renderer, SDL_Surface* src, SDL_Rect* srcRect, SDL_Surface* dest, SDL_Rect* destRect);
+
 	//Renderiza en posiciones directamente
 	void render(int x, int y) const;
 
@@ -47,5 +52,4 @@ public:
 	void render(const SDL_Rect& dest, double angle) const;
 
 	void close();
-
 };

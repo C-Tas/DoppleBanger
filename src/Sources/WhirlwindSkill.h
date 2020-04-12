@@ -24,7 +24,7 @@ public:
 			Vector2D playerCenter = Vector2D(player_->getPosX() + player_->getScaleX(), player_->getPosY() + player_->getScaleY());
 			list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(playerCenter, RADIUS);
 			for (auto it = enemies.begin(); it != enemies.end(); ++it)
-				(*it)->receiveDamage(player_->getAd() * BONUS);
+				(*it)->receiveDamage(player_->getMeleeDmg() * BONUS);
 
 			lastTimeUsed_ = SDL_GetTicks();
 		}

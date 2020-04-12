@@ -15,16 +15,17 @@
 
 void Player::initObject()
 {
-	GameManager::instance()->setPlayer(this);
+	gm_ = GameManager::instance();
+	gm_->setPlayer(this);
 	CollisionCtrl::instance()->setPlayer(this);
 	eventHandler_ = HandleEvents::instance();
 	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 
-	skillWhirl_ = new WhirlwindSkill(this);
-	skillClon_ = new ClonSkill(this);
-	skillExplosion_ = new ClonSelfDestructSkill(this);
-	skillEmpowered_ = new EmpoweredSkill(this);
+	q_ = new WhirlwindSkill(this); skills.push_back(q_);
+	w_ = new EmpoweredSkill(this); skills.push_back(w_);
+	e_ = new ClonSelfDestructSkill(this); skills.push_back(e_);
+	r_ = new ClonSkill(this); skills.push_back(r_);
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
@@ -37,24 +38,37 @@ void Player::initObject()
 
 bool Player::update()
 {
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q))
-		skillClon_->action();
+	//Resetea el coolDown en el HUD
+	for (int i = 0; i < 4; i++) {
+		if (skills[i] != nullptr && cdSkills[i] && !skills[i]->isCD()) {
+			cdSkills[i] = false;
+			GameManager::instance()->setSkillCooldown(false, (SkillKey)i);
+		}
+	}
 
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_W))
-		skillWhirl_->action();
-
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_E))
-		skillExplosion_->action();
-
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_R))
-		skillEmpowered_->action();
-
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q)) {
+		q_->action();
+		GameManager::instance()->setSkillCooldown(true, SkillKey::Q);
+		cdSkills[0] = true;
+	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_W)) {
+		w_->action();
+		GameManager::instance()->setSkillCooldown(true, SkillKey::W);
+		cdSkills[1] = true;
+	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_E)) {
+		e_->action();
+		GameManager::instance()->setSkillCooldown(true, SkillKey::E);
+		cdSkills[2] = true;
+	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_R)) {
+		r_->action();
+	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE) && !app_->getMute()) shout();
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
 		shoot(eventHandler_->getRelativeMousePos());
-#pragma endregion
 
 	//para utilizar las pociones
 	if (eventHandler_->isKeyDown(SDLK_1)) {
@@ -163,6 +177,11 @@ void Player::attack(Enemy* obj)
 	attacking_ = true;
 }
 
+void Player::decreaseMana(double mana) {
+	currStats_.mana_ -= mana;
+	if (currStats_.mana_ <= 0) currStats_.mana_ = 0;
+}
+
 void Player::usePotion(int value, potionType type) {
 	switch (type)
 	{
@@ -220,6 +239,13 @@ void Player::desactivePotion(){
 	}
 }
 
+void Player::setElementsHUD()
+{
+	gm_->setSkillEquiped(SkillName::Torbellino, SkillKey::Q);
+	gm_->setSkillEquiped(SkillName::GolpeFuerte, SkillKey::W);
+	gm_->setSkillEquiped(SkillName::Explosion, SkillKey::E);
+}
+
 void Player::createClon()
 {
 	Vector2D pos;
@@ -232,10 +258,10 @@ void Player::createClon()
 Player::~Player()
 {
 	//Temporal para no dejar basura
-	delete skillWhirl_;
-	delete skillClon_;
-	delete skillExplosion_;
-	delete skillEmpowered_;
+	delete q_;
+	delete r_;
+	delete e_;
+	delete w_;
 
 	delete equip_.armor_;
 	delete equip_.gloves_;

@@ -23,7 +23,6 @@ void CaribbeanIslandState::update()
 
 void CaribbeanIslandState::initState()
 {
-	collisionCtrl_ = CollisionCtrl::instance();
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
 	addRenderUpdateLists(background_);
 
@@ -36,6 +35,7 @@ void CaribbeanIslandState::initState()
 	player_->setPos(playerEntry_);
 	player_->setScale({ (double)W_PLAYER,(double)H_PLAYER });
 	addRenderUpdateLists(player_);
+	addRenderUpdateLists(hud_);
 }
 
 void CaribbeanIslandState::createMonkey(int numMonkeys)

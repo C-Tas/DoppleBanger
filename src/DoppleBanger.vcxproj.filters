@@ -135,8 +135,6 @@
     <ClCompile Include="Sources\Bullet.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Inventory.cpp" />
-    <ClCompile Include="Sources\InventoryButton.cpp" />
     <ClCompile Include="Sources\usable.cpp">
       <Filter>GameObjects\Objects</Filter>
     </ClCompile>
@@ -144,8 +142,6 @@
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Camera.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
-    <ClCompile Include="Sources\Trigger.cpp" />
-    <ClCompile Include="Sources\SkillButton.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Crab.cpp">
       <Filter>GameObjects\Enemies</Filter>
@@ -193,6 +189,41 @@
       <Filter>GameObjects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="SDL2_gfx\SDL2_rotozoom.cpp">
+      <Filter>GameObjects\SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_gfx\SDL2_imageFilter.cpp">
+      <Filter>GameObjects\SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_gfx\SDL2_gfxPrimitives.cpp">
+      <Filter>GameObjects\SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2_gfx\SDL2_framerate.cpp">
+      <Filter>GameObjects\SDL_gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\HUD.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Trigger.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\TextBox.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Inventory.cpp">
+      <Filter>GameStateMahcine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\InventoryButton.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\SkillButton.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ShopState.cpp">
+      <Filter>GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\Skill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -350,15 +381,7 @@
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Camera.h" />
     <ClInclude Include="Sources\Bullet.h" />
-    <ClInclude Include="Sources\Inventory.h" />
-    <ClInclude Include="Sources\InventoryButton.h" />
     <ClInclude Include="Sources\TextBox.h" />
-    <ClInclude Include="Sources\Trigger.h" />
-    <ClInclude Include="Sources\VisualElement.h" />
-    <ClInclude Include="Sources\SkillButton.h" />
-    <ClInclude Include="Sources\WhirlwindSkill.h" />
-    <ClInclude Include="Sources\ClonSkill.h" />
-    <ClInclude Include="Sources\ClonSelfDestructSkill.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Crab.h">
       <Filter>GameObjects\Enemies</Filter>
@@ -406,7 +429,43 @@
       <Filter>GameObjects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Sources\TextBox.h" />
-    <ClInclude Include="Sources\EmpoweredSkill.h" />
+    <ClInclude Include="Sources\HUD.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Trigger.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TextBox.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Inventory.h">
+      <Filter>GameStateMahcine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\InventoryButton.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\SkillButton.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ShopState.h">
+      <Filter>GameStateMahcine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ClonSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ClonSelfDestructSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\EmpoweredSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\WhirlwindSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\VisualElement.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TextBox.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">
@@ -429,6 +488,9 @@
     </Filter>
     <Filter Include="Tools">
       <UniqueIdentifier>{06ef5a17-8315-4334-a756-1e91f63a7fa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\SDL_gfx">
+      <UniqueIdentifier>{af832b6e-25fd-4f01-ab1c-db404ba0f52c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

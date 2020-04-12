@@ -6,7 +6,7 @@
 class SkillButton: public Button
 {
 using CallBackOnClickSkill = void(Application * app, SkillButton * button);
-using CallBackOnPointerOver = void(Application * app, SkillNames skill);
+using CallBackOnPointerOver = void(Application * app, SkillName skill);
 protected:
 	///<summary>Bool que marca si la skill está ya asignada o no</summary>
 	bool asign_ = false;
@@ -21,12 +21,12 @@ protected:
 	///<summary>Referencia al handle events</summary>
 	HandleEvents* handleEvents_;
 	///<summary>identificador de la skill que representa dicho boton</summary>
-	SkillNames id;
+	SkillName id;
 
 public: 
 	///<summary>Constructora de SkillButton</summary>
 	SkillButton(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickSkill* callBack, 
-		SkillNames name, SkillType type, CallBackOnPointerOver* callbackOnPoint):
+		SkillName name, SkillType type, CallBackOnPointerOver* callbackOnPoint):
 		Button(app, texture, pos, scale, nullptr), type_(type) {
 		callbackSkill_ = callBack; handleEvents_ = HandleEvents::instance(); id = name;
 		callbackOnPoint_ = callbackOnPoint;
@@ -40,7 +40,7 @@ public:
 #pragma region Getters
 	bool isAsigned() { return asign_; }
 	bool isUnlocked() { return unlocked_; }
-	SkillNames getSkillId() { return id; }
+	SkillName getSkillId() { return id; }
 	SkillType getSkillType() { return type_; }
 #pragma endregion
 

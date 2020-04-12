@@ -23,10 +23,12 @@ public:
 	void die();
 	//Agrega un enemigo que está agred
 	inline void addAgredEnemy(Enemy* enemy) { agredEnemys_.push_back(enemy); }
+	//Devuelve el coste de maná de la habilidad
+	int getCost() { return cost_; };
 
 private:
 	int ad_ = 0;
-	int cost_ = 100;
+	int cost_ = 10;
 	int range_ = 0;
 	int meleeRate_ = 0;
 	double spawnTime_ = 0; //Ticks cuando se le hizo spawn

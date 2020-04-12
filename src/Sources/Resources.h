@@ -85,6 +85,27 @@ public:
 		GameOver,
 		Win,
 
+		//HUD
+		WheelHUD,
+		RopeHUD,
+		SkillsHUD,
+		CooldownHUD,
+		LifeHUD,
+		ExplosionIcon,
+		GolpeFuerteIcon,
+		InvencibleIcon,
+		LiberacionIcon,
+		PerforanteIcon,
+		RaudoIcon,
+		ReboteIcon,
+		TorbellinoIcon,
+		HealthPot,
+		ManaPot,
+		SpeedPot,
+		ArmorPot,
+		DmgPot,
+		CritPot,
+
 		//Personajes
 		Dragon,
         PlayerFront,

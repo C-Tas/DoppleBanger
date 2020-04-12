@@ -23,8 +23,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ GoToInventoryBButton, "../Sources/assets/botones/InventoryButtonB.png"},
 
 	//Interfaces
-	//{ BotonMenu, "../Sources/assets/botones/botonMenu.png"},
-	//{ Timon, "../Sources/assets/player/timon.png" },
 	{ GoControls, "../Sources/assets/botones/botonControles.png"},
 	{ BackButton, "../Sources/assets/botones/volver.png"},
 
@@ -80,6 +78,27 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Volcanic, "../Sources/assets/interfaces/volcan.png" },
 	{ GameOver, "../Sources/assets/interfaces/gameOver.png" },
 	{ Win, "../Sources/assets/interfaces/win.png" },
+
+	//HUD
+	{  WheelHUD, "../Sources/assets/hud/timonHUD.png" },
+	{  RopeHUD,	"../Sources/assets/hud/lazoHUD.png" },
+	{  SkillsHUD, "../Sources/assets/hud/skillsHUD.png" },
+	{  CooldownHUD, "../Sources/assets/hud/cooldownHUD.png" },
+	{  LifeHUD, "../Sources/assets/hud/vida.png" },
+	{  ExplosionIcon, "../Sources/assets/hud/iconos/explosion.png" },
+	{  GolpeFuerteIcon, "../Sources/assets/hud/iconos/golpeFuerte.png" },
+	{  InvencibleIcon, "../Sources/assets/hud/iconos/invencible.png" },
+	{  LiberacionIcon, "../Sources/assets/hud/iconos/liberacion.png" },
+	{  PerforanteIcon, "../Sources/assets/hud/iconos/perforante.png" },
+	{  RaudoIcon, "../Sources/assets/hud/iconos/raudo.png" },
+	{  ReboteIcon, "../Sources/assets/hud/iconos/rebote.png" },
+	{  TorbellinoIcon, "../Sources/assets/hud/iconos/torbellino.png" },
+	{  HealthPot, "../Sources/assets/hud/iconos/vidaPot.png" },
+	{  ManaPot, "../Sources/assets/hud/iconos/manaPot.png" },
+	{  SpeedPot, "../Sources/assets/hud/iconos/speedPot.png" },
+	{  ArmorPot, "../Sources/assets/hud/iconos/armorPot.png" },
+	{  DmgPot, "../Sources/assets/hud/iconos/dmgPot.png" },
+	{  CritPot, "../Sources/assets/hud/iconos/critPot.png" },
 
 	//Sprites
 	{ Dragon,"../Sources/assets/enemigos/dragon.png"},

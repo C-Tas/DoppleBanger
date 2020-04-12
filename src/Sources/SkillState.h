@@ -23,7 +23,7 @@ private:
 	//<summary>Textura que contiene la �ltima descripcion de la �ltima skill sobre
 	//la que se ha posicionado el cursor</summary>
 
-	SkillNames lastPointed = SkillNames::Unequipped;
+	SkillName lastPointed = SkillName::Unequipped;
 
 	virtual void update();
 	///<summary>Puntero a player (para actualizar las skills que tiene equipadas)</summary>
@@ -63,7 +63,7 @@ protected:
 	void setSelectedSkillButton(SkillButton* button);
 	///<summary>M�todo auxiliar para el callback de equipar la skill a las teclas
 	///0->q, 1->w, 2->e </summary>
-	void equipSelectedSkill(SkillEquiped key);
+	void equipSelectedSkill(SkillKey key);
 
 	///<summary>M�todos auxiliares para el feedback visual</summary>
 	void meleePointsActualized();
@@ -76,19 +76,19 @@ protected:
 
 	///M�todo que, dado el nombre de la skill, devuelve su icono correspondiente
 	///Se usa al pintar las skills que est�n equipadas
-	Texture* getTextureFromSkill(SkillNames name)const;
+	Texture* getTextureFromSkill(SkillName name)const;
 
 	///Redefinici�n del m�todo draw para dibujar las cosas en un orden espec�fico
 	virtual void draw()const;
 
-	void changeDescriptionTexture(SkillNames name)const;
-	void changeDescription(SkillNames name);
+	void changeDescriptionTexture(SkillName name)const;
+	void changeDescription(SkillName name);
 
 	///M�todo para cuando se vaya a destruir el estado, se actualice las skills que tiene equipadas el player
 	void setPlayerSkills();
 	//<summary>M�todo que dado el nombre de una skill crea un objeto Skill* correspondiente
 	///FALTA IMPLEMENTAR LOS OBJETOS QUE HEREDEN DE SKILL, PERO LA ESTRUCTURA EST�</summary>
-	Skill* createSkill(SkillNames name);
+	Skill* createSkill(SkillName name);
 public:
 	///<summary>Constructora de CreditsState</summary>
 	SkillState(Application* app = nullptr, Player* player = nullptr) :GameState(app), player_(player) { initState(); };
@@ -114,7 +114,7 @@ public:
 	///<summary>Asigna el elemento seleccionado a la tecla E</summary>
 	static void assingToEKey(Application* app);
 	///<summary>M�todo para modificar la descripcion que aparece en pantalla</summary>
-	static void changeDescription(Application* app, SkillNames name);
+	static void changeDescription(Application* app, SkillName name);
 
 };
 

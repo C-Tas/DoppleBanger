@@ -3,7 +3,7 @@
 
 void Sword::equip(Player* player)
 {
-	player->addAd(ad_);
+	player->addMeleeDmg(ad_);
 	player->addMeleeRate(meleeRate_);
 }
 

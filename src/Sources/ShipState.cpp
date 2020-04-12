@@ -45,7 +45,6 @@ void ShipState::goSaveState(Application* app)
 
 void ShipState::initState()
 {
-	collisionCtrl_ = CollisionCtrl::instance();
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Ship));
 	addRenderUpdateLists(background_);
 
@@ -86,6 +85,7 @@ void ShipState::initState()
 	player_->setPos(playerEntry_);
 	player_->setScale(Vector2D(W_PLAYER, H_PLAYER));
 	addRenderUpdateLists(player_);
+	addRenderUpdateLists(hud_);
 	startInstance_ = SDL_GetTicks();
 }
 

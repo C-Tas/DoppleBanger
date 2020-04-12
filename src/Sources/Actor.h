@@ -24,53 +24,61 @@ class Actor : public Dynamic
 {
 public:
 #pragma region setters
-	void setHealth(int stat) { currStats_.health_ = stat; };
-	void setMana(int stat) { currStats_.mana_ = stat; };
+	void setHealth(double stat) { currStats_.health_ = stat; };
+	void setMana(double stat) { currStats_.mana_ = stat; };
 	void setManaReg(double stat) { currStats_.manaReg_ = stat; };
-	void setArmor(int stat) { currStats_.armor_ = stat; };
-	void setAd(int stat) { currStats_.meleeDmg_ = stat; };
-	void setAp(int stat) { currStats_.distDmg_ = stat; };
-	void setCrit(int stat) { currStats_.crit_ = stat; };
-	void setMoveSpeed(int stat) { currStats_.moveSpeed_ = stat; };
+	void setArmor(double stat) { currStats_.armor_ = stat; };
+	void setMeleeDmg(double stat) { currStats_.meleeDmg_ = stat; };
+	void setDistDmg(double stat) { currStats_.distDmg_ = stat; };
+	void setCrit(double stat) { currStats_.crit_ = stat; };
+	void setMeleeRange(double stat) { currStats_.meleeRange_ = stat; };
+	void setDistRange(double stat) { currStats_.distRange_ = stat; };
+	void setMoveSpeed(double stat) { currStats_.moveSpeed_ = stat; };
 	void setMeleeRate(double stat) { currStats_.meleeRate_ = stat; };
 	void setDistRate(double stat) { currStats_.distRate_ = stat; };
 #pragma endregion
 
 #pragma region getters
-	int getHealth() { return currStats_.health_; };
-	int getMana() { return currStats_.mana_; };
+	double getHealth() { return currStats_.health_; };
+	double getMana() { return currStats_.mana_; };
 	double getManaReg() { return currStats_.manaReg_; };
-	int getArmor() { return currStats_.armor_; };
-	int getAd() { return currStats_.meleeDmg_; };
-	int getAp() { return currStats_.distDmg_; };
-	int getCrit() { return currStats_.crit_; };
-	int getMoveSpeed() { return currStats_.moveSpeed_; };
+	double getArmor() { return currStats_.armor_; };
+	double getMeleeDmg() { return currStats_.meleeDmg_; };
+	double getDistDmg() { return currStats_.distDmg_; };
+	double getCrit() { return currStats_.crit_; };
+	double getMeleeRange() { return currStats_.meleeRange_; };
+	double getDistRange() { return currStats_.distRange_; };
+	double getMoveSpeed() { return currStats_.moveSpeed_; };
 	double getMeleeRate() { return currStats_.meleeRate_; };
 	double getDistRate() { return currStats_.distRate_; };
 #pragma endregion
 
 #pragma region addition
-	void addHealth(int stat) { currStats_.health_ += stat; };
-	void addMana(int stat) { currStats_.mana_ += stat; };
+	void addHealth(double stat) { currStats_.health_ += stat; };
+	void addMana(double stat) { currStats_.mana_ += stat; };
 	void addManaReg(double stat) { currStats_.manaReg_ += stat; };
-	void addArmor(int stat) { currStats_.armor_ += stat; };
-	void addAd(int stat) { currStats_.meleeDmg_ += stat; };
-	void addAp(int stat) { currStats_.distDmg_ += stat; };
-	void addCrit(int stat) { currStats_.crit_ += stat; };
+	void addArmor(double stat) { currStats_.armor_ += stat; };
+	void addMeleeDmg(double stat) { currStats_.meleeDmg_ += stat; };
+	void addDistDmg(double stat) { currStats_.distDmg_ += stat; };
+	void addCrit(double stat) { currStats_.crit_ += stat; };
+	void addMeleeRange(double stat) { currStats_.meleeRange_ += stat; };
+	void addDistRange(double stat) { currStats_.distRange_ += stat; };
 	void addMoveSpeed(int stat) { currStats_.moveSpeed_ += stat; };
 	void addMeleeRate(double stat) { currStats_.meleeRate_ += stat; };
 	void addDistRate(double stat) { currStats_.distRate_ += stat; };
 #pragma endregion
 
 #pragma region substraction
-	void removeHealth(int stat) { currStats_.health_ -= stat; };
-	void removeMana(int stat) { currStats_.mana_ -= stat; };
+	void removeHealth(double stat) { currStats_.health_ -= stat; };
+	void removeMana(double stat) { currStats_.mana_ -= stat; };
 	void removeManaReg(double stat) { currStats_.manaReg_ -= stat; };
-	void removeArmor(int stat) { currStats_.armor_ -= stat; };
-	void removeAd(int stat) { currStats_.meleeDmg_ -= stat; };
-	void removeAp(int stat) { currStats_.distDmg_ -= stat; };
-	void removeCrit(int stat) { currStats_.crit_ -= stat; };
-	void removeMoveSpeed(int stat) { currStats_.moveSpeed_ -= stat; };
+	void removeArmor(double stat) { currStats_.armor_ -= stat; };
+	void removeAd(double stat) { currStats_.meleeDmg_ -= stat; };
+	void removeAp(double stat) { currStats_.distDmg_ -= stat; };
+	void removeCrit(double stat) { currStats_.crit_ -= stat; };
+	void removeMeleeRange(double stat) { currStats_.meleeRange_ -= stat; };
+	void removeDistRange(double stat) { currStats_.distRange_ -= stat; };
+	void removeMoveSpeed(double stat) { currStats_.moveSpeed_ -= stat; };
 	void removeMeleeRate(double stat) { currStats_.meleeRate_ -= stat; };
 	void removeDistRate(double stat) { currStats_.distRate_ -= stat; };
 #pragma endregion

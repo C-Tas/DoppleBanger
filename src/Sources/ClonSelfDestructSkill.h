@@ -9,7 +9,7 @@ class ClonSelfDestructSkill : public Skill
 private:
 	const int RADIUS = 150;
 	const int BONUS = 1.5;
-	const int COOLDOWN = 5;
+	const int COOLDOWN = 2;
 
 public:
 	ClonSelfDestructSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { cooldown_ = COOLDOWN; };
@@ -24,7 +24,7 @@ public:
 			Vector2D clonCenter = Vector2D(player_->getClonPos().getX() + player_->getClonScale().getX(), player_->getClonPos().getY() + player_->getClonScale().getY());
 			list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(clonCenter, RADIUS);
 			for (auto it = enemies.begin(); it != enemies.end(); ++it)
-				(*it)->receiveDamage(player_->getAd() * BONUS);
+				(*it)->receiveDamage(player_->getMeleeDmg() * BONUS);
 
 			if (player_->killClon()) lastTimeUsed_ = SDL_GetTicks();
 		}

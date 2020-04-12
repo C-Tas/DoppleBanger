@@ -38,7 +38,7 @@ void SkillState::update()
 	point.y = eventHandler_->getRealMousePos().getY();
 	while (i < assignButtons.size() && !SDL_PointInRect(&point, &assignButtons[i]))i++;
 	//Si lo est�, actualizamos cual descripcion debe mostrarse
-	if (i < assignButtons.size()) lastPointed = gm_->getSkillEquiped((SkillEquiped)i);
+	if (i < assignButtons.size()) lastPointed = gm_->getEquippedSkill((SkillKey)i);
 	
 	if (SDL_PointInRect(&point, &goToInventary_->getDestiny())) {
 		goToInventary_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryBButton));
@@ -103,34 +103,34 @@ void SkillState::createSkillsIcons()
 
 	//Precision Skills
 	///Comprobamos si la habilidad esta desbloqueda, seg�n si est� o no, usamos una textura u otra
-	auxTexture = (!gm_->isSkillUnlocked(SkillNames::DisparoPerforante)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC);
-	auto it1 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 330, 352},{ 70, 40 }, selectSkill, SkillNames::DisparoPerforante, SkillType::Active, changeDescription));
+	auxTexture = (!gm_->isSkillUnlocked(SkillName::DisparoPerforante)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC);
+	auto it1 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 330, 352},{ 70, 40 }, selectSkill, SkillName::DisparoPerforante, SkillType::Active, changeDescription));
 
-	auxTexture = (!gm_->isSkillUnlocked(SkillNames::Raudo)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 352 }, { 70, 40 }, selectSkill, SkillNames::Raudo, SkillType::Pasive, changeDescription));
+	auxTexture = (!gm_->isSkillUnlocked(SkillName::Raudo)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 352 }, { 70, 40 }, selectSkill, SkillName::Raudo, SkillType::Pasive, changeDescription));
 	
-	auxTexture = (!gm_->isSkillUnlocked(SkillNames::Rebote)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 352 }, { 70, 40 }, selectSkill, SkillNames::Rebote, SkillType::Active, changeDescription));
+	auxTexture = (!gm_->isSkillUnlocked(SkillName::Rebote)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 352 }, { 70, 40 }, selectSkill, SkillName::Rebote, SkillType::Active, changeDescription));
 	
 	//Melee Skills
-	auxTexture = (!gm_->isSkillUnlocked(SkillNames::GolpeFuerte)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC);
-	auto it2 = skillsIcons_.insert(skillsIcons_.end(), new SkillButton(app_, auxTexture, { 330, 502 }, { 70, 40 }, selectSkill, SkillNames::GolpeFuerte, SkillType::Active, changeDescription));
+	auxTexture = (!gm_->isSkillUnlocked(SkillName::GolpeFuerte)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC);
+	auto it2 = skillsIcons_.insert(skillsIcons_.end(), new SkillButton(app_, auxTexture, { 330, 502 }, { 70, 40 }, selectSkill, SkillName::GolpeFuerte, SkillType::Active, changeDescription));
 	
-	auxTexture = (!gm_->isSkillUnlocked(SkillNames::Invencible)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 502 }, { 70, 40 }, selectSkill, SkillNames::Invencible, SkillType::Pasive, changeDescription));
+	auxTexture = (!gm_->isSkillUnlocked(SkillName::Invencible)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 502 }, { 70, 40 }, selectSkill, SkillName::Invencible, SkillType::Pasive, changeDescription));
 	
-	auxTexture = (!gm_->isSkillUnlocked(SkillNames::Torbellino)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 502 }, { 70, 40 }, selectSkill, SkillNames::Torbellino, SkillType::Active, changeDescription));
+	auxTexture = (!gm_->isSkillUnlocked(SkillName::Torbellino)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 502 }, { 70, 40 }, selectSkill, SkillName::Torbellino, SkillType::Active, changeDescription));
 	
 	//Ghost Skills
-	auxTexture = (!gm_->isSkillUnlocked(SkillNames::LiberacionI)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
-	auto it3 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 330, 652 }, { 70, 40 }, selectSkill, SkillNames::LiberacionI, SkillType::Pasive, changeDescription));
+	auxTexture = (!gm_->isSkillUnlocked(SkillName::LiberacionI)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
+	auto it3 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 330, 652 }, { 70, 40 }, selectSkill, SkillName::LiberacionI, SkillType::Pasive, changeDescription));
 
-	auxTexture = (!gm_->isSkillUnlocked(SkillNames::Explosion)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 652 }, { 70, 40 }, selectSkill, SkillNames::Explosion, SkillType::Active, changeDescription));
+	auxTexture = (!gm_->isSkillUnlocked(SkillName::Explosion)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 652 }, { 70, 40 }, selectSkill, SkillName::Explosion, SkillType::Active, changeDescription));
 	
-	auxTexture = (!gm_->isSkillUnlocked(SkillNames::LiberacionII)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 652 }, { 70, 40 }, selectSkill, SkillNames::LiberacionII, SkillType::Pasive, changeDescription));
+	auxTexture = (!gm_->isSkillUnlocked(SkillName::LiberacionII)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 652 }, { 70, 40 }, selectSkill, SkillName::LiberacionII, SkillType::Pasive, changeDescription));
 
 	skillsTypeIterator[0] = it1;
 	skillsTypeIterator[1] = it2;
@@ -146,9 +146,9 @@ void SkillState::createSkillsIcons()
 
 void SkillState::renderSkillsEquipped()const
 {
-	vector<SkillNames> aux = GameManager::instance()->getAllSkillsEquipped();
+	vector<SkillName> aux = GameManager::instance()->getAllSkillsEquipped();
 	int i = 0;
-	for (SkillNames name : aux) {
+	for (SkillName name : aux) {
 		Texture* auxTex = getTextureFromSkill(name);
 		if (auxTex != nullptr){
 			auxTex->render(assignButtons[i]);
@@ -176,24 +176,24 @@ void SkillState::setSelectedSkillButton(SkillButton* button)
 #endif // _DEBUG
 }
 
-void SkillState::equipSelectedSkill(SkillEquiped key)
+void SkillState::equipSelectedSkill(SkillKey key)
 {
 	if (selected_ != nullptr && selected_->isUnlocked()) {
 		//Si no est� asignada, no hay ninguna en esa tecla y no es una pasiva
-		if (!selected_->isAsigned() && gm_->getSkillEquiped(key) == SkillNames::Unequipped && selected_->getSkillType() != SkillType::Pasive) {
+		if (!selected_->isAsigned() && gm_->getEquippedSkill(key) == SkillName::Unequipped && selected_->getSkillType() != SkillType::Pasive) {
 			selected_->setAsigned(true);
 			gm_->setSkillEquiped(selected_->getSkillId(), key);
 		}
 		//Si est� equipada pero la tecla en la que queremos equipar est� libre
-		else if (selected_->isAsigned() && selected_->getSkillType() != SkillType::Pasive && gm_->getSkillEquiped(key) == SkillNames::Unequipped) {
+		else if (selected_->isAsigned() && selected_->getSkillType() != SkillType::Pasive && gm_->getEquippedSkill(key) == SkillName::Unequipped) {
 
-			SkillEquiped aux = gm_->getEquippedSkillKey(selected_->getSkillId());
-			gm_->setSkillEquiped(SkillNames::Unequipped, aux);
+			SkillKey aux = gm_->getEquippedSkillKey(selected_->getSkillId());
+			gm_->setSkillEquiped(SkillName::Unequipped, aux);
 			gm_->setSkillEquiped(selected_->getSkillId(), key);
 		}
 		//La tecla en la que queremos asignar no est� libre
-		else if (selected_->getSkillType() != SkillType::Pasive && gm_->getSkillEquiped(key) != SkillNames::Unequipped) {
-			SkillNames aux = gm_->getSkillEquiped(key);
+		else if (selected_->getSkillType() != SkillType::Pasive && gm_->getEquippedSkill(key) != SkillName::Unequipped) {
+			SkillName aux = gm_->getEquippedSkill(key);
 			//Buscamos el bot�n que asigna dicha skill
 			auto it = skillsIcons_.begin();
 			while (it != skillsIcons_.end() && aux != (*it)->getSkillId())++it;
@@ -201,7 +201,7 @@ void SkillState::equipSelectedSkill(SkillEquiped key)
 			///Si la skill que queremos introducir est� ya asignada a una tecla
 			if (selected_->isAsigned()) {
 				//Buscamos en cual estaba asignada
-				SkillEquiped changingKey = gm_->getEquippedSkillKey((selected_)->getSkillId());
+				SkillKey changingKey = gm_->getEquippedSkillKey((selected_)->getSkillId());
 				//Equipamos la skill seleccionada en la tecla correspondiente
 				gm_->setSkillEquiped(selected_->getSkillId(), key);
 				//Reasignamos la skill que estaba en la tecla q a la tecla en la que se encontraba 
@@ -283,42 +283,42 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 	}
 }
 
-Texture* SkillState::getTextureFromSkill(SkillNames name)const
+Texture* SkillState::getTextureFromSkill(SkillName name)const
 {
 	Texture* tex;
 	switch (name)
 	{
-	case SkillNames::Unequipped:
+	case SkillName::Unequipped:
 		tex = nullptr;
 		break;
-	case SkillNames::Invencible:
+	case SkillName::Invencible:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC);
 		break;
-	case SkillNames::Raudo:
+	case SkillName::Raudo:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC);
 		break;
-	case SkillNames::LiberacionI:
+	case SkillName::LiberacionI:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
 		break;
-	case SkillNames::LiberacionII:
+	case SkillName::LiberacionII:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
 		break;
-	case SkillNames::GolpeFuerte:
+	case SkillName::GolpeFuerte:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC);
 		break;
-	case SkillNames::Torbellino:
+	case SkillName::Torbellino:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC);
 		break;
-	case SkillNames::DisparoPerforante:
+	case SkillName::DisparoPerforante:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC);
 		break;
-	case SkillNames::Rebote:
+	case SkillName::Rebote:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC);
 		break;
-	case SkillNames::Clon:
+	case SkillName::Clon:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
 		break;
-	case SkillNames::Explosion:
+	case SkillName::Explosion:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC);
 		break;
 	default:
@@ -341,42 +341,42 @@ void SkillState::draw() const
 	renderSkillsEquipped();
 }
 
-void SkillState::changeDescriptionTexture(SkillNames name)const
+void SkillState::changeDescriptionTexture(SkillName name)const
 {
 
 	TextBox descriptionBox(app_, Point2D(descriptionRect.x, descriptionRect.y));
 	switch (name)
 	{
-	case SkillNames::Unequipped:
+	case SkillName::Unequipped:
 		break;
-	case SkillNames::GolpeFuerte:
+	case SkillName::GolpeFuerte:
 		descriptionBox.GolpeFuerte();
 		break;
-	case SkillNames::Invencible:
+	case SkillName::Invencible:
 		descriptionBox.Invencible();
 		break;
-	case SkillNames::Torbellino:
+	case SkillName::Torbellino:
 		descriptionBox.Torbellino();
 		break;
-	case SkillNames::DisparoPerforante:
+	case SkillName::DisparoPerforante:
 		descriptionBox.Perforador();
 		break;
-	case SkillNames::Raudo:
+	case SkillName::Raudo:
 		descriptionBox.Raudo();
 		break;
-	case SkillNames::Rebote:
+	case SkillName::Rebote:
 		descriptionBox.Rebote();
 		break;
-	case SkillNames::Clon:
+	case SkillName::Clon:
 		descriptionBox.Clon();
 		break;
-	case SkillNames::LiberacionI:
+	case SkillName::LiberacionI:
 		descriptionBox.LiberationI();
 		break;
-	case SkillNames::Explosion:
+	case SkillName::Explosion:
 		descriptionBox.Explosion();
 		break;
-	case SkillNames::LiberacionII:
+	case SkillName::LiberacionII:
 		descriptionBox.LiberationII();
 		break;
 	default:
@@ -384,7 +384,7 @@ void SkillState::changeDescriptionTexture(SkillNames name)const
 	}
 }
 
-void SkillState::changeDescription(SkillNames name)
+void SkillState::changeDescription(SkillName name)
 {
 	lastPointed = name;
 }
@@ -393,47 +393,47 @@ void SkillState::setPlayerSkills()
 {
 	if (player_ != nullptr) {
 		for (int i = 0; i < gm_->getAllSkillsEquipped().size() - 1; i++) {//-i pq la del clon siempre est� equipada por defecto
-			player_->setSkillAt(i, createSkill(gm_->getSkillEquiped((SkillEquiped)i)));
+			player_->setSkillAt(i, createSkill(gm_->getEquippedSkill((SkillKey)i)));
 		}
 	}
 }
 
-Skill* SkillState::createSkill(SkillNames name)
+Skill* SkillState::createSkill(SkillName name)
 {
 	Skill* skill;
 	switch (name)
 	{
-	case SkillNames::Unequipped:
+	case SkillName::Unequipped:
 		skill = nullptr;
 		break;
-	case SkillNames::GolpeFuerte:
+	case SkillName::GolpeFuerte:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
-	case SkillNames::Invencible:
+	case SkillName::Invencible:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
-	case SkillNames::Torbellino:
+	case SkillName::Torbellino:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
-	case SkillNames::DisparoPerforante:
+	case SkillName::DisparoPerforante:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
-	case SkillNames::Raudo:
+	case SkillName::Raudo:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
-	case SkillNames::Rebote:
+	case SkillName::Rebote:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
-	case SkillNames::Clon:
+	case SkillName::Clon:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
-	case SkillNames::LiberacionI:
+	case SkillName::LiberacionI:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
-	case SkillNames::Explosion:
+	case SkillName::Explosion:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
-	case SkillNames::LiberacionII:
+	case SkillName::LiberacionII:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	default:
@@ -531,7 +531,7 @@ void SkillState::assingToQKey(Application* app)
 #ifdef _DEBUG
 	cout << "Asignado a la tecla Q" << endl;
 #endif // _DEBUG
-	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(SkillEquiped::Q);
+	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(SkillKey::Q);
 }
 
 void SkillState::assingToWKey(Application* app)
@@ -539,7 +539,7 @@ void SkillState::assingToWKey(Application* app)
 #ifdef _DEBUG
 	cout << "Asignado a la tecla W" << endl;
 #endif // _DEBUG
-	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(SkillEquiped::W);
+	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(SkillKey::W);
 }
 
 void SkillState::assingToEKey(Application* app)
@@ -548,10 +548,10 @@ void SkillState::assingToEKey(Application* app)
 	cout << "Asignado a la tecla E" << endl;
 #endif // _DEBUG
 
-	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(SkillEquiped::E);
+	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(SkillKey::E);
 }
 
-void SkillState::changeDescription(Application* app, SkillNames name)
+void SkillState::changeDescription(Application* app, SkillName name)
 {
 	dynamic_cast<SkillState*>(app->getCurrState())->changeDescription(name);
 }

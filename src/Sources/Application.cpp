@@ -45,6 +45,8 @@ void Application::initSDL() {
 void Application::runApp() {
 	HandleEvents* input = HandleEvents::instance();
 	while (!appClosed_) {
+		//Resetea el negro
+		SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
 		SDL_RenderClear(renderer_); //Clear
 		updateDelta(); //Actualizamos deltaTime
 

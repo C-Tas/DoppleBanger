@@ -7,6 +7,7 @@
 #include <list>
 
 class CollisionCtrl;
+class HUD;
 
 class PlayState : public GameState
 {
@@ -18,11 +19,6 @@ public:
 
 	///<summary>Llama al update del CollisionManager</summary>
 	virtual void update();
-	///<summary>Ir a pauseState (push)</summary>
-	static void goToPauseState(Application* app);
-	///<summary>Ir a InventoryState (push)</summary>
-	static void goToInventoryState(Application* app);
-	//falta otro cambio
 
 	///<summary>A�ade un objeto a la lista enemies_, objectsToRender y gameObjects_</summary>
 	void addEnemy(Enemy* obj);
@@ -35,13 +31,14 @@ public:
 	///<summary>Encuentra al enemigo más cercano a una posición</summary>
 	Enemy* findClosestEnemy(Point2D pos);
 	///<summary>Comprueba colisiones con los enemigos y devuelve el primer enemigo en caso de haber colisión</summary>
-	Enemy* collidesWithEnemy(Point2D pos, Vector2D scale);
+	Enemy* collidesWithEnemy(Point2D pos, Vector2D scale) {};
 
 protected:
 	Point2D playerEntry_ = Vector2D(0, 0);
 	//Singleton de colisiones
 	CollisionCtrl* collisionCtrl_ = nullptr;
 	Player* player_ = nullptr;
+	HUD* hud_ = nullptr;
 	list<Obstacle*> obstacles_;
 	list<Enemy*> enemies_;
 

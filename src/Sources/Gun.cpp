@@ -3,7 +3,7 @@
 
 void Gun::equip(Player* player)
 {
-	player->addAd(ad_);
+	player->addMeleeDmg(ad_);
 	player->addDistRate(distRate_);
 }
 
