@@ -7,7 +7,7 @@
 
 
 
-class InventoryButton;
+
 
 const enum equipType { Armor_, Boots_, Gloves_, Sword_, Saber_, Pistol_, Shotgun_ };
 
@@ -16,7 +16,8 @@ class Equipment : public Item
 protected:
 	equipType type_;
 	Stats modifiers_;
-	
+
+
 public:
 	//Crea un item equipable del tipo dado
 	Equipment(Texture* texture, string name, string desc, double price, equipType type) : 
@@ -42,9 +43,9 @@ public:
 	int getSpeed() { return modifiers_.moveSpeed_; }; // Devuelve el valor de Speed
 	double getDistRate() { return modifiers_.distRate_; }; // Devuelve el valor de DistRate
 	double getMeleeRate() { return modifiers_.meleeRate_; }; // Devuelve el valor de MeleeRate
+
 #pragma endregion
 	virtual void equip(Player* player) = 0;
 	virtual void remove(Player* player) = 0;
 	virtual void writeStats() = 0;
-
 };

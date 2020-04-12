@@ -28,6 +28,7 @@ struct playerEquipment
 class Player : public Actor
 {
 public:
+
 	//Constructora de player
 	Player(Application* app, Vector2D pos, Vector2D scale) :
 		Actor(app, pos, scale) {
@@ -60,6 +61,8 @@ public:
 	playerEquipment& const getInfoEquip() { return equip_; }
 	void usePotion(int value, potionType type);
 	void desactivePotion();
+	void addMoney(int money) { money_ += money; };
+	int getMoney() { return money_; };
 
 	void equip(Armor* armor) { equip_.armor_ = armor; };
 	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
@@ -93,6 +96,7 @@ public:
 #pragma endregion
 
 private:
+	int money_ = 0;
 	bool attacking_ = false;
 	Actor* objective_ = nullptr;
 	Clon* clon_ = nullptr;

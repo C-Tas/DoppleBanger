@@ -2,13 +2,13 @@
 #include "HandleEvents.h"
 
 //Texture* texture, SDL_Rect* destiny, Point2D pos, Vector2D scale)
-Button::Button(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack)
+Button::Button(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack, int id)
 	: Draw(app, pos, scale), cbClick_(callBack) {
 	setTexture(texture);
 	call = 0;
 };
 
-Button::Button(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu)
+Button::Button(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu, int id)
 	: Draw(app,texture, SDL_Rect({(int)pos.getX(),(int)pos.getY(),(int)scale.getX(),(int)scale.getY()})), ButtonCallBackMenu(callBackMenu),currentState_(state) {
 	call = 1;
 };

@@ -11,15 +11,16 @@ using CallBackOnClickMenu = void(GameState* state);
 class Button : public Draw
 {
 public:
-	Button(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* cbClick);
-	Button(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu);
+	Button(Application* app,Texture* texture,Vector2D pos, Vector2D scale, CallBackOnClick* callBack, int id = 0);
+	Button(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu, int id = 0);
 	virtual ~Button() {};
 	virtual bool update(); //Lleva la logica del boton
-	void setCurrentState(GameState* state) { currentState_ = state; }
 	const virtual void draw() {
 		if (currAnim_.numberFrames_ <= 0) texture_->render(getDestiny(), SDL_FLIP_NONE);
 		else texture_->render(getDestiny(), frame_);
 	};
+	void setCurrentState(GameState* state) { currentState_ = state; }
+	int getId() { return id_; };
 
 protected:
 	
@@ -30,4 +31,5 @@ protected:
 	GameState* currentState_ = nullptr;
 	virtual void initObject() {};
 	virtual void initAnim() {};
+	int id_;
 };

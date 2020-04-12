@@ -6,6 +6,7 @@
 #include "StashState.h"
 #include "PauseState.h"
 #include "SkillState.h"
+#include "ShopState.h"
 #include "Inventory.h"
 #include "Collisions.h"
 
@@ -50,6 +51,9 @@ void PlayState::checkPlayerActions() {
 	}
 	else if (eventHandler_->isKeyDown(SDLK_v)) {
 		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
+	}
+	else if (eventHandler_->isKeyDown(SDLK_t)) {
+		app_->getGameStateMachine()->pushState(new ShopState(app_, player_));
 	}
 
 }

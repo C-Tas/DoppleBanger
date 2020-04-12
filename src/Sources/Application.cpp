@@ -3,6 +3,7 @@
 #include "HandleEvents.h"
 #include <exception>
 #include "GameManager.h"
+#include "ShopState.h"
 
 Application::Application(GameStateMachine* state) {
 	initSDL();

@@ -98,9 +98,9 @@ Inventory::Inventory(Application* app) :GameState(app) {
 
 	ListPos = inventoryList_->begin();
 
-	///Reasignamos el callback y el estado puesto que si se borra el antiguo inventario, no se podrá seleccionar 
-	//ninguno de los objetos al no estar la función en la misma direccion de memoria
-	//pasa lo mismo con el estado al que apunta el botón
+	///Reasignamos el callback y el estado puesto que si se borra el antiguo inventario, no se podrï¿½ seleccionar 
+	//ninguno de los objetos al no estar la funciï¿½n en la misma direccion de memoria
+	//pasa lo mismo con el estado al que apunta el botï¿½n
 	for (auto ob = inventoryList_->begin(); ob != inventoryList_->end(); ++ob) {
 		(*ob)->setNewCallBack(callSelectObject);
 		(*ob)->setCurrentState(this);
@@ -182,15 +182,13 @@ void Inventory::addToInventory(Equipment* ob) {
 	//creamos un boton
 	InventoryButton* b = new InventoryButton(app_,this, ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 },ob, callSelectObject);
 	//le asignamos al objeto su boton
-	//Añadimos el boton a la lista y le asignamos un iterador con su posicion
+	//Aï¿½adimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = inventoryList_->insert(inventoryList_->end(), b);
 	b->setIterator(it);
 	//comprobamos si es el primer objeto de la lista
 	if (it == inventoryList_->begin()) {
 		ListPos = inventoryList_->begin();//iniciamos el puntero
 	}
-
-
 }
 
 // este metodo desequipa el objeto si esta equipado y equipa el nuevo objeto

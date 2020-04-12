@@ -2,8 +2,8 @@
 #include "Texture.h"
 class Player;
 
-
-
+class Inventory;
+class InventoryButton;
 
 class Item
 {
@@ -11,6 +11,8 @@ private:
 	string itemName_, itemDescription_;
 	Texture* itemTexture_;
 	double itemQuantity_, itemPrice_;
+	InventoryButton* inventoryButton_;
+	Inventory* inventory_;
 	
 public:
 	Item(Texture* tex, string name, string desc, double price, double quantity = 1) { itemTexture_ = tex; itemName_ = name; itemDescription_ = desc; itemQuantity_ = quantity; itemPrice_ = price; };
@@ -21,13 +23,14 @@ public:
 	void setItemTexture(Texture* tex) { itemTexture_ = tex; };
 	void setItemQuantity(double d) { itemQuantity_ = d; };
 	void setItemPrice(double name) { itemPrice_ = name; };
+	void setButton(InventoryButton* button) { inventoryButton_ = button; };
 
 	string getItemDescription() { return itemDescription_; };
 	string getItemName() { return itemName_; };
 	Texture* getItemTexture() { return itemTexture_; };
 	double getItemQuantity() { return itemQuantity_; };
 	double getItemPrice() { return itemPrice_; };
-
+	InventoryButton* getButton() { return inventoryButton_; }; // Devuelve el boton
 
 	virtual void equip(Player* player) = 0;
 	virtual void remove(Player* player) = 0;

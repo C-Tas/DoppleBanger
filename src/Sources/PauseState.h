@@ -1,7 +1,6 @@
 #pragma once
 #include "GameState.h"
 
-//HAY QUE MEJORAR LO DEL BOTON DE MUTE PORQUE SIEMPRE QUE SE CREA EL ESTADO SE CREA EN MUTE_ON
 class PauseState : public GameState
 {
 public:
