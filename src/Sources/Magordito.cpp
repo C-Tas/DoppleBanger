@@ -3,8 +3,6 @@
 #include "CollisionCtrl.h"
 
 bool Magordito::update() {
-	updateVisPos();
-
 	//Si Magordito muere
 	if (currState_ == STATE::DYING) {
 		//Desbloqueamos la última isla
@@ -13,7 +11,7 @@ bool Magordito::update() {
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return false;
 	}
-	//updateAnim(); //Habría que añadir el método en Draw
+	updateAnim();
 	return false;
 }
 
