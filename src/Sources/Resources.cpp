@@ -86,7 +86,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	
 	//Animaciones
-	{ PlayerShootAnim, "../Sources/assets/player/animaciones/disparo/disparoDcha.png" },
+	{ PlayerShootRightAnim, "../Sources/assets/player/animaciones/disparo/disparoDcha.png" },
+	{ PlayerShootUpAnim, "../Sources/assets/player/animaciones/disparo/disparoFront.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

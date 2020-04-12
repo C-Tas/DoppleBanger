@@ -42,13 +42,7 @@ bool Player::update()
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_) {
-		texture_ = shootTexture_;
-		currAnim_ = shootAnim_;
-		frame_.x = 0; frame_.y = 0;
-		frame_.w = currAnim_.widthFrame_;
-		frame_.h = currAnim_.heightFrame_;
-		currState_ = STATE::SHOOTING;
-		mouseClick_ = eventHandler_->getRelativeMousePos();
+		initShoot();
 	}
 	else if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
 		Vector2D dir = eventHandler_->getRelativeMousePos();
@@ -99,14 +93,7 @@ bool Player::update()
 		return true;
 	}
 	else if (currState_ == STATE::SHOOTING) {
-		if (currAnim_.currFrame_ == 2) //Dispara en el tercer frame
-			shoot(mouseClick_);
-		else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
-			currState_ == STATE::IDLE;	//Reseteo de la animación
-			//Se debería resetear a idle, pero aún no está implementado
-			currAnim_.numberFrames_ = 0;
-			texture_ = auxTx_;
-		}
+		shootAnim();
 	}
 	updateFrame();
 	return false;
@@ -121,11 +108,89 @@ void Player::initObject() {
 	CollisionCtrl::instance()->setPlayer(this);
 }
 
+void Player::initShoot()
+{
+	stop();
+	currState_ = STATE::SHOOTING;
+	mouseClick_ = eventHandler_->getRelativeMousePos();
+	shooted = false;
+	DIR lookAt = calculateDirVis();
+	switch (lookAt)
+	{
+	case DIR::UP:
+		texture_ = shootU_;
+		currAnim_ = shootAnimU_;
+		frameShoot_ = 3;
+		break;
+	case DIR::RIGHT:
+		texture_ = shootR_;
+		currAnim_ = shootAnimR_;
+		frameShoot_ = 2;
+		break;
+	case DIR::DOWN:
+		texture_ = shootD_;
+		currAnim_ = shootAnimD_;
+		frameShoot_ = 3;
+		break;
+	case DIR::LEFT:
+		texture_ = shootL_;
+		currAnim_ = shootAnimL_;
+		frameShoot_ = 2;
+		break;
+	}
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+DIR Player::calculateDirVis()
+{
+	Vector2D center = getCenter(pos_);		//Punto de referencia
+	Vector2D dir = mouseClick_ - center;	//Vector dirección
+	dir.normalize();
+	double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
+	if (angle >= 0) {
+		if (angle <= 50.0) return DIR::RIGHT;
+		else if (angle < 130.0) return DIR::DOWN;
+		else return DIR::LEFT;
+	}
+	else {
+		if (angle >= -50.0) return DIR::RIGHT;
+		else if (angle >= -130.0) return DIR::UP;
+		else return DIR::LEFT;
+	}
+}
+
+void Player::shootAnim()
+{
+	if (!shooted && currAnim_.currFrame_ == frameShoot_) { //Dispara en el tercer frame
+		shoot(mouseClick_);
+		shooted = true; 
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		currState_ == STATE::IDLE;	//Reseteo de la animación
+		//Se debería resetear a idle, pero aún no está implementado
+		currAnim_.numberFrames_ = 0;
+		texture_ = auxTx_;
+	}
+}
+
 void Player::initAnims()
 {
 	//Animación de disparo
-	shootAnim_ = Anim(SHOOT_FRAMES, W_SHOOT_FRAME, H_SHOOT_FRAME, SHOOT_FRAME_RATE, false);
-	shootTexture_ = app_->getTextureManager()->getTexture(Resources::PlayerShootAnim);
+	//Derecha
+	shootAnimR_ = Anim(SHOOT_R_FRAMES, W_SHOOT_R_FRAME, H_SHOOT_R_FRAME, SHOOT_R_FRAME_RATE, false);	
+	shootR_ = app_->getTextureManager()->getTexture(Resources::PlayerShootRightAnim);
+	//Arriba
+	shootAnimU_ = Anim(SHOOT_U_FRAMES, W_SHOOT_U_FRAME, H_SHOOT_U_FRAME, SHOOT_U_FRAME_RATE, false);
+	shootU_ = app_->getTextureManager()->getTexture(Resources::PlayerShootUpAnim);
+	//Izquierda
+	shootAnimL_ = Anim(SHOOT_L_FRAMES, W_SHOOT_L_FRAME, H_SHOOT_L_FRAME, SHOOT_L_FRAME_RATE, false);
+	shootL_ = app_->getTextureManager()->getTexture(Resources::PlayerShootRightAnim);
+	//Abajo
+	shootAnimD_ = Anim(SHOOT_D_FRAMES, W_SHOOT_D_FRAME, H_SHOOT_D_FRAME, SHOOT_D_FRAME_RATE, false);
+	shootD_ = app_->getTextureManager()->getTexture(Resources::PlayerShootUpAnim);
 }
 
 void Player::shoot(Vector2D dir)
@@ -146,7 +211,6 @@ void Player::shoot(Vector2D dir)
 
 void Player::onCollider()
 {
-	move(Vector2D(-dir_.getX(), -dir_.getY())); //Rebote
 	stop(); //Para
 }
 

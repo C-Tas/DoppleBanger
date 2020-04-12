@@ -97,7 +97,8 @@ public:
 
 		//Animaciones
 		CrabAttack,
-		PlayerShootAnim,
+		PlayerShootRightAnim,
+		PlayerShootUpAnim,
 
 		//Interactuables
 		Wheel,

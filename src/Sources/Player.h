@@ -82,17 +82,46 @@ private:
 	array<Skill*, MAX_SKILLS> skillsEquiped_ = {nullptr, nullptr, nullptr};
 #pragma region Animaciones
 	Texture* auxTx_ = nullptr;				//Textura temporal auxiliar
-	//Disparo
 	Vector2D mouseClick_{ 0,0 };			//Vector donde se ha hecho click al disparar
-	Anim shootAnim_{ 0, 0, 0, 0, false};	//Animación de disparo
-	Texture* shootTexture_ = nullptr;		//Textura del disparo
-	const int  SHOOT_FRAMES = 5;			//Frames de la animación
-	const int W_SHOOT_FRAME = 40;			//Ancho del frame
-	const int H_SHOOT_FRAME = 60;			//Alto del frame
-	const int SHOOT_FRAME_RATE = 1;			//Frame rate
-
+	bool shooted = false;					//Para disparar una sola vez en el frame adecuado
+	int frameShoot_ = 0;					//Frame en el que se tiene que disparar
+	//Disparo derecha
+	Anim shootAnimR_{ 0, 0, 0, 0, false};	//Animación de disparo
+	Texture* shootR_ = nullptr;				//Textura del disparo
+	const int SHOOT_R_FRAMES = 5;			//Frames de la animación
+	const int W_SHOOT_R_FRAME = 40;			//Ancho del frame
+	const int H_SHOOT_R_FRAME = 60;			//Alto del frame
+	const int SHOOT_R_FRAME_RATE = 100;		//Frame rate
+	//Disparo hacia arriba
+	Anim shootAnimU_{ 0, 0, 0, 0, false };	//Animación de disparo
+	Texture* shootU_ = nullptr;				//Textura del disparo
+	const int SHOOT_U_FRAMES = 8;			//Frames de la animación
+	const int W_SHOOT_U_FRAME = 28;			//Ancho del frame
+	const int H_SHOOT_U_FRAME = 60;			//Alto del frame
+	const int SHOOT_U_FRAME_RATE = 40;		//Frame rate
+	//Disparo hacia izquierda
+	Anim shootAnimL_{ 0, 0, 0, 0, false };	//Animación de disparo
+	Texture* shootL_ = nullptr;				//Textura del disparo
+	const int SHOOT_L_FRAMES = 5;			//Frames de la animación
+	const int W_SHOOT_L_FRAME = 40;			//Ancho del frame
+	const int H_SHOOT_L_FRAME = 60;			//Alto del frame
+	const int SHOOT_L_FRAME_RATE = 100;		//Frame rate
+	//Disparo hacia abajo
+	Anim shootAnimD_{ 0, 0, 0, 0, false };	//Animación de disparo
+	Texture* shootD_ = nullptr;				//Textura del disparo
+	const int SHOOT_D_FRAMES = 8;			//Frames de la animación
+	const int W_SHOOT_D_FRAME = 28;			//Ancho del frame
+	const int H_SHOOT_D_FRAME = 60;			//Alto del frame
+	const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
+	//Idle
 	//Inicialización de las animaciones
 	virtual void initAnims();
+	//Inicia la animación de disparo
+	void initShoot();
+	//Controla la animación
+	void shootAnim();
+	//Calcula hacia dónde mira el player
+	DIR calculateDirVis();
 #pragma endregion
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
