@@ -59,6 +59,7 @@
     <ClCompile Include="Sources\InventoryButton.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\Kraken.cpp" />
+    <ClCompile Include="Sources\Magordito.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\MainMenuState.cpp" />
     <ClCompile Include="Sources\MonkeyCoco.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Sources\Gun.h" />
     <ClInclude Include="Sources\HandleEvents.h" />
     <ClInclude Include="Sources\Kraken.h" />
+    <ClInclude Include="Sources\Magordito.h" />
     <ClInclude Include="Sources\HUD.h" />
     <ClInclude Include="Sources\Obstacle.h" />
     <ClInclude Include="Sources\MonkeyCoco.h" />

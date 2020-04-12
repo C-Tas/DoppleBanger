@@ -121,6 +121,9 @@ public:
 		WolfFront,
 		Kraken,
 
+		//Bosses
+		Magordito,
+
 		//gizmos
 		Rojo,
 		Azul,

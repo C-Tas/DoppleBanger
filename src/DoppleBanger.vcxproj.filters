@@ -190,6 +190,9 @@
       <Filter>GameObjects\SDL_gfx</Filter>
     </ClCompile>
     <ClCompile Include="Sources\SkillState.cpp" />
+    <ClCompile Include="Sources\Magordito.cpp">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClCompile>
     <ClCompile Include="Sources\PerforateSkill.cpp">
       <Filter>GameObjects\Player</Filter>
     </ClCompile>
@@ -442,6 +445,9 @@
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Sources\SkillState.h" />
+    <ClInclude Include="Sources\Magordito.h">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClInclude>
     <ClInclude Include="Sources\PerforateSkill.h">
       <Filter>GameObjects\Player</Filter>
     </ClInclude>

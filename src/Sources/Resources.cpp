@@ -111,6 +111,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	{ Kraken, "../Sources/assets/enemigos/kraken/kraken.png" },
+	{ Magordito, "../Sources/assets/enemigos/magordito/Magordito.png" },
+	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
+	{ Azul, "../Sources/assets/enemigos/azul.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

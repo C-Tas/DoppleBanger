@@ -8,6 +8,7 @@
 #include "WinState.h"
 #include "Kraken.h"
 
+
 void CaribbeanIslandState::update()
 {
 	if (enemies_.empty()) {
