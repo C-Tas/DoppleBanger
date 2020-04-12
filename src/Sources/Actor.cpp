@@ -1,17 +1,19 @@
 #include "Actor.h"
 
-void Actor::initStats(int health, int mana, int manaReg, int armor, int ad, int ap, int crit, int range, double moveSpeed, double meleeRate, double distRate)
+//Inicialliza los stats
+void Actor::initStats(double health, double mana, double manaReg, double armor, double meleeDmg, double distDmg, double crit,
+	double meleeRange, double distRange, double moveSpeed, double meleeRate, double distRate)
 {
-	currStats_ = Stats(health, mana, manaReg, armor, ad, ap, crit, range, moveSpeed, meleeRate, distRate);
+	currStats_ = Stats(health, mana, manaReg, armor, meleeDmg, distDmg, crit, meleeRange, distRange, moveSpeed, meleeRate, distRate);
 }
-void Actor::changeTexture(bool condition, int animation) {
-	if (condition) {
-		texture_ = textures_[animation];
-		numberFrames_ = framesVector_[animation];
-	}
-	else
-	{
-		texture_ = textures_[0];
-		numberFrames_ = framesVector_[0];
+ 
+//A falta de definir la gesti�n del da�o en funci�n de la armadura
+void Actor::receiveDamage(int damage) {
+	/*double finalDamage = (currStats_.armor_ * damage) / 100;
+	currStats_.health_ -= finalDamage;*/
+	currStats_.health_ -= damage;
+	if (currStats_.health_ <= 0) {
+		this->die();
 	}
 }
+

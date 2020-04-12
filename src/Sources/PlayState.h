@@ -6,34 +6,22 @@
 #include "Enemy.h"
 #include <list>
 
+class CollisionCtrl;
+
 class PlayState : public GameState
 {
-protected:
-	CollisionCtrl* collisionCtrl_ = nullptr;
-	Player* player_ = nullptr;
-	list<Obstacle*> obstacles_;
-	list<Enemy*> enemies_;
-
 public:
 	///<summary>Constructora PlayState</summary>
-	PlayState(Application* app = nullptr) : GameState(app) { initPlayState(); };
+	PlayState(Application* app = nullptr) : GameState(app) { initState(); };
 	///<summary>Destructora</summary>
-	virtual ~PlayState() { };
+	virtual ~PlayState() {};
 
-	///<summary>Inicializa los elementos del PlayState</summary>
-	void initPlayState();
 	///<summary>Llama al update del CollisionManager</summary>
 	virtual void update();
 	///<summary>Ir a pauseState (push)</summary>
 	static void goToPauseState(Application* app);
-	///<summary>Ir a SaveGameState (push)</summary>
-	static void goToSaveGame(Application* app);
 	///<summary>Ir a InventoryState (push)</summary>
 	static void goToInventoryState(Application* app);
-	///<summary>Ir a SelectLevelState (push)</summary>
-	static void goToSelectState(Application* app);
-	///<summary>Ir a StashState (push)</summary>
-	static void goToStashState(Application* app);
 	//falta otro cambio
 
 	///<summary>A�ade un objeto a la lista enemies_, objectsToRender y gameObjects_</summary>
@@ -48,5 +36,14 @@ public:
 	Enemy* findClosestEnemy(Point2D pos);
 	///<summary>Comprueba colisiones con los enemigos y devuelve el primer enemigo en caso de haber colisión</summary>
 	Enemy* collidesWithEnemy(Point2D pos, Vector2D scale);
-};
 
+protected:
+	Point2D playerEntry_ = Vector2D(0, 0);
+	//Singleton de colisiones
+	CollisionCtrl* collisionCtrl_ = nullptr;
+	Player* player_ = nullptr;
+	list<Obstacle*> obstacles_;
+	list<Enemy*> enemies_;
+
+	virtual void initState();
+};

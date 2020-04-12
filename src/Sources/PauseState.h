@@ -1,18 +1,23 @@
 #pragma once
 #include "GameState.h"
+
+//HAY QUE MEJORAR LO DEL BOTON DE MUTE PORQUE SIEMPRE QUE SE CREA EL ESTADO SE CREA EN MUTE_ON
 class PauseState : public GameState
 {
-private:
-	void initState();
 public:
-	///<summary>Constructora PauseState</summary>
 	PauseState(Application* app = nullptr);
-	///<summary>Destructora</summary>
 	virtual ~PauseState() {};
-	///<summary>Vuelve a playState (pop)</summary>
-	static void backToGameState(Application* app);
-	///<summary>Push a controlState</summary>
-	static void goControlState(Application* app);
-	///<summary>Vuelta al menú principal, borra todos los estados menos el primero</summary>
+
+	void changeMute(); //Cambia la textura del botón mute
+
+private:
+	Button* muteButton = nullptr;
+
+	void initState(); //Inicializa el estado
+	#pragma region Callbacks
+	static void resume(Application* app);
+	static void showControls(Application* app);
 	static void goMainMenuState(Application* app);
+	static void muteGame(Application* app);
+	#pragma endregion
 };

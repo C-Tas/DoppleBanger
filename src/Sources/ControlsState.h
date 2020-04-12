@@ -5,7 +5,7 @@ class ControlsState : public GameState
 private:
 	//Variables de la imagen que mostrará la configuración de controles
 	Texture* controlsImage_;
-	const uint controlsW = app_->getWindowWidth();
+	const uint background = app_->getWindowWidth();
 	const uint controlsH = app_->getWindowHeight();
 	void initState();
 
