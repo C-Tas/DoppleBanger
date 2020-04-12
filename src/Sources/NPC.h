@@ -42,6 +42,12 @@ private:
 	const uint W_FRAME_PARROT = 0;
 	const uint H_FRAME_PARROT = 0;
 	const int FRAME_RATE_PARROT = 0;
+
+	//Esqueleto
+	const int NUM_FRAMES_SKELETON = 9;
+	const uint W_FRAME_SKELETON = 75;
+	const uint H_FRAME_SKELETON = 80;
+	const int FRAME_RATE_SKELETON = 200;
 #pragma endregion
 
 protected:

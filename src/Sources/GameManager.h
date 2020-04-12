@@ -42,8 +42,9 @@ enum class spentPoints : int {
 };
 
 enum class missions : int {
-	nombreMision = 0,
-	//Poner aqui nombre de las misiones
+	gallegaEnProblemas = 0,
+	papelesSiniestros
+	//En caso de tener misión para el loro añadirla tb (o si se añade el esqueleto)
 };
 
 #pragma region Skills
@@ -161,6 +162,8 @@ public:
 	const lista getInventory() { return inventory_; };
 	//Devuelve el alijo
 	const lista getStash() { return stash_; };
+	//Devuelve el total de misiones secundarias
+	const int getNumMission() { return NUM_MISION; };
 	//Devuelve el oro conseguido
 	const int getGold() { return currGold_; };
 	//Devuelve los puntos de haza�a

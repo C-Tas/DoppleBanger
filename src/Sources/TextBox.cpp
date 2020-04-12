@@ -73,7 +73,20 @@ void TextBox::dialogChef(bool unlock) {
 	}
 	//Diálogo del chef cuando aún está bloqueado
 	else {
+		Texture text(app_->getRenderer(), "Yo soy un ejemplo de un NPC que aún no ha sido desbloqueado, falta gestionar el comienzo y final de las misiones", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing);
 
+		text.loadFromText(app_->getRenderer(), "secundarias, que pertenecen a otra historia (concretamente 'Misión secundaria - Gallego en problemas').", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+		text.loadFromText(app_->getRenderer(), "Los textos están ajustados para un tamaño mínimo de ventana 1600x900, si se hace más grande, el texto queda", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 3));
+
+		text.loadFromText(app_->getRenderer(), "marginado a la izquierda pero no queda mal, pero si se hace una ventana más pequeña el texto no entra.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 4));
+
+		text.loadFromText(app_->getRenderer(), "Aún así habrá que tener un tamaño mínimo, porque otros elementos también desbordan con una ventana pequeña.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 5));
 	}
 }
 
@@ -105,6 +118,25 @@ void TextBox::dialogParrot() {
 
 	}
 	else if (rnd == 4) {
+
+	}
+}
+
+void TextBox::dialogSkeleton(bool unlock) {
+	initDialog();
+	//Diálogo del esqueleto cuando lo hemos desbloqueado
+	if (unlock) {
+		Texture text(app_->getRenderer(), "Este lindo esqueletito es una prueba de la generación de un NPC desbloquado. Para ello se han cambiado un poco las", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing);
+
+		text.loadFromText(app_->getRenderer(), "colisiones con los NPCs, que podrán reajustarse cuando se cambien las imágenes para gestionar qué partes se", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+		text.loadFromText(app_->getRenderer(), "renderizan por encima y qué por debajo del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 3));
+	}
+	//Diálogo del esqueleto cuando aún está bloqueado
+	else {
 
 	}
 }

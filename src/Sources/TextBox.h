@@ -38,6 +38,9 @@ public:
 	///<summary>Frases del loro, se genera una al azar</summary>
 	void dialogParrot();
 
+	///<summary>Frases del esqueleto</summary>
+	void dialogSkeleton(bool unlock);
+
 	///<summary>Frase del Kraken al empezar/acabar la batalla</summary>
 	void dialogKraken(bool defeated);
 

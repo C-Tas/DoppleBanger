@@ -26,6 +26,9 @@ void NPC::initAnim() {
 	case (int)CollisionCtrl::NPCsNames::Parrot:
 		npcIdle = { NUM_FRAMES_PARROT, W_FRAME_PARROT, H_FRAME_PARROT, FRAME_RATE_PARROT, NAME };
 		break;
+	case (int)CollisionCtrl::NPCsNames::Skeleton:
+		npcIdle = { NUM_FRAMES_SKELETON, W_FRAME_SKELETON, H_FRAME_SKELETON, FRAME_RATE_SKELETON, NAME };
+		break;
 	}
 	currAnim_ = npcIdle;
 	frame_.x = frame_.y = 0;

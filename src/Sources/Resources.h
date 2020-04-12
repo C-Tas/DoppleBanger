@@ -91,6 +91,7 @@ public:
 		MonkeyFront,
 		WolfFront,
 		Cooker,
+		SkeletonMusician,
 
 		//gizmos
 		Rojo,

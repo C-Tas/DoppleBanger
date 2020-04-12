@@ -88,6 +88,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
+	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

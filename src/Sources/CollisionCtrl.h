@@ -19,6 +19,7 @@ public:
 		Chef,
 		Morty,
 		Parrot,
+		Skeleton,
 		Nobody
 	};
 
@@ -64,7 +65,7 @@ public:
 
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
 	void clearList() {
-		obstacles_.clear(); enemies_.clear();
+		npcs_.clear(); obstacles_.clear(); enemies_.clear();
 		/*chests_.clear();*/ triggers_.clear(); enemiesToErase_.clear(); /*chestsToErase_.clear();*/
 		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
 	};
@@ -100,7 +101,7 @@ public:
 
 private:	//Private est� abajo porque necesitan enum del p�blico
 	struct NPCsInfo {
-		NPCsNames id;
+		NPCsNames id = Nobody;
 		NPC* object = nullptr;
 
 		NPCsInfo() {};
@@ -108,7 +109,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	};
 
 	struct ShipObjectsInfo {
-		ShipObjectsNames id;
+		ShipObjectsNames id = Stash;
 		ShipObject* object = nullptr;
 		bool click = false;
 

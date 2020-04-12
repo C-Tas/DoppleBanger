@@ -24,6 +24,7 @@ void CaribbeanIslandState::update()
 void CaribbeanIslandState::initState()
 {
 	collisionCtrl_ = CollisionCtrl::instance();
+	collisionCtrl_->clearList();
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
 	addRenderUpdateLists(background_);
 
@@ -93,7 +94,7 @@ void CaribbeanIslandState::createNPC() {
 	int hWin = app_->getWindowHeight();
 	NPC* chef;
 	Vector2D pos;
-	pos.setVec(Vector2D(800, 400));
+	pos.setVec(Vector2D(wWin / 2, hWin * 3 / 4));
 	chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), pos, Vector2D(app_->getWindowWidth() / 20, app_->getWindowHeight() / 8), 2);
 	addRenderUpdateLists(chef);
 }
