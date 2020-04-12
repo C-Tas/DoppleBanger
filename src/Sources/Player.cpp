@@ -50,7 +50,7 @@ bool Player::update()
 	}
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
-		shoot(eventHandler_->getMousePos());
+		shoot(eventHandler_->getRelativeMousePos());
 #pragma endregion
 
 	//para utilizar las pociones
@@ -93,8 +93,8 @@ bool Player::update()
 		cout << "Ataque potenciado" << endl;
 #endif // _DEBUG
 		empoweredAct_ = false;
-		objective_->reciveDmg((int)currStats_.meleeDmg_ * empoweredBonus_);
-		if (objective_->getState() == STATE::DYING) move(visPos_);
+		objective_->receiveDamage((int)currStats_.meleeDmg_ * empoweredBonus_);
+		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
 		empoweredTime_ = SDL_GetTicks();
 		meleeTime_ = empoweredTime_;
 	}
