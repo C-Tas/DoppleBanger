@@ -1,6 +1,7 @@
 #include "TextBox.h"
 #include "HandleEvents.h"
 #include "Resources.h"
+#include "GameState.h"
 #include "SDL_macros.h"
 
 //Cada línea de los diálogos/descripciones se tiene que renderizar por separado para poder generar los saltos de línea.
@@ -35,6 +36,9 @@ void TextBox::initDescription(Point2D pos) {
 #pragma region Diálogos
 void TextBox::dialogElderMan(int isle) {
 	initDialog();
+	dest.x = lineSpacing;
+	dest.y = app_->getWindowHeight() - dest.h;
+
 	//Viaje a la isla caribeña
 	if (isle == 0) {
 		Texture text(app_->getRenderer(), "Frase 1...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });

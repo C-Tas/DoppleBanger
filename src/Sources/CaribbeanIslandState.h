@@ -16,6 +16,7 @@ public:
 	void createMonkey(int numMonkeys);
 	void createPirates(int numPirates);
 	void createWolves(int numWolves);
+	void createNPC();
 	//void addKills() { kills += 1; }
 #pragma endregion
 protected:

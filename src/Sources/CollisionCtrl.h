@@ -44,6 +44,8 @@ public:
 	void islandCollisions();
 	///<summary>Comprueba las colisiones necesarias en el barco</summary>
 	void shipCollisions();
+	///<summary>Para renderizar los textBox en caso de ser necesario</summary>
+	void drawTextBox();
 
 #pragma region Remove
 	///<summary>Quita las colisiones con el NPC (si el NPC se desbloquea y deja de aparecer en la isla)</summary>
@@ -135,6 +137,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Trigger*> triggersToErase_;
 
 	//Barco
+	int npcCollision = -1;
 	vector<NPCsInfo> npcs_;
 	vector<ShipObjectsInfo> shipObjects_;
 

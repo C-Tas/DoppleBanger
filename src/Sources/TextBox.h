@@ -10,7 +10,6 @@ protected:
 	const int lineSpacing = 30;	//Interlineado y márgenes del texto
 
 public:
-	TextBox() {};
 	///<summary>Constructora del textBox de diálogo</summary>
 	TextBox(Application* app) : app_(app) {};
 	///<summary>Constructora del textBox de descripción</summary>
@@ -120,9 +119,5 @@ public:
 	void Rebote();
 	///<summary>Descripción de la habilidad Perforador del disparo a distancia</summary>
 	void Perforador();
-	
-
-
 #pragma endregion
-
 };

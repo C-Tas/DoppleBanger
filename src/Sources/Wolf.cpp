@@ -149,11 +149,11 @@ bool Wolf::onRange() {
 void Wolf::initAnims()
 {
 	//Para la animación de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK, NUM_FRAMES_ROW_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, NAME_ATK);
+	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, NAME_ATK);
 	//Para la animación de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV, NUM_FRAMES_ROW_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, NAME_MOV);
+	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, NAME_MOV);
 	//Para la animación de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, NUM_FRAMES_ROW_ADLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, NAME_IDLE);
+	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, NAME_IDLE);
 }
 
 //Actualiza la animación en función del frameRate de la actual animación DONE

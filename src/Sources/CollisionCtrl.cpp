@@ -101,22 +101,23 @@ void CollisionCtrl::islandCollisions() {
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			switch (npc_.id) {
 			case ElderMan:
-				//npc_.object->getTextBox().dialogElderMan(-1);
+				npcCollision = 0;
 				break;
 			case Merchant:
-				//npc_.object->getTextBox().dialogMerchant();
+				npcCollision = 1;
 				break;
 			case Chef:
-				//npc_.object->getTextBox().dialogChef(true);
+				npcCollision = 2;
 				break;
 			case Morty:
-				//npc_.object->getTextBox().dialogMorty(true);
+				npcCollision = 3;
 				break;
 			case Parrot:
-				//npc_.object->getTextBox().dialogParrot();
+				npcCollision = 4;
 				break;
 			}
 		}
+		else npcCollision = -1;
 	}
 
 	//Colisi�n cofres con jugador
@@ -185,15 +186,35 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 	        switch (npc.id) {
 	        case Chef:
-				//npc.object->getTextBox().dialogChef(false);
+				npc.object->getTextBox().dialogChef(false);
 	            break;
 	        case Morty:
-				//npc.object->getTextBox().dialogMorty(false);
+				npc.object->getTextBox().dialogMorty(false);
 	            break;
 			case Parrot:
-				//npc.object->getTextBox().dialogParrot();
+				npc.object->getTextBox().dialogParrot();
 				break;
 			}
 		}
+	}
+}
+
+void CollisionCtrl::drawTextBox() {
+	switch (npcCollision) {
+	case 0:
+		npc_.object->getTextBox().dialogElderMan(-1);
+		break;
+	case 1:
+		npc_.object->getTextBox().dialogMerchant();
+		break;
+	case 2:
+		npc_.object->getTextBox().dialogChef(true);
+		break;
+	case 3:
+		npc_.object->getTextBox().dialogMorty(true);
+		break;
+	case 4:
+		npc_.object->getTextBox().dialogParrot();
+		break;
 	}
 }

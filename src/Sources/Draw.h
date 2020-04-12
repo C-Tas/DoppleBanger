@@ -8,19 +8,20 @@
 class Draw : public GameObject
 {
 protected:
-	struct  Anim
+	struct Anim
 	{
 		int numberFrames_;		// Número de frames totales
-		int numberFramesRow_;	// Número de frames por fila 
 		uint widthFrame_;		// Ancho del frame
 		uint heightFrame_;		// Alto del frame
 		int frameRate_;			// Velocidad a la que se cambia de frames
+		int currFrame_ = 0;
 		string name_;
-		Anim(int numberFrames, int numberFramesRow, uint widthFrame, uint heightFrame, int frames,string name) :
-		numberFrames_(numberFrames), numberFramesRow_(numberFramesRow), widthFrame_(widthFrame),
-			heightFrame_(heightFrame), frameRate_(frames),name_(name) {}
+		Anim(int numberFrames, uint widthFrame, uint heightFrame, int frames,string name) :
+		numberFrames_(numberFrames), widthFrame_(widthFrame), heightFrame_(heightFrame), frameRate_(frames), name_(name) {}
 	};
-	Anim currAnim_ {0,0,0,0,0,""};
+	Anim currAnim_ {0,0,0,0,""};
+
+	Uint32 lastFrame_ = 0;
 	//Textura del objeto
 	Texture* texture_ = nullptr;
 	//Rect del render
@@ -75,7 +76,11 @@ public:
 	//<summary>cambia el frame </summary>
 	virtual bool update() { return false; };
 	//Cambia al siguiente frame
-	virtual void updateFrame() { frame_.x = (frame_.x + frame_.w) % (currAnim_.numberFrames_ * frame_.w); };
+	virtual void updateFrame() { 
+		if (currAnim_.frameRate_ <= SDL_GetTicks() - lastFrame_) {
+			lastFrame_ = SDL_GetTicks();
+			frame_.x = (frame_.x + frame_.w) % (currAnim_.numberFrames_ * frame_.w); };
+		}
 
 #pragma region getters
 //Devuelve el rectangulo destino

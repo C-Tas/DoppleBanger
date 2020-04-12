@@ -30,6 +30,7 @@ void CaribbeanIslandState::initState()
 	createMonkey(NUM_MONKEYS);
 	createPirates(NUM_PIRATES);
 	createWolves(NUM_WOLVES);
+	createNPC();
 
 	//Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- W_PLAYER), ((app_->getWindowHeight() * 8 / 10) - H_PLAYER));
@@ -85,4 +86,14 @@ void CaribbeanIslandState::createWolves(int numWolves)
 		newWolf = new Wolf(app_, pos, Vector2D(W_MONKEY, H_MONKEY), patrol);
 		addEnemy(newWolf);
 	}
+}
+
+void CaribbeanIslandState::createNPC() {
+	int wWin = app_->getWindowWidth();
+	int hWin = app_->getWindowHeight();
+	NPC* chef;
+	Vector2D pos;
+	pos.setVec(Vector2D(800, 400));
+	chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), pos, Vector2D(app_->getWindowWidth() / 20, app_->getWindowHeight() / 8), 2);
+	addRenderUpdateLists(chef);
 }
