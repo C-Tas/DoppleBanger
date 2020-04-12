@@ -4,7 +4,13 @@
 vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Botones
 	{ MenuButton, "../Sources/assets/botones/botonMenu.png" },
-	{ GoControls, "../Sources/assets/botones/botonControles.png" },
+	{ PlayButton, "../Sources/assets/botones/playButton.png" },
+	{ ControlsButton, "../Sources/assets/botones/controlButton.png" },
+	{ CreditsButton, "../Sources/assets/botones/creditosButton.png" },
+	{ ExitButton, "../Sources/assets/botones/exitButton.png" },
+	{ LoadButton, "../Sources/assets/botones/loadButton.png" },
+	{ GoMainMenuButton, "../Sources/assets/botones/mainMenuButton.png" },
+	{ ResumeButton, "../Sources/assets/botones/resumeButton.png" },
 	{ BackButton, "../Sources/assets/botones/volver.png" },
 	{ SkipButton, "../Sources/assets/botones/skipButton.png" },
 	{ RestartGame, "../Sources/assets/botones/restartGame.png" },
@@ -21,17 +27,12 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ EquippedButton, "../Sources/assets/botones/Equipar_Boton.png"},
 	{ GoToInventoryAButton, "../Sources/assets/botones/InventoryButtonA.png"},
 	{ GoToInventoryBButton, "../Sources/assets/botones/InventoryButtonB.png"},
-
-	//Interfaces
-	{ GoControls, "../Sources/assets/botones/botonControles.png"},
-	{ BackButton, "../Sources/assets/botones/volver.png"},
-
 	{ ButtonX, "../Sources/assets/botones/botonX.png"},
 	{ ButtonUpgradeGreen, "../Sources/assets/botones/UpgradeButtonGreen.png"},
 	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},
 	{ ButtonUpgradeBlue, "../Sources/assets/botones/UpgradeButtonBlue.png"},
 	{ ButtonUpgradeYellow, "../Sources/assets/botones/UpgradeButtonYellow.png"},
-
+	
 	//Barras Puntos de Hazaña
 	{ GreenBar, "../Sources/assets/botones/greenBar.png"},
 	{ BlueBar, "../Sources/assets/botones/blueBar.png"},
@@ -58,6 +59,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ SkillTorbellinoC, "../Sources/assets/skills/torbellinoHab.png"},
 	{ SkillTorbellinoBN, "../Sources/assets/skills/torbellinoHabBN.png"},
 
+	//Interfaces
 	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
 	{ PauseBackground, "../Sources/assets/interfaces/pauseFondo.png" },
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
@@ -80,25 +82,27 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Win, "../Sources/assets/interfaces/win.png" },
 
 	//HUD
-	{  WheelHUD, "../Sources/assets/hud/timonHUD.png" },
-	{  RopeHUD,	"../Sources/assets/hud/lazoHUD.png" },
-	{  SkillsHUD, "../Sources/assets/hud/skillsHUD.png" },
-	{  CooldownHUD, "../Sources/assets/hud/cooldownHUD.png" },
-	{  LifeHUD, "../Sources/assets/hud/vida.png" },
-	{  ExplosionIcon, "../Sources/assets/hud/iconos/explosion.png" },
-	{  GolpeFuerteIcon, "../Sources/assets/hud/iconos/golpeFuerte.png" },
-	{  InvencibleIcon, "../Sources/assets/hud/iconos/invencible.png" },
-	{  LiberacionIcon, "../Sources/assets/hud/iconos/liberacion.png" },
-	{  PerforanteIcon, "../Sources/assets/hud/iconos/perforante.png" },
-	{  RaudoIcon, "../Sources/assets/hud/iconos/raudo.png" },
-	{  ReboteIcon, "../Sources/assets/hud/iconos/rebote.png" },
-	{  TorbellinoIcon, "../Sources/assets/hud/iconos/torbellino.png" },
-	{  HealthPot, "../Sources/assets/hud/iconos/vidaPot.png" },
-	{  ManaPot, "../Sources/assets/hud/iconos/manaPot.png" },
-	{  SpeedPot, "../Sources/assets/hud/iconos/speedPot.png" },
-	{  ArmorPot, "../Sources/assets/hud/iconos/armorPot.png" },
-	{  DmgPot, "../Sources/assets/hud/iconos/dmgPot.png" },
-	{  CritPot, "../Sources/assets/hud/iconos/critPot.png" },
+	{ WheelHUD, "../Sources/assets/hud/timonHUD.png" },
+	{ RopeHUD,	"../Sources/assets/hud/lazoHUD.png" },
+	{ SkillsHUD, "../Sources/assets/hud/skillsHUD.png" },
+	{ CooldownHUD, "../Sources/assets/hud/cooldownHUD.png" },
+	{ LifeHUD, "../Sources/assets/hud/vida.png" },
+	{ ExplosionIcon, "../Sources/assets/hud/iconos/explosion.png" },
+	{ GolpeFuerteIcon, "../Sources/assets/hud/iconos/golpeFuerte.png" },
+	{ InvencibleIcon, "../Sources/assets/hud/iconos/invencible.png" },
+	{ LiberacionIcon, "../Sources/assets/hud/iconos/liberacion.png" },
+	{ PerforanteIcon, "../Sources/assets/hud/iconos/perforante.png" },
+	{ RaudoIcon, "../Sources/assets/hud/iconos/raudo.png" },
+	{ ReboteIcon, "../Sources/assets/hud/iconos/rebote.png" },
+	{ TorbellinoIcon, "../Sources/assets/hud/iconos/torbellino.png" },
+
+	//Objects
+	{ HealthPot, "../Sources/assets/hud/iconos/vidaPot.png" },
+	{ ManaPot, "../Sources/assets/hud/iconos/manaPot.png" },
+	{ SpeedPot, "../Sources/assets/hud/iconos/speedPot.png" },
+	{ ArmorPot, "../Sources/assets/hud/iconos/armorPot.png" },
+	{ DmgPot, "../Sources/assets/hud/iconos/dmgPot.png" },
+	{ CritPot, "../Sources/assets/hud/iconos/critPot.png" },
 
 	//Sprites
 	{ Dragon,"../Sources/assets/enemigos/dragon.png"},

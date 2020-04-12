@@ -227,14 +227,18 @@
       <Filter>GameObjects\Player</Filter>
     </ClCompile>
     <ClCompile Include="Sources\TextBox.cpp" />
-    <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Skill.cpp">
       <Filter>GameObjects\Player</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Clon.cpp">
       <Filter>GameObjects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\PlayerBullet.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp">
+      <Filter>GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\PlayerBullet.cpp">
+      <Filter>GameObjects\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -478,14 +482,18 @@
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Sources\TextBox.h" />
-    <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Skill.h">
       <Filter>GameObjects\Player</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Clon.h">
       <Filter>GameObjects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\PlayerBullet.h" />
+    <ClInclude Include="Sources\TextBox.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\PlayerBullet.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

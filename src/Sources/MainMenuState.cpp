@@ -21,64 +21,45 @@ void MainMenuState::initState()
 	bg_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground));
 	addRenderUpdateLists(bg_);
 
-
-
 	//Cargamos música de fondo
 	app_->getAudioManager()->playMusic(Resources::MainTheme, -1);
 
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
-
 }
 
 void MainMenuState::createButtons() {
 	//creamos el boton para ir a los controles
-	Button* controlButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuButton),
+	Button* controlButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ControlsButton),
 		{ double(app_->getWindowWidth() / 2) - button_w * 1.5  ,(double)(app_->getWindowHeight() / 2) },
 		{ button_w  ,button_h }, goControlState);
 	gameObjects_.push_back(controlButton);
 	objectsToRender_.push_back(controlButton);
-	VisualElement* controlText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::ControlsText), controlButton->getDestiny());
-	objectsToRender_.push_back(controlText);
-	gameObjects_.push_back(controlText);
 	//creamos el boton para ir a los creditos
-	Button* creditButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuButton),
+	Button* creditButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CreditsButton),
 		{ double(app_->getWindowWidth() / 2) + button_w / 2   , (double)(app_->getWindowHeight() / 2) },
 		{ button_w  ,button_h }, goCreditsState);
 	gameObjects_.push_back(creditButton);
 	objectsToRender_.push_back(creditButton);
-	VisualElement* creditText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::CreditsText), creditButton->getDestiny());
-	objectsToRender_.push_back(creditText);
-	gameObjects_.push_back(creditText);
 	//creamos el boton para jugar cargando el juego del archivo de guardado
-	Button* loadButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuButton),
+	Button* loadButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButton),
 		{ double(app_->getWindowWidth() / 2) - button_w * 1.5 ,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
 		{ button_w,button_h }, goLoadState);
 	gameObjects_.push_back(loadButton);
 	objectsToRender_.push_back(loadButton);
-	VisualElement* loadText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::LoadText), loadButton->getDestiny());
-	objectsToRender_.push_back(loadText);
-	gameObjects_.push_back(loadText);
 	//creamos el boton para jugar sin cargar el juego del archivo de guardado
-	Button* playButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuButton),
+	Button* playButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::PlayButton),
 		{ double(app_->getWindowWidth() / 2) + button_w / 2,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
 		{ button_w,button_h }, goStoryState);
 	gameObjects_.push_back(playButton);
 	objectsToRender_.push_back(playButton);
-	VisualElement* playText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::PlayText), playButton->getDestiny());
-	objectsToRender_.push_back(playText);
-	gameObjects_.push_back(playText);
 
 	//Boton para salir del juego
-	Button* exitButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuButton),
+	Button* exitButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ExitButton),
 		{ double(app_->getWindowWidth() / 2) - button_w / 2,double(app_->getWindowHeight() / 2) + button_h * 2.4 },
 		{ button_w,button_h }, exitGame);
 	gameObjects_.push_back(exitButton);
 	objectsToRender_.push_back(exitButton);
-	VisualElement* exitText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::ExitText), exitButton->getDestiny());
-	objectsToRender_.push_back(exitText);
-	gameObjects_.push_back(exitText);
-
 
 #ifdef _DEBUG
 	cout << "creados los botones correctamente"<<endl;

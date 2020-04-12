@@ -13,7 +13,13 @@ public:
 	enum TextureId : int {
 		//Botones
 		MenuButton,
-		GoControls,
+		PlayButton,
+		ControlsButton,
+		CreditsButton,
+		ExitButton,
+		LoadButton,
+		GoMainMenuButton,
+		ResumeButton,
 		BackButton,
 		SkipButton,
 		MuteOff,
@@ -99,6 +105,8 @@ public:
 		RaudoIcon,
 		ReboteIcon,
 		TorbellinoIcon,
+
+		//Objects
 		HealthPot,
 		ManaPot,
 		SpeedPot,
@@ -106,7 +114,7 @@ public:
 		DmgPot,
 		CritPot,
 
-		//Personajes
+		//Sprites
 		Dragon,
         PlayerFront,
 		MonkeyFront,

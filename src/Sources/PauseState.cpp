@@ -60,26 +60,17 @@ void PauseState::initState()
 
 
 	//Bot�n de reanudar
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, resume);
-	VisualElement* resumeText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::ResumeText), textButon);
-	objectsToRender_.push_back(resumeText);
-	gameObjects_.push_back(resumeText);
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::ResumeButton), posButton, sizeButton, resume);
 
 	//Bot�n de controles
 	posButton = posButton + Vector2D(0, winHeight / 4);
 	textButon.y = posButton.getY();
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, showControls);
-	VisualElement* controlText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::ControlsText), textButon);
-	objectsToRender_.push_back(controlText);
-	gameObjects_.push_back(controlText);
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::ControlsButton), posButton, sizeButton, showControls);
 
 	//Bot�n de men� principal
 	posButton = posButton + Vector2D(0, winHeight / 4 );
 	textButon.y = posButton.getY();
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::MenuButton), posButton, sizeButton, goMainMenuState);
-	VisualElement* mainMenuText = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::MainMenuText), textButon);
-	objectsToRender_.push_back(mainMenuText);
-	gameObjects_.push_back(mainMenuText);
+	createButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState);
 	
 	//Bot�n de mute
 	//Se multiplica por la proporci�n winWidth/winHeight para hacer un cuadrado
