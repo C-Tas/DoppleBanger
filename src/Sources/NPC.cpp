@@ -5,7 +5,7 @@
 void NPC::initObject() {
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scale_.getX(),(int)scale_.getY() });
-	CollisionCtrl::instance()->setLockNPC((CollisionCtrl::NPCsNames)npcType_, this);
+	CollisionCtrl::instance()->addNPC((CollisionCtrl::NPCsNames)npcType_, this);
 	initAnim();
 }
 

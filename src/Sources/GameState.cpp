@@ -43,7 +43,6 @@ void GameState::draw() const {
 	for (auto it = objectsToRender_.begin(); it != objectsToRender_.end(); ++it) {
 		(*it)->draw();
 	}
-	CollisionCtrl::instance()->drawTextBox();
 }
 
 void GameState::handleEvents() {

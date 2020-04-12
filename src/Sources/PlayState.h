@@ -16,6 +16,8 @@ public:
 	///<summary>Destructora</summary>
 	virtual ~PlayState() {};
 
+	//Método necesario para dibujar los textbox por encima del juego
+	virtual void draw()const;
 	///<summary>Llama al update del CollisionManager</summary>
 	virtual void update();
 	///<summary>Ir a pauseState (push)</summary>

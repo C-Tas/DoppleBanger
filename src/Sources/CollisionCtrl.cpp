@@ -95,29 +95,24 @@ void CollisionCtrl::islandCollisions() {
 		}
 	}
 
-	//Colisi�n NPC con jugador
-	if (npc_.object != nullptr) {
-		if (Collisions::collides(npc_.object->getPos(), npc_.object->getScaleX(), npc_.object->getScaleY(),
+	//Colisi�n NPC con jugador -- Como mucho habrá uno por zona
+	if (npcs_.size() > 0) {
+		if (Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX(), npcs_[0].object->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-			switch (npc_.id) {
-			case ElderMan:
-				npcCollision = 0;
-				break;
-			case Merchant:
-				npcCollision = 1;
-				break;
+			onShip = false;
+			npcCollision.object = npcs_[0].object;
+			switch (npcs_[0].id) {
 			case Chef:
-				npcCollision = 2;
+				npcCollision.id = Chef;
 				break;
 			case Morty:
-				npcCollision = 3;
+				npcCollision.id = Morty;
 				break;
 			case Parrot:
-				npcCollision = 4;
+				npcCollision.id = Parrot;
 				break;
 			}
 		}
-		else npcCollision = -1;
 	}
 
 	//Colisi�n cofres con jugador
@@ -182,17 +177,24 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 	for (auto npc : npcs_) {
 		if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
 			npc.object->getPosX() + npc.object->getScaleX() / 2, npc.object->getPosY() + npc.object->getScaleY() / 2, npc.object->getScaleX(), npc.object->getScaleY() / 10)) {
-			player_->stop();
+			onShip = true;
+			npcCollision.object = npc.object;
 
 	        switch (npc.id) {
+			case ElderMan:
+				npcCollision.id = ElderMan;
+				break;
+			case Merchant:
+				npcCollision.id = Merchant;
+				break;
 	        case Chef:
-				npc.object->getTextBox().dialogChef(false);
+				npcCollision.id = Chef;
 	            break;
 	        case Morty:
-				npc.object->getTextBox().dialogMorty(false);
+				npcCollision.id = Morty;
 	            break;
 			case Parrot:
-				npc.object->getTextBox().dialogParrot();
+				npcCollision.id = Parrot;
 				break;
 			}
 		}
@@ -200,21 +202,24 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 }
 
 void CollisionCtrl::drawTextBox() {
-	switch (npcCollision) {
-	case 0:
-		npc_.object->getTextBox().dialogElderMan(-1);
+	//Generamos un textbox si se ha dado alguna colisión con un NPC
+	switch (npcCollision.id) {
+	case ElderMan:
+		npcCollision.object->getTextBox().dialogElderMan(-1);
 		break;
-	case 1:
-		npc_.object->getTextBox().dialogMerchant();
+	case Merchant:
+		npcCollision.object->getTextBox().dialogMerchant();
 		break;
-	case 2:
-		npc_.object->getTextBox().dialogChef(true);
+	case Chef:
+		npcCollision.object->getTextBox().dialogChef(onShip);
 		break;
-	case 3:
-		npc_.object->getTextBox().dialogMorty(true);
+	case Morty:
+		npcCollision.object->getTextBox().dialogMorty(onShip);
 		break;
-	case 4:
-		npc_.object->getTextBox().dialogParrot();
+	case Parrot:
+		npcCollision.object->getTextBox().dialogParrot();
 		break;
 	}
+	npcCollision.id = Nobody;
+	npcCollision.object = nullptr;
 }
