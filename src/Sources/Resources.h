@@ -69,6 +69,7 @@ public:
 		Stash,
 		ShipDoor,
 		ExitShip,
+		Chest,
 
 		//Colsionable
 		Rock,

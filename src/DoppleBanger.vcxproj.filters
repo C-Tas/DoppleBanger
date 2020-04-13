@@ -194,6 +194,7 @@
     </ClCompile>
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Chest.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -405,6 +406,8 @@
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Chest.h" />
+    <ClInclude Include="Sources\Bullet.h" />
+    <ClInclude Include="Sources\TextBox.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

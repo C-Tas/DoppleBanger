@@ -7,10 +7,14 @@ class Chest : public interactuable
 
 private:
 	RandEquipGen rN;
-
+	//Anim Chest
 public:
-	Chest(Application* app, SDL_Rect collisionArea, Texture* texture, Point2D pos, Vector2D scale) : //constructora
-		interactuable(/*app, pos, scale*/), rN(RandEquipGen(app)) {};
+	//Constructora por defecto
+	Chest(Application* app, Point2D pos, Vector2D scale) : //constructora
+		interactuable(app, pos, scale), rN(RandEquipGen(app)) 
+	{
+		initObject();
+	};
 
 	virtual ~Chest() {};
 
@@ -18,5 +22,7 @@ public:
 
 	virtual bool update();
 
-	virtual void onCollider() {};
+	virtual void onCollider();
+
+	virtual void initObject();
 };

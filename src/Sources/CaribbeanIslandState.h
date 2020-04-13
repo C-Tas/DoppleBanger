@@ -6,7 +6,9 @@ class Player;
 class CaribbeanIslandState : public PlayState
 {
 private:
-	Chest* chest_ = nullptr; //temporal
+	//Chest* chest_ = nullptr; //temporal
+	Point2D* posChest = new Vector2D(200, 200);
+	Vector2D* scaleChest = new Vector2D(100, 100);
 public:
 //<summary>Constructor de la isla caribeña</summary>
 	CaribbeanIslandState(Application* app) : PlayState(app) { initState(); }
@@ -29,6 +31,9 @@ protected:
 
 	const int W_MONKEY = app_->getWindowWidth() / 20;
 	const int H_MONKEY = app_->getWindowHeight() / 15;
+
+	const int W_CHEST = app_->getWindowWidth() / 20;
+	const int H_CHEST = app_->getWindowHeight() / 15;
 
 	const int NUM_MONKEYS = 1;
 	const int NUM_PIRATES = 2;

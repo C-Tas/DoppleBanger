@@ -33,11 +33,17 @@ void CaribbeanIslandState::initState()
 	createWolves(NUM_WOLVES);
 	createChest(NUM_CHEST);
 
+	//Crear Chest
+	//chest_ = new Chest(app_, Vector2D(200, 200), Vector2D(100, 100));
+	
+
 	//Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- W_PLAYER), ((app_->getWindowHeight() * 8 / 10) - H_PLAYER));
 	player_->setPos(playerEntry_);
 	player_->setScale({ (double)W_PLAYER,(double)H_PLAYER });
 	addRenderUpdateLists(player_);
+
+
 }
 
 void CaribbeanIslandState::createMonkey(int numMonkeys)
@@ -93,10 +99,13 @@ void CaribbeanIslandState::createChest(int numChest)
 {
 	int wWin = app_->getWindowWidth();
 	int hWin = app_->getWindowHeight();
-	Chest* chest;
+	Chest* newChest;
 	Vector2D pos;
-	
-	//chest = new Chest(app_, playerCollision, app_->getTextureManager()->getTexture(Resources::TextureId::GoControls), Vector2D(200, 200), Vector2D(100, 100));
-	addUpdateList(chest_);
-	addRenderList(chest_);
+	for (int i = 0; i < numChest; i++) {
+		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
+		newChest = new Chest(app_, pos, Vector2D(W_CHEST, H_CHEST));
+		addUpdateList(newChest);
+		addRenderList(newChest);
+		//addObject
+	}
 }
