@@ -9,13 +9,15 @@ class Chest : public interactuable
 private:
 	RandEquipGen rN;
 	
+	Anim openAnim_ = { 0,0,0,0,0 ,"" };
+
 	//Anim Chest
-	const int NUM_FRAMES_ATK = 10;
-	const int NUM_FRAMES_ROW_ATK = 3;
-	const uint W_FRAME_ATK = 200;
-	const uint H_FRAME_ATK = 200;
-	const int FRAME_RATE_ATK = 500;
-	const string NAME_ATK = "attack";
+	const int NUM_FRAMES_OPEN = 10;
+	const int NUM_FRAMES_ROW_OPEN = 3;
+	const uint W_FRAME_OPEN = 200;
+	const uint H_FRAME_OPEN = 200;
+	const int FRAME_RATE_OPEN = 500;
+	const string NAME_OPEN = "open";
 public:
 	//Constructora por defecto
 	Chest(Application* app, Point2D pos, Vector2D scale) : //constructora
