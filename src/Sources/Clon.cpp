@@ -15,7 +15,7 @@ bool Clon::update()
 			meleeTime_ = SDL_GetTicks();
 		}
 	}
-	else die();
+	else if (alive) die();
 
 	return false;
 }
@@ -38,4 +38,5 @@ void Clon::die()
 	agredEnemys_.clear();
 	gm->setClon(nullptr);
 	app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
+	alive = false;
 }

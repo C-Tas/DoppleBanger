@@ -34,6 +34,7 @@ private:
 	double spawnTime_ = 0; //Ticks cuando se le hizo spawn
 	double meleeTime_ = 0; //Ticks cuando se atac� por �ltima vez
 	double duration_ = 0; //Duraci�n del clon
+	bool alive = true;
 
 	Actor* objective_ = nullptr;
 	Player* player_ = nullptr;
