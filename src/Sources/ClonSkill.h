@@ -8,10 +8,10 @@ class ClonSkill : public Skill
 private:
 	const int COOLDOWN = 5;
 	const int CLON_SPAWN_RANGE = 700;
-	const double COST_MANA = 10;
+	const double MANA_COST = 10;
 
 public:
-	ClonSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { cooldown_ = COOLDOWN; costMana_ = COST_MANA; };
+	ClonSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { cooldown_ = COOLDOWN; costMana_ = MANA_COST; };
 	virtual ~ClonSkill() {};
 
 	virtual void action() {

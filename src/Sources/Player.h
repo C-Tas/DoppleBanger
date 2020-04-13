@@ -55,6 +55,7 @@ public:
 	};
 
 #pragma region Getters
+	const Clon* getClon() { return clon_; };
 	const int getLiberation() { return liberation_; };
 	const int getMoney() { return money_; };
 	const double getMaxHealth() { return HEALTH; }; //Faltaria poner una variable que lleve la vida maxima sin ser cte
@@ -62,10 +63,6 @@ public:
 
 	const Vector2D getPreviousPos() { return previousPos_; }
 	//Devuelve la posición del clon
-	const Vector2D getClonPos() { return clon_->getPos(); };
-	//Devuelve la escala del clon
-	const Vector2D getClonScale() { return clon_->getScale(); };
-
 	const Stats& getStats() { return currStats_; };
 	//Devuelve la información del equipment
 	playerEquipment& const getInfoEquip() { return equip_; }
