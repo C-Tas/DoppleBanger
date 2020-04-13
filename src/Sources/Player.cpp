@@ -8,13 +8,14 @@
 #include "TextBox.h"
 #include "PlayerBullet.h"
 
-//Habilidades
+//Habilidades y pociones
 #include "ClonSkill.h"
 #include "WhirlwindSkill.h"
 #include "ClonSelfDestructSkill.h"
 #include "EmpoweredSkill.h"
 #include "RicochetSkill.h"
 #include "PerforateSkill.h"
+#include "usable.h"
 
 void Player::initObject()
 {
@@ -38,6 +39,7 @@ void Player::initObject()
 	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Botas", "helloWorld", 10, 10, 10); equip_.boots_->writeStats(); //Prueba
 	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, Saber_); equip_.sword_->writeStats(); //Prueba
 	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
+	equip_.potion1_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, 10);	//Prueba
 }
 
 bool Player::update()
@@ -46,7 +48,7 @@ bool Player::update()
 	for (int i = 0; i < 4; i++) {
 		if (skills_[i] != nullptr && cdSkills[i] && !skills_[i]->isCD()) {
 			cdSkills[i] = false;
-			GameManager::instance()->setSkillCooldown(false, (SkillKey)i);
+			GameManager::instance()->setSkillCooldown(false, (Key)i);
 		}
 	}
 	//Cuando se acabe el tiempo de ricochet, se pone a false
@@ -56,17 +58,17 @@ bool Player::update()
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q)) {
 		skills_[0]->action();
-		GameManager::instance()->setSkillCooldown(true, SkillKey::Q);
+		GameManager::instance()->setSkillCooldown(true, Key::Q);
 		cdSkills[0] = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_W)) {
 		skills_[1]->action();
-		GameManager::instance()->setSkillCooldown(true, SkillKey::W);
+		GameManager::instance()->setSkillCooldown(true, Key::W);
 		cdSkills[1] = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_E)) {
 		skills_[2]->action();
-		GameManager::instance()->setSkillCooldown(true, SkillKey::E);
+		GameManager::instance()->setSkillCooldown(true, Key::E);
 		cdSkills[2] = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_R)) {
@@ -79,15 +81,15 @@ bool Player::update()
 		if (skills_[0] != nullptr) delete skills_[0];
 		skills_[0] = new RicochetSkill(this);
 		cdSkills[0] = false;
-		gm_->setSkillEquiped(SkillName::Rebote, SkillKey::Q);
-		GameManager::instance()->setSkillCooldown(false, SkillKey::Q);
+		gm_->setSkillEquiped(SkillName::Rebote, Key::Q);
+		GameManager::instance()->setSkillCooldown(false, Key::Q);
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_9)) {
 		if (skills_[1] != nullptr) delete skills_[1];
 		skills_[1] = new PerforateSkill(this);
 		cdSkills[1] = false;
-		gm_->setSkillEquiped(SkillName::DisparoPerforante, SkillKey::W);
-		GameManager::instance()->setSkillCooldown(false, SkillKey::W);
+		gm_->setSkillEquiped(SkillName::DisparoPerforante, Key::W);
+		GameManager::instance()->setSkillCooldown(false, Key::W);
 	}
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
@@ -99,12 +101,14 @@ bool Player::update()
 		if (equip_.potion1_ != nullptr) {
 			PotionTime1 = SDL_GetTicks();
 			equip_.potion1_->use(this);
+			gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 		}
 	}
 	if (eventHandler_->isKeyDown(SDLK_2)) {
 		if (equip_.potion2_ != nullptr) {
 			PotionTime2 = SDL_GetTicks();
 			equip_.potion2_->use(this);
+			gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 		}
 	}
 
@@ -224,6 +228,7 @@ void Player::usePotion(int value, potionType type) {
 		break;
 	case mana_:
 		currStats_.mana_ += value;
+		cout << currStats_.mana_ << endl;
 		break;
 	case velocity_:
 		currStats_.moveSpeed_ += value;
@@ -275,9 +280,10 @@ void Player::desactivePotion(){
 
 void Player::setElementsHUD()
 {
-	gm_->setSkillEquiped(SkillName::Torbellino, SkillKey::Q);
-	gm_->setSkillEquiped(SkillName::GolpeFuerte, SkillKey::W);
-	gm_->setSkillEquiped(SkillName::Explosion, SkillKey::E);
+	gm_->setSkillEquiped(SkillName::Torbellino, Key::Q);
+	gm_->setSkillEquiped(SkillName::GolpeFuerte, Key::W);
+	gm_->setSkillEquiped(SkillName::Explosion, Key::E);
+	gm_->setObjectEquipped(ObjectName::Mana, Key::One);
 }
 
 void Player::createClon()

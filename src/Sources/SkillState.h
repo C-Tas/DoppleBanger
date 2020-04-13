@@ -63,7 +63,7 @@ protected:
 	void setSelectedSkillButton(SkillButton* button);
 	///<summary>M�todo auxiliar para el callback de equipar la skill a las teclas
 	///0->q, 1->w, 2->e </summary>
-	void equipSelectedSkill(SkillKey key);
+	void equipSelectedSkill(Key key);
 
 	///<summary>M�todos auxiliares para el feedback visual</summary>
 	void meleePointsActualized();

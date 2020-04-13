@@ -1,11 +1,9 @@
 #pragma once
 #include "Actor.h"
-#include "HandleEvents.h"
 #include "Clon.h"
-#include "Enemy.h"
 #include "usable.h"
+#include "HandleEvents.h"
 #include <array>
-
 class Skill;
 
 struct playerEquipment

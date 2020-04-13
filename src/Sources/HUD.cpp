@@ -12,8 +12,8 @@ HUD::~HUD() {
 }
 
 const void HUD::draw() {
-	//Esto deja basura, ya se decidirá sobre ello
-	//filledPieRGBA(app_->getRenderer(), xMana_, yMana_, W_WHEEL / 2, START_MANA, endMana_, 36, 113, 163, 255);
+	//Esto deja basura, pero Carlitos nos deja
+	filledPieRGBA(app_->getRenderer(), xMana_, yMana_, W_WHEEL / 2, START_MANA, endMana_, 36, 113, 163, 255);
 
 	for (auto it = elementsHUD_.begin(); it != elementsHUD_.end(); ++it) {
 		(*it)->draw();
@@ -28,25 +28,17 @@ const void HUD::draw() {
 
 	//Se reccorre el vector de las teclas para renderizarlas encima del HUD en caso de que hubiera textura
  	int i = 0;
-	for (i = 0; i < 4; i++) {
+	for (i = 0; i < ICON_AMOUNT; i++) {
 		if (icons[i] != nullptr) {
-			if (cdKeys[i]) cdBg_->render(cdRect_);
+			if (i < 4 && cdKeys[i]) cdBg_->render(cdRect_);
 			icons[i]->render(iconRect);
 		}
 		//Actualiza el rect
-		if (i < 3) {
+		if (i != 3) {
 			iconRect.x += DISTANCE_BTW_ICON;
 			cdRect_.x += DISTANCE_BTW_ICON;
 		}
-	}
-	//Resposicionamiento de los iconos
-	iconRect.x += app_->getWindowWidth() / 10.4;
-	for (int j = i; j < ICON_AMOUNT; j++) {
-		if (icons[j] != nullptr) {
-			icons[j]->render(iconRect);
-		}
-		//Actualiza el rect
-		iconRect.x += DISTANCE_BTW_ICON;
+		else iconRect.x += app_->getWindowWidth() / 10.4;
 	}
 
 	//Para los puntos de hazaña
@@ -64,45 +56,34 @@ const void HUD::draw() {
 }
 
 bool HUD::update() {
-	currentLife_ = dynamic_cast<Player*>(gm_->getPlayer())->getStats().health_;
+	currentLife_ = dynamic_cast<Player*>(gm_->getPlayer())->getHealth();
 	propLife_ = currentLife_ / maxLife_;
 	clipLife_.h = life_->getHeight() * propLife_; //vidaAct * AltTotal / VidaMax
 	clipLife_.y = life_->getHeight() - clipLife_.h;
 
-	currentMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getStats().mana_;
+	currentMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getMana();
 	propMana_ = currentMana_ / maxMana_;
 	endMana_ = (MAX_DEGREES_MANA * propMana_) + START_MANA;	//Proporción de vida para el arco del maná
 	if (endMana_ <= 90) endMana_ = 90;
-
-	//Para eliminar un objeto cuando se usa
-	HandleEvents* event = HandleEvents::instance();
-	if (event->isKeyDown(SDL_SCANCODE_1) && icons[4] != nullptr) icons[4] = nullptr;
-	if (event->isKeyDown(SDL_SCANCODE_2) && icons[5] != nullptr) icons[5] = nullptr;
 	return false;
 }
 
-void HUD::updateSkillKey(int key) {
+void HUD::updateKey(int key) {
 	switch (key)
 	{
-	case (int)SkillKey::Q:
+	case (int)Key::Q:
 		icons[key] = createSkillIcon(key);
 		break;
-	case (int)SkillKey::W:
+	case (int)Key::W:
 		icons[key] = createSkillIcon(key);
 		break;
-	case (int)SkillKey::E:
+	case (int)Key::E:
 		icons[key] = createSkillIcon(key);
 		break;
-	}
-}
-
-void HUD::updateObjectKey(int key) {
-	switch (key)
-	{
-	case (int)ObjectKey::One:
+	case (int)Key::One:
 		icons[key] = createObjectIcon(key);
 		break;
-	case (int)ObjectKey::Two:
+	case (int)Key::Two:
 		icons[key] = createObjectIcon(key);
 		break;
 	}
@@ -110,16 +91,16 @@ void HUD::updateObjectKey(int key) {
 
 void HUD::setSkillCooldown(bool cooldown, int key) {
 	switch (key) {
-	case (int)SkillKey::Q:
+	case (int)Key::Q:
 		cdKeys[key] = cooldown;
 		break;
-	case (int)SkillKey::W:
+	case (int)Key::W:
 		cdKeys[key] = cooldown;
 		break;
-	case (int)SkillKey::E:
+	case (int)Key::E:
 		cdKeys[key] = cooldown;
 		break;
-	case (int)SkillKey::R:
+	case (int)Key::R:
 		cdKeys[key] = cooldown;
 		break;
 	}
@@ -154,12 +135,12 @@ void HUD::initObject() {
 
 	#pragma region Skills&Objects
 	//Aisgna la textura a la tecla correspondiente y se añaden al vector
-	icons.push_back(createSkillIcon((int)SkillKey::Q));
-	icons.push_back(createSkillIcon((int)SkillKey::W));
-	icons.push_back(createSkillIcon((int)SkillKey::E));
+	icons.push_back(createSkillIcon((int)Key::Q));
+	icons.push_back(createSkillIcon((int)Key::W));
+	icons.push_back(createSkillIcon((int)Key::E));
 	icons.push_back(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
-	icons.push_back(createObjectIcon((int)ObjectKey::One));
-	icons.push_back(createObjectIcon((int)ObjectKey::Two));
+	icons.push_back(createObjectIcon((int)Key::One));
+	icons.push_back(createObjectIcon((int)Key::Two));
 
 	cdBg_ = app_->getTextureManager()->getTexture(Resources::CooldownHUD);
 	for (int i = 0; i < 4; i++) {
@@ -192,7 +173,7 @@ void HUD::createBg(Texture* tx, const SDL_Rect& destRect) {
 }
 
 Texture* HUD::createSkillIcon(int key) {
-	switch (gm_->getEquippedSkill((SkillKey)key))
+	switch (gm_->getEquippedSkill((Key)key))
 	{
 	case SkillName::Unequipped:
 		return nullptr;
@@ -218,7 +199,7 @@ Texture* HUD::createSkillIcon(int key) {
 }
 
 Texture* HUD::createObjectIcon(int key) {
-	switch (gm_->getObjectEquipped((ObjectKey)key))
+	switch (gm_->getObjectEquipped((Key)key))
 	{
 	case ObjectName::Unequipped:
 		return nullptr;

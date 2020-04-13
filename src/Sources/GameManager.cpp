@@ -13,26 +13,26 @@ const bool GameManager::isSkillAsign(SkillName skill) {
 	return !i == skillsEquipped_.size();
 }
 
-const SkillKey GameManager::getEquippedSkillKey(SkillName skill) {
+const Key GameManager::getEquippedSkillKey(SkillName skill) {
 	int i = 0;
 	while (i < skillsEquipped_.size() && skillsEquipped_[i] != skill)i++;
-	return (SkillKey)i;
+	return (Key)i;
 }
 
-void GameManager::setSkillCooldown(bool cooldown, SkillKey key)
+void GameManager::setSkillCooldown(bool cooldown, Key key)
 {
 	skillsCooldown[(int)key] = cooldown;
 	hud_->setSkillCooldown(cooldown, (int)key);
 }
 
-void GameManager::setSkillEquiped(SkillName newSkill, SkillKey key)
+void GameManager::setSkillEquiped(SkillName newSkill, Key key)
 {
 	skillsEquipped_[(int)key] = newSkill;
-	hud_->updateSkillKey((int)key);
+	hud_->updateKey((int)key);
 }
 
-void GameManager::setObjectEquipped(ObjectName newObject, ObjectKey key)
+void GameManager::setObjectEquipped(ObjectName newObject, Key key)
 {
-	objectsEquipped[(int)key] = newObject;
-	hud_->updateObjectKey((int)key);
+	objectsEquipped[(int)key - (int)Key::One] = newObject;
+	hud_->updateKey((int)key);
 }

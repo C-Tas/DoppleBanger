@@ -38,7 +38,7 @@ void SkillState::update()
 	point.y = eventHandler_->getRealMousePos().getY();
 	while (i < assignButtons.size() && !SDL_PointInRect(&point, &assignButtons[i]))i++;
 	//Si lo est�, actualizamos cual descripcion debe mostrarse
-	if (i < assignButtons.size()) lastPointed = gm_->getEquippedSkill((SkillKey)i);
+	if (i < assignButtons.size()) lastPointed = gm_->getEquippedSkill((Key)i);
 	
 	if (SDL_PointInRect(&point, &goToInventary_->getDestiny())) {
 		goToInventary_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryBButton));
@@ -176,7 +176,7 @@ void SkillState::setSelectedSkillButton(SkillButton* button)
 #endif // _DEBUG
 }
 
-void SkillState::equipSelectedSkill(SkillKey key)
+void SkillState::equipSelectedSkill(Key key)
 {
 	if (selected_ != nullptr && selected_->isUnlocked()) {
 		//Si no est� asignada, no hay ninguna en esa tecla y no es una pasiva
@@ -187,7 +187,7 @@ void SkillState::equipSelectedSkill(SkillKey key)
 		//Si est� equipada pero la tecla en la que queremos equipar est� libre
 		else if (selected_->isAsigned() && selected_->getSkillType() != SkillType::Pasive && gm_->getEquippedSkill(key) == SkillName::Unequipped) {
 
-			SkillKey aux = gm_->getEquippedSkillKey(selected_->getSkillId());
+			Key aux = gm_->getEquippedSkillKey(selected_->getSkillId());
 			gm_->setSkillEquiped(SkillName::Unequipped, aux);
 			gm_->setSkillEquiped(selected_->getSkillId(), key);
 		}
@@ -201,7 +201,7 @@ void SkillState::equipSelectedSkill(SkillKey key)
 			///Si la skill que queremos introducir est� ya asignada a una tecla
 			if (selected_->isAsigned()) {
 				//Buscamos en cual estaba asignada
-				SkillKey changingKey = gm_->getEquippedSkillKey((selected_)->getSkillId());
+				Key changingKey = gm_->getEquippedSkillKey((selected_)->getSkillId());
 				//Equipamos la skill seleccionada en la tecla correspondiente
 				gm_->setSkillEquiped(selected_->getSkillId(), key);
 				//Reasignamos la skill que estaba en la tecla q a la tecla en la que se encontraba 
@@ -393,7 +393,7 @@ void SkillState::setPlayerSkills()
 {
 	if (player_ != nullptr) {
 		for (int i = 0; i < gm_->getAllSkillsEquipped().size() - 1; i++) {//-i pq la del clon siempre est� equipada por defecto
-			player_->setSkillAt(i, createSkill(gm_->getEquippedSkill((SkillKey)i)));
+			player_->setSkillAt(i, createSkill(gm_->getEquippedSkill((Key)i)));
 		}
 	}
 }
@@ -531,7 +531,7 @@ void SkillState::assingToQKey(Application* app)
 #ifdef _DEBUG
 	cout << "Asignado a la tecla Q" << endl;
 #endif // _DEBUG
-	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(SkillKey::Q);
+	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(Key::Q);
 }
 
 void SkillState::assingToWKey(Application* app)
@@ -539,7 +539,7 @@ void SkillState::assingToWKey(Application* app)
 #ifdef _DEBUG
 	cout << "Asignado a la tecla W" << endl;
 #endif // _DEBUG
-	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(SkillKey::W);
+	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(Key::W);
 }
 
 void SkillState::assingToEKey(Application* app)
@@ -548,12 +548,10 @@ void SkillState::assingToEKey(Application* app)
 	cout << "Asignado a la tecla E" << endl;
 #endif // _DEBUG
 
-	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(SkillKey::E);
+	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(Key::E);
 }
 
 void SkillState::changeDescription(Application* app, SkillName name)
 {
 	dynamic_cast<SkillState*>(app->getCurrState())->changeDescription(name);
 }
-
-

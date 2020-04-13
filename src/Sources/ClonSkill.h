@@ -8,9 +8,10 @@ class ClonSkill : public Skill
 private:
 	const int COOLDOWN = 5;
 	const int CLON_SPAWN_RANGE = 700;
+	const double COST_MANA = 10;
 
 public:
-	ClonSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { cooldown_ = COOLDOWN; };
+	ClonSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { cooldown_ = COOLDOWN; costMana_ = COST_MANA; };
 	virtual ~ClonSkill() {};
 
 	virtual void action() {
@@ -23,10 +24,11 @@ public:
 			if (dist.magnitude() <= CLON_SPAWN_RANGE)
 			{
 				player_->removeMana(costMana_);
+				cout << "Baja maná" << endl;
 				player_->createClon();
 				lastTimeUsed_ = SDL_GetTicks();
 				player_->setClonCoolDown();
-				GameManager::instance()->setSkillCooldown(true, SkillKey::R);
+				GameManager::instance()->setSkillCooldown(true, Key::R);
 			}
 		}
 	};

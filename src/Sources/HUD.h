@@ -13,9 +13,7 @@ public:
 	//Estos dos métodos tienen que ser llamados sólo una vez, por lo que se llaman
 	//desde GameManager al configurar las teclas en el inventario o en el skillState
 	//Actualiza la textura asignada a la tecla
-	void updateSkillKey(int key);
-	//Actualiza la textura asignada a la tecla
-	void updateObjectKey(int key);
+	void updateKey(int key);
 	//Actualiza el estado del cooldown
 	void setSkillCooldown(bool cooldown, int key);
 

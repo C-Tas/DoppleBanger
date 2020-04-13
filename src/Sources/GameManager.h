@@ -1,16 +1,15 @@
 #pragma once
-
-#include <memory>
-#include <iostream>
-#include <list>
-#include "Equipment.h"
 #include "InventoryButton.h"
 #include "RandEquipGen.h"
-#include <vector>
-#include "checkML.h"
+#include "Equipment.h"
 #include "Player.h"
 #include "Clon.h"
 #include "HUD.h"
+#include "checkML.h"
+#include <iostream>
+#include <memory>
+#include <vector>
+#include <list>
 
 using namespace std;
 class Item;
@@ -74,11 +73,13 @@ enum class SkillName : int {
 };
 
 //Enum para identificar las teclas de las habilidades
-enum class SkillKey : int {
+enum class Key : int {
 	Q,
 	W,
 	E,
-	R
+	R,
+	One,
+	Two
 };
 #pragma endregion
 #pragma region Objetos
@@ -92,12 +93,6 @@ enum class ObjectName : int {
 	Armor,
 	Dmg,
 	Crit
-};
-
-//Enum para identificar las teclas de los objetos
-enum class ObjectKey : int {
-	One,
-	Two
 };
 #pragma endregion
 
@@ -138,7 +133,7 @@ private:
 	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
 	vector<bool> skillsUnlocked_ = { false, false ,false, false, false, false, false, true, false, false, false }; //Clon inicializada por defecto
 	//Vector que contiene las habilidades equipadas
-	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped,SkillName::Unequipped,SkillName::Unequipped,SkillName::Clon };
+	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
 	vector<ObjectName> objectsEquipped = { ObjectName::Unequipped, ObjectName::Unequipped };
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
@@ -148,7 +143,7 @@ private:
 	//Puntero al HUD
 	HUD* hud_ = nullptr;
 public:
-	//Constructor vac�o
+	//Constructor vacio
 	GameManager() {
 		unlockedIslands_ = Island::Volcanic;
 		for (int i = 0; i < NUM_MISION; i++) {
@@ -215,11 +210,11 @@ public:
 	const spentPoints getGhostPoints() { return ghost_; };
 	
 	//Devuele la habilidad asignada en la tecla
-	const SkillName getEquippedSkill(SkillKey key) { return skillsEquipped_[(int)key]; }
+	const SkillName getEquippedSkill(Key key) { return skillsEquipped_[(int)key]; }
 	//Devuelve la tecla en la que está equipada la habilidad
-	const SkillKey getEquippedSkillKey(SkillName skill);
+	const Key getEquippedSkillKey(SkillName skill);
 	//Devuelve el objeto equipado
-	const ObjectName getObjectEquipped(ObjectKey key) { return objectsEquipped[(int)key]; }
+	const ObjectName getObjectEquipped(Key key) { return objectsEquipped[(int)key - (int)Key::One]; }
 	
 	//Devuelve la posici�n del player
 	const Point2D getPlayerPos() { return player_->getPos(); };
@@ -264,11 +259,11 @@ public:
 	inline void setSkillUnlocked(SkillName skill) { skillsUnlocked_[(int)skill] = true; }
 
 	//Actualiza el estado del cooldown, no es inline por el HUD
-	void setSkillCooldown(bool cooldown, SkillKey key);
+	void setSkillCooldown(bool cooldown, Key key);
 	//Actualiza la habilidad equipada en el HUD y en el vector, no es inline por el HUD
-	void setSkillEquiped(SkillName newSkill, SkillKey key);
+	void setSkillEquiped(SkillName newSkill, Key key);
 	//Actualiza el objeto equipado en el HUD y en el vector, no es inline por el HUD
-	void setObjectEquipped(ObjectName newObject, ObjectKey key);
+	void setObjectEquipped(ObjectName newObject, Key key);
 
 	//Asigna al puntero de player
 	inline void setPlayer(GameObject* player) { player_ = player; };

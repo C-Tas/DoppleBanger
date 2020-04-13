@@ -6,5 +6,3 @@ void usable::use(Player* player)
 	player->usePotion(value_, type_);
 	used_ = true;
 }
-
-
