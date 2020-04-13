@@ -141,7 +141,7 @@ bool Player::update()
 	}
 
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
-	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective_->getState() != STATE::DYING)
+	else if (attacking_ && objective_ != nullptr && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective_->getState() != STATE::DYING)
 	{
 #ifdef _DEBUG
 		cout << "\nAtaque a melee\n" << endl;

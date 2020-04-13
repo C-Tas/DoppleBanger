@@ -38,7 +38,7 @@ bool MonkeyCoco ::update() {
 		{
 			currState_ == STATE::IDLE;
 			changeAnim(idleAnim_);
-			currEnemy_ = nullptr;
+			lostAggro();
 		}
 		lastHit = SDL_GetTicks();
 	}

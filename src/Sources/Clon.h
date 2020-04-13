@@ -7,6 +7,7 @@
 class Player;
 
 const double DURATION_ = 2; //En segundos
+const int CLON_TAUNT_RANGE = 500;
 
 class Clon : public Collider
 {
@@ -21,8 +22,6 @@ public:
 
 	void changeDuration(double dur) { duration_ = dur; } //En caso de que se pueda modificar la duraci�n
 	void die();
-	//Agrega un enemigo que está agred
-	inline void addAgredEnemy(Enemy* enemy) { agredEnemys_.push_back(enemy); }
 	//Devuelve el coste de maná de la habilidad
 	int getCost() { return cost_; };
 
@@ -37,8 +36,7 @@ private:
 
 	Actor* objective_ = nullptr;
 	Player* player_ = nullptr;
-	//Lista de enemigos que están atacando al clon
-	list<Enemy*> agredEnemys_;
+	list<Enemy*> enemies_;
 
 	void initObject(int ad, int meleeRate, int lib) {
 		spawnTime_ = SDL_GetTicks();
@@ -49,5 +47,6 @@ private:
 
 	virtual void initObject();
 	virtual void initAnim() {};
+	void taunt();
 };
 

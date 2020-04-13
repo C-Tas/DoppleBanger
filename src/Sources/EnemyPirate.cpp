@@ -178,13 +178,6 @@ void EnemyPirate::updateAnim()
 	}
 }
 
-//Cambia la actual animación del mono si no la tiene "equipada"
-void EnemyPirate::changeAnim(Anim& newAnim) {
-	if (newAnim.name_ != currAnim_.name_) {
-		currAnim_ = newAnim;
-	}
-}
-
 //Se encarga de gestionar el ataque a melee o distancia DONE
 void EnemyPirate::attack() {
 	if (currAtackStatus_ == ATK_STATUS::RANGE && currStats_.distRate_ <= SDL_GetTicks() - lastRangeHit_) {
@@ -223,65 +216,27 @@ void EnemyPirate::onCollider()
 
 }
 
-//Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_ DONE
-bool EnemyPirate::getEnemy() {
-	auto gm = GameManager::instance();
-	Vector2D playerPos = isPlayerInRange();
-	Vector2D clonPos = isClonInRange();
-	if (playerPos == Vector2D{ -1,-1 } && clonPos == Vector2D{ -1,-1 }) {
-		return false;
-		currEnemy_ = nullptr;
-	}
-
-	Vector2D closesetEnemy;
-	closesetEnemy = pos_.getClosest(playerPos, clonPos);
-	closesetEnemy == playerPos ? currEnemy_ = gm->getPlayer() : currEnemy_ = gm->getClon();
-	if (!app_->getMute()) {
-		app_->getAudioManager()->playChannel(Resources::AudioId::Agro, 0, 0);
-	}
-	return true;
-}
-
 //Cuando el pirata pierde el agro, se le asigna el agro del player
 //Esto lo llama el clon cuando se destruye
-void EnemyPirate::lostAgro()
+void EnemyPirate::lostAggro()
 {
 	currEnemy_ = GameManager::instance()->getPlayer();
 }
 
-//Devuelve la posición del player si está a rango DONE
-Vector2D EnemyPirate::isPlayerInRange() {
-	GameManager* gm = GameManager::instance();
-	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
+//Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_ DONE
+bool EnemyPirate::getEnemy() {
+	auto gm = GameManager::instance();
+	Vector2D playerPos = isPlayerInRange();
+	if (playerPos == Vector2D{ -1,-1 }) {
+		return false;
+		currEnemy_ = nullptr;
+	}
 
-	Point2D playerPos = gm->getPlayerPos();
-	if (currEnemy_ == nullptr &&
-		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && playerPos.getX() >= pos_.getX()  - rangeVision_
-		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && playerPos.getY() >= pos_.getY()  - rangeVision_) {
-		return playerPos;
+	currEnemy_ = gm->getPlayer();
+	if (!app_->getMute()) {
+		app_->getAudioManager()->playChannel(Resources::AudioId::Agro, 0, 0);
 	}
-	else
-	{
-		return  { -1,-1 };
-	}
-}
-
-//Devuelve la posición del clon si está a rango DONE
-Vector2D EnemyPirate::isClonInRange() {
-	GameManager* gm = GameManager::instance();
-	if (gm->getClon() == nullptr) { return { -1,-1 }; }
-
-	Point2D clonPos = gm->getClon()->getPos();
-	if (currEnemy_ == nullptr &&
-		clonPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && clonPos.getX() >= pos_.getX() - rangeVision_
-		&& clonPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && clonPos.getY() >= pos_.getY() - rangeVision_) {
-		static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
-		return clonPos;
-	}
-	else
-	{
-		return { -1,-1 };
-	}
+	return true;
 }
 
 //Genera la posición a la que se mueve el pirata en función de su rango 
@@ -302,4 +257,20 @@ void EnemyPirate::selectTarget() {
 	}
 	target_ = posToReach;
 	move(enemycenterPos);
+}
+
+Vector2D EnemyPirate::isPlayerInRange() {
+	GameManager* gm = GameManager::instance();
+	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
+
+	Point2D playerPos = gm->getPlayerPos();
+	if (currEnemy_ == nullptr &&
+		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && playerPos.getX() >= pos_.getX() - rangeVision_
+		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && playerPos.getY() >= pos_.getY() - rangeVision_) {
+		return playerPos;
+	}
+	else
+	{
+		return  { -1,-1 };
+	}
 }

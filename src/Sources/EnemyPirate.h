@@ -16,6 +16,9 @@ public:
 	virtual void initObject();
 	virtual void onCollider();
 	virtual void move(Vector2D pos);
+	//Cuando pierde agro del enemigo
+	virtual void lostAggro();
+
 	virtual  ~EnemyPirate() {};
 
 private:
@@ -90,25 +93,20 @@ private:
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet
 	const SDL_Rect FIRST_FRAME = { 0,0,0,0 };
-	//Determina si el jugador está dentro del rango de ataque del monkeyCoco
-	Vector2D isPlayerInRange();
-	//Determina si el clon está dentro del rango de ataque del monkeyCoco
-	Vector2D isClonInRange();
+
 	//Ataque del pirata enemigo
 	void attack();
-	//Gestiona las diferentes animaciones que tiene el monkeyCoco
-	void changeAnim(Anim& newAnim);
 	//Devuelve true si el target está dentro del rango de ataque
 	bool onRange();
 	//Inicializa todas las animaciones
 	void initAnims();
 	//Actualiza la actual animación
 	void updateAnim();
-	//Busca y actualiza al enemigo que atacar
-	bool getEnemy();
-	//Cuando pierde agro del enemigo
-	virtual void lostAgro();
 	//Genera la posición a la que se mueve el pirata en función de su rango 
 	void selectTarget();
+	//Redefine la forma de buscar un enemigo
+	bool getEnemy();
+	//Redefine la forma de buscar al player
+	Vector2D isPlayerInRange();
 };
 

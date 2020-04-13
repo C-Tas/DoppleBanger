@@ -15,7 +15,7 @@ bool Clon::update()
 			meleeTime_ = SDL_GetTicks();
 		}
 	}
-	else die();
+	else player_->killClon();
 
 	return false;
 }
@@ -27,15 +27,21 @@ void Clon::initObject() {
 	duration_ = DURATION_;
 	meleeRate_ = (player_->getStats().meleeRange_ / 2) * player_->getLiberation();
 	ad_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
+	taunt();
 }
 
 void Clon::die()
 {
 	GameManager* gm = GameManager::instance();
-	for (auto enemy : agredEnemys_) {
-		enemy->lostAgro();
-	}
-	agredEnemys_.clear();
 	gm->setClon(nullptr);
 	app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
+	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
+		(*it)->lostAggro();
+}
+
+void Clon::taunt()
+{
+	enemies_ = CollisionCtrl::instance()->getEnemiesInArea(getVisPos(pos_), CLON_TAUNT_RANGE);
+	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
+		(*it)->newEnemy(this);
 }

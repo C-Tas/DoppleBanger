@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Skill.h"
-#include "HandleEvents.h"
+#include "CollisionCtrl.h"
 
 class ClonSkill : public Skill
 {
 private:
 	const int COOLDOWN = 5;
-	const int CLON_SPAWN_RANGE = 700;
+	const int CLON_SPAWN_RANGE = 1000;
 
 public:
 	ClonSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { cooldown_ = COOLDOWN; };
