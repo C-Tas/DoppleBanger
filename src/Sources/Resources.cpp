@@ -114,6 +114,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Magordito, "../Sources/assets/enemigos/magordito/Magordito.png" },
 	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
 	{ Azul, "../Sources/assets/enemigos/azul.png" },
+	{ Cleon, "../Sources/assets/enemigos/cleon/cleon.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

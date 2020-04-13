@@ -242,6 +242,9 @@
     <ClCompile Include="Sources\PlayerBullet.cpp">
       <Filter>GameObjects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\Cleon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -500,6 +503,9 @@
     <ClInclude Include="Sources\PlayerBullet.h">
       <Filter>GameObjects\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\Cleon.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

@@ -32,6 +32,7 @@
     <ClCompile Include="Sources\Button.cpp" />
     <ClCompile Include="Sources\Camera.cpp" />
     <ClCompile Include="Sources\CaribbeanIslandState.cpp" />
+    <ClCompile Include="Sources\Cleon.cpp" />
     <ClCompile Include="Sources\Clon.cpp" />
     <ClCompile Include="Sources\Collider.cpp" />
     <ClCompile Include="Sources\CollisionCtrl.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Sources\Camera.h" />
     <ClInclude Include="Sources\CaribbeanIslandState.h" />
     <ClInclude Include="Sources\checkML.h" />
+    <ClInclude Include="Sources\Cleon.h" />
     <ClInclude Include="Sources\Clon.h" />
     <ClInclude Include="Sources\ClonSelfDestructSkill.h" />
     <ClInclude Include="Sources\ClonSkill.h" />
