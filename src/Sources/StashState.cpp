@@ -63,8 +63,8 @@ void StashState::draw() const
 
 	//Dibujamos los objetos visibles en el inventario y en el alijo
 	//Primer vector determina donde se posiciona el primer objeto y el segundo la distancia en x e y entre objetos
-	drawList(stash_.objects_, stash_.page_, STASH_VISIBLE_ELEMENTS, FIRST_STASH_ELEMENT, DISTANCE_BETWEEN_ELEMENTS, ELEMENTS_PER_ROW);
-	drawList(inventory_.objects_, inventory_.page_, INVENTORY_VISIBLE_ELEMENTS, FIRST_INVENTORY_ELEMENT, DISTANCE_BETWEEN_ELEMENTS, ELEMENTS_PER_ROW);
+	drawList(stash_.objects_, stash_.firstDrawn, STASH_VISIBLE_ELEMENTS, FIRST_STASH_ELEMENT, DISTANCE_BETWEEN_ELEMENTS, ELEMENTS_PER_ROW);
+	drawList(inventory_.objects_, inventory_.firstDrawn, INVENTORY_VISIBLE_ELEMENTS, FIRST_INVENTORY_ELEMENT, DISTANCE_BETWEEN_ELEMENTS, ELEMENTS_PER_ROW);
 
 	//Escribimos la informaci�n del boton seleccionado
 	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render(DESCRIPTION_RECT);
@@ -74,15 +74,16 @@ void StashState::draw() const
 void StashState::update()
 {
 	//update de los objetos del inventario que hay en pantalla
-	auto it = inventory_.objects_->begin();
-	advance(it, inventory_.page_ * INVENTORY_VISIBLE_ELEMENTS);
+	//auto it = inventory_.objects_->begin();
+	//advance(it, inventory_.page_ * INVENTORY_VISIBLE_ELEMENTS);
+	auto it = inventory_.firstDrawn;
 	for (int i = 0; it != inventory_.objects_->end() && i < INVENTORY_VISIBLE_ELEMENTS; i++) {
 		(*it)->update();
 		++it;
 	}
 	//update de los objetos del alijo que hay en pantalla
-	it = stash_.objects_->begin();
-	advance(it, stash_.page_ * STASH_VISIBLE_ELEMENTS);
+	it = stash_.firstDrawn;
+	//advance(it, stash_.page_ * STASH_VISIBLE_ELEMENTS);
 	for (int i = 0; it != stash_.objects_->end() && i < STASH_VISIBLE_ELEMENTS; i++) {
 		(*it)->update();
 		++it;
@@ -173,6 +174,9 @@ void StashState::initState() {
 		(*ob)->setNewCallBack(callbackSelectObject);
 		(*ob)->setCurrentState(this);
 	}
+
+	inventory_.firstDrawn = inventory_.objects_->begin();
+	stash_.firstDrawn = stash_.objects_->begin();
 }
 
 void StashState::endState()
@@ -191,6 +195,7 @@ void StashState::advanceInventoryPage() {
 	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
 	if (((inventory_.page_ + 1) * INVENTORY_VISIBLE_ELEMENTS) < inventory_.objects_->size()) {
 		inventory_.page_++;
+		advance(inventory_.firstDrawn, INVENTORY_VISIBLE_ELEMENTS);
 	}
 }
 
@@ -198,6 +203,8 @@ void StashState::previousInventoryPage()
 {	//Si el primer elemento de la p�gina anterior del la lista no es negativo(no existe), retrocedemos
 	if (((inventory_.page_ - 1) * INVENTORY_VISIBLE_ELEMENTS) >=0) {
 		inventory_.page_--;
+		advance(inventory_.firstDrawn, -INVENTORY_VISIBLE_ELEMENTS);
+
 	}
 }
 
@@ -205,6 +212,8 @@ void StashState::advanceStashPage()
 {	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
 	if ((stash_.page_ + 1) * STASH_VISIBLE_ELEMENTS < stash_.objects_->size()) {
 		stash_.page_++;
+		advance(stash_.firstDrawn, STASH_VISIBLE_ELEMENTS);
+
 	}
 }
 
@@ -212,6 +221,7 @@ void StashState::previousStashPage()
 {	//Si el primer elemento de la p�gina anterior del la lista no es negativo(no existe), retrocedemos
 	if ((stash_.page_ - 1) * STASH_VISIBLE_ELEMENTS >= 0) {
 		stash_.page_--;
+		advance(stash_.firstDrawn, -STASH_VISIBLE_ELEMENTS);
 	}
 }
 
@@ -228,7 +238,7 @@ void StashState::changeBetweenLists()
 	if (selected_ != nullptr) {
 
 		//Buscamos si el objeto selected est� en la lista del inventario
-		auto it = find(inventory_.objects_->begin(), inventory_.objects_->end(), selected_);
+		auto it = find(inventory_.firstDrawn, inventory_.objects_->end(), selected_);
 		
 		//Una vez sabemos a cual, lo intercambiamos de lista
 		if (it == inventory_.objects_->end()) {
@@ -236,6 +246,8 @@ void StashState::changeBetweenLists()
 			selectedIsLastElement(stash_, STASH_VISIBLE_ELEMENTS);
 			//Insertamos en la otra lista
 			it = inventory_.objects_->insert(inventory_.objects_->end(), selected_);
+			//Si no había ningún elemento en la lista, asignamos como por defecto el primero
+			if (inventory_.objects_->end() == inventory_.firstDrawn)inventory_.firstDrawn = inventory_.objects_->begin();
 			//Lo quitamos de la inicial
 			stash_.objects_->erase(selected_->getIterator());
 			//actualizamos iterador
@@ -247,6 +259,8 @@ void StashState::changeBetweenLists()
 			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
 			//Insertamos en la otra lista
 			it = stash_.objects_->insert(stash_.objects_->end(), selected_);
+			//Si no había ningún elemento en la lista, asignamos como por defecto el primero
+			if (stash_.objects_->end() == stash_.firstDrawn)stash_.firstDrawn = stash_.objects_->begin();
 			//Lo quitamos
 			inventory_.objects_->erase(selected_->getIterator());
 			//actualizamos iterador
@@ -261,7 +275,7 @@ void StashState::deleteObject()
 	if (selected_ != nullptr) {
 
 		//Buscamos si el objeto selected est� en la lista del inventario
-		auto it = find(inventory_.objects_->begin(), inventory_.objects_->end(), selected_);
+		auto it = find(inventory_.firstDrawn, inventory_.objects_->end(), selected_);
 
 		//Quitamos el objeto de la lista en la que se encuentra
 		if (it == inventory_.objects_->end()) {
@@ -301,13 +315,13 @@ void StashState::addMoneyToStash()
 
 #pragma endregion
 
-void StashState::drawList(list<InventoryButton*>* list_, int page, const int elemsPerPage, Vector2D iniElemPos, Vector2D distanceBetween, int elementsPerRow)const
+void StashState::drawList(list<InventoryButton*>* list_, list<InventoryButton*>::iterator it, const int elemsPerPage, Vector2D iniElemPos, Vector2D distanceBetween, int elementsPerRow)const
 {
 	//Si existe la lista y no est� vac�a la dibujamos
 	if (list_!= nullptr && !list_->empty()) {
 		int i = 0;
-		auto aux = list_->begin();
-		advance(aux, page * elemsPerPage);
+		auto aux = it;
+		//advance(aux, page * elemsPerPage);
 		while (aux != list_->end() && i < elemsPerPage / elementsPerRow) {//filas
 			int j = 0;
 			while (aux != list_->end() && j < elementsPerRow) {//columnas
@@ -336,10 +350,15 @@ void StashState::selectedIsLastElement(Container & list_, int nVisibleElements)
 {
 	auto aux = list_.objects_->begin();
 	advance(aux, list_.page_ * nVisibleElements);
+	if (selected_->getIterator() == list_.firstDrawn && list_.firstDrawn == aux && aux != --list_.objects_->end())++list_.firstDrawn;
+	else if (selected_->getIterator() == list_.firstDrawn && list_.firstDrawn != list_.objects_->begin() && list_.firstDrawn == --list_.objects_->end()) {
+		advance(list_.firstDrawn, -nVisibleElements);
+#ifdef _DEBUG
+		cout << "Cambio de pagina" << endl;
+#endif // _DEBUG
 
-	//Si es el ultimo objeto,no es el primero de todos, est� solo en una p�gina y es el que queremos mover, 
-	//vamos a retroceder esa p�gina a la anterior con objetos
-	if (--list_.objects_->end() == selected_->getIterator() && list_.page_ > 0 && selected_->getIterator() == aux) list_.page_--;
+		list_.page_--;
+	}
 }
 
 void StashState::moneyChange()

@@ -13,6 +13,7 @@ struct Container {
 	int money_ = 0;
 	///<summary>Posici�n del texto con el dinero del container</summary>
 	SDL_Rect moneyText = {0,0,0,0};
+	list<InventoryButton*>::iterator firstDrawn;
 };
 
 class StashState :
@@ -41,7 +42,7 @@ private:
 	///<summary>N�mero de elementos del alijo que se ven por pantalla</summary>
 	const int STASH_VISIBLE_ELEMENTS = 8;
 	///<summary>Tama�o de los botones que son "cuadrados"</summary>
-	const int BUTTON_SIZE = (int)0.75*(app_->getWindowHeight()/9);
+	const int BUTTON_SIZE = (int)3*(app_->getWindowHeight()/36);
 	///<summary>Posici�n en y en la que se pintan las flechas para avanzar/retroceder en el inventario/alijo </summary>
 	const int ARROW_ROW = (16*(app_->getWindowHeight()/50));
 	///<summary>Posici�n en y en la que se pintan los botones para mover el dinero entre el inventario/alijo</summary>
@@ -89,7 +90,7 @@ private:
 #pragma endregion
 
 	///<summary>M�todo privado para pintar las dos listas con objetos de la forma que precisen</summary>
-	void drawList(list<InventoryButton*>*  list_, int page, const int elemsPerPage, Vector2D iniElemPos, Vector2D distanceBetween,int elementsPerRow = 1)const ;
+	void drawList(list<InventoryButton*>*  list_, list<InventoryButton*>::iterator page, const int elemsPerPage, Vector2D iniElemPos, Vector2D distanceBetween,int elementsPerRow = 1)const ;
 	///<summary>M�todo privado para saber cuantas cifras tiene el dinero tanto del inventario como del alijo (para que los numeros tengan
 	///siempre el mismo tama�o)</summary>
 	int nOfDigits(int n) const;
