@@ -52,7 +52,6 @@ ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(
 	addRenderList(shopGobackButton_);
 
 #ifdef _DEBUG
-	cout << "creamos el objeto" << endl;
 	string nombre = "gloves";
 	string desc = "desc";
 

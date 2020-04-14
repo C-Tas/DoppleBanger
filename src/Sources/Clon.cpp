@@ -7,11 +7,14 @@
 bool Clon::update()
 {
 	if ((SDL_GetTicks() - spawnTime_) / 1000 < duration_) {
-		if (meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING || Vector2D(abs(objective_->getPosX() - pos_.getX()), abs(objective_->getPosY() - pos_.getY())).magnitude() > range_))
+		Vector2D clonPos = getVisPos(pos_);
+		if (meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING ||
+			Vector2D(abs(objective_->getVisPos(objective_->getPos()).getX() - clonPos.getX()), abs(objective_->getVisPos(objective_->getPos()).getY() - clonPos.getY())).magnitude() > range_))
 			objective_ = static_cast<PlayState*>(app_->getGameStateMachine()->getState())->findClosestEnemy(pos_);
 
 		else if (meleeDmg_ > 0 && ((SDL_GetTicks() - meleeTime_) / 1000) > meleeRate_)
 		{
+			cout << "\nClon ataque\n";
 			objective_->receiveDamage(meleeDmg_);
 			meleeTime_ = SDL_GetTicks();
 		}
@@ -26,7 +29,8 @@ void Clon::initObject() {
 	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	spawnTime_ = SDL_GetTicks();
 	duration_ = DURATION_;
-	meleeRate_ = (player_->getStats().meleeRange_ / 2) * player_->getLiberation();
+	range_ = 300;//player_->getStats().meleeRange_;
+	meleeRate_ = (player_->getStats().meleeRate_ / 2) * player_->getLiberation();
 	meleeDmg_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
 	distDmg_ = (player_->getStats().distDmg_ / 2) * player_->getLiberation();
 }
@@ -52,10 +56,12 @@ void Clon::shoot(Vector2D dir)
 void Clon::die()
 {
 	GameManager* gm = GameManager::instance();
-	for (auto enemy : agredEnemys_) {
+	//TODO: Revisar cuando se haga merge con "taunt"
+	/*for (auto enemy : agredEnemys_) {
+		if (enemy != nullptr && enemy->getState() != STATE::DYING)
 		enemy->lostAgro();
 	}
-	agredEnemys_.clear();
+	agredEnemys_.clear();*/
 	gm->setClon(nullptr);
 	app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
 	alive = false;

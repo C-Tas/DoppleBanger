@@ -26,7 +26,7 @@ public:
 	//virtual void action() = 0;
 
 	//Temporal para comprobar que funciona
-	virtual void action() { cout << "Skill que hace cosas" << endl; }
+	virtual void action() {}
 
 #pragma region getters
 	///<summary>Devuelve si la skill es una pasiva o una activa</summary>

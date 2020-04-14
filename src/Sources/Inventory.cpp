@@ -73,7 +73,6 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	if (aux.potion2_ != nullptr) equipment_.potion2_ = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion2_, callSelectObject,true);
 
 	#ifdef _DEBUG
-	cout << "creamos el objeto" << endl;
 	string nombre = "guantes1";
 	string desc = "duantes1";
 	

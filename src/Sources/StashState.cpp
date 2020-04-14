@@ -137,6 +137,7 @@ void StashState::initState() {
 	stashMoneyTex_ = new Texture(app_->getRenderer(), to_string(stash_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
 	//Creo aqu� objetos para comprobar funcionalidad
 	#ifdef _DEBUG
+	
 	cout << "Creando Objetos de prueba en el initState" << endl;
 
 	Gun* gun = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon),"pistolaDefault", "uwu1",0,0,0,Shotgun_);

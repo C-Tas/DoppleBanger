@@ -34,12 +34,12 @@ void Player::initObject()
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
-	equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pechera", "helloWorld", 10, 10, 10); equip_.armor_->writeStats(); //Prueba
-	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Guantes", "helloWorld", 10, 10, 10); equip_.gloves_->writeStats(); //Prueba
-	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Botas", "helloWorld", 10, 10, 10); equip_.boots_->writeStats(); //Prueba
-	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, Saber_); equip_.sword_->writeStats(); //Prueba
-	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
-	equip_.potion1_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, 10);	//Prueba
+	equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pechera", "helloWorld", 10, 10, 10);
+	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Guantes", "helloWorld", 10, 10, 10);
+	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Botas", "helloWorld", 10, 10, 10);
+	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, Saber_);
+	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pistola", "helloWorld", 10, 10, 10, Pistol_);
+	equip_.potion1_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, 10);
 }
 
 bool Player::update()
@@ -116,12 +116,17 @@ bool Player::update()
 	desactivePotion();
 
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
-	int margin = 2; if (attacking_) margin = currStats_.meleeRange_;
+	Vector2D target = target_; int margin = 2;
+	if (attacking_) {
+		target = getVisPos(objective_->getPos());
+		updateDir(target);
+		margin = currStats_.meleeRange_;
+	}
 	Vector2D visPos = getVisPos(pos_);
-	if (visPos.getX() < target_.getX() - margin ||
-		visPos.getX() > target_.getX() + margin ||
-		visPos.getY() < target_.getY() - margin ||
-		visPos.getY() > target_.getY() + margin)
+	if (visPos.getX() < target.getX() - margin ||
+		visPos.getX() > target.getX() + margin ||
+		visPos.getY() < target.getY() - margin ||
+		visPos.getY() > target.getY() + margin)
 	{
 		double delta = app_->getDeltaTime();
 		previousPos_ = pos_;
@@ -197,6 +202,14 @@ void Player::onCollider()
 {
 	move(Vector2D(-dir_.getX(), -dir_.getY())); //Rebote
 	stop(); //Para
+}
+
+void Player::updateDir(Vector2D target)
+{
+	Vector2D visPos = getVisPos(pos_);
+	dir_.setX(target.getX() - visPos.getX());
+	dir_.setY(target.getY() - visPos.getY());
+	dir_.normalize();
 }
 
 void Player::move(Point2D target)
