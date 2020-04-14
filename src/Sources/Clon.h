@@ -19,6 +19,7 @@ public:
 	bool update();
 	void onCollider() {};
 
+	void shoot(Vector2D dir);
 	void changeDuration(double dur) { duration_ = dur; } //En caso de que se pueda modificar la duraci�n
 	void die();
 	//Agrega un enemigo que está agred
@@ -27,7 +28,8 @@ public:
 	int getCost() { return cost_; };
 
 private:
-	int ad_ = 0;
+	int meleeDmg_ = 0;
+	int distDmg_ = 0;
 	int cost_ = 10;
 	int range_ = 0;
 	int meleeRate_ = 0;
@@ -40,13 +42,6 @@ private:
 	Player* player_ = nullptr;
 	//Lista de enemigos que están atacando al clon
 	list<Enemy*> agredEnemys_;
-
-	void initObject(int ad, int meleeRate, int lib) {
-		spawnTime_ = SDL_GetTicks();
-		duration_ = DURATION_;
-		ad_ = (ad / 2) * lib;
-		meleeRate = (meleeRate / 2) * lib;
-	};
 
 	virtual void initObject();
 	virtual void initAnim() {};

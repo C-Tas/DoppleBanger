@@ -188,6 +188,9 @@ void Player::shoot(Vector2D dir)
 	//Se añade a los bucles del juegos
 	app_->getCurrState()->addRenderUpdateLists(bullet);
 	CollisionCtrl::instance()->addPlayerBullet(bullet);
+
+	if (clon_ != nullptr)
+		clon_->shoot(dir);
 }
 
 void Player::onCollider()

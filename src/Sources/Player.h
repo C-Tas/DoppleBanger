@@ -49,6 +49,7 @@ public:
 	bool killClon() {
 		if (clon_ != nullptr) {
 			clon_->die();
+			clon_ = nullptr;
 			return true;
 		}
 		else return false;
