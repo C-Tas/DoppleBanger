@@ -115,10 +115,11 @@ bool Player::update()
 	//comprobamos si hay que desactivar las pociones
 	desactivePotion();
 
+	Enemy* objective = static_cast<Enemy*>(currEnemy_);
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
 	Vector2D target = target_; int margin = 2;
 	if (attacking_) {
-		target = getVisPos(objective_->getPos());
+		target = getVisPos(objective->getPos());
 		updateDir(target);
 		margin = currStats_.meleeRange_;
 	}
@@ -137,26 +138,26 @@ bool Player::update()
 	}
 
 	//Si se ha utilizado el ataque fuerte, ataca con un bonus porcentual de daño
-	else if (empoweredAct_ && attacking_ && objective_->getState() != STATE::DYING)
+	else if (empoweredAct_ && attacking_ && objective->getState() != STATE::DYING)
 	{
 #ifdef _DEBUG
 		cout << "\nAtaque potenciado\n" << endl;
 #endif // _DEBUG
 		empoweredAct_ = false;
-		objective_->receiveDamage((int)currStats_.meleeDmg_ * empoweredBonus_);
-		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
+		objective->receiveDamage((int)currStats_.meleeDmg_ * empoweredBonus_);
+		if (objective->getState() == STATE::DYING) move(getVisPos(pos_));
 		empoweredTime_ = SDL_GetTicks();
 		meleeTime_ = empoweredTime_;
 	}
 
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
-	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective_->getState() != STATE::DYING)
+	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective->getState() != STATE::DYING)
 	{
 #ifdef _DEBUG
 		cout << "\nAtaque a melee\n" << endl;
 #endif // _DEBUG
-		objective_->receiveDamage(currStats_.meleeDmg_);
-		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
+		objective->receiveDamage(currStats_.meleeDmg_);
+		if (objective->getState() == STATE::DYING) move(getVisPos(pos_));
 		meleeTime_ = SDL_GetTicks();
 	}
 
@@ -226,7 +227,7 @@ void Player::move(Point2D target)
 
 void Player::attack(Enemy* obj)
 {
-	objective_ = obj;
+	currEnemy_ = obj;
 	move(getVisPos(obj->getPos()));
 	attacking_ = true;
 }

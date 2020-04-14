@@ -29,7 +29,7 @@ void Clon::initObject() {
 	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	spawnTime_ = SDL_GetTicks();
 	duration_ = DURATION_;
-	range_ = 300;//player_->getStats().meleeRange_;
+	range_ = player_->getStats().meleeRange_ * 2;
 	meleeRate_ = (player_->getStats().meleeRate_ / 2) * player_->getLiberation();
 	meleeDmg_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
 	distDmg_ = (player_->getStats().distDmg_ / 2) * player_->getLiberation();

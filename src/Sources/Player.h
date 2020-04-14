@@ -108,7 +108,6 @@ private:
 	int money_ = 0;
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
-	Actor* objective_ = nullptr;
 	Clon* clon_ = nullptr;
 
 	Vector2D previousPos_;
