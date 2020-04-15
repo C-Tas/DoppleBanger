@@ -87,7 +87,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	
 	//Animaciones
 	{ PlayerShootRightAnim, "../Sources/assets/player/animaciones/disparo/disparoDcha.png" },
-	{ PlayerShootUpAnim, "../Sources/assets/player/animaciones/disparo/disparoFront.png" },
+	{ PlayerShootLeftAnim, "../Sources/assets/player/animaciones/disparo/disparoIz.png" },
+	{ PlayerShootUpAnim, "../Sources/assets/player/animaciones/disparo/disparoTop.png" },
+	{ PlayerShootDownAnim, "../Sources/assets/player/animaciones/disparo/disparoDown.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

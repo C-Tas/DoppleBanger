@@ -26,6 +26,8 @@ void Player::init()
 
 bool Player::update()
 {
+	updateFrame();
+	updateDirVis();
 	//Si se pulsa la Q y se ha acabado el cooldown y se está a rango
 	//Hago un if dentro de otro if ya que como el de dentro tiene que hacer cálculos, estos solo se hagan
 	//cuando ya se han cumplido previamente las dos condiciones anteriores.
@@ -95,7 +97,6 @@ bool Player::update()
 	else if (currState_ == STATE::SHOOTING) {
 		shootAnim();
 	}
-	updateFrame();
 	return false;
 }
 
@@ -112,9 +113,8 @@ void Player::initShoot()
 {
 	stop();
 	currState_ = STATE::SHOOTING;
-	mouseClick_ = eventHandler_->getRelativeMousePos();
+	mousePos_ = eventHandler_->getRelativeMousePos();
 	shooted = false;
-	DIR lookAt = calculateDirVis();
 	switch (lookAt)
 	{
 	case DIR::UP:
@@ -144,28 +144,29 @@ void Player::initShoot()
 	frame_.h = currAnim_.heightFrame_;
 }
 
-DIR Player::calculateDirVis()
+void Player::updateDirVis()
 {
+	mousePos_ = eventHandler_->getRelativeMousePos();
 	Vector2D center = getCenter(pos_);		//Punto de referencia
-	Vector2D dir = mouseClick_ - center;	//Vector dirección
+	Vector2D dir = mousePos_ - center;	//Vector dirección
 	dir.normalize();
 	double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
 	if (angle >= 0) {
-		if (angle <= 50.0) return DIR::RIGHT;
-		else if (angle < 130.0) return DIR::DOWN;
-		else return DIR::LEFT;
+		if (angle <= 50.0) lookAt = DIR::RIGHT;
+		else if (angle < 130.0) lookAt = DIR::DOWN;
+		else lookAt = DIR::LEFT;
 	}
 	else {
-		if (angle >= -50.0) return DIR::RIGHT;
-		else if (angle >= -130.0) return DIR::UP;
-		else return DIR::LEFT;
+		if (angle >= -50.0) lookAt = DIR::RIGHT;
+		else if (angle >= -130.0) lookAt = DIR::UP;
+		else lookAt = DIR::LEFT;
 	}
 }
 
 void Player::shootAnim()
 {
 	if (!shooted && currAnim_.currFrame_ == frameShoot_) { //Dispara en el tercer frame
-		shoot(mouseClick_);
+		shoot(mousePos_);
 		shooted = true; 
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
@@ -180,17 +181,17 @@ void Player::initAnims()
 {
 	//Animación de disparo
 	//Derecha
-	shootAnimR_ = Anim(SHOOT_R_FRAMES, W_SHOOT_R_FRAME, H_SHOOT_R_FRAME, SHOOT_R_FRAME_RATE, false);	
+	shootAnimR_ = Anim(SHOOT_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_R_FRAME_RATE, false);
 	shootR_ = app_->getTextureManager()->getTexture(Resources::PlayerShootRightAnim);
 	//Arriba
-	shootAnimU_ = Anim(SHOOT_U_FRAMES, W_SHOOT_U_FRAME, H_SHOOT_U_FRAME, SHOOT_U_FRAME_RATE, false);
+	shootAnimU_ = Anim(SHOOT_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_U_FRAME_RATE, false);
 	shootU_ = app_->getTextureManager()->getTexture(Resources::PlayerShootUpAnim);
 	//Izquierda
-	shootAnimL_ = Anim(SHOOT_L_FRAMES, W_SHOOT_L_FRAME, H_SHOOT_L_FRAME, SHOOT_L_FRAME_RATE, false);
-	shootL_ = app_->getTextureManager()->getTexture(Resources::PlayerShootRightAnim);
+	shootAnimL_ = Anim(SHOOT_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_L_FRAME_RATE, false);
+	shootL_ = app_->getTextureManager()->getTexture(Resources::PlayerShootLeftAnim);
 	//Abajo
-	shootAnimD_ = Anim(SHOOT_D_FRAMES, W_SHOOT_D_FRAME, H_SHOOT_D_FRAME, SHOOT_D_FRAME_RATE, false);
-	shootD_ = app_->getTextureManager()->getTexture(Resources::PlayerShootUpAnim);
+	shootAnimD_ = Anim(SHOOT_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_D_FRAME_RATE, false);
+	shootD_ = app_->getTextureManager()->getTexture(Resources::PlayerShootDownAnim);
 }
 
 void Player::shoot(Vector2D dir)
