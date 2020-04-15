@@ -64,6 +64,9 @@ public:
 	const Vector2D getPreviousPos() { return previousPos_; }
 	//Devuelve la posición del clon
 	const Stats& getStats() { return currStats_; };
+	//habilidades
+	//activa la pasiva invencible y aplica los efectos de esta
+	void activeInvincible();
 	//Devuelve la información del equipment
 	playerEquipment& const getInfoEquip() { return equip_; }
 	
@@ -118,6 +121,8 @@ private:
 	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
+	const int CRIT_INV = 20;	//Crítico agregado al player después de activar invencible( a falta de equilibrado)
+	const int DMG_INV = 20;		//Daño agregado al player después de activar invencible( a falta de equilibrado)
 	int liberation_ = 2;	//Nivel de la habilidad del clon, debería llevarse a GameManager
 	const int RANGE_SPEED = 1000;	//Velocidad extra para el pistolero raudo (a falta de equilibrado)
 	bool empoweredAct_ = false;		//Si tiene la habilidad activada
