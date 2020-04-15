@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 #include <list>
+#include "Application.h"
 
 using namespace std;
 class Item;
@@ -142,6 +143,8 @@ private:
 	GameObject* clon_ = nullptr;
 	//Puntero al HUD
 	HUD* hud_ = nullptr;
+	//puntero a la aplicacion
+	Application* app_ = nullptr;
 public:
 	//Constructor vacio
 	GameManager() {
@@ -274,5 +277,9 @@ public:
 
 	//borra al clon
 	inline void deleteClon() { clon_ = nullptr; };
+	//aplicacion
+	inline void setApp(Application* app) { app_ = app; }
 #pragma endregion
+	//Para añadir objetos al inventario
+	void addToInventory(Equipment* ob);
 };

@@ -14,6 +14,7 @@ struct Equipments
 	InventoryButton* potion1_ = nullptr;
 	InventoryButton* potion2_ = nullptr;
 };
+void callSelectObject(GameState* state, InventoryButton* but);
 
 
 class Inventory: public GameState

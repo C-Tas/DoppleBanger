@@ -1,4 +1,6 @@
-#include "GameManager.h"
+﻿#include "GameManager.h"
+
+
 unique_ptr<GameManager> GameManager::instance_;
 
 void GameManager::initGameManager(int currGold, Island unlockedIslands, int achievementPoints) {
@@ -36,3 +38,12 @@ void GameManager::setObjectEquipped(ObjectName newObject, Key key)
 	objectsEquipped[(int)key - (int)Key::One] = newObject;
 	hud_->updateKey((int)key);
 }
+
+void GameManager::addToInventory(Equipment* ob) {
+	//creamos un boton
+	InventoryButton* b = new InventoryButton(app_, nullptr, ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);
+	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
+	list <InventoryButton*>::iterator it = inventory_->insert(inventory_->end(), b);
+	b->setIterator(it);
+	//comprobamos si es el primer objeto de la lista
+	

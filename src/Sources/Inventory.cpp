@@ -104,6 +104,7 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	for (auto ob = inventoryList_->begin(); ob != inventoryList_->end(); ++ob) {
 		(*ob)->setNewCallBack(callSelectObject);
 		(*ob)->setCurrentState(this);
+		
 	}
 }
 void Inventory::selectObject(InventoryButton* ob) {
