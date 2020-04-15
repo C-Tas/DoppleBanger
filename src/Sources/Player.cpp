@@ -222,7 +222,6 @@ void Player::activeInvincible()
 	currStats_.distDmg_ += DMG_INV;
 }
 
-
 void Player::decreaseMana(double mana) {
 	currStats_.mana_ -= mana;
 	if (currStats_.mana_ <= 0) currStats_.mana_ = 0;

@@ -8,6 +8,7 @@
 #include "Skill.h"
 #include "VisualElement.h"
 
+
 void SkillState::initState() {
 	////QUITA EL COMENTARIO PARA DEBUGUEAR | LAS SKILLS SE DESBLOQUEAN EN 33,66 Y 100 PUNTOS EN LA RAMA
 	GameManager::instance()->setPrecisionPoints(99);
@@ -222,44 +223,36 @@ void SkillState::equipSelectedSkill(Key key)
 
 void SkillState::meleePointsActualized()
 {
-	auxPointsActualized(skillsTypeIterator[1], app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC),
-		app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC),(int)gm_->getMeleePoints());
+	//std::function<int (int)> func = [](int i) { return i+4; };
 
+	function<void (Player*)> func = [](Player* player) { player->activeInvincible(); };
+
+	auxPointsActualized(skillsTypeIterator[1], app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC),
+		app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC),
+		app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC), (int)gm_->getMeleePoints(),
+		nullptr, func, nullptr);
 }
 
 void SkillState::distancePointsActualized()
 {
-	int points = (int)gm_->getPresicionPoints();
-	auto aux = skillsTypeIterator[0];
-	delete totalPoints_;
-	createTexts();
-	if (points >= 33 && !(*aux)->isUnlocked()) {
-		(*aux)->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC));
-		(*aux)->setUnlocked(true);
-		gm_->setSkillUnlocked((*aux)->getSkillId());
-	}
-	++aux;
-	if (points >= 66 && !(*aux)->isUnlocked()) {
-		(*aux)->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC));
-		(*aux)->setUnlocked(true);
-		gm_->setSkillUnlocked((*aux)->getSkillId());
-		player_->activateSwiftGunslinger();
-	}
-	++aux;
-	if (points >= 100 && !(*aux)->isUnlocked()) {
-		(*aux)->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC));
-		(*aux)->setUnlocked(true);
-		gm_->setSkillUnlocked((*aux)->getSkillId());
-	}
+	function<void(Player*)> func = [](Player* player) { player->activateSwiftGunslinger(); };
+
+	auxPointsActualized(skillsTypeIterator[0], app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC),
+		app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC),
+		(int)gm_->getPresicionPoints(), nullptr, func, nullptr);
 }
 
 void SkillState::ghostPointsActualized()
 {
+	function<void(Player*)> func1 = [](Player* player) { player->setLiberation1(); };
+	function<void(Player*)> func2 = [](Player* player) { player->setLiberation2(); };
+
 	auxPointsActualized(skillsTypeIterator[2], app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC),
-		app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC), (int)gm_->getGhostPoints());
+		app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC)
+		, (int)gm_->getGhostPoints(), func1, nullptr, func2);
 }
 
-void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* t1, Texture* t2, Texture* t3, int points)
+void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* t1, Texture* t2, Texture* t3, int points, std::function<void(Player*)> p1, std::function<void(Player*)> p2, std::function<void(Player*)> p3)
 {
 	delete totalPoints_;
 	createTexts();
@@ -267,18 +260,33 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 		(*aux)->setTexture(t1);
 		(*aux)->setUnlocked(true);
 		gm_->setSkillUnlocked((*aux)->getSkillId());
+		
+		if (p1 != nullptr) {
+			p1(player_);
+			cout << "1" << endl;
+		}
 	}
 	++aux;
 	if (points >= 66 && !(*aux)->isUnlocked()) {
 		(*aux)->setTexture(t2);
 		(*aux)->setUnlocked(true);
 		gm_->setSkillUnlocked((*aux)->getSkillId());
+		if (p2 != nullptr) {
+			p2(player_);
+			cout << "2" << endl;
+
+		}
 	}
 	++aux;
 	if (points >= 100 && !(*aux)->isUnlocked()) {
 		(*aux)->setTexture(t3);
 		(*aux)->setUnlocked(true);
 		gm_->setSkillUnlocked((*aux)->getSkillId());
+		if (p3 != nullptr) {
+			p3(player_);
+			cout << "3" << endl;
+
+		}
 	}
 }
 
@@ -390,7 +398,12 @@ void SkillState::changeDescription(SkillName name)
 
 void SkillState::setPlayerSkills()
 {
+
 	if (player_ != nullptr) {
+		auto aux = player_->getSkillsArray();
+		for (int i = 0; i < aux.size(); i++) {
+			delete aux[i];
+		}
 		for (int i = 0; i < gm_->getAllSkillsEquipped().size() - 1; i++) {//-i pq la del clon siempre est� equipada por defecto
 			player_->setSkillAt(i, createSkill(gm_->getEquippedSkill((Key)i)));
 		}
@@ -409,7 +422,7 @@ Skill* SkillState::createSkill(SkillName name)
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
 		break;
 	case SkillName::Invencible:
-		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
+		skill = new Skill(player_, SkillType::Pasive, SkillBranch::Distance);
 		break;
 	case SkillName::Torbellino:
 		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);

@@ -2,11 +2,11 @@
 #include "GameState.h"
 #include "SkillButton.h"
 #include <array>
+#include <functional>
 
 class Skill;
 class Player;
 class VisualElement;
-
 
 class SkillState :
 	public GameState
@@ -42,6 +42,8 @@ private:
 	{ (int)(0.7588 * app_->getWindowWidth()), (int)(0.8089 * app_->getWindowHeight()), (int)(0.0425 * app_->getWindowWidth()), (int)(0.0433 * app_->getWindowHeight()) },
 	{ (int)(0.8381 * app_->getWindowWidth()), (int)(0.8089 * app_->getWindowHeight()), (int)(0.0425 * app_->getWindowWidth()), (int)(0.0433 * app_->getWindowHeight()) } };
 
+	//
+	void activeInvincible() { player_->activeInvincible(); };
 protected:
 	///<summary>Se inicializa el skill state</summary>
 	virtual void initState();
@@ -76,7 +78,7 @@ protected:
 
 	///<summary>M�todo auxiliar que cambia de texturas cuando las habilidades se desbloquean
 	///Se llama desde melee/distance/ghostPointsActualized</summary>
-	void auxPointsActualized(list<SkillButton*>::iterator aux, Texture* t1,  Texture* t2,  Texture* t3, int points);
+	void auxPointsActualized(list<SkillButton*>::iterator aux, Texture* t1, Texture* t2, Texture* t3, int points, function<void(Player*)> p1, function<void(Player*)> p2, function<void(Player*)> p3);
 
 	///M�todo que, dado el nombre de la skill, devuelve su icono correspondiente
 	///Se usa al pintar las skills que est�n equipadas

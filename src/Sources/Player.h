@@ -73,6 +73,8 @@ public:
 #pragma endregion
 #pragma region Setters
 	void decreaseMana(double mana);
+	inline void setLiberation1() { liberation_ = 1; };
+	inline void setLiberation2( ) { liberation_ = 2; };
 
 	void equip(Armor* armor) { equip_.armor_ = armor; };
 	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
