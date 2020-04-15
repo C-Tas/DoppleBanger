@@ -5,6 +5,7 @@
 
 class Skill;
 class Player;
+class VisualElement;
 
 
 class SkillState :
@@ -31,12 +32,15 @@ private:
 	//<summary>Puntero a la skill seleccionada<summary>
 	SkillButton* selected_ = nullptr;
 	//<summary>Si hay alg�n objeto seleccionado, se pintar� debajo de este un recuadro para mostrar la seleccion</summary>
-	Draw* selectedRectangle = nullptr;
+	VisualElement* selectedRectangle = nullptr;
 	//<summary>Lugar donde se van a pintar las descripciones</summary>
-	SDL_Rect descriptionRect = { 890,350,450,40 };
+	SDL_Rect descriptionRect = { (int)(0.5563 * app_->getWindowWidth()), (int)(0.3889 * app_->getWindowHeight()), (int)(0.2813 * app_->getWindowWidth()), (int)(0.0444 * app_->getWindowHeight()) };//{ 890,350,450,40 };
 
 	///<summary>Vector con los rects de donde se pintaran las texturas de las habilidades cuando sean equipadas en los botones<summary>
-	const vector<SDL_Rect> assignButtons = { { 960,728, 68, 39 }, { 1087,728, 68,39} ,{ 1214, 728, 68, 39 }, {1341,728,68, 39} };
+	const vector<SDL_Rect> assignButtons = { { (int)(0.6 * app_->getWindowWidth()), (int)(0.8089 * app_->getWindowHeight()), (int)(0.0425 * app_->getWindowWidth()), (int)(0.0433 * app_->getWindowHeight()) },
+	{ (int)(0.6794 * app_->getWindowWidth()), (int)(0.8089 * app_->getWindowHeight()), (int)(0.0425 * app_->getWindowWidth()), (int)(0.0433 * app_->getWindowHeight()) },
+	{ (int)(0.7588 * app_->getWindowWidth()), (int)(0.8089 * app_->getWindowHeight()), (int)(0.0425 * app_->getWindowWidth()), (int)(0.0433 * app_->getWindowHeight()) },
+	{ (int)(0.8381 * app_->getWindowWidth()), (int)(0.8089 * app_->getWindowHeight()), (int)(0.0425 * app_->getWindowWidth()), (int)(0.0433 * app_->getWindowHeight()) } };
 
 protected:
 	///<summary>Se inicializa el skill state</summary>
@@ -117,4 +121,3 @@ public:
 	static void changeDescription(Application* app, SkillName name);
 
 };
-

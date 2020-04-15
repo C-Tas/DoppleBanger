@@ -10,9 +10,9 @@
 
 void SkillState::initState() {
 	////QUITA EL COMENTARIO PARA DEBUGUEAR | LAS SKILLS SE DESBLOQUEAN EN 33,66 Y 100 PUNTOS EN LA RAMA
-	//GameManager::instance()->setPrecisionPoints(65);
-	//GameManager::instance()->setMeleePoints(32);
-	//GameManager::instance()->setGhostPoints(99);
+	GameManager::instance()->setPrecisionPoints(99);
+	GameManager::instance()->setMeleePoints(99);
+	GameManager::instance()->setGhostPoints(99);
 
 	#ifdef _DEBUG	//PARA DEBUG
 	cout << "SKILLTATE" << endl;
@@ -55,15 +55,15 @@ void SkillState::update()
 
 void SkillState::createBars() {
 	//PrecisionBar
-	bars_[0] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::GreenBar), { 190, 390, 530, 20 });
+	bars_[0] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::GreenBar), { (int)(0.1188 * app_->getWindowWidth()), (int)(0.4333 * app_->getWindowHeight()), (int)(0.3313 * app_->getWindowWidth()), (int)(0.0222 * app_->getWindowHeight()) });// , { 190, 390, 530, 20 });
 	addRenderList(bars_[0]);
 
 	//MeleeBar
-	bars_[1] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::YellowBar), { 190, 540, 530, 20 });
+	bars_[1] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::YellowBar), { (int)(0.1188 * app_->getWindowWidth()), (int)(0.6 * app_->getWindowHeight()), (int)(0.3313 * app_->getWindowWidth()), (int)(0.0222 * app_->getWindowHeight()) });//{ 190, 540, 530, 20 });
 	addRenderList(bars_[1]);
 
 	//GhostBar
-	bars_[2] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BlueBar), { 190, 690, 530, 20 });
+	bars_[2] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BlueBar), { (int)(0.1188 * app_->getWindowWidth()), (int)(0.7667 * app_->getWindowHeight()), (int)(0.3313 * app_->getWindowWidth()), (int)(0.0222 * app_->getWindowHeight()) });//{ 190, 690, 530, 20 });
 	addRenderList(bars_[2]);
 
 	updateBars();
@@ -71,7 +71,7 @@ void SkillState::createBars() {
 	//Marcos de las barras
 	//No me deja usar emptyBars_.size(), por eso est� el 3 a pelo
 	for (int i = 0; i < 3; i++) {
-		emptyBars_[i] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EmptyBar), { 190, 390 + i * 150, 530, 20 });		// 150 es la distancia entre las barras
+		emptyBars_[i] = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EmptyBar), { (int)(0.1188 * app_->getWindowWidth()), (int)(0.4333 * app_->getWindowHeight()) + i * (int)(0.1667 * app_->getWindowHeight()), (int)(0.3313 * app_->getWindowWidth()), (int)(0.0222 * app_->getWindowHeight()) });// { 190, 390 + i * 150, 530, 20 });		// 150 es la distancia entre las barras
 		addRenderList(emptyBars_[i]);
 	}
 }
@@ -82,13 +82,13 @@ void SkillState::updateBars() {
 		switch (i)
 		{
 		case 0:	//Barra verde
-			aux.w = (530 * (int)gm_->getPresicionPoints() / 100);
+			aux.w = (int)(0.3313 * app_->getWindowWidth() * (int)gm_->getPresicionPoints() / 100);
 			break;
 		case 1:	//Barra amarilla
-			aux.w = (530 * (int)gm_->getMeleePoints() / 100);
+			aux.w = (int)(0.3313 * app_->getWindowWidth() * (int)gm_->getMeleePoints() / 100);
 			break;
 		case 2:	//Barra azul
-			aux.w = (530 * (int)gm_->getGhostPoints() / 100);
+			aux.w = (int)(0.3313 * app_->getWindowWidth() * (int)gm_->getGhostPoints() / 100);
 			break;
 		default:
 			break;
@@ -104,33 +104,33 @@ void SkillState::createSkillsIcons()
 	//Precision Skills
 	///Comprobamos si la habilidad esta desbloqueda, seg�n si est� o no, usamos una textura u otra
 	auxTexture = (!gm_->isSkillUnlocked(SkillName::DisparoPerforante)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC);
-	auto it1 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 330, 352},{ 70, 40 }, selectSkill, SkillName::DisparoPerforante, SkillType::Active, changeDescription));
+	auto it1 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 0.2063 * app_->getWindowWidth(), 0.3911 * app_->getWindowHeight() }, { 0.0438 * app_->getWindowWidth(), 0.0444 * app_->getWindowHeight() }, selectSkill, SkillName::DisparoPerforante, SkillType::Active, changeDescription));
 
 	auxTexture = (!gm_->isSkillUnlocked(SkillName::Raudo)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 352 }, { 70, 40 }, selectSkill, SkillName::Raudo, SkillType::Pasive, changeDescription));
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 0.3138 * app_->getWindowWidth(), 0.3911 * app_->getWindowHeight() }, { 0.0438 * app_->getWindowWidth(), 0.0444 * app_->getWindowHeight() }, selectSkill, SkillName::Raudo, SkillType::Pasive, changeDescription));
 	
 	auxTexture = (!gm_->isSkillUnlocked(SkillName::Rebote)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 352 }, { 70, 40 }, selectSkill, SkillName::Rebote, SkillType::Active, changeDescription));
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 0.4275 * app_->getWindowWidth(), 0.3911 * app_->getWindowHeight() }, { 0.0438 * app_->getWindowWidth(), 0.0444 * app_->getWindowHeight() }, selectSkill, SkillName::Rebote, SkillType::Active, changeDescription));
 	
 	//Melee Skills
 	auxTexture = (!gm_->isSkillUnlocked(SkillName::GolpeFuerte)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC);
-	auto it2 = skillsIcons_.insert(skillsIcons_.end(), new SkillButton(app_, auxTexture, { 330, 502 }, { 70, 40 }, selectSkill, SkillName::GolpeFuerte, SkillType::Active, changeDescription));
+	auto it2 = skillsIcons_.insert(skillsIcons_.end(), new SkillButton(app_, auxTexture, { 0.2063 * app_->getWindowWidth(), 0.5578 * app_->getWindowHeight() }, { 0.0438 * app_->getWindowWidth(), 0.0444 * app_->getWindowHeight() }, selectSkill, SkillName::GolpeFuerte, SkillType::Active, changeDescription));
 	
 	auxTexture = (!gm_->isSkillUnlocked(SkillName::Invencible)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 502 }, { 70, 40 }, selectSkill, SkillName::Invencible, SkillType::Pasive, changeDescription));
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 0.3138 * app_->getWindowWidth(), 0.5578 * app_->getWindowHeight() }, { 0.0438 * app_->getWindowWidth(), 0.0444 * app_->getWindowHeight() }, selectSkill, SkillName::Invencible, SkillType::Pasive, changeDescription));
 	
 	auxTexture = (!gm_->isSkillUnlocked(SkillName::Torbellino)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 502 }, { 70, 40 }, selectSkill, SkillName::Torbellino, SkillType::Active, changeDescription));
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 0.4275 * app_->getWindowWidth(), 0.5578 * app_->getWindowHeight() }, { 0.0438 * app_->getWindowWidth(), 0.0444 * app_->getWindowHeight() }, selectSkill, SkillName::Torbellino, SkillType::Active, changeDescription));
 	
 	//Ghost Skills
 	auxTexture = (!gm_->isSkillUnlocked(SkillName::LiberacionI)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
-	auto it3 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 330, 652 }, { 70, 40 }, selectSkill, SkillName::LiberacionI, SkillType::Pasive, changeDescription));
+	auto it3 = skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 0.2063 * app_->getWindowWidth(), 0.7244 * app_->getWindowHeight() }, { 0.0438 * app_->getWindowWidth(), 0.0444 * app_->getWindowHeight() }, selectSkill, SkillName::LiberacionI, SkillType::Pasive, changeDescription));
 
 	auxTexture = (!gm_->isSkillUnlocked(SkillName::Explosion)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 502, 652 }, { 70, 40 }, selectSkill, SkillName::Explosion, SkillType::Active, changeDescription));
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 0.3138 * app_->getWindowWidth(), 0.7244 * app_->getWindowHeight() }, { 0.0438 * app_->getWindowWidth(), 0.0444 * app_->getWindowHeight() }, selectSkill, SkillName::Explosion, SkillType::Active, changeDescription));
 	
 	auxTexture = (!gm_->isSkillUnlocked(SkillName::LiberacionII)) ? app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationBN) : app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
-	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 684, 652 }, { 70, 40 }, selectSkill, SkillName::LiberacionII, SkillType::Pasive, changeDescription));
+	skillsIcons_.insert(skillsIcons_.end(),new SkillButton(app_, auxTexture, { 0.4275 * app_->getWindowWidth(), 0.7244 * app_->getWindowHeight() }, { 0.0438 * app_->getWindowWidth(), 0.0444 * app_->getWindowHeight() }, selectSkill, SkillName::LiberacionII, SkillType::Pasive, changeDescription));
 
 	skillsTypeIterator[0] = it1;
 	skillsTypeIterator[1] = it2;
@@ -163,11 +163,10 @@ void SkillState::createTexts() {
 		app_->getFontManager()->getFont(Resources::RETRO), SDL_Color{ (0,0,0,1) });
 }
 
-
 void SkillState::setSelectedSkillButton(SkillButton* button)
 {
 	selected_ = button;
-	if (selectedRectangle == nullptr)selectedRectangle = new Draw(app_, app_->getTextureManager()->getTexture(Resources::RedBar), SDL_Rect{ (int)button->getPosX() - 10, (int)button->getPosY() - 10, (int)button->getScaleX() + 20, (int)button->getScaleY() + 10 });
+	if (selectedRectangle == nullptr)selectedRectangle = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::RedBar), SDL_Rect{ (int)button->getPosX() - 10, (int)button->getPosY() - 10, (int)button->getScaleX() + 20, (int)button->getScaleY() + 10 });
 	else {
 		selectedRectangle->setPos(Vector2D(button->getPosX() - 10, button->getPosY() - 10));
 	}
@@ -336,7 +335,7 @@ void SkillState::draw() const
 	if (selectedRectangle != nullptr) selectedRectangle->draw();
 
 	changeDescriptionTexture(lastPointed);
-	totalPoints_->render({ 1270, 250, 100, 40 });
+	totalPoints_->render({ (int)(0.7938 * app_->getWindowWidth()), (int)(0.2778 * app_->getWindowHeight()), (int)(0.0625 * app_->getWindowWidth()), (int)(0.0444 * app_->getWindowHeight()) });//{ 1270, 250, 100, 40 });
 	GameState::draw();
 	renderSkillsEquipped();
 }
@@ -445,30 +444,30 @@ Skill* SkillState::createSkill(SkillName name)
 
 void SkillState::createButtons() {
 	//Precision Button
-	Button* precisionButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeGreen), { 770,375 }, { 50,50 }, increasePrecisionBranch);
+	Button* precisionButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeGreen), { 0.4813 * app_->getWindowWidth(), 0.4167 * app_->getWindowHeight() }, { 0.0313 * app_->getWindowWidth(), 0.0556 * app_->getWindowHeight() }, increasePrecisionBranch);
 	addRenderUpdateLists(precisionButton);
 
 	//Melee Button
-	Button* meleeButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeYellow), { 770,525 }, { 50,50 }, increaseMeleeBranch);
+	Button* meleeButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeYellow), { 0.4813 * app_->getWindowWidth(), 0.5833 * app_->getWindowHeight() }, { 0.0313 * app_->getWindowWidth(), 0.0556 * app_->getWindowHeight() }, increaseMeleeBranch);
 	addRenderUpdateLists(meleeButton);
 
 	//Ghost Button
-	Button* ghostButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeBlue), { 770,675 }, { 50,50 }, increaseGhostBranch);
+	Button* ghostButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonUpgradeBlue), { 0.4813 * app_->getWindowWidth(), 0.75 * app_->getWindowHeight() }, { 0.0313 * app_->getWindowWidth(), 0.0556 * app_->getWindowHeight() }, increaseGhostBranch);
 	addRenderUpdateLists(ghostButton);
 
 	//Back Button
-	Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), { 1439,214 }, { 60,53 }, backToPreviousState);
+	Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), { 0.8994 * app_->getWindowWidth(), 0.2378 * app_->getWindowHeight() }, { 0.0313 * app_->getWindowWidth(), 0.0491 * app_->getWindowHeight() }, backToPreviousState);
 	addRenderUpdateLists(backButton);
 
 	//Inventary Button
-	Button* inventaryButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryAButton), { 137,22 }, { 560, 121 }, goToInventaryState);
+	Button* inventaryButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryAButton), { 0.0856 * app_->getWindowWidth(), 0.0244 * app_->getWindowHeight() }, { 0.35 * app_->getWindowWidth(), 0.1345 * app_->getWindowHeight() }, goToInventaryState);
 	goToInventary_ = inventaryButton;
 	addRenderUpdateLists(inventaryButton);
 
 	///Botones en los que aparecer� la skillEquipada
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 940,693 }, { 110,110 }, assingToQKey));
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 1067,693 }, { 110,110 }, assingToWKey));
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 1194,693 }, { 110,110 }, assingToEKey));
+	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 0.5875 * app_->getWindowWidth(), 0.77 * app_->getWindowHeight() }, { 0.0688 * app_->getWindowWidth(), 0.1222 * app_->getWindowHeight() }, assingToQKey));
+	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 0.6669 * app_->getWindowWidth(), 0.77 * app_->getWindowHeight() }, { 0.0688 * app_->getWindowWidth(), 0.1222 * app_->getWindowHeight() }, assingToWKey));
+	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::EquippedSkill), { 0.7463 * app_->getWindowWidth(), 0.77 * app_->getWindowHeight() }, { 0.0688 * app_->getWindowWidth(), 0.1222 * app_->getWindowHeight() }, assingToEKey));
 
 }
 
