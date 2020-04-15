@@ -55,9 +55,9 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::ButtonX), { 1439,214 }, { 60,53 }, callExit);
 	addRenderUpdateLists(exitButton_);
 
-	auxpos = Vector2D{ 7 * (double)(app_->getWindowWidth() / 13),/* 1 * (double)(app_->getWindowHeight() / 40)*/ -20};
+	auxpos = Vector2D{ 7 * (double)(app_->getWindowWidth() / 13),/* 1 * (double)(app_->getWindowHeight() / 40)*/ 22};
 	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 10),  (double)(app_->getWindowWidth() / 10) };
-	goToSkillsButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos, { 650, 270 }, callSkillsState);
+	goToSkillsButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos, { 610, 120 }, callSkillsState);
 	addRenderUpdateLists(goToSkillsButton_);
 	
 
@@ -354,9 +354,6 @@ void Inventory::update() {
 		equipment_.potion2_->update();
 	}
 
-	//Actualizamos los objetos normales
-	GameState::update();
-
 	SDL_Point point;
 	point.x = eventHandler_->getRealMousePos().getX();
 	point.y = eventHandler_->getRealMousePos().getY();
@@ -367,6 +364,10 @@ void Inventory::update() {
 	else {
 		goToSkillsButton_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToSkillsAButton));
 	}
+	//Actualizamos los objetos normales
+	GameState::update();
+
+	
 }
 Inventory::~Inventory() {
 	delete equipment_.armor_;
