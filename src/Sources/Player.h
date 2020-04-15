@@ -90,21 +90,21 @@ private:
 	Anim shootAnimR_{ 0, 0, 0, 0, false};	//Animación de disparo
 	Texture* shootR_ = nullptr;				//Textura del disparo
 	const int SHOOT_R_FRAMES = 3;			//Frames de la animación
-	const int SHOOT_R_FRAME_RATE = 100;		//Frame rate
+	const int SHOOT_R_FRAME_RATE = 150;		//Frame rate
 	//Disparo hacia arriba
 	Anim shootAnimU_{ 0, 0, 0, 0, false };	//Animación de disparo
 	Texture* shootU_ = nullptr;				//Textura del disparo
-	const int SHOOT_U_FRAMES = 8;			//Frames de la animación
+	const int SHOOT_U_FRAMES = 7;			//Frames de la animación
 	const int SHOOT_U_FRAME_RATE = 40;		//Frame rate
 	//Disparo hacia izquierda
 	Anim shootAnimL_{ 0, 0, 0, 0, false };	//Animación de disparo
 	Texture* shootL_ = nullptr;				//Textura del disparo
 	const int SHOOT_L_FRAMES = 3;			//Frames de la animación
-	const int SHOOT_L_FRAME_RATE = 100;		//Frame rate
+	const int SHOOT_L_FRAME_RATE = 150;		//Frame rate
 	//Disparo hacia abajo
 	Anim shootAnimD_{ 0, 0, 0, 0, false };	//Animación de disparo
 	Texture* shootD_ = nullptr;				//Textura del disparo
-	const int SHOOT_D_FRAMES = 8;			//Frames de la animación
+	const int SHOOT_D_FRAMES = 7;			//Frames de la animación
 	const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
 	//Idle
 	//Inicialización de las animaciones

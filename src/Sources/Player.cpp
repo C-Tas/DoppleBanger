@@ -125,7 +125,7 @@ void Player::initShoot()
 	case DIR::RIGHT:
 		texture_ = shootR_;
 		currAnim_ = shootAnimR_;
-		frameShoot_ = 2;
+		frameShoot_ = 1;
 		break;
 	case DIR::DOWN:
 		texture_ = shootD_;
@@ -135,7 +135,7 @@ void Player::initShoot()
 	case DIR::LEFT:
 		texture_ = shootL_;
 		currAnim_ = shootAnimL_;
-		frameShoot_ = 2;
+		frameShoot_ = 1;
 		break;
 	}
 
@@ -152,13 +152,13 @@ void Player::updateDirVis()
 	dir.normalize();
 	double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
 	if (angle >= 0) {
-		if (angle <= 50.0) lookAt = DIR::RIGHT;
-		else if (angle < 130.0) lookAt = DIR::DOWN;
+		if (angle <= 45.0) lookAt = DIR::RIGHT;
+		else if (angle < 135.0) lookAt = DIR::DOWN;
 		else lookAt = DIR::LEFT;
 	}
 	else {
-		if (angle >= -50.0) lookAt = DIR::RIGHT;
-		else if (angle >= -130.0) lookAt = DIR::UP;
+		if (angle >= -45.0) lookAt = DIR::RIGHT;
+		else if (angle >= -135.0) lookAt = DIR::UP;
 		else lookAt = DIR::LEFT;
 	}
 }

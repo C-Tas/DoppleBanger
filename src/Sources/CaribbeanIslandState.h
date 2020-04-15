@@ -20,8 +20,8 @@ public:
 #pragma endregion
 protected:
 	//Dimensiones de las entidades
-	const int W_PLAYER = app_->getWindowWidth() / 40;
-	const int H_PLAYER = app_->getWindowHeight() / 15;
+	const int W_PLAYER = app_->getWindowWidth() / 15;
+	const int H_PLAYER = app_->getWindowHeight() / 5;
 
 	const int W_MONKEY = app_->getWindowWidth() / 20;
 	const int H_MONKEY = app_->getWindowHeight() / 15;
