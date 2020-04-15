@@ -18,7 +18,7 @@ private:
 
 public:
 
-	InventoryButton(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, Item* ob, CallBackOnClickInventory* callBack, int id = 0);
+	InventoryButton(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, Item* ob, CallBackOnClickInventory* callBack,bool equip = false, int id = 0);
 	virtual bool update();
 	bool isEquipped() { return equipped; }
 	void Enable(bool e) { equipped = e; }

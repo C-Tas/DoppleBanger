@@ -45,5 +45,5 @@ void GameManager::addToInventory(Equipment* ob) {
 	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = inventory_->insert(inventory_->end(), b);
 	b->setIterator(it);
-	//comprobamos si es el primer objeto de la lista
+}
 	

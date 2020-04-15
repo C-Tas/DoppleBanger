@@ -1,8 +1,8 @@
 #include "InventoryButton.h"
 #include "HandleEvents.h"
 
-InventoryButton::InventoryButton(Application* app, GameState* state, Texture* texture, Vector2D pos, Vector2D scale, Item* ob, CallBackOnClickInventory* call, int id)
-	: Button(app,state, texture, pos, scale, nullptr, id), object_(ob){
+InventoryButton::InventoryButton(Application* app, GameState* state, Texture* texture, Vector2D pos, Vector2D scale, Item* ob, CallBackOnClickInventory* call, bool equip, int id)
+	: Button(app,state, texture, pos, scale, nullptr, id), object_(ob), equipped(equip){
 	callBackInventory_ = call;
 }
 
