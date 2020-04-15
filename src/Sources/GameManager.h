@@ -138,7 +138,7 @@ private:
 	//Vector que contiene los objetos equipados
 	vector<ObjectName> objectsEquipped = { ObjectName::Unequipped, ObjectName::Unequipped };
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
-	GameObject* player_ = nullptr;
+	Player* player_ = nullptr;
 	//Puntero al clon
 	GameObject* clon_ = nullptr;
 	//Puntero al HUD
@@ -222,7 +222,7 @@ public:
 	//Devuelve la posici�n del player
 	const Point2D getPlayerPos() { return player_->getPos(); };
 	//Devuelve al jugador
-	GameObject* getPlayer() { return player_; };
+	Player* getPlayer() { return player_; };
 	//Devuelve al clon
 	GameObject* getClon() { return clon_; };
 #pragma endregion
@@ -269,7 +269,7 @@ public:
 	void setObjectEquipped(ObjectName newObject, Key key);
 
 	//Asigna al puntero de player
-	inline void setPlayer(GameObject* player) { player_ = player; };
+	inline void setPlayer(Player* player) { player_ = player; };
 	//Asigna al puntero de clon
 	inline void setClon(GameObject* clon) { clon_ = clon; };
 	//Asigna el puntero de hud

@@ -27,6 +27,7 @@ private:
 	Button* advanceButton_; // boton para que se muestren los siguientes elementos de la lista
 	Button* gobackButton_; // boton para que se muestren los anteriores elementos de la lista
 	Button* exitButton_; // boton para volver al estado anterior
+	Button* goToSkillsButton_;
 	
 	InventoryButton* select_ = nullptr;//Guarda La referencia al elemento seleccionado
 	list<InventoryButton*>:: iterator ListPos;//Guarda la posicion de la lista que se muestra por pantalla

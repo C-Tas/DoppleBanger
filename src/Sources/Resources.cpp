@@ -27,6 +27,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ EquippedButton, "../Sources/assets/botones/Equipar_Boton.png"},
 	{ GoToInventoryAButton, "../Sources/assets/botones/InventoryButtonA.png"},
 	{ GoToInventoryBButton, "../Sources/assets/botones/InventoryButtonB.png"},
+	{GoToSkillsAButton,"../Sources/assets/botones/Abrir_Habilidades_01.png"},
+	{GoToSkillsBButton,"../Sources/assets/botones/Abrir_Habilidades_02.png"},
 	{ ButtonX, "../Sources/assets/botones/botonX.png"},
 	{ ButtonUpgradeGreen, "../Sources/assets/botones/UpgradeButtonGreen.png"},
 	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},

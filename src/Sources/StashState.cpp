@@ -7,20 +7,20 @@ void StashState::backToPrevious(Application* app) {
 	app->getGameStateMachine()->popState();
 }
 
-void StashState::callbackAdvanceInventoryPage(GameState* state) {
-	dynamic_cast<StashState*>(state)->advanceInventoryPage();
+void StashState::callbackAdvanceInventoryPage(Application* app) {
+	dynamic_cast<StashState*>(app->getCurrState())->advanceInventoryPage();
 }
 
-void StashState::callbackAdvanceStashPage(GameState* state) {
-	dynamic_cast<StashState*>(state)->advanceStashPage();
+void StashState::callbackAdvanceStashPage(Application* app) {
+	dynamic_cast<StashState*>(app->getCurrState())->advanceStashPage();
 }
 
-void StashState::callbackPreviousInventoryPage(GameState* state) {
-	dynamic_cast<StashState*>(state)->previousInventoryPage();
+void StashState::callbackPreviousInventoryPage(Application* app) {
+	dynamic_cast<StashState*>(app->getCurrState())->previousInventoryPage();
 }
 
-void StashState::callbackPreviousStashPage(GameState* state) {
-	dynamic_cast<StashState*>(state)->previousStashPage();
+void StashState::callbackPreviousStashPage(Application* app) {
+	dynamic_cast<StashState*>(app->getCurrState())->previousStashPage();
 }
 
 void StashState::callbackSelectObject(GameState* state, InventoryButton* button)
@@ -28,24 +28,24 @@ void StashState::callbackSelectObject(GameState* state, InventoryButton* button)
 	dynamic_cast<StashState*>(state)->selectObject(button);
 }
 
-void StashState::callbackChangeBetweenLists(GameState* state)
+void StashState::callbackChangeBetweenLists(Application* app)
 {
-	dynamic_cast<StashState*>(state)->changeBetweenLists();
+	dynamic_cast<StashState*>(app->getCurrState())->changeBetweenLists();
 }
 
-void StashState::callbackDeleteObject(GameState* state)
+void StashState::callbackDeleteObject(Application* app)
 {
-	dynamic_cast<StashState*>(state)->deleteObject();
+	dynamic_cast<StashState*>(app->getCurrState())->deleteObject();
 }
 
-void StashState::callbackAddMoneyToInventary(GameState* state)
+void StashState::callbackAddMoneyToInventary(Application* app)
 {
-	dynamic_cast<StashState*>(state)->addMoneyToInventory();
+	dynamic_cast<StashState*>(app->getCurrState())->addMoneyToInventory();
 }
 
-void StashState::callbackAddMoneyToStash(GameState* state)
+void StashState::callbackAddMoneyToStash(Application* app)
 {
-	dynamic_cast<StashState*>(state)->addMoneyToStash();
+	dynamic_cast<StashState*>(app->getCurrState())->addMoneyToStash();
 }
 #pragma endregion
 
@@ -96,27 +96,27 @@ void StashState::initState() {
 	background_ = app_->getTextureManager()->getTexture(Resources::TextureId::StashMenu);
 
 	//Bot�n de avanzar la p�gina del inventario
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D((56 * (app_->getWindowWidth() / 70)), ARROW_ROW), Vector2D(BUTTON_SIZE,BUTTON_SIZE), callbackAdvanceInventoryPage));
+	addRenderUpdateLists(new Button(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D((56 * (app_->getWindowWidth() / 70)), ARROW_ROW), Vector2D(BUTTON_SIZE,BUTTON_SIZE), callbackAdvanceInventoryPage));
 	//Bot�n de volver a la p�gina anterior del inventario
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(43 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousInventoryPage));
+	addRenderUpdateLists(new Button(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(43 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousInventoryPage));
 	
 	//Bot�n de avanzar la p�gina del alijo
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D(22 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceStashPage));
+	addRenderUpdateLists(new Button(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D(22 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceStashPage));
 	//Bot�n de volver a la p�gina anterior del alijo
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D((14 * (app_->getWindowWidth() / 70))+10, ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousStashPage));
+	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D((14 * (app_->getWindowWidth() / 70))+10, ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousStashPage));
 
 	//Bot�n para cambiar el objeto de una lista a otra
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 6 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackChangeBetweenLists));
+	addRenderUpdateLists(new Button(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 6 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackChangeBetweenLists));
 	//Bot�n para eliminar el objeto seleccionado
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 7 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
+	addRenderUpdateLists(new Button(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 7 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
 
 	//Bot�n de volver al estado anterior
 	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 2*(app_->getWindowHeight()/9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), backToPrevious));
 
 	//Boton para pasar el dinero del alijo al inventario
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((7 * (app_->getWindowWidth() / 70)), MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToInventary));
+	addRenderUpdateLists(new Button(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((7 * (app_->getWindowWidth() / 70)), MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToInventary));
 	//Boton para pasar el dinero del inventario al alijo
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((37 * (app_->getWindowWidth() / 70))+10,MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToStash));
+	addRenderUpdateLists(new Button(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((37 * (app_->getWindowWidth() / 70))+10,MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToStash));
 
 	GameManager* gm = GameManager::instance();
 

@@ -1,50 +1,52 @@
 #include "Inventory.h"
 #include "Item.h"
-//includes de prueba
-//#include "Gloves.h"
 #include "Player.h"
+#include "SkillState.h"
 using namespace std;
 //callbacks
 
 void callSelectObject(GameState * state, InventoryButton* but) {
 		dynamic_cast<Inventory*>(state)->selectObject(but);
 }
-void callDeleteObject(GameState* state) {
-	dynamic_cast<Inventory*>(state)->deleteObj();
+void callDeleteObject(Application* app) {
+	dynamic_cast<Inventory*>(app->getCurrState())->deleteObj();
 }
-void callEquipedObject(GameState* state) {
-	dynamic_cast<Inventory*>(state)->equippedObj();
+void callEquipedObject(Application* app) {
+	dynamic_cast<Inventory*>(app->getCurrState())->equippedObj();
 }
-void callForwardList(GameState* state) {
-	dynamic_cast<Inventory*>(state)->forwardList();
+void callForwardList(Application* app) {
+	dynamic_cast<Inventory*>(app->getCurrState())->forwardList();
 }
-void callBackList(GameState* state) {
-	dynamic_cast<Inventory*>(state)->backList();
+void callBackList(Application* app) {
+	dynamic_cast<Inventory*>(app->getCurrState())->backList();
 }
 void callExit(Application* app){
 	app->getGameStateMachine()->popState();
+}
+void callSkillsState(Application* app) {
+	app->getGameStateMachine()->changeState(new SkillState(app));
 }
 
 Inventory::Inventory(Application* app) :GameState(app) {
 	background_ = app_->getTextureManager()->getTexture(Resources::InventaryMenu);
 	Vector2D auxpos = Vector2D{ 12 * (double)(app_->getWindowWidth() / 14), 14 * (double)(app_->getWindowHeight() / 17) };
 	Vector2D auxSize = Vector2D{ (double)(app_->getWindowWidth() / 27),  (double)(app_->getWindowWidth() / 27) };
-	deleteButton_ = new Button(app, dynamic_cast<GameState*>(this),app_->getTextureManager()->getTexture(Resources::DeleteButton), auxpos, auxSize,callDeleteObject);
+	deleteButton_ = new Button(app,app_->getTextureManager()->getTexture(Resources::DeleteButton), auxpos, auxSize,callDeleteObject);
 	addRenderUpdateLists(deleteButton_);
 
 	auxpos = Vector2D{ 12 * (double)(app_->getWindowWidth() / 14), 9 * (double)(app_->getWindowHeight() / 12) };
 	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 27),  (double)(app_->getWindowWidth() / 27) };
-	equippedButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::EquippedButton), auxpos, auxSize,callEquipedObject);
+	equippedButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::EquippedButton), auxpos, auxSize,callEquipedObject);
 	addRenderUpdateLists(equippedButton_);
 
 	auxpos = Vector2D{ 10 * (double)(app_->getWindowWidth() / 12), 3* (double)(app_->getWindowHeight() / 10) };
 	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 30),  (double)(app_->getWindowWidth() / 30) };
-	advanceButton_ = new Button(app,this,app_->getTextureManager()->getTexture(Resources::RightArrow), auxpos, auxSize, callForwardList);
+	advanceButton_ = new Button(app,app_->getTextureManager()->getTexture(Resources::RightArrow), auxpos, auxSize, callForwardList);
 	addRenderUpdateLists(advanceButton_);
 
 	auxpos = Vector2D{ 8 * (double)(app_->getWindowWidth() / 13), 3 * (double)(app_->getWindowHeight() / 10) };
 	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 30),  (double)(app_->getWindowWidth() / 30) };
-	gobackButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::LeftArrow), auxpos, auxSize, callBackList);
+	gobackButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::LeftArrow), auxpos, auxSize, callBackList);
 	addRenderUpdateLists(gobackButton_);
 
 	//app_->getWindowWidth(), app_->getWindowHeight() 
@@ -53,15 +55,19 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::ButtonX), { 1439,214 }, { 60,53 }, callExit);
 	addRenderUpdateLists(exitButton_);
 
+	auxpos = Vector2D{ 7 * (double)(app_->getWindowWidth() / 13),/* 1 * (double)(app_->getWindowHeight() / 40)*/ -20};
+	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 10),  (double)(app_->getWindowWidth() / 10) };
+	goToSkillsButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos, { 650, 270 }, callSkillsState);
+	addRenderUpdateLists(goToSkillsButton_);
+	
+
+
 	//Cogemos la lista de objetos del gameManager
 	GameManager* gameManager_ = GameManager::instance();
 	inventoryList_ = gameManager_->getInventory();
 	//Cogemos los objetos equpados de player
-	// en principio habria que coger el player de gameManager
-	vector<Texture*> auxTex;
-	auxTex.push_back(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel));
-	player_ = static_cast<Player*>(gm_->getPlayer());
-	//este player deja basura, pero no se deberia crear aqui, es probisional
+	player_ = gameManager_->getPlayer();
+	
 	playerEquipment aux = player_->getInfoEquip();
 
 	if (aux.armor_ != nullptr) equipment_.armor_ = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.armor_, callSelectObject,true);
@@ -178,7 +184,7 @@ void Inventory::deleteObj() {
 		
 	}
 }
-
+//Hay que quitarle pero todavia no puedo
 void Inventory::addToInventory(Equipment* ob) {
 	//creamos un boton
 	InventoryButton* b = new InventoryButton(app_,this, ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 },ob, callSelectObject);
@@ -350,6 +356,17 @@ void Inventory::update() {
 
 	//Actualizamos los objetos normales
 	GameState::update();
+
+	SDL_Point point;
+	point.x = eventHandler_->getRealMousePos().getX();
+	point.y = eventHandler_->getRealMousePos().getY();
+
+	if (SDL_PointInRect(&point, &goToSkillsButton_->getDestiny())) {
+		goToSkillsButton_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToSkillsBButton));
+	}
+	else {
+		goToSkillsButton_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToSkillsAButton));
+	}
 }
 Inventory::~Inventory() {
 	delete equipment_.armor_;

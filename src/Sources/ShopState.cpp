@@ -1,17 +1,17 @@
 #include "ShopState.h"
 #include "Player.h"
 
-void callForwardListS(GameState* state) {
-	dynamic_cast<ShopState*>(state)->forwardList();
+void callForwardListS(Application* app) {
+	dynamic_cast<ShopState*>(app->getCurrState())->forwardList();
 }
-void callBackListS(GameState* state) {
-	dynamic_cast<ShopState*>(state)->backList();
+void callBackListS(Application* app) {
+	dynamic_cast<ShopState*>(app->getCurrState())->backList();
 }
-void callShopForwardListS(GameState* state) {
-	dynamic_cast<ShopState*>(state)->ShopForwardList();
+void callShopForwardListS(Application* app) {
+	dynamic_cast<ShopState*>(app->getCurrState())->ShopForwardList();
 }
-void callShopBackListS(GameState* state) {
-	dynamic_cast<ShopState*>(state)->ShopBackList();
+void callShopBackListS(Application* app) {
+	dynamic_cast<ShopState*>(app->getCurrState())->ShopBackList();
 }
 void callExitS(Application* app) {
 	app->getGameStateMachine()->popState();
@@ -19,35 +19,35 @@ void callExitS(Application* app) {
 void callSelectObjectS(GameState* state, InventoryButton* ob) {
 	dynamic_cast<ShopState*>(state)->selectObject(ob);
 }
-void callSellObjectS(GameState* state) {
-	dynamic_cast<ShopState*>(state)->sellObj();
+void callSellObjectS(Application* app) {
+	dynamic_cast<ShopState*>(app->getCurrState())->sellObj();
 }
-void callBuyObjectS(GameState* state) {
-	dynamic_cast<ShopState*>(state)->buyObj();
+void callBuyObjectS(Application* app) {
+	dynamic_cast<ShopState*>(app->getCurrState())->buyObj();
 }
 
 ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(player)
 {
-	sellButton_ = new Button(app, dynamic_cast<GameState*>(this), app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), Vector2D{ 50,500 }, Vector2D{ 50,50 }, callSellObjectS);
+	sellButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), Vector2D{ 50,500 }, Vector2D{ 50,50 }, callSellObjectS);
 	addUpdateList(sellButton_);
 	addRenderList(sellButton_);
-	advanceButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D{ 700,100 }, Vector2D{ 50,50 }, callForwardListS);
+	advanceButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D{ 700,100 }, Vector2D{ 50,50 }, callForwardListS);
 	addUpdateList(advanceButton_);
 	addRenderList(advanceButton_);
-	gobackButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackButton), Vector2D{ 500,100 }, Vector2D{ 50,50 }, callBackListS);
+	gobackButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::BackButton), Vector2D{ 500,100 }, Vector2D{ 50,50 }, callBackListS);
 	addUpdateList(gobackButton_);
 	addRenderList(gobackButton_);
 	exitButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 1300,100 }, Vector2D{ 50,50 }, callExitS);
 	addUpdateList(exitButton_);
 	addRenderList(exitButton_);
 
-	buyButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground), Vector2D{ 50,700 }, Vector2D{ 50,50 }, callBuyObjectS, 1);
+	buyButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground), Vector2D{ 50,700 }, Vector2D{ 50,50 }, callBuyObjectS, 1);
 	addUpdateList(buyButton_);
 	addRenderList(buyButton_);
-	shopAdvanceButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D{ 300,100 }, Vector2D{ 50,50 }, callShopForwardListS, 1);
+	shopAdvanceButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D{ 300,100 }, Vector2D{ 50,50 }, callShopForwardListS, 1);
 	addUpdateList(shopAdvanceButton_);
 	addRenderList(shopAdvanceButton_);
-	shopGobackButton_ = new Button(app, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackButton), Vector2D{ 100,100 }, Vector2D{ 50,50 }, callShopBackListS, 1);
+	shopGobackButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::BackButton), Vector2D{ 100,100 }, Vector2D{ 50,50 }, callShopBackListS, 1);
 	addUpdateList(shopGobackButton_);
 	addRenderList(shopGobackButton_);
 

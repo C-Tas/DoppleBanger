@@ -42,6 +42,8 @@ public:
 		ButtonUpgradeYellow,
 		GoToInventoryAButton,
 		GoToInventoryBButton,
+		GoToSkillsAButton,
+		GoToSkillsBButton,
 
 		//BarrasPuntosHazaña
 		Controls,
