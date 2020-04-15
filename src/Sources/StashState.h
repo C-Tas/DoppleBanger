@@ -42,17 +42,23 @@ private:
 	///<summary>N�mero de elementos del alijo que se ven por pantalla</summary>
 	const int STASH_VISIBLE_ELEMENTS = 8;
 	///<summary>Tama�o de los botones que son "cuadrados"</summary>
-	const int BUTTON_SIZE = (int)3*(app_->getWindowHeight()/36);
+	const int BUTTON_SIZE = app_->getWindowHeight()/12;
+	///<summary>Tama�o de los botones que son "cuadrados"</summary>
+	const Vector2D CLOSE_BUTTON_SIZE = { app_->getWindowHeight() / 15, app_->getWindowHeight() / 16 };
 	///<summary>Posici�n en y en la que se pintan las flechas para avanzar/retroceder en el inventario/alijo </summary>
 	const int ARROW_ROW = (16*(app_->getWindowHeight()/50));
 	///<summary>Posici�n en y en la que se pintan los botones para mover el dinero entre el inventario/alijo</summary>
 	const int MONEY_BUTTON_ROW = 13* (app_->getWindowHeight() / 50);
-	///<summary>Posici�n en x en la que se pintan los botones de cerrar alijo, borrar objeto y cambiar de lista</summary>
-	const int FUNCTIONALITY_BUTTONS_COLUMN = (9 * (app_->getWindowWidth() / 10));
+	///<summary>Posici�n en x en la que se pintan los botones de cerrar alijo</summary>
+	const int CLOSE_BUTTON_COLUMN = (9 * (app_->getWindowWidth() / 10));
+	///<summary>Posici�n en x en la que se pintan los botones de borrar objeto y cambiar de lista</summary>
+	const int FUNCTIONALITY_BUTTONS_COLUMN =CLOSE_BUTTON_COLUMN-10 ;
 	///<summary>Ancho en p�xeles de un caracter</summary>
 	const int FONT_WIDTH = (app_->getWindowWidth()/60);
 	///<summary>Alto en p�xeles de un caracter</summary>
 	const int FONT_HEIGHT = (int)(1.7*FONT_WIDTH);
+	///<summary>Distancia el texto númerico del dinero y el texto dinero inventario/alijo</summary>
+	const int MONEY_TEXT_OFFSET = app_->getWindowWidth() / 100;
 	///<summary>Número de elementos por fila que apareceran tanto en el alijo como en el inventario</summary>
 	const int ELEMENTS_PER_ROW = 2;
 	///<summary>Distancia entre los elementos del alijo</summary>
