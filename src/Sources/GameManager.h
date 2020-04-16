@@ -1,5 +1,4 @@
 #pragma once
-
 #include <memory>
 #include <iostream>
 #include <list>
@@ -11,6 +10,7 @@
 #include "Player.h"
 #include "Clon.h"
 
+class Application;
 
 using namespace std;
 class Item;
@@ -119,7 +119,7 @@ private:
 	//Vector que representa las misiones secundarias empezadas
 	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
 
-	
+	Application* app_ = nullptr;
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
 	GameObject* player_ = nullptr;
 	//Puntero al clon
@@ -144,6 +144,7 @@ public:
 		for (InventoryButton* ob : *stash_)delete ob;
 		delete inventory_;
 		delete stash_;
+		delete app_;
 	}
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {
@@ -162,6 +163,8 @@ public:
 	const lista getInventory() { return inventory_; };
 	//Devuelve el alijo
 	const lista getStash() { return stash_; };
+	//Devuelve el tamaño de fuente según el tamaño de la ventana
+	const int getFontSize();
 	//Devuelve el total de misiones secundarias
 	const int getNumMission() { return NUM_MISION; };
 	//Devuelve el oro conseguido
@@ -221,6 +224,7 @@ public:
 	inline void setUnlockedIslands(Island island) { unlockedIslands_ = island; };
 	//Asigna la nueva isla actual
 	inline void setCurrIsland(Island newIsland) { currIsland_ = newIsland; }
+	//Asigna la isla actual
 	inline void setIsland(int island) { currIsland_ = (Island)island; };
 	//Asigna los archievement points
 	inline void setArchievementPoints(int value) { achievementPoints_ = value; }
