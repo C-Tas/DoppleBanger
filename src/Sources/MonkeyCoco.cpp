@@ -29,20 +29,20 @@ bool MonkeyCoco ::update() {
 	if (currState_ == STATE::ATTACKING && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
 		//Si el mono tiene un enemigo y lo tiene a rango
 		if (onRange()) {
-			changeAnim(attackAnim_);
+			//changeAnim(attackAnim_);
 			attack();
 		}
 		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
 		else if(getEnemy())
 		{
-			changeAnim(attackAnim_);
+			//changeAnim(attackAnim_);
 			attack();
 		}
 		//Tengo enemigo pero no a rango
 		else
 		{
 			currState_ == STATE::IDLE;
-			changeAnim(idleAnim_);
+			//changeAnim(idleAnim_);
 			currEnemy_ = nullptr;
 		}
 		lastHit = SDL_GetTicks();

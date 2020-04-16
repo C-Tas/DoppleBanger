@@ -27,7 +27,6 @@ void Player::init()
 bool Player::update()
 {
 	updateFrame();
-	updateDirVis();
 	//Si se pulsa la Q y se ha acabado el cooldown y se está a rango
 	//Hago un if dentro de otro if ya que como el de dentro tiene que hacer cálculos, estos solo se hagan
 	//cuando ya se han cumplido previamente las dos condiciones anteriores.
@@ -86,9 +85,7 @@ bool Player::update()
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
 	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_ && objective_->getState() != STATE::DYING)
 	{
-		objective_->receiveDamage(currStats_.meleeDmg_);
-		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
-		meleeTime_ = SDL_GetTicks();
+		initMelee();
 	}
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte
@@ -96,6 +93,9 @@ bool Player::update()
 	}
 	else if (currState_ == STATE::SHOOTING) {
 		shootAnim();
+	}
+	else if (currState_ == STATE::ATTACKING) {
+		meleeAnim();
 	}
 	return false;
 }
@@ -114,28 +114,65 @@ void Player::initShoot()
 	stop();
 	currState_ = STATE::SHOOTING;
 	mousePos_ = eventHandler_->getRelativeMousePos();
-	shooted = false;
+	shooted_ = false;
+	updateDirVis();
 	switch (lookAt)
 	{
 	case DIR::UP:
-		texture_ = shootU_;
-		currAnim_ = shootAnimU_;
-		frameShoot_ = 3;
+		texture_ = meleeU_;
+		currAnim_ = meleeAnimU_;
+		frameAction_ = 3;
 		break;
 	case DIR::RIGHT:
 		texture_ = shootR_;
 		currAnim_ = shootAnimR_;
-		frameShoot_ = 1;
+		frameAction_ = 1;
 		break;
 	case DIR::DOWN:
 		texture_ = shootD_;
 		currAnim_ = shootAnimD_;
-		frameShoot_ = 3;
+		frameAction_ = 3;
 		break;
 	case DIR::LEFT:
 		texture_ = shootL_;
 		currAnim_ = shootAnimL_;
-		frameShoot_ = 1;
+		frameAction_ = 1;
+		break;
+	}
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Player::initMelee()
+{
+	currState_ = STATE::ATTACKING;
+	mousePos_ = eventHandler_->getRelativeMousePos();
+	attacking_ = false;
+	attacked_ = false;
+	updateDirVisEnemy();
+	switch (lookAt)
+	{
+	case DIR::UP:
+		texture_ = meleeU_;
+		currAnim_ = meleeAnimU_;
+		frameAction_ = 1;
+		break;
+	case DIR::RIGHT:
+		texture_ = meleeR_;
+		currAnim_ = meleeAnimR_;
+		frameAction_ = 2;
+		break;
+	case DIR::DOWN:
+		texture_ = meleeD_;
+		currAnim_ = meleeAnimD_;
+		frameAction_ = 2;
+		break;
+	case DIR::LEFT:
+		texture_ = meleeL_;
+		currAnim_ = meleeAnimL_;
+		frameAction_ = 2;
 		break;
 	}
 
@@ -163,14 +200,50 @@ void Player::updateDirVis()
 	}
 }
 
+void Player::updateDirVisEnemy() {
+	if (objective_ != nullptr) {
+		Vector2D center = getCenter(pos_);		//Punto de referencia
+		Vector2D enemyCenter = getCenter(objective_->getPos());
+		Vector2D dir = enemyCenter - center;		//Vector dirección
+		dir.normalize();
+		double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
+		if (angle >= 0) {
+			if (angle <= 45.0) lookAt = DIR::RIGHT;
+			else if (angle < 135.0) lookAt = DIR::DOWN;
+			else lookAt = DIR::LEFT;
+		}
+		else {
+			if (angle >= -45.0) lookAt = DIR::RIGHT;
+			else if (angle >= -135.0) lookAt = DIR::UP;
+			else lookAt = DIR::LEFT;
+		}
+	}
+}
+
 void Player::shootAnim()
 {
-	if (!shooted && currAnim_.currFrame_ == frameShoot_) { //Dispara en el tercer frame
+	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
 		shoot(mousePos_);
-		shooted = true; 
+		shooted_ = true; 
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
-		currState_ == STATE::IDLE;	//Reseteo de la animación
+		currState_ = STATE::IDLE;	//Reseteo de la animación
+		//Se debería resetear a idle, pero aún no está implementado
+		currAnim_.numberFrames_ = 0;
+		texture_ = auxTx_;
+	}
+}
+
+void Player::meleeAnim()
+{
+	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
+		objective_->receiveDamage(currStats_.meleeDmg_);
+		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
+		meleeTime_ = SDL_GetTicks();
+		attacked_ = true;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		currState_ = STATE::IDLE;	//Reseteo de la animación
 		//Se debería resetear a idle, pero aún no está implementado
 		currAnim_.numberFrames_ = 0;
 		texture_ = auxTx_;
@@ -192,6 +265,19 @@ void Player::initAnims()
 	//Abajo
 	shootAnimD_ = Anim(SHOOT_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_D_FRAME_RATE, false);
 	shootD_ = app_->getTextureManager()->getTexture(Resources::PlayerShootDownAnim);
+	//Animación de melee
+	//Derecha
+	meleeAnimR_ = Anim(MELEE_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_R_FRAME_RATE, false);
+	meleeR_ = app_->getTextureManager()->getTexture(Resources::PlayerMeleeRightAnim);
+	//Arriba
+	meleeAnimU_ = Anim(MELEE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_U_FRAME_RATE, false);
+	meleeU_ = app_->getTextureManager()->getTexture(Resources::PlayerMeleeUpAnim);
+	//Izquierda
+	meleeAnimL_ = Anim(MELEE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_L_FRAME_RATE, false);
+	meleeL_ = app_->getTextureManager()->getTexture(Resources::PlayerMeleeLeftAnim);
+	//Abajo
+	meleeAnimD_ = Anim(MELEE_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_D_FRAME_RATE, false);
+	meleeD_ = app_->getTextureManager()->getTexture(Resources::PlayerMeleeDownAnim);
 }
 
 void Player::shoot(Vector2D dir)

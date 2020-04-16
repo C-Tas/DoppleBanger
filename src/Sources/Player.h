@@ -83,8 +83,9 @@ private:
 #pragma region Animaciones
 	Texture* auxTx_ = nullptr;				//Textura temporal auxiliar
 	Vector2D mousePos_{ 0,0 };			//Vector donde se ha hecho click al disparar
-	bool shooted = false;					//Para disparar una sola vez en el frame adecuado
-	int frameShoot_ = 0;					//Frame en el que se tiene que disparar
+	bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
+	bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
+	int frameAction_ = 0;					//Frame en el que se realiza la acción
 	const int W_H_PLAYER_FRAME = 100;		//Ancho del frame
 	//Disparo derecha
 	Anim shootAnimR_{ 0, 0, 0, 0, false};	//Animación de disparo
@@ -106,15 +107,40 @@ private:
 	Texture* shootD_ = nullptr;				//Textura del disparo
 	const int SHOOT_D_FRAMES = 7;			//Frames de la animación
 	const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
+
+	//Melee derecha
+	Anim meleeAnimR_{ 0, 0, 0, 0, false };	//Animación de melee
+	Texture* meleeR_ = nullptr;				//Textura del melee
+	const int MELEE_R_FRAMES = 5;			//Frames de la animación
+	const int MELEE_R_FRAME_RATE = 50;		//Frame rate
+	//Melee hacia arriba
+	Anim meleeAnimU_{ 0, 0, 0, 0, false };	//Animación de disparo
+	Texture* meleeU_ = nullptr;				//Textura del disparo
+	const int MELEE_U_FRAMES = 3;			//Frames de la animación
+	const int MELEE_U_FRAME_RATE = 75;		//Frame rate
+	//Melee hacia izquierda
+	Anim meleeAnimL_{ 0, 0, 0, 0, false };	//Animación de melee
+	Texture* meleeL_ = nullptr;				//Textura del melee
+	const int MELEE_L_FRAMES = 5;			//Frames de la animación
+	const int MELEE_L_FRAME_RATE = 50;		//Frame rate
+	//Melee hacia abajo
+	Anim meleeAnimD_{ 0, 0, 0, 0, false };	//Animación de melee
+	Texture* meleeD_ = nullptr;				//Textura del melee
+	const int MELEE_D_FRAMES = 5;			//Frames de la animación
+	const int MELEE_D_FRAME_RATE = 50;		//Frame rate
 	//Idle
 	//Inicialización de las animaciones
 	virtual void initAnims();
-	//Inicia la animación de disparo
+	//Inicia la animación
 	void initShoot();
+	void initMelee();
 	//Controla la animación
 	void shootAnim();
-	//Calcula hacia dónde mira el player
+	void meleeAnim();
+	//Calcula hacia dónde mira el player en función del ratón
 	void updateDirVis();
+	//Calcula hacia dónde mira el player en función del enemigo
+	void updateDirVisEnemy();
 #pragma endregion
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities

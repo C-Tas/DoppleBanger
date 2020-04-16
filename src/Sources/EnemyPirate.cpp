@@ -58,13 +58,13 @@ bool EnemyPirate::update() {
 	if (currState_ == STATE::ATTACKING) {
 		//Si el pirata tiene un enemigo y lo tiene a rango
 		if (onRange()) {
-			changeAnim(attackAnim_);
+			//changeAnim(attackAnim_);
 			attack();
 		}
 		else
 		{
 			currState_ = STATE::FOLLOWING;
-			changeAnim(walkAnim_);
+			//changeAnim(walkAnim_);
 			selectTarget();
 		}
 	}
@@ -77,7 +77,7 @@ bool EnemyPirate::update() {
 		}
 		else
 		{
-			changeAnim(walkAnim_);
+			//changeAnim(walkAnim_);
 			selectTarget();
 		}
 	}

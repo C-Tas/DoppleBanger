@@ -90,6 +90,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PlayerShootLeftAnim, "../Sources/assets/player/animaciones/disparo/disparoIz.png" },
 	{ PlayerShootUpAnim, "../Sources/assets/player/animaciones/disparo/disparoTop.png" },
 	{ PlayerShootDownAnim, "../Sources/assets/player/animaciones/disparo/disparoDown.png" },
+	{ PlayerMeleeRightAnim, "../Sources/assets/player/animaciones/melee/meleeDcha.png" },
+	{ PlayerMeleeLeftAnim, "../Sources/assets/player/animaciones/melee/meleeIz.png" },
+	{ PlayerMeleeUpAnim, "../Sources/assets/player/animaciones/melee/meleeTop.png" },
+	{ PlayerMeleeDownAnim, "../Sources/assets/player/animaciones/melee/meleeDown.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

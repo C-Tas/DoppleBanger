@@ -101,6 +101,10 @@ public:
 		PlayerShootLeftAnim,
 		PlayerShootUpAnim,
 		PlayerShootDownAnim,
+		PlayerMeleeRightAnim,
+		PlayerMeleeLeftAnim,
+		PlayerMeleeUpAnim,
+		PlayerMeleeDownAnim,
 
 		//Interactuables
 		Wheel,
