@@ -81,54 +81,43 @@ private:
 	DIR lookAt;	//Hacia dónde mira
 	array<Skill*, MAX_SKILLS> skillsEquiped_ = {nullptr, nullptr, nullptr};
 #pragma region Animaciones
-	Texture* auxTx_ = nullptr;				//Textura temporal auxiliar
-	Vector2D mousePos_{ 0,0 };			//Vector donde se ha hecho click al disparar
-	bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
-	bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
+	Texture* auxTx_ = nullptr;				//Textura de idle temporal, se borrará cuadno esté el idle
+	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
-	const int W_H_PLAYER_FRAME = 100;		//Ancho del frame
+	const int W_H_PLAYER_FRAME = 100;		//Ancho del frame, estándar para todas
+	//Disparo
+	bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
+	vector<Anim> shootAnims_;				//Vector de las animaciones
+	vector<Texture*> shootTx_;				//Vector de las texturas
 	//Disparo derecha
-	Anim shootAnimR_{ 0, 0, 0, 0, false};	//Animación de disparo
-	Texture* shootR_ = nullptr;				//Textura del disparo
 	const int SHOOT_R_FRAMES = 3;			//Frames de la animación
 	const int SHOOT_R_FRAME_RATE = 150;		//Frame rate
 	//Disparo hacia arriba
-	Anim shootAnimU_{ 0, 0, 0, 0, false };	//Animación de disparo
-	Texture* shootU_ = nullptr;				//Textura del disparo
 	const int SHOOT_U_FRAMES = 7;			//Frames de la animación
 	const int SHOOT_U_FRAME_RATE = 40;		//Frame rate
 	//Disparo hacia izquierda
-	Anim shootAnimL_{ 0, 0, 0, 0, false };	//Animación de disparo
-	Texture* shootL_ = nullptr;				//Textura del disparo
 	const int SHOOT_L_FRAMES = 3;			//Frames de la animación
 	const int SHOOT_L_FRAME_RATE = 150;		//Frame rate
 	//Disparo hacia abajo
-	Anim shootAnimD_{ 0, 0, 0, 0, false };	//Animación de disparo
-	Texture* shootD_ = nullptr;				//Textura del disparo
 	const int SHOOT_D_FRAMES = 7;			//Frames de la animación
 	const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
 
 	//Melee derecha
-	Anim meleeAnimR_{ 0, 0, 0, 0, false };	//Animación de melee
-	Texture* meleeR_ = nullptr;				//Textura del melee
+	bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
+	vector<Anim> meleeAnims_;				//Vector de las animaciones
+	vector<Texture*> meleeTx_;				//Vector de las texturas
 	const int MELEE_R_FRAMES = 5;			//Frames de la animación
-	const int MELEE_R_FRAME_RATE = 50;		//Frame rate
+	const int MELEE_R_FRAME_RATE = 200;		//Frame rate
 	//Melee hacia arriba
-	Anim meleeAnimU_{ 0, 0, 0, 0, false };	//Animación de disparo
-	Texture* meleeU_ = nullptr;				//Textura del disparo
 	const int MELEE_U_FRAMES = 3;			//Frames de la animación
-	const int MELEE_U_FRAME_RATE = 75;		//Frame rate
+	const int MELEE_U_FRAME_RATE = 150;		//Frame rate
 	//Melee hacia izquierda
-	Anim meleeAnimL_{ 0, 0, 0, 0, false };	//Animación de melee
-	Texture* meleeL_ = nullptr;				//Textura del melee
 	const int MELEE_L_FRAMES = 5;			//Frames de la animación
-	const int MELEE_L_FRAME_RATE = 50;		//Frame rate
+	const int MELEE_L_FRAME_RATE = 200;		//Frame rate
 	//Melee hacia abajo
-	Anim meleeAnimD_{ 0, 0, 0, 0, false };	//Animación de melee
-	Texture* meleeD_ = nullptr;				//Textura del melee
 	const int MELEE_D_FRAMES = 5;			//Frames de la animación
-	const int MELEE_D_FRAME_RATE = 50;		//Frame rate
-	//Idle
+	const int MELEE_D_FRAME_RATE = 200;		//Frame rate
+
 	//Inicialización de las animaciones
 	virtual void initAnims();
 	//Inicia la animación
@@ -138,7 +127,7 @@ private:
 	void shootAnim();
 	void meleeAnim();
 	//Calcula hacia dónde mira el player en función del ratón
-	void updateDirVis();
+	void updateDirVisMouse();
 	//Calcula hacia dónde mira el player en función del enemigo
 	void updateDirVisEnemy();
 #pragma endregion

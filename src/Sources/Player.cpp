@@ -115,31 +115,24 @@ void Player::initShoot()
 	currState_ = STATE::SHOOTING;
 	mousePos_ = eventHandler_->getRelativeMousePos();
 	shooted_ = false;
-	updateDirVis();
+	updateDirVisMouse();
+	texture_ = shootTx_[(int)lookAt];
+	currAnim_ = shootAnims_[(int)lookAt];
+	//Asigna el frame donde ocurrirá la acción
 	switch (lookAt)
 	{
 	case DIR::UP:
-		texture_ = meleeU_;
-		currAnim_ = meleeAnimU_;
 		frameAction_ = 3;
 		break;
 	case DIR::RIGHT:
-		texture_ = shootR_;
-		currAnim_ = shootAnimR_;
 		frameAction_ = 1;
 		break;
 	case DIR::DOWN:
-		texture_ = shootD_;
-		currAnim_ = shootAnimD_;
 		frameAction_ = 3;
 		break;
 	case DIR::LEFT:
-		texture_ = shootL_;
-		currAnim_ = shootAnimL_;
 		frameAction_ = 1;
-		break;
 	}
-
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
@@ -152,26 +145,20 @@ void Player::initMelee()
 	attacking_ = false;
 	attacked_ = false;
 	updateDirVisEnemy();
+	texture_ = meleeTx_[(int)lookAt];
+	currAnim_ = meleeAnims_[(int)lookAt];
 	switch (lookAt)
 	{
 	case DIR::UP:
-		texture_ = meleeU_;
-		currAnim_ = meleeAnimU_;
 		frameAction_ = 1;
 		break;
 	case DIR::RIGHT:
-		texture_ = meleeR_;
-		currAnim_ = meleeAnimR_;
 		frameAction_ = 2;
 		break;
 	case DIR::DOWN:
-		texture_ = meleeD_;
-		currAnim_ = meleeAnimD_;
 		frameAction_ = 2;
 		break;
 	case DIR::LEFT:
-		texture_ = meleeL_;
-		currAnim_ = meleeAnimL_;
 		frameAction_ = 2;
 		break;
 	}
@@ -181,7 +168,7 @@ void Player::initMelee()
 	frame_.h = currAnim_.heightFrame_;
 }
 
-void Player::updateDirVis()
+void Player::updateDirVisMouse()
 {
 	mousePos_ = eventHandler_->getRelativeMousePos();
 	Vector2D center = getCenter(pos_);		//Punto de referencia
@@ -253,31 +240,32 @@ void Player::meleeAnim()
 void Player::initAnims()
 {
 	//Animación de disparo
-	//Derecha
-	shootAnimR_ = Anim(SHOOT_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_R_FRAME_RATE, false);
-	shootR_ = app_->getTextureManager()->getTexture(Resources::PlayerShootRightAnim);
 	//Arriba
-	shootAnimU_ = Anim(SHOOT_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_U_FRAME_RATE, false);
-	shootU_ = app_->getTextureManager()->getTexture(Resources::PlayerShootUpAnim);
-	//Izquierda
-	shootAnimL_ = Anim(SHOOT_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_L_FRAME_RATE, false);
-	shootL_ = app_->getTextureManager()->getTexture(Resources::PlayerShootLeftAnim);
+	shootAnims_.push_back(Anim(SHOOT_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_U_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootUpAnim));
+	//Derecha
+	shootAnims_.push_back(Anim(SHOOT_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_R_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootRightAnim));
 	//Abajo
-	shootAnimD_ = Anim(SHOOT_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_D_FRAME_RATE, false);
-	shootD_ = app_->getTextureManager()->getTexture(Resources::PlayerShootDownAnim);
+	shootAnims_.push_back(Anim(SHOOT_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_D_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootDownAnim));
+	//Izquierda
+	shootAnims_.push_back(Anim(SHOOT_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_L_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootLeftAnim));
+
 	//Animación de melee
-	//Derecha
-	meleeAnimR_ = Anim(MELEE_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_R_FRAME_RATE, false);
-	meleeR_ = app_->getTextureManager()->getTexture(Resources::PlayerMeleeRightAnim);
 	//Arriba
-	meleeAnimU_ = Anim(MELEE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_U_FRAME_RATE, false);
-	meleeU_ = app_->getTextureManager()->getTexture(Resources::PlayerMeleeUpAnim);
-	//Izquierda
-	meleeAnimL_ = Anim(MELEE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_L_FRAME_RATE, false);
-	meleeL_ = app_->getTextureManager()->getTexture(Resources::PlayerMeleeLeftAnim);
+	meleeAnims_.push_back(Anim(MELEE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_U_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeUpAnim));
+	//Derecha
+	meleeAnims_.push_back(Anim(MELEE_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_R_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeRightAnim));
 	//Abajo
-	meleeAnimD_ = Anim(MELEE_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_D_FRAME_RATE, false);
-	meleeD_ = app_->getTextureManager()->getTexture(Resources::PlayerMeleeDownAnim);
+	meleeAnims_.push_back(Anim(MELEE_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_D_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeDownAnim));
+	//Izquierda
+	meleeAnims_.push_back(Anim(MELEE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_L_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeLeftAnim));
 }
 
 void Player::shoot(Vector2D dir)
