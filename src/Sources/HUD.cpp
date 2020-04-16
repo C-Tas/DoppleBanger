@@ -3,6 +3,7 @@
 #include "SDL_macros.h"
 #include "GameManager.h"
 #include <array>
+#include "Player.h"
 
 HUD::~HUD() {
 	for (auto it = elementsHUD_.begin(); it != elementsHUD_.end(); ++it) {

@@ -4,6 +4,7 @@
 #include "usable.h"
 #include "HandleEvents.h"
 #include <array>
+#include "GameManager.h"
 class Skill;
 
 struct playerEquipment
@@ -41,6 +42,9 @@ public:
 	void attack(Enemy* obj);
 	//Grita
 	void shout();
+	//<summary>Devuelve un puntero Skill* a la habilidad del tipo que le pases por parámetro
+	//devuelve nullptr si no está equipada y si es una pasiva</summary>
+	Skill* createSkill(SkillName name);
 	//Crea un clon. A este método lo llama solo la skill "ClonSkill"
 	void createClon();
 	//Cambia de estado a muriendo
@@ -53,6 +57,9 @@ public:
 		}
 		else return false;
 	};
+	///<summary>Método para crear las skills que tiene el player
+	///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
+	void initSkills();
 
 #pragma region Getters
 	const Clon* getClon() { return clon_; };
@@ -87,24 +94,24 @@ public:
 	void addMoney(int money) { money_ += money; };
 	void usePotion(int value, potionType type);
 	void desactivePotion();
-
-	void setElementsHUD();
 	void setClonCoolDown() { cdSkills[3] = true; }
 	//Aumenta la cadencia de tiro del player
 	void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 	//Activa el ataque potenciado
 	void activateEmpowered() { empoweredAct_ = true; };
 #pragma endregion
-#pragma region SkillsEquipped
-	///<summary>Número máximo de skills equipables</summary>
-	static const int MAX_SKILLS = 3;
-	Skill* getEquippedSkill(int key) { return skillsEquipped_[key]; }
-	void setSkillAt(int key, Skill* skill) { if(skillsEquipped_[key]!= nullptr)delete skillsEquipped_[key]; skillsEquipped_[key] = skill; }
-	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquipped_; }
-#pragma endregion
 
-	void setPerforate(bool perforate) { perforate_ = perforate; };
+#pragma region Skills
+	///<summary>Número máximo de skills equipables</summary>
+	//static const int MAX_SKILLS = 3;
+	Skill* getEquippedSkill(int key) { return skills_[key]; }
+	void setSkillAt(int key, Skill* skill) { 
+		if(skills_[key]!= nullptr)delete skills_[key]; 
+		skills_[key] = skill; }
+	vector <Skill*>& getSkillsArray() { return skills_; }
+#pragma endregion
 	//Activa la perforación
+	void setPerforate(bool perforate) { perforate_ = perforate; };
 	//Activa el rebote y el momento en el que se usa
 	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
 private:
@@ -116,7 +123,6 @@ private:
 	Clon* clon_ = nullptr;
 
 	Vector2D previousPos_;
-	array<Skill*, MAX_SKILLS> skillsEquipped_ = {nullptr, nullptr, nullptr};
 
 	//Habilidades
 	vector<Skill*> skills_;
@@ -168,4 +174,6 @@ private:
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
 
 	void initObject();
+
+	
 };

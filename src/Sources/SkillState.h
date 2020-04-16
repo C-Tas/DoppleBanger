@@ -42,8 +42,12 @@ private:
 	{ (int)(0.7588 * app_->getWindowWidth()), (int)(0.8089 * app_->getWindowHeight()), (int)(0.0425 * app_->getWindowWidth()), (int)(0.0433 * app_->getWindowHeight()) },
 	{ (int)(0.8381 * app_->getWindowWidth()), (int)(0.8089 * app_->getWindowHeight()), (int)(0.0425 * app_->getWindowWidth()), (int)(0.0433 * app_->getWindowHeight()) } };
 
-	//
-	void activeInvincible() { player_->activeInvincible(); };
+	///<summary>Constantes con los puntos para desbloquear las habilidades</summary>
+	const int UNLOCK_FIRST_SKILL = 33;
+	const int UNLOCK_SECOND_SKILL = 66;
+	const int UNLOCK_THRID_SKILL = 100;
+
+	
 protected:
 	///<summary>Se inicializa el skill state</summary>
 	virtual void initState();
@@ -92,9 +96,6 @@ protected:
 
 	///M�todo para cuando se vaya a destruir el estado, se actualice las skills que tiene equipadas el player
 	void setPlayerSkills();
-	//<summary>M�todo que dado el nombre de una skill crea un objeto Skill* correspondiente
-	///FALTA IMPLEMENTAR LOS OBJETOS QUE HEREDEN DE SKILL, PERO LA ESTRUCTURA EST�</summary>
-	Skill* createSkill(SkillName name);
 public:
 	///<summary>Constructora de CreditsState</summary>
 	SkillState(Application* app = nullptr, Player* player = nullptr) :GameState(app), player_(player) { initState(); };

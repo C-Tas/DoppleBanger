@@ -7,6 +7,12 @@
 #include "TextBox.h"
 #include "Skill.h"
 #include "VisualElement.h"
+#include "RicochetSkill.h"
+#include "WhirlwindSkill.h"
+#include "PerforateSkill.h"
+#include "EmpoweredSkill.h"
+#include "ClonSelfDestructSkill.h"
+#include "ClonSkill.h"
 
 
 void SkillState::initState() {
@@ -256,7 +262,7 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 {
 	delete totalPoints_;
 	createTexts();
-	if (points >= 33 && !(*aux)->isUnlocked()) {
+	if (points >= UNLOCK_FIRST_SKILL && !(*aux)->isUnlocked()) {
 		(*aux)->setTexture(t1);
 		(*aux)->setUnlocked(true);
 		gm_->setSkillUnlocked((*aux)->getSkillId());
@@ -267,7 +273,7 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 		}
 	}
 	++aux;
-	if (points >= 66 && !(*aux)->isUnlocked()) {
+	if (points >= UNLOCK_SECOND_SKILL && !(*aux)->isUnlocked()) {
 		(*aux)->setTexture(t2);
 		(*aux)->setUnlocked(true);
 		gm_->setSkillUnlocked((*aux)->getSkillId());
@@ -278,7 +284,7 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 		}
 	}
 	++aux;
-	if (points >= 100 && !(*aux)->isUnlocked()) {
+	if (points >= UNLOCK_THRID_SKILL && !(*aux)->isUnlocked()) {
 		(*aux)->setTexture(t3);
 		(*aux)->setUnlocked(true);
 		gm_->setSkillUnlocked((*aux)->getSkillId());
@@ -401,58 +407,10 @@ void SkillState::setPlayerSkills()
 
 	if (player_ != nullptr) {
 		auto aux = player_->getSkillsArray();
-		for (int i = 0; i < aux.size(); i++) {
-			delete aux[i];
-		}
 		for (int i = 0; i < gm_->getAllSkillsEquipped().size() - 1; i++) {//-i pq la del clon siempre est� equipada por defecto
-			player_->setSkillAt(i, createSkill(gm_->getEquippedSkill((Key)i)));
+			player_->setSkillAt(i, player_->createSkill(gm_->getEquippedSkill((Key)i)));
 		}
 	}
-}
-
-Skill* SkillState::createSkill(SkillName name)
-{
-	Skill* skill;
-	switch (name)
-	{
-	case SkillName::Unequipped:
-		skill = nullptr;
-		break;
-	case SkillName::GolpeFuerte:
-		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
-		break;
-	case SkillName::Invencible:
-		skill = new Skill(player_, SkillType::Pasive, SkillBranch::Distance);
-		break;
-	case SkillName::Torbellino:
-		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
-		break;
-	case SkillName::DisparoPerforante:
-		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
-		break;
-	case SkillName::Raudo:
-		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
-		break;
-	case SkillName::Rebote:
-		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
-		break;
-	case SkillName::Clon:
-		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
-		break;
-	case SkillName::LiberacionI:
-		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
-		break;
-	case SkillName::Explosion:
-		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
-		break;
-	case SkillName::LiberacionII:
-		skill = new Skill(player_, SkillType::Active, SkillBranch::Distance);
-		break;
-	default:
-		skill = nullptr;
-		break;
-	}
-	return skill;
 }
 
 void SkillState::createButtons() {
@@ -490,12 +448,10 @@ SkillState::~SkillState()
 	for (int i = 0; i < 3; i++)delete bars_[i];
 	delete bg_; delete selectedRectangle;
 	delete totalPoints_;
-	//Cuando se borran todos los objetos del estado, asignamos las nuevas skills
-	//al player
-	setPlayerSkills();
 }
 
 void SkillState::backToPreviousState(Application* app) {
+	static_cast<SkillState*>(app->getCurrState())->setPlayerSkills();
 	app->getGameStateMachine()->popState();
 }
 
