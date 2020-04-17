@@ -85,6 +85,23 @@ private:
 	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
 	const int W_H_PLAYER_FRAME = 100;		//Ancho del frame, estándar para todas
+	
+	//Idle
+	vector<Anim> idleAnims_;
+	vector<Texture*> idleTx_;
+	//Idle derecha
+	const int IDLE_R_FRAMES = 4;			//Frames de la animación
+	const int IDLE_R_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia arriba
+	const int IDLE_U_FRAMES = 2;			//Frames de la animación
+	const int IDLE_U_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia izquierda
+	const int IDLE_L_FRAMES = 4;			//Frames de la animación
+	const int IDLE_L_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia abajo
+	const int IDLE_D_FRAMES = 2;			//Frames de la animación
+	const int IDLE_D_FRAME_RATE = 500;		//Frame rate
+
 	//Disparo
 	bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
 	vector<Anim> shootAnims_;				//Vector de las animaciones
@@ -102,10 +119,11 @@ private:
 	const int SHOOT_D_FRAMES = 7;			//Frames de la animación
 	const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
 
-	//Melee derecha
+	//Melee
 	bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
 	vector<Anim> meleeAnims_;				//Vector de las animaciones
 	vector<Texture*> meleeTx_;				//Vector de las texturas
+	//Melee derecha
 	const int MELEE_R_FRAMES = 5;			//Frames de la animación
 	const int MELEE_R_FRAME_RATE = 200;		//Frame rate
 	//Melee hacia arriba
@@ -121,6 +139,7 @@ private:
 	//Inicialización de las animaciones
 	virtual void initAnims();
 	//Inicia la animación
+	void initIdle();
 	void initShoot();
 	void initMelee();
 	//Controla la animación

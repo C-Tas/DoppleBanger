@@ -86,6 +86,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	
 	//Animaciones
+	{ PlayerIdleRightAnim, "../Sources/assets/player/animaciones/idle/idleDcha.png" },
+	{ PlayerIdleLeftAnim, "../Sources/assets/player/animaciones/idle/idleIz.png" },
+	{ PlayerIdleUpAnim, "../Sources/assets/player/animaciones/idle/idleTop.png" },
+	{ PlayerIdleDownAnim, "../Sources/assets/player/animaciones/idle/idleDown.png" },
 	{ PlayerShootRightAnim, "../Sources/assets/player/animaciones/disparo/disparoDcha.png" },
 	{ PlayerShootLeftAnim, "../Sources/assets/player/animaciones/disparo/disparoIz.png" },
 	{ PlayerShootUpAnim, "../Sources/assets/player/animaciones/disparo/disparoTop.png" },
