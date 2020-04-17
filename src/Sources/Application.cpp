@@ -4,13 +4,14 @@
 #include <exception>
 #include "GameManager.h"
 #include "ShopState.h"
+#include "SpookyIslandState.h"
 
 Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine();
-	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState);
+	//GameState* startState = new MainMenuState(this);
+	machine_->pushState(/*startState*/new SpookyIslandState(this));
 }
 
 Application::~Application() {
