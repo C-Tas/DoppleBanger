@@ -5,7 +5,7 @@
 
 class NPC : public Collider {
 private:
-	TextBox txtBox;
+	TextBox* txtBox_ = nullptr;
 	Anim npcIdle = { 0, 0, 0, 0, ""};
 	int npcType_;
 	Uint32 lasFrame_ = 0;
@@ -56,15 +56,16 @@ protected:
 
 public:
 	NPC(Application* app, Texture* texture, Point2D pos, Vector2D scale, int npcType) :
-		Collider(app, pos, scale), txtBox(TextBox(app)) {
+		Collider(app, pos, scale) {
 		texture_ = texture;
 		npcType_ = npcType;
+		txtBox_ = new TextBox(app);
 		initObject();
 	};
-	virtual ~NPC() {};
+	virtual ~NPC() { delete txtBox_; };
 
 	///<summary>Devuelve la caja de texto, hay que llamar al diálogo que se quiera</summary>
-	TextBox getTextBox() { return txtBox; };
+	TextBox* getTextBox() { return txtBox_; };
 
 	///<summary>Lleva la animación del NPC</summary>
 	virtual bool update() { updateFrame(); return false; };

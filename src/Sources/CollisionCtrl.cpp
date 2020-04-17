@@ -226,22 +226,22 @@ void CollisionCtrl::drawTextBox() {
 	//Generamos un textbox si se ha dado alguna colisión con un NPC
 	switch (npcCollision.id) {
 	case ElderMan:
-		npcCollision.object->getTextBox().dialogElderMan(-1);
+		npcCollision.object->getTextBox()->dialogElderMan(-1);
 		break;
 	case Merchant:
-		npcCollision.object->getTextBox().dialogMerchant();
+		npcCollision.object->getTextBox()->dialogMerchant();
 		break;
 	case Chef:
-		npcCollision.object->getTextBox().dialogChef(onShip);
+		npcCollision.object->getTextBox()->dialogChef(onShip);
 		break;
 	case Morty:
-		npcCollision.object->getTextBox().dialogMorty(onShip);
+		npcCollision.object->getTextBox()->dialogMorty(onShip);
 		break;
 	case Parrot:
-		npcCollision.object->getTextBox().dialogParrot();
+		npcCollision.object->getTextBox()->dialogParrot();
 		break;
 	case Skeleton:
-		npcCollision.object->getTextBox().dialogSkeleton(onShip);
+		npcCollision.object->getTextBox()->dialogSkeleton(onShip);
 	}
 	npcCollision.id = Nobody;
 	npcCollision.object = nullptr;

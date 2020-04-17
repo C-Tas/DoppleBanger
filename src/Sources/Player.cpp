@@ -199,6 +199,7 @@ void Player::desactivePotion(){
 		}
 	}
 }
+
 Player::~Player()
 {
 	delete equip_.armor_;
