@@ -146,31 +146,31 @@ bool Wolf::onRange() {
 }
 
 //Inicializa todas las animaciones 
-void Wolf::initAnims()
-{
-	//Para la animación de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK, NUM_FRAMES_ROW_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, NAME_ATK);
-	//Para la animación de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV, NUM_FRAMES_ROW_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, NAME_MOV);
-	//Para la animación de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, NUM_FRAMES_ROW_ADLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, NAME_IDLE);
-}
+//void Wolf::initAnims()
+//{
+//	//Para la animación de ataque
+//	attackAnim_ = Anim(NUM_FRAMES_ATK, NUM_FRAMES_ROW_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, NAME_ATK);
+//	//Para la animación de caminar
+//	walkAnim_ = Anim(NUM_FRAMES_MOV, NUM_FRAMES_ROW_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, NAME_MOV);
+//	//Para la animación de parado
+//	idleAnim_ = Anim(NUM_FRAMES_IDLE, NUM_FRAMES_ROW_ADLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, NAME_IDLE);
+//}
 
 //Actualiza la animación en función del frameRate de la actual animación DONE
-void Wolf::updateAnim()
-{
-	if (currAnim_.frameRate_ <= SDL_GetTicks() - lastFrame_) {
-		lastFrame_ = SDL_GetTicks();
-		frame_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)currAnim_.widthFrame_,(int)currAnim_.heightFrame_ });
-	}
-}
+//void Wolf::updateAnim()
+//{
+//	if (currAnim_.frameRate_ <= SDL_GetTicks() - lastFrame_) {
+//		lastFrame_ = SDL_GetTicks();
+//		frame_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)currAnim_.widthFrame_,(int)currAnim_.heightFrame_ });
+//	}
+//}
 
 //Cambia la actual animación del lobo si no la tiene "equipada" DONE
-void Wolf::changeAnim(Anim& newAnim) {
-	if (newAnim.name_ != currAnim_.name_) {
-		currAnim_ = newAnim;
-	}
-}
+//void Wolf::changeAnim(Anim& newAnim) {
+//	if (newAnim.name_ != currAnim_.name_) {
+//		currAnim_ = newAnim;
+//	}
+//}
 
 //Se encarga de gestionar el ataque a melee DONE
 void Wolf::attack() {
@@ -191,13 +191,8 @@ void Wolf::attack() {
 //Inicializa al lobo
 void Wolf::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::WolfFront));
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
-	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
-	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
-	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	rangeVision_ = 80;//numero magico
-	CollisionCtrl::instance()->addEnemy(this);
-	initAnim();
+	Enemy::initObject();
 }
 
 //gestión de colisiones
@@ -207,21 +202,13 @@ void Wolf::onCollider()
 
 //Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_ DONE
 bool Wolf::getEnemy() {
-	auto gm = GameManager::instance();
-	Vector2D playerPos = isPlayerInRange();
-	Vector2D clonPos = isClonInRange();
-	if (playerPos == Vector2D{ -1,-1 } && clonPos == Vector2D{ -1,-1 }) {
-		return false;
-		currEnemy_ = nullptr;
+	if (Enemy::getEnemy(rangeVision_)) {
+		if (!app_->getMute()) {
+			app_->getAudioManager()->playChannel(Resources::AudioId::WolfHowl, 0, 0);
+		}
+		return true;
 	}
-
-	Vector2D closesetEnemy;
-	closesetEnemy = pos_.getClosest(playerPos, clonPos);
-	closesetEnemy == playerPos ? currEnemy_ = gm->getPlayer() : currEnemy_ = gm->getClon();
-	if (!app_->getMute()) {
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfHowl, 0, 0);
-	}
-	return true;
+	else return false;
 }
 
 //Cuando el pirata pierde el agro, se le asigna el agro del player
@@ -233,39 +220,39 @@ void Wolf::lostAgro()
 }
 
 //Devuelve la posición del player si está a rango DONE
-Vector2D Wolf::isPlayerInRange() {
-	GameManager* gm = GameManager::instance();
-	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
-
-	Point2D playerPos = gm->getPlayerPos();
-	if (currEnemy_ == nullptr &&
-		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && playerPos.getX() >= pos_.getX() - rangeVision_
-		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && playerPos.getY() >= pos_.getY() - rangeVision_) {
-		return playerPos;
-	}
-	else
-	{
-		return  { -1,-1 };
-	}
-}
-
-//Devuelve la posición del clon si está a rango DONE
-Vector2D Wolf::isClonInRange() {
-	GameManager* gm = GameManager::instance();
-	if (gm->getClon() == nullptr) { return { -1,-1 }; }
-
-	Point2D clonPos = gm->getClon()->getPos();
-	if (currEnemy_ == nullptr &&
-		clonPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && clonPos.getX() >= pos_.getX() - rangeVision_
-		&& clonPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && clonPos.getY() >= pos_.getY() - rangeVision_) {
-		static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
-		return clonPos;
-	}
-	else
-	{
-		return { -1,-1 };
-	}
-}
+//Vector2D Wolf::isPlayerInRange() {
+//	GameManager* gm = GameManager::instance();
+//	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
+//
+//	Point2D playerPos = gm->getPlayerPos();
+//	if (currEnemy_ == nullptr &&
+//		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && playerPos.getX() >= pos_.getX() - rangeVision_
+//		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && playerPos.getY() >= pos_.getY() - rangeVision_) {
+//		return playerPos;
+//	}
+//	else
+//	{
+//		return  { -1,-1 };
+//	}
+//}
+//
+////Devuelve la posición del clon si está a rango DONE
+//Vector2D Wolf::isClonInRange() {
+//	GameManager* gm = GameManager::instance();
+//	if (gm->getClon() == nullptr) { return { -1,-1 }; }
+//
+//	Point2D clonPos = gm->getClon()->getPos();
+//	if (currEnemy_ == nullptr &&
+//		clonPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && clonPos.getX() >= pos_.getX() - rangeVision_
+//		&& clonPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && clonPos.getY() >= pos_.getY() - rangeVision_) {
+//		static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
+//		return clonPos;
+//	}
+//	else
+//	{
+//		return { -1,-1 };
+//	}
+//}
 
 //Genera la posición a la que se mueve el pirata en función de su rango 
 void Wolf::selectTarget() {
@@ -277,4 +264,45 @@ void Wolf::selectTarget() {
 	posToReach.setY((enemycenterPos.getY() + currStats_.meleeRange_) - centerPos.getY());
 	target_ = posToReach;
 	move(enemycenterPos);
+}
+
+void Wolf::animationsvar()
+{
+	//Para el ataque
+	 NUM_FRAMES_ATK = 10;
+	 NUM_FRAMES_ROW_ATK = 3;
+	 W_FRAME_ATK = 200;
+	 H_FRAME_ATK = 200;
+	 FRAME_RATE_ATK = 100;
+	 NAME_ATK = "attack";
+	//Para el movimiento
+	 NUM_FRAMES_MOV = 10;
+	 NUM_FRAMES_ROW_MOV = 3;
+	 W_FRAME_MOV = 200;
+	 H_FRAME_MOV = 200;
+	 FRAME_RATE_MOV = 100;
+	 NAME_MOV = "walk";
+	//Para estar parado
+	 NUM_FRAMES_IDLE = 10;
+	 NUM_FRAMES_ROW_ADLE = 3;
+	 W_FRAME_IDLE = 200;
+	 H_FRAME_IDLE = 200;
+	 FRAME_RATE_IDLE = 100;
+	 NAME_IDLE = "idle";
+}
+void Wolf::initialStats()
+{
+	HEALTH = 1000;
+	MANA = 100;
+	MANA_REG = 100;
+	ARMOR = 10;
+	MELEE_DMG = 1;
+	DIST_DMG = 1;
+	CRIT = 2000;
+	MELEE_RANGE = 50;
+	DIST_RANGE = 75;
+	MOVE_SPEED = 250;
+	MELEE_RATE = 1500;
+	DIST_RATE = 1500;
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
