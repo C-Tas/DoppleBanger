@@ -63,26 +63,27 @@ void StashState::draw() const
 
 	//Dibujamos los objetos visibles en el inventario y en el alijo
 	//Primer vector determina donde se posiciona el primer objeto y el segundo la distancia en x e y entre objetos
-	drawList(stash_.objects_, stash_.page_, STASH_VISIBLE_ELEMENTS, Vector2D(app_->getWindowWidth() / 9, (double)(app_->getWindowHeight() / 3) + (app_->getWindowHeight()/12)), Vector2D((app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8)), 2);
-	drawList(inventory_.objects_, inventory_.page_, INVENTORY_VISIBLE_ELEMENTS, Vector2D(((double)(app_->getWindowWidth()/2)) + 55, (double)(app_->getWindowHeight() / 3) + (app_->getWindowHeight() / 10)), Vector2D((app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8)), 2);
+	drawList(stash_.objects_, stash_.firstDrawn, STASH_VISIBLE_ELEMENTS, FIRST_STASH_ELEMENT, DISTANCE_BETWEEN_ELEMENTS, ELEMENTS_PER_ROW);
+	drawList(inventory_.objects_, inventory_.firstDrawn, INVENTORY_VISIBLE_ELEMENTS, FIRST_INVENTORY_ELEMENT, DISTANCE_BETWEEN_ELEMENTS, ELEMENTS_PER_ROW);
 
 	//Escribimos la informaci�n del boton seleccionado
-	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render({ 7 * (app_->getWindowWidth() / 13) - 30, 6*(app_->getWindowHeight()/8)-30, 6*(app_->getWindowWidth() / 16)-20, 4*(app_->getWindowHeight()/21)});
+	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render(DESCRIPTION_RECT);
 	
 }
 
 void StashState::update()
 {
 	//update de los objetos del inventario que hay en pantalla
-	auto it = inventory_.objects_->begin();
-	advance(it, inventory_.page_ * INVENTORY_VISIBLE_ELEMENTS);
+	//auto it = inventory_.objects_->begin();
+	//advance(it, inventory_.page_ * INVENTORY_VISIBLE_ELEMENTS);
+	auto it = inventory_.firstDrawn;
 	for (int i = 0; it != inventory_.objects_->end() && i < INVENTORY_VISIBLE_ELEMENTS; i++) {
 		(*it)->update();
 		++it;
 	}
 	//update de los objetos del alijo que hay en pantalla
-	it = stash_.objects_->begin();
-	advance(it, stash_.page_ * STASH_VISIBLE_ELEMENTS);
+	it = stash_.firstDrawn;
+	//advance(it, stash_.page_ * STASH_VISIBLE_ELEMENTS);
 	for (int i = 0; it != stash_.objects_->end() && i < STASH_VISIBLE_ELEMENTS; i++) {
 		(*it)->update();
 		++it;
@@ -96,41 +97,40 @@ void StashState::initState() {
 	background_ = app_->getTextureManager()->getTexture(Resources::TextureId::StashMenu);
 
 	//Bot�n de avanzar la p�gina del inventario
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D((56 * (app_->getWindowWidth() / 70)), ARROW_ROW), Vector2D(BUTTON_SIZE,BUTTON_SIZE), callbackAdvanceInventoryPage));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D((28 * (double)(app_->getWindowWidth() / 35)), ARROW_ROW), Vector2D(BUTTON_SIZE,BUTTON_SIZE), callbackAdvanceInventoryPage));
 	//Bot�n de volver a la p�gina anterior del inventario
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(43 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousInventoryPage));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(43 * (double)(app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousInventoryPage));
 	
 	//Bot�n de avanzar la p�gina del alijo
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D(22 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceStashPage));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D(11 * (double)(app_->getWindowWidth() / 35), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceStashPage));
 	//Bot�n de volver a la p�gina anterior del alijo
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D((14 * (app_->getWindowWidth() / 70))+10, ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousStashPage));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(((double)(app_->getWindowWidth() / 5))+10, ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousStashPage));
 
 	//Bot�n para cambiar el objeto de una lista a otra
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 6 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackChangeBetweenLists));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 2 * (double)(app_->getWindowHeight() / 3)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackChangeBetweenLists));
 	//Bot�n para eliminar el objeto seleccionado
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 7 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 7 * (double)(app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
 
 	//Bot�n de volver al estado anterior
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 2*(app_->getWindowHeight()/9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), backToPrevious));
+	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), Vector2D(CLOSE_BUTTON_COLUMN, 2* (double)(app_->getWindowHeight()/9)), CLOSE_BUTTON_SIZE, backToPrevious));
 
 	//Boton para pasar el dinero del alijo al inventario
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((7 * (app_->getWindowWidth() / 70)), MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToInventary));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D(((double)(app_->getWindowWidth() / 10)), MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToInventary));
 	//Boton para pasar el dinero del inventario al alijo
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((37 * (app_->getWindowWidth() / 70))+10,MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToStash));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((37 * (double)(app_->getWindowWidth() / 70))+10,MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToStash));
 
-	GameManager* gm = GameManager::instance();
 
 	//Cogemos la referencia de las listas que hay en GameManager
-	stash_.objects_ = gm->getStash();
-	inventory_.objects_ = gm->getInventory();
+	stash_.objects_ = gm_->getStash();
+	inventory_.objects_ = gm_->getInventory();
 
 	//Cogemos la referencia al dinero de gameManager
-	stash_.money_ = gm->getStashGold();
-	inventory_.money_ = gm->getInventoryGold();
+	stash_.money_ = gm_->getStashGold();
+	inventory_.money_ = gm_->getInventoryGold();
 
 	//Posici�n de los textos del alijo e inventario
-	stash_.moneyText = { 5*(app_->getWindowWidth()/16), MONEY_BUTTON_ROW+15, FONT_WIDTH,FONT_HEIGHT }; //width es el ancho de cada n�mero 
-	inventory_.moneyText = { 8*(app_->getWindowWidth()/10)-10,MONEY_BUTTON_ROW+15, FONT_WIDTH,FONT_HEIGHT };
+	stash_.moneyText = { 5*(app_->getWindowWidth()/16), MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT }; //width es el ancho de cada n�mero 
+	inventory_.moneyText = { 4*(app_->getWindowWidth()/5)-10,MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT };
 
 	//Texturas con texto
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
@@ -146,24 +146,22 @@ void StashState::initState() {
 
 	
 	InventoryButton* b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun, callbackSelectObject);
+		Vector2D(0,0), GUN_SIZE, gun, callbackSelectObject);
 	auto it = stash_.objects_->insert(stash_.objects_->end(),b);
 	b->setIterator(it);
 	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun1, callbackSelectObject);
+		Vector2D(0,0), GUN_SIZE, gun1, callbackSelectObject);
 	it = stash_.objects_->insert(stash_.objects_->end(), b);
 	b->setIterator(it);
 	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun3, callbackSelectObject);
+		Vector2D(0,0), GUN_SIZE, gun3, callbackSelectObject);
 	it = stash_.objects_->insert(stash_.objects_->end(), b);
 	b->setIterator(it);
 	
 	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun2, callbackSelectObject);
+		Vector2D(0,0), GUN_SIZE, gun2, callbackSelectObject);
 	it = inventory_.objects_->insert(inventory_.objects_->end(), b);
 	b->setIterator(it);
-
-
 
 	#endif // _DEBUG
 	///Reasignamos el callback y el estado puesto que si se borra el antiguo stash, no se podrá seleccionar 
@@ -176,13 +174,15 @@ void StashState::initState() {
 		(*ob)->setNewCallBack(callbackSelectObject);
 		(*ob)->setCurrentState(this);
 	}
+
+	inventory_.firstDrawn = inventory_.objects_->begin();
+	stash_.firstDrawn = stash_.objects_->begin();
 }
 
 void StashState::endState()
 {
-	GameManager* gm = GameManager::instance();
-	gm->setInventoryGold(inventory_.money_);
-	gm->setStashGold(stash_.money_);
+	gm_->setInventoryGold(inventory_.money_);
+	gm_->setStashGold(stash_.money_);
 
 	delete inventoryMoneyTex_;
 	delete stashMoneyTex_;
@@ -193,8 +193,9 @@ void StashState::endState()
 
 void StashState::advanceInventoryPage() {
 	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
-	if (((inventory_.page_+1) * INVENTORY_VISIBLE_ELEMENTS) < inventory_.objects_->size()) {
+	if (((inventory_.page_ + 1) * INVENTORY_VISIBLE_ELEMENTS) < inventory_.objects_->size()) {
 		inventory_.page_++;
+		advance(inventory_.firstDrawn, INVENTORY_VISIBLE_ELEMENTS);
 	}
 }
 
@@ -202,6 +203,7 @@ void StashState::previousInventoryPage()
 {	//Si el primer elemento de la p�gina anterior del la lista no es negativo(no existe), retrocedemos
 	if (((inventory_.page_ - 1) * INVENTORY_VISIBLE_ELEMENTS) >=0) {
 		inventory_.page_--;
+		advance(inventory_.firstDrawn, -INVENTORY_VISIBLE_ELEMENTS);
 	}
 }
 
@@ -209,6 +211,7 @@ void StashState::advanceStashPage()
 {	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
 	if ((stash_.page_ + 1) * STASH_VISIBLE_ELEMENTS < stash_.objects_->size()) {
 		stash_.page_++;
+		advance(stash_.firstDrawn, STASH_VISIBLE_ELEMENTS);
 	}
 }
 
@@ -216,6 +219,7 @@ void StashState::previousStashPage()
 {	//Si el primer elemento de la p�gina anterior del la lista no es negativo(no existe), retrocedemos
 	if ((stash_.page_ - 1) * STASH_VISIBLE_ELEMENTS >= 0) {
 		stash_.page_--;
+		advance(stash_.firstDrawn, -STASH_VISIBLE_ELEMENTS);
 	}
 }
 
@@ -232,7 +236,7 @@ void StashState::changeBetweenLists()
 	if (selected_ != nullptr) {
 
 		//Buscamos si el objeto selected est� en la lista del inventario
-		auto it = find(inventory_.objects_->begin(), inventory_.objects_->end(), selected_);
+		auto it = find(inventory_.firstDrawn, inventory_.objects_->end(), selected_);
 		
 		//Una vez sabemos a cual, lo intercambiamos de lista
 		if (it == inventory_.objects_->end()) {
@@ -240,6 +244,8 @@ void StashState::changeBetweenLists()
 			selectedIsLastElement(stash_, STASH_VISIBLE_ELEMENTS);
 			//Insertamos en la otra lista
 			it = inventory_.objects_->insert(inventory_.objects_->end(), selected_);
+			//Si no había ningún elemento en la lista, asignamos como por defecto el primero
+			if (inventory_.objects_->end() == inventory_.firstDrawn)inventory_.firstDrawn = inventory_.objects_->begin();
 			//Lo quitamos de la inicial
 			stash_.objects_->erase(selected_->getIterator());
 			//actualizamos iterador
@@ -251,6 +257,8 @@ void StashState::changeBetweenLists()
 			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
 			//Insertamos en la otra lista
 			it = stash_.objects_->insert(stash_.objects_->end(), selected_);
+			//Si no había ningún elemento en la lista, asignamos como por defecto el primero
+			if (stash_.objects_->end() == stash_.firstDrawn)stash_.firstDrawn = stash_.objects_->begin();
 			//Lo quitamos
 			inventory_.objects_->erase(selected_->getIterator());
 			//actualizamos iterador
@@ -265,7 +273,7 @@ void StashState::deleteObject()
 	if (selected_ != nullptr) {
 
 		//Buscamos si el objeto selected est� en la lista del inventario
-		auto it = find(inventory_.objects_->begin(), inventory_.objects_->end(), selected_);
+		auto it = find(inventory_.firstDrawn, inventory_.objects_->end(), selected_);
 
 		//Quitamos el objeto de la lista en la que se encuentra
 		if (it == inventory_.objects_->end()) {
@@ -305,13 +313,12 @@ void StashState::addMoneyToStash()
 
 #pragma endregion
 
-void StashState::drawList(list<InventoryButton*>* list_, int page, const int elemsPerPage, Vector2D iniElemPos, Vector2D distanceBetween, int elementsPerRow)const
+void StashState::drawList(list<InventoryButton*>* list_, list<InventoryButton*>::iterator it, const int elemsPerPage, Vector2D iniElemPos, Vector2D distanceBetween, int elementsPerRow)const
 {
 	//Si existe la lista y no est� vac�a la dibujamos
 	if (list_!= nullptr && !list_->empty()) {
 		int i = 0;
-		auto aux = list_->begin();
-		advance(aux, page * elemsPerPage);
+		auto aux = it;
 		while (aux != list_->end() && i < elemsPerPage / elementsPerRow) {//filas
 			int j = 0;
 			while (aux != list_->end() && j < elementsPerRow) {//columnas
@@ -341,9 +348,11 @@ void StashState::selectedIsLastElement(Container & list_, int nVisibleElements)
 	auto aux = list_.objects_->begin();
 	advance(aux, list_.page_ * nVisibleElements);
 
-	//Si es el ultimo objeto,no es el primero de todos, est� solo en una p�gina y es el que queremos mover, 
-	//vamos a retroceder esa p�gina a la anterior con objetos
-	if (--list_.objects_->end() == selected_->getIterator() && list_.page_ > 0 && selected_->getIterator() == aux) list_.page_--;
+	if (selected_->getIterator() == list_.firstDrawn && list_.firstDrawn == aux && aux != --list_.objects_->end())++list_.firstDrawn;
+	else if (selected_->getIterator() == list_.firstDrawn && list_.firstDrawn != list_.objects_->begin() && list_.firstDrawn == --list_.objects_->end()) {
+		advance(list_.firstDrawn, -nVisibleElements);
+		list_.page_--;
+	}
 }
 
 void StashState::moneyChange()
