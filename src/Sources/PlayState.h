@@ -43,4 +43,6 @@ protected:
 	list<Enemy*> enemies_;
 
 	virtual void initState();
+	//Resetea la partida de acuerdo al GDD
+	void resetGame();
 };

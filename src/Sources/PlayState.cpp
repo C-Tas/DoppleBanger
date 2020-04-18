@@ -2,7 +2,7 @@
 #include "PlayState.h"
 #include "SaveLoadState.h"
 #include "SelectLevelState.h"
-#include "EndState.h"
+#include "ShipState.h"
 #include "StashState.h"
 #include "PauseState.h"
 #include "SkillState.h"
@@ -13,9 +13,8 @@
 
 
 void PlayState::update() {
-	if (player_->getState() == STATE::DYING) { //Comprobamos que el player haya muerto para cambiar de estado
-		collisionCtrl_->clearList();
-		app_->getGameStateMachine()->changeState(new EndState(app_));
+	if (player_->getDead()) { //Comprobamos que el player haya muerto para cambiar de estado
+		resetGame();
 	}
 	else {
 		GameState::update();
@@ -90,4 +89,16 @@ void PlayState::initState()
 	player_ = new Player(app_, Vector2D(0, 0), Vector2D(0, 0));
 	hud_ = new HUD(app_);
 	player_->setElementsHUD();
+}
+
+void PlayState::resetGame()
+{
+	//Se pierde el oro
+	gm_->setInventoryGold(0);
+	//Se resetea el inventario
+	gm_->resetInventory();
+	//Se limpia la lista de colisiones
+	collisionCtrl_->clearList();
+	//Se reinicia la partida en el barco
+	app_->getGameStateMachine()->changeState(new ShipState(app_));
 }

@@ -55,6 +55,7 @@ public:
 	};
 
 #pragma region Getters
+	const bool getDead() { return dead_; };
 	const Clon* getClon() { return clon_; };
 	const int getLiberation() { return liberation_; };
 	const int getMoney() { return money_; };
@@ -103,6 +104,7 @@ public:
 	//Activa el rebote y el momento en el que se usa
 	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
 private:
+	bool dead_ = false;
 	bool attacking_ = false;
 	int money_ = 0;
 	HandleEvents* eventHandler_ = nullptr;

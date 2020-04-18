@@ -245,6 +245,8 @@ public:
 	///Asigna money como cantidad de dinero en el alijo
 	inline void setStashGold(int money) { stashGold = money; }
 
+	//Reseteo del inventario
+	void resetInventory();
 	//Asigna el puntero al inventario
 	inline void setInventoryPointer(lista inv) { inventory_ = inv; };
 	//Asigna el puntero al alijo

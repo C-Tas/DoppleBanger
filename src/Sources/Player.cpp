@@ -158,6 +158,8 @@ bool Player::update()
 
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte
+		//Cuando se acabe la animación es cuando muere y se puede resetear el juego
+		dead_ = true;
 		return true;
 	}
 #pragma endregion
