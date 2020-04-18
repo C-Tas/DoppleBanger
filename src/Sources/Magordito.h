@@ -28,9 +28,9 @@ private:
 #pragma endregion
 
 	//Animaciones de Magordito
-	Anim idleAnim_ = { 0,0,0,0,0 ,"" };
-	Anim teleportAnim_ = { 0,0,0,0,0,"" };
-	Anim kirinAnim_ = { 0,0,0,0,0, "" };
+	Anim idleAnim_ = { 0,0,0,0 ,"" };
+	Anim teleportAnim_ = { 0,0,0,0,"" };
+	Anim kirinAnim_ = { 0,0,0,0, "" };
 
 	//Posiciones de los puntos de teletransporte
 	Point2D MagorditoSpots_[5] {

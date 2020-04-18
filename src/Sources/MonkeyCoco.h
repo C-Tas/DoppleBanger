@@ -21,9 +21,9 @@ public:
 	virtual ~MonkeyCoco() {};
 private:
 	//Diferentes animaciones del mono
-	Anim attackAnim_ = { 0,0,0,0,0 ,""};
-	Anim walkAnim_ = { 0,0,0,0,0,"" };
-	Anim idleAnim_ = { 0,0,0,0,0,"" };
+	Anim attackAnim_ = { 0,0,0,0 ,""};
+	Anim walkAnim_ = { 0,0,0,0,"" };
+	Anim idleAnim_ = { 0,0,0,0,"" };
 
 
 	//Ataque del monkeyCoco

@@ -28,11 +28,11 @@ private:
 	};
 
 	//Diferentes animaciones del kraken
-	Anim slamAnim_ = { 0,0,0,0,0 ,"" };
-	Anim sweepAnim_ = { 0,0,0,0,0,"" };
-	Anim inkAnim_ = { 0,0,0,0,0,"" };
-	Anim diveAnim_ = { 0,0,0,0,0 ,"" };
-	Anim exitAnim_ = { 0,0,0,0,0,"" };
+	Anim slamAnim_ = { 0,0,0,0 ,"" };
+	Anim sweepAnim_ = { 0,0,0,0,"" };
+	Anim inkAnim_ = { 0,0,0,0,"" };
+	Anim diveAnim_ = { 0,0,0,0 ,"" };
+	Anim exitAnim_ = { 0,0,0,0,"" };
 
 
 	//Inicializa las animaciones

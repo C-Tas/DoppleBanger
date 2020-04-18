@@ -126,9 +126,6 @@
     <ClCompile Include="Sources\CollisionCtrl.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\TextBox.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\Bullet.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
@@ -241,6 +238,9 @@
     </ClCompile>
     <ClCompile Include="Sources\PlayerBullet.cpp">
       <Filter>GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\TextBox.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -377,9 +377,6 @@
     <ClInclude Include="Sources\CollisionCtrl.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\TextBox.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\Bullet.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
@@ -499,6 +496,9 @@
     </ClInclude>
     <ClInclude Include="Sources\PlayerBullet.h">
       <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TextBox.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
