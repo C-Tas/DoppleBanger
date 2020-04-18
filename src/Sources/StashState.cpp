@@ -104,7 +104,7 @@ void StashState::initState() {
 	//Bot�n de avanzar la p�gina del alijo
 	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D(11 * (double)(app_->getWindowWidth() / 35), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceStashPage));
 	//Bot�n de volver a la p�gina anterior del alijo
-	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(((double)(app_->getWindowWidth() / 5))+10, ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousStashPage));
+	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(((double)(app_->getWindowWidth() / 5)), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousStashPage));
 
 	//Bot�n para cambiar el objeto de una lista a otra
 	addRenderUpdateLists(new Button(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 2 * (double)(app_->getWindowHeight() / 3)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackChangeBetweenLists));
@@ -250,6 +250,7 @@ void StashState::changeBetweenLists()
 			stash_.objects_->erase(selected_->getIterator());
 			//actualizamos iterador
 			selected_->setIterator(it);
+			if (stash_.objects_->size() == 0) stash_.firstDrawn = stash_.objects_->begin();
 			
 		}
 		else {
@@ -263,6 +264,7 @@ void StashState::changeBetweenLists()
 			inventory_.objects_->erase(selected_->getIterator());
 			//actualizamos iterador
 			selected_->setIterator(it);
+			if (inventory_.objects_->size() == 0)inventory_.firstDrawn = inventory_.objects_->begin();
 		}
 	}
 }
@@ -279,11 +281,13 @@ void StashState::deleteObject()
 		if (it == inventory_.objects_->end()) {
 			selectedIsLastElement(stash_, STASH_VISIBLE_ELEMENTS);
 			stash_.objects_->erase(selected_->getIterator());
+			if (stash_.objects_->size() == 0) stash_.firstDrawn = stash_.objects_->begin();
 		}
 		else
 		{
 			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
 			inventory_.objects_->erase(selected_->getIterator());
+			if (inventory_.objects_->size() == 0)inventory_.firstDrawn = inventory_.objects_->begin();
 		}
 
 		//Borramos el objeto
