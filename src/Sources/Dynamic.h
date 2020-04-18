@@ -28,8 +28,8 @@ protected:
 	//<summary>Constructor vacio de la clase Dynamic</summary>	
 	Dynamic() {};
 	//<summary>Constructor  de la clase Dynamic</summary>	
-	Dynamic(Application* app, Point2D pos, Vector2D scale) :
-		Collider(app, pos, scale) {};
+	Dynamic(Application* app, Point2D pos, Vector2D scale, double rot = 0) :
+		Collider(app, pos, scale, rot) {};
 	//<summary>Constructor  por copia de la clase Dynamic</summary>	
 	Dynamic(Dynamic& other) : Collider(other.app_, other.pos_, other.scale_),
 		dir_(other.dir_), target_(other.target_) {};

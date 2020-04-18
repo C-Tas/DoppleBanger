@@ -112,8 +112,8 @@ bool EnemyPirate::update() {
 void EnemyPirate::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
 	target_.setVec(posToReach);
-	dir_.setX(posToReach.getX() - getCenter(pos_).getX());
-	dir_.setY(posToReach.getY() - getCenter(pos_).getY());
+	dir_.setX(posToReach.getX() - getCenter().getX());
+	dir_.setY(posToReach.getY() - getCenter().getY());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
@@ -190,7 +190,7 @@ void EnemyPirate::attack() {
 	if (currAtackStatus_ == ATK_STATUS::RANGE && currStats_.distRate_ <= SDL_GetTicks() - lastRangeHit_) {
 		lastRangeHit_ = SDL_GetTicks();
 		Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock),
-			getCenter(pos_), getCenter(currEnemy_->getPos()), currStats_.distDmg_);
+			getCenter(), currEnemy_->getCenter(), currStats_.distDmg_);
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addEnemyBullet(bullet);
 	}

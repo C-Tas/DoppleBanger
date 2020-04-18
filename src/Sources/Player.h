@@ -102,6 +102,10 @@ public:
 	//Activa la perforación
 	//Activa el rebote y el momento en el que se usa
 	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
+	//Mueve al jugador en la direccion del vector
+	void displace(Vector2D dir, int dist);
+	//Mira si el objetivo actual ha muerto
+	void isEnemyDead(Actor* obj);
 private:
 	bool attacking_ = false;
 	int money_ = 0;
@@ -144,10 +148,10 @@ private:
 	const double MANA = 100;		//Mana
 	const double MANA_REG = 1;		//Regeneración de maná por segundo
 	const double ARMOR = 10;		//Armadura
-	const double AD = 40;			//Daño a melee
+	const double AD = 100;			//Daño a melee
 	const double AP = 1000;			//Daño a distancia y de las habilidades
 	const double CRIT = 0;			//Crítico
-	const double MELEE_RANGE = 20;	//Rango del ataque a melee
+	const double MELEE_RANGE = 30;	//Rango del ataque a melee
 	const double DIST_RANGE = 0;	//Rango del ataque a distancia
 	const double MOVE_SPEED = 300;	//Velocidad de movimiento
 	const double MELEE_RATE = 1;	//Velocidad del ataque a melee en segundos

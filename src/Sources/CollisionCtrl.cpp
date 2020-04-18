@@ -11,6 +11,7 @@ void CollisionCtrl::islandCollisions() {
 		enemies_.remove(*it);
 	}
 	enemiesToErase_.clear();
+
 	//Quitamos a los cofres de la lista
 	//for (auto it = chestsToErase_.begin(); it != chestsToErase_.end(); ++it) {
 	//	chests_.remove(*it);
@@ -42,8 +43,8 @@ void CollisionCtrl::islandCollisions() {
 
 		//Con enemigos
 		for (auto enem : enemies_) {
-			if (Collisions::collides(enem->getPos(), enem->getScaleX(), enem->getScaleY(),
-				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
+			if (Collisions::collidesWithRotation(enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot(),
+				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY(), (ob)->getCollisionRot())) {
 				//Llamar a m�todo que recalcule la trayectoria del enemigo (con pathfinding no ser�a necesario hacer este for)
 				(ob)->onCollider();
 			}
@@ -70,15 +71,15 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n enemigo con jugador o con balas del jugador
 	for (auto enem : enemies_) {
-		if (Collisions::collides(enem->getPos(), enem->getScaleX(), enem->getScaleY(),
-			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+		if (Collisions::collidesWithRotation(enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot(),
+			player_->getPos(), player_->getScaleX(), player_->getScaleY(), player_->getCollisionRot())) {
 			enem->onCollider();
 			//Cuando el jugador colisiona con el enemigo recibe da�o
 			//Falta a�adir el m�todo correspondiente
 		}
 		for (auto bullet : playerBullets_) {
-			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
-				enem->getPos(), enem->getScaleX(), enem->getScaleY())) {
+			if (Collisions::collidesWithRotation(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(), bullet->getCollisionRot(),
+				enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot())) {
 				enem->receiveDamage(bullet->getDamage());
 				if (bullet->getRicochet()) {	//Cuando esté rebotando
 					bullet->searchEnemy(enemies_, enem);

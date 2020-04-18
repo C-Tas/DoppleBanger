@@ -117,7 +117,7 @@ bool Player::update()
 
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
 	int margin = 2; if (attacking_) margin = currStats_.meleeRange_;
-	Vector2D visPos = getVisPos(pos_);
+	Vector2D visPos = getVisPos();
 	if (visPos.getX() < target_.getX() - margin ||
 		visPos.getX() > target_.getX() + margin ||
 		visPos.getY() < target_.getY() - margin ||
@@ -139,19 +139,19 @@ bool Player::update()
 #endif // _DEBUG
 		empoweredAct_ = false;
 		objective_->receiveDamage((int)currStats_.meleeDmg_ * empoweredBonus_);
-		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
+		if (objective_->getState() == STATE::DYING) move(getVisPos());
 		empoweredTime_ = SDL_GetTicks();
 		meleeTime_ = empoweredTime_;
 	}
 
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
-	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective_->getState() != STATE::DYING)
+	else if (attacking_ && objective_ != nullptr && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective_->getState() != STATE::DYING)
 	{
 #ifdef _DEBUG
 		cout << "\nAtaque a melee\n" << endl;
 #endif // _DEBUG
 		objective_->receiveDamage(currStats_.meleeDmg_);
-		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
+		if (objective_->getState() == STATE::DYING) move(getVisPos());
 		meleeTime_ = SDL_GetTicks();
 	}
 
@@ -202,7 +202,7 @@ void Player::move(Point2D target)
 	//establecemos el objetivo para poder parar al llegar
 	target_.setVec(target);
 	//establecemos la direccion
-	Vector2D visPos = getVisPos(pos_);
+	Vector2D visPos = getVisPos();
 	dir_.setX(target.getX() - visPos.getX());
 	dir_.setY(target.getY() - visPos.getY());
 	dir_.normalize();
@@ -211,7 +211,7 @@ void Player::move(Point2D target)
 void Player::attack(Enemy* obj)
 {
 	objective_ = obj;
-	move(getVisPos(obj->getPos()));
+	move(obj->getVisPos());
 	attacking_ = true;
 }
 
@@ -314,4 +314,18 @@ Player::~Player()
 void Player::shout()
 {
 	app_->getAudioManager()->playChannel(Resources::Shout, 0, 1);
+}
+
+void Player::displace(Vector2D dir, int dist)
+{
+	cout << dir.getX()<< " "<< dir.getY() << " " << dir.angle() * (180 / M_PI) << endl;
+	pos_.setX(pos_.getX() + (dir.getX() * dist));
+	pos_.setY(pos_.getY() + (dir.getY() * dist));
+	stop();
+}
+
+void Player::isEnemyDead(Actor* obj)
+{
+	if (obj == objective_)
+		objective_ = nullptr;
 }

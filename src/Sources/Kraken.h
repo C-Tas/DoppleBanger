@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Enemy.h"
+#include "Tentacle.h"
+#include <list>
 
 class Kraken : public Enemy
 {
@@ -10,12 +12,18 @@ public:
 		:Enemy(app, pos, scale) {
 		initObject();
 	};
+	virtual ~Kraken();
 
 	virtual bool update();
 	virtual void initObject();
 	virtual void onCollider() {};
+	void tentDeath(Tentacle* obj);
 
 private:
+
+	int lastAttack_ = 0;
+	//Lista con los tentáculos invocados
+	list<Tentacle*> tentacles_;
 	//Posiciones en las que puede aparecer el kraken
 	Point2D krakenSpots_[6]
 	{
@@ -37,7 +45,7 @@ private:
 
 	//Inicializa las animaciones
 	void initAnims();
-
+	void slam();
 
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)
@@ -81,7 +89,7 @@ private:
 
 
 #pragma region Stats
-	const double HEALTH = 10;
+	const double HEALTH = 200;
 	const double MANA = 0;
 	const double MANA_REG = 0;
 	const double ARMOR = 10;

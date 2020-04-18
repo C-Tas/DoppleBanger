@@ -4,6 +4,8 @@
 class Collider : public Draw
 {
 protected:
+	//Variable con la rotación del collider
+	double collisionRot_ = 0;
 	///<summary>Rect con el area de colisiones</summary>
 	SDL_Rect collisionArea_{ 0,0,0,0 };
 
@@ -14,7 +16,7 @@ protected:
 	///<summary>Constructor por defecto</summary>
 	Collider() {};
 	///<summary>Constructor de collider</summary>
-	Collider(Application* app, Point2D pos, Vector2D scale) :
+	Collider(Application* app, Point2D pos, Vector2D scale, double rot = 0) : collisionRot_(rot),
 		Draw(app, pos, scale) {
 		initObject();
 	};
@@ -37,6 +39,8 @@ protected:
 public:
 	//Realiza una acción al detectar una colisión
 	virtual void onCollider() = 0;
+	///<summary>Devuelve la rotación de las colisiones</summary>
+	const double getCollisionRot() { return collisionRot_; };
 	///<summary>Devuelve el rect con el area de colisiones</summary>
 	const SDL_Rect& getCollider() {
 		posCollision_ = pos_;	//Provisional -> esta línea se borrará
@@ -48,4 +52,6 @@ public:
 	};
 	///<summary>Establece el rect de colisiones con el valor de newRect</summary>
 	void setCollider(SDL_Rect newRect) { collisionArea_ = newRect; };
+	///<summary>Fija la rotación de las colisiones</summary>
+	void getCollisionRot(double rot) { collisionRot_ = rot; };
 };

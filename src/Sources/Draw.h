@@ -45,11 +45,11 @@ public:
 	};
 	//Dada una posición le resta el offset del objeto que invoca el método
 	//de tal forma que si este se mueve a la dicha posición queda con "los pies" colocados en ella
-	Vector2D getVisPos(Vector2D pos)
+	Vector2D getVisPos()
 	{
 		Vector2D vis;
-		vis.setX(pos.getX() + (scale_.getX() / 2));
-		vis.setY(pos.getY() + (scale_.getY() * 0.8));
+		vis.setX(pos_.getX() + (scale_.getX() / 2));
+		vis.setY(pos_.getY() + (scale_.getY() * 0.8));
 		return vis;
 	}
 #pragma endregion

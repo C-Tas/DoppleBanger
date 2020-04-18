@@ -110,8 +110,8 @@ protected:
 	//Constructor vacío
 	Actor() {};
 	///<summary>Constructor de la clase Actor</summary>
-	Actor(Application* app, Vector2D pos, Vector2D scale) :
-		Dynamic(app, pos, scale) {};
+	Actor(Application* app, Vector2D pos, Vector2D scale, double rot = 0) :
+		Dynamic(app, pos, scale, rot) {};
 	Actor(Actor& other) :Dynamic(other.app_, other.pos_, other.scale_),
 		currStats_(other.currStats_), currState_(other.currState_) {};
 	///<summary>Destructor de la clase Actor</summary>

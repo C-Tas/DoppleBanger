@@ -63,7 +63,7 @@ void MonkeyCoco::initAnims()
 void MonkeyCoco::attack() {
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
 	Bullet* coco = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
-		getCenter(pos_), dir, currStats_.distDmg_, COCO_LIFE, COCO_VEL, Vector2D(W_H_COCO, W_H_COCO));
+		getCenter(), dir, currStats_.distDmg_, COCO_LIFE, COCO_VEL, Vector2D(W_H_COCO, W_H_COCO));
 	app_->getCurrState()->addRenderUpdateLists(coco);
 	CollisionCtrl::instance()->addEnemyBullet(coco);
 }

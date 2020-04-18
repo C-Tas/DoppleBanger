@@ -114,8 +114,8 @@ bool Wolf::update() {
 void Wolf::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
 	target_.setVec(posToReach);
-	dir_.setX(posToReach.getX() - getCenter(pos_).getX());
-	dir_.setY(posToReach.getY() - getCenter(pos_).getY());
+	dir_.setX(posToReach.getX() - getCenter().getX());
+	dir_.setY(posToReach.getY() - getCenter().getY());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
