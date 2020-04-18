@@ -28,11 +28,11 @@ public:
 	inline const double getScaleY() { return scale_.getY(); }
 	//Dada una posición le resta el offset del objeto que invoca el método
 	//de tal forma que si este se mueve a la dicha posición queda centrado en ella
-	Vector2D getCenter(Vector2D pos)
+	Vector2D getCenter()
 	{
 		Vector2D center;
-		center.setX(pos.getX() + (scale_.getX() / 2));
-		center.setY(pos.getY() + (scale_.getY() / 2));
+		center.setX(pos_.getX() + (scale_.getX() / 2));
+		center.setY(pos_.getY() + (scale_.getY() / 2));
 		return center;
 	}
 #pragma endregion

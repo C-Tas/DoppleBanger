@@ -144,7 +144,7 @@ private:
 	const double MANA = 100;		//Mana
 	const double MANA_REG = 1;		//Regeneración de maná por segundo
 	const double ARMOR = 10;		//Armadura
-	const double AD = 1000;			//Daño a melee
+	const double AD = 0;			//Daño a melee
 	const double AP = 1000;			//Daño a distancia y de las habilidades
 	const double CRIT = 0;			//Crítico
 	const double MELEE_RANGE = 20;	//Rango del ataque a melee

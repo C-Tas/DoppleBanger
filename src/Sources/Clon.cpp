@@ -7,9 +7,9 @@
 bool Clon::update()
 {
 	if ((SDL_GetTicks() - spawnTime_) / 1000 < duration_) {
-		Vector2D clonPos = getVisPos(pos_);
+		Vector2D clonPos = getVisPos();
 		if (meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING ||
-			Vector2D(abs(objective_->getVisPos(objective_->getPos()).getX() - clonPos.getX()), abs(objective_->getVisPos(objective_->getPos()).getY() - clonPos.getY())).magnitude() > range_))
+			Vector2D(abs(objective_->getVisPos().getX() - clonPos.getX()), abs(objective_->getVisPos().getY() - clonPos.getY())).magnitude() > range_))
 			objective_ = static_cast<PlayState*>(app_->getGameStateMachine()->getState())->findClosestEnemy(pos_);
 
 		else if (meleeDmg_ > 0 && ((SDL_GetTicks() - meleeTime_) / 1000) > meleeRate_)
