@@ -159,6 +159,8 @@ public:
 		//Equipables
 		Gun1,
 		Gloves1,
+		Boots1,
+		Gloves2,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

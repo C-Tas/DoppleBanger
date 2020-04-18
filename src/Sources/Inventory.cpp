@@ -52,7 +52,7 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	//app_->getWindowWidth(), app_->getWindowHeight() 
 	 auxpos = Vector2D{ 8*(double)(app_->getWindowWidth() /9), 2*(double)(app_->getWindowHeight()/9)};
 	 auxSize = Vector2D{ (double)(app_->getWindowWidth() / 25),  (double)(app_->getWindowWidth() / 25) };
-	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::ButtonX), { 1439,214 }, { 60,53 }, callExit);
+	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::ButtonX), auxpos, auxSize, callExit);
 	addRenderUpdateLists(exitButton_);
 
 	auxpos = Vector2D{ 7 * (double)(app_->getWindowWidth() / 13),/* 1 * (double)(app_->getWindowHeight() / 40)*/ 22};
@@ -70,20 +70,20 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	
 	playerEquipment aux = player_->getInfoEquip();
 
-	if (aux.armor_ != nullptr) equipment_.armor_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.armor_, callSelectObject,true);
-	if (aux.boots_ != nullptr) equipment_.boots_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.boots_, callSelectObject,true);
-	if (aux.gloves_ != nullptr) equipment_.gloves_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.gloves_, callSelectObject,true);
-	if (aux.gun_ != nullptr) equipment_.gun_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), Vector2D{ 300,400 }, Vector2D{ 75,75 }, aux.gun_, callSelectObject,true);
-	if (aux.sword_ != nullptr) equipment_.sword_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.sword_, callSelectObject,true);
-	if (aux.potion1_ != nullptr) equipment_.potion1_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion1_, callSelectObject,true);
-	if (aux.potion2_ != nullptr) equipment_.potion2_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion2_, callSelectObject,true);
+	if (aux.armor_ != nullptr) equipment_.armor_ = new InventoryButton(app_, aux.armor_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.armor_, callSelectObject,true);
+	if (aux.boots_ != nullptr) equipment_.boots_ = new InventoryButton(app_, aux.boots_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.boots_, callSelectObject,true);
+	if (aux.gloves_ != nullptr) equipment_.gloves_ = new InventoryButton(app_, aux.gloves_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.gloves_, callSelectObject,true);
+	if (aux.gun_ != nullptr) equipment_.gun_ = new InventoryButton(app_, aux.gun_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 }, aux.gun_, callSelectObject,true);
+	if (aux.sword_ != nullptr) equipment_.sword_ = new InventoryButton(app_, aux.sword_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.sword_, callSelectObject,true);
+	if (aux.potion1_ != nullptr) equipment_.potion1_ = new InventoryButton(app_, aux.potion1_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion1_, callSelectObject,true);
+	if (aux.potion2_ != nullptr) equipment_.potion2_ = new InventoryButton(app_, aux.potion2_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion2_, callSelectObject,true);
 
 	#ifdef _DEBUG
 	cout << "creamos el objeto" << endl;
 	string nombre = "guantes1";
 	string desc = "duantes1";
 	
-	Gloves* guante0 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
+	Gloves* guante0 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves2), nombre, desc, 20.0, 10, 10);
 	Gloves* guante1 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
 	Gloves* guante2 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
 	Gloves* guante3 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
@@ -234,7 +234,7 @@ void Inventory::equipPotionAux() {
 void Inventory::forwardList() {
 	int aux = advanced;
 	aux += 1;
-	if ((aux * VIEW_LIST)<= inventoryList_->size()){
+	if (((aux * VIEW_LIST))<= inventoryList_->size()){
 		advanced = aux;
 		advance(ListPos, VIEW_LIST);//avanzamos el iterador
 	}
@@ -291,34 +291,71 @@ void Inventory::draw()const {
 			j++;
 		}
 	}
+	double posx, posy, sizeX, sizeY;
+	
 	
 	// falta ajustar la posicion de los botones
 	if (equipment_.gloves_ != nullptr) {
-		equipment_.gloves_->setPos(Vector2D{ 163.0,180.0 });
+		 posx = 2.6 * (double)(app_->getWindowWidth() / 21);
+		 posy = 3 * (double)(app_->getWindowHeight() / 10);
+		 sizeX = (double)(app_->getWindowWidth() / 12);
+		 sizeY = (double)(app_->getWindowWidth() / 12);
+		equipment_.gloves_->setPos(Vector2D{ posx,posy });
+		equipment_.gloves_->setScale(Vector2D{ sizeX,sizeY });
 		equipment_.gloves_->draw();
 	}
 	if (equipment_.gun_ != nullptr) {
-		equipment_.gun_->setPos(Vector2D{ 600.0,500.0 });
+		posx = 2 * (double)(app_->getWindowWidth() / 19);
+		posy = 7 * (double)(app_->getWindowHeight() / 13);
+		sizeX = (double)(app_->getWindowWidth() / 11);
+		sizeY = (double)(app_->getWindowWidth() / 18);
+		equipment_.gun_->setPos(Vector2D{ posx,posy });
+		equipment_.gun_->setScale(Vector2D{ sizeX,sizeY });
 		equipment_.gun_->draw();
 	}
 	if (equipment_.sword_ != nullptr) {
-		equipment_.sword_->setPos(Vector2D{ 700.0,500.0 });
+		posx = 7 * (double)(app_->getWindowWidth() / 20);
+		posy = 5 * (double)(app_->getWindowHeight() / 14);
+		sizeX = (double)(app_->getWindowWidth() / 20);
+		sizeY = (double)(app_->getWindowWidth() / 6);
+		equipment_.sword_->setPos(Vector2D{ posx,posy});
+		equipment_.sword_->setScale(Vector2D{ sizeX,sizeY });
 		equipment_.sword_->draw();
 	}
 	if (equipment_.armor_ != nullptr) {
-		equipment_.armor_->setPos(Vector2D{ 800.0,500.0 });
+		posx = 4.8 * (double)(app_->getWindowWidth() / 21);
+		posy = 5.2 * (double)(app_->getWindowHeight() / 17);
+		sizeX = (double)(app_->getWindowWidth() / 12);
+		sizeY = (double)(app_->getWindowWidth() / 12);
+		equipment_.armor_->setPos(Vector2D{ posx,posy });
+		equipment_.armor_->setScale(Vector2D{ sizeX,sizeY });
 		equipment_.armor_->draw();
 	}
 	if (equipment_.boots_ != nullptr) {
-		equipment_.boots_->setPos(Vector2D{ 900.0,500.0 });
+		posx = 5 * (double)(app_->getWindowWidth() / 21);
+		posy = 9 * (double)(app_->getWindowHeight() / 17);
+		sizeX = (double)(app_->getWindowWidth() / 15);
+		sizeY = (double)(app_->getWindowWidth() / 15);
+		equipment_.boots_->setPos(Vector2D{ posx,posy });
+		equipment_.boots_->setScale(Vector2D{ sizeX,sizeY });
 		equipment_.boots_->draw();
 	}
 	if (equipment_.potion1_ != nullptr) {
-		equipment_.potion1_->setPos(Vector2D{ 1000.0,500.0 });
+		posx = 9.3 * (double)(app_->getWindowWidth() / 21);
+		posy = 5.5 * (double)(app_->getWindowHeight() / 17);
+		sizeX = (double)(app_->getWindowWidth() / 18);
+		sizeY = (double)(app_->getWindowWidth() / 18);
+		equipment_.potion1_->setPos(Vector2D{ posx,posy });
+		equipment_.potion1_->setScale(Vector2D{ sizeX,sizeY });
 		equipment_.potion1_->draw();
 	}
 	if (equipment_.potion2_ != nullptr) {
-		equipment_.potion2_->setPos(Vector2D{ 1100.0,500.0 });
+		posx = 9.3 * (double)(app_->getWindowWidth() / 21);
+		posy = 9.3 * (double)(app_->getWindowHeight() / 17);
+		sizeX = (double)(app_->getWindowWidth() / 18);
+		sizeY = (double)(app_->getWindowWidth() / 18);
+		equipment_.potion2_->setPos(Vector2D{ posx,posy });
+		equipment_.potion2_->setScale(Vector2D{ sizeX,sizeY });
 		equipment_.potion2_->draw();
 	}
 
@@ -361,8 +398,8 @@ void Inventory::update() {
 	}
 
 	SDL_Point point;
-	point.x = eventHandler_->getRealMousePos().getX();
-	point.y = eventHandler_->getRealMousePos().getY();
+	point.x = int(eventHandler_->getRealMousePos().getX());
+	point.y = int(eventHandler_->getRealMousePos().getY());
 
 	if (SDL_PointInRect(&point, &goToSkillsButton_->getDestiny())) {
 		goToSkillsButton_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToSkillsBButton));

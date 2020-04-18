@@ -130,6 +130,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Equipables
 	{Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
 	{Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
+	{Boots1, "../Sources/assets/Equipamiento/botas.png"},
+	{Gloves2, "../Sources/assets/Equipamiento/Guantes2.png"}
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{
