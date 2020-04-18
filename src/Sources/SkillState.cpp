@@ -456,6 +456,7 @@ void SkillState::backToPreviousState(Application* app) {
 }
 
 void SkillState::goToInventaryState(Application* app) {
+	static_cast<SkillState*>(app->getCurrState())->setPlayerSkills();
 	app->getGameStateMachine()->changeState(new Inventory(app));
 }
 

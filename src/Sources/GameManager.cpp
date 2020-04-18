@@ -10,7 +10,7 @@ void GameManager::initGameManager(int currGold, Island unlockedIslands, int achi
 const bool GameManager::isSkillAsign(SkillName skill) {
 	int i = 0;
 	while (i < skillsEquipped_.size() && skillsEquipped_[i] != skill)i++;
-	return !i == skillsEquipped_.size();
+	return !(i == skillsEquipped_.size());
 }
 
 const Key GameManager::getEquippedSkillKey(SkillName skill) {
