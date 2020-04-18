@@ -161,6 +161,7 @@ public:
 		Gloves1,
 		Boots1,
 		Gloves2,
+		Armor1,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

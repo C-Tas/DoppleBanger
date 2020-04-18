@@ -55,8 +55,8 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::ButtonX), auxpos, auxSize, callExit);
 	addRenderUpdateLists(exitButton_);
 
-	auxpos = Vector2D{ 7 * (double)(app_->getWindowWidth() / 13),/* 1 * (double)(app_->getWindowHeight() / 40)*/ 22};
-	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 10),  (double)(app_->getWindowWidth() / 10) };
+	auxpos = Vector2D{ 7 * (double)(app_->getWindowWidth() / 13), 1 * (double)(app_->getWindowHeight() / 40) };
+	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 2.62),  (double)(app_->getWindowWidth() / 7.5) };
 	goToSkillsButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos, { 610, 120 }, callSkillsState);
 	addRenderUpdateLists(goToSkillsButton_);
 	
@@ -89,7 +89,7 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	Gloves* guante3 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
 	Gloves* guante4 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
 	Gloves* guante5= new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
-	Gloves* guante6= new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
+	Armor* armor= new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1), nombre, desc, 20.0, 10, 10);
 
 	addToInventory(guante0);
 	addToInventory(guante1);
@@ -97,7 +97,7 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	addToInventory(guante3);
 	addToInventory(guante4);
 	addToInventory(guante5);
-	addToInventory(guante6);
+	addToInventory(armor);
 
 	
 	#endif
@@ -250,9 +250,7 @@ void Inventory::backList() {
 	}
 }
 void Inventory::draw()const {
-//#ifdef _DEBUG
-//	cout << "entramos en draw" << endl;
-//#endif
+
 	//dibujamos el fondo
 	background_->render(SDL_Rect{ 0,0,app_->getWindowWidth(), app_->getWindowHeight() });
 	GameState::draw();//dibujamos todos los botones normales
@@ -323,10 +321,10 @@ void Inventory::draw()const {
 		equipment_.sword_->draw();
 	}
 	if (equipment_.armor_ != nullptr) {
-		posx = 4.8 * (double)(app_->getWindowWidth() / 21);
+		posx = 5 * (double)(app_->getWindowWidth() / 21);
 		posy = 5.2 * (double)(app_->getWindowHeight() / 17);
-		sizeX = (double)(app_->getWindowWidth() / 12);
-		sizeY = (double)(app_->getWindowWidth() / 12);
+		sizeX = (double)(app_->getWindowWidth() / 13);
+		sizeY = (double)(app_->getWindowWidth() / 13);
 		equipment_.armor_->setPos(Vector2D{ posx,posy });
 		equipment_.armor_->setScale(Vector2D{ sizeX,sizeY });
 		equipment_.armor_->draw();

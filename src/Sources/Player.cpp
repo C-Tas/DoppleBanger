@@ -34,7 +34,7 @@ void Player::initObject()
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
-	equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pechera", "helloWorld", 10, 10, 10); equip_.armor_->writeStats(); //Prueba
+	//equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1), "Pechera", "helloWorld", 10, 10, 10); equip_.armor_->writeStats(); //Prueba
 	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), "Guantes", "helloWorld", 10, 10, 10); equip_.gloves_->writeStats(); //Prueba
 	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Boots1), "Botas", "helloWorld", 10, 10, 10); equip_.boots_->writeStats(); //Prueba
 	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, Saber_); equip_.sword_->writeStats(); //Prueba
