@@ -60,7 +60,7 @@ enum class SkillName : int {
 	Invencible,
 	Torbellino,
 
-	//Ataquea distancia
+	//Ataque a distancia
 	DisparoPerforante,
 	Raudo,
 	Rebote,

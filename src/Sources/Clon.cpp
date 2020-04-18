@@ -33,6 +33,7 @@ void Clon::initObject() {
 	meleeRate_ = (player_->getStats().meleeRate_ / 2) * player_->getLiberation();
 	meleeDmg_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
 	distDmg_ = (player_->getStats().distDmg_ / 2) * player_->getLiberation();
+	taunt();
 }
 
 void Clon::shoot(Vector2D dir)
@@ -64,5 +65,14 @@ void Clon::die()
 	agredEnemys_.clear();*/
 	gm->setClon(nullptr);
 	app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
+	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
+		(*it)->lostAggro();
 	alive = false;
+}
+
+void Clon::taunt()
+{
+	enemies_ = CollisionCtrl::instance()->getEnemiesInArea(getVisPos(pos_), CLON_TAUNT_RANGE);
+	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
+		(*it)->newEnemy(this);
 }

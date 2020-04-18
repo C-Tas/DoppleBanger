@@ -156,22 +156,6 @@ void Wolf::initAnims()
 	idleAnim_ = Anim(NUM_FRAMES_IDLE, NUM_FRAMES_ROW_ADLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, NAME_IDLE);
 }
 
-//Actualiza la animación en función del frameRate de la actual animación DONE
-void Wolf::updateAnim()
-{
-	if (currAnim_.frameRate_ <= SDL_GetTicks() - lastFrame_) {
-		lastFrame_ = SDL_GetTicks();
-		frame_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)currAnim_.widthFrame_,(int)currAnim_.heightFrame_ });
-	}
-}
-
-//Cambia la actual animación del lobo si no la tiene "equipada" DONE
-void Wolf::changeAnim(Anim& newAnim) {
-	if (newAnim.name_ != currAnim_.name_) {
-		currAnim_ = newAnim;
-	}
-}
-
 //Se encarga de gestionar el ataque a melee DONE
 void Wolf::attack() {
 	if (currStats_.meleeRate_ <= SDL_GetTicks() - lastMeleeHit_)
@@ -205,34 +189,41 @@ void Wolf::onCollider()
 {
 }
 
-//Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_ DONE
+//Cuando el pirata pierde el agro, se le asigna el agro del player
+//Esto lo llama el clon cuando se destruye
+void Wolf::lostAggro()
+{
+	currEnemy_ = nullptr;
+	currState_ = STATE::PATROLLING;
+}
+
+//Genera la posición a la que se mueve el pirata en función de su rango 
+void Wolf::selectTarget() {
+
+	Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };
+	Point2D enemycenterPos = { currEnemy_->getPosX() + currEnemy_->getScaleX() / 2, currEnemy_->getPosY() + currEnemy_->getScaleY() / 2 };
+	Vector2D posToReach;
+	posToReach.setX((enemycenterPos.getX() + currStats_.meleeRange_) - centerPos.getX());
+	posToReach.setY((enemycenterPos.getY() + currStats_.meleeRange_) - centerPos.getY());
+	target_ = posToReach;
+	move(enemycenterPos);
+}
+
 bool Wolf::getEnemy() {
 	auto gm = GameManager::instance();
 	Vector2D playerPos = isPlayerInRange();
-	Vector2D clonPos = isClonInRange();
-	if (playerPos == Vector2D{ -1,-1 } && clonPos == Vector2D{ -1,-1 }) {
+	if (playerPos == Vector2D{ -1,-1 }) {
 		return false;
 		currEnemy_ = nullptr;
 	}
 
-	Vector2D closesetEnemy;
-	closesetEnemy = pos_.getClosest(playerPos, clonPos);
-	closesetEnemy == playerPos ? currEnemy_ = gm->getPlayer() : currEnemy_ = gm->getClon();
+	currEnemy_ = gm->getPlayer();
 	if (!app_->getMute()) {
 		app_->getAudioManager()->playChannel(Resources::AudioId::WolfHowl, 0, 0);
 	}
 	return true;
 }
 
-//Cuando el pirata pierde el agro, se le asigna el agro del player
-//Esto lo llama el clon cuando se destruye
-void Wolf::lostAgro()
-{
-	currEnemy_ = nullptr;
-	currState_ = STATE::PATROLLING;
-}
-
-//Devuelve la posición del player si está a rango DONE
 Vector2D Wolf::isPlayerInRange() {
 	GameManager* gm = GameManager::instance();
 	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
@@ -247,34 +238,4 @@ Vector2D Wolf::isPlayerInRange() {
 	{
 		return  { -1,-1 };
 	}
-}
-
-//Devuelve la posición del clon si está a rango DONE
-Vector2D Wolf::isClonInRange() {
-	GameManager* gm = GameManager::instance();
-	if (gm->getClon() == nullptr) { return { -1,-1 }; }
-
-	Point2D clonPos = gm->getClon()->getPos();
-	if (currEnemy_ == nullptr &&
-		clonPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && clonPos.getX() >= pos_.getX() - rangeVision_
-		&& clonPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && clonPos.getY() >= pos_.getY() - rangeVision_) {
-		static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
-		return clonPos;
-	}
-	else
-	{
-		return { -1,-1 };
-	}
-}
-
-//Genera la posición a la que se mueve el pirata en función de su rango 
-void Wolf::selectTarget() {
-
-	Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };
-	Point2D enemycenterPos = { currEnemy_->getPosX() + currEnemy_->getScaleX() / 2, currEnemy_->getPosY() + currEnemy_->getScaleY() / 2 };
-	Vector2D posToReach;
-	posToReach.setX((enemycenterPos.getX() + currStats_.meleeRange_) - centerPos.getX());
-	posToReach.setY((enemycenterPos.getY() + currStats_.meleeRange_) - centerPos.getY());
-	target_ = posToReach;
-	move(enemycenterPos);
 }

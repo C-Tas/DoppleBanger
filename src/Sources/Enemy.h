@@ -1,6 +1,10 @@
 #pragma once
+
 #include "Actor.h"
+
+class Clon;
 using namespace std;
+
 class Enemy : public Actor
 {
 public:
@@ -8,7 +12,9 @@ public:
 	virtual void onCollider() {};
 	//<summary>Metodo que mata a este enemigo</summary>
 	virtual void die();
-	virtual void lostAgro() {};
+	virtual void lostAggro() {};
+	//Cuando se crea un clon se fija como nuevo objetivo
+	virtual void newEnemy(GameObject* obj);
 protected:
 	//Rango de visión de la entidad
 	double rangeVision_ = 0;
@@ -44,8 +50,6 @@ protected:
 	virtual bool onRange(bool melee);
 	//Busca y actualiza al enemigo que atacar
 	virtual bool getEnemy(bool melee);
-	//Determina si el jugador está dentro del rango de ataque del monkeyCoco
+	//Determina si el jugador está dentro del rango de ataque
 	virtual Vector2D isPlayerInRange(int range);
-	//Determina si el clon está dentro del rango de ataque del monkeyCoco
-	virtual Vector2D isClonInRange(int range);
 };

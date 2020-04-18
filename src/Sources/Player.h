@@ -63,7 +63,7 @@ public:
 	const double getMaxMana() { return MANA; }; //Faltaria poner una variable que lleve el mana maximo sin ser cte
 
 	const Vector2D getPreviousPos() { return previousPos_; }
-	//Devuelve la posición del clon
+
 	const Stats& getStats() { return currStats_; };
 	//Devuelve la información del equipment
 	playerEquipment& const getInfoEquip() { return equip_; }
@@ -115,7 +115,7 @@ private:
 
 	//Habilidades
 	vector<Skill*> skills_;
-	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
+	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown //TODO: Esto es redundante?
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
 	int liberation_ = 2;	//Nivel de la habilidad del clon, debería llevarse a GameManager

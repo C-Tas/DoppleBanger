@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Enemy.h"
 class Wolf :
 	public Enemy
@@ -16,6 +16,9 @@ public:
 	virtual void initObject();
 	virtual void onCollider();
 	virtual void move(Vector2D pos);
+	//Cuando pierde agro del enemigo
+	virtual void lostAggro();
+
 	virtual  ~Wolf() {};
 
 private:
@@ -23,9 +26,9 @@ private:
 	vector<Point2D> patrol_;
 	//Punto que representa dentro del vector de patrulla
 	int currTarget_ = 0;
-	//Último ataque a melee
+	//Ãšltimo ataque a melee
 	Uint32 lastMeleeHit_ = 0;
-	//Último frame de animación
+	//Ãšltimo frame de animaciÃ³n
 	Uint32 lastFrame_ = 0;
 	//Tiempo que el lobo pasa parado cuando llega a un target
 	Uint32 idleTime_ = 1000;
@@ -36,7 +39,7 @@ private:
 	Anim walkAnim_ = { 0,0,0,0,0,"" };
 	Anim idleAnim_ = { 0,0,0,0,0,"" };
 	//Constantes para crear las diferentes animaciones 
-	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)
+	//(los valores puestos no son los correctos, a falta de hacer la animaciÃ³n del mono)
 	#pragma region Constantes
 	//Para el ataque
 		const int NUM_FRAMES_ATK = 10;
@@ -76,24 +79,16 @@ private:
 	const double DIST_RATE = 1500;
 #pragma endregion
 
-	//Determina si el jugador está dentro del rango de ataque del monkeyCoco
-	Vector2D isPlayerInRange();
-	//Determina si el clon está dentro del rango de ataque del monkeyCoco
-	Vector2D isClonInRange();
 	//Ataque del monkeyCoco
 	void attack();
-	//Gestiona las diferentes animaciones que tiene el monkeyCoco
-	void changeAnim(Anim& newAnim);
-	//Devuelve true si el target está dentro del rango de ataque
+	//Devuelve true si el target estÃ¡ dentro del rango de ataque
 	bool onRange();
 	//Inicializa todas las animaciones
 	void initAnims();
-	//Actualiza la actual animación
-	void updateAnim();
+	//Genera la posiciÃ³n a la que se mueve el pirata en funciÃ³n de su rango 
+	virtual void selectTarget();
 	//Busca y actualiza al enemigo que atacar
-	bool getEnemy();
-	//Cuando pierde agro del enemigo
-	virtual void lostAgro();
-	//Genera la posición a la que se mueve el pirata en función de su rango 
-	void selectTarget();
+	virtual bool getEnemy();
+	//Determina si el jugador estï¿½ dentro del rango de ataque del monkeyCoco
+	Vector2D isPlayerInRange();
 };
