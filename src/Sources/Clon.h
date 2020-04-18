@@ -6,7 +6,7 @@
 
 class Player;
 
-const double DURATION_ = 2; //En segundos
+const double DURATION_ = 5; //En segundos
 
 class Clon : public Collider
 {

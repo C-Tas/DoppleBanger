@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+
 using namespace std;
 class Enemy : public Actor
 {

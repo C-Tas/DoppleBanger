@@ -57,8 +57,8 @@ bool MonkeyCoco::onRange() {
 	if (currEnemy_ == nullptr) {
 		return false;
 	}
-	SDL_Rect rangeAttack = { getPosX() - currStats_.meleeRange_ - (getScaleX() / 2)  ,
-	getPosY() - currStats_.meleeRange_ - (getScaleY() / 2),currStats_.meleeRange_ * 2, currStats_.meleeRange_ * 2 };;
+	SDL_Rect rangeAttack = { getPosX() - currStats_.distRange_ - (getScaleX() / 2)  ,
+	getPosY() - currStats_.distRange_ - (getScaleY() / 2),currStats_.distRange_ * 2, currStats_.distRange_ * 2 };;
 	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
 		return true;
 	}

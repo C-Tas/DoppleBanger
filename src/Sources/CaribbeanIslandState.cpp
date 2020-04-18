@@ -3,6 +3,7 @@
 #include "ShipState.h"
 #include "MonkeyCoco.h"
 #include "EnemyPirate.h"
+#include "Pumpkin.h"
 #include "Wolf.h"
 #include "EndState.h"
 #include "WinState.h"
@@ -27,9 +28,11 @@ void CaribbeanIslandState::initState()
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
 	addRenderUpdateLists(background_);
 
-	createMonkey(NUM_MONKEYS);
-	createPirates(NUM_PIRATES);
-	createWolves(NUM_WOLVES);
+	//createMonkey(NUM_MONKEYS);
+	//createPirates(NUM_PIRATES);
+	//createWolves(NUM_WOLVES);
+	Pumpkin* p = new Pumpkin(app_, { 120,120 }, {40,40});
+	addEnemy(p);
 
 	//Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
 	playerEntry_ = Vector2D(((app_->getWindowWidth() * 5/8)- W_PLAYER), ((app_->getWindowHeight() * 8 / 10) - H_PLAYER));

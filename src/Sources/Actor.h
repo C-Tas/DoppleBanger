@@ -76,8 +76,8 @@ public:
 #pragma endregion
 	//Realiza una acción al detectar una colisión
 	virtual void onCollider() = 0;
-	//<summary>Establece la direccion del movimiento</summary>	
-	virtual void move(Point2D target) {};
+	////<summary>Establece la direccion del movimiento</summary>	
+	//virtual void move(Point2D target) {};
 	//Método para gestionar el daño recibido 
 	virtual void receiveDamage(int damage);
 	//Método para matar

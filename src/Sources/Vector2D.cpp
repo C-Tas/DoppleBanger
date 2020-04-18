@@ -50,8 +50,15 @@ Vector2D Vector2D::rotate(double degrees) const
 }
 Vector2D Vector2D::getClosest(Vector2D& a,Vector2D& b)
 {
-	double aMagnitud = abs(Vector2D(x_ - a.x_, y_ - a.y_).magnitude());
-	double bMagnitud = abs(Vector2D(x_ - b.x_, y_ - b.y_).magnitude());
-	return aMagnitud <= bMagnitud ? a : b;
+	if (a.x_ == -1 && a.y_ == -1)
+		return b;
+	else if (b.x_ == -1 && b.y_ == -1) return a;
+	else
+	{
+		double aMagnitud = abs(Vector2D(x_ - a.x_, y_ - a.y_).magnitude());
+		double bMagnitud = abs(Vector2D(x_ - b.x_, y_ - b.y_).magnitude());
+		return aMagnitud <= bMagnitud ? a : b;
+	}
+
 }
 #pragma endregion
