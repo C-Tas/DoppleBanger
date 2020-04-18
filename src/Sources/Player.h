@@ -45,10 +45,11 @@ public:
 	const int getLiberation() { return liberation_; };
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
-	const Vector2D getPreviousPos() { return previousPos_; }
-	virtual void die() { currState_ = STATE::DYING; }
+	const Vector2D getPreviousPos() { return previousPos_; };
+	virtual void die() { currState_ = STATE::DYING; };
+	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
 	//metodos para coger la info del player
-	playerEquipment& const getInfoEquip() { return equip_; }
+	playerEquipment& const getInfoEquip() { return equip_; };
 	void desactivePotion();
 	void init();
 	void equip(Armor* armor) { equip_.armor_ = armor; };
@@ -56,8 +57,8 @@ public:
 	void equip(Boots* boots) { equip_.boots_ = boots; };
 	void equip(Sword* sword) { equip_.sword_ = sword; };
 	void equip(Gun* gun) { equip_.gun_ = gun; };
-	void equipPotion1(usable* pot) { equip_.potion1_ = pot; }
-	void equipPotion2(usable* pot) { equip_.potion2_ = pot; }
+	void equipPotion1(usable* pot) { equip_.potion1_ = pot; };
+	void equipPotion2(usable* pot) { equip_.potion2_ = pot; };
 
 	//metodos para usar las pociones
 	void usePotion(int value, potionType type);
@@ -66,9 +67,9 @@ public:
 #pragma region SkillsEquipped
 	///<summary>Número máximo de skills equipables</summary>
 	static const int MAX_SKILLS = 3;
-	Skill* getSkillEquipped(int key) { return skillsEquiped_[key]; }
-	void setSkillAt(int key, Skill* skill) { if(skillsEquiped_[key]!= nullptr)delete skillsEquiped_[key]; skillsEquiped_[key] = skill; }
-	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquiped_; }
+	Skill* getSkillEquipped(int key) { return skillsEquiped_[key]; };
+	void setSkillAt(int key, Skill* skill) { if (skillsEquiped_[key] != nullptr)delete skillsEquiped_[key]; skillsEquiped_[key] = skill; };
+	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquiped_; };
 #pragma endregion
 
 private:
