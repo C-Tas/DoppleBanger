@@ -57,12 +57,6 @@ void Clon::shoot(Vector2D dir)
 void Clon::die()
 {
 	GameManager* gm = GameManager::instance();
-	//TODO: Revisar cuando se haga merge con "taunt"
-	/*for (auto enemy : agredEnemys_) {
-		if (enemy != nullptr && enemy->getState() != STATE::DYING)
-		enemy->lostAgro();
-	}
-	agredEnemys_.clear();*/
 	gm->setClon(nullptr);
 	app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
 	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
@@ -72,7 +66,7 @@ void Clon::die()
 
 void Clon::taunt()
 {
-	enemies_ = CollisionCtrl::instance()->getEnemiesInArea(getVisPos(pos_), CLON_TAUNT_RANGE);
+	enemies_ = CollisionCtrl::instance()->getEnemiesInArea(getVisPos(), CLON_TAUNT_RANGE);
 	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
 		(*it)->newEnemy(this);
 }
