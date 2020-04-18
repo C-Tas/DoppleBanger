@@ -5,8 +5,8 @@
 using namespace std;
 //callbacks
 
-void callSelectObject(GameState * state, InventoryButton* but) {
-		dynamic_cast<Inventory*>(state)->selectObject(but);
+void callSelectObject(Application* app, InventoryButton* but) {
+		dynamic_cast<Inventory*>(app->getCurrState())->selectObject(but);
 }
 void callDeleteObject(Application* app) {
 	dynamic_cast<Inventory*>(app->getCurrState())->deleteObj();
@@ -70,13 +70,13 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	
 	playerEquipment aux = player_->getInfoEquip();
 
-	if (aux.armor_ != nullptr) equipment_.armor_ = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.armor_, callSelectObject,true);
-	if (aux.boots_ != nullptr) equipment_.boots_ = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.boots_, callSelectObject,true);
-	if (aux.gloves_ != nullptr) equipment_.gloves_ = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.gloves_, callSelectObject,true);
-	if (aux.gun_ != nullptr) equipment_.gun_ = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), Vector2D{ 300,400 }, Vector2D{ 75,75 }, aux.gun_, callSelectObject,true);
-	if (aux.sword_ != nullptr) equipment_.sword_ = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.sword_, callSelectObject,true);
-	if (aux.potion1_ != nullptr) equipment_.potion1_ = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion1_, callSelectObject,true);
-	if (aux.potion2_ != nullptr) equipment_.potion2_ = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion2_, callSelectObject,true);
+	if (aux.armor_ != nullptr) equipment_.armor_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.armor_, callSelectObject,true);
+	if (aux.boots_ != nullptr) equipment_.boots_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.boots_, callSelectObject,true);
+	if (aux.gloves_ != nullptr) equipment_.gloves_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.gloves_, callSelectObject,true);
+	if (aux.gun_ != nullptr) equipment_.gun_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), Vector2D{ 300,400 }, Vector2D{ 75,75 }, aux.gun_, callSelectObject,true);
+	if (aux.sword_ != nullptr) equipment_.sword_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.sword_, callSelectObject,true);
+	if (aux.potion1_ != nullptr) equipment_.potion1_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion1_, callSelectObject,true);
+	if (aux.potion2_ != nullptr) equipment_.potion2_ = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion2_, callSelectObject,true);
 
 	#ifdef _DEBUG
 	cout << "creamos el objeto" << endl;
@@ -109,7 +109,7 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	//pasa lo mismo con el estado al que apunta el bot�n
 	for (auto ob = inventoryList_->begin(); ob != inventoryList_->end(); ++ob) {
 		(*ob)->setNewCallBack(callSelectObject);
-		(*ob)->setCurrentState(this);
+		
 		
 	}
 }
@@ -187,7 +187,7 @@ void Inventory::deleteObj() {
 //Hay que quitarle pero todavia no puedo
 void Inventory::addToInventory(Equipment* ob) {
 	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_,this, ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 },ob, callSelectObject);
+	InventoryButton* b = new InventoryButton(app_, ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 },ob, callSelectObject);
 	//le asignamos al objeto su boton
 	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = inventoryList_->insert(inventoryList_->end(), b);
@@ -261,8 +261,12 @@ void Inventory::draw()const {
 		list<InventoryButton*>::iterator aux = ListPos;
 		InventoryButton* auxOb = nullptr;
 		// posiciones estandar de los botones
-		int x = 720;
-		int y = 200;
+		
+		double posx = 9 * (double)(app_->getWindowWidth() / 16);
+		double posy = 4 * (double)(app_->getWindowHeight() / 11);
+		
+		double sizeX = (double)(app_->getWindowWidth() / 16);
+		double SizeY = (double)(app_->getWindowWidth() / 16);
 		int i = 0;
 		//dibujamos los objetos de la primera columna
 		while (i < VIEW_LIST / 2 && aux != inventoryList_->end()) {
@@ -270,7 +274,8 @@ void Inventory::draw()const {
 			//		cout << "entramos en el bucle" << endl;
 			//#endif
 			auxOb = *aux;
-			auxOb->setPos(Vector2D{ double(x),double(y + (i * 75)) });
+			auxOb->setPos(Vector2D{ double(posx),double(posy + double(i * (double(app_->getWindowHeight()) / 9)) )});
+			auxOb->setScale(Vector2D{ sizeX,SizeY });
 			auxOb->draw();//desreferenciamos el puntero
 			aux++;
 			i++;
@@ -279,7 +284,8 @@ void Inventory::draw()const {
 		int j = 0;
 		while (j < VIEW_LIST / 2 && aux != inventoryList_->end()) {
 			auxOb = *aux;
-			auxOb->setPos(Vector2D{ double(x + 250),double(y + (j * 75)) });
+			auxOb->setPos(Vector2D{ double(posx + (double)(app_->getWindowWidth() / 5)),double(posy + (j * (double(app_->getWindowHeight()) / 9))) });
+			auxOb->setScale(Vector2D{ sizeX,SizeY });
 			auxOb->draw();//desreferenciamos el puntero
 			aux++;
 			j++;

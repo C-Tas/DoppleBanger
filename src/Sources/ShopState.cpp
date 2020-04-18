@@ -16,8 +16,8 @@ void callShopBackListS(Application* app) {
 void callExitS(Application* app) {
 	app->getGameStateMachine()->popState();
 }
-void callSelectObjectS(GameState* state, InventoryButton* ob) {
-	dynamic_cast<ShopState*>(state)->selectObject(ob);
+void callSelectObjectS(Application* app, InventoryButton* ob) {
+	dynamic_cast<ShopState*>(app->getCurrState())->selectObject(ob);
 }
 void callSellObjectS(Application* app) {
 	dynamic_cast<ShopState*>(app->getCurrState())->sellObj();
@@ -120,7 +120,7 @@ ShopState::~ShopState()
 void ShopState::addToInventory(Item* ob)
 {
 	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_, this, ob->getItemTexture(), Vector2D(300, 400), Vector2D(50, 50), ob, callSelectObjectS);
+	InventoryButton* b = new InventoryButton(app_, ob->getItemTexture(), Vector2D(300, 400), Vector2D(50, 50), ob, callSelectObjectS);
 	//le asignamos al objeto su boton
 	ob->setButton(b);
 	//Añadimos el boton a la lista y le asignamos un iterador con su posicion
@@ -277,7 +277,7 @@ void ShopState::backList() {
 void ShopState::addToShop(Equipment* ob)
 {
 	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_, this, ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, ob, callSelectObjectS, 1);
+	InventoryButton* b = new InventoryButton(app_,  ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, ob, callSelectObjectS, 1);
 	//le asignamos al objeto su boton
 	ob->setButton(b);
 	//Añadimos el boton a la lista y le asignamos un iterador con su posicion

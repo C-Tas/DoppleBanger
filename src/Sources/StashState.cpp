@@ -23,9 +23,9 @@ void StashState::callbackPreviousStashPage(Application* app) {
 	dynamic_cast<StashState*>(app->getCurrState())->previousStashPage();
 }
 
-void StashState::callbackSelectObject(GameState* state, InventoryButton* button)
+void StashState::callbackSelectObject(Application* app, InventoryButton* button)
 {
-	dynamic_cast<StashState*>(state)->selectObject(button);
+	dynamic_cast<StashState*>(app->getCurrState())->selectObject(button);
 }
 
 void StashState::callbackChangeBetweenLists(Application* app)
@@ -145,20 +145,20 @@ void StashState::initState() {
 	Gun* gun3 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu4", 0, 0, 0, Shotgun_);
 
 	
-	InventoryButton* b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
+	InventoryButton* b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
 		Vector2D(100, 400), Vector2D(125, 50), gun, callbackSelectObject);
 	auto it = stash_.objects_->insert(stash_.objects_->end(),b);
 	b->setIterator(it);
-	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
+	b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
 		Vector2D(100, 400), Vector2D(125, 50), gun1, callbackSelectObject);
 	it = stash_.objects_->insert(stash_.objects_->end(), b);
 	b->setIterator(it);
-	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
+	b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
 		Vector2D(100, 400), Vector2D(125, 50), gun3, callbackSelectObject);
 	it = stash_.objects_->insert(stash_.objects_->end(), b);
 	b->setIterator(it);
 	
-	b = new InventoryButton(app_, this, app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
+	b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
 		Vector2D(100, 400), Vector2D(125, 50), gun2, callbackSelectObject);
 	it = inventory_.objects_->insert(inventory_.objects_->end(), b);
 	b->setIterator(it);

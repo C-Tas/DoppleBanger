@@ -98,7 +98,7 @@ public:
 	static void callbackPreviousStashPage(Application* app);
 	
 	///<summary>Selecciona el objeto sobre el que se hace click</summary>
-	static void callbackSelectObject(GameState* state, InventoryButton* button);
+	static void callbackSelectObject(Application* app, InventoryButton* button);
 	///<summary>Cambia de lista el objeto seleccionado</summary>
 	static void callbackChangeBetweenLists(Application* app);
 	///<summary>Borra el objeto seleccionado</summary>
