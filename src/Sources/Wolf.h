@@ -32,9 +32,9 @@ private:
 	//Tiempo 
 	uint lastIdleTime = 0;
 	//Diferentes animaciones del lobo
-	Anim attackAnim_ = { 0,0,0,0,0 ,"" };
-	Anim walkAnim_ = { 0,0,0,0,0,"" };
-	Anim idleAnim_ = { 0,0,0,0,0,"" };
+	Anim attackAnim_ = { 0,0,0,0 ,"" };
+	Anim walkAnim_ = { 0,0,0,0,"" };
+	Anim idleAnim_ = { 0,0,0,0,"" };
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)
 	#pragma region Constantes

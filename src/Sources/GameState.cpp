@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include "CollisionCtrl.h"
 
 GameState::~GameState() {
 	//Borra todos los objetos de la lista de gameObjects
@@ -43,6 +44,7 @@ void GameState::draw() const {
 		(*it)->draw();
 	}
 }
+
 void GameState::handleEvents() {
 	eventHandler_->update();
 }

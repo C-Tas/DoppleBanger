@@ -120,6 +120,8 @@ public:
 		MonkeyFront,
 		WolfFront,
 		Kraken,
+		Cooker,
+		SkeletonMusician,
 
 		//Bosses
 		Magordito,

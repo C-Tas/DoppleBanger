@@ -12,6 +12,11 @@
 #include "HUD.h"
 
 
+void PlayState::draw() const {
+	GameState::draw();
+	collisionCtrl_->drawTextBox();
+}
+
 void PlayState::update() {
 	if (player_->getState() == STATE::DYING) { //Comprobamos que el player haya muerto para cambiar de estado
 		collisionCtrl_->clearList();

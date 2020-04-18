@@ -80,6 +80,8 @@ void ShipState::initState()
 
 	collisionCtrl_->addShipObjects(stash_, door_, wheel_, exit_);
 
+	createNPC();	//Método de testeo de los NPCs del barco, faltaría hacer uno definitivo para todos los NPCs desbloqueados
+
 	////Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
 	playerEntry_ = Vector2D((W_WIN - W_PLAYER * 4), ((H_WIN * 3 / 4) - H_PLAYER));
 	player_->setPos(playerEntry_);
@@ -87,11 +89,6 @@ void ShipState::initState()
 	addRenderUpdateLists(player_);
 	addRenderUpdateLists(hud_);
 	startInstance_ = SDL_GetTicks();
-}
-
-void ShipState::draw() const
-{
-	GameState::draw();
 }
 
 void ShipState::update()
@@ -103,4 +100,14 @@ void ShipState::update()
 		songActive = true;
 	}
 	collisionCtrl_->shipCollisions();
+}
+
+void ShipState::createNPC() {
+	int wWin = app_->getWindowWidth();
+	int hWin = app_->getWindowHeight();
+	NPC* skeleton;
+	Vector2D pos;
+	pos.setVec(Vector2D(wWin / 2, hWin * 3 / 4));
+	skeleton = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), pos, Vector2D(app_->getWindowWidth() / 11, app_->getWindowHeight() / 6), 5);
+	addRenderUpdateLists(skeleton);
 }

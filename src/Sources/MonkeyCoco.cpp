@@ -52,11 +52,11 @@ bool MonkeyCoco ::update() {
 void MonkeyCoco::initAnims()
 {
 	//Para la animaci�n de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK,NUM_FRAMES_ROW_ATK,W_FRAME_ATK,H_FRAME_ATK,FRAME_RATE_ATK,NAME_ATK);
+	attackAnim_ = Anim(NUM_FRAMES_ATK,W_FRAME_ATK,H_FRAME_ATK,FRAME_RATE_ATK,NAME_ATK);
 	//Para la animaci�n de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV,NUM_FRAMES_ROW_MOV,W_FRAME_MOV,H_FRAME_MOV,FRAME_RATE_MOV,NAME_MOV);
+	walkAnim_ = Anim(NUM_FRAMES_MOV,W_FRAME_MOV,H_FRAME_MOV,FRAME_RATE_MOV,NAME_MOV);
 	//Para la animaci�n de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE,NUM_FRAMES_ROW_ADLE,W_FRAME_IDLE,H_FRAME_IDLE,FRAME_RATE_IDLE,NAME_IDLE);
+	idleAnim_ = Anim(NUM_FRAMES_IDLE,W_FRAME_IDLE,H_FRAME_IDLE,FRAME_RATE_IDLE,NAME_IDLE);
 }
 
 //Se encarga de crear el coco en direcci�n al enemigo

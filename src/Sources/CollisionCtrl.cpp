@@ -101,25 +101,30 @@ void CollisionCtrl::islandCollisions() {
 		}
 	}
 
-	//Colisi�n NPC con jugador
-	if (npc_.object != nullptr) {
-		if (Collisions::collides(npc_.object->getPos(), npc_.object->getScaleX(), npc_.object->getScaleY(),
-			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-			switch (npc_.id) {
-			case ElderMan:
-				//npc_.object->getTextBox().dialogElderMan(-1);
-				break;
-			case Merchant:
-				//npc_.object->getTextBox().dialogMerchant();
-				break;
+	//Colisi�n NPC con jugador -- Como mucho habrá uno por zona
+	if (npcs_.size() > 0) {
+		if (Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX() * 1.1, npcs_[0].object->getScaleY() * 1.1,
+			player_->getPos(), player_->getScaleX() * 1.1, player_->getScaleY() * 1.1)) {
+			if (Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX(), npcs_[0].object->getScaleY(),
+				player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+				player_->stop();
+				player_->setPos(player_->getPreviousPos());
+			}
+
+			onShip = false;
+			npcCollision.object = npcs_[0].object;
+			switch (npcs_[0].id) {
 			case Chef:
-				//npc_.object->getTextBox().dialogChef(true);
+				npcCollision.id = Chef;
 				break;
 			case Morty:
-				//npc_.object->getTextBox().dialogMorty(true);
+				npcCollision.id = Morty;
 				break;
 			case Parrot:
-				//npc_.object->getTextBox().dialogParrot();
+				npcCollision.id = Parrot;
+				break;
+			case Skeleton:
+				npcCollision.id = Skeleton;
 				break;
 			}
 		}
@@ -167,7 +172,6 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 	}
 
 	//Colisi�n con los objetos del barco
-
 	for (int i = 0; i < shipObjects_.size(); i++) {
 		if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
 			shipObjects_[i].object->getPosX() + shipObjects_[i].object->getScaleX() / 2, shipObjects_[i].object->getPosY() + 
@@ -185,19 +189,39 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 	//Colisi�n con los NPCs desbloqueados
 	for (auto npc : npcs_) {
-		if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
-			npc.object->getPosX() + npc.object->getScaleX() / 2, npc.object->getPosY() + npc.object->getScaleY() / 2, npc.object->getScaleX(), npc.object->getScaleY() / 10)) {
-			player_->stop();
+		if (Collisions::collides(npc.object->getPos(), npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 1.1,
+			player_->getPos(), player_->getScaleX() * 1.1, player_->getScaleY() * 1.1)) {
+
+			//RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
+			//npc.object->getPosX() + npc.object->getScaleX() / 2, npc.object->getPosY() + npc.object->getScaleY() / 2, npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 0.11)) {
+
+			if (Collisions::collides(npc.object->getPos(), npc.object->getScaleX(), npc.object->getScaleY(),
+				player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+					player_->stop();
+					player_->setPos(player_->getPreviousPos());
+			}
+
+			onShip = true;
+			npcCollision.object = npc.object;
 
 	        switch (npc.id) {
+			case ElderMan:
+				npcCollision.id = ElderMan;
+				break;
+			case Merchant:
+				npcCollision.id = Merchant;
+				break;
 	        case Chef:
-				//npc.object->getTextBox().dialogChef(false);
+				npcCollision.id = Chef;
 	            break;
 	        case Morty:
-				//npc.object->getTextBox().dialogMorty(false);
+				npcCollision.id = Morty;
 	            break;
 			case Parrot:
-				//npc.object->getTextBox().dialogParrot();
+				npcCollision.id = Parrot;
+				break;
+			case Skeleton:
+				npcCollision.id = Skeleton;
 				break;
 			}
 		}
@@ -215,4 +239,29 @@ list<Enemy*> CollisionCtrl::getEnemiesInArea(Point2D center, int radius)
 		}
 	}
 	return enemiesWithin;
+}
+
+void CollisionCtrl::drawTextBox() {
+	//Generamos un textbox si se ha dado alguna colisión con un NPC
+	switch (npcCollision.id) {
+	case ElderMan:
+		npcCollision.object->getTextBox()->dialogElderMan(-1);
+		break;
+	case Merchant:
+		npcCollision.object->getTextBox()->dialogMerchant();
+		break;
+	case Chef:
+		npcCollision.object->getTextBox()->dialogChef(onShip);
+		break;
+	case Morty:
+		npcCollision.object->getTextBox()->dialogMorty(onShip);
+		break;
+	case Parrot:
+		npcCollision.object->getTextBox()->dialogParrot();
+		break;
+	case Skeleton:
+		npcCollision.object->getTextBox()->dialogSkeleton(onShip);
+	}
+	npcCollision.id = Nobody;
+	npcCollision.object = nullptr;
 }

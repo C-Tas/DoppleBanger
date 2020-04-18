@@ -10,7 +10,6 @@ protected:
 	const int lineSpacing = 30;	//Interlineado y márgenes del texto
 
 public:
-	TextBox() {};
 	///<summary>Constructora del textBox de diálogo</summary>
 	TextBox(Application* app) : app_(app) {};
 	///<summary>Constructora del textBox de descripción</summary>
@@ -38,6 +37,9 @@ public:
 
 	///<summary>Frases del loro, se genera una al azar</summary>
 	void dialogParrot();
+
+	///<summary>Frases del esqueleto</summary>
+	void dialogSkeleton(bool unlock);
 
 	///<summary>Frase del Kraken al empezar/acabar la batalla</summary>
 	void dialogKraken(bool defeated);
@@ -120,9 +122,5 @@ public:
 	void Rebote();
 	///<summary>Descripción de la habilidad Perforador del disparo a distancia</summary>
 	void Perforador();
-	
-
-
 #pragma endregion
-
 };

@@ -11,7 +11,6 @@ public:
 	///<summary> Constructora del barco</summary>
 	ShipState(Application* app) : PlayState(app) { initState(); }
 	virtual ~ShipState() {}
-	virtual void draw()const;
 	void update();
 
 private:
@@ -50,6 +49,8 @@ private:
 	#pragma endregion
 
 	void initState();
+	void createNPC();
+
 	#pragma region Callbacks
 	static void goIsland(Application* app);
 	static void goStashState(Application* app);

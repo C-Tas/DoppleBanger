@@ -46,6 +46,11 @@ public:
 
 
 protected:
+	struct textBoxInfo {
+		Texture* txt_ = nullptr;
+		int x_ = 0;
+		int y_ = 0;
+	};
 	///<summary>Lista con todos los objetos</summary>
 	list<GameObject*> gameObjects_;
 	///<summary>Lista con todos los objetos con metodo Draw()</summary>

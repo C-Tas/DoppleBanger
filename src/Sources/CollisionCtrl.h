@@ -19,7 +19,9 @@ public:
 		Merchant,
 		Chef,
 		Morty,
-		Parrot
+		Parrot,
+		Skeleton,
+		Nobody
 	};
 
 	enum ShipObjectsNames : int {
@@ -45,11 +47,13 @@ public:
 	void islandCollisions();
 	///<summary>Comprueba las colisiones necesarias en el barco</summary>
 	void shipCollisions();
+	///<summary>Para renderizar los textBox en caso de ser necesario</summary>
+	void drawTextBox();
 	list<Enemy*> getEnemiesInArea(Point2D center, int radius);
 
 #pragma region Remove
 	///<summary>Quita las colisiones con el NPC (si el NPC se desbloquea y deja de aparecer en la isla)</summary>
-	void removeNPC() { npc_.object = nullptr; };
+	void removeNPC() { npcs_.clear(); };
 	///<summary>Quita un enemigo de la lista</summary>
 	void removeEnemy(Enemy* enem) { enemiesToErase_.push_back(enem); };
 	///<summary>Quita un cofre de la lista (cuando se abre)</summary>
@@ -77,8 +81,6 @@ public:
 	void setPlayer(Player* player) { player_ = player; };
 
 	//Islas
-	///<summary>Setea el NPC bloqueado de la zona de la isla</summary>
-	void setLockNPC(NPCsNames name, NPC* npc) { npc_ = NPCsInfo(name, npc); };
 	///<summary>A�ade un nuevo obst�culo</summary>
 	void addObstacle(Obstacle* obstacle) { obstacles_.push_back(obstacle); };
 	///<summary>A�ade un nuevo enemigo</summary>
@@ -93,8 +95,8 @@ public:
 	void addTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
 
 	//Barco
-	///<summary>Guarda un nuevo NPC desbloqueado a la lista (para el barco)</summary>
-	void addUnlockNPC(NPCsNames name, NPC* npc) { npcs_.push_back(NPCsInfo(name, npc)); };
+	///<summary>Guarda un nuevo NPC a la lista</summary>
+	void addNPC(NPCsNames name, NPC* npc) { npcs_.push_back(NPCsInfo(name, npc)); };
 	///<summary>Guarda los elementos del barco</summary>
 	void addShipObjects(ShipObject* stash, ShipObject* door, ShipObject* wheel, ShipObject* exit) { 
 			shipObjects_.push_back(ShipObjectsInfo(Stash, stash)); shipObjects_.push_back(ShipObjectsInfo(Door, door)); 
@@ -104,7 +106,7 @@ public:
 
 private:	//Private est� abajo porque necesitan enum del p�blico
 	struct NPCsInfo {
-		NPCsNames id;
+		NPCsNames id = Nobody;
 		NPC* object = nullptr;
 
 		NPCsInfo() {};
@@ -112,7 +114,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	};
 
 	struct ShipObjectsInfo {
-		ShipObjectsNames id;
+		ShipObjectsNames id = Stash;
 		ShipObject* object = nullptr;
 		bool click = false;
 
@@ -123,9 +125,9 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	HandleEvents* input_ = nullptr;	//Para controlar si los objetos han sido clickados
 
 	Player* player_ = nullptr;
+	vector<NPCsInfo> npcs_;	//Si estamos en el barco habrá varios, si estamos en una isla habrá como mucho uno
 
 	//Islas
-	NPCsInfo npc_;	//El NPC en la isla no necesita ser una lista, hay como mucho uno por zona
 	list<Obstacle*> obstacles_;
 	list<Enemy*> enemies_;
 	//list<Chest*> chests_;
@@ -140,7 +142,8 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Trigger*> triggersToErase_;
 
 	//Barco
-	vector<NPCsInfo> npcs_;
+	bool onShip = true;
+	NPCsInfo npcCollision;
 	vector<ShipObjectsInfo> shipObjects_;
 
 	static unique_ptr<CollisionCtrl> instance_;

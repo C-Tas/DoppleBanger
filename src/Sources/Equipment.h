@@ -21,7 +21,7 @@ protected:
 public:
 	//Crea un item equipable del tipo dado
 	Equipment(Texture* texture, string name, string desc, double price, equipType type) : 
-		Item(texture, name, desc, price, 1), type_(type) { };
+		Item(texture, name, desc, price, 1), type_(type) {};
 	virtual ~Equipment() {}; //Destructora generica
 
 #pragma region Setters

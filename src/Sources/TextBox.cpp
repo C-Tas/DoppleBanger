@@ -1,6 +1,7 @@
 #include "TextBox.h"
 #include "HandleEvents.h"
 #include "Resources.h"
+#include "GameState.h"
 #include "SDL_macros.h"
 
 //Cada l�nea de los di�logos/descripciones se tiene que renderizar por separado para poder generar los saltos de l�nea.
@@ -36,6 +37,9 @@ void TextBox::initDescription(Point2D pos) {
 #pragma region Dialogos
 void TextBox::dialogElderMan(int isle) {
 	initDialog();
+	dest.x = lineSpacing;
+	dest.y = app_->getWindowHeight() - dest.h;
+
 	//Viaje a la isla caribe�a
 	if (isle == 0) {
 		Texture text(app_->getRenderer(), "Frase 1...", app_->getFontManager()->getFont(Resources::RETRO), { COLOR(0x00000000) });
@@ -70,7 +74,20 @@ void TextBox::dialogChef(bool unlock) {
 	}
 	//Di�logo del chef cuando a�n est� bloqueado
 	else {
+		Texture text(app_->getRenderer(), "Yo soy un ejemplo de un NPC que a�n no ha sido desbloqueado, falta gestionar el comienzo y final de las misiones", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing);
 
+		text.loadFromText(app_->getRenderer(), "secundarias, que pertenecen a otra historia (concretamente 'Misi�n secundaria - Gallego en problemas').", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+		text.loadFromText(app_->getRenderer(), "Los textos est�n ajustados para un tama�o m�nimo de ventana 1600x900, si se hace m�s grande, el texto queda", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 3));
+
+		text.loadFromText(app_->getRenderer(), "marginado a la izquierda pero no queda mal, pero si se hace una ventana m�s peque�a el texto no entra.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 4));
+
+		text.loadFromText(app_->getRenderer(), "A�n as� habr� que tener un tama�o m�nimo, porque otros elementos tambi�n desbordan con una ventana peque�a.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 5));
 	}
 }
 
@@ -102,6 +119,25 @@ void TextBox::dialogParrot() {
 
 	}
 	else if (rnd == 4) {
+
+	}
+}
+
+void TextBox::dialogSkeleton(bool unlock) {
+	initDialog();
+	//Di�logo del esqueleto cuando lo hemos desbloqueado
+	if (unlock) {
+		Texture text(app_->getRenderer(), "Este lindo esqueletito es una prueba de la generaci�n de un NPC desbloquado. Para ello se han cambiado un poco las", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing);
+
+		text.loadFromText(app_->getRenderer(), "colisiones con los NPCs, que podr�n reajustarse cuando se cambien las im�genes para gestionar qu� partes se", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+		text.loadFromText(app_->getRenderer(), "renderizan por encima y qu� por debajo del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 3));
+	}
+	//Di�logo del esqueleto cuando a�n est� bloqueado
+	else {
 
 	}
 }

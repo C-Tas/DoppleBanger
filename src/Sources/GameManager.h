@@ -41,8 +41,9 @@ enum class spentPoints : int {
 };
 
 enum class missions : int {
-	nombreMision = 0,
-	//Poner aqui nombre de las misiones
+	gallegaEnProblemas = 0,
+	papelesSiniestros
+	//En caso de tener misión para el loro añadirla tb (o si se añade el esqueleto)
 };
 
 #pragma region Skills
@@ -196,7 +197,8 @@ public:
 	const lista getStash() { return stash_; };
 	//Devuelve el vector de skills
 	const vector<SkillName>& getAllSkillsEquipped() { return skillsEquipped_; }
-
+	//Devuelve el total de misiones secundarias
+	const int getNumMission() { return NUM_MISION; };
 	//Devuelve el n�mero de islas desbloqueadas
 	const Island getUnlockedIslands() { return unlockedIslands_; };
 	//Devuelve la isla actual

@@ -56,6 +56,6 @@ void Crab::initObject()
 void Crab::initAnim()
 {
 	//Cambiar los n�meros magicos
-	attackAnim_ = Anim(NUM_FRAMES_ATK, NUM_FRAMES_ATK_ROW, W_CLIP_ATK, H_CLIP_ATK, 10,"Attack");
+	attackAnim_ = Anim(NUM_FRAMES_ATK, W_CLIP_ATK, H_CLIP_ATK, 10,"Attack");
 	//Faltan las otras animaciones
 }
