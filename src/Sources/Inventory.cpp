@@ -359,55 +359,64 @@ void Inventory::draw()const {
 
 }
 void Inventory::update() {
-	//comprobamos si la lista del inventario no esta vacia, si no lo esta se actualizan los objetos de la lista
-	if (!inventoryList_->empty()) {
-		list<InventoryButton*>::iterator aux = ListPos;
-		InventoryButton* auxOb = nullptr;
-		int i = 0;
-		//Actualizaremos SOLO los botones de la lista que salen por pantalla
-		while(i < VIEW_LIST && aux!= inventoryList_->end()){
-			auxOb = *aux;
-			auxOb->update();//desreferenciamos el puntero
-			aux++;
-			i++;
-		}
-	}
-	if (equipment_.gloves_ != nullptr) {
-		equipment_.gloves_->update();
-	}
-	if (equipment_.armor_ != nullptr) {
-		equipment_.armor_->update();
-	}
-	if (equipment_.boots_ != nullptr) {
-		equipment_.boots_->update();
-	}
-	if (equipment_.gun_ != nullptr) {
-		equipment_.gun_->update();
-	}
-	
-	if (equipment_.sword_ != nullptr) {
-		equipment_.sword_->update();
-	}
-	if (equipment_.potion1_ != nullptr) {
-		equipment_.potion1_->update();
-	}
-	if (equipment_.potion2_ != nullptr) {
-		equipment_.potion2_->update();
-	}
-
-	SDL_Point point;
-	point.x = int(eventHandler_->getRealMousePos().getX());
-	point.y = int(eventHandler_->getRealMousePos().getY());
-
-	if (SDL_PointInRect(&point, &goToSkillsButton_->getDestiny())) {
-		goToSkillsButton_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToSkillsBButton));
+	if (eventHandler_->isKeyDown(SDLK_c)) {
+		callExit(app_);
 	}
 	else {
-		goToSkillsButton_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToSkillsAButton));
-	}
-	//Actualizamos los objetos normales
-	GameState::update();
+		//comprobamos si la lista del inventario no esta vacia, si no lo esta se actualizan los objetos de la lista
+		if (!inventoryList_->empty()) {
+			list<InventoryButton*>::iterator aux = ListPos;
+			InventoryButton* auxOb = nullptr;
+			int i = 0;
+			//Actualizaremos SOLO los botones de la lista que salen por pantalla
+			while (i < VIEW_LIST && aux != inventoryList_->end()) {
+				auxOb = *aux;
+				auxOb->update();//desreferenciamos el puntero
+				aux++;
+				i++;
+			}
+		}
+		if (equipment_.gloves_ != nullptr) {
+			equipment_.gloves_->update();
+		}
+		if (equipment_.armor_ != nullptr) {
+			equipment_.armor_->update();
+		}
+		if (equipment_.boots_ != nullptr) {
+			equipment_.boots_->update();
+		}
+		if (equipment_.gun_ != nullptr) {
+			equipment_.gun_->update();
+		}
 
+		if (equipment_.sword_ != nullptr) {
+			equipment_.sword_->update();
+		}
+		if (equipment_.potion1_ != nullptr) {
+			equipment_.potion1_->update();
+		}
+		if (equipment_.potion2_ != nullptr) {
+			equipment_.potion2_->update();
+		}
+
+		SDL_Point point;
+		point.x = int(eventHandler_->getRealMousePos().getX());
+		point.y = int(eventHandler_->getRealMousePos().getY());
+
+		if (SDL_PointInRect(&point, &goToSkillsButton_->getDestiny())) {
+			goToSkillsButton_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToSkillsBButton));
+		}
+		else {
+			goToSkillsButton_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToSkillsAButton));
+		}
+		//Actualizamos los objetos normales
+
+		GameState::update();
+
+
+
+	}
+	
 	
 }
 Inventory::~Inventory() {
