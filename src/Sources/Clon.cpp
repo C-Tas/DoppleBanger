@@ -16,6 +16,8 @@ bool Clon::update()
 		{
 			cout << "\nClon ataque\n";
 			objective_->receiveDamage(meleeDmg_);
+			if (objective_->getState() == STATE::DYING)
+				enemies_.remove(static_cast<Enemy*>(objective_));
 			meleeTime_ = SDL_GetTicks();
 		}
 	}
