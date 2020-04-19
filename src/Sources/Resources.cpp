@@ -30,6 +30,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 
 	//Interfaces
 	{ BackButton, "../Sources/assets/botones/volver.png"},
+	{GoToSkillsAButton,"../Sources/assets/botones/Abrir_Habilidades_01.png"},
+	{GoToSkillsBButton,"../Sources/assets/botones/Abrir_Habilidades_02.png"},
 	{ ButtonX, "../Sources/assets/botones/botonX.png"},
 	{ ButtonUpgradeGreen, "../Sources/assets/botones/UpgradeButtonGreen.png"},
 	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},
@@ -150,9 +152,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
 
 	//Equipables
-	{ Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
-	{ Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
-
+	{Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
+	{Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
+	{Boots1, "../Sources/assets/Equipamiento/botas.png"},
+	{Gloves2, "../Sources/assets/Equipamiento/Guantes2.png"},
+	{Armor1,"../Sources/assets/Equipamiento/Armadura1.png" }
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{

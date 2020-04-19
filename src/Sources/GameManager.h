@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 #include <list>
+#include "Application.h"
 
 using namespace std;
 class Item;
@@ -138,11 +139,13 @@ private:
 	//Vector que contiene los objetos equipados
 	vector<ObjectName> objectsEquipped = { ObjectName::Unequipped, ObjectName::Unequipped };
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
-	GameObject* player_ = nullptr;
+	Player* player_ = nullptr;
 	//Puntero al clon
 	GameObject* clon_ = nullptr;
 	//Puntero al HUD
 	HUD* hud_ = nullptr;
+	//puntero a la aplicacion
+	Application* app_ = nullptr;
 public:
 	//Constructor vacio
 	GameManager() {
@@ -221,7 +224,7 @@ public:
 	//Devuelve la posici�n del player
 	const Point2D getPlayerPos() { return player_->getPos(); };
 	//Devuelve al jugador
-	GameObject* getPlayer() { return player_; };
+	Player* getPlayer() { return player_; };
 	//Devuelve al clon
 	GameObject* getClon() { return clon_; };
 #pragma endregion
@@ -268,7 +271,7 @@ public:
 	void setObjectEquipped(ObjectName newObject, Key key);
 
 	//Asigna al puntero de player
-	inline void setPlayer(GameObject* player) { player_ = player; };
+	inline void setPlayer(Player* player) { player_ = player; };
 	//Asigna al puntero de clon
 	inline void setClon(GameObject* clon) { clon_ = clon; };
 	//Asigna el puntero de hud
@@ -276,5 +279,9 @@ public:
 
 	//borra al clon
 	inline void deleteClon() { clon_ = nullptr; };
+	//aplicacion
+	inline void setApp(Application* app) { app_ = app; }
 #pragma endregion
+	//Para añadir objetos al inventario
+	void addToInventory(Equipment* ob);
 };

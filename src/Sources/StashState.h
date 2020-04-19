@@ -118,21 +118,21 @@ public:
 	///<summary>Vuelta al barco</summary>
 	static void backToPrevious(Application* app);
 	///<summary>Callbacks para avanzar/retroceder las paginas del alijo/inventario </summary>
-	static void callbackAdvanceInventoryPage(GameState* state);
-	static void callbackPreviousInventoryPage(GameState* state);
-	static void callbackAdvanceStashPage(GameState* state);
-	static void callbackPreviousStashPage(GameState* state);
+	static void callbackAdvanceInventoryPage(Application* app);
+	static void callbackPreviousInventoryPage(Application* app);
+	static void callbackAdvanceStashPage(Application* app);
+	static void callbackPreviousStashPage(Application* app);
 	
 	///<summary>Selecciona el objeto sobre el que se hace click</summary>
-	static void callbackSelectObject(GameState* state, InventoryButton* button);
+	static void callbackSelectObject(Application* app, InventoryButton* button);
 	///<summary>Cambia de lista el objeto seleccionado</summary>
-	static void callbackChangeBetweenLists(GameState* state);
+	static void callbackChangeBetweenLists(Application* app);
 	///<summary>Borra el objeto seleccionado</summary>
-	static void callbackDeleteObject(GameState* state);
+	static void callbackDeleteObject(Application* app);
 	///<summary>A�ade todo el dinero del alijo al inventario</summary>
-	static void callbackAddMoneyToInventary(GameState* state);
+	static void callbackAddMoneyToInventary(Application* app);
 	///<summary>A�ade todo el dinero del alijo al inventario</summary>
-	static void callbackAddMoneyToStash(GameState* state);
+	static void callbackAddMoneyToStash(Application* app);
 
 #pragma endregion
 
