@@ -28,6 +28,8 @@ void PlayState::update() {
 	}
 }
 
+//Quiza un addChest?
+
 void PlayState::addEnemy(Enemy* obj) {
 	//Push front porque a suponiendo que dos enemigos se superpongan y se haga click en ellos para atacar,
 	//se renderizan en un orden (el de objectsToRender) y por lo cual las comprobaciones deben hacerse en el contrario.

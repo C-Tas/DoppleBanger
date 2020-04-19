@@ -4,7 +4,7 @@
 #include "NPC.h"
 #include "Obstacle.h"
 #include "Enemy.h"
-//#include "Chest.h"
+#include "Chest.h"
 #include "Bullet.h"
 #include "Trigger.h"
 #include "ShipObject.h"
@@ -57,7 +57,7 @@ public:
 	///<summary>Quita un enemigo de la lista</summary>
 	void removeEnemy(Enemy* enem) { enemiesToErase_.push_back(enem); };
 	///<summary>Quita un cofre de la lista (cuando se abre)</summary>
-	//void removeChest(Chest* chest) { chestsToErase_.push_back(chest); };
+	void removeChest(Chest* chest) { chestsToErase_.push_back(chest); };
 	///<summary>Quita una bala de la lista</summary>
 	void removePlayerBullet(PlayerBullet* bullet) { playerBulletsToErase_.push_back(bullet); };
 	///<summary>Quita una bala de la lista</summary>
@@ -69,7 +69,7 @@ public:
 	void clearList() {
 		//Listas de las islas
 		obstacles_.clear(); enemies_.clear();
-		/*chests_.clear();*/ triggers_.clear(); enemiesToErase_.clear(); /*chestsToErase_.clear();*/
+		chests_.clear(); triggers_.clear(); enemiesToErase_.clear(); chestsToErase_.clear();
 		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
 		//Listas del barco
 		npcs_.clear(); shipObjects_.clear();
@@ -86,7 +86,7 @@ public:
 	///<summary>A�ade un nuevo enemigo</summary>
 	void addEnemy(Enemy* enem) { enemies_.push_back(enem); };
 	///<summary>Vac�a la lista de cofres y setea los nuevos</summary>
-	//void addChest(Chest* chest) { chests_.push_back(chest); };
+	void addChest(Chest* chest) { chests_.push_back(chest); };
 	///<summary>A�ade una nueva bala a la lista</summary>
 	void addPlayerBullet(PlayerBullet* bullet) { playerBullets_.push_back(bullet); };
 	///<summary>A�ade una nueva bala a la lista</summary>
@@ -130,14 +130,14 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	//Islas
 	list<Obstacle*> obstacles_;
 	list<Enemy*> enemies_;
-	//list<Chest*> chests_;
-	list<PlayerBullet*> playerBullets_;
+	list<Chest*> chests_;
+	list<Bullet*> playerBullets_;
 	list<Bullet*> enemyBullets_;
 	list<Trigger*> triggers_;
 
 	list<Enemy*> enemiesToErase_;
-	//list<Chest*> chestsToErase_;
-	list<PlayerBullet*> playerBulletsToErase_;
+	list<Chest*> chestsToErase_;
+	list<Bullet*> playerBulletsToErase_;
 	list<Bullet*> enemyBulletsToErase_;
 	list<Trigger*> triggersToErase_;
 

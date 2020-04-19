@@ -214,6 +214,9 @@
     <ClCompile Include="Sources\TextBox.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\Chest.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Inventory.cpp">
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
@@ -494,6 +497,11 @@
     <ClInclude Include="Sources\TextBox.h">
       <Filter>Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Bullet.h" />
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\Chest.h" />
+    <ClInclude Include="Sources\Bullet.h" />
+    <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\PlayerBullet.h">
       <Filter>GameObjects\Player</Filter>
     </ClInclude>

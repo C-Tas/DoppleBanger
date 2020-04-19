@@ -12,10 +12,10 @@ void CollisionCtrl::islandCollisions() {
 	}
 	enemiesToErase_.clear();
 	//Quitamos a los cofres de la lista
-	//for (auto it = chestsToErase_.begin(); it != chestsToErase_.end(); ++it) {
-	//	chests_.remove(*it);
-	//}
-	//chestsToErase_.clear();
+	for (auto it = chestsToErase_.begin(); it != chestsToErase_.end(); ++it) {
+		chests_.remove(*it);
+	}
+	chestsToErase_.clear();
 	//Quitamos a las balas de las listas
 	for (auto it = playerBulletsToErase_.begin(); it != playerBulletsToErase_.end(); ++it) {
 		playerBullets_.remove(*it);
@@ -131,13 +131,13 @@ void CollisionCtrl::islandCollisions() {
 	}
 
 	//Colisi�n cofres con jugador
-	//for (auto chest : chests_) {
-	//	if (Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
-	//		player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
-	//		chest->onCollider();
-	//		removeChest(chest);	//Para que no pueda volver a abrirse el mismo cofre
-	//	}++
-	//}
+	for (auto chest : chests_) {
+		if (Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
+			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+			chest->onCollider();
+			removeChest(chest);	//Para que no pueda volver a abrirse el mismo cofre
+		}
+	}
 
 	//Jugador con triggers
 	/*for (auto trigg : triggers_) {

@@ -120,16 +120,18 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
 	{ Stash, "../Sources/assets/colisionables/alijo.png" },
-	{ ShipDoor, "../Sources/assets/colisionables/trampilla.png"},
-	{ ExitShip, "../Sources/assets/colisionables/exitShip.png"},
+	{ ShipDoor, "../Sources/assets/colisionables/trampilla.png" },
+	{ ExitShip, "../Sources/assets/colisionables/exitShip.png" },
+	{ Chest, "../Sources/assets/colisionables/cofre.png" },
 
 	//Colisionable
 	{ Rock, "../Sources/assets/colisionables/roca.png" },
 	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
 
 	//Equipables
-	{Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
-	{Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
+	{ Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
+	{ Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
+
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{
