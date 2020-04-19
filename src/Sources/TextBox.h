@@ -1,5 +1,6 @@
 #pragma once
 #include "Application.h"
+#include "GameManager.h"
 #include "Texture.h"
 #include "Vector2D.h"
 
@@ -7,7 +8,7 @@ class TextBox {
 protected:
 	Application* app_ = nullptr;
 	SDL_Rect dest; //Posición de la caja de texto, inicializada en init()
-	const int lineSpacing = 30;	//Interlineado y márgenes del texto
+	const int lineSpacing = GameManager::instance()->getFontSize() * 1.5;	//Interlineado y márgenes del texto
 
 public:
 	///<summary>Constructora del textBox de diálogo</summary>

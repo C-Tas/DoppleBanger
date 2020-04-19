@@ -125,7 +125,7 @@ vector <Resources::MusicInfo> Resources::musicRoutes{
 
 vector <Resources::FontInfo> Resources::fontsRoutes{
 	{ RETRO, "../Sources/fonts/RetroGaming.ttf", GameManager::instance()->getFontSize() },
-	{ RETROSM, "../Sources/fonts/RetroGaming.ttf", 10 }
+	{ RETROSM, "../Sources/fonts/RetroGaming.ttf", GameManager::instance()->getFontSize() / 2 }
 	//Para añadir nueva ruta: {FontId, "./Sources/fonts/name.ttf", size}
 };
 
