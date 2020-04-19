@@ -4,6 +4,7 @@
 #include "usable.h"
 #include "HandleEvents.h"
 #include <array>
+#include "GameManager.h"
 class Skill;
 
 struct playerEquipment
@@ -45,6 +46,9 @@ public:
 	void attack(Enemy* obj);
 	//Grita
 	void shout();
+	//<summary>Devuelve un puntero Skill* a la habilidad del tipo que le pases por parámetro
+	//devuelve nullptr si no está equipada y si es una pasiva</summary>
+	Skill* createSkill(SkillName name);
 	//Crea un clon. A este método lo llama solo la skill "ClonSkill"
 	void createClon();
 	//Cambia de estado a muriendo
@@ -58,6 +62,9 @@ public:
 		else return false;
 	};
 	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
+	///<summary>Método para crear las skills que tiene el player
+	///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
+	void initSkills();
 
 #pragma region Getters
 	const Clon* getClon() { return clon_; };
@@ -69,8 +76,12 @@ public:
 	const Vector2D getPreviousPos() { return previousPos_; }
 	//Devuelve la posición del clon
 	const Stats& getStats() { return currStats_; };
-	//metodos para coger la info del player
-	playerEquipment& const getInfoEquip() { return equip_; };
+	//habilidades
+	//activa la pasiva invencible y aplica los efectos de esta
+	void activeInvincible();
+	//Devuelve la información del equipment
+	playerEquipment& const getInfoEquip() { return equip_; }
+	
 #pragma endregion
 #pragma region Setters
 	//Activa la perforación
@@ -79,6 +90,9 @@ public:
 	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
 
 	void decreaseMana(double mana);
+	inline void setLiberation1() { liberation_ = 1; };
+	inline void setLiberation2( ) { liberation_ = 2; };
+
 	void equip(Armor* armor) { equip_.armor_ = armor; };
 	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
 	void equip(Boots* boots) { equip_.boots_ = boots; };
@@ -90,22 +104,26 @@ public:
 	void addMoney(int money) { money_ += money; };
 	void usePotion(int value, potionType type);
 	void desactivePotion();
-
-	void setElementsHUD();
 	void setClonCoolDown() { cdSkills[3] = true; }
 	//Aumenta la cadencia de tiro del player
 	void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 	//Activa el ataque potenciado
 	void activateEmpowered() { empoweredAct_ = true; };
-#pragma	endregion
-#pragma region SkillsEquipped
-	///<summary>Número máximo de skills equipables</summary>
-	static const int MAX_SKILLS = 3;
-	Skill* getEquippedSkill(int key) { return skillsEquipped_[key]; }
-	void setSkillAt(int key, Skill* skill) { if(skillsEquipped_[key]!= nullptr)delete skillsEquipped_[key]; skillsEquipped_[key] = skill; }
-	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquipped_; }
 #pragma endregion
 
+#pragma region Skills
+	///<summary>Número máximo de skills equipables</summary>
+	//static const int MAX_SKILLS = 3;
+	Skill* getEquippedSkill(int key) { return skills_[key]; }
+	void setSkillAt(int key, Skill* skill) { 
+		if(skills_[key]!= nullptr)delete skills_[key]; 
+		skills_[key] = skill; }
+	vector <Skill*>& getSkillsArray() { return skills_; }
+#pragma endregion
+	//Activa la perforación
+	void setPerforate(bool perforate) { perforate_ = perforate; };
+	//Activa el rebote y el momento en el que se usa
+	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
 private:
 	bool attacking_ = false;
 	int money_ = 0;
@@ -115,7 +133,6 @@ private:
 	Clon* clon_ = nullptr;
 
 	Vector2D previousPos_;
-	array<Skill*, MAX_SKILLS> skillsEquipped_ = {nullptr, nullptr, nullptr};
 
 	//Habilidades
 	vector<Skill*> skills_;
@@ -206,6 +223,8 @@ private:
 #pragma endregion
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
+	const int CRIT_INV = 20;	//Crítico agregado al player después de activar invencible( a falta de equilibrado)
+	const int DMG_INV = 20;		//Daño agregado al player después de activar invencible( a falta de equilibrado)
 	int liberation_ = 2;	//Nivel de la habilidad del clon, debería llevarse a GameManager
 	const int RANGE_SPEED = 1000;	//Velocidad extra para el pistolero raudo (a falta de equilibrado)
 	bool empoweredAct_ = false;		//Si tiene la habilidad activada
@@ -255,4 +274,5 @@ private:
 	playerEquipment equip_;
 	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
+	void initObject();
 };

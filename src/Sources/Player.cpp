@@ -27,12 +27,6 @@ void Player::initObject()
 	GameManager::instance()->setPlayer(this);
 	CollisionCtrl::instance()->setPlayer(this);
 
-	//Inicialización de skills
-	skills_.push_back(new WhirlwindSkill(this));
-	skills_.push_back(new EmpoweredSkill(this));
-	skills_.push_back(new ClonSelfDestructSkill(this));
-	skills_.push_back(new ClonSkill(this));
-
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
 	//equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1), "Pechera", "helloWorld", 10, 10, 10); equip_.armor_->writeStats(); //Prueba
@@ -42,6 +36,19 @@ void Player::initObject()
 	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
 	equip_.potion1_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, 10);	//Prueba
 	equip_.potion2_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, 10);	//Prueba
+}
+
+void Player::initSkills()
+{
+	vector<SkillName> skillsEquipped_ = gm_->getAllSkillsEquipped();
+	int i = 0;
+	SkillName skill;
+	for (SkillName ob : skillsEquipped_) {
+		skill = gm_->getEquippedSkill((Key)i);
+		skills_.push_back(createSkill(skill));
+		gm_->setSkillEquiped(skill, (Key)i);
+		i++;
+	}
 }
 
 bool Player::update()
@@ -59,22 +66,22 @@ bool Player::update()
 		cout << "Fin rebote" << endl;
 		ricochet_ = false;
 	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q)) {
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0]!= nullptr) {
 		skills_[0]->action();
 		GameManager::instance()->setSkillCooldown(true, Key::Q);
 		cdSkills[0] = true;
 	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_W)) {
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_W) && skills_[1] != nullptr) {
 		skills_[1]->action();
 		GameManager::instance()->setSkillCooldown(true, Key::W);
 		cdSkills[1] = true;
 	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_E)) {
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_E) && skills_[2] != nullptr) {
 		skills_[2]->action();
 		GameManager::instance()->setSkillCooldown(true, Key::E);
 		cdSkills[2] = true;
 	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_R)) {
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_R) && skills_[3] != nullptr) {
 		skills_[3]->action();
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE) && !app_->getMute()) shout();
@@ -439,6 +446,13 @@ void Player::attack(Enemy* obj)
 	attacking_ = true;
 }
 
+void Player::activeInvincible()
+{
+	currStats_.crit_ += CRIT_INV;
+	currStats_.meleeDmg_ += DMG_INV;
+	currStats_.distDmg_ += DMG_INV;
+}
+
 void Player::decreaseMana(double mana) {
 	currStats_.mana_ -= mana;
 	if (currStats_.mana_ <= 0) currStats_.mana_ = 0;
@@ -502,14 +516,6 @@ void Player::desactivePotion(){
 	}
 }
 
-void Player::setElementsHUD()
-{
-	gm_->setSkillEquiped(SkillName::Torbellino, Key::Q);
-	gm_->setSkillEquiped(SkillName::GolpeFuerte, Key::W);
-	gm_->setSkillEquiped(SkillName::Explosion, Key::E);
-	gm_->setObjectEquipped(ObjectName::Mana, Key::One);
-}
-
 void Player::createClon()
 {
 	Vector2D pos;
@@ -538,4 +544,49 @@ Player::~Player()
 void Player::shout()
 {
 	app_->getAudioManager()->playChannel(Resources::Shout, 0, 1);
+}
+
+Skill* Player::createSkill(SkillName name)
+{
+	Skill* skill;
+	switch (name)
+	{
+	case SkillName::Unequipped:
+		skill = nullptr;
+		break;
+	case SkillName::GolpeFuerte:
+		skill = new EmpoweredSkill(this);
+		break;
+	case SkillName::Invencible:
+		skill = nullptr;
+		break;
+	case SkillName::Torbellino:
+		skill = new WhirlwindSkill(this);
+		break;
+	case SkillName::DisparoPerforante:
+		skill = new PerforateSkill(this);
+		break;
+	case SkillName::Raudo:
+		skill = nullptr;
+		break;
+	case SkillName::Rebote:
+		skill = new RicochetSkill(this);
+		break;
+	case SkillName::Clon:
+		skill = new ClonSkill(this);
+		break;
+	case SkillName::LiberacionI:
+		skill = nullptr;
+		break;
+	case SkillName::Explosion:
+		skill = new ClonSelfDestructSkill(this);
+		break;
+	case SkillName::LiberacionII:
+		skill = nullptr;
+		break;
+	default:
+		skill = nullptr;
+		break;
+	}
+	return skill;
 }

@@ -2,7 +2,6 @@
 #include "InventoryButton.h"
 #include "RandEquipGen.h"
 #include "Equipment.h"
-#include "Player.h"
 #include "Clon.h"
 #include "HUD.h"
 #include "checkML.h"
@@ -11,6 +10,7 @@
 #include <vector>
 #include <list>
 #include "Application.h"
+
 
 using namespace std;
 class Item;
@@ -227,6 +227,7 @@ public:
 	Player* getPlayer() { return player_; };
 	//Devuelve al clon
 	GameObject* getClon() { return clon_; };
+	
 #pragma endregion
 
 #pragma region setters
