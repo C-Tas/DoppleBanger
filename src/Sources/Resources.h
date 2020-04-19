@@ -121,7 +121,9 @@ public:
 		WolfFront,
 		Kraken,
 		Cooker,
+		Merchant,
 		SkeletonMusician,
+		Cartographer,
 
 		//Bosses
 		Magordito,

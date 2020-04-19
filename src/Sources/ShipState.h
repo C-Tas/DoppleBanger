@@ -48,8 +48,31 @@ private:
 	const uint H_PLAYER = H_WIN / 10;
 	#pragma endregion
 
+	#pragma region NPCs
+	const uint W_ELDERMAN = W_WIN / 11;
+	const uint H_ELDERMAN = H_WIN / 6;
+
+	const uint W_MERCHANT = W_WIN * 2 / 19;
+	const uint H_MERCHANT = H_WIN * 2 / 9;
+
+	const uint W_CHEF = W_WIN / 20;
+	const uint H_CHEF = H_WIN / 8;
+
+	const uint W_MORTY = W_WIN / 20;
+	const uint H_MORTY = H_WIN / 10;
+
+	const uint W_PARROT = W_WIN / 20;
+	const uint H_PARROT = H_WIN / 10;
+
+	const uint W_SKELETON = W_WIN / 20;
+	const uint H_SKELETON = H_WIN / 10;
+
+	const uint W_CARTOGRAPHER = W_WIN / 12;
+	const uint H_CARTOGRAPHER = H_WIN / 6;
+	#pragma region
+
 	void initState();
-	void createNPC();
+	void createNPCs();
 
 	#pragma region Callbacks
 	static void goIsland(Application* app);

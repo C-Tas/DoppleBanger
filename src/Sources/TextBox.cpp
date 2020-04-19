@@ -141,6 +141,18 @@ void TextBox::dialogSkeleton(bool unlock) {
 	}
 }
 
+void TextBox::dialogCartographer(bool unlock) {
+	initDialog();
+	//Diálogo de la cartógrafa cuando la hemos desbloqueado
+	if (unlock) {
+
+	}
+	//Diálogo de la cartógrafa cuando aún está bloqueada
+	else {
+
+	}
+}
+
 void TextBox::dialogKraken(bool defeated) {
 	initDialog();
 	//Al comenzar la batalla

@@ -41,6 +41,9 @@ public:
 	///<summary>Frases del esqueleto</summary>
 	void dialogSkeleton(bool unlock);
 
+	///<summary>Frases de la cartógrafa</summary>
+	void dialogCartographer(bool unlock);
+
 	///<summary>Frase del Kraken al empezar/acabar la batalla</summary>
 	void dialogKraken(bool defeated);
 

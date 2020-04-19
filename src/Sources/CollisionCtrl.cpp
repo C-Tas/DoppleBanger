@@ -126,6 +126,9 @@ void CollisionCtrl::islandCollisions() {
 			case Skeleton:
 				npcCollision.id = Skeleton;
 				break;
+			case Cartographer:
+				npcCollision.id = Cartographer;
+				break;
 			}
 		}
 	}
@@ -195,8 +198,8 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			//RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
 			//npc.object->getPosX() + npc.object->getScaleX() / 2, npc.object->getPosY() + npc.object->getScaleY() / 2, npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 0.11)) {
 
-			if (Collisions::collides(npc.object->getPos(), npc.object->getScaleX(), npc.object->getScaleY(),
-				player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+			if (Collisions::collides(npc.object->getPos(), npc.object->getScaleX() * 0.8, npc.object->getScaleY() * 0.8,
+				player_->getPos(), player_->getScaleX() * 0.8, player_->getScaleY() * 0.8)) {
 					player_->stop();
 					player_->setPos(player_->getPreviousPos());
 			}
@@ -222,6 +225,9 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 				break;
 			case Skeleton:
 				npcCollision.id = Skeleton;
+				break;
+			case Cartographer:
+				npcCollision.id = Cartographer;
 				break;
 			}
 		}
@@ -261,6 +267,8 @@ void CollisionCtrl::drawTextBox() {
 		break;
 	case Skeleton:
 		npcCollision.object->getTextBox()->dialogSkeleton(onShip);
+	case Cartographer:
+		npcCollision.object->getTextBox()->dialogCartographer(onShip);
 	}
 	npcCollision.id = Nobody;
 	npcCollision.object = nullptr;

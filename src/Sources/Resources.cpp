@@ -115,7 +115,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
 	{ Azul, "../Sources/assets/enemigos/azul.png" },
 	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
+	{ Merchant, "../Sources/assets/npc/mercader.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
+	{ Cartographer, "../Sources/assets/npc/Navigator.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

@@ -42,7 +42,9 @@ enum class spentPoints : int {
 
 enum class missions : int {
 	gallegaEnProblemas = 0,
-	papelesSiniestros
+	papelesSiniestros,
+	masValePajaroEnMano,
+	arlongPark
 	//En caso de tener misión para el loro añadirla tb (o si se añade el esqueleto)
 };
 
@@ -195,14 +197,12 @@ public:
 	const lista getInventory() { return inventory_; };
 	//Devuelve el alijo
 	const lista getStash() { return stash_; };
-	//Devuelve el vector de skills
-	const vector<SkillName>& getAllSkillsEquipped() { return skillsEquipped_; }
-	//Devuelve el total de misiones secundarias
-	const int getNumMission() { return NUM_MISION; };
 	//Devuelve el n�mero de islas desbloqueadas
 	const Island getUnlockedIslands() { return unlockedIslands_; };
 	//Devuelve la isla actual
 	const Island getCurrIsland() { return currIsland_; }
+	//Devuelve el vector de skills
+	const vector<SkillName>& getAllSkillsEquipped() { return skillsEquipped_; }
 
 	//Devuelve los puntos gastados en la rama presici�n
 	const spentPoints getPresicionPoints() { return precision_; };

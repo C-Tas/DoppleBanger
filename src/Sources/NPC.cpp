@@ -29,6 +29,9 @@ void NPC::initAnim() {
 	case (int)CollisionCtrl::NPCsNames::Skeleton:
 		npcIdle = { NUM_FRAMES_SKELETON, W_FRAME_SKELETON, H_FRAME_SKELETON, FRAME_RATE_SKELETON, NAME };
 		break;
+	case (int)CollisionCtrl::NPCsNames::Cartographer:
+		npcIdle = { NUM_FRAMES_CARTOGRAPHER, W_FRAME_CARTOGRAPHER, H_FRAME_CARTOGRAPHER, FRAME_RATE_CARTOGRAPHER, NAME };
+		break;
 	}
 	currAnim_ = npcIdle;
 	frame_.x = frame_.y = 0;
