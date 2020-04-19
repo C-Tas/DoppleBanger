@@ -7,7 +7,7 @@
 #include "CaribbeanIslandState.h"
 #include <string>
 
-bool MonkeyCoco ::update() {
+bool MonkeyCoco::update() {
 
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
@@ -23,12 +23,12 @@ bool MonkeyCoco ::update() {
 	//Si el mono tiene enemigo y puede atacar
 	if (currState_ == STATE::ATTACKING && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
 		//Si el mono tiene un enemigo y lo tiene a rango
-		if (onRange()) {
+		if (onRange(false)) {
 			//changeAnim(attackAnim_);
 			attack();
 		}
 		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
-		else if(getEnemy(false))
+		else if (getEnemy(false))
 		{
 			//changeAnim(attackAnim_);
 			attack();
@@ -42,8 +42,8 @@ bool MonkeyCoco ::update() {
 		}
 		lastHit = SDL_GetTicks();
 	}
-	
-	updateFrame();
+
+	updateAnim();
 	return false;
 }
 
@@ -52,11 +52,11 @@ bool MonkeyCoco ::update() {
 void MonkeyCoco::initAnims()
 {
 	//Para la animaci�n de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK,H_FRAME_ATK,FRAME_RATE_ATK, false);
+	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, false);
 	//Para la animaci�n de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV,H_FRAME_MOV,FRAME_RATE_MOV, true);
+	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, true);
 	//Para la animaci�n de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE,H_FRAME_IDLE,FRAME_RATE_IDLE, true);
+	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
 }
 
 //Se encarga de crear el coco en direcci�n al enemigo

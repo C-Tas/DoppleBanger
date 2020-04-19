@@ -56,7 +56,7 @@ private:
 	#pragma endregion
 	//Estadisticas para inicializar al monkeyCoco
 	#pragma region constantes
-	const double HEALTH = 1000;
+	const double HEALTH = 100;
 	const double MANA = 100;
 	const double MANA_REG = 100;
 	const double ARMOR = 10;

@@ -134,8 +134,6 @@
     </ClCompile>
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
-    <ClCompile Include="Sources\Camera.cpp" />
-    <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Crab.cpp">
       <Filter>GameObjects\Enemies</Filter>
@@ -215,7 +213,6 @@
       <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="Sources\TextBox.cpp" />
-    <ClCompile Include="Sources\Chest.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Inventory.cpp">
       <Filter>GameStateMahcine</Filter>
@@ -244,6 +241,18 @@
     </ClCompile>
     <ClCompile Include="Sources\TextBox.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Draw.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Camera.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Chest.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\TextBox.cpp">
+      <Filter>Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -388,10 +397,8 @@
       <Filter>GameObjects\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Bullet.h" />
-    <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\TextBox.h" />
-    <ClInclude Include="Sources\Camera.h" />
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\TextBox.h" />
@@ -499,7 +506,6 @@
     </ClInclude>
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\TextBox.h" />
-    <ClInclude Include="Sources\Chest.h" />
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\PlayerBullet.h">
@@ -507,6 +513,15 @@
     </ClInclude>
     <ClInclude Include="Sources\TextBox.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Camera.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Chest.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TextBox.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

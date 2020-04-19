@@ -45,12 +45,12 @@ bool EnemyPirate::update() {
 
 	//Si el pirata ha muerto
 	if (currState_ == STATE::DYING) {
-		//Tendr�a que hacer la animaci�n de muerte?
+		//Tendría que hacer la animación de muerte?
 		//CollisionCtrl::instance()->addEnemiesToErase(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
-	//Si el pirata no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
+	//Si el pirata no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
 	if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && getEnemy()) {
 		currState_ = STATE::ATTACKING;
 	}
@@ -68,7 +68,7 @@ bool EnemyPirate::update() {
 			selectTarget();
 		}
 	}
-	//Si el pirata se est� moviendo hacia un enemigo
+	//Si el pirata se está moviendo hacia un enemigo
 	if (currState_ == STATE::FOLLOWING) {
 		if (onRange()) {
 			currState_ = STATE::ATTACKING;
@@ -81,18 +81,18 @@ bool EnemyPirate::update() {
 			selectTarget();
 		}
 	}
-	if (currState_ == STATE::IDLE && idleTime_ <= (SDL_GetTicks() -  lastIdleTime)) {
+	if (currState_ == STATE::IDLE && idleTime_ <= (SDL_GetTicks() - lastIdleTime)) {
 		currState_ = STATE::PATROLLING;
 		target_ = patrol_[currPatrol_];
 	}
-	//Si el pirata est� en patrulla
+	//Si el pirata está en patrulla
 	if (currState_ == STATE::PATROLLING) {
 		move(target_);
 		SDL_Rect targetPos = SDL_Rect(
 			{ (int)target_.getX() / 2,(int)target_.getY() / 2,(int)scale_.getX() / 2,(int)scale_.getY() / 2 });
 		SDL_Rect pos = SDL_Rect(
 			{ (int)pos_.getX() / 2,(int)pos_.getY() / 2,(int)scale_.getX() / 2,(int)scale_.getY() / 2 });
-		if (SDL_HasIntersection(&pos,&targetPos)) {
+		if (SDL_HasIntersection(&pos, &targetPos)) {
 			currState_ = STATE::IDLE;
 			lastIdleTime = SDL_GetTicks();
 			if (currPatrol_ == patrol_.size() - 1) {
@@ -104,7 +104,7 @@ bool EnemyPirate::update() {
 			}
 		}
 	}
-	updateFrame();
+	updateAnim();
 	return false;
 }
 
@@ -120,7 +120,7 @@ void EnemyPirate::move(Vector2D posToReach) {
 	pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 }
 
-//Devuelve true si el enemigo que tengo est� a rango y en funci�n de ello cambia entre melee y range
+//Devuelve true si el enemigo que tengo está a rango y en función de ello cambia entre melee y range
 bool EnemyPirate::onRange() {
 	if (currEnemy_ == nullptr) {
 		return false;
@@ -135,18 +135,18 @@ bool EnemyPirate::onRange() {
 
 	SDL_Rect meleeAttack = { meleePosX   ,meleePosY,meleeRangeX * 2, meleeRangeY * 2 };
 	if (currEnemy_ != nullptr && SDL_HasIntersection(&enemyRect, &meleeAttack)) {
-		currAtackStatus_ = ATK_STATUS::MELEE;		
+		currAtackStatus_ = ATK_STATUS::MELEE;
 		setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
 		return true;
 	}
-	else if (currEnemy_ != nullptr){
+	else if (currEnemy_ != nullptr) {
 		double rangePosX = getPosX() + getScaleX() / 2 - currStats_.distRange_ - getScaleX() / 2;
 		double rangePosY = getPosY() + getScaleY() / 2 - currStats_.distRange_ - getScaleY() / 2;
 		double rangeAttackX = getScaleX() / 2 + currStats_.distRange_;
 		double rangeAttackY = getScaleY() / 2 + currStats_.distRange_;
 
 		SDL_Rect rangeAttack = { rangePosX   ,rangePosY,rangeAttackX * 2, rangeAttackY * 2 };
-		if(SDL_HasIntersection(&enemyRect, &rangeAttack)){
+		if (SDL_HasIntersection(&enemyRect, &rangeAttack)) {
 			currAtackStatus_ = ATK_STATUS::RANGE;
 			setTexture(app_->getTextureManager()->getTexture(Resources::PlayerFront));
 			return true;
@@ -161,11 +161,11 @@ bool EnemyPirate::onRange() {
 //Inicializa todas las animaciones
 void EnemyPirate::initAnims()
 {
-	//Para la animaci�n de ataque
+	//Para la animación de ataque
 	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, false);
-	//Para la animaci�n de caminar
+	//Para la animación de caminar
 	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, true);
-	//Para la animaci�n de parado
+	//Para la animación de parado
 	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
 }
 
@@ -178,11 +178,11 @@ void EnemyPirate::attack() {
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addEnemyBullet(bullet);
 	}
-	else if(currStats_.meleeRate_ <= SDL_GetTicks() - lastMeleeHit_)
+	else if (currStats_.meleeRate_ <= SDL_GetTicks() - lastMeleeHit_)
 	{
 		lastMeleeHit_ = SDL_GetTicks();
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
-		if(dmg != nullptr){
+		if (dmg != nullptr) {
 			dmg->receiveDamage(currStats_.meleeDmg_);
 		}
 	}
@@ -192,7 +192,7 @@ void EnemyPirate::attack() {
 //Inicializa al al pirata
 void EnemyPirate::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::PlayerFront));
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);	
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
@@ -201,7 +201,7 @@ void EnemyPirate::initObject() {
 	initAnims();
 }
 
-//Esto es un apa�o, se eliminara cuando este completa la gesti�n de muertes
+//Esto es un apaño, se eliminara cuando este completa la gestión de muertes
 void EnemyPirate::onCollider()
 {
 
@@ -233,15 +233,15 @@ void EnemyPirate::lostAgro()
 	currEnemy_ = GameManager::instance()->getPlayer();
 }
 
-//Devuelve la posici�n del player si est� a rango DONE
+//Devuelve la posición del player si está a rango DONE
 Vector2D EnemyPirate::isPlayerInRange() {
 	GameManager* gm = GameManager::instance();
 	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
 
 	Point2D playerPos = gm->getPlayerPos();
 	if (currEnemy_ == nullptr &&
-		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && playerPos.getX() >= pos_.getX()  - rangeVision_
-		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && playerPos.getY() >= pos_.getY()  - rangeVision_) {
+		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && playerPos.getX() >= pos_.getX() - rangeVision_
+		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && playerPos.getY() >= pos_.getY() - rangeVision_) {
 		return playerPos;
 	}
 	else
@@ -250,7 +250,7 @@ Vector2D EnemyPirate::isPlayerInRange() {
 	}
 }
 
-//Devuelve la posici�n del clon si est� a rango DONE
+//Devuelve la posición del clon si está a rango DONE
 Vector2D EnemyPirate::isClonInRange() {
 	GameManager* gm = GameManager::instance();
 	if (gm->getClon() == nullptr) { return { -1,-1 }; }
@@ -268,7 +268,7 @@ Vector2D EnemyPirate::isClonInRange() {
 	}
 }
 
-//Genera la posici�n a la que se mueve el pirata en funci�n de su rango 
+//Genera la posición a la que se mueve el pirata en función de su rango 
 void EnemyPirate::selectTarget() {
 
 	Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };

@@ -33,6 +33,10 @@ public:
 	virtual bool update();
 	virtual void onCollider();
 
+	//Calcula hacia dónde mira el player en función del ratón
+	void updateDirVisMouse();
+	//Calcula hacia dónde mira el player en función del enemigo
+	void updateDirVisEnemy();
 	//Establece la direccion del movimiento
 	virtual void move(Point2D target);
 	//Dispara creando una bala en la posicion dir
@@ -53,6 +57,7 @@ public:
 		}
 		else return false;
 	};
+	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
 
 #pragma region Getters
 	const Clon* getClon() { return clon_; };
@@ -64,12 +69,16 @@ public:
 	const Vector2D getPreviousPos() { return previousPos_; }
 	//Devuelve la posición del clon
 	const Stats& getStats() { return currStats_; };
-	virtual void die() { currState_ = STATE::DYING; };
-	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
 	//metodos para coger la info del player
 	playerEquipment& const getInfoEquip() { return equip_; };
-	void desactivePotion();
-	void init();
+#pragma endregion
+#pragma region Setters
+	//Activa la perforación
+	void setPerforate(bool perforate) { perforate_ = perforate; };
+	//Activa el rebote y el momento en el que se usa
+	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
+
+	void decreaseMana(double mana);
 	void equip(Armor* armor) { equip_.armor_ = armor; };
 	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
 	void equip(Boots* boots) { equip_.boots_ = boots; };
@@ -88,7 +97,7 @@ public:
 	void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 	//Activa el ataque potenciado
 	void activateEmpowered() { empoweredAct_ = true; };
-#pragma endregion
+#pragma	endregion
 #pragma region SkillsEquipped
 	///<summary>Número máximo de skills equipables</summary>
 	static const int MAX_SKILLS = 3;
@@ -97,10 +106,6 @@ public:
 	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquipped_; }
 #pragma endregion
 
-	void setPerforate(bool perforate) { perforate_ = perforate; };
-	//Activa la perforación
-	//Activa el rebote y el momento en el que se usa
-	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
 private:
 	bool attacking_ = false;
 	int money_ = 0;
@@ -198,10 +203,6 @@ private:
 	//Controla la animación
 	void shootAnim();
 	void meleeAnim();
-	//Calcula hacia dónde mira el player en función del ratón
-	void updateDirVisMouse();
-	//Calcula hacia dónde mira el player en función del enemigo
-	void updateDirVisEnemy();
 #pragma endregion
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
@@ -227,18 +228,18 @@ private:
 
 //<summary>Estadisticas iniciales del jugador</summary>
 #pragma region Stats
-	const double HEALTH = 1000;		//Vida
-	const double MANA = 100;		//Mana
-	const double MANA_REG = 1;		//Regeneración de maná por segundo
-	const double ARMOR = 10;		//Armadura
-	const double AD = 40;			//Daño a melee
-	const double AP = 1000;			//Daño a distancia y de las habilidades
-	const double CRIT = 0;			//Crítico
-	const double MELEE_RANGE = 20;	//Rango del ataque a melee
-	const double DIST_RANGE = 0;	//Rango del ataque a distancia
-	const double MOVE_SPEED = 300;	//Velocidad de movimiento
-	const double MELEE_RATE = 1;	//Velocidad del ataque a melee en segundos
-	const double DIST_RATE = 1;		//Velocidad del ataque a distancia en segundos
+	const double HEALTH = 1000;			//Vida
+	const double MANA = 100;			//Mana
+	const double MANA_REG = 1;			//Regeneración de maná por segundo
+	const double ARMOR = 10;			//Armadura
+	const double MELEE_DAMAGE = 500;	//Daño a melee
+	const double DIST_DAMAGE = 1000;	//Daño a distancia y de las habilidades
+	const double CRIT = 0;				//Crítico
+	const double MELEE_RANGE = 20;		//Rango del ataque a melee
+	const double DIST_RANGE = 0;		//Rango del ataque a distancia
+	const double MOVE_SPEED = 300;		//Velocidad de movimiento
+	const double MELEE_RATE = 1;		//Velocidad del ataque a melee en segundos
+	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos
 
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion

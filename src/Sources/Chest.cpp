@@ -14,7 +14,7 @@ void Chest::initObject() {
 
 void Chest::initAnim() {
 	//Para la animación de abrir
-	openAnim_ = Anim(NUM_FRAMES_OPEN, W_FRAME_OPEN, H_FRAME_OPEN, FRAME_RATE_OPEN, NAME_OPEN);
+	openAnim_ = Anim(NUM_FRAMES_OPEN, W_FRAME_OPEN, H_FRAME_OPEN, FRAME_RATE_OPEN, false);
 }
 
 void Chest::onCollider() {

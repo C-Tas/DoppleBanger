@@ -19,12 +19,13 @@
 
 void Player::initObject()
 {
+	texture_ = auxTx_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	gm_ = GameManager::instance();
-	gm_->setPlayer(this);
-	CollisionCtrl::instance()->setPlayer(this);
 	eventHandler_ = HandleEvents::instance();
-	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DAMAGE, DIST_DAMAGE, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initAnims();
+	GameManager::instance()->setPlayer(this);
+	CollisionCtrl::instance()->setPlayer(this);
 
 	//Inicialización de skills
 	skills_.push_back(new WhirlwindSkill(this));
@@ -97,11 +98,6 @@ bool Player::update()
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_) {
 		initShoot();
 	}
-	else if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
-		Vector2D dir = eventHandler_->getRelativeMousePos();
-		updateDirVisMouse();
-		move(getVisPos(dir));
-	}
 
 	//para utilizar las pociones
 	if (eventHandler_->isKeyDown(SDLK_1)) {
@@ -137,25 +133,27 @@ bool Player::update()
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
 		Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
 	}
-
 	//Si se ha utilizado el ataque fuerte, ataca con un bonus porcentual de daño
 	else if (empoweredAct_ && attacking_ && objective_->getState() != STATE::DYING)
 	{
 #ifdef _DEBUG
 		cout << "\nAtaque potenciado\n" << endl;
 #endif // _DEBUG
-		empoweredAct_ = false;
-		objective_->receiveDamage((int)currStats_.meleeDmg_ * empoweredBonus_);
-		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
-		empoweredTime_ = SDL_GetTicks();
-		meleeTime_ = empoweredTime_;
+		
+		initMelee();
 	}
-
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
 	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective_->getState() != STATE::DYING)
 	{
 		initMelee();
 	}
+	//En caso de que no esté atacando y ya haya llegado al objetivo (primer if)
+	//cambiará de moviéndose a Idle
+	else if (currState_ == STATE::FOLLOWING) {
+		initIdle();
+	}
+
+	//Gestion de estados y animaciones
 	if (currState_ == STATE::SHOOTING) {
 		shootAnim();
 	}
@@ -166,18 +164,8 @@ bool Player::update()
 		//Tendría que hacer la animación de muerte
 		return true;
 	}
-#pragma endregion
 
 	return false;
-}
-
-void Player::initObject() {
-	texture_ = auxTx_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
-	eventHandler_ = HandleEvents::instance();
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
-	initAnims();
-	GameManager::instance()->setPlayer(this);
-	CollisionCtrl::instance()->setPlayer(this);
 }
 
 void Player::initIdle()
@@ -237,7 +225,6 @@ void Player::initShoot()
 void Player::initMelee()
 {
 	currState_ = STATE::ATTACKING;	//Cambio de estado
-	mousePos_ = eventHandler_->getRelativeMousePos();
 	attacking_ = false;	//Para controlar que no se llame más veces este método
 	attacked_ = false;	//Aún no se ha atacado
 	updateDirVisEnemy();	//Hacia dónde está el enemigo
@@ -318,9 +305,17 @@ void Player::shootAnim()
 
 void Player::meleeAnim()
 {
-	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
-		objective_->receiveDamage(currStats_.meleeDmg_);
-		meleeTime_ = SDL_GetTicks();
+ 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
+		double totalDmg = currStats_.meleeDmg_;	//Daño total por si hace el Golpe Fuerte
+		if (empoweredAct_) { //Golpe fuerte
+			empoweredAct_ = false;
+			totalDmg = currStats_.meleeDmg_ * empoweredBonus_;
+			empoweredTime_ = SDL_GetTicks();
+			meleeTime_ = empoweredTime_;
+		}
+		else meleeTime_ = SDL_GetTicks();
+
+		objective_->receiveDamage(totalDmg);
 		attacked_ = true;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {

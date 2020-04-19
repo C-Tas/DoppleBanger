@@ -6,47 +6,45 @@
 class NPC : public Collider {
 private:
 	TextBox* txtBox_ = nullptr;
-	Anim npcIdle = { 0, 0, 0, 0, ""};
+	Anim npcIdle = { 0, 0, 0, 0, true };
 	int npcType_;
 	Uint32 lasFrame_ = 0;
 
 #pragma region Animaciones
-	const string NAME = "npcIdle";
-
 	//Viejo
 	const int NUM_FRAMES_ELDERMAN = 0;
-	const uint W_FRAME_ELDERMAN = 0;
-	const uint H_FRAME_ELDERMAN = 0;
+	const int W_FRAME_ELDERMAN = 0;
+	const int H_FRAME_ELDERMAN = 0;
 	const int FRAME_RATE_ELDERMAN = 0;
 
 	//Mercader
 	const int NUM_FRAMES_MERCHANT = 0;
-	const uint W_FRAME_MERCHANT = 0;
-	const uint H_FRAME_MERCHANT = 0;
+	const int W_FRAME_MERCHANT = 0;
+	const int H_FRAME_MERCHANT = 0;
 	const int FRAME_RATE_MERCHANT= 0;
 
 	//Cocinera
 	const int NUM_FRAMES_CHEF = 2;
-	const uint W_FRAME_CHEF = 29;
-	const uint H_FRAME_CHEF = 63;
+	const int W_FRAME_CHEF = 29;
+	const int H_FRAME_CHEF = 63;
 	const int FRAME_RATE_CHEF= 500;
 
 	//Morty
 	const int NUM_FRAMES_MORTY = 0;
-	const uint W_FRAME_MORTY = 0;
-	const uint H_FRAME_MORTY = 0;
+	const int W_FRAME_MORTY = 0;
+	const int H_FRAME_MORTY = 0;
 	const int FRAME_RATE_MORTY= 0;
 
 	//Loro
 	const int NUM_FRAMES_PARROT = 0;
-	const uint W_FRAME_PARROT = 0;
-	const uint H_FRAME_PARROT = 0;
+	const int W_FRAME_PARROT = 0;
+	const int H_FRAME_PARROT = 0;
 	const int FRAME_RATE_PARROT = 0;
 
 	//Esqueleto
 	const int NUM_FRAMES_SKELETON = 9;
-	const uint W_FRAME_SKELETON = 75;
-	const uint H_FRAME_SKELETON = 80;
+	const int W_FRAME_SKELETON = 75;
+	const int H_FRAME_SKELETON = 80;
 	const int FRAME_RATE_SKELETON = 200;
 #pragma endregion
 

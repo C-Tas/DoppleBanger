@@ -102,12 +102,13 @@ void ShipState::update()
 	collisionCtrl_->shipCollisions();
 }
 
+//Este método se va a modificar, no es definitivo
 void ShipState::createNPC() {
-	int wWin = app_->getWindowWidth();
-	int hWin = app_->getWindowHeight();
+	double wWin = app_->getWindowWidth();
+	double hWin = app_->getWindowHeight();
 	NPC* skeleton;
 	Vector2D pos;
-	pos.setVec(Vector2D(wWin / 2, hWin * 3 / 4));
+	pos.setVec(Vector2D(wWin / 4, hWin * 7 / 8));
 	skeleton = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), pos, Vector2D(app_->getWindowWidth() / 11, app_->getWindowHeight() / 6), 5);
 	addRenderUpdateLists(skeleton);
 }

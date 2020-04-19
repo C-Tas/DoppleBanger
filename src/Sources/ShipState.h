@@ -44,11 +44,12 @@ private:
 	const uint W_EXIT = W_WIN / 15;
 	const uint H_EXIT = H_WIN / 3;
 
-	const uint W_PLAYER = W_WIN / 4;
-	const uint H_PLAYER = H_WIN / 2;
+	const uint W_PLAYER = W_WIN / 8;
+	const uint H_PLAYER = H_WIN / 4;
 	#pragma endregion
 
 	void initState();
+	//Este método se va a modificar, no es definitivo
 	void createNPC();
 
 	#pragma region Callbacks

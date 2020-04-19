@@ -38,8 +38,8 @@ private:
 	const double MANA = 0;
 	const double MANA_REG = 0;
 	const double ARMOR = 1000;
-	const double AD = 1000;
-	const double AP = 0;
+	const double MELEE_DAMAGE = 1000;
+	const double DIST_DAMAGE = 0;
 	const double CRIT = 0;
 	const double MELEE_RANGE = 50;
 	const double DIST_RANGE = 0;

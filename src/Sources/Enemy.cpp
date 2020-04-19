@@ -9,14 +9,6 @@ void Enemy::die()
 	static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 }
 
-
-//Cambia la actual animación del mono si no la tiene "equipada"
-void Enemy::changeAnim(Anim& newAnim) {
-	if (newAnim.name_ != currAnim_.name_) {
-		currAnim_ = newAnim;
-	}
-}
-
 //Actualiza la animación en función del frameRate de la actual animación
 void Enemy::updateAnim()
 {

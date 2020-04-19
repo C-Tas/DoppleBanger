@@ -29,11 +29,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ GoToInventoryBButton, "../Sources/assets/botones/InventoryButtonB.png"},
 
 	//Interfaces
-	//{ BotonMenu, "../Sources/assets/botones/botonMenu.png"},
-	//{ Timon, "../Sources/assets/player/timon.png" },
-	{ GoControls, "../Sources/assets/botones/botonControles.png"},
 	{ BackButton, "../Sources/assets/botones/volver.png"},
-
 	{ ButtonX, "../Sources/assets/botones/botonX.png"},
 	{ ButtonUpgradeGreen, "../Sources/assets/botones/UpgradeButtonGreen.png"},
 	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},

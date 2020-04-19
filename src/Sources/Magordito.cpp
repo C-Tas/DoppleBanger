@@ -21,11 +21,11 @@ void Magordito::initObject() {
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
-	initAnim();
+	initAnims();
 }
 
 void Magordito::initAnims() {
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, NAME_IDLE);
-	teleportAnim_ = Anim(NUM_FRAMES_TELEPORT, W_FRAME_TELEPORT, H_FRAME_TELEPORT, FRAME_RATE_TELEPORT, NAME_TELEPORT);
-	kirinAnim_ = Anim(NUM_FRAMES_KIRIN, W_FRAME_KIRIN, H_FRAME_KIRIN, FRAME_RATE_KIRIN, NAME_KIRIN);
+	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
+	teleportAnim_ = Anim(NUM_FRAMES_TELEPORT, W_FRAME_TELEPORT, H_FRAME_TELEPORT, FRAME_RATE_TELEPORT, false);
+	kirinAnim_ = Anim(NUM_FRAMES_KIRIN, W_FRAME_KIRIN, H_FRAME_KIRIN, FRAME_RATE_KIRIN, false);
 }
