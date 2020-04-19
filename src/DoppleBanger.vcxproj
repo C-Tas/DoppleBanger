@@ -40,6 +40,7 @@
     <ClCompile Include="Sources\ControlsState.cpp" />
     <ClCompile Include="Sources\Crab.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
+    <ClCompile Include="Sources\Draw.cpp" />
     <ClCompile Include="Sources\Dynamic.cpp" />
     <ClCompile Include="Sources\EndState.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />

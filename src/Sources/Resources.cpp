@@ -27,6 +27,13 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ EquippedButton, "../Sources/assets/botones/Equipar_Boton.png"},
 	{ GoToInventoryAButton, "../Sources/assets/botones/InventoryButtonA.png"},
 	{ GoToInventoryBButton, "../Sources/assets/botones/InventoryButtonB.png"},
+
+	//Interfaces
+	//{ BotonMenu, "../Sources/assets/botones/botonMenu.png"},
+	//{ Timon, "../Sources/assets/player/timon.png" },
+	{ GoControls, "../Sources/assets/botones/botonControles.png"},
+	{ BackButton, "../Sources/assets/botones/volver.png"},
+
 	{ ButtonX, "../Sources/assets/botones/botonX.png"},
 	{ ButtonUpgradeGreen, "../Sources/assets/botones/UpgradeButtonGreen.png"},
 	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},
@@ -59,7 +66,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ SkillTorbellinoC, "../Sources/assets/skills/torbellinoHab.png"},
 	{ SkillTorbellinoBN, "../Sources/assets/skills/torbellinoHabBN.png"},
 
-	//Interfaces
 	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
 	{ PauseBackground, "../Sources/assets/interfaces/pauseFondo.png" },
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
@@ -116,6 +122,25 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Azul, "../Sources/assets/enemigos/azul.png" },
 	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
+
+	
+	//Animaciones
+	{ PlayerIdleRightAnim, "../Sources/assets/player/animaciones/idle/idleDcha.png" },
+	{ PlayerIdleLeftAnim, "../Sources/assets/player/animaciones/idle/idleIz.png" },
+	{ PlayerIdleUpAnim, "../Sources/assets/player/animaciones/idle/idleTop.png" },
+	{ PlayerIdleDownAnim, "../Sources/assets/player/animaciones/idle/idleDown.png" },
+	//{ PlayerMoveRightAnim, "../Sources/assets/player/animaciones/movimiento/movimientoDcha.png" },
+	{ PlayerMoveLeftAnim, "../Sources/assets/player/animaciones/movimiento/movimientoIz.png" },
+	//{ PlayerMoveUpAnim, "../Sources/assets/player/animaciones/movimiento/movimientoTop.png" },
+	//{ PlayerMoveDownAnim, "../Sources/assets/player/animaciones/movimiento/movimientoDown.png" },
+	{ PlayerShootRightAnim, "../Sources/assets/player/animaciones/disparo/disparoDcha.png" },
+	{ PlayerShootLeftAnim, "../Sources/assets/player/animaciones/disparo/disparoIz.png" },
+	{ PlayerShootUpAnim, "../Sources/assets/player/animaciones/disparo/disparoTop.png" },
+	{ PlayerShootDownAnim, "../Sources/assets/player/animaciones/disparo/disparoDown.png" },
+	{ PlayerMeleeRightAnim, "../Sources/assets/player/animaciones/melee/meleeDcha.png" },
+	{ PlayerMeleeLeftAnim, "../Sources/assets/player/animaciones/melee/meleeIz.png" },
+	{ PlayerMeleeUpAnim, "../Sources/assets/player/animaciones/melee/meleeTop.png" },
+	{ PlayerMeleeDownAnim, "../Sources/assets/player/animaciones/melee/meleeDown.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

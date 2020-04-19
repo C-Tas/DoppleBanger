@@ -49,6 +49,7 @@ private:
 	};
 
 	virtual void initObject();
-	virtual void initAnim() {};
+	virtual void initAnims() {};
+	void die();
 };
 

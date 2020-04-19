@@ -21,41 +21,28 @@ public:
 	virtual ~MonkeyCoco() {};
 private:
 	//Diferentes animaciones del mono
-	Anim attackAnim_ = { 0,0,0,0 ,""};
-	Anim walkAnim_ = { 0,0,0,0,"" };
-	Anim idleAnim_ = { 0,0,0,0,"" };
-
-
-	//Ataque del monkeyCoco
-	void attack();
-	//Inicializa las animaciones
-	void initAnims();
-
-
+	Anim attackAnim_ = { 0,0,0,0, false };
+	Anim walkAnim_ = { 0,0,0,0, false };
+	Anim idleAnim_ = { 0,0,0,0, false };
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animaci�n del mono)
 	#pragma region Constantes
 	//Para el ataque
 	const int NUM_FRAMES_ATK = 10;
 	const int NUM_FRAMES_ROW_ATK = 3;
-	const uint W_FRAME_ATK = 200;
-	const uint H_FRAME_ATK = 200;
+	const int W_FRAME_ATK = 200;
+	const int H_FRAME_ATK = 200;
 	const int FRAME_RATE_ATK = 100;
-	const string NAME_ATK = "attack";
 	//Para el movimiento
 	const int NUM_FRAMES_MOV = 10;
-	const int NUM_FRAMES_ROW_MOV = 3;
-	const uint W_FRAME_MOV = 200;
-	const uint H_FRAME_MOV = 200;
+	const int W_FRAME_MOV = 200;
+	const int H_FRAME_MOV = 200;
 	const int FRAME_RATE_MOV = 100;
-	const string NAME_MOV = "walk";
 	//Para estar parado
 	const int NUM_FRAMES_IDLE = 10;
-	const int NUM_FRAMES_ROW_ADLE = 3;
-	const uint W_FRAME_IDLE = 200;
-	const uint H_FRAME_IDLE = 200;
+	const int W_FRAME_IDLE = 200;
+	const int H_FRAME_IDLE = 200;
 	const int FRAME_RATE_IDLE = 100;
-	const string NAME_IDLE = "idle";
 	//Proyectil
 	const uint W_H_COCO = app_->getWindowHeight() / 40;		//Tama�o del coco
 	const double COCO_VEL = 700;							//Velocidad del coco
@@ -76,4 +63,23 @@ private:
 	const double MELEE_RATE = 1;
 	const double DIST_RATE = 2500;
 #pragma endregion
+
+	//Entero que representa la cantidad de frames que tiene para las animaciones
+	const int NUM_FRAMES = 0;
+	//Frame para renderizar dentro de un spritesheet
+	const SDL_Rect FIRST_FRAME = { 0,0,0,0 };
+	//Determina si el jugador est� dentro del rango de ataque del monkeyCoco
+	Vector2D isPlayerInRange();
+	//Determina si el clon est� dentro del rango de ataque del monkeyCoco
+	Vector2D isClonInRange();
+	//Ataque del monkeyCoco
+	void attack();
+	//Devuelve true si el target est� dentro del rango de ataque
+	bool onRange();
+	//Inicializa todas las animaciones
+	virtual void initAnims();
+	//Busca y actualiza al enemigo que atacar
+	bool getEnemy();
+	//Cuando pierde el agro
+	virtual void lostAgro();
 };

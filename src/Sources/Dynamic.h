@@ -41,6 +41,6 @@ protected:
 	virtual ~Dynamic() {};
 
 	virtual void initObject() {};
-	virtual void initAnim() {};
+	virtual void initAnims() {};
 
 };

@@ -6,6 +6,7 @@
 enum class STATE
 {
 	ATTACKING,
+	SHOOTING,
 	IDLE,
 	DYING,
 	FOLLOWING,
@@ -93,7 +94,7 @@ public:
 	//Devuelve el estado actual del actor
 	const STATE getState() { return currState_; };
 	//Detiene el movimiento
-	void stop() { dir_ = Vector2D(0, 0); };
+	virtual void stop() { dir_ = Vector2D(0, 0); };
 	//Cambia al enemigo al que está atacando
 	inline void changeAgro(GameObject* newEnemy) { currEnemy_ = newEnemy; };
 
@@ -119,7 +120,7 @@ protected:
 
 	//Inicializa al actor
 	virtual void initObject() {};
-	virtual void initAnim() {};
+	virtual void initAnims() {};
 	//<summary>Inicializa todas las stats</summary>
 	void initStats(double health, double mana, double manaReg, double armor, double meleeDmg, double distDmg, 
 		double crit, double meleeRange, double distRange, double moveSpeed, double meleeRate, double distRate);

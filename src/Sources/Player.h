@@ -64,20 +64,19 @@ public:
 	const Vector2D getPreviousPos() { return previousPos_; }
 	//Devuelve la posición del clon
 	const Stats& getStats() { return currStats_; };
-	//Devuelve la información del equipment
-	playerEquipment& const getInfoEquip() { return equip_; }
-	
-#pragma endregion
-#pragma region Setters
-	void decreaseMana(double mana);
-
+	virtual void die() { currState_ = STATE::DYING; };
+	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
+	//metodos para coger la info del player
+	playerEquipment& const getInfoEquip() { return equip_; };
+	void desactivePotion();
+	void init();
 	void equip(Armor* armor) { equip_.armor_ = armor; };
 	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
 	void equip(Boots* boots) { equip_.boots_ = boots; };
 	void equip(Sword* sword) { equip_.sword_ = sword; };
 	void equip(Gun* gun) { equip_.gun_ = gun; };
-	void equipPotion1(usable* pot) { equip_.potion1_ = pot; }
-	void equipPotion2(usable* pot) { equip_.potion2_ = pot; }
+	void equipPotion1(usable* pot) { equip_.potion1_ = pot; };
+	void equipPotion2(usable* pot) { equip_.potion2_ = pot; };
 
 	void addMoney(int money) { money_ += money; };
 	void usePotion(int value, potionType type);
@@ -116,6 +115,94 @@ private:
 	//Habilidades
 	vector<Skill*> skills_;
 	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
+	DIR lookAt;	//Hacia dónde mira
+#pragma region Animaciones
+	Texture* auxTx_ = nullptr;				//Textura de idle temporal, se borrará cuadno esté el idle
+	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
+	int frameAction_ = 0;					//Frame en el que se realiza la acción
+	const int W_H_PLAYER_FRAME = 100;		//Ancho del frame, estándar para todas
+	
+	//Idle
+	vector<Anim> idleAnims_;
+	vector<Texture*> idleTx_;
+	//Idle derecha
+	const int IDLE_R_FRAMES = 4;			//Frames de la animación
+	const int IDLE_R_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia arriba
+	const int IDLE_U_FRAMES = 2;			//Frames de la animación
+	const int IDLE_U_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia izquierda
+	const int IDLE_L_FRAMES = 4;			//Frames de la animación
+	const int IDLE_L_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia abajo
+	const int IDLE_D_FRAMES = 2;			//Frames de la animación
+	const int IDLE_D_FRAME_RATE = 500;		//Frame rate
+
+	//Movimiento
+	vector<Anim> moveAnims_;
+	vector<Texture*> moveTx_;
+	//Movimieno derecha
+	const int MOVE_R_FRAMES = 4;			//Frames de la animación
+	const int MOVE_R_FRAME_RATE = 500;		//Frame rate
+	//Movimieno hacia arriba
+	const int MOVE_U_FRAMES = 2;			//Frames de la animación
+	const int MOVE_U_FRAME_RATE = 500;		//Frame rate
+	//Movimieno hacia izquierda
+	const int MOVE_L_FRAMES = 8;			//Frames de la animación
+	const int MOVE_L_FRAME_RATE = 100;		//Frame rate
+	//Movimieno hacia abajo
+	const int MOVE_D_FRAMES = 2;			//Frames de la animación
+	const int MOVE_D_FRAME_RATE = 500;		//Frame rate
+
+	//Disparo
+	bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
+	vector<Anim> shootAnims_;				//Vector de las animaciones
+	vector<Texture*> shootTx_;				//Vector de las texturas
+	//Disparo derecha
+	const int SHOOT_R_FRAMES = 3;			//Frames de la animación
+	const int SHOOT_R_FRAME_RATE = 150;		//Frame rate
+	//Disparo hacia arriba
+	const int SHOOT_U_FRAMES = 7;			//Frames de la animación
+	const int SHOOT_U_FRAME_RATE = 40;		//Frame rate
+	//Disparo hacia izquierda
+	const int SHOOT_L_FRAMES = 3;			//Frames de la animación
+	const int SHOOT_L_FRAME_RATE = 150;		//Frame rate
+	//Disparo hacia abajo
+	const int SHOOT_D_FRAMES = 7;			//Frames de la animación
+	const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
+
+	//Melee
+	bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
+	vector<Anim> meleeAnims_;				//Vector de las animaciones
+	vector<Texture*> meleeTx_;				//Vector de las texturas
+	//Melee derecha
+	const int MELEE_R_FRAMES = 5;			//Frames de la animación
+	const int MELEE_R_FRAME_RATE = 200;		//Frame rate
+	//Melee hacia arriba
+	const int MELEE_U_FRAMES = 3;			//Frames de la animación
+	const int MELEE_U_FRAME_RATE = 150;		//Frame rate
+	//Melee hacia izquierda
+	const int MELEE_L_FRAMES = 5;			//Frames de la animación
+	const int MELEE_L_FRAME_RATE = 200;		//Frame rate
+	//Melee hacia abajo
+	const int MELEE_D_FRAMES = 5;			//Frames de la animación
+	const int MELEE_D_FRAME_RATE = 200;		//Frame rate
+
+	//Inicialización de las animaciones
+	virtual void initAnims();
+	//Inicia la animación
+	void initIdle();
+	void initMove();
+	void initShoot();
+	void initMelee();
+	//Controla la animación
+	void shootAnim();
+	void meleeAnim();
+	//Calcula hacia dónde mira el player en función del ratón
+	void updateDirVisMouse();
+	//Calcula hacia dónde mira el player en función del enemigo
+	void updateDirVisEnemy();
+#pragma endregion
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities
 	int liberation_ = 2;	//Nivel de la habilidad del clon, debería llevarse a GameManager
@@ -156,9 +243,15 @@ private:
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
 
+//<summary>Constantes iniciales del jugador</summary>
+#pragma region Constantes
+	//Balas
+	const uint W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
+	const double BULLET_VEL = 1000;							//Velocidad de la bala
+	const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
+#pragma endregion
+	virtual void initObject();
 	playerEquipment equip_;
 	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
-
-	void initObject();
 };

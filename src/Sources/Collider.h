@@ -32,7 +32,7 @@ protected:
 
 	///<summary>Método abstracto a redefinir en los hijos de Collider</summary>
 	virtual void initObject() {};
-	virtual void initAnim() {};
+	virtual void initAnims() {};
 
 public:
 	//Realiza una acción al detectar una colisión

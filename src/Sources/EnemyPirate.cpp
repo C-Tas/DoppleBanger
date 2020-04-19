@@ -45,12 +45,12 @@ bool EnemyPirate::update() {
 
 	//Si el pirata ha muerto
 	if (currState_ == STATE::DYING) {
-		//Tendría que hacer la animación de muerte?
+		//Tendrï¿½a que hacer la animaciï¿½n de muerte?
 		//CollisionCtrl::instance()->addEnemiesToErase(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
-	//Si el pirata no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
+	//Si el pirata no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo mï¿½s cercano
 	if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && getEnemy()) {
 		currState_ = STATE::ATTACKING;
 	}
@@ -58,17 +58,17 @@ bool EnemyPirate::update() {
 	if (currState_ == STATE::ATTACKING) {
 		//Si el pirata tiene un enemigo y lo tiene a rango
 		if (onRange()) {
-			changeAnim(attackAnim_);
+			//changeAnim(attackAnim_);
 			attack();
 		}
 		else
 		{
 			currState_ = STATE::FOLLOWING;
-			changeAnim(walkAnim_);
+			//changeAnim(walkAnim_);
 			selectTarget();
 		}
 	}
-	//Si el pirata se está moviendo hacia un enemigo
+	//Si el pirata se estï¿½ moviendo hacia un enemigo
 	if (currState_ == STATE::FOLLOWING) {
 		if (onRange()) {
 			currState_ = STATE::ATTACKING;
@@ -77,7 +77,7 @@ bool EnemyPirate::update() {
 		}
 		else
 		{
-			changeAnim(walkAnim_);
+			//changeAnim(walkAnim_);
 			selectTarget();
 		}
 	}
@@ -85,7 +85,7 @@ bool EnemyPirate::update() {
 		currState_ = STATE::PATROLLING;
 		target_ = patrol_[currPatrol_];
 	}
-	//Si el pirata está en patrulla
+	//Si el pirata estï¿½ en patrulla
 	if (currState_ == STATE::PATROLLING) {
 		move(target_);
 		SDL_Rect targetPos = SDL_Rect(
@@ -104,7 +104,7 @@ bool EnemyPirate::update() {
 			}
 		}
 	}
-	updateAnim();
+	updateFrame();
 	return false;
 }
 
@@ -120,7 +120,7 @@ void EnemyPirate::move(Vector2D posToReach) {
 	pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 }
 
-//Devuelve true si el enemigo que tengo está a rango y en función de ello cambia entre melee y range
+//Devuelve true si el enemigo que tengo estï¿½ a rango y en funciï¿½n de ello cambia entre melee y range
 bool EnemyPirate::onRange() {
 	if (currEnemy_ == nullptr) {
 		return false;
@@ -161,28 +161,12 @@ bool EnemyPirate::onRange() {
 //Inicializa todas las animaciones
 void EnemyPirate::initAnims()
 {
-	//Para la animación de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, NAME_ATK);
-	//Para la animación de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, NAME_MOV);
-	//Para la animación de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, NAME_IDLE);
-}
-
-//Actualiza la animación en función del frameRate de la actual animación
-void EnemyPirate::updateAnim()
-{
-	if (currAnim_.frameRate_ <= SDL_GetTicks() - lastFrame_) {
-		lastFrame_ = SDL_GetTicks();
-		frame_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)currAnim_.widthFrame_,(int)currAnim_.heightFrame_ });
-	}
-}
-
-//Cambia la actual animación del mono si no la tiene "equipada"
-void EnemyPirate::changeAnim(Anim& newAnim) {
-	if (newAnim.name_ != currAnim_.name_) {
-		currAnim_ = newAnim;
-	}
+	//Para la animaciï¿½n de ataque
+	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, false);
+	//Para la animaciï¿½n de caminar
+	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, true);
+	//Para la animaciï¿½n de parado
+	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
 }
 
 //Se encarga de gestionar el ataque a melee o distancia DONE
@@ -214,10 +198,10 @@ void EnemyPirate::initObject() {
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	rangeVision_ = VIS_RANGE;
 	CollisionCtrl::instance()->addEnemy(this);
-	initAnim();
+	initAnims();
 }
 
-//Esto es un apaño, se eliminara cuando este completa la gestión de muertes
+//Esto es un apaï¿½o, se eliminara cuando este completa la gestiï¿½n de muertes
 void EnemyPirate::onCollider()
 {
 
@@ -249,7 +233,7 @@ void EnemyPirate::lostAgro()
 	currEnemy_ = GameManager::instance()->getPlayer();
 }
 
-//Devuelve la posición del player si está a rango DONE
+//Devuelve la posiciï¿½n del player si estï¿½ a rango DONE
 Vector2D EnemyPirate::isPlayerInRange() {
 	GameManager* gm = GameManager::instance();
 	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
@@ -266,7 +250,7 @@ Vector2D EnemyPirate::isPlayerInRange() {
 	}
 }
 
-//Devuelve la posición del clon si está a rango DONE
+//Devuelve la posiciï¿½n del clon si estï¿½ a rango DONE
 Vector2D EnemyPirate::isClonInRange() {
 	GameManager* gm = GameManager::instance();
 	if (gm->getClon() == nullptr) { return { -1,-1 }; }
@@ -284,7 +268,7 @@ Vector2D EnemyPirate::isClonInRange() {
 	}
 }
 
-//Genera la posición a la que se mueve el pirata en función de su rango 
+//Genera la posiciï¿½n a la que se mueve el pirata en funciï¿½n de su rango 
 void EnemyPirate::selectTarget() {
 
 	Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };

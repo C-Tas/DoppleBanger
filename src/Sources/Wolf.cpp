@@ -45,14 +45,14 @@ bool Wolf::update() {
 
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {
-		//Tendría que hacer la animación de muerte?
+		//Tendrï¿½a que hacer la animaciï¿½n de muerte?
 		if (!app_->getMute()) {
 			app_->getAudioManager()->playChannel(Resources::AudioId::WolfDie, 0, 3);
 		}
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
-	//Si el lobo no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
+	//Si el lobo no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo mï¿½s cercano
 	if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && getEnemy()) {
 		currState_ = STATE::ATTACKING;
 	}
@@ -60,17 +60,17 @@ bool Wolf::update() {
 	if (currState_ == STATE::ATTACKING) {
 		//Si el lobo tiene un enemigo y lo tiene a rango
 		if (onRange()) {
-			changeAnim(attackAnim_);
+			//changeAnim(attackAnim_);
 			attack();
 		}
 		else
 		{
 			currState_ = STATE::FOLLOWING;
-			changeAnim(walkAnim_);
+			//changeAnim(walkAnim_);
 			selectTarget();
 		}
 	}
-	//Si el lobo se está moviendo hacia un enemigo
+	//Si el lobo se estï¿½ moviendo hacia un enemigo
 	if (currState_ == STATE::FOLLOWING) {
 		if (onRange()) {
 			currState_ = STATE::ATTACKING;
@@ -79,7 +79,7 @@ bool Wolf::update() {
 		}
 		else
 		{
-			changeAnim(walkAnim_);
+			//changeAnim(walkAnim_);
 			selectTarget();
 		}
 	}
@@ -87,7 +87,7 @@ bool Wolf::update() {
 		currState_ = STATE::PATROLLING;;
 		target_ = patrol_[currTarget_];
 	}
-	//Si el lobo está en patrulla
+	//Si el lobo estï¿½ en patrulla
 	if (currState_ == STATE::PATROLLING) {
 		move(target_);
 		SDL_Rect targetPos = SDL_Rect(
@@ -106,7 +106,7 @@ bool Wolf::update() {
 			}
 		}
 	}
-	updateAnim();
+	updateFrame();
 	return false;
 }
 
@@ -122,7 +122,7 @@ void Wolf::move(Vector2D posToReach) {
 	pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 }
 
-//Devuelve true si el enemigo que tengo está a rango DONE
+//Devuelve true si el enemigo que tengo estï¿½ a rango DONE
 bool Wolf::onRange() {
 	if (currEnemy_ == nullptr) {
 		return false;
@@ -148,28 +148,12 @@ bool Wolf::onRange() {
 //Inicializa todas las animaciones 
 void Wolf::initAnims()
 {
-	//Para la animación de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, NAME_ATK);
-	//Para la animación de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, NAME_MOV);
-	//Para la animación de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, NAME_IDLE);
-}
-
-//Actualiza la animación en función del frameRate de la actual animación DONE
-void Wolf::updateAnim()
-{
-	if (currAnim_.frameRate_ <= SDL_GetTicks() - lastFrame_) {
-		lastFrame_ = SDL_GetTicks();
-		frame_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)currAnim_.widthFrame_,(int)currAnim_.heightFrame_ });
-	}
-}
-
-//Cambia la actual animación del lobo si no la tiene "equipada" DONE
-void Wolf::changeAnim(Anim& newAnim) {
-	if (newAnim.name_ != currAnim_.name_) {
-		currAnim_ = newAnim;
-	}
+	//Para la animaciï¿½n de ataque
+	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, false);
+	//Para la animaciï¿½n de caminar
+	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, true);
+	//Para la animaciï¿½n de parado
+	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
 }
 
 //Se encarga de gestionar el ataque a melee DONE
@@ -197,10 +181,10 @@ void Wolf::initObject() {
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	rangeVision_ = 80;//numero magico
 	CollisionCtrl::instance()->addEnemy(this);
-	initAnim();
+	initAnims();
 }
 
-//gestión de colisiones
+//gestiï¿½n de colisiones
 void Wolf::onCollider()
 {
 }
@@ -232,7 +216,7 @@ void Wolf::lostAgro()
 	currState_ = STATE::PATROLLING;
 }
 
-//Devuelve la posición del player si está a rango DONE
+//Devuelve la posiciï¿½n del player si estï¿½ a rango DONE
 Vector2D Wolf::isPlayerInRange() {
 	GameManager* gm = GameManager::instance();
 	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
@@ -249,7 +233,7 @@ Vector2D Wolf::isPlayerInRange() {
 	}
 }
 
-//Devuelve la posición del clon si está a rango DONE
+//Devuelve la posiciï¿½n del clon si estï¿½ a rango DONE
 Vector2D Wolf::isClonInRange() {
 	GameManager* gm = GameManager::instance();
 	if (gm->getClon() == nullptr) { return { -1,-1 }; }
@@ -267,7 +251,7 @@ Vector2D Wolf::isClonInRange() {
 	}
 }
 
-//Genera la posición a la que se mueve el pirata en función de su rango 
+//Genera la posiciï¿½n a la que se mueve el pirata en funciï¿½n de su rango 
 void Wolf::selectTarget() {
 
 	Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };

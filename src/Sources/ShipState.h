@@ -44,8 +44,8 @@ private:
 	const uint W_EXIT = W_WIN / 15;
 	const uint H_EXIT = H_WIN / 3;
 
-	const uint W_PLAYER = W_WIN / 25;
-	const uint H_PLAYER = H_WIN / 10;
+	const uint W_PLAYER = W_WIN / 4;
+	const uint H_PLAYER = H_WIN / 2;
 	#pragma endregion
 
 	void initState();

@@ -52,7 +52,7 @@ private:
 
 protected:
 	virtual void initObject();
-	virtual void initAnim();
+	virtual void initAnims();
 
 public:
 	NPC(Application* app, Texture* texture, Point2D pos, Vector2D scale, int npcType) :

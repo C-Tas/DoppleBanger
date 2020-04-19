@@ -44,6 +44,7 @@ void Player::initObject()
 
 bool Player::update()
 {
+	updateFrame();
 	//Resetea el coolDown en el HUD
 	for (int i = 0; i < 4; i++) {
 		if (skills_[i] != nullptr && cdSkills[i] && !skills_[i]->isCD()) {
@@ -93,8 +94,14 @@ bool Player::update()
 	}
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_)
-		shoot(eventHandler_->getRelativeMousePos());
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_) {
+		initShoot();
+	}
+	else if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+		Vector2D dir = eventHandler_->getRelativeMousePos();
+		updateDirVisMouse();
+		move(getVisPos(dir));
+	}
 
 	//para utilizar las pociones
 	if (eventHandler_->isKeyDown(SDLK_1)) {
@@ -147,21 +154,241 @@ bool Player::update()
 	//Se comprueba que el enemigo esté vivo porque puede dar a errores
 	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective_->getState() != STATE::DYING)
 	{
-#ifdef _DEBUG
-		cout << "\nAtaque a melee\n" << endl;
-#endif // _DEBUG
-		objective_->receiveDamage(currStats_.meleeDmg_);
-		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
-		meleeTime_ = SDL_GetTicks();
+		initMelee();
 	}
-
-	if (currState_ == STATE::DYING) {
+	if (currState_ == STATE::SHOOTING) {
+		shootAnim();
+	}
+	else if (currState_ == STATE::ATTACKING) {
+		meleeAnim();
+	}
+	else if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte
 		return true;
 	}
 #pragma endregion
 
 	return false;
+}
+
+void Player::initObject() {
+	texture_ = auxTx_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
+	eventHandler_ = HandleEvents::instance();
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, AD, AP, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initAnims();
+	GameManager::instance()->setPlayer(this);
+	CollisionCtrl::instance()->setPlayer(this);
+}
+
+void Player::initIdle()
+{
+	currState_ = STATE::IDLE;
+	texture_ = idleTx_[(int)lookAt];
+	currAnim_ = idleAnims_[(int)lookAt];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Player::initMove()
+{
+ 	currState_ = STATE::FOLLOWING;
+	mousePos_ = eventHandler_->getRelativeMousePos();
+	texture_ = moveTx_[(int)lookAt];
+	currAnim_ = moveAnims_[(int)lookAt];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Player::initShoot()
+{
+	stop();
+	currState_ = STATE::SHOOTING;	//Cambio de estado
+	mousePos_ = eventHandler_->getRelativeMousePos();
+	shooted_ = false;	//Aún no se ha creado la bala
+	updateDirVisMouse();	//Hacia dónde mira
+	texture_ = shootTx_[(int)lookAt];
+	currAnim_ = shootAnims_[(int)lookAt];
+	//Asigna el frame donde ocurrirá la acción
+	switch (lookAt)
+	{
+	case DIR::UP:
+		frameAction_ = 3;
+		break;
+	case DIR::RIGHT:
+		frameAction_ = 1;
+		break;
+	case DIR::DOWN:
+		frameAction_ = 3;
+		break;
+	case DIR::LEFT:
+		frameAction_ = 1;
+	}
+
+	//Inicio de lso frames
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Player::initMelee()
+{
+	currState_ = STATE::ATTACKING;	//Cambio de estado
+	mousePos_ = eventHandler_->getRelativeMousePos();
+	attacking_ = false;	//Para controlar que no se llame más veces este método
+	attacked_ = false;	//Aún no se ha atacado
+	updateDirVisEnemy();	//Hacia dónde está el enemigo
+	texture_ = meleeTx_[(int)lookAt];
+	currAnim_ = meleeAnims_[(int)lookAt];
+	//Frame exacto del ataque
+	switch (lookAt)
+	{
+	case DIR::UP:
+		frameAction_ = 1;
+		break;
+	case DIR::RIGHT:
+		frameAction_ = 2;
+		break;
+	case DIR::DOWN:
+		frameAction_ = 2;
+		break;
+	case DIR::LEFT:
+		frameAction_ = 2;
+		break;
+	}
+
+	//Se inicia el frame
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Player::updateDirVisMouse()
+{
+	mousePos_ = eventHandler_->getRelativeMousePos();
+	Vector2D center = getCenter(pos_);		//Punto de referencia
+	Vector2D dir = mousePos_ - center;	//Vector dirección
+	dir.normalize();
+	double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
+	if (angle >= 0) {
+		if (angle <= 45.0) lookAt = DIR::RIGHT;
+		else if (angle < 135.0) lookAt = DIR::DOWN;
+		else lookAt = DIR::LEFT;
+	}
+	else {
+		if (angle >= -45.0) lookAt = DIR::RIGHT;
+		else if (angle >= -135.0) lookAt = DIR::UP;
+		else lookAt = DIR::LEFT;
+	}
+}
+
+void Player::updateDirVisEnemy() {
+	if (objective_ != nullptr) {
+		Vector2D center = getCenter(pos_);		//Punto de referencia
+		Vector2D enemyCenter = getCenter(objective_->getPos());
+		Vector2D dir = enemyCenter - center;		//Vector dirección
+		dir.normalize();
+		double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
+		if (angle >= 0) {
+			if (angle <= 45.0) lookAt = DIR::RIGHT;
+			else if (angle < 135.0) lookAt = DIR::DOWN;
+			else lookAt = DIR::LEFT;
+		}
+		else {
+			if (angle >= -45.0) lookAt = DIR::RIGHT;
+			else if (angle >= -135.0) lookAt = DIR::UP;
+			else lookAt = DIR::LEFT;
+		}
+	}
+}
+
+void Player::shootAnim()
+{
+	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
+		shoot(mousePos_);
+		shooted_ = true; 
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();	//Activa el idle
+	}
+}
+
+void Player::meleeAnim()
+{
+	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
+		objective_->receiveDamage(currStats_.meleeDmg_);
+		meleeTime_ = SDL_GetTicks();
+		attacked_ = true;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();	//Activa el idle
+	}
+}
+
+void Player::initAnims()
+{
+	//Animación de idle
+	//Arriba
+	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, IDLE_U_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleUpAnim));			
+	//Derecha																						
+	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, IDLE_R_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleRightAnim));		
+	//Abajo																							
+	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, IDLE_D_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleDownAnim));		
+	//Izquierda																						
+	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, IDLE_L_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleLeftAnim));
+
+	//Animación de movimiento
+	//Arriba
+	moveAnims_.push_back(Anim(MOVE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_U_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleUpAnim));
+	//Derecha														
+	moveAnims_.push_back(Anim(MOVE_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_R_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleRightAnim));
+	//Abajo
+	moveAnims_.push_back(Anim(MOVE_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_D_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleDownAnim));
+	//Izquierda
+	moveAnims_.push_back(Anim(MOVE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_L_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMoveLeftAnim));
+
+	//Animación de disparo
+	//Arriba
+	shootAnims_.push_back(Anim(SHOOT_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_U_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootUpAnim));
+	//Derecha
+	shootAnims_.push_back(Anim(SHOOT_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_R_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootRightAnim));
+	//Abajo
+	shootAnims_.push_back(Anim(SHOOT_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_D_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootDownAnim));
+	//Izquierda
+	shootAnims_.push_back(Anim(SHOOT_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_L_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootLeftAnim));
+
+	//Animación de melee
+	//Arriba
+	meleeAnims_.push_back(Anim(MELEE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_U_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeUpAnim));
+	//Derecha
+	meleeAnims_.push_back(Anim(MELEE_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_R_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeRightAnim));
+	//Abajo
+	meleeAnims_.push_back(Anim(MELEE_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_D_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeDownAnim));
+	//Izquierda
+	meleeAnims_.push_back(Anim(MELEE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_L_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeLeftAnim));
+
+	//Inicializamos con la animación del idle
+	lookAt = DIR::DOWN;
+	initIdle();
 }
 
 void Player::shoot(Vector2D dir)
@@ -192,7 +419,6 @@ void Player::shoot(Vector2D dir)
 
 void Player::onCollider()
 {
-	move(Vector2D(-dir_.getX(), -dir_.getY())); //Rebote
 	stop(); //Para
 }
 
@@ -206,11 +432,13 @@ void Player::move(Point2D target)
 	dir_.setX(target.getX() - visPos.getX());
 	dir_.setY(target.getY() - visPos.getY());
 	dir_.normalize();
+ 	initMove();
 }
 
 void Player::attack(Enemy* obj)
 {
 	objective_ = obj;
+	updateDirVisEnemy();
 	move(getVisPos(obj->getPos()));
 	attacking_ = true;
 }

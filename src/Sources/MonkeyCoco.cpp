@@ -23,27 +23,27 @@ bool MonkeyCoco ::update() {
 	//Si el mono tiene enemigo y puede atacar
 	if (currState_ == STATE::ATTACKING && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
 		//Si el mono tiene un enemigo y lo tiene a rango
-		if (onRange(false)) {
-			changeAnim(attackAnim_);
+		if (onRange()) {
+			//changeAnim(attackAnim_);
 			attack();
 		}
 		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
 		else if(getEnemy(false))
 		{
-			changeAnim(attackAnim_);
+			//changeAnim(attackAnim_);
 			attack();
 		}
 		//Tengo enemigo pero no a rango
 		else
 		{
 			currState_ == STATE::IDLE;
-			changeAnim(idleAnim_);
+			//changeAnim(idleAnim_);
 			currEnemy_ = nullptr;
 		}
 		lastHit = SDL_GetTicks();
 	}
 	
-	updateAnim();
+	updateFrame();
 	return false;
 }
 
@@ -52,11 +52,11 @@ bool MonkeyCoco ::update() {
 void MonkeyCoco::initAnims()
 {
 	//Para la animaci�n de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK,W_FRAME_ATK,H_FRAME_ATK,FRAME_RATE_ATK,NAME_ATK);
+	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK,H_FRAME_ATK,FRAME_RATE_ATK, false);
 	//Para la animaci�n de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV,W_FRAME_MOV,H_FRAME_MOV,FRAME_RATE_MOV,NAME_MOV);
+	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV,H_FRAME_MOV,FRAME_RATE_MOV, true);
 	//Para la animaci�n de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE,W_FRAME_IDLE,H_FRAME_IDLE,FRAME_RATE_IDLE,NAME_IDLE);
+	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE,H_FRAME_IDLE,FRAME_RATE_IDLE, true);
 }
 
 //Se encarga de crear el coco en direcci�n al enemigo
@@ -76,7 +76,7 @@ void MonkeyCoco::initObject() {
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	CollisionCtrl::instance()->addEnemy(this);
-	initAnim();
+	initAnims();
 }
 
 //Gesti�n de las colisiones

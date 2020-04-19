@@ -47,7 +47,9 @@ void PlayState::checkPlayerActions() {
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 	{
 		Enemy* obj; obj = checkAttack();
-		if (obj != nullptr) player_->attack(obj);
+		if (obj != nullptr) {
+			player_->attack(obj);
+		}
 		//else if NPC
 		else player_->move(eventHandler_->getRelativeMousePos());
 	}
