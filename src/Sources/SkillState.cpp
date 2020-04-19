@@ -21,6 +21,8 @@ void SkillState::initState() {
 	GameManager::instance()->setMeleePoints(99);
 	GameManager::instance()->setGhostPoints(99);
 
+	player_ = gm_->getPlayer();
+
 	#ifdef _DEBUG	//PARA DEBUG
 	cout << "SKILLTATE" << endl;
 	cout << "TIENES " << gm_->getAchievementPoints() << " PUNTOS" << endl;

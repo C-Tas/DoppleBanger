@@ -222,7 +222,7 @@ public:
 	const ObjectName getObjectEquipped(Key key) { return objectsEquipped[(int)key - (int)Key::One]; }
 	
 	//Devuelve la posici�n del player
-	const Point2D getPlayerPos() { return player_->getPos(); };
+	const Point2D getPlayerPos();
 	//Devuelve al jugador
 	Player* getPlayer() { return player_; };
 	//Devuelve al clon

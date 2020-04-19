@@ -1,5 +1,5 @@
 ﻿#include "GameManager.h"
-
+#include "Player.h"
 
 unique_ptr<GameManager> GameManager::instance_;
 
@@ -19,6 +19,11 @@ const Key GameManager::getEquippedSkillKey(SkillName skill) {
 	int i = 0;
 	while (i < skillsEquipped_.size() && skillsEquipped_[i] != skill)i++;
 	return (Key)i;
+}
+
+const Point2D GameManager::getPlayerPos()
+{
+	return player_->getPos();
 }
 
 void GameManager::setSkillCooldown(bool cooldown, Key key)
