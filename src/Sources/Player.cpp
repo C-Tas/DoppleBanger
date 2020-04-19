@@ -225,7 +225,6 @@ void Player::initShoot()
 void Player::initMelee()
 {
 	currState_ = STATE::ATTACKING;	//Cambio de estado
-	attacking_ = false;	//Para controlar que no se llame más veces este método
 	attacked_ = false;	//Aún no se ha atacado
 	updateDirVisEnemy();	//Hacia dónde está el enemigo
 	texture_ = meleeTx_[(int)lookAt];
@@ -251,6 +250,7 @@ void Player::initMelee()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+	meleeTime_ = SDL_GetTicks();
 }
 
 void Player::updateDirVisMouse()
@@ -313,9 +313,9 @@ void Player::meleeAnim()
 			empoweredTime_ = SDL_GetTicks();
 			meleeTime_ = empoweredTime_;
 		}
-		else meleeTime_ = SDL_GetTicks();
 
 		objective_->receiveDamage(totalDmg);
+		if (objective_->getState() == STATE::DYING) attacking_ = false;
 		attacked_ = true;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
