@@ -47,6 +47,7 @@ bool Player::update()
 	}
 	else if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
 		Vector2D dir = eventHandler_->getRelativeMousePos();
+		updateDirVisMouse();
 		move(getVisPos(dir));
 	}
 
@@ -87,15 +88,17 @@ bool Player::update()
 	{
 		initMelee();
 	}
-	if (currState_ == STATE::DYING) {
-		//Tendría que hacer la animación de muerte
-		return true;
-	}
-	else if (currState_ == STATE::SHOOTING) {
+	else if (currState_ == STATE::FOLLOWING) { initIdle(); }
+
+	if (currState_ == STATE::SHOOTING) {
 		shootAnim();
 	}
 	else if (currState_ == STATE::ATTACKING) {
 		meleeAnim();
+	}
+	else if (currState_ == STATE::DYING) {
+		//Tendría que hacer la animación de muerte
+		return true;
 	}
 	return false;
 }
@@ -107,6 +110,30 @@ void Player::initObject() {
 	initAnims();
 	GameManager::instance()->setPlayer(this);
 	CollisionCtrl::instance()->setPlayer(this);
+}
+
+void Player::initIdle()
+{
+	currState_ = STATE::IDLE;
+	mousePos_ = eventHandler_->getRelativeMousePos();
+	texture_ = idleTx_[(int)lookAt];
+	currAnim_ = idleAnims_[(int)lookAt];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Player::initMove()
+{
+	currState_ = STATE::FOLLOWING;
+	mousePos_ = eventHandler_->getRelativeMousePos();
+	texture_ = moveTx_[(int)lookAt];
+	currAnim_ = moveAnims_[(int)lookAt];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
 }
 
 void Player::initShoot()
@@ -215,9 +242,7 @@ void Player::shootAnim()
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		currState_ = STATE::IDLE;	//Reseteo de la animación
-		//Se debería resetear a idle, pero aún no está implementado
-		currAnim_.numberFrames_ = 0;
-		texture_ = auxTx_;
+		initIdle();	//Activa el idle
 	}
 }
 
@@ -231,14 +256,40 @@ void Player::meleeAnim()
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		currState_ = STATE::IDLE;	//Reseteo de la animación
-		//Se debería resetear a idle, pero aún no está implementado
-		currAnim_.numberFrames_ = 0;
-		texture_ = auxTx_;
+		initIdle();	//Activa el idle
 	}
 }
 
 void Player::initAnims()
 {
+	//Animación de idle
+	//Arriba
+	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, IDLE_U_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleUpAnim));			
+	//Derecha																						
+	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, IDLE_R_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleRightAnim));		
+	//Abajo																							
+	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, IDLE_D_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleDownAnim));		
+	//Izquierda																						
+	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, IDLE_L_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleLeftAnim));
+
+	//Animación de movimiento
+	//Arriba
+	moveAnims_.push_back(Anim(MOVE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_U_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleUpAnim));
+	//Derecha														
+	moveAnims_.push_back(Anim(MOVE_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_R_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleRightAnim));
+	//Abajo
+	moveAnims_.push_back(Anim(MOVE_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_D_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleDownAnim));
+	//Izquierda
+	moveAnims_.push_back(Anim(MOVE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_L_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMoveLeftAnim));
+
 	//Animación de disparo
 	//Arriba
 	shootAnims_.push_back(Anim(SHOOT_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_U_FRAME_RATE, false));
@@ -266,6 +317,10 @@ void Player::initAnims()
 	//Izquierda
 	meleeAnims_.push_back(Anim(MELEE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_L_FRAME_RATE, false));
 	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeLeftAnim));
+
+	//Inicializamos con la animación del idle
+	lookAt = DIR::DOWN;
+	initIdle();
 }
 
 void Player::shoot(Vector2D dir)
@@ -299,11 +354,13 @@ void Player::move(Point2D target)
 	dir_.setX(target.getX() - visPos.getX());
 	dir_.setY(target.getY() - visPos.getY());
 	dir_.normalize();
+	initMove();
 }
 
 void Player::attack(Enemy* obj)
 {
 	objective_ = obj;
+	updateDirVisEnemy();
 	move(getVisPos(obj->getPos()));
 	attacking_ = true;
 }

@@ -45,10 +45,11 @@ public:
 	const int getLiberation() { return liberation_; };
 	const bool getExplotion() { return explotion_; };
 	const Stats& getStats() { return currStats_; };
-	const Vector2D getPreviousPos() { return previousPos_; }
-	virtual void die() { currState_ = STATE::DYING; }
+	const Vector2D getPreviousPos() { return previousPos_; };
+	virtual void die() { currState_ = STATE::DYING; };
+	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
 	//metodos para coger la info del player
-	playerEquipment& const getInfoEquip() { return equip_; }
+	playerEquipment& const getInfoEquip() { return equip_; };
 	void desactivePotion();
 	void init();
 	void equip(Armor* armor) { equip_.armor_ = armor; };
@@ -56,8 +57,8 @@ public:
 	void equip(Boots* boots) { equip_.boots_ = boots; };
 	void equip(Sword* sword) { equip_.sword_ = sword; };
 	void equip(Gun* gun) { equip_.gun_ = gun; };
-	void equipPotion1(usable* pot) { equip_.potion1_ = pot; }
-	void equipPotion2(usable* pot) { equip_.potion2_ = pot; }
+	void equipPotion1(usable* pot) { equip_.potion1_ = pot; };
+	void equipPotion2(usable* pot) { equip_.potion2_ = pot; };
 
 	//metodos para usar las pociones
 	void usePotion(int value, potionType type);
@@ -66,9 +67,9 @@ public:
 #pragma region SkillsEquipped
 	///<summary>Número máximo de skills equipables</summary>
 	static const int MAX_SKILLS = 3;
-	Skill* getSkillEquipped(int key) { return skillsEquiped_[key]; }
-	void setSkillAt(int key, Skill* skill) { if(skillsEquiped_[key]!= nullptr)delete skillsEquiped_[key]; skillsEquiped_[key] = skill; }
-	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquiped_; }
+	Skill* getSkillEquipped(int key) { return skillsEquiped_[key]; };
+	void setSkillAt(int key, Skill* skill) { if (skillsEquiped_[key] != nullptr)delete skillsEquiped_[key]; skillsEquiped_[key] = skill; };
+	array <Skill*, MAX_SKILLS>& getSkillsArray() { return skillsEquiped_; };
 #pragma endregion
 
 private:
@@ -85,6 +86,39 @@ private:
 	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
 	const int W_H_PLAYER_FRAME = 100;		//Ancho del frame, estándar para todas
+	
+	//Idle
+	vector<Anim> idleAnims_;
+	vector<Texture*> idleTx_;
+	//Idle derecha
+	const int IDLE_R_FRAMES = 4;			//Frames de la animación
+	const int IDLE_R_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia arriba
+	const int IDLE_U_FRAMES = 2;			//Frames de la animación
+	const int IDLE_U_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia izquierda
+	const int IDLE_L_FRAMES = 4;			//Frames de la animación
+	const int IDLE_L_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia abajo
+	const int IDLE_D_FRAMES = 2;			//Frames de la animación
+	const int IDLE_D_FRAME_RATE = 500;		//Frame rate
+
+	//Movimieno
+	vector<Anim> moveAnims_;
+	vector<Texture*> moveTx_;
+	//Movimieno derecha
+	const int MOVE_R_FRAMES = 4;			//Frames de la animación
+	const int MOVE_R_FRAME_RATE = 500;		//Frame rate
+	//Movimieno hacia arriba
+	const int MOVE_U_FRAMES = 2;			//Frames de la animación
+	const int MOVE_U_FRAME_RATE = 500;		//Frame rate
+	//Movimieno hacia izquierda
+	const int MOVE_L_FRAMES = 8;			//Frames de la animación
+	const int MOVE_L_FRAME_RATE = 100;		//Frame rate
+	//Movimieno hacia abajo
+	const int MOVE_D_FRAMES = 2;			//Frames de la animación
+	const int MOVE_D_FRAME_RATE = 500;		//Frame rate
+
 	//Disparo
 	bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
 	vector<Anim> shootAnims_;				//Vector de las animaciones
@@ -102,10 +136,11 @@ private:
 	const int SHOOT_D_FRAMES = 7;			//Frames de la animación
 	const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
 
-	//Melee derecha
+	//Melee
 	bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
 	vector<Anim> meleeAnims_;				//Vector de las animaciones
 	vector<Texture*> meleeTx_;				//Vector de las texturas
+	//Melee derecha
 	const int MELEE_R_FRAMES = 5;			//Frames de la animación
 	const int MELEE_R_FRAME_RATE = 200;		//Frame rate
 	//Melee hacia arriba
@@ -121,6 +156,8 @@ private:
 	//Inicialización de las animaciones
 	virtual void initAnims();
 	//Inicia la animación
+	void initIdle();
+	void initMove();
 	void initShoot();
 	void initMelee();
 	//Controla la animación

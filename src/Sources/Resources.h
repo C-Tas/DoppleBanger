@@ -97,6 +97,14 @@ public:
 
 		//Animaciones
 		CrabAttack,
+		PlayerIdleRightAnim,
+		PlayerIdleLeftAnim,
+		PlayerIdleUpAnim,
+		PlayerIdleDownAnim,
+		//PlayerMoveRightAnim,
+		PlayerMoveLeftAnim,
+		//PlayerMoveUpAnim,
+		//PlayerMoveDownAnim,
 		PlayerShootRightAnim,
 		PlayerShootLeftAnim,
 		PlayerShootUpAnim,
