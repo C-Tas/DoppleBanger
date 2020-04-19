@@ -115,6 +115,5 @@ public:
 
 	///<summary>Devuelve el GameManager</summary>
 	GameManager* getGameManager() { return gameManager_; }
-
 #pragma endregion
 };

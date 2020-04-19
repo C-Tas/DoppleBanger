@@ -42,6 +42,7 @@ public:
 		ButtonUpgradeYellow,
 		GoToInventoryAButton,
 		GoToInventoryBButton,
+		GoToShopButton,
 
 		//BarrasPuntosHazaña
 		Controls,
