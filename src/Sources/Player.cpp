@@ -34,8 +34,8 @@ void Player::initObject()
 	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Boots1), "Botas", "helloWorld", 10, 10, 10); equip_.boots_->writeStats(); //Prueba
 	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, Saber_); equip_.sword_->writeStats(); //Prueba
 	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
-	equip_.potion1_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, 10);	//Prueba
-	equip_.potion2_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, 10);	//Prueba
+	equip_.potion1_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, -1);	//Prueba
+	equip_.potion2_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, -1);	//Prueba
 }
 
 void Player::initSkills()
@@ -49,6 +49,10 @@ void Player::initSkills()
 		gm_->setSkillEquiped(skill, (Key)i);
 		i++;
 	}
+	//esto es una prueba
+
+	gm_->setObjectEquipped(ObjectName::Health, Key::One);
+	gm_->setObjectEquipped(ObjectName::Mana, Key::Two);
 }
 
 bool Player::update()
@@ -109,14 +113,14 @@ bool Player::update()
 
 	//para utilizar las pociones
 	if (eventHandler_->isKeyDown(SDLK_1)) {
-		if (equip_.potion1_ != nullptr) {
+		if (equip_.potion1_ != nullptr && !equip_.potion1_->isUsed()) {
 			PotionTime1 = SDL_GetTicks();
 			equip_.potion1_->use(this);
 			gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 		}
 	}
-	if (eventHandler_->isKeyDown(SDLK_2)) {
-		if (equip_.potion2_ != nullptr) {
+	if (eventHandler_->isKeyDown(SDLK_2) ) {
+		if (equip_.potion2_ != nullptr && !equip_.potion2_->isUsed()) {
 			PotionTime2 = SDL_GetTicks();
 			equip_.potion2_->use(this);
 			gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
@@ -509,7 +513,7 @@ void Player::desactivePotion(){
 		}
 		//Si no, miramos si ha pasado el tiempo de duracion
 		else if ((SDL_GetTicks() - PotionTime2) >= equip_.potion2_->getDuration()) {
-			usePotion(-(equip_.potion1_->getValue()), equip_.potion2_->getType());//quitamos el valor de la pocion
+			usePotion(-(equip_.potion2_->getValue()), equip_.potion2_->getType());//quitamos el valor de la pocion
 			delete equip_.potion2_;// eliminamos la pocion
 			equip_.potion2_ = nullptr;
 		}
