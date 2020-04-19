@@ -88,7 +88,9 @@ bool Player::update()
 	{
 		initMelee();
 	}
-	else if (currState_ == STATE::FOLLOWING) { initIdle(); }
+	/*else if (currState_ == STATE::FOLLOWING) { 
+		initIdle(); 
+	}*/
 
 	if (currState_ == STATE::SHOOTING) {
 		shootAnim();
@@ -115,7 +117,6 @@ void Player::initObject() {
 void Player::initIdle()
 {
 	currState_ = STATE::IDLE;
-	mousePos_ = eventHandler_->getRelativeMousePos();
 	texture_ = idleTx_[(int)lookAt];
 	currAnim_ = idleAnims_[(int)lookAt];
 
@@ -126,7 +127,7 @@ void Player::initIdle()
 
 void Player::initMove()
 {
-	currState_ = STATE::FOLLOWING;
+ 	currState_ = STATE::FOLLOWING;
 	mousePos_ = eventHandler_->getRelativeMousePos();
 	texture_ = moveTx_[(int)lookAt];
 	currAnim_ = moveAnims_[(int)lookAt];
@@ -139,10 +140,10 @@ void Player::initMove()
 void Player::initShoot()
 {
 	stop();
-	currState_ = STATE::SHOOTING;
+	currState_ = STATE::SHOOTING;	//Cambio de estado
 	mousePos_ = eventHandler_->getRelativeMousePos();
-	shooted_ = false;
-	updateDirVisMouse();
+	shooted_ = false;	//Aún no se ha creado la bala
+	updateDirVisMouse();	//Hacia dónde mira
 	texture_ = shootTx_[(int)lookAt];
 	currAnim_ = shootAnims_[(int)lookAt];
 	//Asigna el frame donde ocurrirá la acción
@@ -160,6 +161,8 @@ void Player::initShoot()
 	case DIR::LEFT:
 		frameAction_ = 1;
 	}
+
+	//Inicio de lso frames
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
@@ -167,13 +170,14 @@ void Player::initShoot()
 
 void Player::initMelee()
 {
-	currState_ = STATE::ATTACKING;
+	currState_ = STATE::ATTACKING;	//Cambio de estado
 	mousePos_ = eventHandler_->getRelativeMousePos();
-	attacking_ = false;
-	attacked_ = false;
-	updateDirVisEnemy();
+	attacking_ = false;	//Para controlar que no se llame más veces este método
+	attacked_ = false;	//Aún no se ha atacado
+	updateDirVisEnemy();	//Hacia dónde está el enemigo
 	texture_ = meleeTx_[(int)lookAt];
 	currAnim_ = meleeAnims_[(int)lookAt];
+	//Frame exacto del ataque
 	switch (lookAt)
 	{
 	case DIR::UP:
@@ -190,6 +194,7 @@ void Player::initMelee()
 		break;
 	}
 
+	//Se inicia el frame
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
@@ -241,7 +246,6 @@ void Player::shootAnim()
 		shooted_ = true; 
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
-		currState_ = STATE::IDLE;	//Reseteo de la animación
 		initIdle();	//Activa el idle
 	}
 }
@@ -250,12 +254,10 @@ void Player::meleeAnim()
 {
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
 		objective_->receiveDamage(currStats_.meleeDmg_);
-		if (objective_->getState() == STATE::DYING) move(getVisPos(pos_));
 		meleeTime_ = SDL_GetTicks();
 		attacked_ = true;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
-		currState_ = STATE::IDLE;	//Reseteo de la animación
 		initIdle();	//Activa el idle
 	}
 }
@@ -354,7 +356,7 @@ void Player::move(Point2D target)
 	dir_.setX(target.getX() - visPos.getX());
 	dir_.setY(target.getY() - visPos.getY());
 	dir_.normalize();
-	initMove();
+ 	initMove();
 }
 
 void Player::attack(Enemy* obj)

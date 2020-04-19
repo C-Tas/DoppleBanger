@@ -103,7 +103,7 @@ private:
 	const int IDLE_D_FRAMES = 2;			//Frames de la animación
 	const int IDLE_D_FRAME_RATE = 500;		//Frame rate
 
-	//Movimieno
+	//Movimiento
 	vector<Anim> moveAnims_;
 	vector<Texture*> moveTx_;
 	//Movimieno derecha
