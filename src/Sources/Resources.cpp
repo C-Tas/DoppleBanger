@@ -128,6 +128,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Equipables
 	{Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
 	{Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
+
+	//Tilesets de los mapas
+	{Tileset1, "../Sources/assets/mapas/Isla1-1/tileset2.png"},
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{

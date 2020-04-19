@@ -276,6 +276,8 @@
     <ClCompile Include="tmxLite\Tileset.cpp">
       <Filter>TXMLite</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\TiledMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -583,6 +585,8 @@
     <ClInclude Include="tmxLite\Types.hpp">
       <Filter>TXMLite</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\TiledMap.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

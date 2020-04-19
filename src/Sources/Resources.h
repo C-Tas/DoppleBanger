@@ -157,6 +157,9 @@ public:
 		//Equipables
 		Gun1,
 		Gloves1,
+
+		//Tilesets de los mapas
+		Tileset1,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
