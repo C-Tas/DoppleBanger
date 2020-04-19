@@ -1,6 +1,7 @@
 #pragma once
 #include "Application.h"
 #include "Texture.h"
+#include "Button.h"
 #include "Vector2D.h"
 
 class TextBox {
@@ -8,6 +9,9 @@ protected:
 	Application* app_ = nullptr;
 	SDL_Rect dest; //Posición de la caja de texto, inicializada en init()
 	const int lineSpacing = 30;	//Interlineado y márgenes del texto
+
+	Button* shipButton_;
+	static void goShipState(Application* app);
 
 public:
 	///<summary>Constructora del textBox de diálogo</summary>

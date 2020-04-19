@@ -15,7 +15,6 @@ struct Equipments
 	InventoryButton* potion2_ = nullptr;
 };
 
-
 class Inventory: public GameState
 {
 private:
@@ -45,8 +44,6 @@ private:
 	void equiparAux(InventoryButton* &but);
 	void equipPotionAux();
 	
-	
-	
 public:
 	Inventory(Application* app );
 	virtual ~Inventory() ;
@@ -59,4 +56,3 @@ public:
 	void forwardList();
 	void backList();
 };
-
