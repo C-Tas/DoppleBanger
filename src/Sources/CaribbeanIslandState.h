@@ -7,8 +7,8 @@ class CaribbeanIslandState : public PlayState
 {
 private:
 	//Chest* chest_ = nullptr; //temporal
-	Point2D* posChest = new Vector2D(200, 200);
-	Vector2D* scaleChest = new Vector2D(100, 100);
+	Point2D posChest = Vector2D(200, 200);
+	Vector2D scaleChest = Vector2D(100, 100);
 public:
 //<summary>Constructor de la isla caribeña</summary>
 	CaribbeanIslandState(Application* app) : PlayState(app) { initState(); }

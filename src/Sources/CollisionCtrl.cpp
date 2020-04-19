@@ -1,7 +1,6 @@
 #include "CollisionCtrl.h"
 #include "Collisions.h"
 #include "GameManager.h"
-#include "PlayerBullet.h"
 
 unique_ptr<CollisionCtrl> CollisionCtrl::instance_;
 

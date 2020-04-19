@@ -107,8 +107,7 @@ void CaribbeanIslandState::createChest(int numChest)
 	for (int i = 0; i < numChest; i++) {
 		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
 		newChest = new Chest(app_, pos, Vector2D(W_CHEST, H_CHEST));
-		addUpdateList(newChest);
-		addRenderList(newChest);
+		addRenderUpdateLists(newChest);
 		//addObject
 	}
 }

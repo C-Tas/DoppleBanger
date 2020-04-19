@@ -9,7 +9,7 @@ class Chest : public interactuable
 private:
 	RandEquipGen rN;
 	
-	Anim openAnim_ = { 0,0,0,0,0 ,"" };
+	Anim openAnim_ = { 0,0,0,0,"" };
 
 	//Anim Chest
 	const int NUM_FRAMES_OPEN = 10;

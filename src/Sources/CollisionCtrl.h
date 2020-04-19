@@ -8,6 +8,7 @@
 #include "Bullet.h"
 #include "Trigger.h"
 #include "ShipObject.h"
+#include "PlayerBullet.h"
 #include <list>
 #include <vector>
 
@@ -131,13 +132,13 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Obstacle*> obstacles_;
 	list<Enemy*> enemies_;
 	list<Chest*> chests_;
-	list<Bullet*> playerBullets_;
+	list<PlayerBullet*> playerBullets_;
 	list<Bullet*> enemyBullets_;
 	list<Trigger*> triggers_;
 
 	list<Enemy*> enemiesToErase_;
 	list<Chest*> chestsToErase_;
-	list<Bullet*> playerBulletsToErase_;
+	list<PlayerBullet*> playerBulletsToErase_;
 	list<Bullet*> enemyBulletsToErase_;
 	list<Trigger*> triggersToErase_;
 
