@@ -46,6 +46,7 @@ private:
 	//Inicializa las animaciones
 	void initAnims();
 	void slam();
+	void sweep();
 
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)

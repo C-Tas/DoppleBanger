@@ -4,26 +4,112 @@
 
 bool Tentacle::update()
 {
+	//Si el tentáculo está cayendo
+	if (currState_ == STATE::FOLLOWING)
+	{
+		if ((SDL_GetTicks() - spawnTime_) / 1000 < ATTACK_DURATION)
+			;//Animación tentáculo cayendo
+		else {
+			//Una vez cae se le asigna su hitbox
+			collisionArea_ = collArea_;
+			setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
+			currState_ = STATE::ATTACKING;
+			//Durante 1 frame se hace daño al jugador
+		}
+	}
+	else
+	{
+		//Dependiendo del ataque para el que se ha invocado
+		switch (attack_)
+		{
+		case ATTACKS::SLAM:
+			return slamUpdate();
+			break;
+		case ATTACKS::SWEEP:
+			return sweepUpdate();
+			break;
+		}
+	}
+	return false;
+}
+
+bool Tentacle::sweepUpdate()
+{
+	//Mientras no haya llegado a la posición inicial con un margen de error (y no haya hecho ningún giro para que funcione la primera vez)
+	if (turns_ < 4 || !((abs(pos_.getX() - initPos_.getX()) < 20) && (abs(pos_.getY() - initPos_.getY()) < 10)))
+	{
+		if (!rotating_) 
+		{
+			pos_.setVec(pos_.getVec() + (sweepDir_ * speed_ * app_->getDeltaTime()));
+			double deltaY = (kraken_->getScaleX() - kraken_->getScaleY()) / 2;
+
+			//Comprobaciones de si el tentáculo ha llegado a una de las esquinas en las que gira (dependientes de pos y scale de kraken)
+			if (abs(collisionRot_) == 0 && pos_.getY() + scale_.getY() / 2 > kraken_->getPosY() + kraken_->getScaleY())
+			{
+				centerRot_ = Vector2D(getCenter().getX() - scale_.getX() / 2, getCenter().getY());
+				rotating_ = true;
+			}
+			else if (abs(collisionRot_) == 270 && pos_.getX() + scale_.getX() / 2 > kraken_->getPosX() + kraken_->getScaleX())
+			{
+				centerRot_ = Vector2D(getCenter().getX(), getCenter().getY() + scale_.getX() / 2);
+				rotating_ = true;
+			}
+			else if (abs(collisionRot_) == 180 && pos_.getY() + scale_.getY() / 2 < kraken_->getPosY())
+			{
+				centerRot_ = Vector2D(getCenter().getX() + scale_.getX() / 2, getCenter().getY());
+				rotating_ = true;
+			}
+			else if (abs(collisionRot_) == 90 && pos_.getX() + scale_.getX() / 2 < kraken_->getPosX())
+			{
+				centerRot_ = Vector2D(getCenter().getX(), getCenter().getY() - scale_.getX() / 2);
+				rotating_ = true;
+			}
+		}
+		else
+		{
+			//Cuando llega a una esquina rota cada frame en base a un movimiento circular uniforme con velocidad angular
+			double angle = collisionRot_ * (M_PI / 180);
+			deltaAngle_ += (speed_ * app_->getDeltaTime() / (scale_.getX() / 2));
+			angle += (speed_ * app_->getDeltaTime() / (scale_.getX() / 2));
+			pos_.setX((centerRot_.getX() + (scale_.getX() / 2) * cos(angle)) - scale_.getX() / 2);
+			pos_.setY((centerRot_.getY() + (scale_.getX() / 2) * sin(angle)) - scale_.getY() / 2);
+			collisionRot_ = (180 / M_PI) * atan2(getCenter().getY() - centerRot_.getY(), getCenter().getX() - centerRot_.getX());
+
+			//Si ha completado el giro
+			if (deltaAngle_ >= M_PI / 2) 
+			{
+				rotating_ = false;
+				deltaAngle_ = 0;
+				collisionRot_ = round(collisionRot_);
+				if (collisionRot_ == -90) collisionRot_ = 270;
+				sweepDir_ = Vector2D(cos(collisionRot_ * (M_PI / 180) + M_PI / 2), sin(collisionRot_ * (M_PI / 180) + M_PI / 2));
+				turns_++;
+			}
+		}
+
+	}
+	//Si ha hecho su recorrido y no se está muriendo se muere
+	else if (currState_ != STATE::DYING)
+	{
+		kraken_->tentDeath(this);
+		app_->getCurrState()->removeRenderUpdateLists(this);
+		return true;
+	}
+	return false;
+
+}
+
+bool Tentacle::slamUpdate()
+{
 	//Mientras dure el tentáculo
 	if ((SDL_GetTicks() - spawnTime_) / 1000 < TENTACLE_DURATION)
 	{
-		switch (currState_)
+		if (currState_ == STATE::ATTACKING)
 		{
-		case STATE::FOLLOWING:
-			if ((SDL_GetTicks() - spawnTime_) / 1000 < ATTACK_DURATION)
-				;//Animación tentáculo cayendo
-			else {
-				collisionArea_ = collArea_;
-				setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
-				currState_ = STATE::ATTACKING;
-				//Durante 1 frame se hace daño al jugador
-			}
-			break;
-		case STATE::ATTACKING:
 			//Después de ese frame hace de pared
 			currState_ = STATE::IDLE;
-			break;
 		}
+		return false;
 	}
 	//Cuando muere le dice al kraken que lo mate
 	else if (currState_ != STATE::DYING)
@@ -32,7 +118,6 @@ bool Tentacle::update()
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
-	return false;
 }
 
 void Tentacle::initObject()
@@ -40,12 +125,17 @@ void Tentacle::initObject()
 	setTexture(app_->getTextureManager()->getTexture(Resources::BlueBar));
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
+	//Empieza sin hitbox así que se guarda en una variable a parte
 	collArea_ = SDL_Rect({ (int)pos_.getX(), (int)pos_.getY(), (int)scaleCollision_.getX(), (int)scaleCollision_.getY() });
 	collisionArea_ = SDL_Rect({ 0, 0, 0, 0 });
 	CollisionCtrl::instance()->addEnemy(this);
 	initAnim();
 	spawnTime_ = SDL_GetTicks();
+	//El tentáculo empieza cayendo
 	currState_ = STATE::FOLLOWING;
+	double angle = collisionRot_ * (M_PI / 180) + M_PI / 2;
+	sweepDir_ = Vector2D(cos(angle), sin(angle));
+	initPos_ = pos_;
 }
 
 //Inicializa todas las animaciones
@@ -61,7 +151,6 @@ void Tentacle::onCollider()
 	Player* player = static_cast<Player*>(GameManager::instance()->getPlayer());
 	if (currState_ == STATE::ATTACKING)
 	{
-		cout << collisionRot_ << endl;
 		double radians = collisionRot_ * (M_PI / 180);
 		Point2D p1, p2;
 		Vector2D dir;
@@ -97,7 +186,7 @@ void Tentacle::onCollider()
 		dir.normalize();
 
 		int margin = scale_.getY() * 0.6 + (player->getScaleX() / 2 + player->getScaleY() / 2);
-		player->displace( dir, margin);
+		player->displace(dir, margin);
 
 	}
 	else if (currState_ == STATE::IDLE)

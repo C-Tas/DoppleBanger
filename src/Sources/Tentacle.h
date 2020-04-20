@@ -4,10 +4,12 @@
 
 class Kraken;
 
+enum class ATTACKS { SLAM, SWEEP };
+
 class Tentacle : public Enemy
 {
 public:
-	Tentacle(Application* app, Kraken* kraken, Vector2D pos, Vector2D scale, double rot) : Enemy(app, pos, scale, rot), kraken_(kraken)
+	Tentacle(Application* app, Kraken* kraken, Vector2D pos, Vector2D scale, double rot, ATTACKS attack) : Enemy(app, pos, scale, rot), kraken_(kraken), attack_(attack)
 		{  initObject(); };
 	virtual ~Tentacle() {};
 
@@ -21,6 +23,16 @@ private:
 	int attackFrames_ = 0;
 	//Puntero al kraken padre
 	Kraken* kraken_ = nullptr;
+	ATTACKS attack_;
+
+	//Velocidad y dirección en la que se mueve el tentáculo en sweep
+	bool rotating_ = false;
+	double deltaAngle_ = 0; //Incremento del ángulo de rotación
+	double speed_ = 500;
+	int turns_ = 0; //Número de giros
+	Vector2D sweepDir_;
+	Vector2D centerRot_; //Centro de rotación en relación a las esquinas cuando rotan
+	Vector2D initPos_; //Posición inicial
 
 	//Area del colisión del tentáculo que se guarda para cuando ya ha caído
 	SDL_Rect collArea_;
@@ -31,12 +43,14 @@ private:
 
 	void initObject();
 	void initAnims();
+	bool slamUpdate();
+	bool sweepUpdate();
 
 #pragma region Constantes
 	//Duración del tentáculo
-	const int TENTACLE_DURATION = 2;
+	const int TENTACLE_DURATION = 5;
 	//Duración del tentáculo cayendo
-	const int ATTACK_DURATION = 1;
+	const int ATTACK_DURATION = 3;
 
 	//Tentáculo aparece
 	const int NUM_FRAMES_SPAWN = 0;
