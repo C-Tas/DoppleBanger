@@ -33,11 +33,13 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisiones con obst�culos
 	for (auto ob : obstacles_) {
+		
 		//Con jugador
 		if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
 			(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 			player_->stop();
 			(ob)->onCollider();
+			player_->setPos(player_->getPreviousPos());
 		}
 
 		//Con enemigos

@@ -11,7 +11,7 @@ void SpookyIslandState::initState()
 	collisionCtrl_->clearList();
 
 	map_ = new TiledMap(app_,"../Sources/assets/mapas/Isla1-1/Isla 1.tmx", app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
-		TILESET_FILS, TILESET_COLS, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, Vector2D(app_->getWindowWidth() / 2, 0), TILE_DRAWING_SIZE, {202,203,204,205,206,207,208,209});
+		TILESET_FILS, TILESET_COLS, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, Vector2D(app_->getWindowWidth() / 2, 0), TILE_DRAWING_SIZE, {202,203,204,205,206,207,208,209,210,211,212});
 
 	cout << "mapa cargado correctamente" << endl;
 
@@ -38,12 +38,11 @@ SpookyIslandState::SpookyIslandState(Application* app) : PlayState(app)
 SpookyIslandState::~SpookyIslandState()
 {
 	delete map_;
-	//delete player_;
-	//delete hud_;
 }
 
 void SpookyIslandState::update()
 {
+	///Para comprobar las colisiones con el mapa
 	collisionCtrl_->islandCollisions();
 	PlayState::update();
 }
