@@ -55,6 +55,7 @@ void CollisionCtrl::islandCollisions() {
 				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 				//M�todo para destruir bala
 				removePlayerBullet(bullet);
+				bullet->onCollider();
 			}
 		}
 
@@ -64,6 +65,7 @@ void CollisionCtrl::islandCollisions() {
 				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 				//M�todo para destruir bala
 				removeEnemyBullet(bullet);
+				bullet->onCollider();
 			}
 		}
 	}

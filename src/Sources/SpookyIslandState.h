@@ -14,9 +14,15 @@ private:
 #pragma endregion
 	const int TILE_DRAWING_SIZE = 32;
 
+	//Dimensiones de las entidades
+	const int W_PLAYER = app_->getWindowWidth() / 40;
+	const int H_PLAYER = app_->getWindowHeight() / 15;
+
 public:
 	SpookyIslandState(Application*);
 	virtual ~SpookyIslandState();
-	virtual void draw()const { map_->draw(); };
+	virtual void draw()const { map_->draw(); PlayState::draw(); };
+	virtual void update();
+
 };
 

@@ -1,9 +1,11 @@
 #pragma once
-#include "../tmxLite/Map.hpp"
 #include <string>
 #include "Texture.h"
 #include "Vector2D.h"
 #include "checkML.h"
+#include "Application.h"
+#include <list>
+#include "Obstacle.h"
 
 using namespace std;
 
@@ -31,23 +33,27 @@ struct Tile {
 class TiledMap
 {
 public:
-	TiledMap(const string & filename, Texture* tileset, int filsTileset, int colsTileset, int tileTilesetHeight_ , int tileTilesetWidth, Vector2D iniPos, int tileSize);
-	~TiledMap() { delete map_; };
+	///<summary>Constructora del tilemap, necesita la direccion del archivo de tiled(.tmx), la textura del tileset
+	//cuantas filas y cuantas columnas tiene ese tileset, el ancho y el alto de los tiles, la posición donde quieres que se pinte la esquina superior
+	//izquierda del mapa (en perspectiva isométrica) y el tamaño con el que queremos pintar los tiles</summary>
+	TiledMap(Application* app_, const string& filename, Texture* tileset, int filsTileset, int colsTileset, int tileTilesetHeight_, int tileTilesetWidth, Vector2D iniPos, int tileSize, const list<int>& idCollisionTiles);
+	~TiledMap();
+	
 	///<summary>Método para pintar el mapa</summary>
 	const void draw();
 private:
-	///<summary>Mapa que contiene la información del tilemap. Igual no es necesario mantenerlo durante
-	///todo el tiempo puesto que solo se utiliza en la constructora. Por el momento se mantiene
-	//por si es necesario cuando añadamos las colisiones</summary>
-	tmx::Map* map_;
+	
+	///<summary>Tileset del mapa que estamos cargando</summary>
 	TilesetInfo tileset_;
-
-	//Tamaño al que queremos que se dibujen los tiles
+	
+	//<summary>Tamaño al que queremos que se dibujen los tiles</summary>
 	int tileSize_;
-
-	///<summary>Vector que contiene los tiles a renderizar, siendo los primeros los de las
-	///capas inferiores en tiled y empezando por la esquina superior izquierda
-	///</summary>
-	vector<Tile> tilesToRender;
+	
+	///<summary>Lista que contiene los tiles a renderizar, siendo los primeros los de las
+	///capas inferiores en tiled y empezando por la esquina superior izquierda</summary>
+	list<Tile> tilesToRender;
+	
+	///<summary>Lista que contiene los objetos de tipo obstacle del mapa</summary>
+	list<Obstacle*> mapObstacles_;
 };
 
