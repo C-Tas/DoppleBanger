@@ -36,7 +36,7 @@ bool Tentacle::update()
 bool Tentacle::sweepUpdate()
 {
 	//Mientras no haya llegado a la posición inicial con un margen de error (y no haya hecho ningún giro para que funcione la primera vez)
-	if (turns_ < 4 || !((abs(pos_.getX() - initPos_.getX()) < 20) && (abs(pos_.getY() - initPos_.getY()) < 10)))
+	if (turns_ < 4 || !((abs(pos_.getX() - initPos_.getX()) < (kraken_->getScaleX() * 0.05)) && (abs(pos_.getY() - initPos_.getY()) < (kraken_->getScaleY() * 0.05))))
 	{
 		if (!rotating_) 
 		{

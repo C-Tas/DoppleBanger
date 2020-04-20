@@ -44,7 +44,7 @@ void CaribbeanIslandState::initState()
 	
 	app_->getWindowHeight() / 15;
 	pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
-	newKraken = new Kraken(app_, pos, Vector2D(app_->getWindowWidth() / 5, app_->getWindowHeight() / 10));
+	newKraken = new Kraken(app_, pos, Vector2D(app_->getWindowWidth() / 5, app_->getWindowHeight() / 3));
 	addEnemy(newKraken);
 	//*/
 

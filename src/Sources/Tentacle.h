@@ -50,7 +50,7 @@ private:
 	//Duración del tentáculo
 	const int TENTACLE_DURATION = 5;
 	//Duración del tentáculo cayendo
-	const int ATTACK_DURATION = 3;
+	const int ATTACK_DURATION = 1;
 
 	//Tentáculo aparece
 	const int NUM_FRAMES_SPAWN = 0;
