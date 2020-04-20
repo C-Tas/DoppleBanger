@@ -27,6 +27,7 @@ void CaribbeanIslandState::initState()
 {
 	//Borramos la lista de objetos del CollisionCtrl
 	collisionCtrl_->clearList();
+	gm_->setOnShip(false);
 
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
 	addRenderUpdateLists(background_);
@@ -35,7 +36,6 @@ void CaribbeanIslandState::initState()
 	createPirates(NUM_PIRATES);
 	createWolves(NUM_WOLVES);
 	createChest(NUM_CHEST);
-	createNPC();
 
 	//Crear Chest
 	//chest_ = new Chest(app_, Vector2D(200, 200), Vector2D(100, 100));
@@ -110,14 +110,4 @@ void CaribbeanIslandState::createChest(int numChest)
 		addRenderUpdateLists(newChest);
 		//addObject
 	}
-}
-
-void CaribbeanIslandState::createNPC() {
-	int wWin = app_->getWindowWidth();
-	int hWin = app_->getWindowHeight();
-	NPC* chef;
-	Vector2D pos;
-	pos.setVec(Vector2D(wWin / 2, hWin * 3 / 4));
-	chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), pos, Vector2D(app_->getWindowWidth() / 20, app_->getWindowHeight() / 8), 2);
-	addRenderUpdateLists(chef);
 }

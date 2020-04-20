@@ -1,4 +1,17 @@
 #include "Draw.h"
+#include "GameManager.h"
+
+const void Draw::draw() {
+	if (app_->getGameManager()->getOnShip()) {
+		if (currAnim_.numberFrames_ <= 0) texture_->render(getDestiny(), SDL_FLIP_NONE);
+		else texture_->render(getDestiny(), frame_);
+	}
+	else {
+		SDL_Rect dest = getDestiny(); dest.x = dest.x - Camera::instance()->getCamera().getX(); dest.y = dest.y - Camera::instance()->getCamera().getY();
+		if (currAnim_.numberFrames_ <= 0) texture_->render(dest, SDL_FLIP_NONE);
+		else texture_->render(dest, frame_);
+	}
+};
 
 void Draw::changeAnim(const Anim& newAnim)
 {

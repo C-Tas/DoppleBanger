@@ -3,6 +3,7 @@
 
 void VolcanicIslandState::initState()
 {
+	gm_->setOnShip(false);
 	//background_ = app_->getTextureManager()->getTexture(Resources::Caribbean);
 
 	//Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::BackButton),

@@ -143,7 +143,7 @@ bool Player::update()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
-		Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
+		if (!gm_->getOnShip()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
 	}
 	//Si se ha utilizado el ataque fuerte, ataca con un bonus porcentual de daño
 	else if (empoweredAct_ && attacking_ && objective_->getState() != STATE::DYING)

@@ -50,8 +50,6 @@ private:
 	#pragma endregion
 
 	void initState();
-	//Este método se va a modificar, no es definitivo
-	void createNPC();
 
 	#pragma region Callbacks
 	static void goIsland(Application* app);
