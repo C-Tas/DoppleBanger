@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="50" tilewidth="256" tileheight="128" infinite="0" nextlayerid="10" nextobjectid="1">
+<map version="1.2" tiledversion="1.3.1" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="50" tilewidth="256" tileheight="128" infinite="0" nextlayerid="13" nextobjectid="12">
  <tileset firstgid="1" name="Dopplebanger" tilewidth="257" tileheight="256" tilecount="222" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
@@ -939,4 +939,16 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="10" name="Monkey">
+  <object id="2" gid="1" x="3176.5" y="1551.5" width="256" height="128"/>
+  <object id="5" gid="1" x="1012" y="428" width="256" height="128"/>
+  <object id="6" gid="1" x="3812" y="3180" width="256" height="128"/>
+  <object id="7" gid="1" x="3948" y="4724" width="256" height="128"/>
+  <object id="8" gid="1" x="3312" y="4896" width="256" height="128"/>
+  <object id="9" gid="1" x="4460" y="5780" width="256" height="128"/>
+ </objectgroup>
+ <objectgroup id="12" name="Wolf">
+  <object id="10" gid="111" x="3164" y="2260" width="256" height="128"/>
+  <object id="11" gid="111" x="4844" y="3044" width="256" height="128"/>
+ </objectgroup>
 </map>

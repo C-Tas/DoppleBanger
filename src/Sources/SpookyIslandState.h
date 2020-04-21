@@ -12,7 +12,7 @@ private:
 	const int TILESET_COLS = 25;
 	const int TILESET_FILS = 9;
 #pragma endregion
-	const int TILE_DRAWING_SIZE = 64;
+	const int TILE_DRAWING_SIZE = 128;
 
 	//Dimensiones de las entidades
 	const int W_PLAYER = app_->getWindowWidth() / 40;

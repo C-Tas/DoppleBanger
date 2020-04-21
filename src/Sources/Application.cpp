@@ -10,8 +10,9 @@ Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	machine_ = new GameStateMachine();
-	//GameState* startState = new MainMenuState(this);
-	machine_->pushState(/*startState*/new SpookyIslandState(this));
+	GameState* startState = new MainMenuState(this);
+	machine_->pushState(startState);
+	machine_->pushState(new SpookyIslandState(this));
 }
 
 Application::~Application() {
