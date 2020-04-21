@@ -5,10 +5,15 @@
 #include "Collisions.h"
 
 bool Pumpkin::onDistRange() {
-	SDL_Rect rangeAttack = { getPosX() - currStats_.distRange_ - (getScaleX() / 2)  ,
-	getPosY() - currStats_.distRange_ - (getScaleY() / 2),currStats_.distRange_ * 2, currStats_.distRange_ * 2 };;
-	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
-		return true;
+
+	if (currEnemy_ != nullptr) {
+		Point2D center = getCenter(pos_);
+		Point2D currEnemyCenter = getCenter(currEnemy_->getPos());
+		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
+			center.getX(), center.getY(), currStats_.distRange_))
+		{
+			return true;
+		}
 	}
 	else
 	{
@@ -21,7 +26,6 @@ bool Pumpkin::onMeleeRange() {
 		Point2D currEnemyCenter = getCenter(currEnemy_->getPos());
 		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
 			center.getX(), center.getY(), currStats_.meleeRange_)) {
-			followPlayer_ = true;
 			return true;
 		}
 		else return false;
@@ -37,23 +41,22 @@ bool Pumpkin::update() {
 
 #endif // _DEBUG
 
-	//Si el mono ha muerto
+	//Si la calabaza ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte?
 		//Cuando acabe la animación, lo mata
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
-	//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
+	//Si la calabaza no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
 	if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
 		currState_ = STATE::ATTACKING;
 	}
-	//Si el mono tiene enemigo y puede atacar
+	//Si la calabaza tiene enemigo y puede atacar
 	if (currState_ == STATE::ATTACKING ) {
-		//Si el mono tiene un enemigo y lo tiene a rango
-		if (followPlayer_ || onMeleeRange()) {
-			changeAnim(walkAnim_);
-			follow();
+		//Si la calabaza tiene un enemigo y lo tiene a rango
+		if ( onMeleeRange()) {
+			currState_ = STATE::FOLLOWING;
 		}
 		else {
 			if (onDistRange() && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
@@ -79,10 +82,18 @@ bool Pumpkin::update() {
 		}
 		lastHit = SDL_GetTicks();
 	}
+	if (currState_ == STATE::FOLLOWING) {
+		changeAnim(walkAnim_);
+		follow();
+	}
 	updateAnim();
 	return false;
 }
 void Pumpkin::disAttack() {
+#ifdef _DEBUG
+	cout << "hey";
+#endif // _DEBUG
+
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
 	Bullet* seed = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
 		getCenter(pos_), dir, currStats_.distDmg_, seedLife, seedVel, Vector2D(wHSeed, wHSeed));

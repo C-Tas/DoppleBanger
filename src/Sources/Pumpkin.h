@@ -5,9 +5,6 @@ class Pumpkin :
 {
 private:
 	Uint32 lastHit = 0;
-	///<summary>booleano que determina si debe o no seguir al jugador</summary>
-	bool followPlayer_=false;
-
 	 uint wHSeed = app_->getWindowHeight() / 40;		//Tamaño de la semilla
 	 double seedVel = 700;							//Velocidad de la semilla
 	 double seedLife = 3;								//Vida del proyectil en segundos
@@ -20,23 +17,25 @@ private:
 	 const string NAME_EXP = "explode";
 	///<summary>Devuelve si hay un enemigo en rango y establece cual es el más cercano </summary>
 	bool onDistRange();
-	///
+	///<summary>Devuelve si hay un enemigo en rango melee y establece cual es el más cercano </summary>
 	bool onMeleeRange();
-	///
+	///<summary>Ataca a distancia </summary>
 	void disAttack();
-	///
+	///<summary>Inicializa el ataque</summary>
 	void initObject();
-	///
+	///<summary>Pierde el agro</summary>
 	void lostAgro();
-	///
+	///<summary>Establece las variables de las animaciones </summary>
 	void animationsvar();
-	///
+	///<summary>Inicializa las stats</summary>
 	void initialStats();
-	///
+	///<summary>Sigue al jugador o al clon</summary>
 	void follow();
-	///
+	///<summary>explota y hace daño si colisiona con el player</summary>
 	void explote();
+	///<summary>Move a la calabaza siguiendo al clon o al player</summary>
 	void move(Point2D posToReach);
+	///<summary>Metodo que realiza al colisionar</summary>
 	void onCollider() { explote(); }
 public:
 	virtual bool update();
