@@ -1,16 +1,15 @@
 #pragma once
+#include <memory>
+#include <list>
+#include <vector>
+#include <iostream>
+#include "Application.h"
 #include "InventoryButton.h"
 #include "RandEquipGen.h"
 #include "Equipment.h"
 #include "Clon.h"
 #include "HUD.h"
 #include "checkML.h"
-#include <iostream>
-#include <memory>
-#include <vector>
-#include <list>
-#include "Application.h"
-
 
 using namespace std;
 class Item;
@@ -138,6 +137,7 @@ private:
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
 	vector<ObjectName> objectsEquipped = { ObjectName::Unequipped, ObjectName::Unequipped };
+
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
 	Player* player_ = nullptr;
 	//Puntero al clon
@@ -160,6 +160,7 @@ public:
 		for (InventoryButton* ob : *stash_)delete ob;
 		delete inventory_;
 		delete stash_;
+		delete app_;
 	}
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {
@@ -193,15 +194,19 @@ public:
 	const int getInventoryGold() { return inventoryGold; }
 	//Devuelve el dinero del alijo
 	const int getStashGold() { return stashGold; }
+		//Devuelve el tamaño de fuente según el tamaño de la ventana
+	const int getFontSize();
+	//Devuelve el total de misiones secundarias
+	const int getNumMission() { return NUM_MISION; };
 
 	//Devuelve el inventario
 	const lista getInventory() { return inventory_; };
 	//Devuelve el alijo
 	const lista getStash() { return stash_; };
+
 	//Devuelve el vector de skills
 	const vector<SkillName>& getAllSkillsEquipped() { return skillsEquipped_; }
-	//Devuelve el total de misiones secundarias
-	const int getNumMission() { return NUM_MISION; };
+
 	//Devuelve el n�mero de islas desbloqueadas
 	const Island getUnlockedIslands() { return unlockedIslands_; };
 	//Devuelve la isla actual
