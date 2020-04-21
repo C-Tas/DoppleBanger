@@ -225,6 +225,7 @@ private:
 	int liberation_ = 2;	//Nivel de la habilidad del clon, debería llevarse a GameManager
 	const int RANGE_SPEED = 1000;	//Velocidad extra para el pistolero raudo (a falta de equilibrado)
 	bool empoweredAct_ = false;		//Si tiene la habilidad activada
+	bool empoweredAnim_ = false; //Si ha empezado la animación del ataque potenciado
 	double empoweredBonus_ = 1.5;	//Bonus porcentual del daño
 	bool perforate_ = false;	//Para saber si el siguiente disparo perfora
 	bool ricochet_ = false;		//Para saber si los disparos van a rebotar
@@ -248,7 +249,7 @@ private:
 	const double MANA = 100;			//Mana
 	const double MANA_REG = 1;			//Regeneración de maná por segundo
 	const double ARMOR = 10;			//Armadura
-	const double MELEE_DAMAGE = 1000;	//Daño a melee
+	const double MELEE_DAMAGE = 0;	//Daño a melee
 	const double DIST_DAMAGE = 1000;	//Daño a distancia y de las habilidades
 	const double CRIT = 0;				//Crítico
 	const double MELEE_RANGE = 20;		//Rango del ataque a melee

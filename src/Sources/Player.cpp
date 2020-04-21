@@ -156,9 +156,10 @@ bool Player::update()
 			if ((*it) == objective)
 				found = true;
 
-		if (found && empoweredAct_)
+		if (found && empoweredAct_ && !empoweredAnim_)
 		{
 			cout << "\nAtaque potenciado\n" << endl;
+			empoweredAnim_ = true;
 			initMelee();
 		}
 		else if (found && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_)
@@ -339,6 +340,7 @@ void Player::meleeAnim()
 		attacked_ = true;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		empoweredAnim_ = false;
 		initIdle();	//Activa el idle
 	}
 }
