@@ -16,6 +16,8 @@
 #include "RicochetSkill.h"
 #include "PerforateSkill.h"
 #include "usable.h"
+#include "Blunder.h"
+#include "Blunderbuss.h"
 
 void Player::initObject()
 {
@@ -33,7 +35,11 @@ void Player::initObject()
 	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), "Guantes", "helloWorld", 10, 10, 10); equip_.gloves_->writeStats(); //Prueba
 	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Boots1), "Botas", "helloWorld", 10, 10, 10); equip_.boots_->writeStats(); //Prueba
 	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, Saber_); equip_.sword_->writeStats(); //Prueba
-	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
+	//equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
+	auto  fireWeapon = app_->genEquip(equipType::Pistol_);
+	equip(fireWeapon);
+	//equip(new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), "Pistola", "pipota", 10, 10, 10, Pistol_, 1000));
+	equip_.fireGun_->writeStats();
 	equip_.potion1_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, -1);	//Prueba
 	equip_.potion2_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, -1);	//Prueba
 }
@@ -408,20 +414,35 @@ void Player::shoot(Vector2D dir)
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 	shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-	PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Rock),
-		shootPos, dir, currStats_.distDmg_);
-	//Activa perforación en la bala
-	if (perforate_) {
-		bullet->setPerforate(perforate_);
-		perforate_ = false;
-	}
-	//Activa el rebote en la bala
-	if (ricochet_)
-		bullet->setRicochet(ricochet_);
+	if (currFireArm_ == FIREARM::PISTOL) {
+		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir,
+			currStats_.distDmg_, currStats_.distRange_, static_cast<Gun*>(equip_.fireGun_)->getBulletSpeed());
+		//Activa perforación en la bala
+		if (perforate_) {
+			bullet->setPerforate(perforate_);
+			perforate_ = false;
+		}
+		//Activa el rebote en la bala
+		if (ricochet_)
+			bullet->setRicochet(ricochet_);
 
-	//Se añade a los bucles del juegos
-	app_->getCurrState()->addRenderUpdateLists(bullet);
-	CollisionCtrl::instance()->addPlayerBullet(bullet);
+		//Se añade a los bucles del juegos
+		app_->getCurrState()->addRenderUpdateLists(bullet);
+		CollisionCtrl::instance()->addPlayerBullet(bullet);
+	}
+	else if (currFireArm_ == FIREARM::BLUNDERBUSS) {
+		Blunderbuss* blunderbuss = new Blunderbuss(app_, app_->getTextureManager()->getTexture(Resources::MonkeyFront), shootPos, dir,
+			currStats_.distDmg_, currStats_.distRange_, static_cast<Blunder*>(equip_.fireGun_)->getBulletSpeed());
+		if (perforate_) {
+			blunderbuss->activatePerforate();
+			perforate_ = false;
+		}
+		if (ricochet_) {
+			blunderbuss->activateRicochet();
+		}
+		app_->getCurrState()->addUpdateList(blunderbuss);
+	}
+
 }
 
 void Player::onCollider()
@@ -461,6 +482,7 @@ void Player::decreaseMana(double mana) {
 	currStats_.mana_ -= mana;
 	if (currStats_.mana_ <= 0) currStats_.mana_ = 0;
 }
+
 
 void Player::usePotion(int value, potionType type) {
 	switch (type)
@@ -520,6 +542,41 @@ void Player::desactivePotion(){
 	}
 }
 
+void Player::changeFireArmStatus()
+{
+	switch (equip_.fireGun_->getType())
+	{
+	case equipType::Pistol_:
+		currFireArm_ = FIREARM::PISTOL;
+		break;
+	case equipType::Shotgun_:
+		currFireArm_ = FIREARM::SHOTGUN;
+		break;
+	case equipType::Blunderbuss_:
+		currFireArm_ = FIREARM::BLUNDERBUSS;
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::changeDistWeaponStats(Equipment* newWeapon)
+{
+	if (equip_.fireGun_ != nullptr) {
+		//se quitan los stats del equipo anterior
+		currStats_.crit_ -= equip_.fireGun_->getCrit();
+		currStats_.distDmg_ -= equip_.fireGun_->getDistDmg();
+		currStats_.distRange_ -= equip_.fireGun_->getDistRange();
+		currStats_.distDmg_ -= equip_.fireGun_->getDistDmg();
+	}
+	//se agregan los stats del equipo nuevo
+	currStats_.crit_ += newWeapon->getCrit();
+	currStats_.distDmg_ += newWeapon->getDistDmg();
+	currStats_.distRange_ += newWeapon->getDistRange();
+	currStats_.distDmg_ += newWeapon->getDistDmg();
+	equip_.fireGun_ = newWeapon;
+}
+
 void Player::createClon()
 {
 	Vector2D pos;
@@ -540,7 +597,7 @@ Player::~Player()
 	delete equip_.gloves_;
 	delete equip_.boots_;
 	delete equip_.sword_;
-	delete equip_.gun_;
+	delete equip_.fireGun_;
 	delete equip_.potion1_;
 	delete equip_.potion2_;
 }

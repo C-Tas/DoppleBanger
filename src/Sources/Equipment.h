@@ -5,18 +5,14 @@
 #include "Stats.h"
 #include <iostream>
 
+const enum equipType { Armor_, Boots_, Gloves_, Sword_, Saber_, Pistol_, Shotgun_, Blunderbuss_};
 
-
-
-
-const enum equipType { Armor_, Boots_, Gloves_, Sword_, Saber_, Pistol_, Shotgun_ };
 
 class Equipment : public Item
 {
 protected:
 	equipType type_;
 	Stats modifiers_;
-
 
 public:
 	//Crea un item equipable del tipo dado
@@ -43,7 +39,9 @@ public:
 	int getSpeed() { return modifiers_.moveSpeed_; }; // Devuelve el valor de Speed
 	double getDistRate() { return modifiers_.distRate_; }; // Devuelve el valor de DistRate
 	double getMeleeRate() { return modifiers_.meleeRate_; }; // Devuelve el valor de MeleeRate
-
+	double getDistDmg() { return modifiers_.distDmg_; }//Devuelve el valor del daño a distancia de un arma
+	double getDistRange() { return modifiers_.distRange_; }//devuelve el rango del arma a distancia
+	inline equipType getType()const { return type_; };
 #pragma endregion
 	virtual void equip(Player* player) = 0;
 	virtual void remove(Player* player) = 0;

@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "Resources.h"
 #include "GameManager.h"
-
+#include "Blunder.h"
 
 RandEquipGen::RandEquipGen(Application* app) : app_(app)
 {
@@ -20,7 +20,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 {
 	//Aqu� visual me hizo declararlo todo a parte o no compilaba
 	int ad, health, armor, price, crit, speed;
-	double meleeRate, distRate;
+	double meleeRate, distRate, distRange;
 	
 	Equipment* obj;
 	int area = (int)gameManager_->getUnlockedIslands();
@@ -73,7 +73,9 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		ad = rn_->nextInt(5 * area, 16 * area);
 		distRate = rn_->nextInt(2 * area, 4 * area);
 		price = rn_->nextInt(4 * area, 6 * area);
-		obj = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pistola", "helloWorld", price, ad, distRate, type);
+		crit = rn_->nextInt(1 * area, 3 * area);
+		distRange = rn_->nextInt(2 * area, 6 * area);
+		obj = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pistola", "helloWorld", price, ad, distRate, distRange, crit, type, PISTOL_BULLET_SPEED);
 		break;
 
 	//Dispara en are recta con menos da�o y alcance que la escopeta
@@ -81,7 +83,19 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		ad = rn_->nextInt(3 * area, 13 * area);
 		distRate = rn_->nextInt(1 * area, 2 * area);
 		price = rn_->nextInt(4 * area, 6 * area);
-		obj = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Trabuco", "helloWorld", price, ad, distRate, type);
+		crit = rn_->nextInt(2 * area, 6 * area);
+		distRange = rn_->nextInt(1 * area, 3 * area);
+		distRange = distRange / 2;
+		obj = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Pistola", "helloWorld", price, ad, distRate, distRange, crit, type, PISTOL_BULLET_SPEED);
+		break;
+	case Blunderbuss_:
+		ad = rn_->nextInt(3 * area, 13 * area);
+		distRate = rn_->nextInt(4 * area, 6 * area);
+		price = rn_->nextInt(4 * area, 6 * area);
+		crit = rn_->nextInt(2 * area, 6 * area);
+		distRange = rn_->nextInt(1 * area, 2 * area);
+		distRange = distRange / 3;
+		obj = new Blunder(app_->getTextureManager()->getTexture(Resources::TextureId::Blunderbuss), "Trabuco", "Trabucón para el más perrón", price, ad, distRate, crit, distRange, type, BLUNDERBUSS_BULLET_SPEED);
 		break;
 	default:
 		return nullptr;

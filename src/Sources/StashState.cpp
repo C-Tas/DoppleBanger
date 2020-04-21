@@ -139,10 +139,15 @@ void StashState::initState() {
 	#ifdef _DEBUG
 	cout << "Creando Objetos de prueba en el initState" << endl;
 
-	Gun* gun = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon),"pistolaDefault", "uwu1",0,0,0,Shotgun_);
+	Equipment* gun = app_->getEquipGen()->genEquip(equipType::Pistol_);
+	Equipment* gun1 = app_->getEquipGen()->genEquip(equipType::Shotgun_);
+	Equipment* gun2 = app_->getEquipGen()->genEquip(equipType::Blunderbuss_);
+	Equipment* gun3 = app_->getEquipGen()->genEquip(equipType::Pistol_);
+
+	/*Gun* gun = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon),"pistolaDefault", "uwu1",0,0,0,Shotgun_);
 	Gun* gun1 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu2", 0, 0, 0, Shotgun_);
 	Gun* gun2 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu3", 0, 0, 0, Shotgun_);
-	Gun* gun3 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu4", 0, 0, 0, Shotgun_);
+	Gun* gun3 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu4", 0, 0, 0, Shotgun_);*/
 
 	
 	InventoryButton* b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),

@@ -181,6 +181,7 @@ public:
 		Boots1,
 		Gloves2,
 		Armor1,
+		Blunderbuss
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

@@ -254,6 +254,10 @@
     <ClCompile Include="Sources\TextBox.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Blunderbuss.cpp" />
+    <ClCompile Include="Sources\Blunder.cpp">
+      <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -522,6 +526,10 @@
     </ClInclude>
     <ClInclude Include="Sources\TextBox.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Blunderbuss.h" />
+    <ClInclude Include="Sources\Blunder.h">
+      <Filter>GameObjects\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
