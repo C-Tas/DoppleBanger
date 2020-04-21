@@ -29,8 +29,10 @@ public:
 	///<summary>Maneja los eventos de todos los objetos en la lista de objectEvents_</summary>
 	///<summary>A�ade un objeto a la lista de gameObjects</summary>
 	virtual void handleEvents();//Ejecuta los eventos de los objetos objectEvents_
+	//Crea botones con un callback con parámetro Application*
 	virtual void createButton(Application* app, Texture* texture, Point2D pos, Vector2D scale, CallBackOnClick* callBack);
-
+	//Crea botones con un callback sin parámetros
+	virtual void createButton2(NoParCallBack* callBack, Application* app, Texture* texture, Point2D pos, Vector2D scale);
 	///<summary>A�ade un objeto a la lista de gameObjects</summary>
 	void addUpdateList(GameObject* obj);
 	///<summary>A�ade un objeto a la lista de objectsToRender_</summary>

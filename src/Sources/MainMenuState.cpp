@@ -2,7 +2,7 @@
 #include "ControlsState.h"
 #include "CreditsState.h"
 #include "StoryState.h"
-#include "SaveLoadState.h"
+#include "SaveState.h"
 #include "Button.h"
 #include "Texture.h"
 #include "SDL_macros.h"
@@ -74,7 +74,7 @@ void MainMenuState::goCreditsState(Application* app) {
 	app->getGameStateMachine()->pushState(new CreditsState(app));
 };
 void MainMenuState::goLoadState(Application* app) {
-	app->getGameStateMachine()->pushState(new SaveLoadState(app, true)); //TRUE => LOAD //FALSE => SAVE
+	app->getGameStateMachine()->pushState(new SaveState(app)); //TRUE => LOAD //FALSE => SAVE
 };
 void MainMenuState::goStoryState(Application* app) {
 	app->getGameStateMachine()->pushState(new StoryState(app));

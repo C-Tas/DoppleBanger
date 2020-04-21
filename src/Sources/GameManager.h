@@ -174,6 +174,11 @@ public:
 	//Inicializa el oro, la actual isla y los puntos de haza�a
 	inline void initGameManager(int currGold, Island unlockedIslands, int achievementPoints);
 
+	//Guarda en la partida 1
+	void saveGame1();
+	void saveGame2();
+	void saveGame3();
+
 #pragma region getters
 	//Devuelve true si la misi�n ha sido pasada
 	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };

@@ -23,9 +23,6 @@
     <ClCompile Include="Sources\PauseState.cpp">
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\SaveLoadState.cpp">
-      <Filter>GameStateMahcine</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\PlayState.cpp">
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
@@ -254,6 +251,9 @@
     <ClCompile Include="Sources\TextBox.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\SaveState.cpp">
+      <Filter>GameStateMahcine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -275,9 +275,6 @@
       <Filter>GameStateMahcine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\PauseState.h">
-      <Filter>GameStateMahcine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\SaveLoadState.h">
       <Filter>GameStateMahcine</Filter>
     </ClInclude>
     <ClInclude Include="Sources\PlayState.h">
@@ -522,6 +519,9 @@
     </ClInclude>
     <ClInclude Include="Sources\TextBox.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\SaveState.h">
+      <Filter>GameStateMahcine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

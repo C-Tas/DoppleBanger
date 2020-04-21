@@ -6,7 +6,7 @@
 #include "SpookyIslandState.h"
 #include "VolcanicIslandState.h"
 #include "SelectLevelState.h"
-#include "SaveLoadState.h"
+#include "SaveState.h"
 #include "StashState.h"
 
 #include "Collisions.h" //Provisional
@@ -36,7 +36,7 @@ void ShipState::goMap(Application* app)
 //Callback para ir al menu de guardado
 void ShipState::goSaveState(Application* app)
 {
-	app->getGameStateMachine()->pushState(new SaveLoadState(app, false));
+	app->getGameStateMachine()->pushState(new SaveState(app));
 }
 #pragma endregion
 

@@ -53,6 +53,12 @@ void GameState::createButton(Application* app, Texture* texture, Point2D pos, Ve
 	addRenderUpdateLists(button); //Lo mete en las listas de objetos y de dibujado
 }
 
+void GameState::createButton2(NoParCallBack* callBack, Application* app, Texture* texture, Point2D pos, Vector2D scale)
+{
+	Button* button = new Button(callBack, app, texture, pos, scale); //Crea boton
+	addRenderUpdateLists(button); //Lo mete en las listas de objetos y de dibujado
+}
+
 void GameState::addUpdateList(GameObject* obj) {
 	gameObjects_.push_back(obj);
 }

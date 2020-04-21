@@ -11,6 +11,21 @@ void GameManager::initGameManager(int currGold, Island unlockedIslands, int achi
 	app_ = new Application();
 }
 
+void GameManager::saveGame1()
+{
+	cout << "Guardada Partida 1" << endl;
+}
+
+void GameManager::saveGame2()
+{
+	cout << "Guardada Partida 2" << endl;
+}
+
+void GameManager::saveGame3()
+{
+	cout << "Guardada Partida 3" << endl;
+}
+
 const int GameManager::getFontSize()
 {
 	int fontSize;

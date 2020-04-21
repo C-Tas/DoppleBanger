@@ -44,6 +44,9 @@ public:
 		GoToInventoryBButton,
 		GoToSkillsAButton,
 		GoToSkillsBButton,
+		SaveGame1,
+		SaveGame2,
+		SaveGame3,
 
 		//BarrasPuntosHazaña
 		Controls,
@@ -76,6 +79,7 @@ public:
 		MenuBackground,
 		InventaryMenu,
 		PauseBackground,
+		SaveLoadBackground,
 		StashMenu,//
 		SkillMenu,
 		Scene1,

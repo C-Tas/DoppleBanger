@@ -28,6 +28,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ EquippedButton, "../Sources/assets/botones/Equipar_Boton.png"},
 	{ GoToInventoryAButton, "../Sources/assets/botones/InventoryButtonA.png"},
 	{ GoToInventoryBButton, "../Sources/assets/botones/InventoryButtonB.png"},
+	{ SaveGame1, "../Sources/assets/botones/saveGame1.png"},
+	{ SaveGame2, "../Sources/assets/botones/saveGame2.png"},
+	{ SaveGame3, "../Sources/assets/botones/saveGame3.png"},
 
 	//Interfaces
 	{ BackButton, "../Sources/assets/botones/volver.png"},
@@ -65,8 +68,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ SkillTorbellinoC, "../Sources/assets/skills/torbellinoHab.png"},
 	{ SkillTorbellinoBN, "../Sources/assets/skills/torbellinoHabBN.png"},
 
+	//Interfaces
 	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
 	{ PauseBackground, "../Sources/assets/interfaces/pauseFondo.png" },
+	{ SaveLoadBackground, "../Sources/assets/interfaces/saveLoadBg.png" },
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
 	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
 	{ SkillMenu, "../Sources/assets/interfaces/HabilidadesFondo.png" },

@@ -76,7 +76,7 @@
     <ClCompile Include="Sources\RandEquipGen.cpp" />
     <ClCompile Include="Sources\Resources.cpp" />
     <ClCompile Include="Sources\RicochetSkill.cpp" />
-    <ClCompile Include="Sources\SaveLoadState.cpp" />
+    <ClCompile Include="Sources\SaveState.cpp" />
     <ClCompile Include="Sources\SDL_macros.cpp" />
     <ClCompile Include="Sources\SelectLevelState.cpp" />
     <ClCompile Include="Sources\ShipState.cpp" />
@@ -157,7 +157,7 @@
     <ClInclude Include="Sources\RandEquipGen.h" />
     <ClInclude Include="Sources\Resources.h" />
     <ClInclude Include="Sources\RicochetSkill.h" />
-    <ClInclude Include="Sources\SaveLoadState.h" />
+    <ClInclude Include="Sources\SaveState.h" />
     <ClInclude Include="Sources\SDL_macros.h" />
     <ClInclude Include="Sources\SelectLevelState.h" />
     <ClInclude Include="Sources\ShipState.h" />
