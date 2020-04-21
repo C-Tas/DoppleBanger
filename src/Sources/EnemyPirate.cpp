@@ -112,8 +112,8 @@ bool EnemyPirate::update() {
 void EnemyPirate::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
 	target_.setVec(posToReach);
-	dir_.setX(posToReach.getX() - getCenter(pos_).getX());
-	dir_.setY(posToReach.getY() - getCenter(pos_).getY());
+	dir_.setX(posToReach.getX() - getCenter().getX());
+	dir_.setY(posToReach.getY() - getCenter().getY());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
@@ -174,7 +174,7 @@ void EnemyPirate::attack() {
 	if (currAtackStatus_ == ATK_STATUS::RANGE && currStats_.distRate_ <= SDL_GetTicks() - lastRangeHit_) {
 		lastRangeHit_ = SDL_GetTicks();
 		Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock),
-			getCenter(pos_), getCenter(currEnemy_->getPos()), currStats_.distDmg_);
+			getCenter(), currEnemy_->getCenter(), currStats_.distDmg_);
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addEnemyBullet(bullet);
 	}
@@ -207,19 +207,23 @@ void EnemyPirate::onCollider()
 
 }
 
+//Cuando el pirata pierde el agro, se le asigna el agro del player
+//Esto lo llama el clon cuando se destruye
+void EnemyPirate::lostAggro()
+{
+	currEnemy_ = GameManager::instance()->getPlayer();
+}
+
 //Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_ DONE
 bool EnemyPirate::getEnemy() {
 	auto gm = GameManager::instance();
 	Vector2D playerPos = isPlayerInRange();
-	Vector2D clonPos = isClonInRange();
-	if (playerPos == Vector2D{ -1,-1 } && clonPos == Vector2D{ -1,-1 }) {
+	if (playerPos == Vector2D{ -1,-1 }) {
 		return false;
 		currEnemy_ = nullptr;
 	}
 
-	Vector2D closesetEnemy;
-	closesetEnemy = pos_.getClosest(playerPos, clonPos);
-	closesetEnemy == playerPos ? currEnemy_ = gm->getPlayer() : currEnemy_ = gm->getClon();
+	currEnemy_ = gm->getPlayer();
 	if (!app_->getMute()) {
 		app_->getAudioManager()->playChannel(Resources::AudioId::Agro, 0, 0);
 	}
@@ -247,24 +251,6 @@ Vector2D EnemyPirate::isPlayerInRange() {
 	else
 	{
 		return  { -1,-1 };
-	}
-}
-
-//Devuelve la posición del clon si está a rango DONE
-Vector2D EnemyPirate::isClonInRange() {
-	GameManager* gm = GameManager::instance();
-	if (gm->getClon() == nullptr) { return { -1,-1 }; }
-
-	Point2D clonPos = gm->getClon()->getPos();
-	if (currEnemy_ == nullptr &&
-		clonPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && clonPos.getX() >= pos_.getX() - rangeVision_
-		&& clonPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && clonPos.getY() >= pos_.getY() - rangeVision_) {
-		static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
-		return clonPos;
-	}
-	else
-	{
-		return { -1,-1 };
 	}
 }
 

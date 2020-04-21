@@ -15,8 +15,5 @@ int main(int argc, char** argv) {
 	app->runApp();
 
 	delete app;
-
-	cout << "Success" << endl;
-
 	return 0;
 }

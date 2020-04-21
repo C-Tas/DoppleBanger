@@ -57,6 +57,7 @@ public:
 	bool killClon() {
 		if (clon_ != nullptr) {
 			clon_->die();
+			clon_ = nullptr;
 			return true;
 		}
 		else return false;
@@ -74,7 +75,7 @@ public:
 	const double getMaxMana() { return MANA; }; //Faltaria poner una variable que lleve el mana maximo sin ser cte
 
 	const Vector2D getPreviousPos() { return previousPos_; }
-	//Devuelve la posición del clon
+
 	const Stats& getStats() { return currStats_; };
 	//habilidades
 	//activa la pasiva invencible y aplica los efectos de esta
@@ -126,7 +127,6 @@ private:
 	int money_ = 0;
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
-	Actor* objective_ = nullptr;
 	Clon* clon_ = nullptr;
 
 	Vector2D previousPos_;
@@ -248,7 +248,7 @@ private:
 	const double MANA = 100;			//Mana
 	const double MANA_REG = 1;			//Regeneración de maná por segundo
 	const double ARMOR = 10;			//Armadura
-	const double MELEE_DAMAGE = 10;	//Daño a melee
+	const double MELEE_DAMAGE = 1000;	//Daño a melee
 	const double DIST_DAMAGE = 1000;	//Daño a distancia y de las habilidades
 	const double CRIT = 0;				//Crítico
 	const double MELEE_RANGE = 20;		//Rango del ataque a melee
@@ -268,6 +268,7 @@ private:
 	const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
 #pragma endregion
 	virtual void initObject();
+	void updateDir(Vector2D dir);
 	playerEquipment equip_;
 	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2

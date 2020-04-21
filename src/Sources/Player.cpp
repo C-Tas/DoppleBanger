@@ -130,13 +130,17 @@ bool Player::update()
 	//comprobamos si hay que desactivar las pociones
 	desactivePotion();
 
+	Enemy* objective = static_cast<Enemy*>(currEnemy_);
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
-	int margin = 2; if (attacking_) margin = currStats_.meleeRange_;
-	Vector2D visPos = getVisPos(pos_);
-	if (visPos.getX() < target_.getX() - margin ||
-		visPos.getX() > target_.getX() + margin ||
-		visPos.getY() < target_.getY() - margin ||
-		visPos.getY() > target_.getY() + margin)
+	Vector2D target = target_;
+	if (attacking_) {
+		target = objective->getVisPos();
+		updateDir(target);
+	}
+	Vector2D visPos = getVisPos();
+	list<Enemy*> enemiesInRange = CollisionCtrl::instance()->getEnemiesInArea(getCenter(), currStats_.meleeRange_);
+	if ((visPos.getX() < target.getX() - 2 || visPos.getX() > target.getX() + 2 || visPos.getY() < target.getY() - 2 || visPos.getY() > target.getY() + 2) &&
+		(!attacking_ || objective == nullptr || objective->getState() == STATE::DYING || enemiesInRange.empty()))
 	{
 		double delta = app_->getDeltaTime();
 		previousPos_ = pos_;
@@ -145,19 +149,23 @@ bool Player::update()
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
 		Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
 	}
-	//Si se ha utilizado el ataque fuerte, ataca con un bonus porcentual de daño
-	else if (empoweredAct_ && attacking_ && objective_->getState() != STATE::DYING)
+	else if (attacking_ && objective != nullptr && objective->getState() != STATE::DYING && !enemiesInRange.empty())
 	{
-#ifdef _DEBUG
-		cout << "\nAtaque potenciado\n" << endl;
-#endif // _DEBUG
-		
-		initMelee();
-	}
-	//Se comprueba que el enemigo esté vivo porque puede dar a errores
-	else if (attacking_ && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_&& objective_->getState() != STATE::DYING)
-	{
-		initMelee();
+		bool found = false;
+		for (auto it = enemiesInRange.begin(); !found && it != enemiesInRange.end(); ++it)
+			if ((*it) == objective)
+				found = true;
+
+		if (found && empoweredAct_)
+		{
+			cout << "\nAtaque potenciado\n" << endl;
+			initMelee();
+		}
+		else if (found && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_)
+		{
+			cout << "\nAtaque a melee\n" << endl;
+			initMelee();
+		}
 	}
 	//En caso de que no esté atacando y ya haya llegado al objetivo (primer if)
 	//cambiará de moviéndose a Idle
@@ -268,7 +276,7 @@ void Player::initMelee()
 void Player::updateDirVisMouse()
 {
 	mousePos_ = eventHandler_->getRelativeMousePos();
-	Vector2D center = getCenter(pos_);		//Punto de referencia
+	Vector2D center = getCenter();		//Punto de referencia
 	Vector2D dir = mousePos_ - center;	//Vector dirección
 	dir.normalize();
 	double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
@@ -285,9 +293,9 @@ void Player::updateDirVisMouse()
 }
 
 void Player::updateDirVisEnemy() {
-	if (objective_ != nullptr) {
-		Vector2D center = getCenter(pos_);		//Punto de referencia
-		Vector2D enemyCenter = getCenter(objective_->getPos());
+	if (currEnemy_ != nullptr) {
+		Vector2D center = getCenter();		//Punto de referencia
+		Vector2D enemyCenter = currEnemy_->getCenter();
 		Vector2D dir = enemyCenter - center;		//Vector dirección
 		dir.normalize();
 		double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
@@ -326,8 +334,8 @@ void Player::meleeAnim()
 			meleeTime_ = empoweredTime_;
 		}
 
-		objective_->receiveDamage(totalDmg);
-		if (objective_->getState() == STATE::DYING) attacking_ = false;
+		static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
+		if (static_cast<Enemy*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
 		attacked_ = true;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
@@ -422,11 +430,22 @@ void Player::shoot(Vector2D dir)
 	//Se añade a los bucles del juegos
 	app_->getCurrState()->addRenderUpdateLists(bullet);
 	CollisionCtrl::instance()->addPlayerBullet(bullet);
+
+	if (clon_ != nullptr)
+		clon_->shoot(dir);
 }
 
 void Player::onCollider()
 {
 	stop(); //Para
+}
+
+void Player::updateDir(Vector2D target)
+{
+	Vector2D visPos = getVisPos();
+	dir_.setX(target.getX() - visPos.getX());
+	dir_.setY(target.getY() - visPos.getY());
+	dir_.normalize();
 }
 
 void Player::move(Point2D target)
@@ -435,7 +454,7 @@ void Player::move(Point2D target)
 	//establecemos el objetivo para poder parar al llegar
 	target_.setVec(target);
 	//establecemos la direccion
-	Vector2D visPos = getVisPos(pos_);
+	Vector2D visPos = getVisPos();
 	dir_.setX(target.getX() - visPos.getX());
 	dir_.setY(target.getY() - visPos.getY());
 	dir_.normalize();
@@ -444,9 +463,8 @@ void Player::move(Point2D target)
 
 void Player::attack(Enemy* obj)
 {
-	objective_ = obj;
-	updateDirVisEnemy();
-	move(getVisPos(obj->getPos()));
+	currEnemy_ = obj;
+	move(obj->getVisPos());
 	attacking_ = true;
 }
 

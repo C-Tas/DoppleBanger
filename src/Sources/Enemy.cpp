@@ -38,17 +38,18 @@ bool Enemy::getEnemy(bool melee) {
 	int range = currStats_.meleeRange_; if (!melee) range = currStats_.distRange_;
 	auto gm = GameManager::instance();
 	Vector2D playerPos = isPlayerInRange(range);
-	Vector2D clonPos = isClonInRange(range);
-	if (playerPos == Vector2D{ -1,-1 } && clonPos == Vector2D{ -1,-1 }) {
+	if (playerPos == Vector2D{ -1,-1 }) {
 		currEnemy_ = nullptr;
 		return false;
 	}
 
-	Vector2D closesetEnemy;
-	closesetEnemy = pos_.getClosest(playerPos, clonPos);
-	closesetEnemy == playerPos ? currEnemy_ = gm->getPlayer() : currEnemy_ = gm->getClon();
+	currEnemy_ = gm->getPlayer();
 	return true;
 }
+
+void Enemy::newEnemy(GameObject* obj) {
+	currEnemy_ = obj;
+};
 
 //Devuelve la posición del player si está a rango 
 Vector2D Enemy::isPlayerInRange(int range) {
@@ -65,20 +66,4 @@ Vector2D Enemy::isPlayerInRange(int range) {
 	{
 		return  { -1,-1 };
 	}
-}
-
-//Devuelve la posición del clon si está a rango
-Vector2D Enemy::isClonInRange(int range) {
-	GameManager* gm = GameManager::instance();
-	if (gm->getClon() == nullptr) { return { -1,-1 }; }
-
-	Point2D clonPos = gm->getClon()->getPos();
-	if (currEnemy_ == nullptr &&
-		clonPos.getX() <= pos_.getX() + range && clonPos.getX() >= pos_.getX() - range
-		&& clonPos.getY() <= pos_.getY() + range && clonPos.getY() >= pos_.getY() - range) {
-		static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
-		return clonPos;
-	}
-	else
-		return { -1,-1 };
 }

@@ -92,13 +92,13 @@ void Application::initResources() {
 	//Creacion de las texturas
 	for (auto& image : Resources::imageRoutes) {
 		textureManager_->loadFromImg(image.textureId, renderer_, image.filename);
-		cout << "Creada textura de: " << image.textureId << endl;
+		//cout << "Creada textura de: " << image.textureId << endl;
 	}
 
 	//Creación de las fuentes
 	for (auto& font : Resources::fontsRoutes) {
 		fontManager_->loadFont(font.id, font.fileName, font.size);
-		cout << "Creada fuente: " << font.id << endl;
+		//cout << "Creada fuente: " << font.id << endl;
 	}
 
 	//Creación de mensajes

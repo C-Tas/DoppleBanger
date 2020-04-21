@@ -21,7 +21,7 @@ bool Crab::update() {
 }
 void Crab::move(Point2D target)
 {
-	Vector2D visPos = getVisPos(pos_);
+	Vector2D visPos = getVisPos();
 	//Margen de 2 pixeles
 	if (visPos.getX() < target_.getX() - 2 ||
 		visPos.getX() > target_.getX() + 2 ||
@@ -37,7 +37,7 @@ void Crab::move(Point2D target)
 	}
 }
 void Crab::attack() { 
-	Vector2D visPos = getVisPos(pos_);
+	Vector2D visPos = getVisPos();
 	if (visPos.getX() < 200 && visPos.getX() > 150 && visPos.getY() < 500 && visPos.getX() > 150) {
 		//doDamage();//falta definir en enemy
 		currState_ = STATE::ATTACKING;

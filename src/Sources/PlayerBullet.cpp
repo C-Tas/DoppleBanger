@@ -8,7 +8,7 @@ void PlayerBullet::searchEnemy(list<Enemy*> enemies, Enemy* currEnemy)
 	Vector2D newTarget(-100, -100);				//El nuevo target
 	if (currRico < NUM_RICO) {
 		SDL_Rect enemyRect;							//Rectángulo del enemigo
-		Vector2D centerBullet = getCenter(pos_);	//Centro de la bala
+		Vector2D centerBullet = getCenter();	//Centro de la bala
 
 		for (auto it = enemies.begin(); it != enemies.end(); ++it) {
 			enemyRect = (*it)->getCollider();

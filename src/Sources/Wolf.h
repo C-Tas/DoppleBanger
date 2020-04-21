@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Enemy.h"
 class Wolf :
 	public Enemy
@@ -16,6 +16,9 @@ public:
 	virtual void initObject();
 	virtual void onCollider();
 	virtual void move(Vector2D pos);
+	//Cuando pierde agro del enemigo
+	virtual void lostAggro();
+
 	virtual  ~Wolf() {};
 
 private:
@@ -23,9 +26,9 @@ private:
 	vector<Point2D> patrol_;
 	//Punto que representa dentro del vector de patrulla
 	int currTarget_ = 0;
-	//�ltimo ataque a melee
+	//Último ataque a melee
 	Uint32 lastMeleeHit_ = 0;
-	//�ltimo frame de animaci�n
+	//Último frame de animación
 	Uint32 lastFrame_ = 0;
 	//Tiempo que el lobo pasa parado cuando llega a un target
 	Uint32 idleTime_ = 1000;
@@ -36,7 +39,7 @@ private:
 	Anim walkAnim_ = { 0,0,0,0, false};
 	Anim idleAnim_ = { 0,0,0,0, false };
 	//Constantes para crear las diferentes animaciones 
-	//(los valores puestos no son los correctos, a falta de hacer la animaci�n del mono)
+	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)
 	#pragma region Constantes
 	//Para el ataque
 	const int NUM_FRAMES_ATK = 10;
@@ -70,10 +73,6 @@ private:
 	const double DIST_RATE = 1500;
 #pragma endregion
 
-	//Determina si el jugador est� dentro del rango de ataque del monkeyCoco
-	Vector2D isPlayerInRange();
-	//Determina si el clon est� dentro del rango de ataque del monkeyCoco
-	Vector2D isClonInRange();
 	//Ataque del monkeyCoco
 	void attack();
 	//Devuelve true si el target est� dentro del rango de ataque
@@ -81,9 +80,9 @@ private:
 	//Inicializa todas las animaciones
 	void initAnims();
 	//Busca y actualiza al enemigo que atacar
-	bool getEnemy();
-	//Cuando pierde agro del enemigo
-	virtual void lostAgro();
+	virtual bool getEnemy();
+	//Determina si el jugador est� dentro del rango de ataque del monkeyCoco
+	Vector2D isPlayerInRange();
 	//Genera la posici�n a la que se mueve el pirata en funci�n de su rango 
 	void selectTarget();
 };
