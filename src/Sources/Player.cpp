@@ -202,12 +202,14 @@ void Player::initIdle()
 
 void Player::initMove()
 {
- 	currState_ = STATE::FOLLOWING;
 	mousePos_ = eventHandler_->getRelativeMousePos();
 	texture_ = moveTx_[(int)lookAt];
 	currAnim_ = moveAnims_[(int)lookAt];
+	if (currState_ != STATE::FOLLOWING) {
+		currState_ = STATE::FOLLOWING;
+		frame_.x = 0; frame_.y = 0;
+	}
 
-	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 }
@@ -364,13 +366,13 @@ void Player::initAnims()
 	//Animación de movimiento
 	//Arriba
 	moveAnims_.push_back(Anim(MOVE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_U_FRAME_RATE, true));
-	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleUpAnim));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMoveUpAnim));
 	//Derecha														
 	moveAnims_.push_back(Anim(MOVE_R_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_R_FRAME_RATE, true));
-	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleRightAnim));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMoveRightAnim));
 	//Abajo
 	moveAnims_.push_back(Anim(MOVE_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_D_FRAME_RATE, true));
-	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleDownAnim));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMoveDownAnim));
 	//Izquierda
 	moveAnims_.push_back(Anim(MOVE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_L_FRAME_RATE, true));
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMoveLeftAnim));

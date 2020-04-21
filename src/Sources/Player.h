@@ -161,17 +161,17 @@ private:
 	vector<Anim> moveAnims_;
 	vector<Texture*> moveTx_;
 	//Movimieno derecha
-	const int MOVE_R_FRAMES = 4;			//Frames de la animación
-	const int MOVE_R_FRAME_RATE = 500;		//Frame rate
+	const int MOVE_R_FRAMES = 8;			//Frames de la animación
+	const int MOVE_R_FRAME_RATE = 100;		//Frame rate
 	//Movimieno hacia arriba
-	const int MOVE_U_FRAMES = 2;			//Frames de la animación
-	const int MOVE_U_FRAME_RATE = 500;		//Frame rate
+	const int MOVE_U_FRAMES = 8;			//Frames de la animación
+	const int MOVE_U_FRAME_RATE = 100;		//Frame rate
 	//Movimieno hacia izquierda
 	const int MOVE_L_FRAMES = 8;			//Frames de la animación
 	const int MOVE_L_FRAME_RATE = 100;		//Frame rate
 	//Movimieno hacia abajo
-	const int MOVE_D_FRAMES = 2;			//Frames de la animación
-	const int MOVE_D_FRAME_RATE = 500;		//Frame rate
+	const int MOVE_D_FRAMES = 8;			//Frames de la animación
+	const int MOVE_D_FRAME_RATE = 100;		//Frame rate
 
 	//Disparo
 	bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
