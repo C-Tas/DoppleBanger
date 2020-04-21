@@ -2,7 +2,6 @@
 #include <stack>
 #include "GameState.h"
 
-
 //<summary>Struct que define cada una de las escenas (imagen a mostrar y duración de la misma)</summary>
 struct Scene {
 	Uint32 duration;

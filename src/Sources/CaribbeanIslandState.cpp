@@ -108,7 +108,7 @@ void CaribbeanIslandState::createChest(int numChest)
 		pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
 		newChest = new Chest(app_, pos, Vector2D(W_CHEST, H_CHEST));
 		addRenderUpdateLists(newChest);
-		//addObject
+		addObject(newChest);
 	}
 }
 
@@ -120,4 +120,5 @@ void CaribbeanIslandState::createNPC() {
 	pos.setVec(Vector2D(wWin / 2, hWin * 3 / 4));
 	chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), pos, Vector2D(app_->getWindowWidth() / 20, app_->getWindowHeight() / 8), 2);
 	addRenderUpdateLists(chef);
+	addObject(chef);
 }

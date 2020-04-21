@@ -7,6 +7,7 @@
 ///<summary>Reanuda la partida actual</summary>
 void PauseState::resume(Application* app)
 {
+	SDL_ShowCursor(SDL_DISABLE);
 	app->getGameStateMachine()->popState();
 }
 ///<summary>Muestra los controles</summary>
@@ -46,6 +47,8 @@ void PauseState::changeMute()
 
 void PauseState::initState()
 {
+	SDL_ShowCursor(SDL_ENABLE);
+
 	background_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::PauseBackground));
 	addRenderUpdateLists(background_);
 

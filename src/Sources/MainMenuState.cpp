@@ -15,6 +15,8 @@ using namespace std;
 #pragma region Inicializacion
 void MainMenuState::initState()
 {
+	SDL_ShowCursor(SDL_ENABLE);
+
 	//Fondo de la escena
 	button_h = app_->getWindowHeight() / 10;
 	button_w = app_->getWindowWidth() / 6;

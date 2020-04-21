@@ -16,6 +16,8 @@ protected:
 	///<summary>Constructor de collider</summary>
 	Collider(Application* app, Point2D pos, Vector2D scale) :
 		Draw(app, pos, scale) {
+		posCollision_ = pos;
+		scaleCollision_ = scale;
 		initObject();
 	};
 

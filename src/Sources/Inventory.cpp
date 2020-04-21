@@ -21,6 +21,7 @@ void callBackList(Application* app) {
 	dynamic_cast<Inventory*>(app->getCurrState())->backList();
 }
 void callExit(Application* app){
+	SDL_ShowCursor(SDL_DISABLE);
 	app->getGameStateMachine()->popState();
 }
 void callSkillsState(Application* app) {
@@ -28,6 +29,8 @@ void callSkillsState(Application* app) {
 }
 
 Inventory::Inventory(Application* app) :GameState(app) {
+	SDL_ShowCursor(SDL_ENABLE);
+
 	background_ = app_->getTextureManager()->getTexture(Resources::InventaryMenu);
 	Vector2D auxpos = Vector2D{ 12 * (double)(app_->getWindowWidth() / 14), 14 * (double)(app_->getWindowHeight() / 17) };
 	Vector2D auxSize = Vector2D{ (double)(app_->getWindowWidth() / 27),  (double)(app_->getWindowWidth() / 27) };

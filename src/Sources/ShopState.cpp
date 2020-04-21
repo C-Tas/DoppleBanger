@@ -14,6 +14,7 @@ void callShopBackListS(Application* app) {
 	dynamic_cast<ShopState*>(app->getCurrState())->ShopBackList();
 }
 void callExitS(Application* app) {
+	SDL_ShowCursor(SDL_DISABLE);
 	app->getGameStateMachine()->popState();
 }
 void callSelectObjectS(Application* app, InventoryButton* ob) {
@@ -28,6 +29,8 @@ void callBuyObjectS(Application* app) {
 
 ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(player)
 {
+	SDL_ShowCursor(SDL_ENABLE);
+
 	sellButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), Vector2D{ 50,500 }, Vector2D{ 50,50 }, callSellObjectS);
 	addUpdateList(sellButton_);
 	addRenderList(sellButton_);

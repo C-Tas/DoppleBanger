@@ -2,7 +2,6 @@
 #include "GameState.h"
 #include <list>
 
-
 ///<summary>Contenedor de la informaci�n tanto del alijo como del inventario</summary>
 struct Container {
 	///<summary>Lista con los objetos del inventario o del alijo</summary>
@@ -16,8 +15,7 @@ struct Container {
 	list<InventoryButton*>::iterator firstDrawn;
 };
 
-class StashState :
-	public GameState
+class StashState : public GameState
 {
 private:
 	///<summary>Contenedor con la informaci�n del alijo</summary>
@@ -36,7 +34,6 @@ private:
 	Texture* selectedObjectDescription_ = nullptr;
 
 #pragma region Constants
-
 	///<summary>N�mero de elementos del inventario que se ven por pantalla</summary>
 	const int INVENTORY_VISIBLE_ELEMENTS = 4;
 	///<summary>N�mero de elementos del alijo que se ven por pantalla</summary>
@@ -73,7 +70,6 @@ private:
 	const Vector2D GUN_SIZE = Vector2D(app_->getWindowWidth() / 12, app_->getWindowHeight() / 18);
 	///<summary>Posición del Rect de las descripciones</summary>
 	const SDL_Rect DESCRIPTION_RECT = { (app_->getWindowWidth() / 2) + 30, 3 * (app_->getWindowHeight() / 4) - 30, 2 * (app_->getWindowWidth() / 7), 4 * (app_->getWindowHeight() / 21) };
-
 #pragma endregion
 
 	///<summary>M�todo para inicializar el estado. Se le llama desde la constructora</summary>
@@ -105,7 +101,6 @@ private:
 	///<summary>M�todo auxiliar para actualizar los valores en los textos del dinero al cambiarlos</summary>
 	void moneyChange();
 
-
 public:
 	///<summary>Constructora del StashState</summary>
 	StashState(Application* app = nullptr) : GameState(app) { initState(); };
@@ -113,7 +108,6 @@ public:
 	virtual ~StashState() { endState(); background_ = nullptr; };
 
 #pragma region Callbacks
-
 	//<summary>Callbacks para cambiar elementos de este estado</summary>
 	///<summary>Vuelta al barco</summary>
 	static void backToPrevious(Application* app);
@@ -133,11 +127,9 @@ public:
 	static void callbackAddMoneyToInventary(Application* app);
 	///<summary>A�ade todo el dinero del alijo al inventario</summary>
 	static void callbackAddMoneyToStash(Application* app);
-
 #pragma endregion
 
 	virtual void draw()const;
 	virtual void update();
-
 };
 

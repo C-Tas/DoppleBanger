@@ -30,13 +30,18 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 
 	//Interfaces
 	{ BackButton, "../Sources/assets/botones/volver.png"},
-	{GoToSkillsAButton,"../Sources/assets/botones/Abrir_Habilidades_01.png"},
-	{GoToSkillsBButton,"../Sources/assets/botones/Abrir_Habilidades_02.png"},
+	{ GoToSkillsAButton,"../Sources/assets/botones/Abrir_Habilidades_01.png"},
+	{ GoToSkillsBButton,"../Sources/assets/botones/Abrir_Habilidades_02.png"},
 	{ ButtonX, "../Sources/assets/botones/botonX.png"},
 	{ ButtonUpgradeGreen, "../Sources/assets/botones/UpgradeButtonGreen.png"},
 	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},
 	{ ButtonUpgradeBlue, "../Sources/assets/botones/UpgradeButtonBlue.png"},
 	{ ButtonUpgradeYellow, "../Sources/assets/botones/UpgradeButtonYellow.png"},
+
+	//Punteros
+	{ MovementPointer, "../Sources/assets/punteros/punteroMov.png"},
+	{ AttackPointer, "../Sources/assets/punteros/punteroAtaque.png"},
+	{ GrabPointer, "../Sources/assets/punteros/punteroMano.png"},
 	
 	//Barras Puntos de Hazaña
 	{ GreenBar, "../Sources/assets/botones/greenBar.png"},
