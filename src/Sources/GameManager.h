@@ -3,13 +3,14 @@
 #include <list>
 #include <vector>
 #include <iostream>
-#include "Application.h"
 #include "InventoryButton.h"
 #include "RandEquipGen.h"
 #include "Equipment.h"
 #include "Clon.h"
 #include "HUD.h"
 #include "checkML.h"
+
+class Application;
 
 using namespace std;
 class Item;
@@ -160,7 +161,6 @@ public:
 		for (InventoryButton* ob : *stash_)delete ob;
 		delete inventory_;
 		delete stash_;
-		delete app_;
 	}
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {
