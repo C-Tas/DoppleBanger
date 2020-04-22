@@ -20,6 +20,9 @@ public:
 	///<summary>Llama al update del CollisionManager</summary>
 	virtual void update();
 
+	///<summary>Método que settea el player</summary>
+	void setPlayer(Player* player) { player_ = player; }
+
 	///<summary>A�ade un objeto a la lista enemies_, objectsToRender y gameObjects_</summary>
 	void addEnemy(Enemy* obj);
 	///<summary>Quita un objeto a la lista enemies_, objectsToRender y gameObjects_</summary>

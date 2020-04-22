@@ -78,6 +78,11 @@ private:
 	const int W_ENEMYPIRATE = app_->getWindowWidth() / 20;
 	const int H_ENEMYPIRATE = app_->getWindowHeight() / 15;
 
+
+	//Dimensiones de las entidades
+	const int W_PLAYER = app_->getWindowWidth() / 40;
+	const int H_PLAYER = app_->getWindowHeight() / 15;
+
 #pragma endregion
 
 	

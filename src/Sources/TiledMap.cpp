@@ -190,7 +190,12 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 	else if (objectType == "Cleon") {
 		//Añadir Cleon
 	}
-
+	else if (objectType == "Player") {
+		Player* player = new Player(app_, pos, Vector2D(W_PLAYER, H_PLAYER));
+		state_->addRenderUpdateLists(player);
+		state_->setPlayer(player);
+		GameManager::instance()->setPlayer(player);
+		CollisionCtrl::instance()->setPlayer(player);
+	}
 	
-
 }
