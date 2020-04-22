@@ -24,14 +24,14 @@ public:
 			
 			cout << "\nExplosión\n";
 			player_->removeMana(costMana_);
+			player_->getClon()->initSelfDestruction();
 			//Consigue la lista de los enemigos golpeados y les hace daño
 			Vector2D clonCenter = Vector2D(player_->getClon()->getPos().getX() + player_->getClon()->getScale().getX(), player_->getClon()->getPos().getY() + player_->getClon()->getScale().getY());
 			list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(clonCenter, RADIUS);
 			for (auto it = enemies.begin(); it != enemies.end(); ++it)
 				(*it)->receiveDamage(player_->getMeleeDmg() * BONUS);
 
-			if (player_->killClon()) lastTimeUsed_ = SDL_GetTicks();
+			if (player_->getClon() != nullptr) lastTimeUsed_ = SDL_GetTicks();
 		}
 	};
 };
-

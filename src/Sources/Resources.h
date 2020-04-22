@@ -150,6 +150,10 @@ public:
 		PlayerMeleeLeftAnim,
 		PlayerMeleeUpAnim,
 		PlayerMeleeDownAnim,
+		ClonSelfDestructionRightAnim,
+		ClonSelfDestructionLeftAnim,
+		ClonSelfDestructionUpAnim,
+		ClonSelfDestructionDownAnim,
 
 		//Interactuables
 		Wheel,

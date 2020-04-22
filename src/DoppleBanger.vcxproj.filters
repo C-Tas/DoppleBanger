@@ -230,9 +230,6 @@
     <ClCompile Include="Sources\Skill.cpp">
       <Filter>GameObjects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Clon.cpp">
-      <Filter>GameObjects\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\TextBox.cpp">
       <Filter>GameObjects\Player</Filter>
     </ClCompile>
@@ -253,6 +250,9 @@
     </ClCompile>
     <ClCompile Include="Sources\TextBox.cpp">
       <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Clon.cpp">
+      <Filter>GameObjects\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

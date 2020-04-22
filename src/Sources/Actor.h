@@ -11,6 +11,7 @@ enum class STATE
 	DYING,
 	FOLLOWING,
 	PATROLLING,
+	SELFDESTRUCT
 };
 
 //Enumerado para representar la dirección a la que mira una entidad
@@ -85,6 +86,8 @@ public:
 #pragma endregion
 	//Realiza una acción al detectar una colisión
 	virtual void onCollider() = 0;
+	//Calcula hacia dónde mira en función del objetivo
+	void updateDirVisObjective(GameObject* objective);
 	//<summary>Establece la direccion del movimiento</summary>	
 	virtual void move(Point2D target) {};
 	//Método para gestionar el daño recibido 
@@ -107,7 +110,8 @@ protected:
 	//Es el enemigo visto desde la entidad
 	GameObject* currEnemy_ = nullptr;
 	//Actual dirección a la que mira la entidad
-	DIR currDir_ = DIR::RIGHT;
+	DIR currDir_ = DIR::DOWN;
+
 	//Constructor vacío
 	Actor() {};
 	///<summary>Constructor de la clase Actor</summary>
