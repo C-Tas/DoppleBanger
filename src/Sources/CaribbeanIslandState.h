@@ -33,8 +33,8 @@ protected:
 	const int W_MONKEY = app_->getWindowWidth() / 20;
 	const int H_MONKEY = app_->getWindowHeight() / 15;
 
-	const int W_CHEST = app_->getWindowWidth() / 20;
-	const int H_CHEST = app_->getWindowHeight() / 15;
+	const int W_CHEST = app_->getWindowWidth() / 15;
+	const int H_CHEST = app_->getWindowHeight() / 10;
 
 	const int NUM_MONKEYS = 1;
 	const int NUM_PIRATES = 2;

@@ -8,21 +8,35 @@ void Chest::initObject() {
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	CollisionCtrl::instance()->addChest(this);
-
+	
 	initAnim();
 }
 
 void Chest::initAnim() {
 	//Para la animación de abrir
 	openAnim_ = Anim(NUM_FRAMES_OPEN, W_FRAME_OPEN, H_FRAME_OPEN, FRAME_RATE_OPEN, false);
+
+	texture_ = app_->getTextureManager()->getTexture(Resources::Chest);
+	currAnim_ = openAnim_;
+
+	//Se inicia el frame
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+bool Chest::update() {
+	if (open) {
+		updateFrame();
+
+		if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+			app_->getCurrState()->removeRenderUpdateLists(this);
+		}
+	}
+	return false;
 }
 
 void Chest::onCollider() {
-	//Método que va a añadirse proximamente por Aurora
-	//GameManager::instance()->addToInventory(rN.genEquip());
-	
-	//initAnim(); cuando este la animación
-
-	//Cuando acabe la animación los destruye -- faltaría añadir la textura
-	app_->getCurrState()->removeRenderUpdateLists(this);
+	open = true;
+	GameManager::instance()->addToInventory(rN.genEquip());
 }
