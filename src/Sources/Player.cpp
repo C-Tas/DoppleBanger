@@ -133,10 +133,13 @@ bool Player::update()
 	Enemy* objective = static_cast<Enemy*>(currEnemy_);
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
 	Vector2D target = target_;
-	if (attacking_) {
+	if (attacking_ && objective != nullptr) {
 		target = objective->getVisPos();
 		updateDir(target);
 	}
+	else
+		attacking_ = false;
+
 	Vector2D visPos = getVisPos();
 	list<Enemy*> enemiesInRange = CollisionCtrl::instance()->getEnemiesInArea(getCenter(), currStats_.meleeRange_);
 	if ((visPos.getX() < target.getX() - 2 || visPos.getX() > target.getX() + 2 || visPos.getY() < target.getY() - 2 || visPos.getY() > target.getY() + 2) &&
@@ -615,4 +618,18 @@ Skill* Player::createSkill(SkillName name)
 		break;
 	}
 	return skill;
+}
+
+void Player::displace(Vector2D dir, int dist)
+{
+	cout << dir.getX() << " " << dir.getY() << " " << dir.angle() * (180 / M_PI) << endl;
+	pos_.setX(pos_.getX() + (dir.getX() * dist));
+	pos_.setY(pos_.getY() + (dir.getY() * dist));
+	stop();
+}
+
+void Player::isEnemyDead(Actor* obj)
+{
+	if (obj == currEnemy_)
+		currEnemy_ = nullptr;
 }

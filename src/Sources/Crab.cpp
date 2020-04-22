@@ -32,7 +32,8 @@ void Crab::move(Point2D target)
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 	}
-	else {
+	else 
+	{
 		updateTarget();
 	}
 }

@@ -20,8 +20,8 @@ protected:
 	double rangeVision_ = 0;
 
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores serán los puestos, si se le pasan valores los editara</summary>
-	Enemy(Application* app = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0,0 })
-		:Actor(app, pos, scale) {};
+	Enemy(Application* app = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0,0 }, double rot = 0)
+		:Actor(app, pos, scale, rot) {};
 	//<summary>Constructor por copia</summary>
 	Enemy(Enemy& other) :Actor(other.app_, other.pos_, other.scale_) {};
 	//<summary>Constructor por movimiento<summary>

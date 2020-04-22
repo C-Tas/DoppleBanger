@@ -50,9 +50,6 @@
     <ClCompile Include="Sources\Button.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Collider.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\Dynamic.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
@@ -255,6 +252,7 @@
       <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Cleon.cpp" />
+    <ClCompile Include="Sources\Tentacle.cpp">
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -512,6 +510,7 @@
     <ClInclude Include="Sources\PlayerBullet.h">
       <Filter>GameObjects\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Tentacle.h">
     <ClInclude Include="Sources\TextBox.h">
       <Filter>Managers</Filter>
     </ClInclude>

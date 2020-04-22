@@ -57,7 +57,8 @@ void Application::runApp() {
 
 		SDL_RenderPresent(renderer_); //Draw
 
-		if (input->isKeyDown(SDLK_ESCAPE))appClosed_ = true;
+		if (input->isKeyDown(SDLK_ESCAPE))
+			appClosed_ = true;
 	
 	}
 	endGame();

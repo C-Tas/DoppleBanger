@@ -51,6 +51,10 @@ public:
 	Skill* createSkill(SkillName name);
 	//Crea un clon. A este método lo llama solo la skill "ClonSkill"
 	void createClon();
+	//Mueve al jugador una distancia en una direccion
+	void displace(Vector2D dir, int dist);
+	//Si se ha muerto el enemigo al que está atacando el jugador se setea a nullptr
+	void isEnemyDead(Actor* obj);
 	//Cambia de estado a muriendo
 	virtual void die() { currState_ = STATE::DYING; }
 	//Mata al clon

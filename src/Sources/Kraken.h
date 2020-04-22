@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Enemy.h"
+#include "Tentacle.h"
+#include <list>
 
 class Kraken : public Enemy
 {
@@ -10,12 +12,18 @@ public:
 		:Enemy(app, pos, scale) {
 		initObject();
 	};
+	virtual ~Kraken();
 
 	virtual bool update();
 	virtual void initObject();
 	virtual void onCollider() {};
+	void tentDeath(Tentacle* obj);
 
 private:
+
+	int lastAttack_ = 0;
+	//Lista con los tentáculos invocados
+	list<Tentacle*> tentacles_;
 	//Posiciones en las que puede aparecer el kraken
 	Point2D krakenSpots_[6]
 	{
@@ -28,8 +36,7 @@ private:
 	};
 
 	//Diferentes animaciones del kraken
-	Anim slamAnim_ = { 0,0,0,0 ,"" };
-	Anim sweepAnim_ = { 0,0,0,0,"" };
+	Anim idleAnim_ = { 0,0,0,0 ,"" };
 	Anim inkAnim_ = { 0,0,0,0,"" };
 	Anim diveAnim_ = { 0,0,0,0 ,"" };
 	Anim exitAnim_ = { 0,0,0,0,"" };
@@ -37,51 +44,36 @@ private:
 
 	//Inicializa las animaciones
 	void initAnims();
-
+	void slam();
 
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)
 #pragma region Constantes
-	//Ataque con el tentáculo
-	const int NUM_FRAMES_SLAM = 0;
-	const int NUM_FRAMES_ROW_SLAM = 0;
-	const uint W_FRAME_SLAM = 0;
-	const uint H_FRAME_SLAM = 0;
-	const int FRAME_RATE_SLAM = 0;
-	const string NAME_SLAM = "slam";
-	//Barrido con el tentáculo
-	const int NUM_FRAMES_SWEEP = 0;
-	const int NUM_FRAMES_ROW_SWEEP = 0;
-	const uint W_FRAME_SWEEP = 0;
-	const uint H_FRAME_SWEEP = 0;
-	const int FRAME_RATE_SWEEP = 0;
-	const string NAME_SWEEP = "sweep";
+	//Idle
+	const int NUM_FRAMES_IDLE = 0;
+	const uint W_FRAME_IDLE = 0;
+	const uint H_FRAME_IDLE = 0;
+	const int FRAME_RATE_IDLE = 0;
 	//Disparo de tinta
 	const int NUM_FRAMES_INK = 0;
-	const int NUM_FRAMES_ROW_INK = 0;
 	const uint W_FRAME_INK = 0;
 	const uint H_FRAME_INK = 0;
 	const int FRAME_RATE_INK = 0;
-	const string NAME_INK = "ink";
 	//Sumergirse
 	const int NUM_FRAMES_DIVE = 0;
-	const int NUM_FRAMES_ROW_DIVE = 0;
 	const uint W_FRAME_DIVE = 0;
 	const uint H_FRAME_DIVE = 0;
 	const int FRAME_RATE_DIVE = 0;
-	const string NAME_DIVE = "dive";
 	//Salir del agua
 	const int NUM_FRAMES_EXIT = 0;
-	const int NUM_FRAMES_ROW_EXIT = 0;
 	const uint W_FRAME_EXIT = 0;
 	const uint H_FRAME_EXIT = 0;
 	const int FRAME_RATE_EXIT = 0;
-	const string NAME_EXIT = "exit";
 #pragma endregion
 
 
 #pragma region Stats
-	const double HEALTH = 10;
+	const double HEALTH = 200;
 	const double MANA = 0;
 	const double MANA_REG = 0;
 	const double ARMOR = 10;
