@@ -36,8 +36,7 @@ private:
 	};
 
 	//Diferentes animaciones del kraken
-	Anim slamAnim_ = { 0,0,0,0,0 ,"" };
-	Anim sweepAnim_ = { 0,0,0,0,0,"" };
+	Anim idleAnim_ = { 0,0,0,0,0,"" };
 	Anim inkAnim_ = { 0,0,0,0,0,"" };
 	Anim diveAnim_ = { 0,0,0,0,0 ,"" };
 	Anim exitAnim_ = { 0,0,0,0,0,"" };
@@ -51,20 +50,13 @@ private:
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)
 #pragma region Constantes
-	//Ataque con el tentáculo
-	const int NUM_FRAMES_SLAM = 0;
-	const int NUM_FRAMES_ROW_SLAM = 0;
-	const uint W_FRAME_SLAM = 0;
-	const uint H_FRAME_SLAM = 0;
-	const int FRAME_RATE_SLAM = 0;
-	const string NAME_SLAM = "slam";
-	//Barrido con el tentáculo
-	const int NUM_FRAMES_SWEEP = 0;
-	const int NUM_FRAMES_ROW_SWEEP = 0;
-	const uint W_FRAME_SWEEP = 0;
-	const uint H_FRAME_SWEEP = 0;
-	const int FRAME_RATE_SWEEP = 0;
-	const string NAME_SWEEP = "sweep";
+	//Idle
+	const int NUM_FRAMES_IDLE = 0;
+	const int NUM_FRAMES_ROW_IDLE = 0;
+	const uint W_FRAME_IDLE = 0;
+	const uint H_FRAME_IDLE = 0;
+	const int FRAME_RATE_IDLE = 0;
+	const string NAME_IDLE = "idle";
 	//Disparo de tinta
 	const int NUM_FRAMES_INK = 0;
 	const int NUM_FRAMES_ROW_INK = 0;
