@@ -81,9 +81,12 @@ void ShipState::initState()
 	collisionCtrl_->addShipObjects(stash_, door_, wheel_, exit_);
 
 	////Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
+	player_ = new Player(app_, Vector2D(0, 0), Vector2D(0, 0));
+	hud_ = new HUD(app_);
 	playerEntry_ = Vector2D((W_WIN - W_PLAYER * 4), ((H_WIN * 3 / 4) - H_PLAYER));
 	player_->setPos(playerEntry_);
 	player_->setScale(Vector2D(W_PLAYER, H_PLAYER));
+	player_->setElementsHUD();
 	addRenderUpdateLists(player_);
 	addRenderUpdateLists(hud_);
 	startInstance_ = SDL_GetTicks();

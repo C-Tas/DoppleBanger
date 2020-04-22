@@ -31,32 +31,12 @@ TiledMap::TiledMap(Application* app, PlayState* state, const string& filename,Te
 	//Si no se ha cargado el mapa lanzamos excepcion
 	if (!success)throw exception("Mapa no cargado correctamente");
 	else {
-
-		//Cuantos tiles hay por fila y columna
-		tmx::Vector2u map_dimensions = map_.getTileCount();
-		//Tamaño de los tiles del mapa
-		tmx::Vector2u map_tilesize = map_.getTileSize();
-
-		///Cogemos todas las layers del archivo
-		auto& map_layers = map_.getLayers();
-		///Las recorremos una a una
-		for (auto& layer : map_layers) {
-			//Capas con tiles
-			if (layer->getType() == tmx::Layer::Type::Tile) {
-
-				auto* tile_layer = dynamic_cast<tmx::TileLayer*>(layer.get());
-				//Cogemos los tiles de la Layer
-				auto layer_tiles = tile_layer->getTiles();
-				createTileLayer(layer_tiles, map_dimensions);
-			}
-			//Capas con objetos
-			else if (layer->getType() == tmx::Layer::Type::Object) {
-				auto* object_layer = dynamic_cast<tmx::ObjectGroup*>(layer.get());
-				//Cogemos los objetos de la layer
-				auto layer_objects = object_layer->getObjects();
-				createObjects(layer_objects, map_tilesize, object_layer->getName());
-			}
-		}
+		auto orientation = map_.getOrientation();
+		//Niveles con enemigos
+		if (orientation == tmx::Orientation::Isometric) createIsometricMap(map_);
+		//Colisiones del barco
+		else if (orientation == tmx::Orientation::Orthogonal)createIsometricMap(map_);
+		
 	}
 
 }
@@ -89,7 +69,7 @@ void TiledMap::addObstacle(Tile tile)
 	CollisionCtrl::instance()->addObstacle(newObstacle);
 }
 
-void TiledMap::createTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions)
+void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions)
 {
 	///Recorremos toda la matriz que contiene la informacion de la capa que acabamos de coger
 	for (unsigned int y = 0; y < map_dimensions.y; y++) {
@@ -198,4 +178,78 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		CollisionCtrl::instance()->setPlayer(player);
 	}
 	
+}
+
+void TiledMap::createIsometricMap(const tmx::Map& map_)
+{
+	//Cuantos tiles hay por fila y columna
+	tmx::Vector2u map_dimensions = map_.getTileCount();
+	//Tamaño de los tiles del mapa
+	tmx::Vector2u map_tilesize = map_.getTileSize();
+	
+	///Cogemos todas las layers del archivo
+	auto& map_layers = map_.getLayers();
+	///Las recorremos una a una
+	for (auto& layer : map_layers) {
+		//Capas con tiles
+		if (layer->getType() == tmx::Layer::Type::Tile) {
+
+			auto* tile_layer = dynamic_cast<tmx::TileLayer*>(layer.get());
+			//Cogemos los tiles de la Layer
+			auto layer_tiles = tile_layer->getTiles();
+			createIsometricTileLayer(layer_tiles, map_dimensions);
+		}
+		//Capas con objetos
+		else if (layer->getType() == tmx::Layer::Type::Object) {
+			auto* object_layer = dynamic_cast<tmx::ObjectGroup*>(layer.get());
+			//Cogemos los objetos de la layer
+			auto layer_objects = object_layer->getObjects();
+			createObjects(layer_objects, map_tilesize, object_layer->getName());
+		}
+	}
+}
+
+void TiledMap::createOrthogonalMap(const tmx::Map& map_)
+{
+	//Cuantos tiles hay por fila y columna
+	tmx::Vector2u map_dimensions = map_.getTileCount();
+	//Tamaño de los tiles del mapa
+	tmx::Vector2u map_tilesize = map_.getTileSize();
+
+	///Cogemos todas las layers del archivo
+	auto& map_layers = map_.getLayers();
+	///Las recorremos una a una
+	for (auto& layer : map_layers) {
+		//Capas con tiles
+		if (layer->getType() == tmx::Layer::Type::Tile) {
+
+			auto* tile_layer = dynamic_cast<tmx::TileLayer*>(layer.get());
+			//Cogemos los tiles de la Layer
+			auto layer_tiles = tile_layer->getTiles();
+			createOrthogonalTileLayer(layer_tiles, map_dimensions);
+		}
+	}
+}
+
+
+void TiledMap::createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions)
+{
+	///Recorremos toda la matriz que contiene la informacion de la capa que acabamos de coger
+	for (unsigned int y = 0; y < map_dimensions.y; y++) {
+		for (unsigned int x = 0; x < map_dimensions.x; x++) {
+
+			int tileIndex = x + (y * map_dimensions.y);
+			int gid = layer_tiles[tileIndex].ID;
+
+			///Si el tile no es vacío
+			if (gid != 0) {
+				Tile tile;
+				//Lo guardamos en la posición del mapa que corresponda
+				tile.worldPos_ = { (double)x*(double)(app_->getWindowWidth()/map_dimensions.x), (double)y*(double)(app_->getWindowHeight()/map_dimensions.y)};
+				//En las capas ortogonales solo vamos a pintar la imagen, asi que cualquier tile que no sea vacio
+				//es un tile de colision
+				addObstacle(tile);
+			}
+		}
+	}
 }

@@ -25,6 +25,10 @@ void CaribbeanIslandState::initState()
 	//Inicializamos el mapa de la zona 1
 	initZone1();
 
+	//Inicializamos el hud
+	hud_ = new HUD(app_);
+	player_->setElementsHUD();
+
 	//Añadimos el hud a objetos a renderizar
 	addRenderUpdateLists(hud_);
 }

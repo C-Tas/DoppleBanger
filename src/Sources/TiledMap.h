@@ -88,14 +88,23 @@ private:
 	
 	///<summary>Método auxiliar para crear un tile que no se pueda atravesar</summary>
 	void addObstacle(Tile tile);
-	///<summary>Método auxiliar que crea un tile (que se dibuja)</summary>
-	void createTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
+	
+	///<summary>Método auxiliar que crea una layer de tiles isométricas (y las almacena para dibujarlas)</summary>
+	void createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
+	///<summary>Método auxiliar que crea una layer de tiles órtogonales</summary>
+	void createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
+	
 	///<summary>Método auxiliar para crear todos los objetos de una capa
 	//según el objectType que le pasemos(nombre de la capa), creará objetos de un tipo u otro</summary>
 	void createObjects(vector<tmx::Object> object_tiles, tmx::Vector2u tilesize, string objectType);
 	///<summary>Método complementario a createObjects que, según el objectType(nombre de la capa)
 	///que le pases te crea un objeto de dicho tipo</summary>
 	void createElement(Vector2D pos, string objectType);
-	
+
+	///<summary></summary>
+	void createIsometricMap(const tmx::Map & map_);
+	///<summary></summary>
+	void createOrthogonalMap(const tmx::Map& map_);
+
 };
 
