@@ -254,6 +254,7 @@
     <ClCompile Include="Sources\TextBox.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Cleon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -523,6 +524,7 @@
     <ClInclude Include="Sources\TextBox.h">
       <Filter>Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Cleon.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

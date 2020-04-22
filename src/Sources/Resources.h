@@ -127,6 +127,7 @@ public:
 
 		//Bosses
 		Magordito,
+		Cleon,
 
 		//gizmos
 		Rojo,
