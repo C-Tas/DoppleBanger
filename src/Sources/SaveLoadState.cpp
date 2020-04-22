@@ -2,8 +2,8 @@
 #include "MainMenuState.h"
 
 void SaveLoadState::goToGame(Application* app){
+	SDL_ShowCursor(SDL_DISABLE);
 	app->getGameStateMachine()->popState();
-
 }
 //mirar
 void SaveLoadState::goToMainMenu() {
@@ -18,5 +18,7 @@ void SaveLoadState::goToMainMenu() {
 
 void SaveLoadState::initState()
 {
+	SDL_ShowCursor(SDL_ENABLE);
+
 	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), Vector2D(0, 0), Vector2D(100, 100), goToGame);
 }

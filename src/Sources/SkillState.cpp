@@ -16,6 +16,8 @@
 
 
 void SkillState::initState() {
+	SDL_ShowCursor(SDL_ENABLE);
+
 	////QUITA EL COMENTARIO PARA DEBUGUEAR | LAS SKILLS SE DESBLOQUEAN EN 33,66 Y 100 PUNTOS EN LA RAMA
 	GameManager::instance()->setPrecisionPoints(99);
 	GameManager::instance()->setMeleePoints(99);
@@ -454,6 +456,7 @@ SkillState::~SkillState()
 
 void SkillState::backToPreviousState(Application* app) {
 	static_cast<SkillState*>(app->getCurrState())->setPlayerSkills();
+	SDL_ShowCursor(SDL_DISABLE);
 	app->getGameStateMachine()->popState();
 }
 

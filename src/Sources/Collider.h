@@ -18,6 +18,8 @@ protected:
 	///<summary>Constructor de collider</summary>
 	Collider(Application* app, Point2D pos, Vector2D scale, double rot = 0) : collisionRot_(rot),
 		Draw(app, pos, scale) {
+		posCollision_ = pos;
+		scaleCollision_ = scale;
 		initObject();
 	};
 

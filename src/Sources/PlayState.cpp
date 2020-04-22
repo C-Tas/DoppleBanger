@@ -1,4 +1,4 @@
-#include "Collisions.h"
+﻿#include "Collisions.h"
 #include "PlayState.h"
 #include "SaveLoadState.h"
 #include "SelectLevelState.h"
@@ -8,16 +8,19 @@
 #include "SkillState.h"
 #include "ShopState.h"
 #include "Inventory.h"
-#include "Collisions.h"
 #include "HUD.h"
+#include "conio.h"
 
 
 void PlayState::draw() const {
 	GameState::draw();
 	collisionCtrl_->drawTextBox();
+	mousePointer->draw();
 }
 
 void PlayState::update() {
+	updateMousePointer();
+
 	if (player_->getState() == STATE::DYING) { //Comprobamos que el player haya muerto para cambiar de estado
 		collisionCtrl_->clearList();
 		app_->getGameStateMachine()->changeState(new EndState(app_));
@@ -28,7 +31,26 @@ void PlayState::update() {
 	}
 }
 
-//Quiza un addChest?
+void PlayState::updateMousePointer() {
+	point.x = eventHandler_->getRelativeMousePos().getX();
+	point.y = eventHandler_->getRelativeMousePos().getY();
+	mousePointer->setPos(Vector2D(point.x, point.y));
+
+	bool found = false;
+	for (auto it = objects_.begin(); !found && it != objects_.end(); ++it) {
+		if (SDL_PointInRect(&point, &(*it)->getCollider())) {
+			mousePointer->setTexture(app_->getTextureManager()->getTexture(Resources::GrabPointer));
+			found = true;
+		}
+	}
+	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
+		if (SDL_PointInRect(&point, &(*it)->getCollider())) {
+			mousePointer->setTexture(app_->getTextureManager()->getTexture(Resources::AttackPointer));
+			found = true;
+		}
+	}
+	if (!found) mousePointer->setTexture(app_->getTextureManager()->getTexture(Resources::MovementPointer));
+}
 
 void PlayState::addEnemy(Enemy* obj) {
 	//Push front porque a suponiendo que dos enemigos se superpongan y se haga click en ellos para atacar,
@@ -37,10 +59,18 @@ void PlayState::addEnemy(Enemy* obj) {
 	addRenderUpdateLists(obj);
 }
 
+void PlayState::addObject(Collider* obj) {
+	objects_.push_back(obj);
+}
+
 void PlayState::removeEnemy(Enemy* obj) {
 	//Push front porque a suponiendo que dos enemigos se superpongan y se haga click en ellos para atacar,
 	//se renderizan en un orden (el de objectsToRender) y por lo cual las comprobaciones deben hacerse en el contrario.
 	enemies_.remove(obj);
+}
+
+void PlayState::removeObject(Collider* obj) {
+	objects_.remove(obj);
 }
 
 void PlayState::checkPlayerActions() {	
@@ -98,6 +128,12 @@ Enemy* PlayState::findClosestEnemy(Point2D pos) {
 
 void PlayState::initState()
 {
+	//Desactivamos el puntero para poder renderizar los punteros del juego
+	SDL_ShowCursor(SDL_DISABLE);
+	//Creamos nuestro nuevo puntero
+	mousePointer = new Draw(app_, app_->getTextureManager()->getTexture(Resources::MovementPointer));
+	mousePointer->setScale(Vector2D(W_MOUSE_POINTER, H_MOUSE_POINTER));
+
 	collisionCtrl_ = CollisionCtrl::instance();
 	player_ = new Player(app_, Vector2D(0, 0), Vector2D(0, 0));
 	hud_ = new HUD(app_);

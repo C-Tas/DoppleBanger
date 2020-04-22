@@ -38,6 +38,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},
 	{ ButtonUpgradeBlue, "../Sources/assets/botones/UpgradeButtonBlue.png"},
 	{ ButtonUpgradeYellow, "../Sources/assets/botones/UpgradeButtonYellow.png"},
+
+	//Punteros
+	{ MovementPointer, "../Sources/assets/punteros/punteroMov.png"},
+	{ AttackPointer, "../Sources/assets/punteros/punteroAtaque.png"},
+	{ GrabPointer, "../Sources/assets/punteros/punteroMano.png"},
 	
 	//Barras Puntos de Hazaña
 	{ GreenBar, "../Sources/assets/botones/greenBar.png"},

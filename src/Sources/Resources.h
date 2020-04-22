@@ -45,6 +45,11 @@ public:
 		GoToSkillsAButton,
 		GoToSkillsBButton,
 
+		//Punteros
+		MovementPointer,
+		AttackPointer,
+		GrabPointer,
+
 		//BarrasPuntosHazaña
 		Controls,
 		GreenBar,

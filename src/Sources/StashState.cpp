@@ -4,6 +4,7 @@
 #pragma region Callbacks
 
 void StashState::backToPrevious(Application* app) {
+	SDL_ShowCursor(SDL_DISABLE);
 	app->getGameStateMachine()->popState();
 }
 
@@ -93,6 +94,9 @@ void StashState::update()
 }
 
 void StashState::initState() {
+	//Desactivamos el puntero para poder renderizar los punteros del juego
+	SDL_ShowCursor(SDL_ENABLE);
+
 	//Fondo
 	background_ = app_->getTextureManager()->getTexture(Resources::TextureId::StashMenu);
 

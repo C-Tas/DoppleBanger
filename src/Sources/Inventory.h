@@ -47,8 +47,6 @@ private:
 	void equiparAux(InventoryButton* &but);
 	void equipPotionAux();
 	
-	
-	
 public:
 	Inventory(Application* app );
 	virtual ~Inventory() ;

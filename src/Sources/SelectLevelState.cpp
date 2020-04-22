@@ -7,6 +7,7 @@
 #include "Draw.h"
 
 void backShip(Application* app) {
+	SDL_ShowCursor(SDL_DISABLE);
 	app->getGameStateMachine()->popState();
 }
 
@@ -22,7 +23,8 @@ SelectLevelState::SelectLevelState(Application* app)
 }
 
 void SelectLevelState::initState() {
-	
+	SDL_ShowCursor(SDL_ENABLE);
+
 	//Button* newIslandButton;
 
 #pragma region Testeo
