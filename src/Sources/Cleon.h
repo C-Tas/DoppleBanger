@@ -33,11 +33,11 @@ private:
 #pragma endregion
 
 	//Animaciones de Cleon
-	Anim idleAnim_ = { 0,0,0,0,0 ,"" };
-	Anim runAnim_ = { 0,0,0,0,0, "" };
-	Anim assaultAnim_ = { 0,0,0,0,0,"" };
-	Anim meleeAnim_ = { 0,0,0,0,0, "" };
-	Anim barrelAnim_ = { 0,0,0,0,0, "" };
+	Anim idleAnim_ = { 0,0,0,0,"" };
+	Anim runAnim_ = { 0,0,0,0, "" };
+	Anim assaultAnim_ = { 0,0,0,0,"" };
+	Anim meleeAnim_ = { 0,0,0,0, "" };
+	Anim barrelAnim_ = { 0,0,0,0, "" };
 
 	//Inicializa objetos
 	virtual void initObject();
@@ -51,7 +51,6 @@ private:
 	const uint W_FRAME_IDLE = 0;
 	const uint H_FRAME_IDLE = 0;
 	const int FRAME_RATE_IDLE = 0;
-	const string NAME_IDLE = "idle";
 
 	//Animacion correr
 	const int NUM_FRAMES_RUN = 0;
@@ -59,7 +58,6 @@ private:
 	const uint W_FRAME_RUN = 0;
 	const uint H_FRAME_RUN = 0;
 	const int FRAME_RATE_RUN = 0;
-	const string NAME_RUN = "run";
 
 	//Animacion embestida
 	const int NUM_FRAMES_ASSAULT = 0;
@@ -67,7 +65,6 @@ private:
 	const uint W_FRAME_ASSAULT = 0;
 	const uint H_FRAME_ASSAULT = 0;
 	const int FRAME_RATE_ASSAULT = 0;
-	const string NAME_ASSAULT = "assault";
 
 	//Animacion cuerpo a cuerpo
 	const int NUM_FRAMES_MELEE = 0;
@@ -75,7 +72,6 @@ private:
 	const uint W_FRAME_MELEE = 0;
 	const uint H_FRAME_MELEE = 0;
 	const int FRAME_RATE_MELEE = 0;
-	const string NAME_MELEE = "melee";
 
 	//Animacion embestida
 	const int NUM_FRAMES_BARREL = 0;
@@ -83,7 +79,6 @@ private:
 	const uint W_FRAME_BARREL = 0;
 	const uint H_FRAME_BARREL = 0;
 	const int FRAME_RATE_BARREL = 0;
-	const string NAME_BARREL = "barrel";
 #pragma endregion
 };
 
