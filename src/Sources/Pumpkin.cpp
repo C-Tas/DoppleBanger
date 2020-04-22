@@ -49,7 +49,7 @@ bool Pumpkin::update() {
 		return true;
 	}
 	//Si la calabaza no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
-	if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
+	if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
 		currState_ = STATE::ATTACKING;
 	}
 	//Si la calabaza tiene enemigo y puede atacar
@@ -62,14 +62,16 @@ bool Pumpkin::update() {
 			if (onDistRange() && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
 				changeAnim(attackAnim_);
 				disAttack();
+				lastHit = SDL_GetTicks();
 			}
 
 
 			//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
-			else if (getEnemy(currStats_.distRange_) && currStats_.distRate_ <= SDL_GetTicks() - lastHit)
+			else if (getEnemy(rangeVision_) && currStats_.distRate_ <= SDL_GetTicks() - lastHit)
 			{
 				changeAnim(attackAnim_);
 				disAttack();
+				lastHit = SDL_GetTicks();
 			}
 
 			//Tengo enemigo pero no a rango
@@ -80,7 +82,6 @@ bool Pumpkin::update() {
 				currEnemy_ = nullptr;
 			}
 		}
-		lastHit = SDL_GetTicks();
 	}
 	if (currState_ == STATE::FOLLOWING) {
 		changeAnim(walkAnim_);
@@ -151,6 +152,7 @@ void Pumpkin::animationsvar()
 
 void Pumpkin::initialStats()
 {
+	rangeVision_ = 500;
 	HEALTH = 100;
 	MANA = 100;
 	MANA_REG = 1;

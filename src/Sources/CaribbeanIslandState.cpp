@@ -31,7 +31,7 @@ void CaribbeanIslandState::initState()
 	//createMonkey(NUM_MONKEYS);
 	//createPirates(NUM_PIRATES);
 	//createWolves(NUM_WOLVES);
-	Pumpkin* p = new Pumpkin(app_, { 120,120 }, {40,40});
+	Pumpkin* p = new Pumpkin(app_, { 20,20 }, {40,40});
 	addEnemy(p);
 
 	//Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos

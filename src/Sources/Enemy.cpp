@@ -11,7 +11,7 @@ void Enemy::die()
 Vector2D Enemy::isPlayerInRange(double n)
 {
 	GameManager* gm = GameManager::instance();
-	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
+	if (gm->getPlayer() == nullptr) { return NOPE; }
 
 	Point2D playerPos = gm->getPlayerPos();
 	if (currEnemy_ == nullptr &&
@@ -21,14 +21,14 @@ Vector2D Enemy::isPlayerInRange(double n)
 	}
 	else
 	{
-		return  { -1,-1 };
+		return  NOPE;
 	}
 }
 
 Vector2D Enemy::isClonInRange(double n)
 {
 	GameManager* gm = GameManager::instance();
-	if (gm->getClon() == nullptr) { return { -1,-1 }; }
+	if (gm->getClon() == nullptr) { return NOPE ; }
 
 	Point2D clonPos = gm->getClon()->getPos();
 	if (currEnemy_ == nullptr &&
@@ -39,7 +39,7 @@ Vector2D Enemy::isClonInRange(double n)
 	}
 	else
 	{
-		return { -1,-1 };
+		return NOPE;
 	}
 }
 
@@ -48,7 +48,7 @@ bool Enemy::getEnemy(double n)
 	auto gm = GameManager::instance();
 	Vector2D playerPos = isPlayerInRange(n);
 	Vector2D clonPos = isClonInRange(n);
-	if (playerPos == Vector2D{ -1,-1 } && clonPos == Vector2D{ -1,-1 }) {
+	if (playerPos == Vector2D(NOPE)&& clonPos == Vector2D(NOPE)) {
 		currEnemy_ = nullptr;
 		return false;
 	}

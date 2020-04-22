@@ -37,7 +37,9 @@ protected:
 	virtual void initAnim();
 	//cambia la animacion
 	virtual void changeAnim(Anim& newAnim);
+	//en cada enemigo establece las variables de las animaciones
 	virtual void animationsvar()=0;
+	//en cada enemigo establece las stats de los enemigos
 	virtual void initialStats() = 0;
 #pragma region Animacion
 	Anim attackAnim_ = { 0,0,0,0,0 ,"" };
@@ -63,8 +65,6 @@ protected:
 	 uint H_FRAME_IDLE = 0;
 	 int FRAME_RATE_IDLE = 0;
 	 string NAME_IDLE = "idle";
-
-	 virtual void animationsVar() {};
 #pragma endregion
 #pragma region stats
 	  double HEALTH = 0;

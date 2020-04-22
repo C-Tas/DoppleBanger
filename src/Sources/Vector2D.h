@@ -9,6 +9,7 @@
 #define M_PI 3.14159265358979323846264338327950288
 #endif
 
+#define NOPE {INT_MIN,INT_MIN}
 class Vector2D
 {
 private:
