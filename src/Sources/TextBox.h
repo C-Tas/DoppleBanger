@@ -1,6 +1,7 @@
 #pragma once
 #include "Application.h"
 #include "Texture.h"
+#include "Button.h"
 #include "Vector2D.h"
 
 class TextBox {
@@ -9,12 +10,23 @@ protected:
 	SDL_Rect dest; //Posición de la caja de texto, inicializada en init()
 	const int lineSpacing = 30;	//Interlineado y márgenes del texto
 
+	Button* shopButton_ = nullptr;
+	static void goShopState(Application* app);
+
 public:
 	///<summary>Constructora del textBox de diálogo</summary>
-	TextBox(Application* app) : app_(app) {};
+	TextBox(Application* app) : app_(app) { 
+		dest.w = app_->getWindowWidth();
+		dest.h = app_->getWindowHeight() / 4;
+		dest.x = 0;
+		dest.y = app_->getWindowHeight() - dest.h;
+
+		shopButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToShopButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 }, 
+			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, goShopState); 
+	};
 	///<summary>Constructora del textBox de descripción</summary>
 	TextBox(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
-	~TextBox() {};
+	~TextBox() { delete shopButton_; };
 
 	///<summary>Carga el textBox de diálogo inicial</summary>
 	void initDialog();

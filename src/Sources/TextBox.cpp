@@ -2,6 +2,7 @@
 #include "HandleEvents.h"
 #include "Resources.h"
 #include "GameState.h"
+#include "ShopState.h"
 #include "SDL_macros.h"
 
 //Cada línea de los diálogos/descripciones se tiene que renderizar por separado para poder generar los saltos de línea.
@@ -11,12 +12,15 @@
 //Cada objeto llama a su correspondiente descripción, cuando el estado abierto se lo indique,
 //pasándo la posición en la que se sitúa la descripción de dicho estado.
 
+//Callback del mercader para abrir la tienda
+void TextBox::goShopState(Application* app)
+{
+	dynamic_cast<Player*>(app->getGameManager()->getPlayer())->stop();
+	app->getGameStateMachine()->pushState(new ShopState(app));
+}
+
 void TextBox::initDialog() {
 	//Generamos la caja donde irá el texto
-	dest.w = app_->getWindowWidth();
-	dest.h = app_->getWindowHeight() / 4;
-	dest.x = 0;
-	dest.y = app_->getWindowHeight() - dest.h;
 	Texture* whiteRect = app_->getTextureManager()->getTexture(Resources::TextureId::TextBox);
 	whiteRect->render(dest);
 
@@ -63,6 +67,11 @@ void TextBox::dialogElderMan(int isle) {
 
 void TextBox::dialogMerchant() {
 	initDialog();
+	Texture text(app_->getRenderer(), "Blablabla", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(lineSpacing, dest.y + lineSpacing);
+
+	shopButton_->draw();
+	shopButton_->update();
 }
 
 void TextBox::dialogChef(bool unlock) {
