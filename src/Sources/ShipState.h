@@ -10,7 +10,7 @@ class ShipState : public PlayState
 public:
 	///<summary> Constructora del barco</summary>
 	ShipState(Application* app) : PlayState(app) { initState(); }
-	virtual ~ShipState() {}
+	virtual ~ShipState() { delete collisionMap_; }
 	virtual void draw()const;
 	void update();
 
@@ -22,6 +22,13 @@ private:
 
 	//Para guardar la posición del clik del ratón  
 	SDL_Point mouse; 
+
+	//Mapa con las colisiones del barco
+	TiledMap* collisionMap_;
+	const std::string TILED_MAP = "../Sources/assets/mapas/Isla1-1/barco.tmx";
+	const int TILE_WIDTH_TILESET = 8;
+	const int TILE_HEIGHT_TILESET = 8;
+	const int TILE_DRAWING_SIZE =  (int)(app_->getWindowWidth()/60);
 
 	#pragma region ShipObjects
 	ShipObject* stash_ = nullptr;//Alijo

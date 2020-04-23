@@ -1,6 +1,5 @@
 #pragma once
 #include "PlayState.h"
-#include "TiledMap.h"
 class Player;
 
 class CaribbeanIslandState : public PlayState

@@ -5,6 +5,7 @@
 #include "Obstacle.h"
 #include "Enemy.h"
 #include <list>
+#include "TiledMap.h"
 
 class CollisionCtrl;
 class HUD;

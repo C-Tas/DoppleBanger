@@ -11,8 +11,8 @@ void SpookyIslandState::initState()
 	collisionCtrl_->clearList();
 
 	//Creamos el mapa
-	map_ = new TiledMap(app_,this,ZONE1_MAP_DIR, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
-		TILESET_FILS, TILESET_COLS, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, Vector2D(app_->getWindowWidth() / 2, 0), TILE_DRAWING_SIZE, COLLISION_TILES_ID);
+	map_ = new TiledMap(app_,this,ZONE1_MAP_DIR, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
+		TILESET_FILS, TILESET_COLS,  Vector2D(app_->getWindowWidth() / 2, 0),  COLLISION_TILES_ID);
 
 	addRenderUpdateLists(hud_);
 }

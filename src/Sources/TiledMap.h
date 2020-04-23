@@ -39,7 +39,8 @@ public:
 	///<summary>Constructora del tilemap, necesita la direccion del archivo de tiled(.tmx), la textura del tileset
 	//cuantas filas y cuantas columnas tiene ese tileset, el ancho y el alto de los tiles, la posición donde quieres que se pinte la esquina superior
 	//izquierda del mapa (en perspectiva isométrica) y el tamaño con el que queremos pintar los tiles</summary>
-	TiledMap(Application* app_, PlayState* state,const string& filename, Texture* tileset, int filsTileset, int colsTileset, int tileTilesetHeight_, int tileTilesetWidth, Vector2D iniPos, int tileSize, const list<int>& idCollisionTiles);
+	TiledMap(Application* app_, PlayState* state,const string& filename, int tileTilesetHeight_, int tileTilesetWidth, int tileSize, Texture* tileset = nullptr, int filsTileset = 1 , int colsTileset = 1 ,
+		 Vector2D iniPos = Vector2D(0,0),  const list<int>& idCollisionTiles = {1});
 	
 	///<summary>Destructora del mapa, borra todos los obstaculos creados</summary>
 	~TiledMap();
@@ -86,13 +87,15 @@ private:
 #pragma endregion
 
 	
-	///<summary>Método auxiliar para crear un tile que no se pueda atravesar</summary>
-	void addObstacle(Tile tile);
+	///<summary>Método auxiliar para crear un tile que no se pueda atravesar (isométrico) (no ocupa todo el tamaño del tile)</summary>
+	void addIsometricObstacle(Tile tile);
+	///<summary>Método auxiliar para crear un tile que no se pueda atravesar (ortogonal) (colision == tamaño de dibujado del tile)</summary>
+	void addOrthogonalObstacle(Tile tile);
 	
 	///<summary>Método auxiliar que crea una layer de tiles isométricas (y las almacena para dibujarlas)</summary>
 	void createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
 	///<summary>Método auxiliar que crea una layer de tiles órtogonales</summary>
-	void createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
+	void createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, tmx::Vector2u tilesize);
 	
 	///<summary>Método auxiliar para crear todos los objetos de una capa
 	//según el objectType que le pasemos(nombre de la capa), creará objetos de un tipo u otro</summary>
@@ -101,9 +104,9 @@ private:
 	///que le pases te crea un objeto de dicho tipo</summary>
 	void createElement(Vector2D pos, string objectType);
 
-	///<summary></summary>
+	///<summary>Crea un mapa en perspectiva isométrica (niveles del juego)</summary>
 	void createIsometricMap(const tmx::Map & map_);
-	///<summary></summary>
+	///<summary>Crea un mapa en perspectiva ortogonal (shipState)</summary>
 	void createOrthogonalMap(const tmx::Map& map_);
 
 };
