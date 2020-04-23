@@ -22,6 +22,7 @@ public:
 		Morty,
 		Parrot,
 		Skeleton,
+		Cartographer,
 		Nobody
 	};
 

@@ -84,7 +84,7 @@ void ShipState::initState()
 
 	collisionCtrl_->addShipObjects(stash_, door_, wheel_, exit_);
 
-	createNPC();	//Método de testeo de los NPCs del barco, faltaría hacer uno definitivo para todos los NPCs desbloqueados
+	createNPCs();	//Método de testeo de los NPCs del barco, faltaría hacer uno definitivo para todos los NPCs desbloqueados
 
 	////Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
 	playerEntry_ = Vector2D((W_WIN - W_PLAYER * 4), ((H_WIN * 3 / 4) - H_PLAYER));
@@ -106,14 +106,45 @@ void ShipState::update()
 	collisionCtrl_->shipCollisions();
 }
 
-//Este método se va a modificar, no es definitivo
-void ShipState::createNPC() {
-	double wWin = app_->getWindowWidth();
-	double hWin = app_->getWindowHeight();
-	NPC* skeleton;
-	Vector2D pos;
-	pos.setVec(Vector2D(wWin / 4, hWin * 7 / 8));
-	skeleton = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), pos, Vector2D(app_->getWindowWidth() / 11, app_->getWindowHeight() / 6), 5);
-	addRenderUpdateLists(skeleton);
-	addObject(skeleton);
+void ShipState::createNPCs() {
+	//El viejo y el mercader están desde el principio
+	NPC* elderman;
+	elderman = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), Vector2D(W_WIN / 3, (double)H_WIN / 7), Vector2D(W_ELDERMAN, H_ELDERMAN), 0);
+	addRenderUpdateLists(elderman);
+
+	NPC* merchant;
+	merchant = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Merchant), Vector2D((double)W_WIN / 30, (double)H_WIN * 3 / 5), Vector2D(W_MERCHANT, H_MERCHANT), 1);
+	addRenderUpdateLists(merchant);
+
+	//Comprobamos si los NPCs restantes están desbloqueados
+	if (gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
+		NPC* chef;
+		chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), Vector2D((double)W_WIN * 3 / 14, H_WIN / 35), Vector2D(W_CHEF, H_CHEF), 2);
+		addRenderUpdateLists(chef);
+	}
+
+	if (gm_->isThatMissionPass(missions::papelesSiniestros)) {
+		//NPC* morty;
+		//morty = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Morty), Vector2D(W_WIN / 2, (double)H_WIN * 3 / 4), Vector2D(W_MORTY, H_MORTY), 3);
+		//addRenderUpdateLists(morty);
+	}
+
+	//Por si se añaden estos NPCs
+	//if (gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
+	//	NPC* parrot;
+	//	parrot = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Parrot), Vector2D(W_WIN / 2, (double)H_WIN * 3 / 4), Vector2D(W_PARROT, H_PARROT), 4);
+	//	addRenderUpdateLists(parrot);
+	//}
+
+	//if (gm_->isThatMissionPass(missions::misionDelEsqueleto)) {
+	//	NPC* skeleton;
+	//	skeleton = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), Vector2D(W_WIN / 2, H_WIN * 3 / 4), Vector2D(W_SKELETON, H_SKELETON), 5);
+	//	addRenderUpdateLists(skeleton);
+	//}
+
+	if (gm_->isThatMissionPass(missions::arlongPark)) {
+		NPC* cartographer;
+		cartographer = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cartographer), Vector2D((double)W_WIN * 11 / 14, H_WIN / 30), Vector2D(W_CARTOGRAPHER, H_CARTOGRAPHER), 6);
+		addRenderUpdateLists(cartographer);
+	}
 }

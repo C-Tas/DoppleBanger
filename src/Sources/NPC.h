@@ -12,16 +12,16 @@ private:
 
 #pragma region Animaciones
 	//Viejo
-	const int NUM_FRAMES_ELDERMAN = 0;
-	const int W_FRAME_ELDERMAN = 0;
-	const int H_FRAME_ELDERMAN = 0;
-	const int FRAME_RATE_ELDERMAN = 0;
+	const int NUM_FRAMES_ELDERMAN = 9;
+	const uint W_FRAME_ELDERMAN = 75;
+	const uint H_FRAME_ELDERMAN = 80;
+	const int FRAME_RATE_ELDERMAN = 200;
 
 	//Mercader
-	const int NUM_FRAMES_MERCHANT = 0;
-	const int W_FRAME_MERCHANT = 0;
-	const int H_FRAME_MERCHANT = 0;
-	const int FRAME_RATE_MERCHANT= 0;
+	const int NUM_FRAMES_MERCHANT = 1;
+	const uint W_FRAME_MERCHANT = 100;
+	const uint H_FRAME_MERCHANT = 100;
+	const int FRAME_RATE_MERCHANT= 200;
 
 	//Cocinera
 	const int NUM_FRAMES_CHEF = 2;
@@ -46,6 +46,12 @@ private:
 	const int W_FRAME_SKELETON = 75;
 	const int H_FRAME_SKELETON = 80;
 	const int FRAME_RATE_SKELETON = 200;
+
+	//Cartógrafa
+	const int NUM_FRAMES_CARTOGRAPHER = 1;
+	const uint W_FRAME_CARTOGRAPHER = 50;
+	const uint H_FRAME_CARTOGRAPHER = 70;
+	const int FRAME_RATE_CARTOGRAPHER = 200;
 #pragma endregion
 
 protected:
@@ -53,6 +59,7 @@ protected:
 	virtual void initAnims();
 
 public:
+	//Constructor para crear un NPC, npcType = 0:viejo, 1:mercader, 2:chef, 3:Morty, 4:loro, 5:esqueleto
 	NPC(Application* app, Texture* texture, Point2D pos, Vector2D scale, int npcType) :
 		Collider(app, pos, scale) {
 		texture_ = texture;

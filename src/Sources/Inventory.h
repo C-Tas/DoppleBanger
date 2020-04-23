@@ -16,7 +16,6 @@ struct Equipments
 };
 void callSelectObject(GameState* state, InventoryButton* but);
 
-
 class Inventory: public GameState
 {
 private:
@@ -59,4 +58,3 @@ public:
 	void forwardList();
 	void backList();
 };
-

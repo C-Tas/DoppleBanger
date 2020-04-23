@@ -44,6 +44,7 @@ public:
 		GoToInventoryBButton,
 		GoToSkillsAButton,
 		GoToSkillsBButton,
+		GoToShopButton,
 
 		//Punteros
 		MovementPointer,
@@ -128,7 +129,9 @@ public:
 		WolfFront,
 		Kraken,
 		Cooker,
+		Merchant,
 		SkeletonMusician,
+		Cartographer,
 
 		//Bosses
 		Magordito,
