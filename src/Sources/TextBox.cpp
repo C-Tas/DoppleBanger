@@ -3,6 +3,7 @@
 #include "Resources.h"
 #include "GameState.h"
 #include "ShopState.h"
+#include "Player.h"
 #include "SDL_macros.h"
 
 //Cada línea de los diálogos/descripciones se tiene que renderizar por separado para poder generar los saltos de línea.

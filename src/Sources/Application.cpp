@@ -9,7 +9,7 @@ Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
 	gameManager_ = GameManager::instance();
-	GameManager::instance()->setApp(this);
+	gameManager_->setApp(this);
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
 	machine_->pushState(startState);

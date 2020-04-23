@@ -13,14 +13,14 @@ private:
 #pragma region Animaciones
 	//Viejo
 	const int NUM_FRAMES_ELDERMAN = 9;
-	const uint W_FRAME_ELDERMAN = 75;
-	const uint H_FRAME_ELDERMAN = 80;
+	const int W_FRAME_ELDERMAN = 75;
+	const int H_FRAME_ELDERMAN = 80;
 	const int FRAME_RATE_ELDERMAN = 200;
 
 	//Mercader
 	const int NUM_FRAMES_MERCHANT = 1;
-	const uint W_FRAME_MERCHANT = 100;
-	const uint H_FRAME_MERCHANT = 100;
+	const int W_FRAME_MERCHANT = 100;
+	const int H_FRAME_MERCHANT = 100;
 	const int FRAME_RATE_MERCHANT= 200;
 
 	//Cocinera
@@ -49,8 +49,8 @@ private:
 
 	//Cartógrafa
 	const int NUM_FRAMES_CARTOGRAPHER = 1;
-	const uint W_FRAME_CARTOGRAPHER = 50;
-	const uint H_FRAME_CARTOGRAPHER = 70;
+	const int W_FRAME_CARTOGRAPHER = 50;
+	const int H_FRAME_CARTOGRAPHER = 70;
 	const int FRAME_RATE_CARTOGRAPHER = 200;
 #pragma endregion
 
