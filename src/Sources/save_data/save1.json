@@ -1,0 +1,9 @@
+{
+"currIsland": 0,
+"unlockedIsland": 0,
+"skillPoints": 350,
+"currGold": 300,
+"stashGold": 1000,
+"skills": ["null", "null", "null"],
+"objects": ["Health", "Mana"],
+}

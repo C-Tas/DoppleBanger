@@ -11,8 +11,8 @@ private:
 	virtual void initState();
 	//Callbacks
 	static void backToPreviousState(Application* app);
-	static void saveGame1();
-	static void saveGame2();
-	static void saveGame3();
+	static void saveSlot1();
+	static void saveSlot2();
+	static void saveSlot3();
 };
 

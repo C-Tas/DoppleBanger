@@ -60,6 +60,7 @@
     <ClCompile Include="Sources\Inventory.cpp" />
     <ClCompile Include="Sources\InventoryButton.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
+    <ClCompile Include="Sources\jute.cpp" />
     <ClCompile Include="Sources\Kraken.cpp" />
     <ClCompile Include="Sources\Magordito.cpp" />
     <ClCompile Include="Sources\main.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="Sources\Gloves.h" />
     <ClInclude Include="Sources\Gun.h" />
     <ClInclude Include="Sources\HandleEvents.h" />
+    <ClInclude Include="Sources\jute.h" />
     <ClInclude Include="Sources\Kraken.h" />
     <ClInclude Include="Sources\Magordito.h" />
     <ClInclude Include="Sources\HUD.h" />
