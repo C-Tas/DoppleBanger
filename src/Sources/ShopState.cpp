@@ -279,7 +279,7 @@ void ShopState::backList() {
 void ShopState::addToShop(Equipment* ob)
 {
 	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_,  ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, ob, callSelectObjectS, 1);
+	InventoryButton* b = new InventoryButton(app_,  ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, ob, callSelectObjectS, false,1);
 	//le asignamos al objeto su boton
 	ob->setButton(b);
 	//Añadimos el boton a la lista y le asignamos un iterador con su posicion
