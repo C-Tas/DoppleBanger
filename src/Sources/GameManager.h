@@ -35,7 +35,7 @@ enum class Island : int {
 	Spooky,
 	Volcanic
 };
-enum class spentPoints : int {
+enum class PointsTree : int {
 	Precision = 0,
 	Melee = 0,
 	Ghost = 0
@@ -107,7 +107,7 @@ private:
 	//Cantidad de oro que genera en un nivel
 	int currGold_ = 0;
 	//Puntos de haza�a
-	int achievementPoints_ = 350;
+	int achievementPoints_ = 1000;
 	//Cantidad de dinero almacenada en el inventario
 	int inventoryGold = 300;
 	//Cantidad de dinero almacenada en el alijo
@@ -116,12 +116,14 @@ private:
 	Island unlockedIslands_ = Island::Caribbean;
 	//Enum de la isla actual
 	Island currIsland_ = Island::Caribbean;
+	//Maximo de los puntos de hazaña
+	int maxPoints_ = 1000;
 	//Puntos de haza�a gastados en la rama precisi�n
-	spentPoints precision_ = spentPoints::Precision;
+	int precisionPoints_ = maxPoints_ - 1;
 	//Puntos de haza�a gastados e la rama melee
-	spentPoints melee_ = spentPoints::Melee;
+	int meleePoints_ = maxPoints_ - 1;
 	//Puntos de haza�a gastados de la rama ghost
-	spentPoints ghost_ = spentPoints::Ghost;
+	int clonPoints_ = maxPoints_ - 1;
 	//Puntero a la lista de item del inventario
 	list<InventoryButton*>* inventory_ = new list<InventoryButton*>;
 	//Puntero a la lista de items del alijo
@@ -134,6 +136,8 @@ private:
 	vector<bool> skillsCooldown = { false, false, false, false };
 	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
 	vector<bool> skillsUnlocked_ = { false, false ,false, false, false, false, false, true, false, false, false }; //Clon inicializada por defecto
+	//Vector que contiene los puntos invertidos en cada rama
+	vector<int> pointrTree_ = { 0, 0, 0 };
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
@@ -181,6 +185,7 @@ public:
 	void saveSlot2();
 	//Guardar en slot3
 	void saveSlot3();
+	//Guarda los datos en el json pasado como parámetro
 	void save(ofstream& slot);
 #pragma endregion
 #pragma region getters
@@ -221,12 +226,14 @@ public:
 	//Devuelve la isla actual
 	const Island getCurrIsland() { return currIsland_; }
 
+	//Devuelve el máximo de los puntos de hazaña
+	const int getMaxPoints() { return maxPoints_; };
 	//Devuelve los puntos gastados en la rama presici�n
-	const spentPoints getPresicionPoints() { return precision_; };
+	const int getPresicionPoints() { return precisionPoints_; };
 	//Devuelve los puntos gastados en la rama melee
-	const spentPoints getMeleePoints() { return melee_; };
+	const int getMeleePoints() { return meleePoints_; };
 	//Devuelve los puntos gastados en la rama fantasma
-	const spentPoints getGhostPoints() { return ghost_; };
+	const int getGhostPoints() { return clonPoints_; };
 	
 	//Devuele la habilidad asignada en la tecla
 	const SkillName getEquippedSkill(Key key) { return skillsEquipped_[(int)key]; }
@@ -248,11 +255,11 @@ public:
 	//Asigna los archievement points
 	inline void setArchievementPoints(int value) { achievementPoints_ = value; }
 	//Asigna los puntos gastados a la rama precision
-	inline void setPrecisionPoints(int value) { precision_ = (spentPoints)value; };
+	inline void setPrecisionPoints(int value) { precisionPoints_ = value; };
 	//Asigna los puntos gastados a la rama melee
-	inline void setMeleePoints(int value) { melee_ = (spentPoints)value; };
+	inline void setMeleePoints(int value) { meleePoints_ = value; };
 	//Asigna los puntos gastados a la rama Ghost
-	inline void setGhostPoints(int value) { ghost_ = (spentPoints)value; };
+	inline void setGhostPoints(int value) { clonPoints_ = value; };
 	//Añade(+) /Quita(-) dinero del inventario
 	inline void addInventoryGold(int money) { inventoryGold += money; }
 	////Añade(+) /Quita(-) dinero del alijo

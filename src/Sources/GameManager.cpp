@@ -20,8 +20,10 @@ void GameManager::initGameManager(int currGold, Island unlockedIslands, int achi
 "skillPoints": 0,
 "currGold": 0,
 "stashGold": 0,
+"precision": 0,
+"melee": 0,
+"clon": 0,
 "skillTree":[0, 0, 0],
-"skills": [null, null, null],
 "objects": [null, null],
 "missionStarted": [],
 "missionCompleted":	[],
@@ -31,51 +33,58 @@ void GameManager::initGameManager(int currGold, Island unlockedIslands, int achi
 */
 void GameManager::saveSlot1()
 {
+	ifstream input("../Sources/save_data/save1.json");
+	if (input.fail()) cout << "No hay partida guardada" << endl;
+	input.close();
 	ofstream slot_("../Sources/save_data/save1.json");
 	save(slot_);
 }
 
 void GameManager::saveSlot2()
 {
+	ifstream input("../Sources/save_data/save2.json");
+	if (input.fail()) cout << "No hay partida guardada" << endl;
+	input.close();
+	
 	ofstream slot_("../Sources/save_data/save2.json");
 	save(slot_);
 }
 
 void GameManager::saveSlot3()
 {
+	ifstream input("../Sources/save_data/save3.json");
+	if (input.fail()) cout << "No hay partida guardada" << endl;
+	input.close();
 	ofstream slot_("../Sources/save_data/save3.json");
 	save(slot_);
 }
 
 void GameManager::save(ofstream& slot)
 {
+	jValue mainJson(jType::JOBJECT);
 	jValue aux(jType::JNUMBER);
-	//Apertura del cuerpo
-	slot << "{" << endl;
 	//Isla actual
 	aux.set_string(to_string((int)currIsland_));
-	slot << "\"currIsland\":" << " " << aux.as_int() << "," << endl;
+	mainJson.add_property("currIsland", aux);
 	//Última isla desbloqueada
 	aux.set_string(to_string((int)currIsland_));
-	slot << "\"unlockedIsland\":" << " " << aux.as_int() << "," << endl;
-	//Puntos de hazaña actuales
-	aux.set_string(to_string(achievementPoints_));
-	slot << "\"skillPoints\":" << " " << aux.as_int() << "," << endl;
+	mainJson.add_property("unlockedIsland", aux);
 	//Oro del inventario
 	aux.set_string(to_string(inventoryGold));
-	slot << "\"currGold\":" << " " << aux.as_int() << "," << endl;
+	mainJson.add_property("currGold", aux);
 	//Oro del alijo
 	aux.set_string(to_string(stashGold));
-	slot << "\"stashGold\":" << " " << aux.as_int() << "," << endl;
-	//Cambio del tipo del jValue
-	jValue skillTreeValue(jType::JARRAY);
-		//Puntos de hazaña invertidos
-		//aux.set_string("0");	//Rama combate
-		//mainJValue.add_element(aux);
-		//aux.set_string("0");	//Rama precisión
-		//mainJValue.add_element(aux);
-		//aux.set_string("0");	//Rama clon
-		//mainJValue.add_element(aux);
+	mainJson.add_property("stashGold", aux);
+	//Puntos de hazaña actuales
+	aux.set_string(to_string(achievementPoints_));
+	mainJson.add_property("skillPoints", aux);
+	//Puntos de hazaña invertidos
+	aux.set_string(to_string(precisionPoints_));	//Rama combate
+	mainJson.add_property("precision", aux);
+	aux.set_string(to_string(meleePoints_));	//Rama precisión
+	mainJson.add_property("melee", aux);
+	aux.set_string(to_string(clonPoints_));	//Rama clon
+	mainJson.add_property("clon", aux);
 	//Habilidades equipadas
 	jValue skillEquippedValue(jType::JARRAY);
 	aux.set_type(jType::JSTRING);
@@ -103,8 +112,9 @@ void GameManager::save(ofstream& slot)
 		}
 		skillEquippedValue.add_element(aux);
 	}
-	slot << "\"skills\":" << " " << skillEquippedValue.to_string() << "," << endl;
+	mainJson.add_property("skills", skillEquippedValue);
 
+	//Objetos equipados
 	jValue objectsValue(jType::JARRAY);
 	for (int i = 0; i < objectsEquipped.size(); i++) {
 		switch (objectsEquipped[i])
@@ -133,8 +143,116 @@ void GameManager::save(ofstream& slot)
 		}
 		objectsValue.add_element(aux);
 	}
-	slot << "\"objects\":" << " " << objectsValue.to_string() << "," << endl;
+	mainJson.add_property("objects", objectsValue);
 
+	//Equipamiento del player
+	jValue equipValue(jType::JARRAY);
+	playerEquipment auxEquip = player_->getInfoEquip();
+	vector<Equipment*> vEquip{
+		auxEquip.armor_,
+		auxEquip.boots_,
+		auxEquip.gloves_,
+		auxEquip.sword_,
+		auxEquip.gun_
+	};
+	vector<jValue> objects{
+		(jType::JOBJECT),
+		(jType::JOBJECT),
+		(jType::JOBJECT),
+		(jType::JOBJECT),
+		(jType::JOBJECT)
+	};
+	//const enum equipType { Armor_, Boots_, Gloves_, Sword_, Saber_, Pistol_, Shotgun_ };
+	for (int i = 0; i < vEquip.size(); i++) {
+		if (vEquip[i] == nullptr) {
+			aux.set_type(jType::JSTRING);
+			aux.set_string("null");
+		}
+		else {
+			switch (vEquip[i]->getEquipTye())
+			{
+			case equipType::Armor_:
+				aux.set_type(jType::JSTRING);
+				aux.set_string("Armor");
+				objects[i].add_property("name", aux);
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string(vEquip[i]->getArmor()));
+				objects[i].add_property("armor", aux);
+				aux.set_string(to_string(vEquip[i]->getHealth()));
+				objects[i].add_property("health", aux);
+				//Armor y health
+				break;
+			case equipType::Boots_:
+				aux.set_type(jType::JSTRING);
+				aux.set_string("Boots");
+				objects[i].add_property("name", aux);
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string(vEquip[i]->getArmor()));
+				objects[i].add_property("armor", aux);
+				aux.set_string(to_string(vEquip[i]->getSpeed()));
+				objects[i].add_property("speed", aux);
+				//speed y armor
+				break;
+			case equipType::Gloves_:
+				aux.set_type(jType::JSTRING);
+				aux.set_string("Gloves");
+				objects[i].add_property("name", aux);
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string(vEquip[i]->getArmor()));
+				objects[i].add_property("armor", aux);
+				aux.set_string(to_string(vEquip[i]->getCrit()));
+				objects[i].add_property("critic", aux);
+				//Crítico y armor
+				break;
+			case equipType::Sword_:
+				aux.set_type(jType::JSTRING);
+				aux.set_string("Sword");
+				objects[i].add_property("name", aux);
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string(vEquip[i]->getMeleeRate()));
+				objects[i].add_property("rate", aux);
+				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
+				objects[i].add_property("damage", aux);
+				//MeleeRate y ad
+				break;
+			case equipType::Saber_:
+				aux.set_type(jType::JSTRING);
+				aux.set_string("Saber");
+				objects[i].add_property("name", aux);
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string(vEquip[i]->getMeleeRate()));
+				objects[i].add_property("rate", aux);
+				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
+				objects[i].add_property("damage", aux);
+				//MeleeRate y ad
+				break;
+			case equipType::Pistol_:
+				aux.set_type(jType::JSTRING);
+				aux.set_string("Pistol");
+				objects[i].add_property("name", aux);
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string(vEquip[i]->getDistRate()));
+				objects[i].add_property("rate", aux);
+				aux.set_string(to_string(vEquip[i]->getDistDmg()));
+				objects[i].add_property("damage", aux);
+				//DistRate y disDmg
+				break;
+			case equipType::Shotgun_:
+				aux.set_type(jType::JSTRING);
+				aux.set_string("ShotGun");
+				objects[i].add_property("name", aux);
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string(vEquip[i]->getDistRate()));
+				objects[i].add_property("rate", aux);
+				aux.set_string(to_string(vEquip[i]->getDistDmg()));
+				objects[i].add_property("damage", aux);
+				//DistRate y distDmg
+				break;
+			}
+		}
+		equipValue.add_element(objects[i]);
+	}
+	mainJson.add_property("equipment", equipValue);
 	//Misiones empezadas
 	//vector<bool> questStarted = missionsStarted;
 	////Misiones completadas
@@ -148,7 +266,7 @@ void GameManager::save(ofstream& slot)
 	//for (InventoryButton* ob : *stash_) {
 
 	//}
-	slot << "}";
+	slot << mainJson.to_string();
 	slot.close();
 }
 

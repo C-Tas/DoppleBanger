@@ -19,7 +19,10 @@ public:
 
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
-
+#pragma region Getters
+	int getAd() { return ad_; };
+	double distRate() { return distRate_; };
+#pragma endregion
 	virtual void writeStats() {
 		std::cout << type_ << "\n";
 		std::cout << "ad: " << ad_ << "\n";

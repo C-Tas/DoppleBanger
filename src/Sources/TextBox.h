@@ -124,4 +124,5 @@ public:
 	///<summary>Descripción de la habilidad Perforador del disparo a distancia</summary>
 	void Perforador();
 #pragma endregion
+#pragma 
 };

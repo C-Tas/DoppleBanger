@@ -19,7 +19,10 @@ public:
 
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
-
+#pragma region Getters
+	int getCrit() { return crit_; };
+	int getArmor() { return armor_; };
+#pragma endregion
 	virtual void writeStats() {
 		std::cout << type_ << "\n";
 		std::cout << "crit: " << crit_ << "\n";
