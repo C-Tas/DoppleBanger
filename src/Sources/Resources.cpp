@@ -131,7 +131,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 
 	//Tilesets de los mapas
 	{Tileset1, "../Sources/assets/mapas/Isla1-1/tileset2.png"},
-	{CollisionTile, "../Sources/assets/mapas/Isla1-1/CollisionTile.png"},
+	{CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png"},
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{

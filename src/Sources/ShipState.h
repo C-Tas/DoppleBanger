@@ -25,7 +25,7 @@ private:
 
 	//Mapa con las colisiones del barco
 	TiledMap* collisionMap_;
-	const std::string TILED_MAP = "../Sources/assets/mapas/Isla1-1/barco.tmx";
+	const std::string TILED_MAP = "../Sources/assets/mapas/barco/barco.tmx";
 	const int TILE_WIDTH_TILESET = 8;
 	const int TILE_HEIGHT_TILESET = 8;
 	const int TILE_DRAWING_SIZE =  (int)(app_->getWindowWidth()/60);
