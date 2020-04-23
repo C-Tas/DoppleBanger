@@ -153,6 +153,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ShipDoor, "../Sources/assets/colisionables/trampilla.png" },
 	{ ExitShip, "../Sources/assets/colisionables/exitShip.png" },
 	{ Chest, "../Sources/assets/colisionables/cofreAnim.png" },
+	{ Bullet, "../Sources/assets/colisionables/bullet.png" },
+
 
 	//Colisionable
 	{ Rock, "../Sources/assets/colisionables/roca.png" },

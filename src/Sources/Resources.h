@@ -163,6 +163,7 @@ public:
 		ShipDoor,
 		ExitShip,
 		Chest,
+		Bullet,
 
 		//Colsionable
 		Rock,

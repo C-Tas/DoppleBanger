@@ -47,7 +47,7 @@ void Clon::shoot(Vector2D dir)
 		shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 		shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Rock),
+		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet),
 			shootPos, dir, distDmg_);
 
 		//Se añade a los bucles del juegos

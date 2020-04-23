@@ -173,7 +173,7 @@ void EnemyPirate::initAnims()
 void EnemyPirate::attack() {
 	if (currAtackStatus_ == ATK_STATUS::RANGE && currStats_.distRate_ <= SDL_GetTicks() - lastRangeHit_) {
 		lastRangeHit_ = SDL_GetTicks();
-		Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Rock),
+		Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet),
 			getCenter(), currEnemy_->getCenter(), currStats_.distDmg_);
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addEnemyBullet(bullet);
