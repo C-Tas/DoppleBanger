@@ -3,12 +3,12 @@
 
 void Gloves::equip(Player* player)
 {
-	player->addCrit(crit_);
-	player->addArmor(armor_);
+	player->addCrit(modifiers_.crit_);
+	player->addArmor(modifiers_.armor_);
 }
 
 void Gloves::remove(Player* player)
 {
-	player->removeCrit(crit_);
-	player->removeArmor(armor_);
+	player->removeCrit(modifiers_.crit_);
+	player->removeArmor(modifiers_.armor_);
 }

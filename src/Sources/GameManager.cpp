@@ -63,6 +63,8 @@ void GameManager::save(ofstream& slot)
 {
 	jValue mainJson(jType::JOBJECT);
 	jValue aux(jType::JNUMBER);
+	//Variables numericas
+	#pragma region JNUMBER
 	//Isla actual
 	aux.set_string(to_string((int)currIsland_));
 	mainJson.add_property("currIsland", aux);
@@ -85,7 +87,38 @@ void GameManager::save(ofstream& slot)
 	mainJson.add_property("melee", aux);
 	aux.set_string(to_string(clonPoints_));	//Rama clon
 	mainJson.add_property("clon", aux);
+	#pragma endregion
+	//Misiones empezadas
+	#pragma region Misiones
+	jValue questStarted(jType::JARRAY);
+	aux.set_type(jType::JBOOLEAN);
+	for (int i = 0; i < missionsStarted.size(); i++) {
+		switch (missionsStarted[i])
+		{
+		case true:
+			aux.set_string("true");
+		case false:
+			aux.set_string("false");
+		}
+		questStarted.add_element(aux);
+	}
+	mainJson.add_property("questStarted", questStarted);
+	////Misiones completadas
+	jValue questFinished(jType::JARRAY);
+	for (int i = 0; i < missionsComplete.size(); i++) {
+		switch (missionsComplete[i])
+		{
+		case true:
+			aux.set_string("true");
+		case false:
+			aux.set_string("false");
+		}
+		questFinished.add_element(aux);
+	}
+	mainJson.add_property("questFinished", questFinished);
+	#pragma endregion
 	//Habilidades equipadas
+	#pragma region Habilidades equipadas
 	jValue skillEquippedValue(jType::JARRAY);
 	aux.set_type(jType::JSTRING);
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
@@ -113,8 +146,9 @@ void GameManager::save(ofstream& slot)
 		skillEquippedValue.add_element(aux);
 	}
 	mainJson.add_property("skills", skillEquippedValue);
-
+	#pragma endregion
 	//Objetos equipados
+	#pragma region Objetos equipados
 	jValue objectsValue(jType::JARRAY);
 	for (int i = 0; i < objectsEquipped.size(); i++) {
 		switch (objectsEquipped[i])
@@ -144,8 +178,9 @@ void GameManager::save(ofstream& slot)
 		objectsValue.add_element(aux);
 	}
 	mainJson.add_property("objects", objectsValue);
-
+	#pragma endregion
 	//Equipamiento del player
+	#pragma region Equipamiento
 	jValue equipValue(jType::JARRAY);
 	playerEquipment auxEquip = player_->getInfoEquip();
 	vector<Equipment*> vEquip{
@@ -167,6 +202,7 @@ void GameManager::save(ofstream& slot)
 		if (vEquip[i] == nullptr) {
 			aux.set_type(jType::JSTRING);
 			aux.set_string("null");
+			objects[i].add_property("name", aux);
 		}
 		else {
 			switch (vEquip[i]->getEquipTye())
@@ -253,10 +289,7 @@ void GameManager::save(ofstream& slot)
 		equipValue.add_element(objects[i]);
 	}
 	mainJson.add_property("equipment", equipValue);
-	//Misiones empezadas
-	//vector<bool> questStarted = missionsStarted;
-	////Misiones completadas
-	//vector<bool> questFinished = missionsComplete;
+	#pragma endregion
 
 	////Inventario
 	//for (InventoryButton* ob : *inventory_) {

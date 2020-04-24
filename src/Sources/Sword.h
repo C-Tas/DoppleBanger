@@ -6,12 +6,13 @@ class Sword : public Equipment
 {
 private:
 	equipType type_;
-	int ad_ = 0;
-	double meleeRate_ = 0;
 
 public:
-	Sword(Texture* texture, string name, string desc, double price, int ad, double meleeRate, equipType type) :
-		Equipment(texture, name, desc, price, type), ad_(ad), meleeRate_(meleeRate), type_(type) {};
+	Sword(Texture* texture, string name, string desc, double price, double meleeDamage, double meleeRate, equipType type) :
+		Equipment(texture, name, desc, price, type), type_(type) {
+		modifiers_.meleeDmg_ = meleeDamage;
+		modifiers_.meleeRate_ = meleeRate;
+	};
 	virtual ~Sword() {};
 
 	//Equipar dicho equipamiento
@@ -19,14 +20,11 @@ public:
 
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
-#pragma region Getter
-	int getAd() { return ad_; };
-	double getMeleeRate() { return meleeRate_; };
-#pragma endregion
+
 	virtual void writeStats() {
 		std::cout << type_ << "\n";
-		std::cout << "ad: " << ad_ << "\n";
-		std::cout << "meleeRate: " << meleeRate_ << "\n";
+		std::cout << "meleeDamage: " << modifiers_.meleeDmg_ << "\n";
+		std::cout << "meleeRate: " << modifiers_.meleeRate_ << "\n";
 	};
 };
 

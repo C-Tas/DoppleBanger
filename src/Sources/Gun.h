@@ -6,12 +6,13 @@ class Gun : public Equipment
 {
 private:
 	equipType type_;
-	int ad_ = 0;
-	double distRate_ = 0;
 
 public:
-	Gun(Texture* texture, string name, string desc, double price, int ad, double distRate, equipType type) :
-		Equipment(texture, name, desc, price, type), ad_(ad), distRate_(distRate), type_(type) {};
+	Gun(Texture* texture, string name, string desc, double price, double distDamage, double distRate, equipType type) :
+		Equipment(texture, name, desc, price, type), type_(type) {
+		modifiers_.distDmg_ = distDamage;
+		modifiers_.distRate_ = distRate;
+	};
 	virtual ~Gun() {};
 
 	//Equipar dicho equipamiento
@@ -19,14 +20,11 @@ public:
 
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
-#pragma region Getters
-	int getAd() { return ad_; };
-	double distRate() { return distRate_; };
-#pragma endregion
+
 	virtual void writeStats() {
 		std::cout << type_ << "\n";
-		std::cout << "ad: " << ad_ << "\n";
-		std::cout << "distRate: " << distRate_ << "\n";
+		std::cout << "distDamage: " << modifiers_.distDmg_ << "\n";
+		std::cout << "distRate: " << modifiers_.distRate_ << "\n";
 	};
 };
 

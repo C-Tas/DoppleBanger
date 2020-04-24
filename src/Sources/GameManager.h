@@ -43,8 +43,11 @@ enum class PointsTree : int {
 
 enum class missions : int {
 	gallegaEnProblemas = 0,
-	papelesSiniestros
+	papelesSiniestros,
 	//En caso de tener misión para el loro añadirla tb (o si se añade el esqueleto)
+
+	//Para saber el tamaño
+	Size
 };
 
 #pragma region Skills
@@ -100,8 +103,6 @@ enum class ObjectName : int {
 
 class GameManager {
 private:
-	//Numero de misiones secundarias
-	static const int NUM_MISION = 10;
 	//Puntero unico para evitar copias
 	static unique_ptr<GameManager> instance_;
 	//Cantidad de oro que genera en un nivel
@@ -129,9 +130,9 @@ private:
 	//Puntero a la lista de items del alijo
 	list<InventoryButton*>* stash_ = new list<InventoryButton*>;
 	//Vector que representa las misiones secundarias completadas
-	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
+	vector<bool> missionsComplete = vector<bool>((int)missions::Size);
 	//Vector que representa las misiones secundarias empezadas
-	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
+	vector<bool> missionsStarted = vector<bool>((int)missions::Size);
 	//Vector de cooldowns de las habilidades equipadas
 	vector<bool> skillsCooldown = { false, false, false, false };
 	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
@@ -155,7 +156,7 @@ public:
 	//Constructor vacio
 	GameManager() {
 		unlockedIslands_ = Island::Volcanic;
-		for (int i = 0; i < NUM_MISION; i++) {
+		for (int i = 0; i < (int)missions::Size; i++) {
 			missionsComplete[i] = false;
 		}
 	}
@@ -210,8 +211,6 @@ public:
 	const int getStashGold() { return stashGold; }
 		//Devuelve el tamaño de fuente según el tamaño de la ventana
 	const int getFontSize();
-	//Devuelve el total de misiones secundarias
-	const int getNumMission() { return NUM_MISION; };
 
 	//Devuelve el inventario
 	const lista getInventory() { return inventory_; };

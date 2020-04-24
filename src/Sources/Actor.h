@@ -74,8 +74,8 @@ public:
 	void removeMana(double stat) { currStats_.mana_ -= stat; };
 	void removeManaReg(double stat) { currStats_.manaReg_ -= stat; };
 	void removeArmor(double stat) { currStats_.armor_ -= stat; };
-	void removeAd(double stat) { currStats_.meleeDmg_ -= stat; };
-	void removeAp(double stat) { currStats_.distDmg_ -= stat; };
+	void removeMeleeDamage(double stat) { currStats_.meleeDmg_ -= stat; };
+	void removeDistDamage(double stat) { currStats_.distDmg_ -= stat; };
 	void removeCrit(double stat) { currStats_.crit_ -= stat; };
 	void removeMeleeRange(double stat) { currStats_.meleeRange_ -= stat; };
 	void removeDistRange(double stat) { currStats_.distRange_ -= stat; };

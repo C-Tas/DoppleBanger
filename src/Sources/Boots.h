@@ -6,12 +6,13 @@ class Boots : public Equipment
 {
 private:
 	equipType type_;
-	int speed_ = 0;
-	int armor_ = 0;
 
 public:
-	Boots(Texture* texture, string name, string desc, double price, int speed, int armor) :
-		Equipment(texture, name, desc, price, Boots_), speed_(speed), armor_(armor), type_(Boots_) {};
+	Boots(Texture* texture, string name, string desc, double price, double speed, double armor) :
+		Equipment(texture, name, desc, price, Boots_), type_(Boots_) {
+		modifiers_.moveSpeed_ = speed;
+		modifiers_.armor_ = armor;
+	};
 	virtual ~Boots() {};
 
 	//Equipar dicho equipamiento
@@ -20,14 +21,10 @@ public:
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
 
-#pragma region Getters
-	int getSpeed() { return speed_; };
-	int getArmor() { return armor_; };
-#pragma endregion
 	virtual void writeStats() {
 		std::cout << type_ << "\n";
-		std::cout << "speed: " << speed_ << "\n";
-		std::cout << "armor: " << armor_ << "\n";
+		std::cout << "speed: " << modifiers_.moveSpeed_ << "\n";
+		std::cout << "armor: " << modifiers_.armor_ << "\n";
 	};
 };
 
