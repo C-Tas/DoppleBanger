@@ -108,7 +108,7 @@ bool Player::update()
 
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_) {
-		initShoot();
+		initShoot(); 
 	}
 
 	//para utilizar las pociones
@@ -243,6 +243,8 @@ void Player::initShoot()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+
+	if (clon_ != nullptr)clon_->initShoot(mousePos_);
 }
 
 void Player::initMelee()
@@ -274,25 +276,6 @@ void Player::initMelee()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 	meleeTime_ = SDL_GetTicks();
-}
-
-void Player::updateDirVisMouse()
-{
-	mousePos_ = eventHandler_->getRelativeMousePos();
-	Vector2D center = getCenter();		//Punto de referencia
-	Vector2D dir = mousePos_ - center;	//Vector dirección
-	dir.normalize();
-	double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
-	if (angle >= 0) {
-		if (angle <= 45.0) currDir_ = DIR::RIGHT;
-		else if (angle < 135.0) currDir_ = DIR::DOWN;
-		else currDir_ = DIR::LEFT;
-	}
-	else {
-		if (angle >= -45.0) currDir_ = DIR::RIGHT;
-		else if (angle >= -135.0) currDir_ = DIR::UP;
-		else currDir_ = DIR::LEFT;
-	}
 }
 
 void Player::shootAnim()
@@ -416,7 +399,7 @@ void Player::shoot(Vector2D dir)
 	CollisionCtrl::instance()->addPlayerBullet(bullet);
 
 	if (clon_ != nullptr)
-		clon_->shoot(dir);
+		clon_->shoot();
 }
 
 void Player::onCollider()

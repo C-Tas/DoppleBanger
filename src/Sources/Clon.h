@@ -20,9 +20,11 @@ public:
 	bool update();
 	void onCollider() {};
 
-	void shoot(Vector2D dir);
+	void shoot();
 	void changeDuration(double dur) { duration_ = dur; }	//En caso de que se pueda modificar la duraci�n
 	void initSelfDestruction();
+	//<summary>Método para iniciar la animación de disparo del clon, recibe un vector2D que es la dirección hacia la que dispara</summary>
+	void initShoot(Vector2D dir);
 
 	void die();
 	//Devuelve el coste de maná de la habilidad
@@ -42,6 +44,9 @@ private:
 	Actor* objective_ = nullptr;
 	Player* player_ = nullptr;
 	list<Enemy*> enemies_;
+	//<summary>Variable que guarda la dirección hacia la que va a disparar el clon
+	//Se actualiza al llamar al initShoot desde el player</summary>
+	Vector2D shootingDir_ = {0,0};
 
 	virtual void initObject();
 	void taunt();
@@ -67,5 +72,33 @@ private:
 	//Autodestrucción hacia abajo
 	const int SELFDESTRUCT_D_FRAMES = 8;			//Frames de la animación
 	const int SELFDESTRUCT_D_FRAME_RATE = 100;		//Frame rate
+
+
+	//Disparo
+	vector<Anim> shootAnims_;				//Vector de las animaciones
+	vector<Texture*> shootTx_;				//Vector de las texturas
+	//Disparo derecha
+	const int SHOOT_R_FRAMES = 5;			//Frames de la animación
+	const int SHOOT_R_FRAME_RATE = 100;		//Frame rate
+	const int SHOOT_R_SHOOTINGFRAME = 1;	//Frame en el que se realiza el disparo
+	//Disparo hacia arriba
+	const int SHOOT_U_FRAMES = 8;			//Frames de la animación
+	const int SHOOT_U_FRAME_RATE = 100;		//Frame rate
+	const int SHOOT_U_SHOOTINGFRAME = 2;	//Frame en el que se realiza el disparo
+
+	//Disparo hacia izquierda
+	const int SHOOT_L_FRAMES = 5;			//Frames de la animación
+	const int SHOOT_L_FRAME_RATE = 100;		//Frame rate
+	const int SHOOT_L_SHOOTINGFRAME = 1;	//Frame en el que se realiza el disparo
+	//Disparo hacia abajo
+	const int SHOOT_D_FRAMES = 8;			//Frames de la animación
+	const int SHOOT_D_FRAME_RATE = 100;		//Frame rate
+	const int SHOOT_D_SHOOTINGFRAME = 2;	//Frame en el que se realiza el disparo
+
+	//Vector que contiene los frames en los que se dispara en las distintas animaciones de disparo
+	vector<int>shootingFrame_; 
+
+
+
 #pragma endregion
 };

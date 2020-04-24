@@ -144,6 +144,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ClonSelfDestructionLeftAnim, "../Sources/assets/clon/autodestruccion/ClonLeftExplosion.png" },
 	{ ClonSelfDestructionUpAnim, "../Sources/assets/clon/autodestruccion/ClonBackExplosion.png" },
 	{ ClonSelfDestructionDownAnim, "../Sources/assets/clon/autodestruccion/ClonFrontExplosion.png" },
+	{ ClonShootRightAnim, "../Sources/assets/clon/disparo/ClonRightShooting.png" },
+	{ ClonShootLeftAnim, "../Sources/assets/clon/disparo/ClonLeftShooting.png" },
+	{ ClonShootUpAnim, "../Sources/assets/clon/disparo/ClonBackShooting.png" },
+	{ ClonShootDownAnim, "../Sources/assets/clon/disparo/ClonFrontShooting.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
