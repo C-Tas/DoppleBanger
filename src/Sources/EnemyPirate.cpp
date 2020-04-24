@@ -192,12 +192,7 @@ void EnemyPirate::attack() {
 //Inicializa al al pirata
 void EnemyPirate::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::PlayerFront));
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
-	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
-	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
-	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	rangeVision_ = VIS_RANGE;
-	CollisionCtrl::instance()->addEnemy(this);
 	initAnims();
 }
 
@@ -216,18 +211,13 @@ void EnemyPirate::lostAggro()
 
 //Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_ DONE
 bool EnemyPirate::getEnemy() {
-	auto gm = GameManager::instance();
-	Vector2D playerPos = isPlayerInRange();
-	if (playerPos == Vector2D{ -1,-1 }) {
-		return false;
-		currEnemy_ = nullptr;
+	if (Enemy::getEnemy(rangeVision_)) {
+		if (!app_->getMute()) {
+			app_->getAudioManager()->playChannel(Resources::AudioId::Agro, 0, 0);
+		}
+		return true;
 	}
-
-	currEnemy_ = gm->getPlayer();
-	if (!app_->getMute()) {
-		app_->getAudioManager()->playChannel(Resources::AudioId::Agro, 0, 0);
-	}
-	return true;
+	else return false;
 }
 
 //Cuando el pirata pierde el agro, se le asigna el agro del player
@@ -237,24 +227,8 @@ void EnemyPirate::lostAgro()
 	currEnemy_ = GameManager::instance()->getPlayer();
 }
 
-//Devuelve la posición del player si está a rango DONE
-Vector2D EnemyPirate::isPlayerInRange() {
-	GameManager* gm = GameManager::instance();
-	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
 
-	Point2D playerPos = gm->getPlayerPos();
-	if (currEnemy_ == nullptr &&
-		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && playerPos.getX() >= pos_.getX() - rangeVision_
-		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && playerPos.getY() >= pos_.getY() - rangeVision_) {
-		return playerPos;
-	}
-	else
-	{
-		return  { -1,-1 };
-	}
-}
-
-//Genera la posición a la que se mueve el pirata en función de su rango 
+//Genera la posici�n a la que se mueve el pirata en funci�n de su rango 
 void EnemyPirate::selectTarget() {
 
 	Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };
@@ -272,4 +246,20 @@ void EnemyPirate::selectTarget() {
 	}
 	target_ = posToReach;
 	move(enemycenterPos);
+}
+void EnemyPirate::initialStats()
+{
+	HEALTH = 1000;
+	MANA = 100;
+	MANA_REG = 100;
+	ARMOR = 10;
+	MELEE_DMG = 0;
+	DIST_DMG = 0;
+	CRIT = 2000;
+	MELEE_RANGE = 50;
+	DIST_RANGE = 75;
+	MOVE_SPEED = 250;
+	MELEE_RATE = 1500;
+	DIST_RATE = 1500;
+	initStats(HEALTH,MANA, MANA_REG,ARMOR,MELEE_DMG,DIST_DMG,CRIT,MELEE_RANGE,DIST_RANGE,MOVE_SPEED,MELEE_RATE,DIST_RATE);
 }

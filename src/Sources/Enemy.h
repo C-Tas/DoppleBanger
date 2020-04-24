@@ -2,7 +2,6 @@
 
 #include "Actor.h"
 
-class Clon;
 using namespace std;
 
 class Enemy : public Actor
@@ -18,7 +17,7 @@ public:
 protected:
 	//Rango de visión de la entidad
 	double rangeVision_ = 0;
-
+	Uint32 lastFrame_ = 0;
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores serán los puestos, si se le pasan valores los editara</summary>
 	Enemy(Application* app = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0,0 }, double rot = 0)
 		:Actor(app, pos, scale, rot) {};
@@ -28,22 +27,35 @@ protected:
 	Enemy(Enemy&& other)noexcept :Actor(other.app_, other.pos_, other.scale_) {};
 	//<summary>Destructor</summary>
 	virtual ~Enemy() {};
-
-	//Vector que representa el alto y ancho de la caja de colisiones
-	Point2D boxCollision_;
+	//<summary> Devuelve la posicion del player si esta en rango, sino devuelve {-1,-1}</summary>
+	virtual Vector2D isPlayerInRange(double n);
+	//<summary> Devuelve la posicion del clon si esta en rango, sino devuelve {-1,-1}</summary>
+	virtual Vector2D isClonInRange(double n);
+	//<summary> Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_</summary>
+	virtual bool getEnemy(double n);
+	//Actualiza la animaci�n en funci�n del frameRate de la actual animaci�n
 	//Último ataque
 	Uint32 lastHit = 0;
-	//Último frame de animación
-	Uint32 lastFrame_ = 0;
-
 	//Inicializa al Enemy
-	virtual void initObject() {};
+	virtual void initObject();
 	//Inicializa las animaciones
 	virtual void initAnims() {};
-	//Ataque
-	virtual void attack() {};
-	//Actualiza la actual animación
-	virtual void updateAnim();
+	//en cada enemigo establece las stats de los enemigos
+	virtual void initialStats() = 0;
+#pragma region stats
+	  double HEALTH = 0;
+	  double MANA = 0;
+	  double MANA_REG = 0;
+	  double ARMOR = 0;
+	  double MELEE_DMG = 0;
+	  double DIST_DMG = 0;
+	  double CRIT = 0;
+	  double MELEE_RANGE = 0;
+	  double DIST_RANGE = 0;
+	  double MOVE_SPEED = 0;
+	  double MELEE_RATE = 0;
+	  double DIST_RATE = 0;
+#pragma endregion
 	//Devuelve true si el target está dentro del rango de ataque
 	virtual bool onRange(bool melee);
 	//Busca y actualiza al enemigo que atacar

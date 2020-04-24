@@ -28,8 +28,6 @@ private:
 	int currTarget_ = 0;
 	//Último ataque a melee
 	Uint32 lastMeleeHit_ = 0;
-	//Último frame de animación
-	Uint32 lastFrame_ = 0;
 	//Tiempo que el lobo pasa parado cuando llega a un target
 	Uint32 idleTime_ = 1000;
 	//Tiempo 
@@ -57,21 +55,6 @@ private:
 	const int H_FRAME_IDLE = 200;
 	const int FRAME_RATE_IDLE = 100;
 	#pragma endregion
-	//Estadisticas para inicializar al monkeyCoco
-	#pragma region constantes
-	const double HEALTH = 100;
-	const double MANA = 100;
-	const double MANA_REG = 100;
-	const double ARMOR = 10;
-	const double MELEE_DMG = 1;
-	const double DIST_DMG = 1;
-	const double CRIT = 2000;
-	const double MELEE_RANGE = 50;
-	const double DIST_RANGE = 75;
-	const double MOVE_SPEED = 250;
-	const double MELEE_RATE = 1500;
-	const double DIST_RATE = 1500;
-#pragma endregion
 
 	//Ataque del monkeyCoco
 	void attack();
@@ -81,8 +64,11 @@ private:
 	void initAnims();
 	//Busca y actualiza al enemigo que atacar
 	virtual bool getEnemy();
-	//Determina si el jugador est� dentro del rango de ataque del monkeyCoco
-	Vector2D isPlayerInRange();
+	//Cuando pierde agro del enemigo
+	virtual void lostAgro();
 	//Genera la posici�n a la que se mueve el pirata en funci�n de su rango 
 	void selectTarget();
+
+	virtual void animationsvar();
+	virtual void initialStats();
 };

@@ -17,7 +17,7 @@ bool MonkeyCoco::update() {
 		return true;
 	}
 	//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
-	if (currState_ == STATE::IDLE && getEnemy(false)) {
+	if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
 		currState_ = STATE::ATTACKING;
 	}
 	//Si el mono tiene enemigo y puede atacar
@@ -28,7 +28,7 @@ bool MonkeyCoco::update() {
 			attack();
 		}
 		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
-		else if (getEnemy(false))
+		else if(getEnemy(currStats_.distRange_))
 		{
 			//changeAnim(attackAnim_);
 			attack();
@@ -36,8 +36,8 @@ bool MonkeyCoco::update() {
 		//Tengo enemigo pero no a rango
 		else
 		{
-			currState_ == STATE::IDLE;
-			lostAggro();
+			currState_ = STATE::IDLE;
+			currEnemy_ = nullptr;
 		}
 		lastHit = SDL_GetTicks();
 	}
@@ -46,6 +46,21 @@ bool MonkeyCoco::update() {
 	return false;
 }
 
+//Devuelve true si el enemigo que tengo est� a rango
+bool MonkeyCoco::onRange() {
+	if (currEnemy_ == nullptr) {
+		return false;
+	}
+	SDL_Rect rangeAttack = { getPosX() - currStats_.distRange_ - (getScaleX() / 2)  ,
+	getPosY() - currStats_.distRange_ - (getScaleY() / 2),currStats_.distRange_ * 2, currStats_.distRange_ * 2 };;
+	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
+		return true;
+	}
+	else
+	{
+		false;
+	}
+}
 
 //Inicializa todas las animaciones
 void MonkeyCoco::initAnims()
@@ -70,12 +85,28 @@ void MonkeyCoco::attack() {
 //Inicializa al mono
 void MonkeyCoco::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
-	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
-	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
-	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
-	CollisionCtrl::instance()->addEnemy(this);
 	initAnims();
+}
+
+void MonkeyCoco::lostAgro()
+{
+	currEnemy_ = nullptr;
+}
+void MonkeyCoco::initialStats()
+{
+	HEALTH = 100;
+	MANA = 100;
+	MANA_REG = 1;
+	ARMOR = 10;
+	MELEE_DMG = 0;
+	DIST_DMG = 100;
+	CRIT = 0;
+	MELEE_RANGE = 20;
+	DIST_RANGE = 250;
+	MOVE_SPEED = 100;
+	MELEE_RATE = 1;
+	DIST_RATE = 2500;
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
 //Gesti�n de las colisiones

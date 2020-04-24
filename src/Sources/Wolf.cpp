@@ -175,10 +175,6 @@ void Wolf::attack() {
 //Inicializa al lobo
 void Wolf::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::WolfFront));
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
-	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
-	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
-	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	rangeVision_ = 80;//numero magico
 	CollisionCtrl::instance()->addEnemy(this);
 	initAnims();
@@ -210,32 +206,49 @@ void Wolf::selectTarget() {
 }
 
 bool Wolf::getEnemy() {
-	auto gm = GameManager::instance();
-	Vector2D playerPos = isPlayerInRange();
-	if (playerPos == Vector2D{ -1,-1 }) {
-		return false;
-		currEnemy_ = nullptr;
+	if (Enemy::getEnemy(rangeVision_)) {
+		if (!app_->getMute()) {
+			app_->getAudioManager()->playChannel(Resources::AudioId::WolfHowl, 0, 0);
+		}
+		return true;
 	}
-
-	currEnemy_ = gm->getPlayer();
-	if (!app_->getMute()) {
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfHowl, 0, 0);
-	}
-	return true;
+	else return false;
 }
 
-Vector2D Wolf::isPlayerInRange() {
-	GameManager* gm = GameManager::instance();
-	if (gm->getPlayer() == nullptr) { return { -1,-1 }; }
+//Cuando el pirata pierde el agro, se le asigna el agro del player
+//Esto lo llama el clon cuando se destruye
+void Wolf::lostAgro()
+{
+	currEnemy_ = nullptr;
+	currState_ = STATE::PATROLLING;
+}
 
-	Point2D playerPos = gm->getPlayerPos();
-	if (currEnemy_ == nullptr &&
-		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeVision_ && playerPos.getX() >= pos_.getX() - rangeVision_
-		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeVision_ && playerPos.getY() >= pos_.getY() - rangeVision_) {
-		return playerPos;
-	}
-	else
-	{
-		return  { -1,-1 };
-	}
+
+//Genera la posici�n a la que se mueve el pirata en funci�n de su rango 
+void Wolf::selectTarget() {
+
+	Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };
+	Point2D enemycenterPos = { currEnemy_->getPosX() + currEnemy_->getScaleX() / 2, currEnemy_->getPosY() + currEnemy_->getScaleY() / 2 };
+	Vector2D posToReach;
+	posToReach.setX((enemycenterPos.getX() + currStats_.meleeRange_) - centerPos.getX());
+	posToReach.setY((enemycenterPos.getY() + currStats_.meleeRange_) - centerPos.getY());
+	target_ = posToReach;
+	move(enemycenterPos);
+}
+
+void Wolf::initialStats()
+{
+	HEALTH = 1000;
+	MANA = 100;
+	MANA_REG = 100;
+	ARMOR = 10;
+	MELEE_DMG = 1;
+	DIST_DMG = 1;
+	CRIT = 2000;
+	MELEE_RANGE = 50;
+	DIST_RANGE = 75;
+	MOVE_SPEED = 250;
+	MELEE_RATE = 1500;
+	DIST_RATE = 1500;
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }

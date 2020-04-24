@@ -37,8 +37,8 @@ private:
 	Uint32 lastRangeHit_ = 0;
 	//Último ataque a melee
 	Uint32 lastMeleeHit_ = 0;
-	//Último frame de animación
-	Uint32 lastFrame_ = 0;
+	//�ltimo frame de animaci�n
+	//Uint32 lastFrame_ = 0;
 	//Tiempo que el pirata pasa parado cuando llega a un target
 	Uint32 idleTime_ = 1000;
 	//Tiempo 
@@ -73,19 +73,7 @@ private:
 	const string NAME_IDLE = "idle";
 #pragma endregion
 	//Estadisticas para inicializar al monkeyCoco
-#pragma region consts
-	const double HEALTH = 1000;
-	const double MANA = 100;
-	const double MANA_REG = 100;
-	const double ARMOR = 10;
-	const double MELEE_DMG = 0;
-	const double DIST_DMG = 0;
-	const double CRIT = 2000;
-	const double MELEE_RANGE = 50;
-	const double DIST_RANGE = 75;
-	const double MOVE_SPEED = 250;
-	const double MELEE_RATE = 1500;
-	const double DIST_RATE = 1500;
+	#pragma region consts
 	const int VIS_RANGE = 75;
 #pragma endregion
 
@@ -93,20 +81,19 @@ private:
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet
 	const SDL_Rect FIRST_FRAME = { 0,0,0,0 };
-	//Determina si el jugador está dentro del rango de ataque del monkeyCoco
-	Vector2D isPlayerInRange();
-	//Determina si el clon está dentro del rango de ataque del monkeyCoco
-	Vector2D isClonInRange();
 	//Ataque del pirata enemigo
 	void attack();
-	//Devuelve true si el target está dentro del rango de ataque
+	//Devuelve true si el target est� dentro del rango de ataque
 	bool onRange();
 	//Inicializa todas las animaciones
 	void initAnims();
 	//Busca y actualiza al enemigo que atacar
-	bool getEnemy();
+	virtual bool getEnemy();
 	//Cuando pierde agro del enemigo
 	virtual void lostAgro();
 	//Genera la posición a la que se mueve el pirata en función de su rango 
 	void selectTarget();
+
+	virtual void animationsvar();
+	virtual void initialStats();
 };

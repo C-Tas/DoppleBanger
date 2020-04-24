@@ -73,6 +73,7 @@
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\PlayerBullet.cpp" />
     <ClCompile Include="Sources\PlayState.cpp" />
+    <ClCompile Include="Sources\Pumpkin.cpp" />
     <ClCompile Include="Sources\RandEquipGen.cpp" />
     <ClCompile Include="Sources\Resources.cpp" />
     <ClCompile Include="Sources\RicochetSkill.cpp" />
@@ -91,7 +92,6 @@
     <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\Tentacle.cpp" />
     <ClCompile Include="Sources\Sword.cpp" />
-    <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
@@ -156,6 +156,7 @@
     <ClInclude Include="Sources\Player.h" />
     <ClInclude Include="Sources\PlayerBullet.h" />
     <ClInclude Include="Sources\PlayState.h" />
+    <ClInclude Include="Sources\Pumpkin.h" />
     <ClInclude Include="Sources\RandEquipGen.h" />
     <ClInclude Include="Sources\Resources.h" />
     <ClInclude Include="Sources\RicochetSkill.h" />

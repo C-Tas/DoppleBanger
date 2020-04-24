@@ -63,19 +63,5 @@ private:
 	const double COCO_VEL = 700;							//Velocidad del coco
 	const double COCO_LIFE = 3;								//Vida del proyectil en segundos
 #pragma endregion
-//Estadisticas para inicializar al monkeyCoco
-#pragma region Stats
-	const double HEALTH = 100;
-	const double MANA = 100;
-	const double MANA_REG = 1;
-	const double ARMOR = 10;
-	const double MELEE_DMG = 0;
-	const double DIST_DMG = 100;
-	const double CRIT = 0;
-	const double MELEE_RANGE = 20;
-	const double DIST_RANGE = 250;
-	const double MOVE_SPEED = 100;
-	const double MELEE_RATE = 1;
-	const double DIST_RATE = 2500;
 #pragma endregion
 };
