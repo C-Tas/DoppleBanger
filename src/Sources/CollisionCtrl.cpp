@@ -76,19 +76,22 @@ void CollisionCtrl::islandCollisions() {
 			//Cuando el jugador colisiona con el enemigo recibe da�o
 			//Falta a�adir el m�todo correspondiente
 		}
-		for (auto bullet : playerBullets_) {
-			if (Collisions::collidesWithRotation(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(), bullet->getCollisionRot(),
-				enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot())) {
-				enem->receiveDamage(bullet->getDamage());
-				if (bullet->getRicochet()) {	//Cuando esté rebotando
-					bullet->searchEnemy(enemies_, enem);
-				}
-				else if (!bullet->getPerforate()) {	//Cuando no esté perforando
-					removePlayerBullet(bullet);
-					bullet->onCollider();
+		if (enem != nullptr) {
+			for (auto bullet : playerBullets_) {
+				if (Collisions::collidesWithRotation(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(), bullet->getCollisionRot(),
+					enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot())) {
+					enem->receiveDamage(bullet->getDamage());
+					if (bullet->getRicochet()) {	//Cuando esté rebotando
+						bullet->searchEnemy(enemies_, enem);
+					}
+					else if (!bullet->getPerforate()) {	//Cuando no esté perforando
+						removePlayerBullet(bullet);
+						bullet->onCollider();
+					}
 				}
 			}
 		}
+
 	}
 
 	//Colisi�n bala del enemigo con jugador

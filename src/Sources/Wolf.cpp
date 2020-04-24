@@ -174,9 +174,9 @@ void Wolf::attack() {
 
 //Inicializa al lobo
 void Wolf::initObject() {
+	Enemy::initObject();
 	setTexture(app_->getTextureManager()->getTexture(Resources::WolfFront));
 	rangeVision_ = 80;//numero magico
-	initAnims();
 }
 
 //gesti�n de colisiones

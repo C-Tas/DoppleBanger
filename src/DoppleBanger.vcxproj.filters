@@ -7,7 +7,6 @@
     <ClCompile Include="SDL2_gfx\SDL2_rotozoom.cpp" />
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
-    <ClCompile Include="Sources\Armor.cpp" />
     <ClCompile Include="Sources\Boots.cpp" />
     <ClCompile Include="Sources\AudioManager.cpp" />
     <ClCompile Include="Sources\Bullet.cpp" />
@@ -83,11 +82,11 @@
     <ClCompile Include="Sources\WinState.cpp" />
     <ClCompile Include="Sources\Wolf.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
+    <ClCompile Include="Sources\Armor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
-    <ClInclude Include="Sources\Armor.h" />
     <ClInclude Include="Sources\Boots.h" />
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\AudioManager.h" />
@@ -170,5 +169,6 @@
     <ClInclude Include="Sources\WinState.h" />
     <ClInclude Include="Sources\Wolf.h" />
     <ClInclude Include="Sources\WhirlwindSkill.h" />
+    <ClInclude Include="Sources\Armor.h" />
   </ItemGroup>
 </Project>

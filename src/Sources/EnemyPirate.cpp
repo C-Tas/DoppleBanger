@@ -191,9 +191,9 @@ void EnemyPirate::attack() {
 
 //Inicializa al al pirata
 void EnemyPirate::initObject() {
+	Enemy::initObject();
 	setTexture(app_->getTextureManager()->getTexture(Resources::PlayerFront));
 	rangeVision_ = VIS_RANGE;
-	initAnims();
 }
 
 //Esto es un apaño, se eliminara cuando este completa la gestión de muertes

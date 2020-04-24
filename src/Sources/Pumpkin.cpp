@@ -23,7 +23,7 @@ bool Pumpkin::onDistRange() {
 bool Pumpkin::onMeleeRange() {
 	if (currEnemy_ != nullptr ) {
 		Point2D center = getCenter();
-		Point2D currEnemyCenter = getCenter();
+		Point2D currEnemyCenter = currEnemy_->getCenter();
 		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
 			center.getX(), center.getY(), currStats_.meleeRange_)) {
 			return true;
@@ -116,6 +116,7 @@ void Pumpkin::explote() {
 	}
 	changeAnim(explotingAnim_);
 	currState_ = STATE::DYING;
+	CollisionCtrl::instance()->removeEnemy(this);
 }
 void Pumpkin::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));

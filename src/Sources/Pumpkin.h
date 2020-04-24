@@ -4,7 +4,6 @@ class Pumpkin :
 	public Enemy
 {
 private:
-	Uint32 lastHit = 0;
 	 uint wHSeed = app_->getWindowHeight() / 40;		//Tamaño de la semilla
 	 double seedVel = 700;							//Velocidad de la semilla
 	 double seedLife = 3;								//Vida del proyectil en segundos
