@@ -171,16 +171,53 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	{ WolfHowl ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
 	{ WolfAttack ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
 	{ WolfDie ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" },
-	{Shout, "../Sources/assets/efectos_sonido/temparr.wav"}
 
+	//Player
+	{ Walk	  ,"../Sources/assets/efectos_sonido/player/walk.wav" },
+	{ Attack1 ,"../Sources/assets/efectos_sonido/player/attack1.wav" },
+	{ Attack2 ,"../Sources/assets/efectos_sonido/player/attack2.wav" },
+	{ Attack3 ,"../Sources/assets/efectos_sonido/player/attack3.wav" },
+	{ Attack4 ,"../Sources/assets/efectos_sonido/player/attack4.wav" },
+	{ Attack5 ,"../Sources/assets/efectos_sonido/player/attack5.wav" },
+	{ Attack6 ,"../Sources/assets/efectos_sonido/player/attack6.wav" },
+	{ Dying   ,"../Sources/assets/efectos_sonido/player/dying.wav" },
+	{ Laugh1   ,"../Sources/assets/efectos_sonido/player/laugh1.mp3" },
+	{ Laugh2   ,"../Sources/assets/efectos_sonido/player/laugh2.mp3" },
+	{ Laugh3   ,"../Sources/assets/efectos_sonido/player/laugh3.mp3" },
+	{ Laugh4   ,"../Sources/assets/efectos_sonido/player/laugh4.mp3" },
+	{ Laugh5   ,"../Sources/assets/efectos_sonido/player/laugh5.mp3" },
+	{ Laugh6   ,"../Sources/assets/efectos_sonido/player/laugh6.mp3" },
+	{ Laugh7   ,"../Sources/assets/efectos_sonido/player/laugh7.mp3" },
+	{ Shout   ,"../Sources/assets/efectos_sonido/player/jar.mp3"},
+	{ Drink   ,"../Sources/assets/efectos_sonido/player/drink.wav" },
+	{ EmpoweredSkill   ,"../Sources/assets/efectos_sonido/player/EmpoweredSkill.wav"},
+	{ PerforateSkill   ,"../Sources/assets/efectos_sonido/player/perforateSkill.wav"},
+	{ Ricochet   ,"../Sources/assets/efectos_sonido/player/ricochet.wav"},
+	{ WhirlwindSkill   ,"../Sources/assets/efectos_sonido/player/whirlwindSkill.wav"},
+	{ Pistol   ,"../Sources/assets/efectos_sonido/player/pistol.wav"},
+	{ Trabuco   ,"../Sources/assets/efectos_sonido/player/trabuco.wav"},
+	{ Sword1   ,"../Sources/assets/efectos_sonido/player/sword1.flac"},
+	{ Sword2  ,"../Sources/assets/efectos_sonido/player/sword2.flac"},
+	{ Sword3  ,"../Sources/assets/efectos_sonido/player/sword3.wav"},
+	{ Sword4  ,"../Sources/assets/efectos_sonido/player/sword4.aiff"},
+	{ Sword5  ,"../Sources/assets/efectos_sonido/player/sword5.wav"},
+	{ Sword6  ,"../Sources/assets/efectos_sonido/player/sword6.wav"},
+	{ MeleeCrit  ,"../Sources/assets/efectos_sonido/player/meleeCrit.wav"},
+	{ DistCrit  ,"../Sources/assets/efectos_sonido/player/distCrit.wav"},
+
+
+	//Clon
+	{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
+
+	//Ship
+	{ Waves ,"../Sources/assets/efectos_sonido/ship/waves.wav" }
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 };
 
 vector <Resources::MusicInfo> Resources::musicRoutes{
 	{ MainTheme ,"../Sources/assets/music/mainTheme.mp3" },
-	{ ShipSingers ,"../Sources/assets/music/ShipSingers.mp3" }
-
-
+	{ ShipSingers ,"../Sources/assets/music/ShipSingers.mp3" },
+	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" }
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 };
 

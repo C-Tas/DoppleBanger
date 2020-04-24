@@ -108,6 +108,8 @@ protected:
 	GameObject* currEnemy_ = nullptr;
 	//Actual dirección a la que mira la entidad
 	DIR currDir_ = DIR::RIGHT;
+	//Puntero al audio manager
+	AudioManager* am_ = nullptr;
 	//Constructor vacío
 	Actor() {};
 	///<summary>Constructor de la clase Actor</summary>
@@ -119,7 +121,7 @@ protected:
 	virtual ~Actor() {};
 
 	//Inicializa al actor
-	virtual void initObject() {};
+	virtual void initObject() { am_ = app_->getAudioManager(); };
 	virtual void initAnims() {};
 	//<summary>Inicializa todas las stats</summary>
 	void initStats(double health, double mana, double manaReg, double armor, double meleeDmg, double distDmg, 

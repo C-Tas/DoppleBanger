@@ -194,6 +194,7 @@ public:
 		//Música
 		MainTheme,
 		ShipSingers,
+		Caribbean,
 
 		//Efectos de sonido
 		Agro,
@@ -202,7 +203,45 @@ public:
 		WolfHowl,
 		WolfAttack,
 		WolfDie,
-		Shout //TODO: Añadir a resources el sonido del grito.
+		
+		//player
+		Walk,
+		Attack1,
+		Attack2,
+		Attack3,
+		Attack4,
+		Attack5,
+		Attack6,
+		Dying,
+		Laugh1,
+		Laugh2,
+		Laugh3,
+		Laugh4,
+		Laugh5,
+		Laugh6,
+		Laugh7,
+		Shout,
+		Drink,
+		EmpoweredSkill,
+		PerforateSkill,
+		Ricochet,
+		WhirlwindSkill,
+		Pistol,
+		Trabuco,
+		Sword1 ,
+		Sword2 ,
+		Sword3 ,
+		Sword4 ,
+		Sword5 ,
+		Sword6,
+		MeleeCrit,
+		DistCrit,
+
+		//CLon
+		Explosion,
+
+		//Ship
+		Waves
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

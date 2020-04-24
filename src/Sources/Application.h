@@ -112,7 +112,6 @@ public:
 	SRandBasedGenerator* getRandom() { return random_; }
 	///<summary>Devuelve el mute</summary>
 	bool getMute() { return mute_; }
-
 	///<summary>Devuelve el GameManager</summary>
 	GameManager* getGameManager() { return gameManager_; }
 

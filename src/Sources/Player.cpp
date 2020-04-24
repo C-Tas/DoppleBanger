@@ -161,6 +161,7 @@ bool Player::update()
 
 		if (found && empoweredAct_ && !empoweredAnim_)
 		{
+			app_->getAudioManager()->playChannel(Resources::EmpoweredSkill, 0, 3);
 			cout << "\nAtaque potenciado\n" << endl;
 			empoweredAnim_ = true;
 			initMelee();
@@ -185,6 +186,7 @@ bool Player::update()
 		meleeAnim();
 	}
 	else if (currState_ == STATE::DYING) {
+		app_->getAudioManager()->playChannel(Resources::Dying, 0, 0);
 		//Tendría que hacer la animación de muerte
 		return true;
 	}
@@ -194,6 +196,7 @@ bool Player::update()
 
 void Player::initIdle()
 {
+	app_->getAudioManager()->haltChannel(0);
 	currState_ = STATE::IDLE;
 	texture_ = idleTx_[(int)lookAt];
 	currAnim_ = idleAnims_[(int)lookAt];
@@ -205,6 +208,10 @@ void Player::initIdle()
 
 void Player::initMove()
 {
+	if (SDL_GetTicks() -  WALK_TIME > lastWalkSound_ ) {
+		lastWalkSound_ = SDL_GetTicks();
+		app_->getAudioManager()->playChannel(Resources::Walk, -1, 0);
+	}
 	mousePos_ = eventHandler_->getRelativeMousePos();
 	texture_ = moveTx_[(int)lookAt];
 	currAnim_ = moveAnims_[(int)lookAt];
@@ -219,6 +226,8 @@ void Player::initMove()
 
 void Player::initShoot()
 {
+	auto choice = app_->getRandom()->nextInt(Resources::Attack1, Resources::Attack6);
+	app_->getAudioManager()->playChannel(choice, 0, 1);
 	stop();
 	currState_ = STATE::SHOOTING;	//Cambio de estado
 	mousePos_ = eventHandler_->getRelativeMousePos();
@@ -250,6 +259,10 @@ void Player::initShoot()
 
 void Player::initMelee()
 {
+	auto choice = app_->getRandom()->nextInt(Resources::Attack1, Resources::Attack6);
+	app_->getAudioManager()->playChannel(choice, 0, 1);
+	auto melee = app_->getRandom()->nextInt(Resources::Sword1, Resources::Sword6);
+	app_->getAudioManager()->playChannel(melee, 0, 3);
 	currState_ = STATE::ATTACKING;	//Cambio de estado
 	attacked_ = false;	//Aún no se ha atacado
 	updateDirVisEnemy();	//Hacia dónde está el enemigo
@@ -425,6 +438,8 @@ void Player::shoot(Vector2D dir)
 
 	PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Rock),
 		shootPos, dir, currStats_.distDmg_);
+	app_->getAudioManager()->playChannel(Resources::Pistol, 0, 3);
+
 	//Activa perforación en la bala
 	if (perforate_) {
 		bullet->setPerforate(perforate_);
@@ -488,6 +503,7 @@ void Player::decreaseMana(double mana) {
 }
 
 void Player::usePotion(int value, potionType type) {
+	app_->getAudioManager()->playChannel(Resources::Drink, 0, 1);
 	switch (type)
 	{
 	case live_:
@@ -547,6 +563,8 @@ void Player::desactivePotion(){
 
 void Player::createClon()
 {
+	auto choice = app_->getRandom()->nextInt(Resources::Laugh1, Resources::Laugh7);
+	app_->getAudioManager()->playChannel(choice, 0, 1);
 	Vector2D pos;
 	pos.setX(eventHandler_->getRelativeMousePos().getX() - (scale_.getX() / 2));
 	pos.setY(eventHandler_->getRelativeMousePos().getY() - (scale_.getY() * 0.8));

@@ -64,6 +64,7 @@ void Application::runApp() {
 	endGame();
 }
 
+
 void Application::updateDelta()
 {
 	lastTicks_ = currTicks_;
