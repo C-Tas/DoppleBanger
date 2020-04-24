@@ -9,6 +9,7 @@
 
 bool MonkeyCoco::update() {
 
+	updateFrame();
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendr�a que hacer la animaci�n de muerte?
@@ -23,7 +24,7 @@ bool MonkeyCoco::update() {
 	//Si el mono tiene enemigo y puede atacar
 	if (currState_ == STATE::ATTACKING && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
 		//Si el mono tiene un enemigo y lo tiene a rango
-		if (onRange(false)) {
+		if (onRange()) {
 			//changeAnim(attackAnim_);
 			attack();
 		}
@@ -41,26 +42,9 @@ bool MonkeyCoco::update() {
 		}
 		lastHit = SDL_GetTicks();
 	}
-
-	updateAnim();
 	return false;
 }
 
-//Devuelve true si el enemigo que tengo est� a rango
-bool MonkeyCoco::onRange() {
-	if (currEnemy_ == nullptr) {
-		return false;
-	}
-	SDL_Rect rangeAttack = { getPosX() - currStats_.distRange_ - (getScaleX() / 2)  ,
-	getPosY() - currStats_.distRange_ - (getScaleY() / 2),currStats_.distRange_ * 2, currStats_.distRange_ * 2 };;
-	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
-		return true;
-	}
-	else
-	{
-		false;
-	}
-}
 
 //Inicializa todas las animaciones
 void MonkeyCoco::initAnims()
@@ -84,14 +68,11 @@ void MonkeyCoco::attack() {
 
 //Inicializa al mono
 void MonkeyCoco::initObject() {
+	Enemy::initObject();
 	setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
 	initAnims();
 }
 
-void MonkeyCoco::lostAgro()
-{
-	currEnemy_ = nullptr;
-}
 void MonkeyCoco::initialStats()
 {
 	HEALTH = 100;
@@ -110,5 +91,4 @@ void MonkeyCoco::initialStats()
 }
 
 //Gesti�n de las colisiones
-void MonkeyCoco::onCollider()
-{}
+void MonkeyCoco::onCollider() {};

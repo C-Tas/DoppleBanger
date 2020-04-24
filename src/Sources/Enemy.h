@@ -7,17 +7,19 @@ using namespace std;
 class Enemy : public Actor
 {
 public:
+	//virtuales
 	virtual bool update() { return false; };
 	virtual void onCollider() {};
 	//<summary>Metodo que mata a este enemigo</summary>
 	virtual void die();
 	virtual void lostAggro() {};
 	//Cuando se crea un clon se fija como nuevo objetivo
-	virtual void newEnemy(GameObject* obj);
+	virtual void newEnemy(GameObject* obj) { currEnemy_ = obj; };
 protected:
+	//Último ataque
+	Uint32 lastHit = 0;
 	//Rango de visión de la entidad
 	double rangeVision_ = 0;
-	Uint32 lastFrame_ = 0;
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores serán los puestos, si se le pasan valores los editara</summary>
 	Enemy(Application* app = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0,0 }, double rot = 0)
 		:Actor(app, pos, scale, rot) {};
@@ -33,9 +35,8 @@ protected:
 	virtual Vector2D isClonInRange(double n);
 	//<summary> Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_</summary>
 	virtual bool getEnemy(double n);
-	//Actualiza la animaci�n en funci�n del frameRate de la actual animaci�n
-	//Último ataque
-	Uint32 lastHit = 0;
+	//Devuelve true si el target está dentro del rango de ataque
+	virtual bool onRange();
 	//Inicializa al Enemy
 	virtual void initObject();
 	//Inicializa las animaciones
@@ -56,10 +57,5 @@ protected:
 	  double MELEE_RATE = 0;
 	  double DIST_RATE = 0;
 #pragma endregion
-	//Devuelve true si el target está dentro del rango de ataque
-	virtual bool onRange(bool melee);
-	//Busca y actualiza al enemigo que atacar
-	virtual bool getEnemy(bool melee);
-	//Determina si el jugador está dentro del rango de ataque
-	virtual Vector2D isPlayerInRange(int range);
+
 };

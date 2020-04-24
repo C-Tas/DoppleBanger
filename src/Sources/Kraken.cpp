@@ -7,7 +7,7 @@ Kraken::~Kraken()
 }
 
 bool Kraken::update() {
-
+	updateFrame();
 	if ((SDL_GetTicks() - lastAttack_) / 1000 > 3)
 	{
 		slam();
@@ -22,7 +22,7 @@ bool Kraken::update() {
 				if (i != nullptr)
 				{
 					i->die();
-					app_->getCurrState()->removeRenderUpdateLists(this);
+					app_->getCurrState()->removeRenderUpdateLists(i);
 				}
 			}
 			tentacles_.clear();
@@ -32,7 +32,6 @@ bool Kraken::update() {
 		return true;
 	}
 
-	updateAnim();
 	return false;
 }
 

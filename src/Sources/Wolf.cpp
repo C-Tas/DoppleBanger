@@ -176,7 +176,6 @@ void Wolf::attack() {
 void Wolf::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::WolfFront));
 	rangeVision_ = 80;//numero magico
-	CollisionCtrl::instance()->addEnemy(this);
 	initAnims();
 }
 
@@ -224,17 +223,6 @@ void Wolf::lostAgro()
 }
 
 
-//Genera la posici�n a la que se mueve el pirata en funci�n de su rango 
-void Wolf::selectTarget() {
-
-	Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };
-	Point2D enemycenterPos = { currEnemy_->getPosX() + currEnemy_->getScaleX() / 2, currEnemy_->getPosY() + currEnemy_->getScaleY() / 2 };
-	Vector2D posToReach;
-	posToReach.setX((enemycenterPos.getX() + currStats_.meleeRange_) - centerPos.getX());
-	posToReach.setY((enemycenterPos.getY() + currStats_.meleeRange_) - centerPos.getY());
-	target_ = posToReach;
-	move(enemycenterPos);
-}
 
 void Wolf::initialStats()
 {

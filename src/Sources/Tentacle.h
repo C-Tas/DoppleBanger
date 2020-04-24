@@ -33,6 +33,8 @@ private:
 
 	void initObject();
 	void initAnims();
+	virtual void initialStats() {};
+
 
 #pragma region Constantes
 	//Duración del tentáculo

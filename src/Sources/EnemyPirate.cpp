@@ -43,6 +43,7 @@ bool EnemyPirate::update() {
 	cout << state << endl;*/
 #endif // _DEBUG
 
+	updateFrame();
 	//Si el pirata ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte?
@@ -104,7 +105,6 @@ bool EnemyPirate::update() {
 			}
 		}
 	}
-	updateAnim();
 	return false;
 }
 

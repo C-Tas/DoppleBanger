@@ -33,6 +33,7 @@ private:
 	void attack();
 	//Inicializa las animaciones
 	void initAnims();
+	virtual void initialStats();
 
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animaci�n del mono)

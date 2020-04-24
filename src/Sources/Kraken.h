@@ -18,7 +18,7 @@ public:
 	virtual void initObject();
 	virtual void onCollider() {};
 	void tentDeath(Tentacle* obj);
-
+	virtual void initialStats() {};
 private:
 
 	int lastAttack_ = 0;

@@ -92,6 +92,7 @@
     <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\Tentacle.cpp" />
     <ClCompile Include="Sources\Sword.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />

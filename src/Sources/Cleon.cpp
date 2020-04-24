@@ -3,6 +3,7 @@
 #include "CollisionCtrl.h"
 
 bool Cleon::update() {
+	updateFrame();
 	//Si Magordito muere
 	if (currState_ == STATE::DYING) {
 		//Desbloqueamos la última isla
@@ -11,7 +12,6 @@ bool Cleon::update() {
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return false;
 	}
-	updateAnim();
 	return false;
 }
 

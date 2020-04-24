@@ -69,6 +69,5 @@ private:
 	//Genera la posici�n a la que se mueve el pirata en funci�n de su rango 
 	void selectTarget();
 
-	virtual void animationsvar();
 	virtual void initialStats();
 };

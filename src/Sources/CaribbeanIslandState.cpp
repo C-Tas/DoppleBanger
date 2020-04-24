@@ -32,9 +32,9 @@ void CaribbeanIslandState::initState()
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::CaribbeanMap));
 	addRenderUpdateLists(background_);
 
-	//createMonkey(NUM_MONKEYS);
-	//createPirates(NUM_PIRATES);
-	//createWolves(NUM_WOLVES);
+	createMonkey(NUM_MONKEYS);
+	createPirates(NUM_PIRATES);
+	createWolves(NUM_WOLVES);
 	Pumpkin* p = new Pumpkin(app_, { 20,20 }, {40,40});
 	addEnemy(p);
 

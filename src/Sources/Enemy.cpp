@@ -10,15 +10,15 @@ void Enemy::die()
 	static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 }
 
-Vector2D Enemy::isPlayerInRange(double n)
+Vector2D Enemy::isPlayerInRange(double rangeAttack)
 {
 	GameManager* gm = GameManager::instance();
 	if (gm->getPlayer() == nullptr) { return NOPE; }
 
 	Point2D playerPos = gm->getPlayerPos();
 	if (currEnemy_ == nullptr &&
-		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + n && playerPos.getX() >= pos_.getX() - n
-		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + n && playerPos.getY() >= pos_.getY() -n) {
+		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeAttack && playerPos.getX() >= pos_.getX() - rangeAttack
+		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeAttack && playerPos.getY() >= pos_.getY() -rangeAttack) {
 		return playerPos;
 	}
 	else
@@ -36,7 +36,7 @@ Vector2D Enemy::isClonInRange(double n)
 	if (currEnemy_ == nullptr &&
 		clonPos.getX() <= pos_.getX() + (getScaleX() / 2) + n && clonPos.getX() >= pos_.getX() - n
 		&& clonPos.getY() <= pos_.getY() + (getScaleY() / 2) + n && clonPos.getY() >= pos_.getY() - n) {
-		static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
+		//static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
 		return clonPos;
 	}
 	else
@@ -68,5 +68,22 @@ void Enemy::initObject()
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
+	initAnims();
 	CollisionCtrl::instance()->addEnemy(this);
+}
+
+//Devuelve true si el enemigo que tengo está a rango
+bool Enemy::onRange() {
+	if (currEnemy_ == nullptr) {
+		return false;
+	}
+	SDL_Rect rangeAttack = { getPosX() - currStats_.distRange_ - (getScaleX() / 2)  ,
+	getPosY() - currStats_.distRange_ - (getScaleY() / 2),currStats_.distRange_ * 2, currStats_.distRange_ * 2 };;
+	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

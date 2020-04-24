@@ -8,13 +8,16 @@ private:
 	 uint wHSeed = app_->getWindowHeight() / 40;		//Tamaño de la semilla
 	 double seedVel = 700;							//Velocidad de la semilla
 	 double seedLife = 3;								//Vida del proyectil en segundos
-	 Anim explotingAnim_ = { 0,0,0,0,0 ,"" };
+	 Anim explotingAnim_ = { 0,0,0,0, false };
+	 Anim attackAnim_ = { 0,0,0,0 ,false };
+	 Anim idleAnim_ = { 0,0,0,0 ,false };
+	 Anim walkAnim_ = { 0,0,0,0 ,false };
+
 	 const int NUM_FRAMES_EXP = 10;
 	 const int NUM_FRAMES_ROW_EXP = 3;
 	 const int W_FRAME_EXP = 200;
 	 const int H_FRAME_EXP = 200;
 	 const int FRAME_RATE_EXP = 100;
-	 const string NAME_EXP = "explode";
 	///<summary>Devuelve si hay un enemigo en rango y establece cual es el más cercano </summary>
 	bool onDistRange();
 	///<summary>Devuelve si hay un enemigo en rango melee y establece cual es el más cercano </summary>
@@ -25,8 +28,6 @@ private:
 	void initObject();
 	///<summary>Pierde el agro</summary>
 	void lostAgro();
-	///<summary>Establece las variables de las animaciones </summary>
-	void animationsvar();
 	///<summary>Inicializa las stats</summary>
 	void initialStats();
 	///<summary>Sigue al jugador o al clon</summary>

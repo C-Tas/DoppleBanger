@@ -7,8 +7,8 @@
 bool Pumpkin::onDistRange() {
 
 	if (currEnemy_ != nullptr) {
-		Point2D center = getCenter(pos_);
-		Point2D currEnemyCenter = getCenter(currEnemy_->getPos());
+		Point2D center = getCenter();
+		Point2D currEnemyCenter = getCenter();
 		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
 			center.getX(), center.getY(), currStats_.distRange_))
 		{
@@ -22,8 +22,8 @@ bool Pumpkin::onDistRange() {
 }
 bool Pumpkin::onMeleeRange() {
 	if (currEnemy_ != nullptr ) {
-		Point2D center = getCenter(pos_);
-		Point2D currEnemyCenter = getCenter(currEnemy_->getPos());
+		Point2D center = getCenter();
+		Point2D currEnemyCenter = getCenter();
 		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
 			center.getX(), center.getY(), currStats_.meleeRange_)) {
 			return true;
@@ -41,6 +41,7 @@ bool Pumpkin::update() {
 
 #endif // _DEBUG
 
+	updateFrame();
 	//Si la calabaza ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte?
@@ -87,7 +88,6 @@ bool Pumpkin::update() {
 		changeAnim(walkAnim_);
 		follow();
 	}
-	updateAnim();
 	return false;
 }
 void Pumpkin::disAttack() {
@@ -97,7 +97,7 @@ void Pumpkin::disAttack() {
 
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
 	Bullet* seed = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
-		getCenter(pos_), dir, currStats_.distDmg_, seedLife, seedVel, Vector2D(wHSeed, wHSeed));
+		getCenter(), dir, currStats_.distDmg_, seedLife, seedVel, Vector2D(wHSeed, wHSeed));
 	app_->getCurrState()->addRenderUpdateLists(seed);
 	CollisionCtrl::instance()->addEnemyBullet(seed);
 }
@@ -126,30 +126,6 @@ void Pumpkin::lostAgro()
 	currEnemy_ = nullptr;
 }
 
-void Pumpkin::animationsvar()
-{
-	NUM_FRAMES_ATK = 10;
-	NUM_FRAMES_ROW_ATK = 3;
-	W_FRAME_ATK = 200;
-	H_FRAME_ATK = 200;
-	FRAME_RATE_ATK = 100;
-	NAME_ATK = "attack";
-	//Para el movimiento
-	NUM_FRAMES_MOV = 10;
-	NUM_FRAMES_ROW_MOV = 3;
-	W_FRAME_MOV = 200;
-	H_FRAME_MOV = 200;
-	FRAME_RATE_MOV = 100;
-	NAME_MOV = "walk";
-	//Para estar parado
-	NUM_FRAMES_IDLE = 10;
-	NUM_FRAMES_ROW_ADLE = 3;
-	W_FRAME_IDLE = 200;
-	H_FRAME_IDLE = 200;
-	FRAME_RATE_IDLE = 100;
-	NAME_IDLE = "idle";
-}
-
 void Pumpkin::initialStats()
 {
 	rangeVision_ = 500;
@@ -169,8 +145,8 @@ void Pumpkin::initialStats()
 }
 void Pumpkin::move(Point2D posToReach) {
 	target_.setVec(posToReach);
-	dir_.setX(posToReach.getX() - getCenter(pos_).getX());
-	dir_.setY(posToReach.getY() - getCenter(pos_).getY());
+	dir_.setX(posToReach.getX() - getCenter().getX());
+	dir_.setY(posToReach.getY() - getCenter().getY());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
