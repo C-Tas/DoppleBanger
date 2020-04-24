@@ -212,7 +212,7 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 
 
 	//Clon
-	{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
+	//{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
 
 	//Ship
 	{ Waves ,"../Sources/assets/efectos_sonido/ship/waves.wav" }

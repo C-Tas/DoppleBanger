@@ -242,7 +242,7 @@ public:
 		DistCrit,
 
 		//CLon
-		Explosion,
+		//Explosion,
 
 		//Ship
 		Waves
