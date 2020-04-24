@@ -90,9 +90,14 @@ public:
 #pragma endregion
 #pragma region Setters
 	//Activa la perforación
-	void setPerforate(bool perforate) { perforate_ = perforate; };
+	void setPerforate(bool perforate) {
+		app_->getAudioManager()->playChannel(Resources::PerforateSkill, 0, 3);
+		perforate_ = perforate; };
 	//Activa el rebote y el momento en el que se usa
-	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
+	void setRicochet(bool ricochet) { 
+		app_->getAudioManager()->playChannel(Resources::Ricochet, 0, 3);
+		ricochet_ = ricochet; 
+		lastTimeRico_ = SDL_GetTicks(); };
 
 	void decreaseMana(double mana);
 	inline void setLiberation1() { liberation_ = 1; };
@@ -113,7 +118,10 @@ public:
 	//Aumenta la cadencia de tiro del player
 	void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 	//Activa el ataque potenciado
-	void activateEmpowered() { empoweredAct_ = true; };
+	void activateEmpowered() {
+		app_->getAudioManager()->playChannel(Resources::EmpoweredSkill, 0, 3);
+		empoweredAct_ = true; 
+	};
 #pragma endregion
 
 #pragma region Skills
@@ -264,6 +272,15 @@ private:
 
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
+	//Constantes para el delay de los efectos de sonido
+#pragma region constSounds
+	const double WALK_TIME = 600;
+#pragma endregion
+	//variables para controlar ultimos sonidos
+#pragma region LastSounds
+	double lastWalkSound_ = 0;
+#pragma endregion
+
 
 //<summary>Constantes iniciales del jugador</summary>
 #pragma region Constantes

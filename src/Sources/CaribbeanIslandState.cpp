@@ -15,6 +15,7 @@ void CaribbeanIslandState::update()
 {
 	if (enemies_.empty()) {
 		collisionCtrl_->clearList();
+		app_->getAudioManager()->haltMusic();
 		app_->getGameStateMachine()->changeState(new WinState(app_));
 	}
 	else {
@@ -55,6 +56,7 @@ void CaribbeanIslandState::initState()
 	player_->setScale({ (double)W_PLAYER,(double)H_PLAYER });
 	addRenderUpdateLists(player_);
 	addRenderUpdateLists(hud_);
+	app_->getAudioManager()->playMusic(Resources::Caribbean, -1);
 }
 
 void CaribbeanIslandState::createMonkey(int numMonkeys)

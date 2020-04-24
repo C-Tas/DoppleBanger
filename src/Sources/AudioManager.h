@@ -1,9 +1,17 @@
 #pragma once
 #include <SDL_mixer.h>
+#include "Resources.h"
 #include <string>
 #include <map>
 using namespace std;
 
+
+/*canales y sus usos
+	canal 0 player walk y morir
+	canal 1 para los ataques del player y al invocar clon
+	canal 3 para el uso de posiones, melee hit y skills
+	canal 4 para el clon
+*/
 class AudioManager {
 public:
 	AudioManager();

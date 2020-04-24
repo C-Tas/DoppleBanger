@@ -79,6 +79,7 @@ void MainMenuState::goLoadState(Application* app) {
 	app->getGameStateMachine()->pushState(new SaveLoadState(app, true)); //TRUE => LOAD //FALSE => SAVE
 };
 void MainMenuState::goStoryState(Application* app) {
+	app->getAudioManager()->playChannel(Resources::Shout, 0, 1);
 	app->getGameStateMachine()->pushState(new StoryState(app));
 };
 void MainMenuState::exitGame(Application* app) {

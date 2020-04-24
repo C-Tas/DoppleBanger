@@ -19,7 +19,10 @@ void ShipState::goIsland(Application* app)
 	//Viajamos a la isla correspondiente
 	GameManager* gm = GameManager::instance();
 	Island currIsland = gm->getCurrIsland();
-	if (currIsland == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
+	if (currIsland == Island::Caribbean) {
+		app->getAudioManager()->haltMusic();  
+		app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
+	}
 	else if (currIsland == Island::Spooky) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
 	else if (currIsland == Island::Volcanic) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
 }
@@ -44,7 +47,6 @@ void ShipState::initState()
 {
 	//Borramos la lista de objetos del barco del CollisionCtrl
 	collisionCtrl_->clearList();
-
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Ship));
 	addRenderUpdateLists(background_);
 
@@ -100,7 +102,9 @@ void ShipState::update()
 	PlayState::update();
 
 	if (!songActive && pirateSingers_ <= SDL_GetTicks() - startInstance_) {
-		app_->getAudioManager()->playMusic(Resources::ShipSingers, -1);
+		app_->getAudioManager()->playChannel(Resources::Waves, -1, 5);
+		app_->getAudioManager()->setChannelVolume(5, 5);
+
 		songActive = true;
 	}
 	collisionCtrl_->shipCollisions();
