@@ -22,7 +22,6 @@ public:
 	virtual void remove(Player* player);
 
 	virtual void writeStats() {
-		std::cout << type_ << "\n";
 		std::cout << "meleeDamage: " << modifiers_.meleeDmg_ << "\n";
 		std::cout << "meleeRate: " << modifiers_.meleeRate_ << "\n";
 	};

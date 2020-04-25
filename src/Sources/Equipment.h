@@ -9,7 +9,7 @@
 
 
 
-const enum equipType { Armor_, Boots_, Gloves_, Sword_, Saber_, Pistol_, Shotgun_ };
+enum class equipType { Armor, Gloves, Boots, Sword, Saber, Pistol, Shotgun };
 
 class Equipment : public Item
 {

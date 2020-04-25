@@ -71,12 +71,12 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	playerEquipment aux = player_->getInfoEquip();
 
 	if (aux.armor_ != nullptr) equipment_.armor_ = new InventoryButton(app_, aux.armor_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.armor_, callSelectObject,true);
-	if (aux.boots_ != nullptr) equipment_.boots_ = new InventoryButton(app_, aux.boots_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.boots_, callSelectObject,true);
 	if (aux.gloves_ != nullptr) equipment_.gloves_ = new InventoryButton(app_, aux.gloves_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.gloves_, callSelectObject,true);
-	if (aux.gun_ != nullptr) equipment_.gun_ = new InventoryButton(app_, aux.gun_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 }, aux.gun_, callSelectObject,true);
+	if (aux.boots_ != nullptr) equipment_.boots_ = new InventoryButton(app_, aux.boots_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.boots_, callSelectObject,true);
 	if (aux.sword_ != nullptr) equipment_.sword_ = new InventoryButton(app_, aux.sword_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.sword_, callSelectObject,true);
-	if (aux.potion1_ != nullptr) equipment_.potion1_ = new InventoryButton(app_, aux.potion1_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion1_, callSelectObject,true);
-	if (aux.potion2_ != nullptr) equipment_.potion2_ = new InventoryButton(app_, aux.potion2_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potion2_, callSelectObject,true);
+	if (aux.gun_ != nullptr) equipment_.gun_ = new InventoryButton(app_, aux.gun_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 }, aux.gun_, callSelectObject,true);
+	if (aux.potions_[0] != nullptr) equipment_.potion1_ = new InventoryButton(app_, aux.potions_[0]->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[0], callSelectObject,true);
+	if (aux.potions_[1] != nullptr) equipment_.potion2_ = new InventoryButton(app_, aux.potions_[1]->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[1], callSelectObject,true);
 
 	#ifdef _DEBUG
 	string nombre = "guantes1";
@@ -98,7 +98,6 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	addToInventory(guante5);
 	addToInventory(armor);
 
-	
 	#endif
 
 	ListPos = inventoryList_->begin();
@@ -108,14 +107,12 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	//pasa lo mismo con el estado al que apunta el bot�n
 	for (auto ob = inventoryList_->begin(); ob != inventoryList_->end(); ++ob) {
 		(*ob)->setNewCallBack(callSelectObject);
-		
-		
 	}
 }
+
 void Inventory::selectObject(InventoryButton* ob) {
 	select_ = ob;
 	printInformation();//este metodo todabia no hace nada
-
 }
 
 void Inventory::equippedObj() {
@@ -159,13 +156,9 @@ void Inventory::equippedObj() {
 			inventoryList_->erase(select_->getIterator());
 
 		}
-		
-		
-		
-
 	}
-
 }
+
 void Inventory::deleteObj() {
 	//Comprobamos si hay algun elemento seleccionado
 	if (select_ != nullptr) {

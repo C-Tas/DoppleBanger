@@ -9,7 +9,7 @@ private:
 
 public:
 	Armor(Texture* texture, string name, string desc, double price, double health, double armor) :
-		Equipment(texture, name, desc, price, Armor_), type_(Armor_) {
+		Equipment(texture, name, desc, price, equipType::Armor), type_(equipType::Armor) {
 		modifiers_.health_ = health;
 		modifiers_.armor_ = armor;
 	};
@@ -21,7 +21,6 @@ public:
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
 	virtual void writeStats() {
-		std::cout << type_ << "\n";
 		std::cout << "health: " << modifiers_.health_ << "\n";
 		std::cout << "armor: " << modifiers_.armor_ << "\n";
 	};

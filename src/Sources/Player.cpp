@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "SDL_macros.h"
-#include "GameManager.h"
 #include "CollisionCtrl.h"
 #include "Collisions.h"
 #include "GameState.h"
@@ -29,13 +28,86 @@ void Player::initObject()
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
-	//equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1), "Pechera", "helloWorld", 10, 10, 10); equip_.armor_->writeStats(); //Prueba
-	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), "Guantes", "helloWorld", 10, 10, 10); equip_.gloves_->writeStats(); //Prueba
-	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Boots1), "Botas", "helloWorld", 10, 10, 10); equip_.boots_->writeStats(); //Prueba
-	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, Saber_); equip_.sword_->writeStats(); //Prueba
-	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
-	equip_.potion1_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, -1);	//Prueba
-	equip_.potion2_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, -1);	//Prueba
+	equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1), "Pechera", "helloWorld", 10, 10, 10);
+	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), "Guantes", "helloWorld", 10, 10, 10);
+	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Boots1), "Botas", "helloWorld", 10, 10, 10);
+	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, equipType::Saber);
+	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), "Pistola", "helloWorld", 10, 10, 10, equipType::Pistol);
+}
+
+void Player::load(jute::jValue& mainJson)
+{
+	//Equipa los objetos guardados en el Json
+	loadObjects(mainJson);
+	loadEquip(mainJson);
+}
+void Player::loadObjects(jute::jValue& mainJson) {
+	//Objetos equipados
+	for (int i = 0; i < 2; i++) {
+		if (mainJson["objects"][i].as_string() == "Health") {
+			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::HealthPot),
+				"vida", "aba", 0, potionType::Health, 10, -1);
+		}
+		else if (mainJson["objects"][i].as_string() == "Mana") {
+			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::ManaPot),
+				"vida", "aba", 0, potionType::Mana, 10, -1);
+		}
+		else if (mainJson["objects"][i].as_string() == "Speed") {
+			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::SpeedPot),
+				"vida", "aba", 0, potionType::Speed, 10, 3);
+		}
+		else if (mainJson["objects"][i].as_string() == "Armor") {
+			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::ArmorPot),
+				"vida", "aba", 0, potionType::Armor, 10, 4);
+		}
+		else if (mainJson["objects"][i].as_string() == "Dmg") {
+			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::DmgPot),
+				"vida", "aba", 0, potionType::Damage, 10, 3);
+		}
+		else if (mainJson["objects"][i].as_string() == "Crit") {
+			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::CritPot),
+				"vida", "aba", 0, potionType::Crit, 10, -4);
+		}
+	}
+}
+
+void Player::loadEquip(jute::jValue& mainJson) {
+	//Se comprueba que no haya equipo ya definido
+	if (equip_.armor_ != nullptr) delete equip_.armor_;
+	if (equip_.gloves_ != nullptr) delete equip_.gloves_;
+	if (equip_.boots_ != nullptr) delete equip_.boots_;
+	if (equip_.sword_ != nullptr) delete equip_.sword_;
+	if (equip_.gun_ != nullptr) delete equip_.gun_;
+
+	//Pechera
+	double auxStat1 = mainJson["equipment"][0]["health"].as_double();
+	double auxStat2 = mainJson["equipment"][0]["armor"].as_double();
+	equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1),
+		"Pechera", "helloWorld", 10, auxStat1, auxStat2);
+	//Guantes
+	auxStat1 = mainJson["equipment"][1]["critic"].as_double();
+	auxStat2 = mainJson["equipment"][1]["armor"].as_double();
+	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1),
+		"Guantes", "helloWorld", 10, auxStat1, auxStat2);
+	//Botas
+	auxStat1 = mainJson["equipment"][2]["speed"].as_double();
+	auxStat2 = mainJson["equipment"][2]["armor"].as_double();
+	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Boots1),
+		"Botas", "helloWorld", 10,auxStat1,auxStat2);
+	//Espada
+	auxStat1 = mainJson["equipment"][3]["damage"].as_double();
+	auxStat2 = mainJson["equipment"][0]["rate"].as_double();
+	equipType auxType = (equipType)mainJson["equipment"][3]["name"].as_int();
+	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel),
+		"Sable", "helloWorld", 10, 
+		auxStat1, auxStat2, auxType);
+	//Pistola
+	auxStat1 = mainJson["equipment"][4]["damage"].as_double();
+	auxStat2 = mainJson["equipment"][0]["rate"].as_double();
+	auxType = (equipType)mainJson["equipment"][4]["name"].as_int();
+	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
+		"Pistola", "helloWorld", 10,
+		auxStat1, auxStat2, auxType);
 }
 
 void Player::initSkills()
@@ -113,18 +185,16 @@ bool Player::update()
 
 	//para utilizar las pociones
 	if (eventHandler_->isKeyDown(SDLK_1)) {
-		if (equip_.potion1_ != nullptr && !equip_.potion1_->isUsed()) {
+		if (equip_.potions_[0] != nullptr && !equip_.potions_[0]->isUsed()) {
 			PotionTime1 = SDL_GetTicks();
-			equip_.potion1_->use(this);
+			equip_.potions_[0]->use(this);
 			gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 		}
 	}
-	if (eventHandler_->isKeyDown(SDLK_2) ) {
-		if (equip_.potion2_ != nullptr && !equip_.potion2_->isUsed()) {
+	if (eventHandler_->isKeyDown(SDLK_2) && equip_.potions_[1] != nullptr && !equip_.potions_[1]->isUsed()) {
 			PotionTime2 = SDL_GetTicks();
-			equip_.potion2_->use(this);
+			equip_.potions_[1]->use(this);
 			gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
-		}
 	}
 
 	//comprobamos si hay que desactivar las pociones
@@ -480,30 +550,30 @@ void Player::activeInvincible()
 }
 
 void Player::decreaseMana(double mana) {
-	currStats_.mana_ -= mana;
-	if (currStats_.mana_ <= 0) currStats_.mana_ = 0;
+	currStats_.Mana -= mana;
+	if (currStats_.Mana <= 0) currStats_.Mana = 0;
 }
 
 void Player::usePotion(int value, potionType type) {
 	switch (type)
 	{
-	case live_:
+	case potionType::Health:
 		currStats_.health_ += value;
 		break;
-	case mana_:
-		currStats_.mana_ += value;
-		cout << currStats_.mana_ << endl;
+	case potionType::Mana:
+		currStats_.Mana += value;
+		cout << currStats_.Mana << endl;
 		break;
-	case velocity_:
+	case potionType::Speed:
 		currStats_.moveSpeed_ += value;
 		break;
-	case damage_:
+	case potionType::Damage:
 		currStats_.meleeDmg_ += value;
 		break;
-	case defense_:
+	case potionType::Armor:
 		currStats_.armor_ += value;
 		break;
-	case critic_:
+	case potionType::Crit:
 		currStats_.crit_ += value;
 		break;
 	}
@@ -512,32 +582,32 @@ void Player::usePotion(int value, potionType type) {
 void Player::desactivePotion(){
 	//Pocion1
 	//Si la pocion uno esta usada
-	if (equip_.potion1_ != nullptr && equip_.potion1_->isUsed()  ) {
+	if (equip_.potions_[0] != nullptr && equip_.potions_[0]->isUsed()  ) {
 		//si es de efecto permanente la borramos
-		if (equip_.potion1_->getDuration() <= -1) {
-			delete equip_.potion1_;
-			equip_.potion1_ = nullptr;
+		if (equip_.potions_[0]->getDuration() <= -1) {
+			delete equip_.potions_[0];
+			equip_.potions_[0] = nullptr;
 		}
 		//Si no, miramos si ha pasado el tiempo de duracion
-		else if ((SDL_GetTicks() - PotionTime1) >= equip_.potion1_->getDuration()) {
-			usePotion(-(equip_.potion1_->getValue()), equip_.potion1_->getType());//quitamos el valor de la pocion
-			delete equip_.potion1_;// eliminamos la pocion
-			equip_.potion1_ = nullptr;
+		else if ((SDL_GetTicks() - PotionTime1) >= equip_.potions_[0]->getDuration()) {
+			usePotion(-(equip_.potions_[0]->getValue()), equip_.potions_[0]->getType());//quitamos el valor de la pocion
+			delete equip_.potions_[0];// eliminamos la pocion
+			equip_.potions_[0] = nullptr;
 		}
 	}
 	//Pocion2
 	//Si la pocion uno esta usada
-	if (equip_.potion2_ != nullptr && equip_.potion2_->isUsed()) {
+	if (equip_.potions_[1] != nullptr && equip_.potions_[1]->isUsed()) {
 		//si es de efecto permanente la borramos
-		if (equip_.potion2_->getDuration() <= -1) {
-			delete equip_.potion2_;
-			equip_.potion2_ = nullptr;
+		if (equip_.potions_[1]->getDuration() <= -1) {
+			delete equip_.potions_[1];
+			equip_.potions_[1] = nullptr;
 		}
 		//Si no, miramos si ha pasado el tiempo de duracion
-		else if ((SDL_GetTicks() - PotionTime2) >= equip_.potion2_->getDuration()) {
-			usePotion(-(equip_.potion2_->getValue()), equip_.potion2_->getType());//quitamos el valor de la pocion
-			delete equip_.potion2_;// eliminamos la pocion
-			equip_.potion2_ = nullptr;
+		else if ((SDL_GetTicks() - PotionTime2) >= equip_.potions_[1]->getDuration()) {
+			usePotion(-(equip_.potions_[1]->getValue()), equip_.potions_[1]->getType());//quitamos el valor de la pocion
+			delete equip_.potions_[1];// eliminamos la pocion
+			equip_.potions_[1] = nullptr;
 		}
 	}
 }
@@ -563,8 +633,9 @@ Player::~Player()
 	delete equip_.boots_;
 	delete equip_.sword_;
 	delete equip_.gun_;
-	delete equip_.potion1_;
-	delete equip_.potion2_;
+	for (int i = 0; i < equip_.potions_.size(); i++) {
+		delete equip_.potions_[i];
+	}
 }
 
 void Player::shout()

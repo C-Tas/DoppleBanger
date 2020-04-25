@@ -9,7 +9,7 @@ private:
 
 public:
 	Gloves(Texture* texture, string name, string desc, double price, double crit, double armor) :
-		Equipment(texture, name, desc, price, Gloves_), type_(Gloves_) {
+		Equipment(texture, name, desc, price, equipType::Gloves), type_(equipType::Gloves) {
 		modifiers_.crit_ = crit;
 		modifiers_.armor_ = armor;
 	};
@@ -22,7 +22,6 @@ public:
 	virtual void remove(Player* player);
 
 	virtual void writeStats() {
-		std::cout << type_ << "\n";
 		std::cout << "crit: " << modifiers_.crit_ << "\n";
 		std::cout << "armor: " << modifiers_.armor_ << "\n";
 	};

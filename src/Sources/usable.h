@@ -2,7 +2,7 @@
 #include "Item.h"
 class Player;
 
-const enum potionType { live_, mana_, velocity_, damage_, defense_, critic_ };
+enum class potionType { Health, Mana, Speed, Damage, Armor, Crit };
 
 class usable: public Item
 {

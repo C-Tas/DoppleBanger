@@ -27,7 +27,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 	switch (type)
 	{
 	//Vida y armadura
-	case Armor_:
+	case equipType::Armor:
 		health = rn_->nextInt(7 * area, 16 * area);
 		armor = rn_->nextInt(3 * area, 8 * area);
 		price = rn_->nextInt(2 * area, 4 * area);
@@ -35,7 +35,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		break;
 
 	//Velocidad y armadura
-	case Boots_:
+	case equipType::Boots:
 		speed = rn_->nextInt(1 * area, 4 * area);
 		armor = rn_->nextInt(2 * area, 6 * area);
 		price = rn_->nextInt(1 * area, 2 * area);
@@ -43,7 +43,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		break;
 
 	//Cr�tico y armadura
-	case Gloves_:
+	case equipType::Gloves:
 		crit = rn_->nextInt(3 * area, 8 * area);
 		armor = rn_->nextInt(1 * area, 3 * area);
 		price = rn_->nextInt(1 * area, 4 * area);
@@ -52,7 +52,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 
 	//Ad y velocidad de ataque
 	//Mas alcance que el sable
-	case Sword_:
+	case equipType::Sword:
 		ad = rn_->nextInt(5 * area, 16 * area);
 		meleeRate = rn_->nextInt(3 * area, 6 * area);
 		price = rn_->nextInt(3 * area, 5 * area);
@@ -60,7 +60,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		break;
 
 	//Mas da�o que la espada
-	case Saber_:
+	case equipType::Saber:
 		ad = rn_->nextInt(6 * area, 17 * area);
 		meleeRate = rn_->nextInt(1 * area, 4 * area);
 		price = rn_->nextInt(3 * area, 5 * area);
@@ -69,7 +69,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 
 	//Ap y velocidad de disparo
 	//Dispara en linea recta con mas da�o y alcance que la escopeta
-	case Pistol_:
+	case equipType::Pistol:
 		ad = rn_->nextInt(5 * area, 16 * area);
 		distRate = rn_->nextInt(2 * area, 4 * area);
 		price = rn_->nextInt(4 * area, 6 * area);
@@ -77,7 +77,7 @@ Equipment* RandEquipGen::genEquip(equipType type)
 		break;
 
 	//Dispara en are recta con menos da�o y alcance que la escopeta
-	case Shotgun_:
+	case equipType::Shotgun:
 		ad = rn_->nextInt(3 * area, 13 * area);
 		distRate = rn_->nextInt(1 * area, 2 * area);
 		price = rn_->nextInt(4 * area, 6 * area);

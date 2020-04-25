@@ -1,7 +1,6 @@
 ﻿#include "GameManager.h"
 #include "Application.h"
 #include "Player.h"
-#include "jute.h"
 #include "InventoryButton.h"
 #include "EmpoweredSkill.h"
 #include "WhirlwindSkill.h"
@@ -49,9 +48,35 @@ void GameManager::save(ofstream& slot)
 {
 	//Json principal donde se guardará toda la info
 	jValue mainJson(jType::JOBJECT);
-	jValue aux(jType::JNUMBER);
 	//Variables numericas
-	#pragma region JNUMBER
+	saveJNUMBER(slot, mainJson);
+	//Misiones empezadas
+	saveMissions(slot, mainJson);
+	//Habilidades equipadas
+	saveSkills(slot, mainJson);
+	//Objetos equipados
+	saveEquipment(slot, mainJson);
+	//Inventario
+	#pragma region Inventario
+	//for (InventoryButton* ob : *inventory_) {
+
+	//}
+	#pragma endregion
+	//Alijo
+	#pragma region Alijo
+	//for (InventoryButton* ob : *stash_) {
+
+	//}
+	#pragma endregion
+
+	//Se guarda todo en el archivo
+	slot << mainJson.to_string();
+	slot.close();
+}
+
+void GameManager::saveJNUMBER(ofstream& slot, jute::jValue& mainJson)
+{
+	jValue aux(jType::JNUMBER);
 	//Isla actual
 	aux.set_string(to_string((int)currIsland_));
 	mainJson.add_property("currIsland", aux);
@@ -74,11 +99,12 @@ void GameManager::save(ofstream& slot)
 	mainJson.add_property("melee", aux);
 	aux.set_string(to_string(clonPoints_));	//Rama clon
 	mainJson.add_property("clon", aux);
-	#pragma endregion
-	//Misiones empezadas
-	#pragma region Misiones
+}
+
+void GameManager::saveMissions(ofstream& slot, jute::jValue& mainJson)
+{
 	jValue questStarted(jType::JARRAY);
-	aux.set_type(jType::JBOOLEAN);
+	jValue aux(jType::JBOOLEAN);
 	for (int i = 0; i < missionsStarted.size(); i++) {
 		switch (missionsStarted[i])
 		{
@@ -103,11 +129,12 @@ void GameManager::save(ofstream& slot)
 		questFinished.add_element(aux);
 	}
 	mainJson.add_property("questFinished", questFinished);
-	#pragma endregion
-	//Habilidades equipadas
-	#pragma region Habilidades equipadas
+}
+
+void GameManager::saveSkills(ofstream& slot, jute::jValue& mainJson)
+{
 	jValue skillEquippedValue(jType::JARRAY);
-	aux.set_type(jType::JSTRING);
+	jValue aux(jType::JSTRING);
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
 		switch (skillsEquipped_[i])
 		{
@@ -133,51 +160,24 @@ void GameManager::save(ofstream& slot)
 		skillEquippedValue.add_element(aux);
 	}
 	mainJson.add_property("skills", skillEquippedValue);
-	#pragma endregion
-	//Objetos equipados
-	#pragma region Objetos equipados
-	jValue objectsValue(jType::JARRAY);
-	for (int i = 0; i < objectsEquipped_.size(); i++) {
-		switch (objectsEquipped_[i])
-		{
-		case ObjectName::Unequipped:
-			aux.set_string("null");
-			break;
-		case ObjectName::Health:
-			aux.set_string("Health");
-			break;
-		case ObjectName::Mana:
-			aux.set_string("Mana");
-			break;
-		case ObjectName::Speed:
-			aux.set_string("Speed");
-			break;
-		case ObjectName::Armor:
-			aux.set_string("Armor");
-			break;
-		case ObjectName::Dmg:
-			aux.set_string("Dmg");
-			break;
-		case ObjectName::Crit:
-			aux.set_string("Crit");
-			break;
-		}
-		objectsValue.add_element(aux);
-	}
-	mainJson.add_property("objects", objectsValue);
-	#pragma endregion
-	//Equipamiento del player
-	#pragma region Equipamiento
+}
+
+void GameManager::saveEquipment(ofstream& slot, jute::jValue& mainJson)
+{
 	jValue equipValue(jType::JARRAY);
+	jValue aux(jType::JSTRING);
+	//Auxilizar del equipo del player
 	playerEquipment auxEquip = player_->getInfoEquip();
+	//Auxliar del equipamiento del player
 	vector<Equipment*> vEquip{
 		auxEquip.armor_,
-		auxEquip.boots_,
 		auxEquip.gloves_,
+		auxEquip.boots_,
 		auxEquip.sword_,
 		auxEquip.gun_
-	};
-	vector<jValue> objects{
+	};	
+	//Información del equipamiento que se va a guardar
+	vector<jValue> equip{
 		(jType::JOBJECT),
 		(jType::JOBJECT),
 		(jType::JOBJECT),
@@ -189,110 +189,124 @@ void GameManager::save(ofstream& slot)
 		if (vEquip[i] == nullptr) {
 			aux.set_type(jType::JSTRING);
 			aux.set_string("null");
-			objects[i].add_property("name", aux);
+			equip[i].add_property("name", aux);
 		}
 		else {
 			switch (vEquip[i]->getEquipTye())
 			{
-			case equipType::Armor_:
-				aux.set_type(jType::JSTRING);
-				aux.set_string("Armor");
-				objects[i].add_property("name", aux);
+			case equipType::Armor:
 				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
+				equip[i].add_property("name", aux);
 				aux.set_string(to_string(vEquip[i]->getArmor()));
-				objects[i].add_property("armor", aux);
+				equip[i].add_property("armor", aux);
 				aux.set_string(to_string(vEquip[i]->getHealth()));
-				objects[i].add_property("health", aux);
+				equip[i].add_property("health", aux);
 				//Armor y health
 				break;
-			case equipType::Boots_:
-				aux.set_type(jType::JSTRING);
-				aux.set_string("Boots");
-				objects[i].add_property("name", aux);
+			case equipType::Gloves:
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
+				equip[i].add_property("name", aux);
 				aux.set_type(jType::JNUMBER);
 				aux.set_string(to_string(vEquip[i]->getArmor()));
-				objects[i].add_property("armor", aux);
-				aux.set_string(to_string(vEquip[i]->getSpeed()));
-				objects[i].add_property("speed", aux);
-				//speed y armor
-				break;
-			case equipType::Gloves_:
-				aux.set_type(jType::JSTRING);
-				aux.set_string("Gloves");
-				objects[i].add_property("name", aux);
-				aux.set_type(jType::JNUMBER);
-				aux.set_string(to_string(vEquip[i]->getArmor()));
-				objects[i].add_property("armor", aux);
+				equip[i].add_property("armor", aux);
 				aux.set_string(to_string(vEquip[i]->getCrit()));
-				objects[i].add_property("critic", aux);
+				equip[i].add_property("critic", aux);
 				//Crítico y armor
 				break;
-			case equipType::Sword_:
-				aux.set_type(jType::JSTRING);
-				aux.set_string("Sword");
-				objects[i].add_property("name", aux);
+			case equipType::Boots:
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
+				equip[i].add_property("name", aux);
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string(vEquip[i]->getArmor()));
+				equip[i].add_property("armor", aux);
+				aux.set_string(to_string(vEquip[i]->getSpeed()));
+				equip[i].add_property("speed", aux);
+				//speed y armor
+				break;
+			case equipType::Sword:
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
+				equip[i].add_property("name", aux);
 				aux.set_type(jType::JNUMBER);
 				aux.set_string(to_string(vEquip[i]->getMeleeRate()));
-				objects[i].add_property("rate", aux);
+				equip[i].add_property("rate", aux);
 				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
-				objects[i].add_property("damage", aux);
+				equip[i].add_property("damage", aux);
 				//MeleeRate y ad
 				break;
-			case equipType::Saber_:
-				aux.set_type(jType::JSTRING);
-				aux.set_string("Saber");
-				objects[i].add_property("name", aux);
+			case equipType::Saber:
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
+				equip[i].add_property("name", aux);
 				aux.set_type(jType::JNUMBER);
 				aux.set_string(to_string(vEquip[i]->getMeleeRate()));
-				objects[i].add_property("rate", aux);
+				equip[i].add_property("rate", aux);
 				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
-				objects[i].add_property("damage", aux);
+				equip[i].add_property("damage", aux);
 				//MeleeRate y ad
 				break;
-			case equipType::Pistol_:
-				aux.set_type(jType::JSTRING);
-				aux.set_string("Pistol");
-				objects[i].add_property("name", aux);
+			case equipType::Pistol:
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
+				equip[i].add_property("name", aux);
 				aux.set_type(jType::JNUMBER);
 				aux.set_string(to_string(vEquip[i]->getDistRate()));
-				objects[i].add_property("rate", aux);
+				equip[i].add_property("rate", aux);
 				aux.set_string(to_string(vEquip[i]->getDistDmg()));
-				objects[i].add_property("damage", aux);
+				equip[i].add_property("damage", aux);
 				//DistRate y disDmg
 				break;
-			case equipType::Shotgun_:
-				aux.set_type(jType::JSTRING);
-				aux.set_string("ShotGun");
-				objects[i].add_property("name", aux);
+			case equipType::Shotgun:
+				aux.set_type(jType::JNUMBER);
+				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
+				equip[i].add_property("name", aux);
 				aux.set_type(jType::JNUMBER);
 				aux.set_string(to_string(vEquip[i]->getDistRate()));
-				objects[i].add_property("rate", aux);
+				equip[i].add_property("rate", aux);
 				aux.set_string(to_string(vEquip[i]->getDistDmg()));
-				objects[i].add_property("damage", aux);
+				equip[i].add_property("damage", aux);
 				//DistRate y distDmg
 				break;
 			}
 		}
-		equipValue.add_element(objects[i]);
+		equipValue.add_element(equip[i]);
 	}
 	mainJson.add_property("equipment", equipValue);
-	#pragma endregion
-	//Inventario
-	#pragma region Inventario
-	//for (InventoryButton* ob : *inventory_) {
-
-	//}
-	#pragma endregion
-	//Alijo
-	#pragma region Alijo
-	//for (InventoryButton* ob : *stash_) {
-
-	//}
-	#pragma endregion
-
-	//Se guarda todo en el archivo
-	slot << mainJson.to_string();
-	slot.close();
+	//Informacion de los objetos que se va a guardar
+	jValue objectsValue(jType::JARRAY);
+	for (int i = 0; i < auxEquip.potions_.size(); i++) {
+		if (auxEquip.potions_[i] != nullptr) {
+			switch (auxEquip.potions_[i]->getType())
+			{
+			case potionType::Health:
+				aux.set_string("Health");
+				break;
+			case potionType::Mana:
+				aux.set_string("Mana");
+				break;
+			case potionType::Speed:
+				aux.set_string("Speed");
+				break;
+			case potionType::Armor:
+				aux.set_string("Armor");
+				break;
+			case potionType::Damage:
+				aux.set_string("Dmg");
+				break;
+			case potionType::Crit:
+				aux.set_string("Crit");
+				break;
+			}
+		}
+		else {
+			aux.set_string("null");
+		}
+		objectsValue.add_element(aux);
+	}
+	mainJson.add_property("objects", objectsValue);
 }
 
 void GameManager::load(string jsonName)
@@ -300,7 +314,17 @@ void GameManager::load(string jsonName)
 	parser parser_;
 	jValue mainJson = parser_.parse_file(jsonName);
 	//Variables numericas
-	#pragma region JNUMBER
+	loadJNUMBER(mainJson);
+	//Misiones
+	loadMissions(mainJson);
+	//Equipamiento
+	player_->load(mainJson);
+	//HUD
+	loadHUD(mainJson);
+	
+}
+
+void GameManager::loadJNUMBER(jute::jValue& mainJson){
 	currIsland_ = (Island)mainJson["currIsland"].as_int();
 	unlockedIslands_ = (Island)mainJson["unlockedIsland"].as_int();
 	inventoryGold_ = mainJson["currGold"].as_int();
@@ -309,18 +333,19 @@ void GameManager::load(string jsonName)
 	precisionPoints_ = mainJson["precision"].as_int();
 	meleePoints_ = mainJson["melee"].as_int();
 	clonPoints_ = mainJson["clon"].as_int();
-	#pragma endregion
-	//Misiones
-	#pragma region Misiones
+}
+
+void GameManager::loadMissions(jute::jValue& mainJson){
 	for (int i = 0; i < missionsStarted.size(); i++) {
 		missionsStarted[i] = mainJson["questStarted"][i].as_bool();
 	}
 	for (int i = 0; i < missionsComplete.size(); i++) {
 		missionsComplete[i] = mainJson["questFinished"][i].as_bool();
 	}
-	#pragma endregion
-	//Habilidades equipadas
-	#pragma region Habilidades equipadas
+}
+
+void GameManager::loadSkills(jute::jValue& mainJson)
+{
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
 		if (mainJson["skills"][i].as_string() == "null") {
 			setSkillEquiped(SkillName::Unequipped, (Key)i);
@@ -342,10 +367,11 @@ void GameManager::load(string jsonName)
 		}
 	}
 	player_->initSkills();
-	#pragma endregion
-	//Objetos equipados
-	#pragma region Objetos equipados
-	for (int i = 0; i < objectsEquipped_.size(); i++) {
+}
+
+void GameManager::loadHUD(jute::jValue& mainJson)
+{
+	for (int i = 0; i < 2; i++) {
 		if (mainJson["objects"][i].as_string() == "null") {
 			objectsEquipped_[i] = ObjectName::Unequipped;
 		}
@@ -368,11 +394,8 @@ void GameManager::load(string jsonName)
 			objectsEquipped_[i] = ObjectName::Crit;
 		}
 	}
-	#pragma endregion
-	//Equipamiento
-	#pragma region Equipamiento
-
-	#pragma endregion
+	//Habilidades equipadas
+	loadSkills(mainJson);
 }
 
 void GameManager::resetGame()

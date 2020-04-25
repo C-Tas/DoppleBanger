@@ -5,6 +5,7 @@
 #include "HandleEvents.h"
 #include <array>
 #include "GameManager.h"
+#include "jute.h"
 class Skill;
 
 struct playerEquipment
@@ -15,9 +16,11 @@ struct playerEquipment
 	Boots* boots_ = nullptr;
 	Sword* sword_ = nullptr;
 	Gun* gun_ = nullptr;
-	
-	usable* potion1_ = nullptr;
-	usable* potion2_ = nullptr;
+
+	vector<usable*> potions_{
+		nullptr,
+		nullptr
+	};
 };
 
 class Player : public Actor
@@ -64,63 +67,64 @@ public:
 	};
 	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
 
-#pragma region Getters
-	const Clon* getClon() { return clon_; };
-	const int getLiberation() { return liberation_; };
-	const int getMoney() { return money_; };
-	const double getMaxHealth() { return HEALTH; }; //Faltaria poner una variable que lleve la vida maxima sin ser cte
-	const double getMaxMana() { return MANA; }; //Faltaria poner una variable que lleve el mana maximo sin ser cte
+	#pragma region Getters
+		const Clon* getClon() { return clon_; };
+		const int getLiberation() { return liberation_; };
+		const int getMoney() { return money_; };
+		const double getMaxHealth() { return HEALTH; }; //Faltaria poner una variable que lleve la vida maxima sin ser cte
+		const double getMaxMana() { return MANA; }; //Faltaria poner una variable que lleve el mana maximo sin ser cte
 
-	const Vector2D getPreviousPos() { return previousPos_; }
+		const Vector2D getPreviousPos() { return previousPos_; }
 
-	const Stats& getStats() { return currStats_; };
-	//habilidades
-	//activa la pasiva invencible y aplica los efectos de esta
-	void activeInvincible();
-	//Devuelve la información del equipment
-	playerEquipment& const getInfoEquip() { return equip_; }
+		const Stats& getStats() { return currStats_; };
+		//habilidades
+		//activa la pasiva invencible y aplica los efectos de esta
+		void activeInvincible();
+		//Devuelve la información del equipment
+		playerEquipment& const getInfoEquip() { return equip_; }
 	
-#pragma endregion
-#pragma region Setters
-	//Activa la perforación
-	void setPerforate(bool perforate) { perforate_ = perforate; };
-	//Activa el rebote y el momento en el que se usa
-	void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
+	#pragma endregion
+	#pragma region Setters
+		//Activa la perforación
+		void setPerforate(bool perforate) { perforate_ = perforate; };
+		//Activa el rebote y el momento en el que se usa
+		void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
 
-	void decreaseMana(double mana);
-	inline void setLiberation1() { liberation_ = 1; };
-	inline void setLiberation2( ) { liberation_ = 2; };
+		void decreaseMana(double mana);
+		inline void setLiberation1() { liberation_ = 1; };
+		inline void setLiberation2( ) { liberation_ = 2; };
 
-	void equip(Armor* armor) { equip_.armor_ = armor; };
-	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
-	void equip(Boots* boots) { equip_.boots_ = boots; };
-	void equip(Sword* sword) { equip_.sword_ = sword; };
-	void equip(Gun* gun) { equip_.gun_ = gun; };
-	void equipPotion1(usable* pot) { equip_.potion1_ = pot; };
-	void equipPotion2(usable* pot) { equip_.potion2_ = pot; };
+		void equip(Armor* armor) { equip_.armor_ = armor; };
+		void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
+		void equip(Boots* boots) { equip_.boots_ = boots; };
+		void equip(Sword* sword) { equip_.sword_ = sword; };
+		void equip(Gun* gun) { equip_.gun_ = gun; };
+		void equipPotion1(usable* pot) { equip_.potions_[0] = pot; };
+		void equipPotion2(usable* pot) { equip_.potions_[1] = pot; };
 
-	void addMoney(int money) { money_ += money; };
-	void usePotion(int value, potionType type);
-	void desactivePotion();
-	void setClonCoolDown() { cdSkills[3] = true; }
-	//Aumenta la cadencia de tiro del player
-	void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
-	//Activa el ataque potenciado
-	void activateEmpowered() { empoweredAct_ = true; };
-#pragma endregion
+		void addMoney(int money) { money_ += money; };
+		void usePotion(int value, potionType type);
+		void desactivePotion();
+		void setClonCoolDown() { cdSkills[3] = true; }
+		//Aumenta la cadencia de tiro del player
+		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
+		//Activa el ataque potenciado
+		void activateEmpowered() { empoweredAct_ = true; };
 
-#pragma region Skills
-	///<summary>Método para crear las skills que tiene el player
-	///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
-	void initSkills();
-	///<summary>Número máximo de skills equipables</summary>
-	Skill* getEquippedSkill(int key) { return skills_[key]; }
-	void setSkillAt(int key, Skill* skill) { 
-		if(skills_[key]!= nullptr)delete skills_[key]; 
-		skills_[key] = skill; }
-	vector <Skill*>& getSkillsArray() { return skills_; }
-#pragma endregion
-
+		//Carga el equipamiento del player
+		void load(jute::jValue& mainJson);
+	#pragma endregion
+	#pragma region Skills
+		///<summary>Método para crear las skills que tiene el player
+		///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
+		void initSkills();
+		///<summary>Número máximo de skills equipables</summary>
+		Skill* getEquippedSkill(int key) { return skills_[key]; }
+		void setSkillAt(int key, Skill* skill) { 
+			if(skills_[key]!= nullptr)delete skills_[key]; 
+			skills_[key] = skill; }
+		vector <Skill*>& getSkillsArray() { return skills_; }
+	#pragma endregion
 
 private:
 	bool attacking_ = false;
@@ -273,4 +277,10 @@ private:
 	playerEquipment equip_;
 	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
+
+	#pragma region Cargar
+	//Equipa los objetos guardados en el Json
+	void loadObjects(jute::jValue& mainJson);
+	void loadEquip(jute::jValue& mainJson);
+	#pragma endregion
 };

@@ -9,6 +9,7 @@
 #include "Clon.h"
 #include "HUD.h"
 #include "checkML.h"
+#include "jute.h"
 
 class Application;
 
@@ -150,6 +151,35 @@ private:
 	HUD* hud_ = nullptr;
 	//puntero a la aplicacion
 	Application* app_ = nullptr;
+
+	//Metodos para guardar y cargar partida
+	#pragma region Guardar/Cargar
+		#pragma region Guardar
+		//Guarda los datos en el json pasado como parámetro
+		void save(ofstream& slot);
+		//Guarda los datos de tipo JNUMBER
+		void saveJNUMBER(ofstream& slot, jute::jValue& mainJson);
+		//Guarda las misiones
+		void saveMissions(ofstream& slot, jute::jValue& mainJson);
+		//Guarda las habilidades equipadas
+		void saveSkills(ofstream& slot, jute::jValue& mainJson);
+		//Guarda el equipamiento del player
+		void saveEquipment(ofstream& slot, jute::jValue& mainJson);
+		#pragma endregion
+		#pragma region Cargar
+		//Carga los datos desde el json pasado como parámetro
+		void load(string jsonName);
+		//Carga los datos de tipo JNUMBER
+		void loadJNUMBER(jute::jValue& mainJson);
+		//Carga las misiones
+		void loadMissions(jute::jValue& mainJson);
+		//Carga las habilidades
+		void loadSkills(jute::jValue& mainJson);
+		//Carga las texturas del HUD
+		void loadHUD(jute::jValue& mainJson);
+		#pragma endregion
+	#pragma endregion
+
 public:
 	//Constructor vacio
 	GameManager() {
@@ -182,16 +212,12 @@ public:
 	void saveSlot2();
 	//Guardar en slot3
 	void saveSlot3();
-	//Guarda los datos en el json pasado como parámetro
-	void save(ofstream& slot);
 	//Cargar slot1
 	void loadSlot1();
 	//Cargar slot2
 	void loadSlot2();
 	//Cargar slot3
 	void loadSlot3();
-	//Carga los datos desde el json pasado como parámetro
-	void load(string jsonName);
 	//Resetea los valores del juego para una partida nueva
 	void resetGame();
 #pragma endregion
