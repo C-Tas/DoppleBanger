@@ -101,8 +101,11 @@ void PlayState::checkPlayerActions() {
 	else if (eventHandler_->isKeyDown(SDLK_t)) {
 		app_->getGameStateMachine()->pushState(new ShopState(app_, player_));
 	}
+
+	//Testeo
 	else if (eventHandler_->isKeyDown(SDLK_s)) {
-		app_->getGameStateMachine()->pushState(new ShipState(app_));
+		if (dynamic_cast<ShipState*>(app_->getCurrState()) == nullptr)
+			app_->getGameStateMachine()->changeState(new ShipState(app_));
 	}
 }
 

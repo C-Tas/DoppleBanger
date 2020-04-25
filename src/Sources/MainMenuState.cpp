@@ -79,6 +79,8 @@ void MainMenuState::goLoadState(Application* app) {
 	app->getGameStateMachine()->pushState(new SaveLoadState(app, true)); //TRUE => LOAD //FALSE => SAVE
 };
 void MainMenuState::goStoryState(Application* app) {
+	app->getGameManager()->setCompleteMission(missions::gallegaEnProblemas, false);
+	app->getGameManager()->setStartedMission(missions::gallegaEnProblemas, false);
 	app->getGameStateMachine()->pushState(new StoryState(app));
 };
 void MainMenuState::exitGame(Application* app) {

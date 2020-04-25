@@ -23,7 +23,11 @@ void CaribbeanIslandState::update()
 
 void CaribbeanIslandState::addMissionConter() {
 	missionCounter++;
-	if (missionCounter == NUM_WOLVES) gm_->setCompleteMission(missions::gallegaEnProblemas);
+	if (missionCounter == NUM_WOLVES) {
+		gm_->setCompleteMission(missions::gallegaEnProblemas, true);
+		gm_->addInventoryGold(500);
+		gm_->setArchievementPoints(gm_->getAchievementPoints() + 1000);
+	}
 }
 
 void CaribbeanIslandState::initState()
