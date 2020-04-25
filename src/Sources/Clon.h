@@ -22,6 +22,7 @@ public:
 
 	void shoot(Vector2D dir);
 	void changeDuration(double dur) { duration_ = dur; }	//En caso de que se pueda modificar la duraci�n
+	void initIdle();
 	void initSelfDestruction();
 
 	void die();
@@ -50,6 +51,24 @@ private:
 	virtual void initAnim();
 
 	const int W_H_CLON_FRAME = 100;
+
+	//Idle
+	bool idle_ = true; 
+	vector<Anim> idleAnims_;                //Vector de las animaciones
+	vector<Texture*> idleTx_;               //Vector de las texturas
+	//Idle derecha
+	const int IDLE_R_FRAMES = 4;			//Frames de la animación
+	const int IDLE_R_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia arriba
+	const int IDLE_U_FRAMES = 2;			//Frames de la animación
+	const int IDLE_U_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia izquierda
+	const int IDLE_L_FRAMES = 4;			//Frames de la animación
+	const int IDLE_L_FRAME_RATE = 500;		//Frame rate
+	//Idle hacia abajo
+	const int IDLE_D_FRAMES = 2;			//Frames de la animación
+	const int IDLE_D_FRAME_RATE = 500;		//Frame rate
+
 
 	//Autodestrucción
 	bool selfDestruct_ = false;						//Para disparar una sola vez en el frame adecuado

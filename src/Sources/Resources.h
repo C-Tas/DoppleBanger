@@ -154,6 +154,10 @@ public:
 		ClonSelfDestructionLeftAnim,
 		ClonSelfDestructionUpAnim,
 		ClonSelfDestructionDownAnim,
+		ClonIdleRightAnim,
+		ClonIdleLeftAnim,
+		ClonIdleUpAnim,
+		ClonIdleDownAnim,
 
 		//Interactuables
 		Wheel,

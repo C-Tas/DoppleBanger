@@ -10,6 +10,8 @@ bool Clon::update() {
 	if ((SDL_GetTicks() - spawnTime_) / 1000 < duration_) {
 		if (currState_ == STATE::SELFDESTRUCT && currAnim_.currFrame_ == currAnim_.numberFrames_) {
 			player_->killClon();
+		}else {
+			initIdle();
 		}
 
 		Vector2D clonPos = getVisPos();
@@ -44,6 +46,21 @@ void Clon::initObject() {
 }
 
 void Clon::initAnim() {
+
+	//Animación de idle  --> Cambiar los Resource mas tarde
+	//Arriba
+	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_U_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleUpAnim));
+	//Derecha																						
+	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_R_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleRightAnim));
+	//Abajo																							
+	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_D_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleDownAnim));
+	//Izquierda																						
+	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_L_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleLeftAnim));
+
 	//Animación de autodestrucción
 	//Arriba
 	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_U_FRAME_RATE, false));
@@ -57,6 +74,17 @@ void Clon::initAnim() {
 	//Izquierda
 	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_L_FRAME_RATE, false));
 	selfDestructTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonSelfDestructionLeftAnim));
+}
+
+void Clon::initIdle() {
+	currState_ = STATE::IDLE;
+	updateDirVisObjective(static_cast<PlayState*>(app_->getGameStateMachine()->getState())->findClosestEnemy(pos_));
+	texture_ = idleTx_[(int)currDir_];
+	currAnim_ = idleAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
 }
 
 void Clon::initSelfDestruction() {
