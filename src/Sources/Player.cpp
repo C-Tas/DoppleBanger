@@ -331,6 +331,14 @@ void Player::updateDirVisEnemy() {
 	}
 }
 
+//void Player::setElementsHUD()
+//{
+//	gm_->setSkillEquiped(SkillName::Torbellino, Key::Q);
+//	gm_->setSkillEquiped(SkillName::GolpeFuerte, Key::W);
+//	gm_->setSkillEquiped(SkillName::Explosion, Key::E);
+//	gm_->setObjectEquipped(ObjectName::Mana, Key::One);
+//}
+
 void Player::shootAnim()
 {
 	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
@@ -461,6 +469,7 @@ void Player::onCollider()
 {
 	stop(); //Para
 }
+
 
 void Player::updateDir(Vector2D target)
 {

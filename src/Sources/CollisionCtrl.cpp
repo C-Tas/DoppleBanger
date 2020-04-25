@@ -35,20 +35,11 @@ void CollisionCtrl::islandCollisions() {
 	for (auto ob : obstacles_) {
 		
 		//Con jugador
-		if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
+		if (Collisions::collides(Vector2D(player_->getCollider().x, player_->getCollider().y), player_->getCollider().w, player_->getCollider().h, 
 			(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 			player_->stop();
 			(ob)->onCollider();
 			player_->setPos(player_->getPreviousPos());
-		}
-
-		//Con enemigos
-		for (auto enem : enemies_) {
-			if (Collisions::collidesWithRotation(enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot(),
-				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY(), (ob)->getCollisionRot())) {
-				//Llamar a m�todo que recalcule la trayectoria del enemigo (con pathfinding no ser�a necesario hacer este for)
-				(ob)->onCollider();
-			}
 		}
 		
 		//Con balas del jugador

@@ -81,8 +81,8 @@ private:
 
 
 	//Dimensiones de las entidades
-	const int W_PLAYER = app_->getWindowWidth() / 40;
-	const int H_PLAYER = app_->getWindowHeight() / 15;
+	const int W_PLAYER = app_->getWindowWidth() / 16;
+	const int H_PLAYER = app_->getWindowHeight() / 6;
 
 #pragma endregion
 

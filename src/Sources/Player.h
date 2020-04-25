@@ -38,6 +38,7 @@ public:
 	void updateDirVisMouse();
 	//Calcula hacia dónde mira el player en función del enemigo
 	void updateDirVisEnemy();
+	//void setElementsHUD();
 	//Establece la direccion del movimiento
 	virtual void move(Point2D target);
 	//Dispara creando una bala en la posicion dir

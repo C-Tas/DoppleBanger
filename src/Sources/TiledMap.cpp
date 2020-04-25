@@ -57,9 +57,7 @@ const void TiledMap::draw()
 			(int)(ob.worldPos_.getY()- Camera::instance()->getCamera().getY()),tileSize_, tileSize_ },
 			{ (int)ob.tilesetPos_.getX(), (int)ob.tilesetPos_.getY(), tileset_.tileWidth_, tileset_.tileHeight_ });
 	}
-	//for (Obstacle* obs : mapObstacles_) {
-	//	obs->draw();
-	//}
+
 
 }
 
@@ -149,10 +147,10 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 	}
 	else if (objectType == "Crab") {
 		//Añadir cangrejo
-		//Por ahora parece que no se pueden crear pero creo que es por las texturas
-		Crab* crab = new Crab(app_, pos, Vector2D(W_CRAB, H_CRAB));
-		state_->addEnemy(crab);
-		CollisionCtrl::instance()->addEnemy(crab);
+		////Por ahora parece que no se pueden crear pero creo que es por las texturas
+		//Crab* crab = new Crab(app_, pos, Vector2D(W_CRAB, H_CRAB));
+		//state_->addEnemy(crab);
+		//CollisionCtrl::instance()->addEnemy(crab);
 	}
 	else if (objectType == "Wolf") {
 		//Añadir lobo
