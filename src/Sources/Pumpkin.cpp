@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "CollisionCtrl.h"
 #include "Collisions.h"
+#include "PlayState.h"
 
 bool Pumpkin::onDistRange() {
 
@@ -44,48 +45,38 @@ bool Pumpkin::update() {
 	updateFrame();
 	//Si la calabaza ha muerto
 	if (currState_ == STATE::DYING) {
-		//Tendría que hacer la animación de muerte?
-		//Cuando acabe la animación, lo mata
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		return true;
+		
+		return explosionAnim();
 	}
 	//Si la calabaza no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
 	if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
-		currState_ = STATE::ATTACKING;
+		initAttack();
 	}
 	//Si la calabaza tiene enemigo y puede atacar
 	if (currState_ == STATE::ATTACKING ) {
 		//Si la calabaza tiene un enemigo y lo tiene a rango
 		if ( onMeleeRange()) {
-			currState_ = STATE::FOLLOWING;
+			initMove();
 		}
 		else {
 			if (onDistRange() && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
-				changeAnim(attackAnim_);
-				disAttack();
-				lastHit = SDL_GetTicks();
+				shootAnim();
 			}
-
-
 			//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
 			else if (getEnemy(rangeVision_) && currStats_.distRate_ <= SDL_GetTicks() - lastHit)
 			{
-				changeAnim(attackAnim_);
-				disAttack();
-				lastHit = SDL_GetTicks();
+				shootAnim();
 			}
 
 			//Tengo enemigo pero no a rango
 			else
 			{
-				currState_ = STATE::IDLE;
-				changeAnim(idleAnim_);
+				initIdle();
 				currEnemy_ = nullptr;
 			}
 		}
 	}
 	if (currState_ == STATE::FOLLOWING) {
-		changeAnim(walkAnim_);
 		follow();
 	}
 	return false;
@@ -104,41 +95,37 @@ void Pumpkin::disAttack() {
 void Pumpkin::follow() {
 	if (currEnemy_ != nullptr) {
 		move(currEnemy_->getPos());
+		auto dirAux = currDir_;
+		updateDirVisEnemy();
+		if (currDir_ != dirAux) {
+			initMove();
+		}
 	}
 	else {
-		explote();
+		initExplosion();
 	}
-}
-void Pumpkin::explote() {
-	auto dmg = dynamic_cast<Player*>(currEnemy_);
-	if (dmg != nullptr) {
-		dmg->receiveDamage(currStats_.meleeDmg_);
-	}
-	changeAnim(explotingAnim_);
-	currState_ = STATE::DYING;
-	CollisionCtrl::instance()->removeEnemy(this);
 }
 void Pumpkin::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
 	Enemy::initObject();
+	explosionRange_ = getScaleX();
 }
 void Pumpkin::lostAgro()
 {
 	currEnemy_ = nullptr;
 }
-
 void Pumpkin::initialStats()
 {
-	rangeVision_ = 500;
+	rangeVision_ = 350;
 	HEALTH = 100;
 	MANA = 100;
 	MANA_REG = 1;
 	ARMOR = 10;
-	MELEE_DMG = 0;
+	MELEE_DMG = 750;
 	DIST_DMG = 300;
 	CRIT = 0;
-	MELEE_RANGE = 100;
-	DIST_RANGE = 500;
+	MELEE_RANGE = 200;
+	DIST_RANGE = 350;
 	MOVE_SPEED = 100;
 	MELEE_RATE = 1;
 	DIST_RATE = 2500;
@@ -152,4 +139,161 @@ void Pumpkin::move(Point2D posToReach) {
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 	pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
+}
+void Pumpkin::initAnims()
+{
+	//Animación de idle
+		//Arriba
+	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, IDLE_U_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinIdleUpAnim));
+		//Derecha																						
+	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, IDLE_R_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinIdleRightAnim));
+		//Abajo																							
+	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, IDLE_D_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinIdleDownAnim));
+		//Izquierda																						
+	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, IDLE_L_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinIdleLeftAnim));
+
+	//Animación de ataque
+		//Arriba
+	attackAnims_.push_back(Anim(ATTACK_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, ATTACK_U_FRAME_RATE, false));
+	attackTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinAttackUpAnim));
+		//Derecha																						
+	attackAnims_.push_back(Anim(ATTACK_R_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, ATTACK_R_FRAME_RATE, false));
+	attackTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinAttackRightAnim));
+		//Abajo																							
+	attackAnims_.push_back(Anim(ATTACK_D_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, ATTACK_D_FRAME_RATE, false));
+	attackTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinAttackDownAnim));
+		//Izquierda																						
+	attackAnims_.push_back(Anim(ATTACK_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, ATTACK_L_FRAME_RATE, false));
+	attackTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinAttackLeftAnim));
+	
+	//Animación de explosión
+		//Arriba
+	explosionAnims_.push_back(Anim(EXPLOSION_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, EXPLOSION_U_FRAME_RATE, false));
+	explosionTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinExpUpAnim));
+		//Derecha																						
+	explosionAnims_.push_back(Anim(EXPLOSION_R_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, EXPLOSION_R_FRAME_RATE, false));
+	explosionTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinExpRightAnim));
+		//Abajo																							
+	explosionAnims_.push_back(Anim(EXPLOSION_D_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, EXPLOSION_D_FRAME_RATE, false));
+	explosionTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinExpDownAnim));
+		//Izquierda																						
+	explosionAnims_.push_back(Anim(EXPLOSION_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, EXPLOSION_L_FRAME_RATE, false));
+	explosionTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinExpLeftAnim));
+	
+	//Animación de movimiento
+		//Arriba
+	moveAnims_.push_back(Anim(MOVE_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, MOVE_U_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveUpAnim));
+		//Derecha																						
+	moveAnims_.push_back(Anim(MOVE_R_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, MOVE_R_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveRightAnim));
+		//Abajo																							
+	moveAnims_.push_back(Anim(MOVE_D_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, MOVE_D_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveDownAnim));
+		//Izquierda																						
+	moveAnims_.push_back(Anim(MOVE_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, MOVE_L_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveLeftAnim));
+	
+	initIdle();
+}
+void Pumpkin::initIdle()
+{
+	currState_ = STATE::IDLE;
+	texture_ = idleTx_[(int)currDir_];
+	currAnim_ = idleAnims_[(int)currDir_];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+void Pumpkin::initAttack()
+{
+	shooted_ = false;
+	updateDirVisEnemy();
+	currState_ = STATE::ATTACKING;
+	texture_ = attackTx_[(int)currDir_];
+	currAnim_ = attackAnims_[(int)currDir_];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+void Pumpkin::initExplosion()
+{
+	texture_ = explosionTx_[(int)currDir_];
+	currAnim_ = explosionAnims_[(int)currDir_];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+	currState_ = STATE::DYING;
+	CollisionCtrl::instance()->removeEnemy(this);
+
+}
+bool Pumpkin::explosionAnim()
+{
+	if (!explosion_ && currAnim_.currFrame_ == FRAME_ACTION_EXPLOSION) {
+		explosion_ = true;
+		auto dmg = dynamic_cast<Player*>(currEnemy_);
+		Point2D center = getCenter();
+		Point2D currEnemyCenter = currEnemy_->getCenter();
+		if (dmg != nullptr && RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
+			center.getX(), center.getY(), explosionRange_)) {
+			dmg->receiveDamage(currStats_.meleeDmg_);
+		}
+		return false;
+	}
+	else if(currAnim_.currFrame_ >= currAnim_.numberFrames_)
+	{
+		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
+		app_->getCurrState()->removeRenderUpdateLists(this);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+void Pumpkin::initMove()
+{
+	currState_ = STATE::FOLLOWING;
+	texture_ = moveTx_[(int)currDir_];
+	currAnim_ = moveAnims_[(int)currDir_];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+//Testeo
+void Pumpkin::updateDirVisEnemy() {
+	if (currEnemy_ != nullptr) {
+		Vector2D center = getCenter();		//Punto de referencia
+		Vector2D enemyCenter = currEnemy_->getCenter();
+		Vector2D dir = enemyCenter - center;		//Vector dirección
+		dir.normalize();
+		double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
+		if (angle >= 0) {
+			if (angle <= 45.0) currDir_ = DIR::RIGHT;
+			else if (angle < 135.0) currDir_ = DIR::DOWN;
+			else currDir_ = DIR::LEFT;
+		}
+		else {
+			if (angle >= -45.0) currDir_ = DIR::RIGHT;
+			else if (angle >= -135.0) currDir_ = DIR::UP;
+			else currDir_ = DIR::LEFT;
+		}
+	}
+}
+//testeo
+void Pumpkin::shootAnim()
+{
+	if (!shooted_ && currAnim_.currFrame_ == FRAME_ACTION_SHOOT) {
+		disAttack();
+		lastHit = SDL_GetTicks();
+		shooted_ = true;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();	//Activa el idle
+	}
 }

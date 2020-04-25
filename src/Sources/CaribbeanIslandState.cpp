@@ -36,7 +36,7 @@ void CaribbeanIslandState::initState()
 	createMonkey(NUM_MONKEYS);
 	createPirates(NUM_PIRATES);
 	createWolves(NUM_WOLVES);
-	Pumpkin* p = new Pumpkin(app_, { 20,20 }, {40,40});
+	Pumpkin* p = new Pumpkin(app_, { 20,20 }, {100,70});
 	addEnemy(p);
 
 	//Kraken Temporal

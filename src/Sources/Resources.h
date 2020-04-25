@@ -143,6 +143,7 @@ public:
 
 		//Animaciones
 		CrabAttack,
+		//Player
 		PlayerIdleRightAnim,
 		PlayerIdleLeftAnim,
 		PlayerIdleUpAnim,
@@ -159,6 +160,27 @@ public:
 		PlayerMeleeLeftAnim,
 		PlayerMeleeUpAnim,
 		PlayerMeleeDownAnim,
+		//Calabaza
+			//Idle
+		PumpkinIdleRightAnim,
+		PumpkinIdleLeftAnim,
+		PumpkinIdleUpAnim,
+		PumpkinIdleDownAnim,
+			//Explosion
+		PumpkinExpRightAnim,
+		PumpkinExpLeftAnim,
+		PumpkinExpUpAnim,
+		PumpkinExpDownAnim,
+			//Attack
+		PumpkinAttackRightAnim,
+		PumpkinAttackLeftAnim,
+		PumpkinAttackUpAnim,
+		PumpkinAttackDownAnim,
+			//Move
+		PumpkinMoveRightAnim,
+		PumpkinMoveLeftAnim,
+		PumpkinMoveUpAnim,
+		PumpkinMoveDownAnim,
 
 		//Interactuables
 		Wheel,

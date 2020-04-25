@@ -146,7 +146,6 @@ private:
 	//Habilidades
 	vector<Skill*> skills_;
 	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
-	DIR lookAt;	//Hacia dónde mira
 #pragma region Animaciones
 	Texture* auxTx_ = nullptr;				//Textura de idle temporal, se borrará cuadno esté el idle
 	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
