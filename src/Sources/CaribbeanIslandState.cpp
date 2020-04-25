@@ -35,21 +35,21 @@ void CaribbeanIslandState::initState()
 	addRenderUpdateLists(background_);
 
 	createMonkey(NUM_MONKEYS);
-	createPirates(NUM_PIRATES);
-	createWolves(NUM_WOLVES);
-	Pumpkin* p = new Pumpkin(app_, { 20,20 }, {40,40});
-	addEnemy(p);
+	//createPirates(NUM_PIRATES);
+	//createWolves(NUM_WOLVES);
+	//Pumpkin* p = new Pumpkin(app_, { 20,20 }, {40,40});
+	//addEnemy(p);
 
 	//Kraken Temporal
-	int wWin = app_->getWindowWidth();
-	int hWin = app_->getWindowHeight();
-	Kraken* newKraken;
-	Vector2D pos;
-	
-	app_->getWindowHeight() / 15;
-	pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
-	newKraken = new Kraken(app_, pos, Vector2D(app_->getWindowWidth() / 5, app_->getWindowHeight() / 3));
-	addEnemy(newKraken);
+	//int wWin = app_->getWindowWidth();
+	//int hWin = app_->getWindowHeight();
+	//Kraken* newKraken;
+	//Vector2D pos;
+	//
+	//app_->getWindowHeight() / 15;
+	//pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
+	//newKraken = new Kraken(app_, pos, Vector2D(app_->getWindowWidth() / 5, app_->getWindowHeight() / 3));
+	//addEnemy(newKraken);
 
 	//Siempre se a�ade el ultimo para que se renderice por encima de los demas objetos
 	playerEntry_ = Vector2D((app_->getWindowWidth() * 5 / 8) - W_PLAYER, (app_->getWindowHeight() * 8 / 10) - H_PLAYER);

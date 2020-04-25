@@ -159,6 +159,14 @@ public:
 		PlayerMeleeLeftAnim,
 		PlayerMeleeUpAnim,
 		PlayerMeleeDownAnim,
+		MonkeyIdleRightAnim,
+		MonkeyIdleLeftAnim,
+		MonkeyIdleUpAnim,
+		MonkeyIdleDownAnim,
+		MonkeyShootRightAnim,
+		MonkeyShootLeftAnim,
+		MonkeyShootUpAnim,
+		MonkeyShootDownAnim,
 
 		//Interactuables
 		Wheel,

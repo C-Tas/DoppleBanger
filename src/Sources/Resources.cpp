@@ -149,6 +149,14 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PlayerMeleeLeftAnim, "../Sources/assets/player/animaciones/melee/meleeIz.png" },
 	{ PlayerMeleeUpAnim, "../Sources/assets/player/animaciones/melee/meleeTop.png" },
 	{ PlayerMeleeDownAnim, "../Sources/assets/player/animaciones/melee/meleeDown.png" },
+	{ MonkeyIdleRightAnim, "../Sources/assets/enemigos/monkey/idleDchaDown.png" },
+	{ MonkeyIdleLeftAnim, "../Sources/assets/enemigos/monkey/idleIzTop.png" },
+	{ MonkeyIdleUpAnim, "../Sources/assets/enemigos/monkey/idleDchaTop.png" },
+	{ MonkeyIdleDownAnim, "../Sources/assets/enemigos/monkey/idleIzDown.png" },
+	{ MonkeyShootRightAnim, "../Sources/assets/enemigos/monkey/shootDchaDown.png" },
+	{ MonkeyShootLeftAnim, "../Sources/assets/enemigos/monkey/shootIzTop.png" },
+	{ MonkeyShootUpAnim, "../Sources/assets/enemigos/monkey/shootDchaTop.png" },
+	{ MonkeyShootDownAnim, "../Sources/assets/enemigos/monkey/shootIzDown.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

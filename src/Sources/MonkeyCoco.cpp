@@ -8,8 +8,8 @@
 #include <string>
 
 bool MonkeyCoco::update() {
-
 	updateFrame();
+
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendr�a que hacer la animaci�n de muerte?
@@ -18,43 +18,63 @@ bool MonkeyCoco::update() {
 		return true;
 	}
 	//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
-	if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
-		currState_ = STATE::ATTACKING;
+	else if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
+		currState_ = STATE::SHOOTING;
 	}
+
 	//Si el mono tiene enemigo y puede atacar
-	if (currState_ == STATE::ATTACKING && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
-		//Si el mono tiene un enemigo y lo tiene a rango
-		if (onRange()) {
-			//changeAnim(attackAnim_);
-			attack();
+	if (currState_ == STATE::SHOOTING) {
+		if (currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
+			//Si el mono tiene un enemigo y lo tiene a rango
+			if (onRange()) {
+				initShoot();
+			}
+			//Tengo enemigo pero no a rango
+			else {
+				initIdle();
+				currEnemy_ = nullptr;
+			}
+			lastHit = SDL_GetTicks();
 		}
-		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
-		else if(getEnemy(currStats_.distRange_))
-		{
-			//changeAnim(attackAnim_);
-			attack();
-		}
-		//Tengo enemigo pero no a rango
-		else
-		{
-			currState_ = STATE::IDLE;
-			currEnemy_ = nullptr;
-		}
-		lastHit = SDL_GetTicks();
+		if (currEnemy_ != nullptr) shootAnim();
 	}
 	return false;
 }
 
 
 //Inicializa todas las animaciones
-void MonkeyCoco::initAnims()
-{
-	//Para la animaci�n de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, false);
-	//Para la animaci�n de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, true);
-	//Para la animaci�n de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
+void MonkeyCoco::initAnims() {
+	//Animación de idle
+	//Derecha arriba																					
+	idleAnims_.push_back(Anim(IDLE_R_U_FRAMES, W_H_MONKEY_FRAME, W_H_MONKEY_FRAME, IDLE_R_U_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::MonkeyIdleUpAnim));
+	//Derecha abajo
+	idleAnims_.push_back(Anim(IDLE_R_D_FRAMES, W_H_MONKEY_FRAME, W_H_MONKEY_FRAME, IDLE_R_D_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::MonkeyIdleRightAnim));
+	//Izquierda abajo																							
+	idleAnims_.push_back(Anim(IDLE_L_D_FRAMES, W_H_MONKEY_FRAME, W_H_MONKEY_FRAME, IDLE_L_D_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::MonkeyIdleDownAnim));
+	//Izquierda arriba																				
+	idleAnims_.push_back(Anim(IDLE_L_U_FRAMES, W_H_MONKEY_FRAME, W_H_MONKEY_FRAME, IDLE_L_U_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::MonkeyIdleLeftAnim));
+
+	//Animación de disparo
+	//Derecha arriba
+	shootAnims_.push_back(Anim(SHOOT_R_U_FRAMES, W_H_MONKEY_FRAME, W_H_MONKEY_FRAME, SHOOT_R_U_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::MonkeyShootUpAnim));
+	//Derecha abajo
+	shootAnims_.push_back(Anim(SHOOT_R_D_FRAMES, W_H_MONKEY_FRAME, W_H_MONKEY_FRAME, SHOOT_R_D_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::MonkeyShootRightAnim));
+	//Izquierda abajo
+	shootAnims_.push_back(Anim(SHOOT_L_D_FRAMES, W_H_MONKEY_FRAME, W_H_MONKEY_FRAME, SHOOT_L_D_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::MonkeyShootDownAnim));
+	//Izquierda arriba
+	shootAnims_.push_back(Anim(SHOOT_L_U_FRAMES, W_H_MONKEY_FRAME, W_H_MONKEY_FRAME, SHOOT_L_U_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::MonkeyShootLeftAnim));
+
+	//Inicializamos con la animación del idle
+	currDir_ = DIR::DOWN;
+	initIdle();
 }
 
 //Se encarga de crear el coco en direcci�n al enemigo
@@ -73,8 +93,7 @@ void MonkeyCoco::initObject() {
 	initAnims();
 }
 
-void MonkeyCoco::initialStats()
-{
+void MonkeyCoco::initialStats() {
 	HEALTH = 100;
 	MANA = 100;
 	MANA_REG = 1;
@@ -82,13 +101,77 @@ void MonkeyCoco::initialStats()
 	MELEE_DMG = 0;
 	DIST_DMG = 100;
 	CRIT = 0;
-	MELEE_RANGE = 20;
-	DIST_RANGE = 250;
-	MOVE_SPEED = 100;
-	MELEE_RATE = 1;
-	DIST_RATE = 2500;
+	MELEE_RANGE = 0;
+	DIST_RANGE = 300;
+	MOVE_SPEED = 0;
+	MELEE_RATE = 0;
+	DIST_RATE = 1300;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
-//Gesti�n de las colisiones
-void MonkeyCoco::onCollider() {};
+void MonkeyCoco::updateDirVisObjective(GameObject* objective) {
+	if (objective != nullptr) {
+		Vector2D center = getCenter();		//Punto de referencia
+		Vector2D enemyCenter = objective->getCenter();
+		Vector2D dir = enemyCenter - center;		//Vector dirección
+		dir.normalize();
+		double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
+		if (angle >= 0) {
+			if (angle <= 90.0) currDir_ = DIR::RIGHT;	//Para la derecha abajo
+			else currDir_ = DIR::DOWN;	//Para abajo izquierda
+		}
+		else {
+			if (angle >= -90.0) currDir_ = DIR::UP;	//Para la derecha arriba
+			else currDir_ = DIR::LEFT;	//Para la izquierda arriba
+		}
+	}
+}
+
+void MonkeyCoco::initIdle() {
+	currState_ = STATE::IDLE;
+	texture_ = idleTx_[(int)currDir_];
+	currAnim_ = idleAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void MonkeyCoco::initShoot() {
+	currState_ = STATE::SHOOTING;	//Cambio de estado
+	shooted_ = false;	//Aún no se ha creado la bala
+	updateDirVisObjective(currEnemy_);	//Hacia dónde mira
+	texture_ = shootTx_[(int)currDir_];
+	currAnim_ = shootAnims_[(int)currDir_];
+
+	//Asigna el frame donde ocurrirá la acción
+	switch (currDir_)
+	{
+	case DIR::UP:		//Derecha arriba
+		frameAction_ = 10;
+		break;
+	case DIR::RIGHT:	//Derecha abajo
+		frameAction_ = 9;
+		break;
+	case DIR::DOWN:		//Izquierda abajo
+		frameAction_ = 10;
+		break;
+	case DIR::LEFT:		//Izquierda arriba
+		frameAction_ = 10;
+	}
+
+	//Inicio de lso frames
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void MonkeyCoco::shootAnim() {
+	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
+		attack();
+		shooted_ = true;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();	//Activa el idle
+	}
+}
