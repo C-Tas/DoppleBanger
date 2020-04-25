@@ -23,7 +23,9 @@ public:
 	void createWolves(int numWolves);
 	void createChest(int numChest);
 	//void addKills() { kills += 1; }
+	void createNPC();
 #pragma endregion
+
 protected:
 	//Dimensiones de las entidades
 	const int W_PLAYER = app_->getWindowWidth() / 15;
