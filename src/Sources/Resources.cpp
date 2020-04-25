@@ -31,6 +31,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ SaveGame1, "../Sources/assets/botones/saveGame1.png"},
 	{ SaveGame2, "../Sources/assets/botones/saveGame2.png"},
 	{ SaveGame3, "../Sources/assets/botones/saveGame3.png"},
+	{ LoadGame1, "../Sources/assets/botones/loadGame1.png"},
+	{ LoadGame2, "../Sources/assets/botones/loadGame2.png"},
+	{ LoadGame3, "../Sources/assets/botones/loadGame3.png"},
+	{ LoadGameNull, "../Sources/assets/botones/loadGameNull.png"},
+	{ LoadButtonNull, "../Sources/assets/botones/loadButtonNull.png"},
 
 	//Interfaces
 	{ BackButton, "../Sources/assets/botones/volver.png"},

@@ -26,8 +26,9 @@ public:
 	virtual void draw() const;//Renderiza todos los objetos en la lista de objectToRender_
 	///<summary>Actualiza todos los objetos en la lista de gameObjects_</summary>
 	virtual void update();
+	//Para reiniciar el estado
+	void resetState();
 	///<summary>Maneja los eventos de todos los objetos en la lista de objectEvents_</summary>
-	///<summary>A�ade un objeto a la lista de gameObjects</summary>
 	virtual void handleEvents();//Ejecuta los eventos de los objetos objectEvents_
 	//Crea botones con un callback con parámetro Application*
 	virtual void createButton(Application* app, Texture* texture, Point2D pos, Vector2D scale, CallBackOnClick* callBack);

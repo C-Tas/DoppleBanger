@@ -142,7 +142,7 @@ private:
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
-	vector<ObjectName> objectsEquipped = { ObjectName::Unequipped, ObjectName::Unequipped };
+	vector<ObjectName> objectsEquipped_ = { ObjectName::Unequipped, ObjectName::Unequipped };
 
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
 	Player* player_ = nullptr;
@@ -176,8 +176,6 @@ public:
 	}
 	GameManager(GameManager&) = delete;
 	GameManager& operator=(const GameManager&) = delete;
-	//Inicializa el oro, la actual isla y los puntos de haza�a
-	inline void initGameManager(int currGold, Island unlockedIslands, int achievementPoints);
 
 #pragma region Guardar/Cargar
 	//Guardar en slot1
@@ -188,6 +186,16 @@ public:
 	void saveSlot3();
 	//Guarda los datos en el json pasado como parámetro
 	void save(ofstream& slot);
+	//Cargar slot1
+	void loadSlot1();
+	//Cargar slot2
+	void loadSlot2();
+	//Cargar slot3
+	void loadSlot3();
+	//Carga los datos desde el json pasado como parámetro
+	void load(string jsonName);
+	//Resetea los valores del juego para una partida nueva
+	void resetGame();
 #pragma endregion
 #pragma region getters
 	//Devuelve true si la misi�n ha sido pasada
@@ -239,7 +247,7 @@ public:
 	//Devuelve la tecla en la que está equipada la habilidad
 	const Key getEquippedSkillKey(SkillName skill);
 	//Devuelve el objeto equipado
-	const ObjectName getObjectEquipped(Key key) { return objectsEquipped[(int)key - (int)Key::One]; }
+	const ObjectName getObjectEquipped(Key key) { return objectsEquipped_[(int)key - (int)Key::One]; }
 	
 	//Devuelve la posici�n del player
 	const Point2D getPlayerPos();
@@ -297,7 +305,6 @@ public:
 	inline void setClon(GameObject* clon) { clon_ = clon; };
 	//Asigna el puntero de hud
 	inline void setHUD(HUD* hud) { hud_ = hud; }
-
 	//borra al clon
 	inline void deleteClon() { clon_ = nullptr; };
 	//aplicacion

@@ -14,7 +14,7 @@
 #include <cstring>
 
 namespace jute {
-  enum jType {JSTRING, JOBJECT, JARRAY, JBOOLEAN, JNUMBER, JNULL, JUNKNOWN};
+  enum class jType {JSTRING, JOBJECT, JARRAY, JBOOLEAN, JNUMBER, JNULL, JUNKNOWN};
   class jValue {
     private:
       std::string makesp(int);

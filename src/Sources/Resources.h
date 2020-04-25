@@ -47,6 +47,11 @@ public:
 		SaveGame1,
 		SaveGame2,
 		SaveGame3,
+		LoadGame1,
+		LoadGame2,
+		LoadGame3,
+		LoadGameNull,
+		LoadButtonNull,
 
 		//BarrasPuntosHazaña
 		Controls,

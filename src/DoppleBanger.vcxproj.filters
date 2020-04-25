@@ -257,6 +257,9 @@
     <ClCompile Include="Sources\jute.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\LoadState.cpp">
+      <Filter>GameStateMahcine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\GameStateMachine.h">
@@ -528,6 +531,9 @@
     </ClInclude>
     <ClInclude Include="Sources\jute.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\LoadState.h">
+      <Filter>GameStateMahcine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

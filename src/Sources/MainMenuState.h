@@ -15,9 +15,11 @@ private:
 	Player* player_ = nullptr;
 	//Crab* crab_ = nullptr;
 
-protected:
 	///<summary>Se inicializa el menu</summary>
 	virtual void initState();
+	//Para comprobar si existen partidas guardadas
+	bool existDataGame();
+protected:
 	///<summary>crea los 4 botones necesarios del main menu</summary>
 	void createButtons();
 

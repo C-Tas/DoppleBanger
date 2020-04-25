@@ -4,7 +4,6 @@
 void SaveState::backToPreviousState(Application* app) {
 	app->getGameStateMachine()->popState();
 }
-
 void SaveState::saveSlot1() {
 	GameManager::instance()->saveSlot1();
 }

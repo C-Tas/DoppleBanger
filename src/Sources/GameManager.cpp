@@ -3,64 +3,51 @@
 #include "Player.h"
 #include "jute.h"
 #include "InventoryButton.h"
+#include "EmpoweredSkill.h"
+#include "WhirlwindSkill.h"
+#include "RicochetSkill.h"
+#include "PerforateSkill.h"
+#include "ClonSelfDestructSkill.h"
 
 using namespace jute;
 unique_ptr<GameManager> GameManager::instance_;
 
-void GameManager::initGameManager(int currGold, Island unlockedIslands, int achievementPoints) {
-	currGold_ = currGold;
-	unlockedIslands_ = unlockedIslands;
-	achievementPoints_ = achievementPoints;
-	app_ = new Application();
-}
-/*
-{
-"currIsland": 0,
-"unlockedIsland": 1,
-"skillPoints": 0,
-"currGold": 0,
-"stashGold": 0,
-"precision": 0,
-"melee": 0,
-"clon": 0,
-"skillTree":[0, 0, 0],
-"objects": [null, null],
-"missionStarted": [],
-"missionCompleted":	[],
-"stash":[],
-"inventory":[]
-}
-*/
 void GameManager::saveSlot1()
 {
-	ifstream input("../Sources/save_data/save1.json");
-	if (input.fail()) cout << "No hay partida guardada" << endl;
-	input.close();
 	ofstream slot_("../Sources/save_data/save1.json");
 	save(slot_);
 }
 
 void GameManager::saveSlot2()
 {
-	ifstream input("../Sources/save_data/save2.json");
-	if (input.fail()) cout << "No hay partida guardada" << endl;
-	input.close();
-	
 	ofstream slot_("../Sources/save_data/save2.json");
 	save(slot_);
 }
 
 void GameManager::saveSlot3()
 {
-	ifstream input("../Sources/save_data/save3.json");
-	if (input.fail()) cout << "No hay partida guardada" << endl;
-	input.close();
 	ofstream slot_("../Sources/save_data/save3.json");
 	save(slot_);
 }
 
+void GameManager::loadSlot1()
+{
+	load("../Sources/save_data/save1.json");
+}
+
+void GameManager::loadSlot2()
+{
+	load("../Sources/save_data/save2.json");
+}
+
+void GameManager::loadSlot3()
+{
+	load("../Sources/save_data/save3.json");
+}
+
 void GameManager::save(ofstream& slot)
 {
+	//Json principal donde se guardará toda la info
 	jValue mainJson(jType::JOBJECT);
 	jValue aux(jType::JNUMBER);
 	//Variables numericas
@@ -69,7 +56,7 @@ void GameManager::save(ofstream& slot)
 	aux.set_string(to_string((int)currIsland_));
 	mainJson.add_property("currIsland", aux);
 	//Última isla desbloqueada
-	aux.set_string(to_string((int)currIsland_));
+	aux.set_string(to_string((int)unlockedIslands_));
 	mainJson.add_property("unlockedIsland", aux);
 	//Oro del inventario
 	aux.set_string(to_string(inventoryGold));
@@ -150,8 +137,8 @@ void GameManager::save(ofstream& slot)
 	//Objetos equipados
 	#pragma region Objetos equipados
 	jValue objectsValue(jType::JARRAY);
-	for (int i = 0; i < objectsEquipped.size(); i++) {
-		switch (objectsEquipped[i])
+	for (int i = 0; i < objectsEquipped_.size(); i++) {
+		switch (objectsEquipped_[i])
 		{
 		case ObjectName::Unequipped:
 			aux.set_string("null");
@@ -290,17 +277,128 @@ void GameManager::save(ofstream& slot)
 	}
 	mainJson.add_property("equipment", equipValue);
 	#pragma endregion
-
-	////Inventario
+	//Inventario
+	#pragma region Inventario
 	//for (InventoryButton* ob : *inventory_) {
 
 	//}
-
+	#pragma endregion
+	//Alijo
+	#pragma region Alijo
 	//for (InventoryButton* ob : *stash_) {
 
 	//}
+	#pragma endregion
+
+	//Se guarda todo en el archivo
 	slot << mainJson.to_string();
 	slot.close();
+}
+
+void GameManager::load(string jsonName)
+{
+	parser parser_;
+	jValue mainJson = parser_.parse_file(jsonName);
+	//Variables numericas
+	#pragma region JNUMBER
+	currIsland_ = (Island)mainJson["currIsland"].as_int();
+	unlockedIslands_ = (Island)mainJson["unlockedIsland"].as_int();
+	currGold_ = mainJson["currGold"].as_int();
+	stashGold = mainJson["stashGold"].as_int();
+	achievementPoints_ = mainJson["skillPoints"].as_int();
+	precisionPoints_ = mainJson["precision"].as_int();
+	meleePoints_ = mainJson["melee"].as_int();
+	clonPoints_ = mainJson["clon"].as_int();
+	#pragma endregion
+	//Misiones
+	#pragma region Misiones
+	for (int i = 0; i < missionsStarted.size(); i++) {
+		missionsStarted[i] = mainJson["questStarted"][i].as_bool();
+	}
+	for (int i = 0; i < missionsComplete.size(); i++) {
+		missionsComplete[i] = mainJson["questFinished"][i].as_bool();
+	}
+	#pragma endregion
+	//Habilidades equipadas
+	#pragma region Habilidades equipadas
+	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
+		if (mainJson["skills"][i].as_string() == "null") {
+			setSkillEquiped(SkillName::Unequipped, (Key)i);
+		}
+		else if (mainJson["skills"][i].as_string() == "GolpeFuerte") {
+			setSkillEquiped(SkillName::GolpeFuerte, (Key)i);
+		}
+		else if (mainJson["skills"][i].as_string() == "Torbellino") {
+			setSkillEquiped(SkillName::Torbellino, (Key)i);
+		}
+		else if (mainJson["skills"][i].as_string() == "Perforante") {
+			setSkillEquiped(SkillName::DisparoPerforante, (Key)i);
+		}
+		else if (mainJson["skills"][i].as_string() == "Rebote") {
+			setSkillEquiped(SkillName::Rebote, (Key)i);
+		}
+		else if (mainJson["skills"][i].as_string() == "Explosion") {
+			setSkillEquiped(SkillName::Explosion, (Key)i);
+		}
+	}
+	player_->initSkills();
+	#pragma endregion
+	//Objetos equipados
+	#pragma region Objetos equipados
+	for (int i = 0; i < objectsEquipped_.size(); i++) {
+		if (mainJson["objects"][i].as_string() == "null") {
+			objectsEquipped_[i] = ObjectName::Unequipped;
+		}
+		else if (mainJson["objects"][i].as_string() == "Health") {
+			objectsEquipped_[i] = ObjectName::Health;
+		}
+		else if (mainJson["objects"][i].as_string() == "Mana") {
+			objectsEquipped_[i] = ObjectName::Mana;
+		}
+		else if (mainJson["objects"][i].as_string() == "Speed") {
+			objectsEquipped_[i] = ObjectName::Speed;
+		}
+		else if (mainJson["objects"][i].as_string() == "Armor") {
+			objectsEquipped_[i] = ObjectName::Armor;
+		}
+		else if (mainJson["objects"][i].as_string() == "Dmg") {
+			objectsEquipped_[i] = ObjectName::Dmg;
+		}
+		else if (mainJson["objects"][i].as_string() == "Crit") {
+			objectsEquipped_[i] = ObjectName::Crit;
+		}
+	}
+	#pragma endregion
+	//Equipamiento
+	#pragma region Equipamiento
+
+	#pragma endregion
+}
+
+void GameManager::resetGame()
+{
+	currIsland_ = Island::Caribbean;
+	unlockedIslands_ = Island::Caribbean;
+	currGold_ = 0;
+	stashGold = 0;
+	achievementPoints_ = 0;
+	precisionPoints_ = 0;
+	meleePoints_ = 0;
+	clonPoints_ = 0;
+	for (int i = 0; i < missionsStarted.size(); i++) {
+		missionsStarted[i] = false;
+		missionsComplete[i] = false;
+	}
+	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
+		skillsEquipped_[i] = SkillName::Unequipped;
+	}
+	for (int i = 0; i < objectsEquipped_.size(); i++) {
+		objectsEquipped_[i] = ObjectName::Unequipped;
+	}
+	for (InventoryButton* ob : *inventory_)delete ob;
+	inventory_->clear();
+	for (InventoryButton* ob : *stash_)delete ob;
+	stash_->clear();
 }
 
 const int GameManager::getFontSize()
@@ -347,7 +445,7 @@ void GameManager::setSkillEquiped(SkillName newSkill, Key key)
 
 void GameManager::setObjectEquipped(ObjectName newObject, Key key)
 {
-	objectsEquipped[(int)key - (int)Key::One] = newObject;
+	objectsEquipped_[(int)key - (int)Key::One] = newObject;
 	hud_->updateKey((int)key);
 }
 

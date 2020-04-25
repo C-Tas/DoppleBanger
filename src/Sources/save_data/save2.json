@@ -9,7 +9,7 @@
   "clon": 999,
   "questStarted": [false, false],
   "questFinished": [false, false],
-  "skills": ["null", "null", "null"],
+  "skills": ["Torbellino", "GolpeFuerte", "null"],
   "objects": ["Health", "Mana"],
   "equipment": [{
       "name": "null"

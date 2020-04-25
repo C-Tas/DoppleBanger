@@ -63,9 +63,6 @@ public:
 		else return false;
 	};
 	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
-	///<summary>Método para crear las skills que tiene el player
-	///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
-	void initSkills();
 
 #pragma region Getters
 	const Clon* getClon() { return clon_; };
@@ -113,6 +110,9 @@ public:
 #pragma endregion
 
 #pragma region Skills
+	///<summary>Método para crear las skills que tiene el player
+	///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
+	void initSkills();
 	///<summary>Número máximo de skills equipables</summary>
 	Skill* getEquippedSkill(int key) { return skills_[key]; }
 	void setSkillAt(int key, Skill* skill) { 
