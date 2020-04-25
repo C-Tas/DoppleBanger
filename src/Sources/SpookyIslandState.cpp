@@ -7,6 +7,7 @@ void backShipSpooky(Application* app) {
 }
 void SpookyIslandState::initState()
 {
+	gm_->setOnShip(false);
 	//background_ = app_->getTextureManager()->getTexture(Resources::Spooky);
 
 	//Button* backButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::BackButton),

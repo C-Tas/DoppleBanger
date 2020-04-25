@@ -114,6 +114,8 @@ private:
 	int inventoryGold = 300;
 	//Cantidad de dinero almacenada en el alijo
 	int stashGold = 1000;
+	//Booleano que indica si estamos en el barco
+	bool onShip_ = true;
 	//Enum de la �ltima isla desbloqueada
 	Island unlockedIslands_ = Island::Caribbean;
 	//Enum de la isla actual
@@ -184,9 +186,11 @@ public:
 	//Devuelve si está activo el cooldown de la habilidad
 	const bool getSkillCooldown(int skill) { return skillsCooldown[skill]; };
 	//Devuelve si la skill está desbloqueda
-	const bool isSkillUnlocked(SkillName skill) { return skillsUnlocked_[(int)skill]; }
+	const bool isSkillUnlocked(SkillName skill) { return skillsUnlocked_[(int)skill]; };
 	//Devuelve si la skill está equipada
 	const bool isSkillAsign(SkillName skill);
+	//Devuelve si estamos o no en la isla
+	const bool getOnShip() { return onShip_; };
 
 	//Devuelve el oro conseguido
 	const int getGold() { return currGold_; };
@@ -224,7 +228,7 @@ public:
 	//Devuelve la tecla en la que está equipada la habilidad
 	const Key getEquippedSkillKey(SkillName skill);
 	//Devuelve el objeto equipado
-	const ObjectName getObjectEquipped(Key key) { return objectsEquipped[(int)key - (int)Key::One]; }
+	const ObjectName getObjectEquipped(Key key) { return objectsEquipped[(int)key - (int)Key::One]; };
 	
 	//Devuelve la posici�n del player
 	const Point2D getPlayerPos();
@@ -237,7 +241,7 @@ public:
 
 #pragma region setters
 	//Asigna los archievement points
-	inline void setArchievementPoints(int value) { achievementPoints_ = value; }
+	inline void setArchievementPoints(int value) { achievementPoints_ = value; };
 	//Asigna los puntos gastados a la rama precision
 	inline void setPrecisionPoints(int value) { precision_ = (spentPoints)value; };
 	//Asigna los puntos gastados a la rama melee
@@ -245,13 +249,15 @@ public:
 	//Asigna los puntos gastados a la rama Ghost
 	inline void setGhostPoints(int value) { ghost_ = (spentPoints)value; };
 	//Añade(+) /Quita(-) dinero del inventario
-	inline void addInventoryGold(int money) { inventoryGold += money; }
+	inline void addInventoryGold(int money) { inventoryGold += money; };
 	////Añade(+) /Quita(-) dinero del alijo
-	inline void addStashGold(int money) { stashGold += money; }
+	inline void addStashGold(int money) { stashGold += money; };
 	///Asigna money como cantidad de dinero en el inventario
-	inline void setInventoryGold(int money) { inventoryGold = money; }
+	inline void setInventoryGold(int money) { inventoryGold = money; };
 	///Asigna money como cantidad de dinero en el alijo
-	inline void setStashGold(int money) { stashGold = money; }
+	inline void setStashGold(int money) { stashGold = money; };
+	//Indica si estamos o no en el barco
+	inline void setOnShip(bool onShip) { onShip_ = onShip; };
 
 	//Asigna el puntero al inventario
 	inline void setInventoryPointer(lista inv) { inventory_ = inv; };
@@ -265,9 +271,9 @@ public:
 	//Asigna a la ultima isla desbloqueada
 	inline void setUnlockedIslands(Island island) { unlockedIslands_ = island; };
 	//Asigna la nueva isla actual
-	inline void setCurrIsland(Island newIsland) { currIsland_ = newIsland; }
+	inline void setCurrIsland(Island newIsland) { currIsland_ = newIsland; };
 	//Marca como desbloqueda la skill que pases como parámetro
-	inline void setSkillUnlocked(SkillName skill) { skillsUnlocked_[(int)skill] = true; }
+	inline void setSkillUnlocked(SkillName skill) { skillsUnlocked_[(int)skill] = true; };
 
 	//Actualiza el estado del cooldown, no es inline por el HUD
 	void setSkillCooldown(bool cooldown, Key key);
@@ -281,12 +287,12 @@ public:
 	//Asigna al puntero de clon
 	inline void setClon(GameObject* clon) { clon_ = clon; };
 	//Asigna el puntero de hud
-	inline void setHUD(HUD* hud) { hud_ = hud; }
+	inline void setHUD(HUD* hud) { hud_ = hud; };
 
 	//borra al clon
 	inline void deleteClon() { clon_ = nullptr; };
 	//aplicacion
-	inline void setApp(Application* app) { app_ = app; }
+	inline void setApp(Application* app) { app_ = app; };
 #pragma endregion
 	//Para añadir objetos al inventario
 	void addToInventory(Equipment* ob);

@@ -47,6 +47,8 @@ void ShipState::initState()
 {
 	//Borramos la lista de objetos del barco del CollisionCtrl
 	collisionCtrl_->clearList();
+	gm_->setOnShip(true);
+
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Ship));
 	addRenderUpdateLists(background_);
 
@@ -92,6 +94,7 @@ void ShipState::initState()
 	playerEntry_ = Vector2D((W_WIN - W_PLAYER * 4), ((H_WIN * 3 / 4) - H_PLAYER));
 	player_->setPos(playerEntry_);
 	player_->setScale(Vector2D(W_PLAYER, H_PLAYER));
+	Camera::instance()->updateCamera(W_WIN / 2, H_WIN / 2);
 	addRenderUpdateLists(player_);
 	addRenderUpdateLists(hud_);
 	startInstance_ = SDL_GetTicks();

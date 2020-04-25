@@ -17,6 +17,7 @@ public:
 	virtual ~ShipObject() {};
 
 	void onCollider();
+
 private:
 	CallBackChangeState* cb_ = nullptr;
 };

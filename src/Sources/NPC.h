@@ -7,8 +7,8 @@ class NPC : public Collider {
 private:
 	TextBox* txtBox_ = nullptr;
 	Anim npcIdle = { 0, 0, 0, 0, true };
-	int npcType_;
 	Uint32 lasFrame_ = 0;
+	int npcType_;
 
 #pragma region Animaciones
 	//Viejo
@@ -74,5 +74,6 @@ public:
 
 	///<summary>Lleva la animación del NPC</summary>
 	virtual bool update() { updateFrame(); return false; };
+
 	virtual void onCollider() {};
 };
