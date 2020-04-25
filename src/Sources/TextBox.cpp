@@ -79,24 +79,27 @@ void TextBox::dialogChef(bool unlock) {
 	initDialog();
 	//Diálogo del chef cuando lo hemos desbloqueado
 	if (unlock) {
-
+		Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando ya lo hemos desbloqueado.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing);
 	}
 	//Diálogo del chef cuando aún está bloqueado
 	else {
-		Texture text(app_->getRenderer(), "Yo soy un ejemplo de un NPC que aún no ha sido desbloqueado, falta gestionar el comienzo y final de las misiones", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + lineSpacing);
+		//Si la misión secundaria aún no se ha completado
+		if (!app_->getGameManager()->isThatMissionPass(missions::gallegaEnProblemas)) {
+			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la misión secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
-		text.loadFromText(app_->getRenderer(), "secundarias, que pertenecen a otra historia (concretamente 'Misión secundaria - Gallego en problemas').", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 2));
+			text.loadFromText(app_->getRenderer(), "'Gallego en problemas'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+		}
+		//Si se completa la misión y se habla con el chef se desbloquea
+		else {
+			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la misión secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
-		text.loadFromText(app_->getRenderer(), "Los textos están ajustados para un tamaño mínimo de ventana 1600x900, si se hace más grande, el texto queda", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 3));
-
-		text.loadFromText(app_->getRenderer(), "marginado a la izquierda pero no queda mal, pero si se hace una ventana más pequeña el texto no entra.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 4));
-
-		text.loadFromText(app_->getRenderer(), "Aún así habrá que tener un tamaño mínimo, porque otros elementos también desbordan con una ventana pequeña.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 5));
+			text.loadFromText(app_->getRenderer(), "'Gallego en problemas', después de esto el chef se añade a la lista de NPCs desbloquedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+		}
 	}
 }
 

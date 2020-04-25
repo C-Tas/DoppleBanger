@@ -11,6 +11,9 @@
 #include "HUD.h"
 #include "conio.h"
 
+//Provisional -- testeo
+#include "ShipState.h"
+
 
 void PlayState::draw() const {
 	GameState::draw();
@@ -98,7 +101,9 @@ void PlayState::checkPlayerActions() {
 	else if (eventHandler_->isKeyDown(SDLK_t)) {
 		app_->getGameStateMachine()->pushState(new ShopState(app_, player_));
 	}
-
+	else if (eventHandler_->isKeyDown(SDLK_s)) {
+		app_->getGameStateMachine()->pushState(new ShipState(app_));
+	}
 }
 
 Enemy* PlayState::checkAttack() {

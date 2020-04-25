@@ -6,16 +6,18 @@ class Player;
 class CaribbeanIslandState : public PlayState
 {
 private:
-	//Chest* chest_ = nullptr; //temporal
-	Point2D posChest = Vector2D(200, 200);
-	Vector2D scaleChest = Vector2D(100, 100);
+	int missionCounter = 0;
+	bool missionPass = false;
+
 public:
 //<summary>Constructor de la isla caribeña</summary>
 	CaribbeanIslandState(Application* app) : PlayState(app) { initState(); }
 //<summary>Destructor de la isla caribeña</summary>
-	virtual ~CaribbeanIslandState() {};
+	virtual ~CaribbeanIslandState() { gm_->setStartedMission(missions::gallegaEnProblemas, false); };
 
 	virtual void update();
+
+	void addMissionConter();
 
 #pragma region Provisional
 	void createMonkey(int numMonkeys);

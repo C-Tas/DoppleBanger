@@ -9,7 +9,6 @@
 #include "Chest.h"
 #include "Kraken.h"
 
-
 void CaribbeanIslandState::update()
 {
 	if (enemies_.empty()) {
@@ -22,6 +21,10 @@ void CaribbeanIslandState::update()
 	}
 }
 
+void CaribbeanIslandState::addMissionConter() {
+	missionCounter++;
+	if (missionCounter == NUM_WOLVES) gm_->setCompleteMission(missions::gallegaEnProblemas);
+}
 
 void CaribbeanIslandState::initState()
 {
@@ -32,13 +35,21 @@ void CaribbeanIslandState::initState()
 	addRenderUpdateLists(background_);
 
 	/*createMonkey(NUM_MONKEYS);
+	createChest(NUM_CHEST);*/
 	createPirates(NUM_PIRATES);
 	createWolves(NUM_WOLVES);
-	createChest(NUM_CHEST);
-	createNPC();*/
+
+	//Creamos la misión secundaria si no se ha completado aún
+	if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
+		//Reiniciamos el contador de muertes para cumplir la misión y creamos el NPC
+		gm_->setStartedMission(missions::gallegaEnProblemas, true);
+		missionCounter = 0;
+		missionPass = false;
+		createNPC();
+	}
 
 	//Kraken Temporal
-	int wWin = app_->getWindowWidth();
+	/*int wWin = app_->getWindowWidth();
 	int hWin = app_->getWindowHeight();
 	Kraken* newKraken;
 	Vector2D pos;
@@ -46,7 +57,7 @@ void CaribbeanIslandState::initState()
 	app_->getWindowHeight() / 15;
 	pos.setVec(Vector2D(app_->getRandom()->nextInt(wWin / 2, wWin), app_->getRandom()->nextInt(0, hWin / 2)));
 	newKraken = new Kraken(app_, pos, Vector2D(app_->getWindowWidth() / 5, app_->getWindowHeight() / 3));
-	addEnemy(newKraken);
+	addEnemy(newKraken);*/
 
 	//Siempre se a�ade el ultimo para que se renderice por encima de los demas objetos
 	playerEntry_ = Vector2D((app_->getWindowWidth() * 5 / 8) - W_PLAYER, (app_->getWindowHeight() * 8 / 10) - H_PLAYER);

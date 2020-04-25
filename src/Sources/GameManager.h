@@ -261,7 +261,7 @@ public:
 	//Completa una misi�n secundaria
 	inline void setCompleteMission(missions mission) { missionsComplete[(int)mission] = true; };
 	//Empieza una misi�n secundaria
-	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
+	inline void setStartedMission(missions mission, bool started) { missionsStarted[(int)mission] = started; };
 	//Asigna a la ultima isla desbloqueada
 	inline void setUnlockedIslands(Island island) { unlockedIslands_ = island; };
 	//Asigna la nueva isla actual

@@ -49,6 +49,10 @@ bool Wolf::update() {
 		if (!app_->getMute()) {
 			app_->getAudioManager()->playChannel(Resources::AudioId::WolfDie, 0, 3);
 		}
+
+		//Esta línea habría que moverla al cangrejo cuando esté hecho
+		if (app_->getGameManager()->isThatMissionStarted(missions::gallegaEnProblemas)) dynamic_cast<CaribbeanIslandState*>(app_->getCurrState())->addMissionConter();
+
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}

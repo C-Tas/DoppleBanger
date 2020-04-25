@@ -74,7 +74,7 @@ public:
 		chests_.clear(); triggers_.clear(); enemiesToErase_.clear(); chestsToErase_.clear();
 		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
 		//Listas del barco
-		npcs_.clear(); shipObjects_.clear();
+		npcs_.clear(); shipObjects_.clear(); newNpc = true;
 	};
 #pragma endregion
 
@@ -144,7 +144,8 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Trigger*> triggersToErase_;
 
 	//Barco
-	bool onShip = true;
+	bool onShip = true;		//Para mandar si estamos en el barco o en una isla
+	bool newNpc = true;	//Para que los NPCs solo se agreguen una vez a la lista de desbloqueados
 	NPCsInfo npcCollision;
 	vector<ShipObjectsInfo> shipObjects_;
 
