@@ -5,6 +5,7 @@
 #include "Obstacle.h"
 #include "Enemy.h"
 #include <list>
+#include "TiledMap.h"
 
 class CollisionCtrl;
 class HUD;
@@ -24,6 +25,9 @@ public:
 
 	///<summary>Actualizamos le puntero del ratón</summary>
 	void updateMousePointer();
+	///<summary>Método que settea el player</summary>
+	void setPlayer(Player* player) { player_ = player; }
+
 	///<summary>A�ade un objeto a la lista enemies_, objectsToRender y gameObjects_</summary>
 	void addEnemy(Enemy* obj);
 	///<summary>A�ade un objeto a la lista objects_ (objetos que quieran cambiar el puntero por la mano)</summary>

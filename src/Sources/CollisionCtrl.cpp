@@ -33,11 +33,13 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisiones con obst�culos
 	for (auto ob : obstacles_) {
+		
 		//Con jugador
 		if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
 			(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 			player_->stop();
 			(ob)->onCollider();
+			player_->setPos(player_->getPreviousPos());
 		}
 
 		//Con enemigos
@@ -55,6 +57,7 @@ void CollisionCtrl::islandCollisions() {
 				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 				//M�todo para destruir bala
 				removePlayerBullet(bullet);
+				bullet->onCollider();
 			}
 		}
 
@@ -64,6 +67,7 @@ void CollisionCtrl::islandCollisions() {
 				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 				//M�todo para destruir bala
 				removeEnemyBullet(bullet);
+				bullet->onCollider();
 			}
 		}
 	}
@@ -233,6 +237,17 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 				npcCollision.id = Cartographer;
 				break;
 			}
+		}
+	}
+
+	///Colision con las paredes del barco
+	for (auto ob : obstacles_) {
+		//Con jugador
+		if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
+			(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
+			player_->stop();
+			(ob)->onCollider();
+			player_->setPos(player_->getPreviousPos());
 		}
 	}
 }

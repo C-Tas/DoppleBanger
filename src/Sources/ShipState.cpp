@@ -49,6 +49,9 @@ void ShipState::initState()
 	collisionCtrl_->clearList();
 	gm_->setOnShip(true);
 
+	collisionMap_ = new TiledMap(app_, this, TILED_MAP, TILE_HEIGHT_TILESET, TILE_WIDTH_TILESET,TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::CollisionTile),
+		TILESET_FILS, TILESET_COLS, Vector2D(-TILE_DRAWING_SIZE, -TILE_DRAWING_SIZE));
+
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Ship));
 	addRenderUpdateLists(background_);
 
@@ -91,10 +94,14 @@ void ShipState::initState()
 	createNPCs();	//Método de testeo de los NPCs del barco, faltaría hacer uno definitivo para todos los NPCs desbloqueados
 
 	////Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
+	player_ = new Player(app_, Vector2D(0, 0), Vector2D(0, 0));
+	hud_ = new HUD(app_);
+	player_->initSkills();
 	playerEntry_ = Vector2D((W_WIN - W_PLAYER * 4), ((H_WIN * 3 / 4) - H_PLAYER));
 	player_->setPos(playerEntry_);
 	player_->setScale(Vector2D(W_PLAYER, H_PLAYER));
 	Camera::instance()->updateCamera(W_WIN / 2, H_WIN / 2);
+	//player_->setElementsHUD();
 	addRenderUpdateLists(player_);
 	addRenderUpdateLists(hud_);
 	startInstance_ = SDL_GetTicks();

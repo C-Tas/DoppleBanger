@@ -95,12 +95,24 @@
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
+    <ClCompile Include="Sources\TiledMap.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\usable.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
     <ClCompile Include="Sources\WinState.cpp" />
     <ClCompile Include="Sources\Wolf.cpp" />
+    <ClCompile Include="tmxLite\FreeFuncs.cpp" />
+    <ClCompile Include="tmxLite\ImageLayer.cpp" />
+    <ClCompile Include="tmxLite\LayerGroup.cpp" />
+    <ClCompile Include="tmxLite\Map.cpp" />
+    <ClCompile Include="tmxLite\miniz.c" />
+    <ClCompile Include="tmxLite\Object.cpp" />
+    <ClCompile Include="tmxLite\ObjectGroup.cpp" />
+    <ClCompile Include="tmxLite\Property.cpp" />
+    <ClCompile Include="tmxLite\pugixml.cpp" />
+    <ClCompile Include="tmxLite\TileLayer.cpp" />
+    <ClCompile Include="tmxLite\Tileset.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -180,6 +192,7 @@
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
+    <ClInclude Include="Sources\TiledMap.h" />
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\usable.h" />
     <ClInclude Include="Sources\Vector2D.h" />
@@ -188,6 +201,22 @@
     <ClInclude Include="Sources\WinState.h" />
     <ClInclude Include="Sources\Wolf.h" />
     <ClInclude Include="Sources\WhirlwindSkill.h" />
+    <ClInclude Include="tmxLite\Config.hpp" />
+    <ClInclude Include="tmxLite\FreeFuncs.hpp" />
+    <ClInclude Include="tmxLite\ImageLayer.hpp" />
+    <ClInclude Include="tmxLite\Layer.hpp" />
+    <ClInclude Include="tmxLite\LayerGroup.hpp" />
+    <ClInclude Include="tmxLite\Log.hpp" />
+    <ClInclude Include="tmxLite\Map.hpp" />
+    <ClInclude Include="tmxLite\miniz.h" />
+    <ClInclude Include="tmxLite\Object.hpp" />
+    <ClInclude Include="tmxLite\ObjectGroup.hpp" />
+    <ClInclude Include="tmxLite\Property.hpp" />
+    <ClInclude Include="tmxLite\pugiconfig.hpp" />
+    <ClInclude Include="tmxLite\pugixml.hpp" />
+    <ClInclude Include="tmxLite\TileLayer.hpp" />
+    <ClInclude Include="tmxLite\Tileset.hpp" />
+    <ClInclude Include="tmxLite\Types.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

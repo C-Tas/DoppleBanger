@@ -135,7 +135,4 @@ void PlayState::initState()
 	mousePointer->setScale(Vector2D(W_MOUSE_POINTER, H_MOUSE_POINTER));
 
 	collisionCtrl_ = CollisionCtrl::instance();
-	player_ = new Player(app_, Vector2D(0, 0), Vector2D(0, 0));
-	hud_ = new HUD(app_);
-	player_->initSkills();
 }

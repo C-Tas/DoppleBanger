@@ -191,6 +191,10 @@ public:
 		Boots1,
 		Gloves2,
 		Armor1,
+
+		//Tilesets de los mapas
+		Tileset1,
+		CollisionTile,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

@@ -168,7 +168,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
 	{Boots1, "../Sources/assets/Equipamiento/botas.png"},
 	{Gloves2, "../Sources/assets/Equipamiento/Guantes2.png"},
-	{Armor1,"../Sources/assets/Equipamiento/Armadura1.png" }
+	{Armor1,"../Sources/assets/Equipamiento/Armadura1.png" },
+
+	//Tilesets de los mapas
+	{Tileset1, "../Sources/assets/mapas/Isla1-1/tileset_v2.png"},
+	{CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png"}
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{
