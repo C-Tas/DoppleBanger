@@ -6,8 +6,6 @@
 
 class Player;
 
-const double DURATION_ = 2; //En segundos
-const int CLON_TAUNT_RANGE = 500;
 
 class Clon : public Actor
 {
@@ -40,6 +38,10 @@ private:
 	double meleeTime_ = 0;	//Ticks cuando se atac� por �ltima vez
 	double duration_ = 0;	//Duraci�n del clon
 	bool alive_ = true;
+
+
+	const double DURATION_ = 10; //En segundos
+	const int CLON_TAUNT_RANGE = 500;
 
 	Actor* objective_ = nullptr;
 	Player* player_ = nullptr;
@@ -83,7 +85,7 @@ private:
 	const int SHOOT_R_SHOOTINGFRAME = 1;	//Frame en el que se realiza el disparo
 	//Disparo hacia arriba
 	const int SHOOT_U_FRAMES = 8;			//Frames de la animación
-	const int SHOOT_U_FRAME_RATE = 100;		//Frame rate
+	const int SHOOT_U_FRAME_RATE = 40;		//Frame rate
 	const int SHOOT_U_SHOOTINGFRAME = 2;	//Frame en el que se realiza el disparo
 
 	//Disparo hacia izquierda
@@ -92,7 +94,7 @@ private:
 	const int SHOOT_L_SHOOTINGFRAME = 1;	//Frame en el que se realiza el disparo
 	//Disparo hacia abajo
 	const int SHOOT_D_FRAMES = 8;			//Frames de la animación
-	const int SHOOT_D_FRAME_RATE = 100;		//Frame rate
+	const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
 	const int SHOOT_D_SHOOTINGFRAME = 2;	//Frame en el que se realiza el disparo
 
 	//Vector que contiene los frames en los que se dispara en las distintas animaciones de disparo

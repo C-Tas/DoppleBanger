@@ -12,7 +12,7 @@ bool Clon::update() {
 			player_->killClon();
 		}
 		else if (currState_ == STATE::SHOOTING && currAnim_.currFrame_ == currAnim_.numberFrames_) {
-			currState_ == STATE::IDLE;
+			currState_ = STATE::IDLE;
 			///Esto está puesto como temporal por qué no está el idle
 			texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 			currAnim_ = { 0,0,0,0,false };
