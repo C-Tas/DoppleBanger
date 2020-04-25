@@ -59,7 +59,7 @@ void GameManager::save(ofstream& slot)
 	aux.set_string(to_string((int)unlockedIslands_));
 	mainJson.add_property("unlockedIsland", aux);
 	//Oro del inventario
-	aux.set_string(to_string(inventoryGold));
+	aux.set_string(to_string(inventoryGold_));
 	mainJson.add_property("currGold", aux);
 	//Oro del alijo
 	aux.set_string(to_string(stashGold));
@@ -303,7 +303,7 @@ void GameManager::load(string jsonName)
 	#pragma region JNUMBER
 	currIsland_ = (Island)mainJson["currIsland"].as_int();
 	unlockedIslands_ = (Island)mainJson["unlockedIsland"].as_int();
-	currGold_ = mainJson["currGold"].as_int();
+	inventoryGold_ = mainJson["currGold"].as_int();
 	stashGold = mainJson["stashGold"].as_int();
 	achievementPoints_ = mainJson["skillPoints"].as_int();
 	precisionPoints_ = mainJson["precision"].as_int();
@@ -379,7 +379,7 @@ void GameManager::resetGame()
 {
 	currIsland_ = Island::Caribbean;
 	unlockedIslands_ = Island::Caribbean;
-	currGold_ = 0;
+	inventoryGold_ = 0;
 	stashGold = 0;
 	achievementPoints_ = 0;
 	precisionPoints_ = 0;

@@ -105,12 +105,10 @@ class GameManager {
 private:
 	//Puntero unico para evitar copias
 	static unique_ptr<GameManager> instance_;
-	//Cantidad de oro que genera en un nivel
-	int currGold_ = 0;
 	//Puntos de haza�a
 	int achievementPoints_ = 1000;
 	//Cantidad de dinero almacenada en el inventario
-	int inventoryGold = 300;
+	int inventoryGold_ = 300;
 	//Cantidad de dinero almacenada en el alijo
 	int stashGold = 1000;
 	//Enum de la �ltima isla desbloqueada
@@ -209,15 +207,13 @@ public:
 	//Devuelve si la skill está equipada
 	const bool isSkillAsign(SkillName skill);
 
-	//Devuelve el oro conseguido
-	const int getGold() { return currGold_; };
 	//Devuelve los puntos de haza�a
 	const int getAchievementPoints() { return achievementPoints_; };
 	//Devuelve el dinero del inventario
-	const int getInventoryGold() { return inventoryGold; }
+	const int getInventoryGold() { return inventoryGold_; }
 	//Devuelve el dinero del alijo
 	const int getStashGold() { return stashGold; }
-		//Devuelve el tamaño de fuente según el tamaño de la ventana
+	//Devuelve el tamaño de fuente según el tamaño de la ventana
 	const int getFontSize();
 
 	//Devuelve el inventario
@@ -268,11 +264,11 @@ public:
 	//Asigna los puntos gastados a la rama Ghost
 	inline void setGhostPoints(int value) { clonPoints_ = value; };
 	//Añade(+) /Quita(-) dinero del inventario
-	inline void addInventoryGold(int money) { inventoryGold += money; }
+	inline void addInventoryGold(int money) { inventoryGold_ += money; }
 	////Añade(+) /Quita(-) dinero del alijo
 	inline void addStashGold(int money) { stashGold += money; }
 	///Asigna money como cantidad de dinero en el inventario
-	inline void setInventoryGold(int money) { inventoryGold = money; }
+	inline void setInventoryGold(int money) { inventoryGold_ = money; }
 	///Asigna money como cantidad de dinero en el alijo
 	inline void setStashGold(int money) { stashGold = money; }
 
