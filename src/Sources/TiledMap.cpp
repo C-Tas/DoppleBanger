@@ -57,12 +57,17 @@ const void TiledMap::draw()
 			(int)(ob.worldPos_.getY()- Camera::instance()->getCamera().getY()),tileSize_, tileSize_ },
 			{ (int)ob.tilesetPos_.getX(), (int)ob.tilesetPos_.getY(), tileset_.tileWidth_, tileset_.tileHeight_ });
 	}
+	//for (Obstacle* obs : mapObstacles_) {
+	//	obs->draw();
+	//}
+
 }
 
 void TiledMap::addIsometricObstacle(Tile tile)
 {
-	SDL_Rect collisionArea = { (int)tile.worldPos_.getX() + (tileSize_ / 4), (int)tile.worldPos_.getY() + (tileSize_ / 3), (tileSize_ / 4), (tileSize_ / 4) };
-	Obstacle* newObstacle = new Obstacle(app_, collisionArea, nullptr, tile.worldPos_, Vector2D(tileSize_, tileSize_));
+	SDL_Rect collisionArea = { (int)tile.worldPos_.getX() + (tileSize_ / 3), (int)tile.worldPos_.getY() + (tileSize_ / 4), (tileSize_ ), (tileSize_ ) };
+	Obstacle* newObstacle = new Obstacle(app_, collisionArea, app_->getTextureManager()->getTexture(Resources::CollisionTile), Vector2D(tile.worldPos_.getX() , tile.worldPos_.getY() + (tileSize_ / 8))
+		, Vector2D(tileSize_, (double)(tileSize_/2) + (double)(tileSize_/8)));
 	//Los añadimos a esta lista para luego poder borrarlos desde el propio mapa
 	mapObstacles_.push_back(newObstacle);
 	CollisionCtrl::instance()->addObstacle(newObstacle);
@@ -260,7 +265,7 @@ void TiledMap::createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tile
 				tile.tilesetPos_ = { aux.getX() * tileset_.tileWidth_, aux.getY() * tileset_.tileHeight_ };
 
 				//TEMPORAL, PARA QUE SE VEAN DONDE ESTÁN LAS COLISIONES
-				tilesToRender.push_back(tile);
+				//tilesToRender.push_back(tile);
 				
 				//En las capas ortogonales solo vamos a pintar la imagen, asi que cualquier tile que no sea vacio
 				//es un tile de colision

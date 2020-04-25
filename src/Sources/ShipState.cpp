@@ -45,7 +45,8 @@ void ShipState::initState()
 	//Borramos la lista de objetos del barco del CollisionCtrl
 	collisionCtrl_->clearList();
 
-	collisionMap_ = new TiledMap(app_, this, TILED_MAP, TILE_HEIGHT_TILESET, TILE_WIDTH_TILESET,TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::CollisionTile));
+	collisionMap_ = new TiledMap(app_, this, TILED_MAP, TILE_HEIGHT_TILESET, TILE_WIDTH_TILESET,TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::CollisionTile),
+		TILESET_FILS, TILESET_COLS, Vector2D(-TILE_DRAWING_SIZE, -TILE_DRAWING_SIZE));
 
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Ship));
 	addRenderUpdateLists(background_);
@@ -98,7 +99,7 @@ void ShipState::draw() const
 {
 	GameState::draw();
 	//TEMPORAL PARA QUE SE VEAN DONDE ESTÁN LAS COLISIONES
-	collisionMap_->draw();
+	//collisionMap_->draw();
 }
 
 void ShipState::update()

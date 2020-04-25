@@ -16,10 +16,10 @@ public:
 protected:
 #pragma region Tilemap_Const
 
-	const int TILESET_TILE_WIDTH = 32;
-	const int TILESET_TILE_HEIGHT = 32;
-	const int TILESET_COLS = 25;
-	const int TILESET_FILS = 9;
+	const int TILESET_TILE_WIDTH = 256;
+	const int TILESET_TILE_HEIGHT = 256;
+	const int TILESET_COLS = 22;
+	const int TILESET_FILS = 14;
 	const int TILE_DRAWING_SIZE = 128;
 
 	///<summary>Direccion en la que se encuentra el archivo de Tiled del mapa de la zona 1</summary>
@@ -29,7 +29,7 @@ protected:
 	///<summary>Direccion en la que se encuentra el archivo de Tiled del mapa de la zona 3</summary>
 	const std::string ZONE3_TILEMAP = "../Sources/assets/mapas/Isla1-1/Isla 1.tmx";
 	//Tiles que queremos que tengan la funcionalidad del colisionar
-	const list <int> collisionTilesIdZone1 = { 202,203,204,205,206,207,208,209,210,211,212 };
+	const list <int> collisionTilesIdZone1 = { 12,13,66,67,68,69,70,71,72,73,74,75,76,77,129,131,132,133,178,179,180,181,246,247,248,249,250,251,252,253,254};
 #pragma endregion
 
 	virtual void initState();

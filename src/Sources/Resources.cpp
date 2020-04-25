@@ -130,7 +130,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
 
 	//Tilesets de los mapas
-	{Tileset1, "../Sources/assets/mapas/Isla1-1/tileset2.png"},
+	{Tileset1, "../Sources/assets/mapas/Isla1-1/tileset_v2.png"},
 	{CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png"},
 };
 

@@ -29,6 +29,8 @@ private:
 	const int TILE_WIDTH_TILESET = 8;
 	const int TILE_HEIGHT_TILESET = 8;
 	const int TILE_DRAWING_SIZE =  (int)(app_->getWindowWidth()/60);
+	const int TILESET_COLS = 1;
+	const int TILESET_FILS = 1;
 
 	#pragma region ShipObjects
 	ShipObject* stash_ = nullptr;//Alijo

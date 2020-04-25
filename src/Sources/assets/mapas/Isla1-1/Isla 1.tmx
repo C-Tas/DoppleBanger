@@ -1,729 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="50" tilewidth="256" tileheight="128" infinite="0" nextlayerid="14" nextobjectid="13">
- <tileset firstgid="1" name="Dopplebanger" tilewidth="257" tileheight="256" tilecount="222" columns="0">
-  <grid orientation="orthogonal" width="1" height="1"/>
-  <tile id="0">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_14.png"/>
-  </tile>
-  <tile id="1">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_water_256_01.png"/>
-  </tile>
-  <tile id="2">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_water_256_02.png"/>
-  </tile>
-  <tile id="3">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_water_256_03.png"/>
-  </tile>
-  <tile id="4">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_water_256_04.png"/>
-  </tile>
-  <tile id="5">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_water_256_05.png"/>
-  </tile>
-  <tile id="6">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_water_256_06.png"/>
-  </tile>
-  <tile id="7">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_water_256_07.png"/>
-  </tile>
-  <tile id="8">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_water_256_08.png"/>
-  </tile>
-  <tile id="9">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_water_256_09.png"/>
-  </tile>
-  <tile id="10">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_water_256_10.png"/>
-  </tile>
-  <tile id="11">
-   <image width="256" height="128" source="AssetsPixelated/Clay/output-onlinepngtools.png"/>
-  </tile>
-  <tile id="12">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_01.png"/>
-  </tile>
-  <tile id="13">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_02.png"/>
-  </tile>
-  <tile id="14">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_03.png"/>
-  </tile>
-  <tile id="15">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_04.png"/>
-  </tile>
-  <tile id="16">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_05.png"/>
-  </tile>
-  <tile id="17">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_06.png"/>
-  </tile>
-  <tile id="18">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_07.png"/>
-  </tile>
-  <tile id="19">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_08.png"/>
-  </tile>
-  <tile id="20">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_09.png"/>
-  </tile>
-  <tile id="21">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_10.png"/>
-  </tile>
-  <tile id="22">
-   <image width="256" height="256" source="AssetsPixelated/Clay/clay_iso_tile_256_11.png"/>
-  </tile>
-  <tile id="23">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_01.png"/>
-  </tile>
-  <tile id="24">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_02.png"/>
-  </tile>
-  <tile id="25">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_03.png"/>
-  </tile>
-  <tile id="26">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_04.png"/>
-  </tile>
-  <tile id="27">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_05.png"/>
-  </tile>
-  <tile id="28">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_06.png"/>
-  </tile>
-  <tile id="29">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_07.png"/>
-  </tile>
-  <tile id="30">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_08.png"/>
-  </tile>
-  <tile id="31">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_09.png"/>
-  </tile>
-  <tile id="32">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_10.png"/>
-  </tile>
-  <tile id="33">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_11.png"/>
-  </tile>
-  <tile id="34">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_12.png"/>
-  </tile>
-  <tile id="35">
-   <image width="256" height="128" source="AssetsPixelated/Clay/clay_iso_tile_road_256_13.png"/>
-  </tile>
-  <tile id="36">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_10.png"/>
-  </tile>
-  <tile id="37">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_11.png"/>
-  </tile>
-  <tile id="38">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_12.png"/>
-  </tile>
-  <tile id="39">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_13.png"/>
-  </tile>
-  <tile id="40">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_14.png"/>
-  </tile>
-  <tile id="41">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_water_256_01.png"/>
-  </tile>
-  <tile id="42">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_water_256_02.png"/>
-  </tile>
-  <tile id="43">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_water_256_03.png"/>
-  </tile>
-  <tile id="44">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_water_256_04.png"/>
-  </tile>
-  <tile id="45">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_water_256_05.png"/>
-  </tile>
-  <tile id="46">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_water_256_06.png"/>
-  </tile>
-  <tile id="47">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_water_256_07.png"/>
-  </tile>
-  <tile id="48">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_water_256_08.png"/>
-  </tile>
-  <tile id="49">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_water_256_09.png"/>
-  </tile>
-  <tile id="50">
-   <image width="257" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_water_256_10.png"/>
-  </tile>
-  <tile id="51">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_0.png"/>
-  </tile>
-  <tile id="52">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_02.png"/>
-  </tile>
-  <tile id="53">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_03.png"/>
-  </tile>
-  <tile id="54">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_04.png"/>
-  </tile>
-  <tile id="55">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_05.png"/>
-  </tile>
-  <tile id="56">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_06.png"/>
-  </tile>
-  <tile id="57">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_07.png"/>
-  </tile>
-  <tile id="58">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_08.png"/>
-  </tile>
-  <tile id="59">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_09.png"/>
-  </tile>
-  <tile id="60">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_10.png"/>
-  </tile>
-  <tile id="61">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_256_11.png"/>
-  </tile>
-  <tile id="62">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_01.png"/>
-  </tile>
-  <tile id="63">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_02.png"/>
-  </tile>
-  <tile id="64">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_03.png"/>
-  </tile>
-  <tile id="65">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_04.png"/>
-  </tile>
-  <tile id="66">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_05.png"/>
-  </tile>
-  <tile id="67">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_06.png"/>
-  </tile>
-  <tile id="68">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_07.png"/>
-  </tile>
-  <tile id="69">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_08.png"/>
-  </tile>
-  <tile id="70">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_01/grass_01_iso_tile_road_256_09.png"/>
-  </tile>
-  <tile id="71">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_06.png"/>
-  </tile>
-  <tile id="72">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_07.png"/>
-  </tile>
-  <tile id="73">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_08.png"/>
-  </tile>
-  <tile id="74">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_09.png"/>
-  </tile>
-  <tile id="75">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_10.png"/>
-  </tile>
-  <tile id="76">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_11.png"/>
-  </tile>
-  <tile id="77">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_12.png"/>
-  </tile>
-  <tile id="78">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_13.png"/>
-  </tile>
-  <tile id="79">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_14.png"/>
-  </tile>
-  <tile id="80">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_01.png"/>
-  </tile>
-  <tile id="81">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_02.png"/>
-  </tile>
-  <tile id="82">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_03.png"/>
-  </tile>
-  <tile id="83">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_04.png"/>
-  </tile>
-  <tile id="84">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_05.png"/>
-  </tile>
-  <tile id="85">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_06.png"/>
-  </tile>
-  <tile id="86">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_07.png"/>
-  </tile>
-  <tile id="87">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_08.png"/>
-  </tile>
-  <tile id="88">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_09.png"/>
-  </tile>
-  <tile id="89">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_10.png"/>
-  </tile>
-  <tile id="90">
-   <image width="256" height="256" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_256_11.png"/>
-  </tile>
-  <tile id="91">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_01.png"/>
-  </tile>
-  <tile id="92">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_02.png"/>
-  </tile>
-  <tile id="93">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_03.png"/>
-  </tile>
-  <tile id="94">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_04.png"/>
-  </tile>
-  <tile id="95">
-   <image width="256" height="128" source="AssetsPixelated/Grass/grass_02/grass_02_iso_tile_road_256_05.png"/>
-  </tile>
-  <tile id="96">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (6).png"/>
-  </tile>
-  <tile id="97">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (7).png"/>
-  </tile>
-  <tile id="98">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (8).png"/>
-  </tile>
-  <tile id="99">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (9).png"/>
-  </tile>
-  <tile id="100">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (10).png"/>
-  </tile>
-  <tile id="101">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (11).png"/>
-  </tile>
-  <tile id="102">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (12).png"/>
-  </tile>
-  <tile id="103">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (13).png"/>
-  </tile>
-  <tile id="104">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (14).png"/>
-  </tile>
-  <tile id="105">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (15).png"/>
-  </tile>
-  <tile id="106">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (16).png"/>
-  </tile>
-  <tile id="107">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (17).png"/>
-  </tile>
-  <tile id="108">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (18).png"/>
-  </tile>
-  <tile id="109">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (19).png"/>
-  </tile>
-  <tile id="110">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (20).png"/>
-  </tile>
-  <tile id="111">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (21).png"/>
-  </tile>
-  <tile id="112">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (22).png"/>
-  </tile>
-  <tile id="113">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (23).png"/>
-  </tile>
-  <tile id="114">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (24).png"/>
-  </tile>
-  <tile id="115">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (25).png"/>
-  </tile>
-  <tile id="116">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (26).png"/>
-  </tile>
-  <tile id="117">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (27).png"/>
-  </tile>
-  <tile id="118">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (28).png"/>
-  </tile>
-  <tile id="119">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (29).png"/>
-  </tile>
-  <tile id="120">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (30).png"/>
-  </tile>
-  <tile id="121">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (31).png"/>
-  </tile>
-  <tile id="122">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (32).png"/>
-  </tile>
-  <tile id="123">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (33).png"/>
-  </tile>
-  <tile id="124">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (34).png"/>
-  </tile>
-  <tile id="125">
-   <image width="256" height="256" source="AssetsPixelated/Lava/output-onlinepngtools (35).png"/>
-  </tile>
-  <tile id="126">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools.png"/>
-  </tile>
-  <tile id="127">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (1).png"/>
-  </tile>
-  <tile id="128">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (2).png"/>
-  </tile>
-  <tile id="129">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (3).png"/>
-  </tile>
-  <tile id="130">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (4).png"/>
-  </tile>
-  <tile id="131">
-   <image width="256" height="128" source="AssetsPixelated/Lava/output-onlinepngtools (5).png"/>
-  </tile>
-  <tile id="132">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (29).png"/>
-  </tile>
-  <tile id="133">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (30).png"/>
-  </tile>
-  <tile id="134">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (31).png"/>
-  </tile>
-  <tile id="135">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (32).png"/>
-  </tile>
-  <tile id="136">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (33).png"/>
-  </tile>
-  <tile id="137">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (34).png"/>
-  </tile>
-  <tile id="138">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (35).png"/>
-  </tile>
-  <tile id="139">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools.png"/>
-  </tile>
-  <tile id="140">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (1).png"/>
-  </tile>
-  <tile id="141">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (2).png"/>
-  </tile>
-  <tile id="142">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (3).png"/>
-  </tile>
-  <tile id="143">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (4).png"/>
-  </tile>
-  <tile id="144">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (5).png"/>
-  </tile>
-  <tile id="145">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (6).png"/>
-  </tile>
-  <tile id="146">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (7).png"/>
-  </tile>
-  <tile id="147">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (8).png"/>
-  </tile>
-  <tile id="148">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (9).png"/>
-  </tile>
-  <tile id="149">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (10).png"/>
-  </tile>
-  <tile id="150">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (11).png"/>
-  </tile>
-  <tile id="151">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (12).png"/>
-  </tile>
-  <tile id="152">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (13).png"/>
-  </tile>
-  <tile id="153">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (14).png"/>
-  </tile>
-  <tile id="154">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (15).png"/>
-  </tile>
-  <tile id="155">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (16).png"/>
-  </tile>
-  <tile id="156">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (17).png"/>
-  </tile>
-  <tile id="157">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (18).png"/>
-  </tile>
-  <tile id="158">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (19).png"/>
-  </tile>
-  <tile id="159">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (20).png"/>
-  </tile>
-  <tile id="160">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (21).png"/>
-  </tile>
-  <tile id="161">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (22).png"/>
-  </tile>
-  <tile id="162">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (23).png"/>
-  </tile>
-  <tile id="163">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (24).png"/>
-  </tile>
-  <tile id="164">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (25).png"/>
-  </tile>
-  <tile id="165">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (26).png"/>
-  </tile>
-  <tile id="166">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (27).png"/>
-  </tile>
-  <tile id="167">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_1/output-onlinepngtools (28).png"/>
-  </tile>
-  <tile id="168">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (2).png"/>
-  </tile>
-  <tile id="169">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (3).png"/>
-  </tile>
-  <tile id="170">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (4).png"/>
-  </tile>
-  <tile id="171">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (5).png"/>
-  </tile>
-  <tile id="172">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (6).png"/>
-  </tile>
-  <tile id="173">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (7).png"/>
-  </tile>
-  <tile id="174">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (8).png"/>
-  </tile>
-  <tile id="175">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (9).png"/>
-  </tile>
-  <tile id="176">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (10).png"/>
-  </tile>
-  <tile id="177">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (11).png"/>
-  </tile>
-  <tile id="178">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (12).png"/>
-  </tile>
-  <tile id="179">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (13).png"/>
-  </tile>
-  <tile id="180">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (14).png"/>
-  </tile>
-  <tile id="181">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (15).png"/>
-  </tile>
-  <tile id="182">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (16).png"/>
-  </tile>
-  <tile id="183">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (17).png"/>
-  </tile>
-  <tile id="184">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (18).png"/>
-  </tile>
-  <tile id="185">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (19).png"/>
-  </tile>
-  <tile id="186">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (20).png"/>
-  </tile>
-  <tile id="187">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (21).png"/>
-  </tile>
-  <tile id="188">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (22).png"/>
-  </tile>
-  <tile id="189">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (23).png"/>
-  </tile>
-  <tile id="190">
-   <image width="256" height="128" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (24).png"/>
-  </tile>
-  <tile id="191">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools.png"/>
-  </tile>
-  <tile id="192">
-   <image width="256" height="256" source="AssetsPixelated/Paving/Paving_2/output-onlinepngtools (1).png"/>
-  </tile>
-  <tile id="193">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (21).png"/>
-  </tile>
-  <tile id="194">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (22).png"/>
-  </tile>
-  <tile id="195">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (23).png"/>
-  </tile>
-  <tile id="196">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (24).png"/>
-  </tile>
-  <tile id="197">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (25).png"/>
-  </tile>
-  <tile id="198">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (26).png"/>
-  </tile>
-  <tile id="199">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (27).png"/>
-  </tile>
-  <tile id="200">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (28).png"/>
-  </tile>
-  <tile id="201">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools.png"/>
-  </tile>
-  <tile id="202">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools (1).png"/>
-  </tile>
-  <tile id="203">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools (2).png"/>
-  </tile>
-  <tile id="204">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools (3).png"/>
-  </tile>
-  <tile id="205">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools (4).png"/>
-  </tile>
-  <tile id="206">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools (5).png"/>
-  </tile>
-  <tile id="207">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools (6).png"/>
-  </tile>
-  <tile id="208">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools (7).png"/>
-  </tile>
-  <tile id="209">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools (8).png"/>
-  </tile>
-  <tile id="210">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools (9).png"/>
-  </tile>
-  <tile id="211">
-   <image width="256" height="256" source="AssetsPixelated/Sand/output-onlinepngtools (10).png"/>
-  </tile>
-  <tile id="212">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (11).png"/>
-  </tile>
-  <tile id="213">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (12).png"/>
-  </tile>
-  <tile id="214">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (13).png"/>
-  </tile>
-  <tile id="215">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (14).png"/>
-  </tile>
-  <tile id="216">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (15).png"/>
-  </tile>
-  <tile id="217">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (16).png"/>
-  </tile>
-  <tile id="218">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (17).png"/>
-  </tile>
-  <tile id="219">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (18).png"/>
-  </tile>
-  <tile id="220">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (19).png"/>
-  </tile>
-  <tile id="221">
-   <image width="256" height="128" source="AssetsPixelated/Sand/output-onlinepngtools (20).png"/>
-  </tile>
- </tileset>
- <layer id="7" name="Fondo" width="50" height="50">
+<map version="1.2" tiledversion="1.3.1" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="18" nextobjectid="11">
+ <tileset firstgid="1" source="DoppleBanger.tsx"/>
+ <layer id="7" name="Fondo" width="50" height="55">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,51,51,51,51,51,51
+0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,133,133,133,133,133,133,133
 </data>
  </layer>
- <layer id="1" name="Suelo" width="50" height="50" locked="1">
+ <layer id="11" name="Subsuelo" width="50" height="55">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -735,50 +72,6 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,62,56,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,62,54,91,91,91,91,91,91,91,91,91,91,91,58,52,91,91,91,59,54,91,91,53,57,91,91,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,61,61,91,91,91,91,91,91,91,91,91,91,91,60,52,54,56,52,62,58,91,91,52,54,91,91,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,91,62,55,91,91,91,91,91,91,91,61,52,60,57,62,59,91,54,62,91,62,61,61,60,91,91,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,59,60,61,56,91,91,91,91,53,60,52,91,54,62,61,62,62,91,62,60,62,60,61,62,58,55,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,60,59,56,54,61,91,57,54,61,91,91,91,61,54,61,62,62,61,53,61,60,57,60,91,60,60,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,62,61,60,61,57,91,61,53,60,91,91,91,91,91,91,62,53,53,60,60,58,61,54,91,54,55,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,62,62,61,61,62,60,62,62,91,91,91,91,91,91,91,60,61,91,60,91,59,91,61,54,91,59,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,91,60,53,91,62,62,91,91,91,91,91,91,91,91,91,61,62,62,55,60,91,62,91,57,91,58,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,91,60,62,91,57,60,61,91,91,91,91,91,91,91,91,52,57,62,52,62,62,60,62,91,91,55,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,91,91,61,61,57,61,55,91,91,91,91,91,91,91,91,91,52,91,60,54,52,91,61,62,91,54,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,91,91,91,61,61,61,60,59,91,91,91,91,91,91,91,91,58,62,62,60,56,53,91,60,60,91,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,91,91,55,52,62,91,54,60,62,91,91,91,91,91,91,91,61,61,60,62,60,59,61,91,61,60,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,91,91,56,54,60,60,60,91,60,58,91,91,91,91,91,91,61,91,59,62,62,60,62,91,60,60,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,61,91,91,62,58,61,62,91,52,62,62,56,61,59,59,56,61,91,61,60,61,60,62,62,62,61,60,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,62,0,91,91,91,56,61,61,56,52,59,61,91,91,91,57,62,56,60,61,61,61,62,52,91,91,60,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,61,0,91,91,91,91,58,61,91,61,91,91,91,91,91,57,61,61,60,62,62,60,61,60,62,61,60,58,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,61,0,0,0,62,62,60,61,57,54,91,91,91,91,53,60,91,61,62,91,54,61,62,62,58,91,91,52,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,61,0,0,91,91,91,54,54,54,60,91,91,91,91,59,91,57,61,60,60,61,61,62,60,61,91,91,58,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,61,0,0,91,91,91,91,56,58,55,91,91,91,91,62,91,60,62,91,91,62,60,60,60,61,91,61,53,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,60,0,91,91,91,91,62,61,60,55,91,91,91,91,57,60,62,53,61,62,62,60,58,60,61,91,59,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,60,0,91,58,91,57,61,62,61,61,91,54,91,91,91,57,62,91,57,60,54,62,52,61,61,55,56,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,61,0,60,62,91,57,59,60,62,61,91,60,61,62,91,62,62,54,91,61,60,60,62,56,62,62,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,60,0,0,59,58,91,58,60,62,62,61,61,60,61,61,62,91,59,91,61,60,52,62,53,60,62,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,60,0,0,62,55,91,91,91,52,62,62,61,60,58,55,59,91,53,62,62,61,58,60,61,60,91,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,62,0,0,0,57,61,59,91,91,91,61,60,62,61,56,91,91,61,54,55,62,62,62,62,62,91,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,62,62,0,0,62,91,57,56,91,91,91,91,61,62,60,62,62,62,60,91,62,60,61,61,62,62,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,91,60,0,0,0,62,91,62,57,60,54,56,57,59,62,55,62,91,60,60,60,61,60,62,61,55,91,91,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,91,61,62,0,0,0,91,56,58,91,91,91,91,91,91,91,57,58,91,91,58,61,60,61,54,53,59,53,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,59,91,62,62,91,91,91,91,91,62,91,91,91,91,91,91,91,91,60,91,62,62,91,91,55,62,62,91,91,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,57,58,58,61,57,61,62,60,61,0,61,60,58,60,59,59,59,61,62,62,0,0,57,61,57,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,62,62,59,60,60,61,60,0,0,0,0,61,61,60,60,61,0,0,0,0,0,0,58,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,58,62,58,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,0,0,0,0,0,0,0,0,0,0,0,0,59,60,59,61,60,57,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,62,58,60,61,59,60,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,0,0,0,0,0,0,0,0,62,58,60,58,58,62,60,57,57,61,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,58,57,58,62,60,62,61,61,59,57,62,58,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,59,59,59,58,58,59,62,59,57,58,61,58,58,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,61,61,61,0,0,0,0,0,0,0,0,0,0,0,57,58,60,62,62,61,58,57,61,62,62,62,58,62,61,0,0,0,0,0,0,0,0,0,0,0,
-62,60,62,61,62,62,60,60,62,60,61,62,60,60,61,60,61,61,60,61,60,62,62,60,60,62,60,60,60,62,60,62,61,62,60,60,61,61,61,0,0,0,0,0,0,0,0,0,0,0
-</data>
- </layer>
- <layer id="5" name="Intermedio" width="50" height="50">
-  <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -786,107 +79,6 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,51,44,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,42,51,51,51,51,51,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,51,51,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,48,51,51,51,51,51,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,80,0,42,51,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,69,0,43,51,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,51,51,51,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,0,48,51,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,51,46,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,80,0,0,0,0,2147483698,2147483691,2147483696,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,76,79,78,0,0,50,47,51,44,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,2147483693,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,3221225552,64,77,0,50,47,51,51,45,3221225520,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,3221225552,0,0,42,51,51,51,51,1073741869,2147483696,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1073741872,2147483693,51,51,51,51,44,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,3221225517,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,2147483693,51,51,51,44,0,0,0,0,0,0,0,0,0,0,0,0,0,80,0,43,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1073741872,2147483693,51,51,44,0,0,0,0,0,0,0,0,0,0,0,0,76,77,0,42,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,1073741866,1073741866,49,0,0,80,0,0,0,0,0,0,0,0,0,70,0,0,42,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,76,77,0,0,0,0,0,0,0,0,0,70,0,50,47,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483728,79,68,67,78,0,0,0,0,0,0,0,69,0,43,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,2147483690,3221225520,0,0,64,1073741904,0,75,68,78,0,0,0,76,68,77,0,43,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,0,0,3221225552,0,0,0,0,3221225552,0,0,0,3221225552,0,0,0,42,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,51,51,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,51,51,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,51,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,47,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,1073741866,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,47,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,2147483693,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,2147483690,2147483691,47,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,2147483693,51,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,2147483693,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,2147483693,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,51,51,51,51,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,51,51,51,51,0,0,0,0,0,0,0
-</data>
- </layer>
- <layer id="4" name="Paredes_1" width="50" height="50">
-  <data encoding="csv">
-61,62,60,61,62,62,62,62,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,62,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,62,62,60,60,62,62,61,62,61,0,0,0,0,0,0,0,0,0,0,0,0,0,60,62,62,61,62,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-60,60,61,62,62,62,61,62,60,61,62,0,0,0,0,0,0,0,0,0,0,0,62,60,61,62,62,62,62,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,61,60,62,62,60,61,62,60,60,62,60,0,0,0,0,0,0,0,0,0,61,61,60,60,62,60,62,61,61,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,61,61,62,60,61,61,62,61,60,62,0,0,0,0,0,0,0,0,60,62,60,61,60,60,62,62,60,60,60,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,61,61,62,60,60,60,62,62,61,62,62,0,0,0,0,0,0,0,62,62,62,62,60,60,62,61,62,62,61,60,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,60,62,60,62,61,62,62,60,62,61,61,60,0,0,0,0,0,0,0,60,60,61,62,60,60,60,62,62,61,60,61,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,61,60,60,62,61,60,60,62,61,60,60,61,0,0,0,0,0,0,0,61,62,62,60,60,62,61,61,62,60,62,60,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,60,62,61,60,61,61,60,60,61,62,60,62,0,0,0,0,0,0,0,62,62,61,60,60,60,61,61,62,62,60,61,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,60,62,61,60,61,61,61,62,62,60,0,0,0,0,0,0,0,0,0,0,0,60,61,60,62,60,61,62,60,61,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,60,60,60,61,60,61,60,62,61,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,62,60,61,62,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,61,62,60,60,60,61,62,60,61,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,60,62,62,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,61,60,61,62,61,61,60,60,62,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,60,61,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,61,60,61,61,60,62,61,61,62,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,62,61,62,60,60,62,62,62,61,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,62,62,62,62,62,60,62,62,61,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,60,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,62,60,61,60,61,61,62,61,61,60,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,62,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-60,60,62,62,62,61,61,60,61,60,61,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,61,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,60,61,60,61,62,60,60,61,60,62,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,60,60,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,62,61,60,61,62,61,61,62,62,60,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,60,61,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,61,62,61,61,60,61,62,61,61,61,60,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,62,61,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,61,62,60,60,61,62,60,60,61,60,61,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,60,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-60,60,61,61,62,61,61,62,62,61,61,62,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,61,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,61,62,60,61,60,60,60,60,0,60,62,62,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,61,61,61,60,61,61,61,62,0,0,62,61,60,62,62,60,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,61,62,60,61,61,62,60,0,0,62,62,62,60,62,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,62,61,62,60,60,61,60,0,0,0,0,0,0,61,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-60,61,62,62,61,60,60,60,62,0,0,0,0,0,0,0,0,0,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,62,62,62,62,62,61,61,60,0,0,0,0,0,0,0,0,60,61,0,0,0,0,0,0,61,60,0,0,0,0,0,0,0,0,0,61,62,0,0,0,0,0,0,0,0,0,0,0,0,
-60,62,61,61,62,62,60,60,61,0,0,0,0,0,0,0,61,61,0,0,0,0,0,0,0,0,61,61,61,0,0,0,0,0,0,61,60,0,0,0,0,0,0,0,0,0,0,0,0,0,
-60,61,60,61,61,62,62,62,60,0,0,0,0,0,61,61,61,0,0,0,0,0,0,0,0,0,60,61,62,62,62,60,62,62,60,62,60,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,60,60,61,61,61,62,62,0,0,0,0,0,0,61,60,60,62,62,62,61,61,62,62,62,62,60,62,60,62,61,60,61,62,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-60,61,60,61,61,61,62,60,60,0,0,0,0,0,61,60,61,60,61,61,61,60,60,61,62,61,60,61,61,62,61,61,61,61,62,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,60,61,62,61,61,62,62,62,0,0,0,0,0,0,0,0,61,61,60,62,62,62,60,60,60,0,0,0,0,0,60,62,60,61,61,60,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,61,62,60,61,60,62,62,62,0,0,0,0,0,0,0,0,0,0,61,62,60,0,0,0,0,0,0,0,0,0,0,61,62,61,60,60,0,0,0,0,0,0,0,0,0,0,0,0,0,
-60,62,62,62,60,61,61,61,61,0,0,0,0,0,0,0,0,0,0,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,61,62,60,62,61,62,60,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-62,62,60,60,60,61,60,62,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,60,60,60,60,61,62,61,60,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,62,62,62,62,61,61,62,61,0,0,0,0,0,0,0,0,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,61,61,60,60,62,62,60,60,60,212,210,210,211,210,210,208,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,62,60,62,62,60,61,60,59,62,212,212,209,209,208,212,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,61,60,61,62,60,60,62,62,59,62,61,61,61,61,209,210,208,0,0,0,0,0,0,0,0,0,0,0,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,62,61,60,60,60,62,61,61,61,62,61,61,61,60,60,59,61,0,0,0,0,0,0,0,212,210,209,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-61,62,59,61,60,62,60,61,62,59,60,61,60,61,62,60,61,60,62,0,0,0,0,0,209,209,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-60,59,62,61,60,59,59,59,62,60,59,61,59,60,60,59,60,62,59,61,0,0,0,209,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-60,62,60,59,61,60,62,61,59,60,59,61,59,61,61,62,60,59,58,61,61,61,62,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-60,60,60,62,61,61,59,61,62,60,62,59,61,59,61,61,60,61,60,61,60,62,59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-59,62,62,59,62,60,62,61,60,61,60,60,60,61,59,62,60,60,59,60,62,58,59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-59,61,62,61,59,60,61,60,59,60,61,62,61,61,61,59,59,59,61,58,62,58,59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
- </layer>
- <layer id="6" name="Paredes_2" width="50" height="50">
-  <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -894,61 +86,465 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,211,212,202,212,0,0,0,0,0,0,0,212,203,211,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,207,210,210,0,0,0,0,0,0,0,0,0,0,0,0,212,208,211,212,209,209,210,210,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,211,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,212,210,208,212,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,212,210,212,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,211,210,209,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,206,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,211,207,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,210,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,210,211,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,210,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,212,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,212,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,209,0,0,0,212,206,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,212,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,210,0,0,0,210,210,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,209,209,211,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,212,206,210,0,0,206,210,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,211,207,211,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,211,209,210,0,0,212,210,206,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,210,211,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,210,212,212,212,0,211,212,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,208,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,211,206,211,206,212,0,211,209,208,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,210,212,207,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,210,210,211,210,208,0,0,210,208,212,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,210,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,210,210,210,210,208,212,0,0,206,210,209,211,212,210,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,207,210,207,211,211,0,0,210,212,212,210,206,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,211,211,211,208,211,0,0,0,0,0,0,211,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,211,206,211,206,212,0,0,0,0,0,0,0,0,0,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,206,210,211,211,0,0,0,0,0,0,0,0,208,209,0,0,0,0,0,0,209,212,0,0,0,0,0,0,0,0,0,210,207,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,209,0,0,0,0,0,0,0,0,211,212,0,0,0,0,0,0,0,0,211,212,212,0,0,0,0,0,0,209,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,208,206,0,0,0,0,0,0,207,212,210,0,0,0,0,0,0,0,0,0,210,209,207,211,208,211,212,212,212,210,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,211,210,212,0,0,0,0,0,0,0,208,211,207,0,206,212,207,207,211,210,212,211,211,210,211,211,212,208,207,211,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,211,212,208,211,211,0,0,0,0,0,206,210,212,210,210,211,210,210,208,208,209,208,212,212,211,212,207,210,212,208,211,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,210,212,207,210,211,0,0,0,0,0,0,0,0,210,211,209,211,212,210,212,210,210,0,0,0,0,0,210,207,211,210,208,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,210,208,212,207,0,0,0,0,0,0,0,0,0,0,212,211,210,0,0,0,0,0,0,0,0,0,0,212,210,212,212,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,210,206,211,206,0,0,0,0,0,0,0,0,0,0,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,206,210,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,212,210,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,207,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,212,210,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,212,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,258,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,258,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,258,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,211,212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,209,210,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,258,258,0,0,0,0,0,0,0,0,0,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,258,258,258,258,0,0,0,0,0,0,258,258,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,258,258,258,258,258,258,258,258,0,0,0,258,258,258,0,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,258,258,258,258,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,258,258,258,258,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,258,258,258,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="10" name="Monkey">
-  <object id="2" gid="1" x="3176.5" y="1551.5" width="256" height="128"/>
-  <object id="5" gid="1" x="1012" y="428" width="256" height="128"/>
-  <object id="6" gid="1" x="3812" y="3180" width="256" height="128"/>
-  <object id="7" gid="1" x="3948" y="4724" width="256" height="128"/>
-  <object id="8" gid="1" x="3312" y="4896" width="256" height="128"/>
-  <object id="9" gid="1" x="4460" y="5780" width="256" height="128"/>
+ <layer id="1" name="Suelo" width="50" height="55">
+  <data encoding="csv">
+22,22,22,20,22,20,21,22,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,21,21,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,19,21,19,21,22,21,20,22,22,0,0,0,0,0,0,0,0,0,0,0,0,0,21,19,20,20,20,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,22,20,21,22,20,21,21,20,20,22,0,0,0,0,0,0,0,0,0,0,0,19,22,19,21,21,19,22,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,21,22,22,20,20,19,19,21,20,22,20,0,0,0,0,0,0,0,0,0,20,19,21,20,22,22,19,20,21,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,22,20,21,22,20,21,22,20,21,19,21,0,0,0,0,0,0,0,0,19,19,21,21,22,21,21,20,20,20,21,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,19,20,20,20,21,20,21,21,22,20,19,20,0,0,0,0,0,0,0,22,21,19,19,21,20,20,19,22,22,22,22,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,22,21,21,19,22,20,20,21,19,19,22,21,0,0,0,0,0,0,0,20,22,19,20,22,21,19,19,21,20,20,21,20,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,21,21,20,20,21,22,20,22,19,19,22,20,0,0,0,0,0,0,0,20,21,20,20,21,22,21,19,21,21,20,22,22,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,19,21,22,20,20,20,20,19,20,20,21,22,20,0,0,0,0,0,0,19,21,21,19,20,22,22,22,20,19,20,19,19,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,22,20,19,19,22,20,22,19,21,20,22,21,19,0,0,0,0,0,0,19,20,22,22,19,21,22,19,20,20,19,22,20,20,20,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,19,21,22,22,21,21,19,21,19,22,21,20,19,0,0,0,0,0,0,21,19,19,20,19,20,19,20,22,21,21,19,20,21,20,20,19,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,19,20,20,20,21,21,19,20,22,19,22,22,19,20,0,0,0,0,0,21,20,22,22,22,19,20,20,19,21,20,19,22,20,20,19,21,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,21,20,22,22,19,22,22,20,21,19,22,22,20,19,0,0,0,0,21,20,21,21,22,21,22,22,20,21,21,22,21,19,20,19,20,21,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,20,21,20,20,21,20,19,21,22,22,20,19,20,19,0,0,0,20,19,22,20,19,22,21,22,19,19,22,21,20,21,22,20,19,22,20,19,0,0,0,0,0,0,0,0,0,0,0,0,
+19,22,20,19,20,20,20,22,19,20,21,20,22,22,21,21,0,21,21,22,20,20,21,22,20,20,22,20,22,19,19,19,22,19,22,20,20,19,0,0,0,0,0,0,0,0,0,0,0,0,
+20,20,20,21,22,22,22,20,19,21,21,20,19,19,19,22,19,19,22,19,20,22,19,21,19,20,22,22,22,22,20,19,20,21,19,19,19,19,0,0,0,0,0,0,0,0,0,0,0,0,
+22,22,21,21,22,19,21,19,22,22,19,22,19,20,19,20,21,19,20,20,21,19,20,20,20,22,22,20,20,20,22,20,21,21,22,19,21,22,0,0,0,0,0,0,0,0,0,0,0,0,
+21,21,22,20,19,20,22,21,21,22,22,21,19,21,22,22,21,19,22,21,21,20,22,19,21,20,19,22,19,22,21,22,20,20,22,20,22,20,19,0,0,0,0,0,0,0,0,0,0,0,
+22,21,21,19,21,20,19,19,22,20,19,21,19,19,21,19,20,22,21,20,21,21,21,21,21,20,21,21,20,22,21,20,22,19,19,21,22,21,22,0,0,0,0,0,0,0,0,0,0,0,
+22,19,21,22,20,19,19,22,21,19,19,19,21,21,22,20,21,19,21,21,21,22,22,19,22,19,20,21,22,22,19,20,20,22,21,22,20,21,19,0,0,0,0,0,0,0,0,0,0,0,
+21,21,22,19,19,21,21,21,21,20,22,20,22,21,19,21,19,20,22,20,19,22,22,20,22,21,19,22,19,19,21,19,20,19,19,21,20,19,20,19,0,0,0,0,0,0,0,0,0,0,
+21,22,22,21,21,21,20,22,20,22,22,20,22,21,21,20,21,21,19,19,22,19,21,21,21,20,21,22,21,20,19,22,20,19,19,19,21,22,21,22,0,0,0,0,0,0,0,0,0,0,
+21,22,20,21,19,22,20,22,21,20,21,21,21,20,21,19,21,21,19,22,20,21,20,20,20,20,19,22,19,20,22,20,22,21,19,22,19,21,20,21,0,0,0,0,0,0,0,0,0,0,
+22,19,20,22,21,21,20,21,19,22,22,20,22,19,22,21,21,21,20,20,19,21,20,20,21,21,20,19,20,21,21,22,21,20,21,20,21,21,22,21,0,0,0,0,0,0,0,0,0,0,
+19,19,21,19,22,20,19,20,20,22,21,21,21,19,20,20,22,19,21,21,22,22,22,20,20,19,21,21,21,21,21,21,20,21,20,22,20,19,20,0,0,0,0,0,0,0,0,0,0,0,
+20,22,21,22,20,22,19,20,19,22,21,22,19,21,22,20,19,19,19,21,21,19,21,19,19,20,22,21,19,22,19,19,19,21,22,21,21,19,21,0,0,0,0,0,0,0,0,0,0,0,
+19,21,19,20,22,22,22,20,19,20,20,0,20,20,19,22,22,20,19,20,22,20,20,20,22,19,19,19,19,22,20,21,20,20,20,19,20,19,21,0,0,0,0,0,0,0,0,0,0,0,
+22,19,21,20,20,19,21,22,21,22,20,0,0,0,0,20,20,20,20,21,20,21,22,19,22,19,22,19,22,21,22,22,21,20,21,21,21,21,22,0,0,0,0,0,0,0,0,0,0,0,
+19,21,21,19,20,22,19,20,19,22,21,0,0,0,0,21,20,21,20,20,22,21,21,22,21,22,21,19,19,19,22,22,21,21,21,22,21,20,20,21,0,0,0,0,0,0,0,0,0,0,
+21,22,20,22,22,22,22,19,21,19,22,0,0,0,22,20,20,21,20,20,19,20,22,20,19,22,21,22,21,19,22,21,19,22,21,20,20,22,22,21,0,0,0,0,0,0,0,0,0,0,
+19,22,21,21,19,22,20,19,21,20,20,0,0,0,22,20,19,21,21,19,20,22,20,21,21,19,19,20,19,19,20,21,21,19,19,20,22,19,20,22,0,0,0,0,0,0,0,0,0,0,
+20,22,20,21,19,21,21,22,20,21,19,0,0,20,22,20,22,20,19,22,19,19,22,22,21,19,20,20,21,21,19,21,22,21,20,21,22,21,21,19,0,0,0,0,0,0,0,0,0,0,
+22,20,22,20,20,21,20,20,20,19,19,0,19,19,20,22,19,21,21,21,21,22,22,19,19,20,20,20,19,21,20,19,20,22,21,19,21,19,22,0,0,0,0,0,0,0,0,0,0,0,
+22,21,21,22,22,21,21,19,22,21,22,0,19,21,22,19,22,21,21,22,19,20,21,22,21,22,19,19,20,21,21,21,20,21,20,19,21,21,20,0,0,0,0,0,0,0,0,0,0,0,
+19,19,19,22,21,22,19,20,21,19,22,0,21,19,22,22,19,19,20,21,19,21,19,21,20,21,20,21,20,19,19,19,22,20,22,22,22,22,20,0,0,0,0,0,0,0,0,0,0,0,
+22,22,21,21,21,19,22,20,21,21,19,0,22,20,21,19,21,19,20,19,21,21,20,20,19,22,22,22,22,22,20,21,21,20,19,20,20,20,0,0,0,0,0,0,0,0,0,0,0,0,
+21,20,19,20,19,21,20,22,21,21,22,0,19,19,21,20,22,22,21,20,20,20,21,22,20,22,21,22,19,19,21,22,22,20,19,19,21,22,0,0,0,0,0,0,0,0,0,0,0,0,
+20,20,22,22,20,19,22,22,19,21,19,0,21,21,19,19,19,19,21,21,20,19,19,20,21,19,19,20,19,20,20,21,22,22,19,20,21,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,20,19,20,20,21,21,22,21,22,22,0,21,19,21,22,20,20,22,22,21,20,21,22,20,22,22,21,19,22,19,22,19,22,21,21,22,20,0,0,0,0,0,0,0,0,0,0,0,0,
+21,21,20,20,19,21,22,22,20,22,20,0,0,21,20,20,19,22,19,20,20,22,22,19,19,20,19,22,22,19,22,19,19,19,19,22,22,19,0,0,0,0,0,0,0,0,0,0,0,0,
+21,22,20,21,20,22,21,20,21,22,22,0,0,0,22,20,21,22,22,22,20,21,22,22,20,19,20,22,21,20,20,20,22,20,21,19,20,20,0,0,0,0,0,0,0,0,0,0,0,0,
+20,21,22,19,20,22,22,20,22,22,19,21,0,0,22,20,19,19,20,21,20,22,20,19,22,22,21,20,20,21,21,20,21,22,21,19,21,22,22,0,0,0,0,0,0,0,0,0,0,0,
+21,22,20,21,22,20,22,20,21,19,21,19,0,0,0,20,19,22,20,19,21,19,20,21,21,19,21,20,20,21,21,21,22,19,20,19,21,20,21,0,0,0,0,0,0,0,0,0,0,0,
+20,20,19,22,22,20,21,20,22,19,19,19,21,0,0,0,0,22,21,20,19,22,19,19,20,22,22,22,20,20,21,21,20,20,22,22,21,19,22,0,0,0,0,0,0,0,0,0,0,0,
+19,22,21,22,20,22,20,19,19,20,21,19,19,20,20,20,22,21,20,19,21,21,19,19,22,22,22,20,19,20,19,22,20,22,21,19,22,19,22,0,0,0,0,0,0,0,0,0,0,0,
+20,21,19,19,19,19,19,19,21,19,20,21,22,20,22,21,21,21,20,20,0,22,19,19,21,19,19,22,21,20,21,0,0,19,20,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,22,20,19,19,20,21,19,20,21,20,19,21,22,21,20,20,20,20,0,0,0,0,22,20,20,20,19,0,0,0,0,0,0,21,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,20,20,19,20,20,19,21,20,19,20,21,21,21,21,19,19,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,22,21,20,20,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,21,20,20,20,22,20,22,19,21,22,20,21,20,21,20,20,20,20,0,0,0,0,0,0,0,0,0,0,0,22,21,19,22,22,20,19,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,20,21,21,20,21,20,19,20,22,19,22,20,19,22,21,20,19,20,0,0,0,0,0,0,0,0,22,19,19,21,22,19,19,19,19,22,19,0,0,0,0,0,0,0,0,0,0,0,0,
+19,21,20,20,21,22,20,21,21,21,20,20,21,22,20,21,21,21,19,19,0,0,0,20,22,21,19,22,20,21,20,22,20,20,22,21,19,20,0,0,0,0,0,0,0,0,0,0,0,0,
+20,21,21,22,21,22,22,21,20,20,21,20,19,19,22,19,20,21,21,21,20,20,20,20,21,22,20,19,22,21,22,21,20,22,20,21,21,19,0,0,0,0,0,0,0,0,0,0,0,0,
+19,20,22,19,21,20,19,21,22,19,22,21,20,19,19,20,20,20,22,22,19,22,22,21,21,21,20,19,19,21,20,21,21,20,22,21,18,21,21,0,0,0,0,0,0,0,0,0,0,0,
+20,19,19,20,21,20,19,19,19,19,19,21,19,20,21,20,21,21,22,20,21,22,21,22,19,21,19,22,20,20,20,22,19,21,20,21,20,22,21,0,0,0,0,0,0,0,0,0,0,0,
+22,19,21,19,19,21,19,22,22,21,20,19,22,20,22,20,20,21,19,19,20,22,21,21,22,22,20,19,22,22,21,19,19,22,20,19,18,22,20,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="10" name="Decorativo" width="50" height="55">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,117,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,119,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,117,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,113,116,115,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,119,107,114,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,119,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,113,110,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,117,0,0,0,0,0,0,0,0,0,111,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,113,114,0,0,0,0,0,0,0,0,0,111,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,118,116,110,110,115,0,0,0,0,0,0,0,111,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,107,120,0,112,110,115,0,0,0,113,110,114,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,119,0,0,0,0,119,0,0,0,119,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,117,0,0,113,120,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,118,110,110,110,110,110,116,110,110,114,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,111,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,118,108,120,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="Intermedio" width="50" height="55">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,128,133,133,133,133,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,133,133,133,133,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,133,133,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,124,124,128,133,133,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,133,133,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,129,133,133,133,133,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,133,126,130,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,126,130,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,126,130,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,130,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,122,132,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,127,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,127,133,133,125,132,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,133,133,125,132,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,133,133,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,133,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,124,124,130,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,127,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,122,132,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,127,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,127,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,124,130,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,127,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,131,122,122,127,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,133,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,129,128,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,133,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="Paredes_1" width="50" height="55">
+  <data encoding="csv">
+21,21,20,21,20,22,22,22,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,22,20,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,20,22,19,21,22,22,22,22,22,0,0,0,0,0,0,0,0,0,0,0,0,0,20,19,19,22,21,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,21,21,20,21,19,20,20,20,20,21,0,0,0,0,0,0,0,0,0,0,0,19,19,19,22,22,20,21,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,20,20,19,22,22,21,20,22,20,21,21,0,0,0,0,0,0,0,0,0,19,19,19,21,20,20,22,22,19,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,20,20,21,21,21,19,20,19,21,22,22,0,0,0,0,0,0,0,0,22,22,22,19,19,20,20,22,22,21,20,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,22,21,20,22,19,21,19,20,21,20,21,22,0,0,0,0,0,0,0,21,20,19,19,19,22,21,19,22,19,22,20,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,21,21,21,22,20,20,21,20,19,21,21,19,0,0,0,0,0,0,0,21,20,19,20,19,21,20,21,19,20,20,21,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,21,19,21,22,21,20,21,19,19,19,22,12,0,0,0,0,0,0,0,20,22,20,20,19,21,22,20,19,20,22,21,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,21,21,20,20,19,20,22,19,19,21,12,13,0,0,0,0,0,0,0,21,13,13,13,20,22,20,19,20,19,21,20,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,21,22,19,20,20,21,19,22,20,13,12,0,0,0,0,0,0,0,0,0,0,0,0,13,12,13,13,13,13,13,13,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,20,21,22,20,21,19,20,22,19,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,12,12,12,13,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,20,21,21,20,21,22,21,20,21,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,13,13,13,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,19,20,21,22,22,22,20,21,20,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,22,22,21,22,22,21,19,19,21,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,19,19,21,21,19,20,21,20,20,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,20,22,19,19,19,20,22,21,20,13,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,20,20,22,20,20,22,21,20,22,13,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,20,22,19,21,21,20,19,21,13,13,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,21,22,20,21,20,21,20,22,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,13,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,22,22,21,20,21,19,21,21,13,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,12,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,19,21,19,20,20,19,22,20,13,13,13,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,21,21,21,21,20,22,22,12,12,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,21,20,21,22,20,22,19,13,13,13,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,19,21,20,19,21,21,22,12,0,12,13,13,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,22,20,22,19,21,19,21,13,0,0,12,13,13,13,13,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,20,22,20,19,22,21,22,12,0,0,13,13,12,13,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,19,19,21,20,21,22,19,12,0,0,0,13,13,13,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,22,21,21,20,19,21,20,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,21,21,21,19,20,20,21,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,19,21,21,20,21,20,20,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,21,22,21,21,21,21,21,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,21,20,22,19,19,19,19,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,19,19,20,19,19,21,19,13,0,0,0,0,0,0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,20,19,22,20,19,21,19,13,0,0,0,0,0,0,0,0,12,12,0,0,0,0,0,0,12,12,0,0,0,0,0,0,0,0,0,12,12,0,0,0,0,0,0,0,0,0,0,0,0,
+19,20,22,19,21,19,22,20,13,0,0,0,0,0,0,0,12,13,0,0,0,0,0,0,0,0,13,12,13,0,0,0,0,0,0,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,20,20,19,19,19,20,22,13,0,0,0,0,0,0,13,12,0,0,0,0,0,0,0,0,0,13,13,13,12,12,12,13,12,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,19,20,19,19,21,22,20,12,0,0,0,0,0,0,12,12,12,0,12,12,13,13,13,12,13,13,13,12,12,12,13,12,13,13,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,21,21,22,19,20,19,21,12,0,0,0,0,0,13,12,12,12,13,12,13,13,12,13,12,13,13,13,12,13,12,13,13,13,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+19,19,21,19,21,21,21,20,12,0,0,0,0,0,0,0,0,12,13,12,13,13,13,13,13,12,0,0,0,0,0,12,13,12,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,20,19,21,21,22,20,22,13,0,0,0,0,0,0,0,0,0,12,12,12,13,0,0,0,0,0,0,0,0,0,0,13,13,13,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,22,21,21,21,20,12,20,13,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,21,20,21,22,22,13,22,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+20,21,21,21,21,22,12,22,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,21,19,21,21,21,12,12,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,19,20,19,21,21,20,13,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,22,20,20,22,21,20,22,12,12,12,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,21,20,20,21,22,19,21,22,19,12,12,13,13,13,13,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+22,20,22,20,20,19,22,20,21,21,22,20,22,19,22,22,22,13,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,22,19,21,22,20,19,20,20,20,20,21,21,21,20,22,21,13,0,0,0,0,0,0,0,0,12,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,22,22,20,20,19,21,21,21,19,19,21,21,21,20,21,20,13,13,0,0,0,0,0,12,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,21,20,22,20,19,19,22,20,21,21,19,19,22,20,22,19,19,13,12,0,0,0,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,19,20,22,20,20,21,21,21,19,21,22,22,20,20,19,20,19,22,13,13,13,13,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,22,20,20,19,21,21,20,20,21,22,19,19,22,22,21,19,20,20,19,22,22,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,19,19,21,19,20,19,22,20,20,19,20,22,22,21,22,22,19,19,21,19,19,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+21,19,21,20,22,21,21,20,20,20,20,21,22,21,19,20,22,22,19,22,21,21,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="6" name="Paredes_2" width="50" height="55">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,72,76,72,75,0,0,0,0,0,0,0,73,75,76,76,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,74,73,76,0,0,0,0,0,0,0,0,0,0,0,0,74,75,73,76,75,72,76,71,73,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,75,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,75,73,71,75,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,73,71,71,72,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,72,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,75,72,71,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,72,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,75,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,72,72,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,72,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,73,72,72,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,72,73,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,71,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,76,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,76,0,0,0,73,74,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,74,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,73,0,0,0,72,71,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,72,73,76,72,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,74,73,74,0,0,75,76,73,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,71,73,76,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,75,75,75,0,0,74,73,72,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,75,72,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,72,73,75,74,0,75,73,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,74,75,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,74,73,73,75,74,0,76,74,75,73,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,76,75,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,72,76,73,73,75,0,0,75,74,71,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,71,73,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,71,72,74,75,76,75,0,0,71,74,71,75,72,72,73,0,0,0,0,0,0,0,0,0,0,0,0,0,0,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,73,71,75,73,74,0,0,75,73,73,76,71,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,71,73,76,75,72,0,0,0,75,71,75,76,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,74,73,73,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,73,74,72,73,75,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,75,74,71,75,74,75,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,76,75,74,75,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,76,73,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,73,76,74,73,73,0,0,0,0,0,0,0,0,0,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,76,71,73,73,0,0,0,0,0,0,0,0,71,71,0,0,0,0,0,0,73,74,72,0,0,0,0,0,0,0,0,75,76,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,74,71,0,0,0,0,0,0,0,0,73,71,0,0,0,0,0,0,0,0,72,71,0,0,0,0,0,0,0,73,72,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,75,71,0,0,0,0,0,0,0,71,76,0,0,0,0,0,0,0,0,0,71,76,73,72,73,73,76,71,74,76,73,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,71,74,72,0,0,0,0,0,0,0,75,75,76,0,71,71,74,74,76,71,71,73,75,74,73,75,73,72,74,75,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,73,72,73,74,73,0,0,0,0,0,74,74,76,76,71,75,76,76,76,75,71,73,76,71,75,74,76,71,76,76,76,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,73,75,76,75,73,0,0,0,0,0,0,0,0,76,74,73,71,76,75,71,76,73,0,0,0,0,0,75,74,76,75,75,72,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,76,72,72,71,0,0,0,0,0,0,0,0,0,71,75,75,72,0,0,0,0,0,0,0,0,0,0,74,71,75,72,75,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,76,75,71,72,0,0,0,0,0,0,0,0,0,0,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,75,71,75,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,75,72,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,73,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,75,74,75,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,74,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,71,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,71,75,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,72,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="8" name="Objetos_1" width="50" height="55">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,171,0,0,0,0,0,167,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,171,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,249,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,166,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,174,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,251,168,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,182,0,0,0,0,0,0,0,0,0,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,162,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,174,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,294,254,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,174,172,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,257,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+167,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,164,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,175,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,165,0,0,0,0,0,0,0,0,0,0,289,0,0,0,0,0,0,0,0,0,180,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,165,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,179,0,0,179,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,251,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,171,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,165,0,0,0,0,0,0,0,0,0,0,0,164,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,168,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,249,0,178,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,174,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,290,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,167,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,291,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,178,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,169,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,171,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,173,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="9" name="Objetos_2" width="50" height="55">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,181,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,250,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,165,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,165,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,267,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,181,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,268,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,269,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,165,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,165,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="17" name="Player">
+  <object id="10" gid="178" x="4704" y="3616" width="256" height="256"/>
  </objectgroup>
- <objectgroup id="12" name="Wolf"/>
- <objectgroup id="13" name="Player">
-  <object id="12" gid="191" x="4872" y="2696" width="256" height="128"/>
+ <objectgroup id="15" name="Monkey" offsetx="0" offsety="-56">
+  <object id="4" gid="222" x="2480" y="3776" width="256" height="256"/>
+  <object id="5" gid="222" x="2492" y="4020" width="256" height="256"/>
+  <object id="6" gid="222" x="2242" y="2126" width="256" height="256"/>
+  <object id="7" gid="222" x="2608" y="1832" width="256" height="256"/>
+  <object id="8" gid="222" x="2248" y="5560" width="256" height="256"/>
+  <object id="9" gid="222" x="1976" y="5192" width="256" height="256"/>
  </objectgroup>
+ <objectgroup id="16" name="Crab"/>
+ <imagelayer id="14" name="Capa de Imagen 1" opacity="0.37">
+  <image source="Isla 1.png"/>
+ </imagelayer>
 </map>
