@@ -1,6 +1,10 @@
 #include "CaribbeanIslandState.h"
 #include "Player.h"
 #include "ShipState.h"
+#include "MonkeyCoco.h"
+#include "EnemyPirate.h"
+#include "Wolf.h"
+#include "Skeleton.h"
 #include "EndState.h"
 #include "WinState.h"
 

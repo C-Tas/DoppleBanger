@@ -30,6 +30,7 @@
     <ClCompile Include="Sources\Blunderbuss.cpp" />
     <ClCompile Include="Sources\Boots.cpp" />
     <ClCompile Include="Sources\AudioManager.cpp" />
+    <ClCompile Include="Sources\BoneBullet.cpp" />
     <ClCompile Include="Sources\Bullet.cpp" />
     <ClCompile Include="Sources\Button.cpp" />
     <ClCompile Include="Sources\Camera.cpp" />
@@ -85,6 +86,7 @@
     <ClCompile Include="Sources\ShipState.cpp" />
     <ClCompile Include="Sources\Skill.cpp" />
     <ClCompile Include="Sources\SkillButton.cpp" />
+    <ClCompile Include="Sources\Skeleton.cpp" />
     <ClCompile Include="Sources\SkillState.cpp" />
     <ClCompile Include="Sources\ShopState.cpp" />
     <ClCompile Include="Sources\SRandBasedGenerator.cpp" />
@@ -123,6 +125,7 @@
     <ClInclude Include="Sources\Blunder.h" />
     <ClInclude Include="Sources\Blunderbuss.h" />
     <ClInclude Include="Sources\Boots.h" />
+    <ClInclude Include="Sources\BoneBullet.h" />
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\AudioManager.h" />
     <ClInclude Include="Sources\Button.h" />
@@ -182,6 +185,7 @@
     <ClInclude Include="Sources\SelectLevelState.h" />
     <ClInclude Include="Sources\ShipState.h" />
     <ClInclude Include="Sources\ShopState.h" />
+    <ClInclude Include="Sources\Skeleton.h" />
     <ClInclude Include="Sources\Skill.h" />
     <ClInclude Include="Sources\SkillButton.h" />
     <ClInclude Include="Sources\SkillState.h" />

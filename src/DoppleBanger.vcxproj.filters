@@ -132,6 +132,9 @@
     <ClCompile Include="Sources\Clon.cpp">
       <Filter>GameObjects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\SkillState.cpp" />
+    <ClCompile Include="Sources\Skeleton.cpp" />
+    <ClCompile Include="Sources\BoneBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -344,6 +347,9 @@
     <ClInclude Include="Sources\Blunder.h">
       <Filter>GameObjects\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\SkillState.h" />
+    <ClInclude Include="Sources\Skeleton.h" />
+    <ClInclude Include="Sources\BoneBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

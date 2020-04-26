@@ -38,6 +38,10 @@ protected:
 	//Tiles que queremos que tengan la funcionalidad del colisionar
 	const list <int> collisionTilesIdZone1 = { 13,66,67,68,69,70,71,72,73,74,75,76,77,129,131,132,133,178,179,180,181,246,247,248,249,250,251,252,253,254};
 #pragma endregion
+	const int numMonkeys_ = 1;
+	const int numPirates_ = 2;
+	const int numWolves = 3;
+	const int numSkeletons = 1;
 
 	virtual void initState();
 	///<summary>Inicializa el mapa de la zona 1 de la isla</summary>
