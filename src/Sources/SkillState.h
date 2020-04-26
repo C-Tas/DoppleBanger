@@ -1,12 +1,12 @@
 #pragma once
 #include "GameState.h"
-#include "SkillButton.h"
 #include <array>
 #include <functional>
 
 class Skill;
 class Player;
 class VisualElement;
+class SkillButton;
 
 class SkillState :
 	public GameState

@@ -4,6 +4,10 @@
 using namespace std;
 
 class Item;
+class Equipment;
+class usable;
+//Este class de InventoryButton en InventoryButton es necesario, no borrar
+//Sin esto no funciona el Callback :O
 class InventoryButton;
 using CallBackOnClickInventory = void(Application* app, InventoryButton* button);
 
@@ -35,7 +39,7 @@ public:
 	list <InventoryButton*> ::iterator getIterator() { return inventoryIterator_; }
 
 	//Object
-	void setObject(Equipment* ob) { object_ = ob; }
+	void setObject(Equipment* ob);
 	Item* getObject() { return object_; }
 	void setNewCallBack(CallBackOnClickInventory* newCallBack) { callBackInventory_ = newCallBack; };
 };

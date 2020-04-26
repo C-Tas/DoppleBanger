@@ -4,12 +4,9 @@
 #include "StoryState.h"
 #include "LoadState.h"
 #include "Button.h"
-#include "Texture.h"
 #include "SDL_macros.h"
 #include "VisualElement.h"
 #include <fstream>
-
-#include "Clon.h"
 
 using namespace std;
 
@@ -28,7 +25,7 @@ void MainMenuState::initState()
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
 }
-bool MainMenuState::existDataGame()
+bool MainMenuState::isExistingDataGame()
 {
 	ifstream slot1("../Sources/save_data/save1.json");
 	ifstream slot2("../Sources/save_data/save2.json");
@@ -60,7 +57,7 @@ void MainMenuState::createButtons() {
 	objectsToRender_.push_back(creditButton);
 	//creamos el boton para jugar cargando el juego del archivo de guardado
 	Button* loadButton = nullptr;
-	if (!existDataGame()) {
+	if (!isExistingDataGame()) {
 		loadButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButtonNull),
 			{ double(app_->getWindowWidth() / 2) - button_w * 1.5 ,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
 			{ button_w,button_h }, nullptr);	

@@ -1,9 +1,10 @@
 #pragma once
-#include "InventoryButton.h"
 #include "GameState.h"
 #include <list>
 
+class InventoryButton;
 using namespace std;
+
 struct Equipments
 {
 	InventoryButton* armor_ = nullptr;
@@ -14,8 +15,6 @@ struct Equipments
 	InventoryButton* potion1_ = nullptr;
 	InventoryButton* potion2_ = nullptr;
 };
-void callSelectObject(GameState* state, InventoryButton* but);
-
 
 class Inventory: public GameState
 {

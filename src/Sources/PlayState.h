@@ -1,13 +1,13 @@
 ﻿#pragma once
 #include "GameState.h"
 #include "CollisionCtrl.h"
-#include "Player.h"
-#include "Obstacle.h"
-#include "Enemy.h"
 #include <list>
 
 class CollisionCtrl;
 class HUD;
+class Player;
+class Enemy;
+class Obstacle;
 
 class PlayState : public GameState
 {

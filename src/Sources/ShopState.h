@@ -1,7 +1,8 @@
 #pragma once
-#include "InventoryButton.h"
 #include "GameState.h"
 #include <list>
+
+class InventoryButton;
 
 class ShopState :
 	public GameState

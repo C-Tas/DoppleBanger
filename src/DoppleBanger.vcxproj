@@ -56,7 +56,6 @@
     <ClCompile Include="Sources\Gun.cpp" />
     <ClCompile Include="Sources\HandleEvents.cpp" />
     <ClCompile Include="Sources\HUD.cpp" />
-    <ClCompile Include="Sources\interactuable.cpp" />
     <ClCompile Include="Sources\Inventory.cpp" />
     <ClCompile Include="Sources\InventoryButton.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
@@ -148,7 +147,6 @@
     <ClInclude Include="Sources\MonkeyCoco.h" />
     <ClInclude Include="Sources\PerforateSkill.h" />
     <ClInclude Include="Sources\Physics.h" />
-    <ClInclude Include="Sources\interactuable.h" />
     <ClInclude Include="Sources\Inventory.h" />
     <ClInclude Include="Sources\InventoryButton.h" />
     <ClInclude Include="Sources\Item.h" />

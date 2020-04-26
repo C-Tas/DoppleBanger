@@ -1,5 +1,10 @@
 #include "StashState.h"
 #include "GameManager.h"
+#include "Armor.h"
+#include "Gloves.h"
+#include "Boots.h"
+#include "Sword.h"
+#include "Gun.h"
 
 #pragma region Callbacks
 

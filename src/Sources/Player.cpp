@@ -15,6 +15,11 @@
 #include "RicochetSkill.h"
 #include "PerforateSkill.h"
 #include "usable.h"
+#include "Armor.h"
+#include "Gloves.h"
+#include "Boots.h"
+#include "Sword.h"
+#include "Gun.h"
 
 void Player::initObject()
 {

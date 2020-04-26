@@ -1,10 +1,15 @@
 #include "Inventory.h"
-#include "Item.h"
+#include "Armor.h"
+#include "Gloves.h"
+#include "Boots.h"
+#include "Sword.h"
+#include "Gun.h"
+#include "usable.h"
 #include "Player.h"
 #include "SkillState.h"
 using namespace std;
-//callbacks
 
+//callbacks
 void callSelectObject(Application* app, InventoryButton* but) {
 	dynamic_cast<Inventory*>(app->getCurrState())->selectObject(but);
 }

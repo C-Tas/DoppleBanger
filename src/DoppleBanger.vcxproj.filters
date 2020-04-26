@@ -68,9 +68,6 @@
     <ClCompile Include="Sources\Item.cpp">
       <Filter>GameObjects\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\interactuable.cpp">
-      <Filter>GameObjects\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\Equipment.cpp">
       <Filter>GameObjects\Objects</Filter>
     </ClCompile>
@@ -220,9 +217,6 @@
     <ClCompile Include="Sources\SkillButton.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\ShopState.cpp">
-      <Filter>GameObjects\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Skill.cpp">
       <Filter>GameObjects\Player</Filter>
@@ -258,6 +252,9 @@
       <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="Sources\LoadState.cpp">
+      <Filter>GameStateMahcine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ShopState.cpp">
       <Filter>GameStateMahcine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -329,9 +326,6 @@
       <Filter>GameObjects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Item.h">
-      <Filter>GameObjects\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\interactuable.h">
       <Filter>GameObjects\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Equipment.h">

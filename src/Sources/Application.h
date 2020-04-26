@@ -1,6 +1,8 @@
 #pragma once
 #include "SDL.h"
+#include "Texture.h"
 #include "GameStateMachine.h"
+#include "SRandBasedGenerator.h"
 #include "RandEquipGen.h"
 #include "TextureManager.h"
 #include "FontManager.h"
@@ -102,9 +104,9 @@ public:
 	//Devuelve el audioManager
 	AudioManager* getAudioManager() { return audioManager_; };
 	///<summary>Devuelve el generador de equipamiento aleatorio </summary>
-	Equipment* genEquip() { return equipGen_->genEquip(); };
+	/*Equipment* genEquip() { return equipGen_->genEquip(); };
 	///<summary>Devuelve un objeto del tipo type generado aleatoriamente</summary>
-	Equipment* genEquip(equipType type) { return equipGen_->genEquip(type); };
+	Equipment* genEquip(equipType type) { return equipGen_->genEquip(type); };*/
 	//Devuelve equipGen_
 	RandEquipGen* getEquipGen() { return equipGen_; }
 

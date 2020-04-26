@@ -1,9 +1,10 @@
 #pragma once
-#include "interactuable.h"
-#include "RandEquipGen.h"
-#include "Inventory.h"
+#include "Collider.h"
 
-class Chest : public interactuable
+class RandEquipGen;
+class Inventory;
+
+class Chest : public Collider
 {
 
 private:
@@ -19,7 +20,7 @@ private:
 public:
 	//Constructora por defecto
 	Chest(Application* app, Point2D pos, Vector2D scale) : //constructora
-		interactuable(app, pos, scale), rN(RandEquipGen(app))
+		Collider(app, pos, scale), rN(RandEquipGen(app))
 	{
 		initObject();
 	};

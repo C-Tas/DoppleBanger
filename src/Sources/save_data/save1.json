@@ -1,8 +1,8 @@
 {
   "currIsland": 0,
   "unlockedIsland": 2,
-  "currGold": 300,
-  "stashGold": 1000,
+  "currGold": 1300,
+  "stashGold": 0,
   "skillPoints": 1000,
   "precision": 999,
   "melee": 999,

@@ -1,5 +1,11 @@
 #include "ShopState.h"
 #include "Player.h"
+#include "InventoryButton.h"
+#include "Armor.h"
+#include "Gloves.h"
+#include "Boots.h"
+#include "Sword.h"
+#include "Gun.h"
 
 void callForwardListS(Application* app) {
 	dynamic_cast<ShopState*>(app->getCurrState())->forwardList();

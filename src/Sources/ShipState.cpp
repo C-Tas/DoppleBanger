@@ -1,16 +1,13 @@
 #include "ShipState.h"
-#include "GameManager.h"
-#include "Player.h"
 #include "ShipObject.h"
+#include "Player.h"
+#include "GameManager.h"
+#include "SaveState.h"
+#include "StashState.h"
+#include "SelectLevelState.h"
 #include "CaribbeanIslandState.h"
 #include "SpookyIslandState.h"
 #include "VolcanicIslandState.h"
-#include "SelectLevelState.h"
-#include "SaveState.h"
-#include "StashState.h"
-
-#include "Collisions.h" //Provisional
-
 
 #pragma region CallBacks
 //Callback para cambiar de GameState e ir a la isla actual

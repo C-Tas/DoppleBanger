@@ -1,16 +1,12 @@
 #pragma once
 
-#include "GameObject.h"
-#include "Draw.h"
 #include "Application.h"
-#include "SDL.h"
-#include "Texture.h"
-#include "Resources.h"
 #include "HandleEvents.h"
-#include "Button.h"
-#include <list>
-#include "checkML.h"
 #include "GameManager.h"
+#include <list>
+
+class Draw;
+class Button;
 
 using namespace std;
 using uint = unsigned int;

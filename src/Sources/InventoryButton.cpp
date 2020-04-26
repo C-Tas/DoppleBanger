@@ -108,4 +108,6 @@ bool InventoryButton::update() {
 	else return false;
 }
 
-
+void InventoryButton::setObject(Equipment* ob){
+	object_ = ob;
+}

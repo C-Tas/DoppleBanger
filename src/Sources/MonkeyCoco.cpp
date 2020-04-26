@@ -1,10 +1,7 @@
 #include "MonkeyCoco.h"
-#include <iostream>
 #include "GameManager.h"
-#include "Resources.h"
 #include "Bullet.h"
 #include "CollisionCtrl.h"
-#include "CaribbeanIslandState.h"
 #include <string>
 
 bool MonkeyCoco::update() {

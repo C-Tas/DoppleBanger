@@ -10,6 +10,9 @@
 #include "Collisions.h"
 #include "HUD.h"
 
+#include "Player.h"
+#include "Enemy.h"
+#include "Obstacle.h"
 
 void PlayState::draw() const {
 	GameState::draw();

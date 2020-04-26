@@ -1,6 +1,5 @@
 #pragma once
 #include "Item.h"
-class Player;
 
 class usable: public Item
 {

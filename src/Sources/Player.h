@@ -1,12 +1,18 @@
 #pragma once
 #include "Actor.h"
 #include "Clon.h"
-#include "usable.h"
 #include "HandleEvents.h"
 #include <array>
 #include "GameManager.h"
 #include "jute.h"
+
 class Skill;
+class Armor;
+class Gloves;
+class Boots;
+class Sword;
+class Gun;
+class usable;
 
 struct playerEquipment
 {
