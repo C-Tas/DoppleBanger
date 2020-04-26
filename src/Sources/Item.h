@@ -14,14 +14,14 @@ enum class equipType {
 	Size
 };
 enum class potionType { Health, Mana, Speed, Damage, Armor, Crit };
-
+enum class ObjectType { Equipment, Usable };
 class Item
 {
 protected:
 	double price_ = 0;
 	double quantity_ = 0;
-	
-	Item(double quantity = 1) : quantity_(quantity) {};
+	ObjectType objectType_;
+	Item(ObjectType objectType, double quantity = 1) : quantity_(quantity), objectType_(objectType) {};
 	virtual void initObject() = 0;
 public:
 	~Item() {};
@@ -32,6 +32,7 @@ public:
 	#pragma region Getters
 		double getQuantity() { return quantity_; };
 		double getPrice() { return price_; };
+		ObjectType getObjectType() { return objectType_; };
 	#pragma endregion
 	#pragma region Setters
 		void setQuantity(double quantity) { quantity_ = quantity; };

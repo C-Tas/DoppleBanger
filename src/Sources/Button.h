@@ -15,8 +15,10 @@ public:
 	virtual ~Button() {};
 	virtual bool update(); //Lleva la logica del boton
 	const virtual void draw() {
-		if (currAnim_.numberFrames_ <= 0) texture_->render(getDestiny(), SDL_FLIP_NONE);
-		else texture_->render(getDestiny(), frame_);
+		if (texture_ != nullptr) {
+			if (currAnim_.numberFrames_ <= 0) texture_->render(getDestiny(), SDL_FLIP_NONE);
+			else texture_->render(getDestiny(), frame_);
+		}
 	};
 	void setCurrentState(GameState* state) { currentState_ = state; }
 	int getId() { return id_; };

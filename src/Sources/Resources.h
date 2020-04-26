@@ -185,11 +185,20 @@ public:
 		Coco,
 
 		//Equipables
-		Gun1,
-		Gloves1,
-		Boots1,
-		Gloves2,
 		Armor1,
+		Armor2,
+		Gloves1,
+		Gloves2,
+		Boots1,
+		Boots2,
+		Sword1,
+		Sword2,
+		Saber1,
+		Saber2,
+		Gun1,
+		Gun2,
+		ShotGun1,
+		ShotGun2
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>

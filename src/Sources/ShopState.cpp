@@ -37,11 +37,11 @@ ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(
 	gobackButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::BackButton), Vector2D{ 500,100 }, Vector2D{ 50,50 }, callBackListS);
 	addUpdateList(gobackButton_);
 	addRenderList(gobackButton_);
-	exitButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::ExitButton), Vector2D{ 1300,100 }, Vector2D{ 50,50 }, callExitS);
+	exitButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), Vector2D{ 1300,100 }, Vector2D{ 50,50 }, callExitS);
 	addUpdateList(exitButton_);
 	addRenderList(exitButton_);
 
-	buyButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground), Vector2D{ 50,700 }, Vector2D{ 50,50 }, callBuyObjectS, 1);
+	buyButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D{ 50,700 }, Vector2D{ 50,50 }, callBuyObjectS, 1);
 	addUpdateList(buyButton_);
 	addRenderList(buyButton_);
 	shopAdvanceButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D{ 300,100 }, Vector2D{ 50,50 }, callShopForwardListS, 1);
@@ -272,7 +272,7 @@ void ShopState::backList() {
 void ShopState::addToShop(Equipment* ob)
 {
 	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, ob, callSelectObjectS, 1);
+	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, ob, callSelectObjectS, false, 1);
 	//Añadimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = shopList_.insert(shopList_.end(), b);
 	b->setIterator(it);

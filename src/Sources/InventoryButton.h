@@ -14,9 +14,16 @@ private:
 	Item* object_ = nullptr;
 	bool equipped = false;
 	CallBackOnClickInventory* callBackInventory_ = nullptr;
+	virtual void initObject();
+	void initTextureEquipment();
+	void initTextureUsable();
 public:
 
-	InventoryButton(Application* app, Vector2D pos, Vector2D scale, Item* ob, CallBackOnClickInventory* callBack, bool equip = false, int id = 0);
+	InventoryButton(Application* app, Vector2D pos, Vector2D scale, Item* ob, CallBackOnClickInventory* callBack, bool equip = false, int id = 0)
+		: Button(app, nullptr, pos, scale, nullptr, id), object_(ob), equipped(equip) {
+		callBackInventory_ = callBack;
+		initObject();
+	}
 	virtual bool update();
 	bool isEquipped() { return equipped; }
 	void Enable(bool e) { equipped = e; }

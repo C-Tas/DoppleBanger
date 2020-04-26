@@ -1,33 +1,42 @@
 {
   "currIsland": 0,
   "unlockedIsland": 2,
-  "currGold": 0,
-  "stashGold": 1300,
+  "currGold": 300,
+  "stashGold": 1000,
   "skillPoints": 997,
   "precision": 1000,
   "melee": 1000,
   "clon": 1000,
   "questStarted": [false, false],
   "questFinished": [false, false],
-  "skills": ["Torbellino", "null", "Explosion"],
+  "skills": ["Torbellino", "Perforante", "Explosion"],
   "equipment": [{
       "name": 0,
+      "price": 10,
       "armor": 10.000000,
       "health": 10.000000
     }, {
-      "name": 1,
+      "name": 2,
+      "price": 10,
       "armor": 10.000000,
       "critic": 10.000000
     }, {
-      "name": 2,
+      "name": 4,
+      "price": 10,
       "armor": 10.000000,
       "speed": 10.000000
     }, {
-      "name": 4,
+      "name": 8,
+      "price": 10,
+      "rate": 10.000000,
+      "damage": 10.000000,
       "rate": 10.000000,
       "damage": 10.000000
     }, {
-      "name": 5,
+      "name": 10,
+      "price": 10,
+      "rate": 0.000000,
+      "damage": 0.000000,
       "rate": 10.000000,
       "damage": 10.000000
     }],

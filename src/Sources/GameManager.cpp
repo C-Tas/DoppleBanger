@@ -168,6 +168,38 @@ void GameManager::saveEquipment(ofstream& slot, jute::jValue& mainJson)
 	jValue aux(jType::JSTRING);
 	//Auxilizar del equipo del player
 	playerEquipment auxEquip = player_->getInfoEquip();
+	//Informacion de los objetos que se va a guardar
+	jValue objectsValue(jType::JARRAY);
+	for (int i = 0; i < auxEquip.potions_.size(); i++) {
+		if (auxEquip.potions_[i] != nullptr) {
+			switch (auxEquip.potions_[i]->getType())
+			{
+			case potionType::Health:
+				aux.set_string("Health");
+				break;
+			case potionType::Mana:
+				aux.set_string("Mana");
+				break;
+			case potionType::Speed:
+				aux.set_string("Speed");
+				break;
+			case potionType::Armor:
+				aux.set_string("Armor");
+				break;
+			case potionType::Damage:
+				aux.set_string("Dmg");
+				break;
+			case potionType::Crit:
+				aux.set_string("Crit");
+				break;
+			}
+		}
+		else {
+			aux.set_string("null");
+		}
+		objectsValue.add_element(aux);
+	}
+	mainJson.add_property("objects", objectsValue);
 	//Auxliar del equipamiento del player
 	vector<Equipment*> vEquip{
 		auxEquip.armor_,
@@ -227,78 +259,10 @@ void GameManager::saveEquipment(ofstream& slot, jute::jValue& mainJson)
 				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
 				equip[i].add_property("damage", aux);
 			}
-			switch (vEquip[i]->getEquipType())
-			{
-			case equipType::ArmorI:
-				break;
-			case equipType::GlovesI:
-				break;
-			case equipType::BootsI:
-				
-				//speed y armor
-				break;
-			case equipType::SwordI:
-				
-				//MeleeRate y ad
-				break;
-			case equipType::SaberI:
-				aux.set_string(to_string(vEquip[i]->getMeleeRate()));
-				equip[i].add_property("rate", aux);
-				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
-				equip[i].add_property("damage", aux);
-				//MeleeRate y ad
-				break;
-			case equipType::PistolI:
-				aux.set_string(to_string(vEquip[i]->getDistRate()));
-				equip[i].add_property("rate", aux);
-				aux.set_string(to_string(vEquip[i]->getDistDmg()));
-				equip[i].add_property("damage", aux);
-				//DistRate y disDmg
-				break;
-			case equipType::ShotgunI:
-				aux.set_string(to_string(vEquip[i]->getDistRate()));
-				equip[i].add_property("rate", aux);
-				aux.set_string(to_string(vEquip[i]->getDistDmg()));
-				equip[i].add_property("damage", aux);
-				//DistRate y distDmg
-				break;
-			}
 		}
 		equipValue.add_element(equip[i]);
 	}
 	mainJson.add_property("equipment", equipValue);
-	//Informacion de los objetos que se va a guardar
-	jValue objectsValue(jType::JARRAY);
-	for (int i = 0; i < auxEquip.potions_.size(); i++) {
-		if (auxEquip.potions_[i] != nullptr) {
-			switch (auxEquip.potions_[i]->getType())
-			{
-			case potionType::Health:
-				aux.set_string("Health");
-				break;
-			case potionType::Mana:
-				aux.set_string("Mana");
-				break;
-			case potionType::Speed:
-				aux.set_string("Speed");
-				break;
-			case potionType::Armor:
-				aux.set_string("Armor");
-				break;
-			case potionType::Damage:
-				aux.set_string("Dmg");
-				break;
-			case potionType::Crit:
-				aux.set_string("Crit");
-				break;
-			}
-		}
-		else {
-			aux.set_string("null");
-		}
-		objectsValue.add_element(aux);
-	}
-	mainJson.add_property("objects", objectsValue);
 }
 
 void GameManager::load(string jsonName)

@@ -163,11 +163,20 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
 
 	//Equipables
-	{Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
-	{Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
-	{Boots1, "../Sources/assets/Equipamiento/botas.png"},
-	{Gloves2, "../Sources/assets/Equipamiento/Guantes2.png"},
-	{Armor1,"../Sources/assets/Equipamiento/Armadura1.png" }
+	{ Armor1,"../Sources/assets/Equipamiento/armadura1.png" },
+	{ Armor1,"../Sources/assets/Equipamiento/armadura2.png" },
+	{ Gloves1, "../Sources/assets/Equipamiento/guantes1.png"},
+	{ Gloves2, "../Sources/assets/Equipamiento/guantes2.png"},
+	{ Boots1, "../Sources/assets/Equipamiento/botas.png"},
+	{ Boots2, "../Sources/assets/Equipamiento/zapatos.png" },
+	{ Sword1, "../Sources/assets/Equipamiento/espada1.png" },
+	{ Sword1, "../Sources/assets/Equipamiento/espada2.png" },
+	{ Saber1, "../Sources/assets/Equipamiento/sable1.png" },
+	{ Saber2, "../Sources/assets/Equipamiento/sable2.png" },
+	{ Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
+	{ Gun2, "../Sources/assets/Equipamiento/pistola2.png" },
+	{ ShotGun1, "../Sources/assets/Equipamiento/trabuco1.png" },
+	{ ShotGun2, "../Sources/assets/Equipamiento/trabuco2.png" },
 };
 
 vector<Resources::SoundInfo> Resources::soundRoutes{

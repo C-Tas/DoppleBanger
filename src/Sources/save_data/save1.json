@@ -10,26 +10,31 @@
   "questStarted": [false, false],
   "questFinished": [false, false],
   "skills": ["null", "null", "null"],
+  "objects": ["null", "null"],
   "equipment": [{
       "name": 0,
+      "price": 10,
       "armor": 10.000000,
       "health": 10.000000
     }, {
-      "name": 1,
+      "name": 3,
+      "price": 20,
       "armor": 10.000000,
       "critic": 10.000000
     }, {
-      "name": 2,
+      "name": 4,
+      "price": 10,
       "armor": 10.000000,
       "speed": 10.000000
     }, {
-      "name": 4,
+      "name": 8,
+      "price": 10,
       "rate": 10.000000,
       "damage": 10.000000
     }, {
-      "name": 5,
-      "rate": 10.000000,
-      "damage": 10.000000
-    }],
-  "objects": [null, null]
+      "name": 10,
+      "price": 10,
+      "rate": 0.000000,
+      "damage": 0.000000
+    }]
 }

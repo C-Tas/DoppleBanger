@@ -69,8 +69,10 @@ public:
 	//<metodo comun para renderizar tanto imagenes con un solo frame como con varios"
 	const virtual void draw() {
 		SDL_Rect dest = getDestiny(); dest.x = dest.x - Camera::instance()->getCamera().getX(); dest.y = dest.y - Camera::instance()->getCamera().getY();
-		if (currAnim_.numberFrames_ <= 0) texture_->render(dest, SDL_FLIP_NONE);
-		else texture_->render(dest, frame_);
+		if (texture_ != nullptr) {
+			if (currAnim_.numberFrames_ <= 0) texture_->render(dest, SDL_FLIP_NONE);
+			else texture_->render(dest, frame_);
+		}
 	};
 	
 	//<summary>cambia el frame </summary>

@@ -34,7 +34,7 @@ private:
 
 	virtual void initObject();
 public:
-	usable(potionType type) : Item(), type_(type) { initObject(); };
+	usable(potionType type) : Item(ObjectType::Usable), type_(type) { initObject(); };
 
 	virtual ~usable() {}; //Destructora 
 	virtual bool update();

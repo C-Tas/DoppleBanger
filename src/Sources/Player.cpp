@@ -95,12 +95,13 @@ void Player::loadEquip(jute::jValue& mainJson) {
 	//Espada
 	auxPrice = mainJson["equipment"][3]["price"].as_double();
 	auxStat1 = mainJson["equipment"][3]["damage"].as_double();
-	auxStat2 = mainJson["equipment"][0]["rate"].as_double();
+	auxStat2 = mainJson["equipment"][3]["rate"].as_double();
+	auxType = (equipType)mainJson["equipment"][3]["name"].as_int();
 	equip_.sword_ = new Sword(auxPrice, auxStat1, auxStat2, auxType);
 	//Pistola
-	auxPrice = mainJson["equipment"][3]["price"].as_double();
+	auxPrice = mainJson["equipment"][4]["price"].as_double();
 	auxStat1 = mainJson["equipment"][4]["damage"].as_double();
-	auxStat2 = mainJson["equipment"][0]["rate"].as_double();
+	auxStat2 = mainJson["equipment"][4]["rate"].as_double();
 	auxType = (equipType)mainJson["equipment"][4]["name"].as_int();
 	equip_.gun_ = new Gun(auxPrice, auxStat1, auxStat2, auxType);
 }
