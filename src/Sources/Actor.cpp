@@ -7,6 +7,26 @@ void Actor::initStats(double health, double mana, double manaReg, double armor, 
 	currStats_ = Stats(health, mana, manaReg, armor, meleeDmg, distDmg, crit, meleeRange, distRange, moveSpeed, meleeRate, distRate);
 }
  
+void Actor::updateDirVisObjective(GameObject* objective) {
+	if (objective != nullptr) {
+		Vector2D center = getCenter();		//Punto de referencia
+		Vector2D objectiveCenter = objective->getCenter();
+		Vector2D dir = objectiveCenter - center;		//Vector dirección
+		dir.normalize();
+		double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
+		if (angle >= 0) {
+			if (angle <= 45.0) currDir_ = DIR::RIGHT;
+			else if (angle < 135.0) currDir_ = DIR::DOWN;
+			else currDir_ = DIR::LEFT;
+		}
+		else {
+			if (angle >= -45.0) currDir_ = DIR::RIGHT;
+			else if (angle >= -135.0) currDir_ = DIR::UP;
+			else currDir_ = DIR::LEFT;
+		}
+	}
+}
+
 //A falta de definir la gesti�n del da�o en funci�n de la armadura
 void Actor::receiveDamage(int damage) {
 	/*double finalDamage = (currStats_.armor_ * damage) / 100;

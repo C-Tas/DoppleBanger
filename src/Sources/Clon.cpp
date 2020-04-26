@@ -4,9 +4,14 @@
 #include "GameManager.h"
 #include "PlayerBullet.h"
 
-bool Clon::update()
-{
+bool Clon::update() {
+	updateFrame();
+
 	if ((SDL_GetTicks() - spawnTime_) / 1000 < duration_) {
+		if (currState_ == STATE::SELFDESTRUCT && currAnim_.currFrame_ == currAnim_.numberFrames_) {
+			player_->killClon();
+		}
+
 		Vector2D clonPos = getVisPos();
 		if (meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING ||
 			Vector2D(abs(objective_->getVisPos().getX() - clonPos.getX()), abs(objective_->getVisPos().getY() - clonPos.getY())).magnitude() > range_))
@@ -21,7 +26,7 @@ bool Clon::update()
 			meleeTime_ = SDL_GetTicks();
 		}
 	}
-	else if (alive) player_->killClon();
+	else if (alive_) player_->killClon();
 
 	return false;
 }
@@ -40,8 +45,35 @@ void Clon::initObject() {
 	taunt();
 }
 
-void Clon::shoot(Vector2D dir)
-{
+void Clon::initAnim() {
+	//Animación de autodestrucción
+	//Arriba
+	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_U_FRAME_RATE, false));
+	selfDestructTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonSelfDestructionUpAnim));
+	//Derecha																					
+	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_R_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_R_FRAME_RATE, false));
+	selfDestructTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonSelfDestructionRightAnim));
+	//Abajo
+	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_D_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_D_FRAME_RATE, false));
+	selfDestructTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonSelfDestructionDownAnim));
+	//Izquierda
+	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_L_FRAME_RATE, false));
+	selfDestructTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonSelfDestructionLeftAnim));
+}
+
+void Clon::initSelfDestruction() {
+	currState_ = STATE::SELFDESTRUCT;
+	//updateDirVisObjective(static_cast<PlayState*>(app_->getGameStateMachine()->getState())->findClosestEnemy(pos_));	//Hacia dónde está el enemigo --> Para el resto de animaciones
+	//Aquí no hace falta actualizar la dirección porque se autodestruirá en la dirección que estuviese previamente
+	texture_ = selfDestructTx_[(int)currDir_];
+	currAnim_ = selfDestructAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Clon::shoot(Vector2D dir) {
 	if (distDmg_ > 0)
 	{
 		//Se calcula la posici�n desde la cual se dispara la bala
@@ -57,18 +89,16 @@ void Clon::shoot(Vector2D dir)
 	}
 }
 
-void Clon::die()
-{
+void Clon::die() {
 	GameManager* gm = GameManager::instance();
 	gm->setClon(nullptr);
 	app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
 	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
 		(*it)->lostAggro();
-	alive = false;
+	alive_ = false;
 }
 
-void Clon::taunt()
-{
+void Clon::taunt() {
 	enemies_ = CollisionCtrl::instance()->getEnemiesInArea(getVisPos(), CLON_TAUNT_RANGE);
 	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
 		(*it)->newEnemy(this);

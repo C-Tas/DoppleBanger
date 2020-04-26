@@ -44,9 +44,6 @@ public:
 
 	//Calcula hacia dónde mira el player en función del ratón
 	void updateDirVisMouse();
-	//Calcula hacia dónde mira el player en función del enemigo
-	void updateDirVisEnemy();
-	//void setElementsHUD();
 	//Establece la direccion del movimiento
 	virtual void move(Point2D target);
 	//Dispara creando una bala en la posicion dir
@@ -81,7 +78,7 @@ public:
 	void initSkills();
 
 #pragma region Getters
-	const Clon* getClon() { return clon_; };
+	Clon* getClon() { return clon_; };
 	const int getLiberation() { return liberation_; };
 	const int getMoney() { return money_; };
 	const double getMaxHealth() { return HEALTH; }; //Faltaria poner una variable que lleve la vida maxima sin ser cte
@@ -158,14 +155,13 @@ private:
 	//Habilidades
 	vector<Skill*> skills_;
 	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
-	DIR lookAt;	//Hacia dónde mira
 
 	//Cambia el tipo de arma actual equipada
 	void changeFireArmStatus();
 	//cambia los stats de un arma
 	void changeDistWeaponStats(Equipment* newWeapon);
+
 #pragma region Animaciones
-	Texture* auxTx_ = nullptr;				//Textura de idle temporal, se borrará cuadno esté el idle
 	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
 	const int W_H_PLAYER_FRAME = 100;		//Ancho del frame, estándar para todas

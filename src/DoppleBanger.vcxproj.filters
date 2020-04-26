@@ -103,6 +103,8 @@
     </ClCompile>
     <ClCompile Include="tmxLite\ObjectGroup.cpp">
       <Filter>TXMLite</Filter>
+    <ClCompile Include="Sources\TextBox.cpp">
+      <Filter>GameObjects\Player</Filter>
     </ClCompile>
     <ClCompile Include="tmxLite\Property.cpp">
       <Filter>TXMLite</Filter>
@@ -126,6 +128,9 @@
     <ClCompile Include="Sources\Blunderbuss.cpp" />
     <ClCompile Include="Sources\Blunder.cpp">
       <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Clon.cpp">
+      <Filter>GameObjects\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

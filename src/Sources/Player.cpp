@@ -21,7 +21,7 @@
 
 void Player::initObject()
 {
-	texture_ = auxTx_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
+	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	gm_ = GameManager::instance();
 	eventHandler_ = HandleEvents::instance();
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DAMAGE, DIST_DAMAGE, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
@@ -204,8 +204,8 @@ void Player::initIdle()
 {
 	app_->getAudioManager()->haltChannel(0);
 	currState_ = STATE::IDLE;
-	texture_ = idleTx_[(int)lookAt];
-	currAnim_ = idleAnims_[(int)lookAt];
+	texture_ = idleTx_[(int)currDir_];
+	currAnim_ = idleAnims_[(int)currDir_];
 
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
@@ -219,8 +219,8 @@ void Player::initMove()
 		app_->getAudioManager()->playChannel(Resources::Walk, -1, 0);
 	}
 	mousePos_ = eventHandler_->getRelativeMousePos();
-	texture_ = moveTx_[(int)lookAt];
-	currAnim_ = moveAnims_[(int)lookAt];
+	texture_ = moveTx_[(int)currDir_];
+	currAnim_ = moveAnims_[(int)currDir_];
 	if (currState_ != STATE::FOLLOWING) {
 		currState_ = STATE::FOLLOWING;
 		frame_.x = 0; frame_.y = 0;
@@ -239,10 +239,10 @@ void Player::initShoot()
 	mousePos_ = eventHandler_->getRelativeMousePos();
 	shooted_ = false;	//Aún no se ha creado la bala
 	updateDirVisMouse();	//Hacia dónde mira
-	texture_ = shootTx_[(int)lookAt];
-	currAnim_ = shootAnims_[(int)lookAt];
+	texture_ = shootTx_[(int)currDir_];
+	currAnim_ = shootAnims_[(int)currDir_];
 	//Asigna el frame donde ocurrirá la acción
-	switch (lookAt)
+	switch (currDir_)
 	{
 	case DIR::UP:
 		frameAction_ = 3;
@@ -271,11 +271,11 @@ void Player::initMelee()
 	app_->getAudioManager()->playChannel(melee, 0, 3);
 	currState_ = STATE::ATTACKING;	//Cambio de estado
 	attacked_ = false;	//Aún no se ha atacado
-	updateDirVisEnemy();	//Hacia dónde está el enemigo
-	texture_ = meleeTx_[(int)lookAt];
-	currAnim_ = meleeAnims_[(int)lookAt];
+	updateDirVisObjective(currEnemy_);	//Hacia dónde está el enemigo
+	texture_ = meleeTx_[(int)currDir_];
+	currAnim_ = meleeAnims_[(int)currDir_];
 	//Frame exacto del ataque
-	switch (lookAt)
+	switch (currDir_)
 	{
 	case DIR::UP:
 		frameAction_ = 1;
@@ -306,34 +306,14 @@ void Player::updateDirVisMouse()
 	dir.normalize();
 	double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
 	if (angle >= 0) {
-		if (angle <= 45.0) lookAt = DIR::RIGHT;
-		else if (angle < 135.0) lookAt = DIR::DOWN;
-		else lookAt = DIR::LEFT;
+		if (angle <= 45.0) currDir_ = DIR::RIGHT;
+		else if (angle < 135.0) currDir_ = DIR::DOWN;
+		else currDir_ = DIR::LEFT;
 	}
 	else {
-		if (angle >= -45.0) lookAt = DIR::RIGHT;
-		else if (angle >= -135.0) lookAt = DIR::UP;
-		else lookAt = DIR::LEFT;
-	}
-}
-
-void Player::updateDirVisEnemy() {
-	if (currEnemy_ != nullptr) {
-		Vector2D center = getCenter();		//Punto de referencia
-		Vector2D enemyCenter = currEnemy_->getCenter();
-		Vector2D dir = enemyCenter - center;		//Vector dirección
-		dir.normalize();
-		double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
-		if (angle >= 0) {
-			if (angle <= 45.0) lookAt = DIR::RIGHT;
-			else if (angle < 135.0) lookAt = DIR::DOWN;
-			else lookAt = DIR::LEFT;
-		}
-		else {
-			if (angle >= -45.0) lookAt = DIR::RIGHT;
-			else if (angle >= -135.0) lookAt = DIR::UP;
-			else lookAt = DIR::LEFT;
-		}
+		if (angle >= -45.0) currDir_ = DIR::RIGHT;
+		else if (angle >= -135.0) currDir_ = DIR::UP;
+		else currDir_ = DIR::LEFT;
 	}
 }
 
@@ -436,7 +416,7 @@ void Player::initAnims()
 	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeLeftAnim));
 
 	//Inicializamos con la animación del idle
-	lookAt = DIR::DOWN;
+	currDir_ = DIR::DOWN;
 	initIdle();
 }
 
