@@ -79,11 +79,11 @@ public:
 
 #pragma region Getters
 	const bool getDead() { return dead_; };
-	const Clon* getClon() { return clon_; };
 	const int getLiberation() { return liberation_; };
 	const int getMoney() { return money_; };
 	const double getMaxHealth() { return HEALTH; }; //Faltaria poner una variable que lleve la vida maxima sin ser cte
 	const double getMaxMana() { return MANA; }; //Faltaria poner una variable que lleve el mana maximo sin ser cte
+	Clon* getClon() { return clon_; };
 
 	const Vector2D getPreviousPos() { return previousPos_; }
 

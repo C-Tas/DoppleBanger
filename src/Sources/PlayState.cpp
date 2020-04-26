@@ -23,6 +23,7 @@ void PlayState::update() {
 		resetGame();
 	}
 	else {
+		updateMousePointer();
 		GameState::update();
 		checkPlayerActions();
 	}
