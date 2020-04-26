@@ -234,8 +234,8 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 	///Colision con las paredes del barco
 	for (auto ob : obstacles_) {
 		//Con jugador
-		if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
-			(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
+		if (Collisions::collides(player_->getPos(), player_->getScaleX() * 0.6, player_->getScaleY() * 0.8,
+			(ob)->getPos(), (ob)->getScaleX() * 0.6, (ob)->getScaleY() * 0.8)) {
 			player_->stop();
 			(ob)->onCollider();
 			player_->setPos(player_->getPreviousPos());

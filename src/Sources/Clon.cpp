@@ -8,7 +8,7 @@ bool Clon::update() {
 	updateFrame();
 
 	if ((SDL_GetTicks() - spawnTime_) / 1000 < duration_) {
-		if (currState_ == STATE::SELFDESTRUCT && currAnim_.currFrame_ == currAnim_.numberFrames_) {
+		if (currState_ == STATE::SELFDESTRUCT && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
 			player_->killClon();
 		}
 
