@@ -10,8 +10,6 @@ bool Clon::update() {
 	if ((SDL_GetTicks() - spawnTime_) / 1000 < duration_) {
 		if (currState_ == STATE::SELFDESTRUCT && currAnim_.currFrame_ == currAnim_.numberFrames_) {
 			player_->killClon();
-		}else {
-			initIdle();
 		}
 
 		Vector2D clonPos = getVisPos();
@@ -43,6 +41,7 @@ void Clon::initObject() {
 	meleeDmg_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
 	distDmg_ = (player_->getStats().distDmg_ / 2) * player_->getLiberation();
 	taunt();
+	initAnim();
 }
 
 void Clon::initAnim() {
@@ -50,16 +49,16 @@ void Clon::initAnim() {
 	//Animación de idle  --> Cambiar los Resource mas tarde
 	//Arriba
 	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_U_FRAME_RATE, true));
-	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleUpAnim));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonIdleUpAnim));
 	//Derecha																						
 	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_R_FRAME_RATE, true));
-	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleRightAnim));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonIdleRightAnim));
 	//Abajo																							
 	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_D_FRAME_RATE, true));
-	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleDownAnim));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonIdleDownAnim));
 	//Izquierda																						
 	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_L_FRAME_RATE, true));
-	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleLeftAnim));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonIdleLeftAnim));
 
 	//Animación de autodestrucción
 	//Arriba
@@ -74,11 +73,13 @@ void Clon::initAnim() {
 	//Izquierda
 	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_L_FRAME_RATE, false));
 	selfDestructTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonSelfDestructionLeftAnim));
+
+	//currDir_ = DIR::LEFT;
+	initIdle();
 }
 
 void Clon::initIdle() {
 	currState_ = STATE::IDLE;
-	updateDirVisObjective(static_cast<PlayState*>(app_->getGameStateMachine()->getState())->findClosestEnemy(pos_));
 	texture_ = idleTx_[(int)currDir_];
 	currAnim_ = idleAnims_[(int)currDir_];
 
