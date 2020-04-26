@@ -11,6 +11,9 @@ bool Clon::update() {
 		if (currState_ == STATE::SELFDESTRUCT && currAnim_.currFrame_ == currAnim_.numberFrames_) {
 			player_->killClon();
 		}
+		else if (currState_ == STATE::ATTACKING) {
+			meleeAnim();
+		}
 
 		Vector2D clonPos = getVisPos();
 		if (meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING ||
@@ -20,10 +23,8 @@ bool Clon::update() {
 		else if (meleeDmg_ > 0 && ((SDL_GetTicks() - meleeTime_) / 1000) > meleeRate_)
 		{
 			cout << "\nClon ataque\n";
-			objective_->receiveDamage(meleeDmg_);
-			if (objective_->getState() == STATE::DYING)
-				enemies_.remove(static_cast<Enemy*>(objective_));
-			meleeTime_ = SDL_GetTicks();
+			
+			initMelee();
 		}
 	}
 	else if (alive_) player_->killClon();
@@ -60,6 +61,20 @@ void Clon::initAnim() {
 	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_L_FRAME_RATE, true));
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonIdleLeftAnim));
 
+	//Animación de melee
+	//Arriba
+	meleeAnims_.push_back(Anim(MELEE_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, MELEE_U_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonMeleeUpAnim));
+	//Derecha
+	meleeAnims_.push_back(Anim(MELEE_R_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, MELEE_R_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonMeleeRightAnim));
+	//Abajo
+	meleeAnims_.push_back(Anim(MELEE_D_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, MELEE_D_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonMeleeDownAnim));
+	//Izquierda
+	meleeAnims_.push_back(Anim(MELEE_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, MELEE_L_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonMeleeLeftAnim));
+
 	//Animación de autodestrucción
 	//Arriba
 	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_U_FRAME_RATE, false));
@@ -86,6 +101,52 @@ void Clon::initIdle() {
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+}
+
+void Clon::initMelee()
+{
+	currState_ = STATE::ATTACKING;	//Cambio de estado
+	attacked_ = false;	//Aún no se ha atacado
+	updateDirVisObjective(static_cast<PlayState*>(app_->getGameStateMachine()->getState())->findClosestEnemy(pos_));	//Hacia dónde está el enemigo
+	texture_ = meleeTx_[(int)currDir_];
+	currAnim_ = meleeAnims_[(int)currDir_];
+	//Frame exacto del ataque
+	switch (currDir_)
+	{
+	case DIR::UP:
+		frameAction_ = 2;
+		break;
+	case DIR::RIGHT:
+		frameAction_ = 3;
+		break;
+	case DIR::DOWN:
+		frameAction_ = 3;
+		break;
+	case DIR::LEFT:
+		frameAction_ = 3;
+		break;
+	}
+
+	//Se inicia el frame
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+	meleeTime_ = SDL_GetTicks();
+}
+
+void Clon::meleeAnim() {
+
+	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
+		objective_->receiveDamage(meleeDmg_);
+		if (objective_->getState() == STATE::DYING)
+			enemies_.remove(static_cast<Enemy*>(objective_));
+		meleeTime_ = SDL_GetTicks();
+		attacked_ = true;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();
+	}
+
 }
 
 void Clon::initSelfDestruction() {

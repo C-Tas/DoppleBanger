@@ -11,7 +11,7 @@ class Clon : public Actor
 public:
 	//Liberation es el nivel de la habilidad liberaci�n: 0 no se tiene, 1 nivel 1, 2 nivel 2.
 	Clon(Application* app, Point2D pos, Vector2D scale, Player* player) : 
-		Actor(app, pos, scale), player_(player) { initObject(); initAnim(); };
+		Actor(app, pos, scale), player_(player) { initObject(); };
 	~Clon() {};
 
 	bool update();
@@ -19,7 +19,7 @@ public:
 
 	void shoot(Vector2D dir);
 	void changeDuration(double dur) { duration_ = dur; }	//En caso de que se pueda modificar la duraci�n
-	void initIdle();
+	
 	void initSelfDestruction();
 
 	void die();
@@ -48,11 +48,16 @@ private:
 
 #pragma region Animaciones
 	virtual void initAnim();
+	int frameAction_ = 0;
+	
+	void initIdle();
+	void initMelee();
+	void meleeAnim();
+
 
 	const int W_H_CLON_FRAME = 100;
 
 	//Idle
-	bool idle_ = true; 
 	vector<Anim> idleAnims_;                //Vector de las animaciones
 	vector<Texture*> idleTx_;               //Vector de las texturas
 	//Idle derecha
@@ -68,6 +73,22 @@ private:
 	const int IDLE_D_FRAMES = 2;			//Frames de la animación
 	const int IDLE_D_FRAME_RATE = 500;		//Frame rate
 
+	//Melee
+	bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
+	vector<Anim> meleeAnims_;				//Vector de las animaciones
+	vector<Texture*> meleeTx_;				//Vector de las texturas
+	//Melee derecha
+	const int MELEE_R_FRAMES = 7;			//Frames de la animación
+	const int MELEE_R_FRAME_RATE = 100;		//Frame rate
+	//Melee hacia arriba
+	const int MELEE_U_FRAMES = 5;			//Frames de la animación
+	const int MELEE_U_FRAME_RATE = 200;		//Frame rate
+	//Melee hacia izquierda
+	const int MELEE_L_FRAMES = 7;			//Frames de la animación
+	const int MELEE_L_FRAME_RATE = 100;		//Frame rate
+	//Melee hacia abajo
+	const int MELEE_D_FRAMES = 7;			//Frames de la animación
+	const int MELEE_D_FRAME_RATE = 100;		//Frame rate
 
 	//Autodestrucción
 	bool selfDestruct_ = false;						//Para disparar una sola vez en el frame adecuado

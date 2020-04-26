@@ -148,6 +148,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
     { ClonIdleLeftAnim, "../Sources/assets/clon/idle/ClonLeftIdle.png" },
     { ClonIdleUpAnim, "../Sources/assets/clon/idle/ClonBackIdle.png" },
     { ClonIdleDownAnim, "../Sources/assets/clon/idle/ClonFrontIdle.png" },
+	{ ClonMeleeRightAnim, "../Sources/assets/clon/melee/ClonRightMelee.png" },
+	{ClonMeleeLeftAnim, "../Sources/assets/clon/melee/ClonLeftMelee.png" },
+	{ClonMeleeUpAnim, "../Sources/assets/clon/melee/ClonBackMelee.png" },
+	{ClonMeleeDownAnim, "../Sources/assets/clon/melee/ClonFrontMelee.png" },
 
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
