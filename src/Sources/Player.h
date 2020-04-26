@@ -103,8 +103,8 @@ public:
 		void equipPotion2(usable* pot) { equip_.potions_[1] = pot; };
 
 		void addMoney(int money) { money_ += money; };
-		void usePotion(int value, potionType type);
-		void desactivePotion();
+		void usePotion(usable* potion);
+		void desactivePotion(usable* potion);
 		void setClonCoolDown() { cdSkills[3] = true; }
 		//Aumenta la cadencia de tiro del player
 		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };

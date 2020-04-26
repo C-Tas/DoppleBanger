@@ -3,26 +3,19 @@
 
 #include "Item.h"
 #include "Stats.h"
-#include <iostream>
-
-
-
-
-
-enum class equipType { Armor, Gloves, Boots, Sword, Saber, Pistol, Shotgun };
 
 class Equipment : public Item
 {
 protected:
 	equipType type_;
-	Stats modifiers_;
-
+	Stats modifiers_ = Stats();
+	virtual void initObject() = 0;
 public:
 	//Crea un item equipable del tipo dado
-	Equipment(Texture* texture, string name, string desc, double price, equipType type) : 
-		Item(texture, name, desc, price, 1), type_(type) {};
+	Equipment(equipType type) : Item(), type_(type) {};
 	virtual ~Equipment() {}; //Destructora generica
 
+	virtual bool update() { return false; };
 #pragma region Setters
 	void setHealth(double health) { modifiers_.health_ = health; };// Asigna el valor de Health
 	void setArmor(double armor) { modifiers_.armor_ = armor; };// Asigna el valor de Armor
@@ -34,7 +27,6 @@ public:
 	void setMeleeRate(double meleeRate) { modifiers_.meleeRate_ = meleeRate; }; // Asigna el valor de MeleeRate
 #pragma endregion
 	
-
 #pragma region Getters
 	double getHealth() { return modifiers_.health_; }; // Devuelve el valor de Health
 	double getArmor() { return modifiers_.armor_; }; // Devuelve el valor de Armor
@@ -44,9 +36,8 @@ public:
 	double getSpeed() { return modifiers_.moveSpeed_; }; // Devuelve el valor de Speed
 	double getDistRate() { return modifiers_.distRate_; }; // Devuelve el valor de DistRate
 	double getMeleeRate() { return modifiers_.meleeRate_; }; // Devuelve el valor de MeleeRate
-	equipType getEquipTye() { return type_; };	//Devuelve el tipo del objeto
+	equipType getEquipType() { return type_; };	//Devuelve el tipo del objeto
 #pragma endregion
 	virtual void equip(Player* player) = 0;
 	virtual void remove(Player* player) = 0;
-	virtual void writeStats() = 0;
 };

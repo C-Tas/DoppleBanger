@@ -28,7 +28,7 @@ void callBuyObjectS(Application* app) {
 
 ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(player)
 {
-	sellButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), Vector2D{ 50,500 }, Vector2D{ 50,50 }, callSellObjectS);
+	sellButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D{ 50,500 }, Vector2D{ 50,50 }, callSellObjectS);
 	addUpdateList(sellButton_);
 	addRenderList(sellButton_);
 	advanceButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D{ 700,100 }, Vector2D{ 50,50 }, callForwardListS);
@@ -37,7 +37,7 @@ ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(
 	gobackButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::BackButton), Vector2D{ 500,100 }, Vector2D{ 50,50 }, callBackListS);
 	addUpdateList(gobackButton_);
 	addRenderList(gobackButton_);
-	exitButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 1300,100 }, Vector2D{ 50,50 }, callExitS);
+	exitButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::ExitButton), Vector2D{ 1300,100 }, Vector2D{ 50,50 }, callExitS);
 	addUpdateList(exitButton_);
 	addRenderList(exitButton_);
 
@@ -52,16 +52,14 @@ ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(
 	addRenderList(shopGobackButton_);
 
 #ifdef _DEBUG
-	string nombre = "gloves";
-	string desc = "desc";
 
-	Gloves* guante0 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante1 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante2 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante3 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante4 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante5 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante6 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
+	Gloves* guante0 = new Gloves(20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante1 = new Gloves(20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante2 = new Gloves(20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante3 = new Gloves(20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante4 = new Gloves(20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante5 = new Gloves(20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante6 = new Gloves(20.0, 10, 10, equipType::GlovesII);
 
 	addToInventory(guante0);
 	addToInventory(guante1);
@@ -72,17 +70,17 @@ ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(
 	addToInventory(guante6);
 
 
-	Gloves* guante11 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante12 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante13 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante14 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante15 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante16 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante17 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante18 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante19 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante20 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante21 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
+	Gloves* guante11 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante12 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante13 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante14 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante15 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante16 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante17 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante18 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante19 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante20 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante21 = new Gloves(20.0, 10, 10, equipType::GlovesI);
 
 	addToShop(guante11);
 	addToShop(guante12);
@@ -119,9 +117,7 @@ ShopState::~ShopState()
 void ShopState::addToInventory(Item* ob)
 {
 	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_, ob->getItemTexture(), Vector2D(300, 400), Vector2D(50, 50), ob, callSelectObjectS);
-	//le asignamos al objeto su boton
-	ob->setButton(b);
+	InventoryButton* b = new InventoryButton(app_, Vector2D(300, 400), Vector2D(50, 50), ob, callSelectObjectS);
 	//Añadimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = inventoryList_.insert(inventoryList_.end(), b);
 	b->setIterator(it);
@@ -238,7 +234,7 @@ void ShopState::sellObj()
 	{
 		if (select_->getIterator() == ListPos)++ListPos;
 		select_->Enable(true);
-		player_->addMoney(select_->getObject()->getItemPrice());
+		player_->addMoney(select_->getObject()->getPrice());
 		inventoryList_.erase(select_->getIterator());
 		delete select_;
 		select_ = nullptr;
@@ -276,9 +272,7 @@ void ShopState::backList() {
 void ShopState::addToShop(Equipment* ob)
 {
 	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_,  ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, ob, callSelectObjectS, 1);
-	//le asignamos al objeto su boton
-	ob->setButton(b);
+	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, ob, callSelectObjectS, 1);
 	//Añadimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = shopList_.insert(shopList_.end(), b);
 	b->setIterator(it);
@@ -290,11 +284,11 @@ void ShopState::addToShop(Equipment* ob)
 
 void ShopState::buyObj()
 {
-	if (select_ != nullptr && player_->getMoney() >= select_->getObject()->getItemPrice() && select_->getId() == 1)
+	if (select_ != nullptr && player_->getMoney() >= select_->getObject()->getPrice() && select_->getId() == 1)
 	{
 		if (select_->getIterator() == shopListPos)++shopListPos;
 		select_->Enable(true);
-		player_->addMoney(-select_->getObject()->getItemPrice());
+		player_->addMoney(-select_->getObject()->getPrice());
 		addToInventory(select_->getObject());
 		shopList_.erase(select_->getIterator());
 	}

@@ -93,11 +93,11 @@ void GameManager::saveJNUMBER(ofstream& slot, jute::jValue& mainJson)
 	aux.set_string(to_string(achievementPoints_));
 	mainJson.add_property("skillPoints", aux);
 	//Puntos de hazaña invertidos
-	aux.set_string(to_string(precisionPoints_));	//Rama combate
+	aux.set_string(to_string(precisionPoints_));//Rama combate
 	mainJson.add_property("precision", aux);
 	aux.set_string(to_string(meleePoints_));	//Rama precisión
 	mainJson.add_property("melee", aux);
-	aux.set_string(to_string(clonPoints_));	//Rama clon
+	aux.set_string(to_string(clonPoints_));		//Rama clon
 	mainJson.add_property("clon", aux);
 }
 
@@ -192,78 +192,70 @@ void GameManager::saveEquipment(ofstream& slot, jute::jValue& mainJson)
 			equip[i].add_property("name", aux);
 		}
 		else {
-			switch (vEquip[i]->getEquipTye())
-			{
-			case equipType::Armor:
-				aux.set_type(jType::JNUMBER);
-				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
-				equip[i].add_property("name", aux);
+			//Nombre
+			aux.set_type(jType::JNUMBER);
+			aux.set_string(to_string((int)vEquip[i]->getEquipType()));
+			equip[i].add_property("name", aux);
+			//Precio
+			aux.set_string(to_string((int)vEquip[i]->getPrice()));
+			equip[i].add_property("price", aux);
+			equipType auxType = vEquip[i]->getEquipType();
+			if (auxType == equipType::ArmorI || auxType == equipType::ArmorII) {
 				aux.set_string(to_string(vEquip[i]->getArmor()));
 				equip[i].add_property("armor", aux);
 				aux.set_string(to_string(vEquip[i]->getHealth()));
-				equip[i].add_property("health", aux);
-				//Armor y health
-				break;
-			case equipType::Gloves:
-				aux.set_type(jType::JNUMBER);
-				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
-				equip[i].add_property("name", aux);
-				aux.set_type(jType::JNUMBER);
+				equip[i].add_property("health", aux); 
+			}
+			else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
 				aux.set_string(to_string(vEquip[i]->getArmor()));
 				equip[i].add_property("armor", aux);
 				aux.set_string(to_string(vEquip[i]->getCrit()));
 				equip[i].add_property("critic", aux);
-				//Crítico y armor
-				break;
-			case equipType::Boots:
-				aux.set_type(jType::JNUMBER);
-				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
-				equip[i].add_property("name", aux);
-				aux.set_type(jType::JNUMBER);
+			}
+			else if (auxType == equipType::BootsI || auxType == equipType::BootsII) {
 				aux.set_string(to_string(vEquip[i]->getArmor()));
 				equip[i].add_property("armor", aux);
 				aux.set_string(to_string(vEquip[i]->getSpeed()));
 				equip[i].add_property("speed", aux);
+			}
+			else if (auxType == equipType::SwordI || auxType == equipType::SwordII 
+				|| auxType == equipType::SaberI || auxType == equipType::SaberII
+				|| auxType == equipType::PistolI || auxType == equipType::PistolII
+				|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
+				aux.set_string(to_string(vEquip[i]->getMeleeRate()));
+				equip[i].add_property("rate", aux);
+				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
+				equip[i].add_property("damage", aux);
+			}
+			switch (vEquip[i]->getEquipType())
+			{
+			case equipType::ArmorI:
+				break;
+			case equipType::GlovesI:
+				break;
+			case equipType::BootsI:
+				
 				//speed y armor
 				break;
-			case equipType::Sword:
-				aux.set_type(jType::JNUMBER);
-				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
-				equip[i].add_property("name", aux);
-				aux.set_type(jType::JNUMBER);
+			case equipType::SwordI:
+				
+				//MeleeRate y ad
+				break;
+			case equipType::SaberI:
 				aux.set_string(to_string(vEquip[i]->getMeleeRate()));
 				equip[i].add_property("rate", aux);
 				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
 				equip[i].add_property("damage", aux);
 				//MeleeRate y ad
 				break;
-			case equipType::Saber:
-				aux.set_type(jType::JNUMBER);
-				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
-				equip[i].add_property("name", aux);
-				aux.set_type(jType::JNUMBER);
-				aux.set_string(to_string(vEquip[i]->getMeleeRate()));
-				equip[i].add_property("rate", aux);
-				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
-				equip[i].add_property("damage", aux);
-				//MeleeRate y ad
-				break;
-			case equipType::Pistol:
-				aux.set_type(jType::JNUMBER);
-				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
-				equip[i].add_property("name", aux);
-				aux.set_type(jType::JNUMBER);
+			case equipType::PistolI:
 				aux.set_string(to_string(vEquip[i]->getDistRate()));
 				equip[i].add_property("rate", aux);
 				aux.set_string(to_string(vEquip[i]->getDistDmg()));
 				equip[i].add_property("damage", aux);
 				//DistRate y disDmg
 				break;
-			case equipType::Shotgun:
-				aux.set_type(jType::JNUMBER);
-				aux.set_string(to_string((int)vEquip[i]->getEquipTye()));
-				equip[i].add_property("name", aux);
-				aux.set_type(jType::JNUMBER);
+			case equipType::ShotgunI:
 				aux.set_string(to_string(vEquip[i]->getDistRate()));
 				equip[i].add_property("rate", aux);
 				aux.set_string(to_string(vEquip[i]->getDistDmg()));
@@ -474,7 +466,7 @@ void GameManager::setObjectEquipped(ObjectName newObject, Key key)
 
 void GameManager::addToInventory(Equipment* ob) {
 	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_, ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);
+	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);
 	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = inventory_->insert(inventory_->end(), b);
 	b->setIterator(it);

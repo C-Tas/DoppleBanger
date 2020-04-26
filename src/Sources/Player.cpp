@@ -28,11 +28,11 @@ void Player::initObject()
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
-	equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1), "Pechera", "helloWorld", 10, 10, 10);
-	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), "Guantes", "helloWorld", 10, 10, 10);
-	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Boots1), "Botas", "helloWorld", 10, 10, 10);
-	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, equipType::Saber);
-	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), "Pistola", "helloWorld", 10, 10, 10, equipType::Pistol);
+	equip_.armor_ = new Armor(10, 10, 10, equipType::ArmorI);
+	equip_.gloves_ = new Gloves(10, 10, 10, equipType::GlovesI);
+	equip_.boots_ = new Boots(10, 10, 10, equipType::BootsI);
+	equip_.sword_ = new Sword(10, 10, 10, equipType::SaberI);
+	equip_.gun_ = new Gun(10, 10, 10, equipType::PistolI);
 }
 
 void Player::load(jute::jValue& mainJson)
@@ -41,32 +41,27 @@ void Player::load(jute::jValue& mainJson)
 	loadObjects(mainJson);
 	loadEquip(mainJson);
 }
+
 void Player::loadObjects(jute::jValue& mainJson) {
 	//Objetos equipados
 	for (int i = 0; i < 2; i++) {
 		if (mainJson["objects"][i].as_string() == "Health") {
-			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::HealthPot),
-				"vida", "aba", 0, potionType::Health, 10, -1);
+			equip_.potions_[i] = new usable(potionType::Health);
 		}
 		else if (mainJson["objects"][i].as_string() == "Mana") {
-			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::ManaPot),
-				"vida", "aba", 0, potionType::Mana, 10, -1);
+			equip_.potions_[i] = new usable(potionType::Mana);
 		}
 		else if (mainJson["objects"][i].as_string() == "Speed") {
-			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::SpeedPot),
-				"vida", "aba", 0, potionType::Speed, 10, 3);
+			equip_.potions_[i] = new usable(potionType::Speed);
 		}
 		else if (mainJson["objects"][i].as_string() == "Armor") {
-			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::ArmorPot),
-				"vida", "aba", 0, potionType::Armor, 10, 4);
+			equip_.potions_[i] = new usable(potionType::Armor);
 		}
 		else if (mainJson["objects"][i].as_string() == "Dmg") {
-			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::DmgPot),
-				"vida", "aba", 0, potionType::Damage, 10, 3);
+			equip_.potions_[i] = new usable(potionType::Damage);
 		}
 		else if (mainJson["objects"][i].as_string() == "Crit") {
-			equip_.potions_[i] = new usable(app_->getTextureManager()->getTexture(Resources::CritPot),
-				"vida", "aba", 0, potionType::Crit, 10, -4);
+			equip_.potions_[i] = new usable(potionType::Crit);
 		}
 	}
 }
@@ -80,34 +75,34 @@ void Player::loadEquip(jute::jValue& mainJson) {
 	if (equip_.gun_ != nullptr) delete equip_.gun_;
 
 	//Pechera
+	double auxPrice = mainJson["equipment"][0]["price"].as_double();
 	double auxStat1 = mainJson["equipment"][0]["health"].as_double();
 	double auxStat2 = mainJson["equipment"][0]["armor"].as_double();
-	equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1),
-		"Pechera", "helloWorld", 10, auxStat1, auxStat2);
+	equipType auxType = (equipType)mainJson["equipment"][0]["name"].as_int();
+	equip_.armor_ = new Armor(auxPrice, auxStat1, auxStat2, auxType);
 	//Guantes
+	auxPrice = mainJson["equipment"][1]["price"].as_double();
 	auxStat1 = mainJson["equipment"][1]["critic"].as_double();
 	auxStat2 = mainJson["equipment"][1]["armor"].as_double();
-	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1),
-		"Guantes", "helloWorld", 10, auxStat1, auxStat2);
+	auxType = (equipType)mainJson["equipment"][1]["name"].as_int();
+	equip_.gloves_ = new Gloves(auxPrice, auxStat1, auxStat2, auxType);
 	//Botas
+	auxPrice = mainJson["equipment"][2]["price"].as_double();
 	auxStat1 = mainJson["equipment"][2]["speed"].as_double();
 	auxStat2 = mainJson["equipment"][2]["armor"].as_double();
-	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Boots1),
-		"Botas", "helloWorld", 10,auxStat1,auxStat2);
+	auxType = (equipType)mainJson["equipment"][2]["name"].as_int();
+	equip_.boots_ = new Boots(auxPrice, auxStat1, auxStat2, auxType);
 	//Espada
+	auxPrice = mainJson["equipment"][3]["price"].as_double();
 	auxStat1 = mainJson["equipment"][3]["damage"].as_double();
 	auxStat2 = mainJson["equipment"][0]["rate"].as_double();
-	equipType auxType = (equipType)mainJson["equipment"][3]["name"].as_int();
-	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel),
-		"Sable", "helloWorld", 10, 
-		auxStat1, auxStat2, auxType);
+	equip_.sword_ = new Sword(auxPrice, auxStat1, auxStat2, auxType);
 	//Pistola
+	auxPrice = mainJson["equipment"][3]["price"].as_double();
 	auxStat1 = mainJson["equipment"][4]["damage"].as_double();
 	auxStat2 = mainJson["equipment"][0]["rate"].as_double();
 	auxType = (equipType)mainJson["equipment"][4]["name"].as_int();
-	equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		"Pistola", "helloWorld", 10,
-		auxStat1, auxStat2, auxType);
+	equip_.gun_ = new Gun(auxPrice, auxStat1, auxStat2, auxType);
 }
 
 void Player::initSkills()
@@ -139,9 +134,9 @@ bool Player::update()
 	}
 	//Cuando se acabe el tiempo de ricochet, se pone a false
 	if (ricochet_ && (SDL_GetTicks() - lastTimeRico_) / 1000 > TIME_RICO) {
-		cout << "Fin rebote" << endl;
 		ricochet_ = false;
 	}
+
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0]!= nullptr) {
 		skills_[0]->action();
 		GameManager::instance()->setSkillCooldown(true, Key::Q);
@@ -162,43 +157,22 @@ bool Player::update()
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE) && !app_->getMute()) shout();
 
-	//Para testeo
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_8)) {
-		if (skills_[0] != nullptr) delete skills_[0];
-		skills_[0] = new RicochetSkill(this);
-		cdSkills[0] = false;
-		gm_->setSkillEquiped(SkillName::Rebote, Key::Q);
-		GameManager::instance()->setSkillCooldown(false, Key::Q);
-	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_9)) {
-		if (skills_[1] != nullptr) delete skills_[1];
-		skills_[1] = new PerforateSkill(this);
-		cdSkills[1] = false;
-		gm_->setSkillEquiped(SkillName::DisparoPerforante, Key::W);
-		GameManager::instance()->setSkillCooldown(false, Key::W);
-	}
-
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_) {
 		initShoot();
 	}
 
 	//para utilizar las pociones
-	if (eventHandler_->isKeyDown(SDLK_1)) {
-		if (equip_.potions_[0] != nullptr && !equip_.potions_[0]->isUsed()) {
-			PotionTime1 = SDL_GetTicks();
-			equip_.potions_[0]->use(this);
-			gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
-		}
+	if (eventHandler_->isKeyDown(SDLK_1) && equip_.potions_[0] != nullptr && !equip_.potions_[0]->isUsed()) {
+		PotionTime1 = SDL_GetTicks();
+		usePotion(equip_.potions_[0]);
+		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 	}
 	if (eventHandler_->isKeyDown(SDLK_2) && equip_.potions_[1] != nullptr && !equip_.potions_[1]->isUsed()) {
-			PotionTime2 = SDL_GetTicks();
-			equip_.potions_[1]->use(this);
-			gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
+		PotionTime2 = SDL_GetTicks();
+		usePotion(equip_.potions_[1]);
+		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 	}
-
-	//comprobamos si hay que desactivar las pociones
-	desactivePotion();
 
 	Enemy* objective = static_cast<Enemy*>(currEnemy_);
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
@@ -554,61 +528,46 @@ void Player::decreaseMana(double mana) {
 	if (currStats_.Mana <= 0) currStats_.Mana = 0;
 }
 
-void Player::usePotion(int value, potionType type) {
-	switch (type)
+void Player::usePotion(usable* potion) {
+	switch (potion->getType())
 	{
 	case potionType::Health:
-		currStats_.health_ += value;
+		currStats_.health_ = currStats_.health_ * (1 + potion->getValue() / 100);
 		break;
 	case potionType::Mana:
-		currStats_.Mana += value;
+		currStats_.Mana = currStats_.Mana * (1 + potion->getValue() / 100);
 		cout << currStats_.Mana << endl;
 		break;
 	case potionType::Speed:
-		currStats_.moveSpeed_ += value;
+		currStats_.moveSpeed_ += potion->getValue();
 		break;
 	case potionType::Damage:
-		currStats_.meleeDmg_ += value;
+		currStats_.meleeDmg_ = currStats_.meleeDmg_ * (1 + potion->getValue() / 100);
+		currStats_.distDmg_ = currStats_.distDmg_ * (1 + potion->getValue() / 100);
 		break;
 	case potionType::Armor:
-		currStats_.armor_ += value;
+		currStats_.armor_ += potion->getValue();
 		break;
 	case potionType::Crit:
-		currStats_.crit_ += value;
+		currStats_.crit_ += potion->getValue();
 		break;
 	}
+
+	potion->use();
 }
 
-void Player::desactivePotion(){
+void Player::desactivePotion(usable* potion){
 	//Pocion1
-	//Si la pocion uno esta usada
-	if (equip_.potions_[0] != nullptr && equip_.potions_[0]->isUsed()  ) {
-		//si es de efecto permanente la borramos
-		if (equip_.potions_[0]->getDuration() <= -1) {
-			delete equip_.potions_[0];
-			equip_.potions_[0] = nullptr;
-		}
-		//Si no, miramos si ha pasado el tiempo de duracion
-		else if ((SDL_GetTicks() - PotionTime1) >= equip_.potions_[0]->getDuration()) {
-			usePotion(-(equip_.potions_[0]->getValue()), equip_.potions_[0]->getType());//quitamos el valor de la pocion
-			delete equip_.potions_[0];// eliminamos la pocion
-			equip_.potions_[0] = nullptr;
-		}
+	//Si la pocion se usa 
+	if (equip_.potions_[0] != nullptr && equip_.potions_[0] == potion) {
+		//app_->getCurrState()->removeRenderUpdateList(equip_.potions_[0]);
+		equip_.potions_[0] = nullptr;
 	}
 	//Pocion2
-	//Si la pocion uno esta usada
-	if (equip_.potions_[1] != nullptr && equip_.potions_[1]->isUsed()) {
-		//si es de efecto permanente la borramos
-		if (equip_.potions_[1]->getDuration() <= -1) {
-			delete equip_.potions_[1];
-			equip_.potions_[1] = nullptr;
-		}
-		//Si no, miramos si ha pasado el tiempo de duracion
-		else if ((SDL_GetTicks() - PotionTime2) >= equip_.potions_[1]->getDuration()) {
-			usePotion(-(equip_.potions_[1]->getValue()), equip_.potions_[1]->getType());//quitamos el valor de la pocion
-			delete equip_.potions_[1];// eliminamos la pocion
-			equip_.potions_[1] = nullptr;
-		}
+	//Si la pocion se usa
+	if (equip_.potions_[1] != nullptr && equip_.potions_[1] == potion) {
+		//app_->getCurrState()->removeRenderUpdateList(equip_.potions_[1]);
+		equip_.potions_[1] = nullptr;
 	}
 }
 

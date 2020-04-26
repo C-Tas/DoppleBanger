@@ -129,38 +129,32 @@ void StashState::initState() {
 	inventory_.money_ = gm_->getInventoryGold();
 
 	//Posici�n de los textos del alijo e inventario
-	stash_.moneyText = { 5*(app_->getWindowWidth()/16), MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT }; //width es el ancho de cada n�mero 
-	inventory_.moneyText = { 4*(app_->getWindowWidth()/5)-10,MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT };
+	stash_.moneyText = { 5 * (app_->getWindowWidth() / 16), MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT }; //width es el ancho de cada n�mero 
+	inventory_.moneyText = { 4 * (app_->getWindowWidth() / 5) - 10,MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT };
 
 	//Texturas con texto
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
 	stashMoneyTex_ = new Texture(app_->getRenderer(), to_string(stash_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
 	//Creo aqu� objetos para comprobar funcionalidad
 	#ifdef _DEBUG
-	
-	cout << "Creando Objetos de prueba en el initState" << endl;
 
-	Gun* gun = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon),"pistolaDefault", "uwu1",0,0,0, equipType::Shotgun);
-	Gun* gun1 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu2", 0, 0, 0, equipType::Shotgun);
-	Gun* gun2 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu3", 0, 0, 0, equipType::Shotgun);
-	Gun* gun3 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu4", 0, 0, 0, equipType::Shotgun);
+	Gun* gun  = new Gun(0, 0, 0, equipType::ShotgunI);
+	Gun* gun1 = new Gun(0, 0, 0, equipType::ShotgunI);
+	Gun* gun2 = new Gun(0, 0, 0, equipType::ShotgunI);
+	Gun* gun3 = new Gun(0, 0, 0, equipType::ShotgunI);
 
 	
-	InventoryButton* b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun, callbackSelectObject);
+	InventoryButton* b = new InventoryButton(app_, Vector2D(100, 400), Vector2D(125, 50), gun, callbackSelectObject);
 	auto it = stash_.objects_->insert(stash_.objects_->end(),b);
 	b->setIterator(it);
-	b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun1, callbackSelectObject);
+	b = new InventoryButton(app_, Vector2D(100, 400), Vector2D(125, 50), gun1, callbackSelectObject);
 	it = stash_.objects_->insert(stash_.objects_->end(), b);
 	b->setIterator(it);
-	b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun3, callbackSelectObject);
+	b = new InventoryButton(app_, Vector2D(100, 400), Vector2D(125, 50), gun3, callbackSelectObject);
 	it = stash_.objects_->insert(stash_.objects_->end(), b);
 	b->setIterator(it);
 	
-	b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun2, callbackSelectObject);
+	b = new InventoryButton(app_, Vector2D(100, 400), Vector2D(125, 50), gun2, callbackSelectObject);
 	it = inventory_.objects_->insert(inventory_.objects_->end(), b);
 	b->setIterator(it);
 
@@ -228,7 +222,7 @@ void StashState::selectObject(InventoryButton* button)
 {
 	selected_ = button;
 	if (selectedObjectDescription_ != nullptr)delete selectedObjectDescription_;
-	selectedObjectDescription_ = new Texture(app_->getRenderer(), selected_->getObject()->getItemDescription(), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
+	selectedObjectDescription_ = new Texture(app_->getRenderer(), "Descripcion Temporal", app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
 }
 
 void StashState::changeBetweenLists()

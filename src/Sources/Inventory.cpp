@@ -6,7 +6,7 @@ using namespace std;
 //callbacks
 
 void callSelectObject(Application* app, InventoryButton* but) {
-		dynamic_cast<Inventory*>(app->getCurrState())->selectObject(but);
+	dynamic_cast<Inventory*>(app->getCurrState())->selectObject(but);
 }
 void callDeleteObject(Application* app) {
 	dynamic_cast<Inventory*>(app->getCurrState())->deleteObj();
@@ -28,39 +28,42 @@ void callSkillsState(Application* app) {
 }
 
 Inventory::Inventory(Application* app) :GameState(app) {
+	//Fondo
 	background_ = app_->getTextureManager()->getTexture(Resources::InventaryMenu);
 	Vector2D auxpos = Vector2D{ 12 * (double)(app_->getWindowWidth() / 14), 14 * (double)(app_->getWindowHeight() / 17) };
 	Vector2D auxSize = Vector2D{ (double)(app_->getWindowWidth() / 27),  (double)(app_->getWindowWidth() / 27) };
 	deleteButton_ = new Button(app,app_->getTextureManager()->getTexture(Resources::DeleteButton), auxpos, auxSize,callDeleteObject);
 	addRenderUpdateLists(deleteButton_);
 
+	//Boton para equipar
 	auxpos = Vector2D{ 12 * (double)(app_->getWindowWidth() / 14), 9 * (double)(app_->getWindowHeight() / 12) };
 	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 27),  (double)(app_->getWindowWidth() / 27) };
 	equippedButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::EquippedButton), auxpos, auxSize,callEquipedObject);
 	addRenderUpdateLists(equippedButton_);
 
+	//Boton para iterar en la lista - Derecha
 	auxpos = Vector2D{ 10 * (double)(app_->getWindowWidth() / 12), 3* (double)(app_->getWindowHeight() / 10) };
 	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 30),  (double)(app_->getWindowWidth() / 30) };
 	advanceButton_ = new Button(app,app_->getTextureManager()->getTexture(Resources::RightArrow), auxpos, auxSize, callForwardList);
 	addRenderUpdateLists(advanceButton_);
 
+	//Boton para iterar en la lista - Izquierda
 	auxpos = Vector2D{ 8 * (double)(app_->getWindowWidth() / 13), 3 * (double)(app_->getWindowHeight() / 10) };
 	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 30),  (double)(app_->getWindowWidth() / 30) };
 	gobackButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::LeftArrow), auxpos, auxSize, callBackList);
 	addRenderUpdateLists(gobackButton_);
 
-	//app_->getWindowWidth(), app_->getWindowHeight() 
-	 auxpos = Vector2D{ 8*(double)(app_->getWindowWidth() /9), 2*(double)(app_->getWindowHeight()/9)};
-	 auxSize = Vector2D{ (double)(app_->getWindowWidth() / 25),  (double)(app_->getWindowWidth() / 25) };
+	//Boton para salir del inventario
+	auxpos = Vector2D{ 8*(double)(app_->getWindowWidth() /9), 2*(double)(app_->getWindowHeight()/9)};
+	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 25),  (double)(app_->getWindowWidth() / 25) };
 	exitButton_= new Button(app, app_->getTextureManager()->getTexture(Resources::ButtonX), auxpos, auxSize, callExit);
 	addRenderUpdateLists(exitButton_);
 
+	//Boton para ir al SkillState
 	auxpos = Vector2D{ 7 * (double)(app_->getWindowWidth() / 13), 1 * (double)(app_->getWindowHeight() / 40) };
 	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 2.62),  (double)(app_->getWindowWidth() / 7.5) };
 	goToSkillsButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos, { 610, 120 }, callSkillsState);
 	addRenderUpdateLists(goToSkillsButton_);
-	
-
 
 	//Cogemos la lista de objetos del gameManager
 	GameManager* gameManager_ = GameManager::instance();
@@ -70,25 +73,25 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	
 	playerEquipment aux = player_->getInfoEquip();
 
-	if (aux.armor_ != nullptr) equipment_.armor_ = new InventoryButton(app_, aux.armor_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.armor_, callSelectObject,true);
-	if (aux.gloves_ != nullptr) equipment_.gloves_ = new InventoryButton(app_, aux.gloves_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.gloves_, callSelectObject,true);
-	if (aux.boots_ != nullptr) equipment_.boots_ = new InventoryButton(app_, aux.boots_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.boots_, callSelectObject,true);
-	if (aux.sword_ != nullptr) equipment_.sword_ = new InventoryButton(app_, aux.sword_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.sword_, callSelectObject,true);
-	if (aux.gun_ != nullptr) equipment_.gun_ = new InventoryButton(app_, aux.gun_->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 }, aux.gun_, callSelectObject,true);
-	if (aux.potions_[0] != nullptr) equipment_.potion1_ = new InventoryButton(app_, aux.potions_[0]->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[0], callSelectObject,true);
-	if (aux.potions_[1] != nullptr) equipment_.potion2_ = new InventoryButton(app_, aux.potions_[1]->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[1], callSelectObject,true);
+	if (aux.armor_ != nullptr) equipment_.armor_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.armor_, callSelectObject, true);
+	if (aux.gloves_ != nullptr) equipment_.gloves_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.gloves_, callSelectObject, true);
+	if (aux.boots_ != nullptr) equipment_.boots_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.boots_, callSelectObject, true);
+	if (aux.sword_ != nullptr)	equipment_.sword_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.sword_, callSelectObject, true);
+	if (aux.gun_ != nullptr) equipment_.gun_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, aux.gun_, callSelectObject, true);
+	if (aux.potions_[0] != nullptr)	equipment_.potion1_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[0], callSelectObject, true);
+	if (aux.potions_[1] != nullptr)	equipment_.potion2_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[1], callSelectObject, true);
 
 	#ifdef _DEBUG
 	string nombre = "guantes1";
 	string desc = "duantes1";
 	
-	Gloves* guante0 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves2), nombre, desc, 20.0, 10, 10);
-	Gloves* guante1 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
-	Gloves* guante2 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
-	Gloves* guante3 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
-	Gloves* guante4 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
-	Gloves* guante5= new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), nombre, desc, 20.0, 10, 10);
-	Armor* armor= new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1), nombre, desc, 20.0, 10, 10);
+	Gloves* guante0 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesII);
+	Gloves* guante1 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesI);
+	Gloves* guante2 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesI);
+	Gloves* guante3 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesI);
+	Gloves* guante4 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesI);
+	Gloves* guante5 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesI);
+	Armor* armor = new Armor(20.0, 10.0, 10.0, equipType::ArmorII);
 
 	addToInventory(guante0);
 	addToInventory(guante1);
@@ -154,7 +157,6 @@ void Inventory::equippedObj() {
 			equipPotionAux();
 			select_->Enable(true);
 			inventoryList_->erase(select_->getIterator());
-
 		}
 	}
 }
@@ -179,7 +181,7 @@ void Inventory::deleteObj() {
 //Hay que quitarle pero todavia no puedo
 void Inventory::addToInventory(Equipment* ob) {
 	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_, ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 75,75 },ob, callSelectObject);
+	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 },ob, callSelectObject);
 	//le asignamos al objeto su boton
 	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = inventoryList_->insert(inventoryList_->end(), b);
@@ -196,7 +198,6 @@ void Inventory::equiparAux(InventoryButton* &but) {
 	if (but != nullptr) {
 	//desequipamos el objeto actual
 
-		
 		but->getObject()->remove(player_);
 		but->Enable(false);
 		InventoryButton* aux = but;
@@ -282,7 +283,6 @@ void Inventory::draw()const {
 		}
 	}
 	double posx, posy, sizeX, sizeY;
-	
 	
 	// falta ajustar la posicion de los botones
 	if (equipment_.gloves_ != nullptr) {
@@ -404,13 +404,9 @@ void Inventory::update() {
 		//Actualizamos los objetos normales
 
 		GameState::update();
-
-
-
 	}
-	
-	
 }
+
 Inventory::~Inventory() {
 	delete equipment_.armor_;
 	delete equipment_.gloves_;

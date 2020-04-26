@@ -5,11 +5,11 @@
 class Boots : public Equipment
 {
 private:
-	equipType type_;
+	virtual void initObject() {};
 
 public:
-	Boots(Texture* texture, string name, string desc, double price, double speed, double armor) :
-		Equipment(texture, name, desc, price, equipType::Boots), type_(equipType::Boots) {
+	Boots(double price, double speed, double armor, equipType type) : Equipment(type) {
+		price_ = price;
 		modifiers_.moveSpeed_ = speed;
 		modifiers_.armor_ = armor;
 	};
@@ -20,10 +20,5 @@ public:
 
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
-
-	virtual void writeStats() {
-		std::cout << "speed: " << modifiers_.moveSpeed_ << "\n";
-		std::cout << "armor: " << modifiers_.armor_ << "\n";
-	};
 };
 

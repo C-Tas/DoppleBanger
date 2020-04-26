@@ -2,23 +2,21 @@
 #include "Button.h"
 #include <list>
 using namespace std;
-using CallBackOnClickInventory = void(Application* app, InventoryButton* button);
-//using CallBackOnClickInventory = void(GameState * state, Equipment * ob);
 
 class Item;
+class InventoryButton;
+using CallBackOnClickInventory = void(Application* app, InventoryButton* button);
 
 class InventoryButton: public Button
 {
 private:
 	list <InventoryButton*> ::iterator inventoryIterator_ ;
-	Item* object_;
+	Item* object_ = nullptr;
 	bool equipped = false;
-	CallBackOnClickInventory* callBackInventory_;
-	
-
+	CallBackOnClickInventory* callBackInventory_ = nullptr;
 public:
 
-	InventoryButton(Application* app,Texture* texture, Vector2D pos, Vector2D scale, Item* ob, CallBackOnClickInventory* callBack,bool equip = false, int id = 0);
+	InventoryButton(Application* app, Vector2D pos, Vector2D scale, Item* ob, CallBackOnClickInventory* callBack, bool equip = false, int id = 0);
 	virtual bool update();
 	bool isEquipped() { return equipped; }
 	void Enable(bool e) { equipped = e; }
@@ -34,4 +32,3 @@ public:
 	Item* getObject() { return object_; }
 	void setNewCallBack(CallBackOnClickInventory* newCallBack) { callBackInventory_ = newCallBack; };
 };
-

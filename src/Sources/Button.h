@@ -2,10 +2,9 @@
 #include "Draw.h"
 #include "Application.h"
 
-
-
 using CallBackOnClick = void (Application* app);
 using NoParCallBack = void();	//Callback sin parámetros
+
 class Button : public Draw
 {
 public:
