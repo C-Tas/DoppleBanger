@@ -65,21 +65,21 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ SkillPerforanteC, "../Sources/assets/skills/perforanteHab.png"},
 	{ SkillPerforanteBN, "../Sources/assets/skills/perforanteHabBN.png"},
 	{ SkillRaudoC, "../Sources/assets/skills/raudoHab.png"},
-	{ SkillRaudoBN, "../Sources/assets/skills/raudoHabBN.png"},
-	{ SkillReboteC, "../Sources/assets/skills/reboteHab.png"},
-	{ SkillReboteBN, "../Sources/assets/skills/reboteHabBN.png"},
-	{ SkillTorbellinoC, "../Sources/assets/skills/torbellinoHab.png"},
-	{ SkillTorbellinoBN, "../Sources/assets/skills/torbellinoHabBN.png"},
+	{ SkillRaudoBN, "../Sources/assets/skills/raudoHabBN.png" },
+	{ SkillReboteC, "../Sources/assets/skills/reboteHab.png" },
+	{ SkillReboteBN, "../Sources/assets/skills/reboteHabBN.png" },
+	{ SkillTorbellinoC, "../Sources/assets/skills/torbellinoHab.png" },
+	{ SkillTorbellinoBN, "../Sources/assets/skills/torbellinoHabBN.png" },
 
 	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
 	{ PauseBackground, "../Sources/assets/interfaces/pauseFondo.png" },
-	{ Controls, "../Sources/assets/interfaces/controles.png"},
+	{ Controls, "../Sources/assets/interfaces/controles.png" },
 	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
 	{ SkillMenu, "../Sources/assets/interfaces/HabilidadesFondo.png" },
-	{ StashMenu, "../Sources/assets/interfaces/AlijoFondo.png"},
-	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
-	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
-	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
+	{ StashMenu, "../Sources/assets/interfaces/AlijoFondo.png" },
+	{ Scene1, "../Sources/assets/interfaces/Scene1.png" },
+	{ Scene2, "../Sources/assets/interfaces/Scene2.png" },
+	{ Scene3, "../Sources/assets/interfaces/Scene3.png" },
 	{ TextBox, "../Sources/assets/interfaces/textBoxBg.png" },
 	{ Ship, "../Sources/assets/interfaces/barco.png" },
 	{ Table, "../Sources/assets/interfaces/mesa.png" },
@@ -92,7 +92,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ GameOver, "../Sources/assets/interfaces/gameOver.png" },
 	{ Win, "../Sources/assets/interfaces/win.png" },
 
-	//HUD
+		//HUD
 	{ WheelHUD, "../Sources/assets/hud/timonHUD.png" },
 	{ RopeHUD,	"../Sources/assets/hud/lazoHUD.png" },
 	{ SkillsHUD, "../Sources/assets/hud/skillsHUD.png" },
@@ -107,7 +107,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ReboteIcon, "../Sources/assets/hud/iconos/rebote.png" },
 	{ TorbellinoIcon, "../Sources/assets/hud/iconos/torbellino.png" },
 
-	//Objects
+		//Objects
 	{ HealthPot, "../Sources/assets/hud/iconos/vidaPot.png" },
 	{ ManaPot, "../Sources/assets/hud/iconos/manaPot.png" },
 	{ SpeedPot, "../Sources/assets/hud/iconos/speedPot.png" },
@@ -115,9 +115,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ DmgPot, "../Sources/assets/hud/iconos/dmgPot.png" },
 	{ CritPot, "../Sources/assets/hud/iconos/critPot.png" },
 
-	//Sprites
-	{ Dragon,"../Sources/assets/enemigos/dragon.png"},
-	{ PlayerFront, "../Sources/assets/player/frontal.png"},
+		//Sprites
+	{ Dragon,"../Sources/assets/enemigos/dragon.png" },
+	{ PlayerFront, "../Sources/assets/player/frontal.png" },
 	{ CrabAttack, "../Sources/assets/enemigos/crab/crab_attack.png" },
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
@@ -131,8 +131,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
 	{ Cartographer, "../Sources/assets/npc/Navigator.png" },
 
-	
-	//Animaciones
+
+		//Animaciones
 	{ PlayerIdleRightAnim, "../Sources/assets/player/animaciones/idle/idleDcha.png" },
 	{ PlayerIdleLeftAnim, "../Sources/assets/player/animaciones/idle/idleIz.png" },
 	{ PlayerIdleUpAnim, "../Sources/assets/player/animaciones/idle/idleTop.png" },
@@ -150,7 +150,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PlayerMeleeUpAnim, "../Sources/assets/player/animaciones/melee/meleeTop.png" },
 	{ PlayerMeleeDownAnim, "../Sources/assets/player/animaciones/melee/meleeDown.png" },
 
-	//Interactuables
+		//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
 	{ Stash, "../Sources/assets/colisionables/alijo.png" },
 	{ ShipDoor, "../Sources/assets/colisionables/trampilla.png" },
@@ -158,17 +158,17 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Chest, "../Sources/assets/colisionables/cofreAnim.png" },
 	{ Bullet, "../Sources/assets/colisionables/bullet.png" },
 
-
-	//Colisionable
+		//Colisionable
 	{ Rock, "../Sources/assets/colisionables/roca.png" },
 	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
 
-	//Equipables
-	{Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
-	{Gloves1, "../Sources/assets/Equipamiento/Gloves.png"},
-	{Boots1, "../Sources/assets/Equipamiento/botas.png"},
-	{Gloves2, "../Sources/assets/Equipamiento/Guantes2.png"},
-	{Armor1,"../Sources/assets/Equipamiento/Armadura1.png" },
+		//Equipables
+	{ Gun1, "../Sources/assets/Equipamiento/pistola1.png" },
+	{ Gloves1, "../Sources/assets/Equipamiento/Gloves.png" },
+	{ Boots1, "../Sources/assets/Equipamiento/botas.png" },
+	{ Gloves2, "../Sources/assets/Equipamiento/Guantes2.png" },
+	{ Armor1,"../Sources/assets/Equipamiento/Armadura1.png" },
+	{ Blunderbuss ,"../Sources/assets/Equipamiento/trabuco.png" },
 
 	//Tilesets de los mapas
 	{Tileset1, "../Sources/assets/mapas/Isla1-1/tileset_v2.png"},

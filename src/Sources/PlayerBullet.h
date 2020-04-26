@@ -3,10 +3,10 @@
 class PlayerBullet : public Bullet
 {
 public:
-	PlayerBullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, int damage) :
+	PlayerBullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, int damage, double lifeSpan,double bulletSpeed) :
 		Bullet(app, texture, pos, dir, damage){
-		lifeSpan_ = BULLET_LIFE;
-		speed_ = BULLET_VEL;
+		lifeSpan_ = lifeSpan;
+		speed_ = bulletSpeed;
 		scale_ = Vector2D(W_H_BULLET, W_H_BULLET);
 	};
 	~PlayerBullet() {};
@@ -31,8 +31,6 @@ private:
 	int currRico = 0;										//Número de rebotes
 	const float RADIUS = 1000;								// Radio de la circunferencia de búsqueda de la bala
 	const uint W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
-	const double BULLET_VEL = 1000;							//Velocidad de la bala
-	const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
 	virtual void initObject() {};
 };
 

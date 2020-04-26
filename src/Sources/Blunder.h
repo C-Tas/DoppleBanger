@@ -1,8 +1,7 @@
 #pragma once
-
 #include "Equipment.h"
-
-class Gun : public Equipment
+class Blunder :
+	public Equipment
 {
 private:
 	equipType type_;
@@ -10,14 +9,14 @@ private:
 	double crit_ = 0;
 	double bulletSpeed_ = 0;
 	double distRate_ = 0;
-	double disRange_ = 0 ;
+	double disRange_ = 0;
 
 public:
-	Gun(Texture* texture, string name, string desc, double price, int ad, double distRate, double crit, double disRange, equipType type, double bulletSpeed) :
+	Blunder(Texture* texture, string name, string desc, double price, int ad, double distRate, double crit, double disRange, equipType type, double bulletSpeed) :
 		Equipment(texture, name, desc, price, type), ad_(ad), crit_(crit), distRate_(distRate), disRange_(disRange), type_(type), bulletSpeed_(bulletSpeed) {
 		initStats();
 	};
-	virtual ~Gun() {};
+	virtual ~Blunder() {};
 
 	//Equipar dicho equipamiento
 	virtual void equip(Player* player);

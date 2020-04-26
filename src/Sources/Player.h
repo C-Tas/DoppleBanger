@@ -7,6 +7,14 @@
 #include "GameManager.h"
 class Skill;
 
+//Enumerado que representa el tipo de arma que tiene equipada
+enum class FIREARM
+{
+	PISTOL,
+	BLUNDERBUSS,
+	SHOTGUN
+};
+
 struct playerEquipment
 {
 	//Equipamiento del jugador
@@ -14,7 +22,7 @@ struct playerEquipment
 	Gloves* gloves_ = nullptr;
 	Boots* boots_ = nullptr;
 	Sword* sword_ = nullptr;
-	Gun* gun_ = nullptr;
+	Equipment* fireGun_ = nullptr;
 	
 	usable* potion1_ = nullptr;
 	usable* potion2_ = nullptr;
@@ -108,7 +116,10 @@ public:
 	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
 	void equip(Boots* boots) { equip_.boots_ = boots; };
 	void equip(Sword* sword) { equip_.sword_ = sword; };
-	void equip(Gun* gun) { equip_.gun_ = gun; };
+	void equip(Equipment* newWeapon) { 
+		changeDistWeaponStats(newWeapon);
+		changeFireArmStatus(); 
+	}
 	void equipPotion1(usable* pot) { equip_.potion1_ = pot; };
 	void equipPotion2(usable* pot) { equip_.potion2_ = pot; };
 
@@ -143,11 +154,16 @@ private:
 	Clon* clon_ = nullptr;
 
 	Vector2D previousPos_;
-
+	FIREARM currFireArm_;
 	//Habilidades
 	vector<Skill*> skills_;
 	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
 	DIR lookAt;	//Hacia dónde mira
+
+	//Cambia el tipo de arma actual equipada
+	void changeFireArmStatus();
+	//cambia los stats de un arma
+	void changeDistWeaponStats(Equipment* newWeapon);
 #pragma region Animaciones
 	Texture* auxTx_ = nullptr;				//Textura de idle temporal, se borrará cuadno esté el idle
 	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar

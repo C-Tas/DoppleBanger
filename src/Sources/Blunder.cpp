@@ -1,19 +1,19 @@
-#include "Gun.h"
+#include "Blunder.h"
 #include "Player.h"
 
-void Gun::equip(Player* player)
+void Blunder::equip(Player* player)
 {
 	player->addMeleeDmg(ad_);
 	player->addDistRate(distRate_);
 }
 
-void Gun::remove(Player* player)
+void Blunder::remove(Player* player)
 {
 	player->removeAd(ad_);
 	player->removeDistRate(distRate_);
 }
 
-void Gun::initStats()
+void Blunder::initStats()
 {
 	modifiers_.crit_ = crit_;
 	modifiers_.distDmg_ = ad_;

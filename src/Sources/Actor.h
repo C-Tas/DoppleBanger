@@ -52,6 +52,7 @@ public:
 	double getMoveSpeed() { return currStats_.moveSpeed_; };
 	double getMeleeRate() { return currStats_.meleeRate_; };
 	double getDistRate() { return currStats_.distRate_; };
+	const DIR getDir() { return currDir_; }
 #pragma endregion
 
 #pragma region addition

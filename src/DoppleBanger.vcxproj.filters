@@ -117,6 +117,16 @@
       <Filter>TXMLite</Filter>
     </ClCompile>
     <ClCompile Include="Sources\TiledMap.cpp" />
+    <ClCompile Include="Sources\Chest.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\TextBox.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Blunderbuss.cpp" />
+    <ClCompile Include="Sources\Blunder.cpp">
+      <Filter>GameObjects\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -253,6 +263,82 @@
       <Filter>TXMLite</Filter>
     </ClInclude>
     <ClInclude Include="Sources\TiledMap.h" />
+    <ClInclude Include="Sources\SkillState.h" />
+    <ClInclude Include="Sources\Magordito.h">
+      <Filter>GameObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\PerforateSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\RicochetSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Trigger.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TextBox.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Inventory.h">
+      <Filter>GameStateMahcine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\InventoryButton.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\SkillButton.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ShopState.h">
+      <Filter>GameStateMahcine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ClonSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ClonSelfDestructSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\EmpoweredSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\WhirlwindSkill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\VisualElement.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\Skill.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Clon.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TextBox.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Bullet.h" />
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\Bullet.h" />
+    <ClInclude Include="Sources\TextBox.h" />
+    <ClInclude Include="Sources\PlayerBullet.h">
+      <Filter>GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TextBox.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Camera.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Chest.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\TextBox.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Blunderbuss.h" />
+    <ClInclude Include="Sources\Blunder.h">
+      <Filter>GameObjects\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameStateMahcine">

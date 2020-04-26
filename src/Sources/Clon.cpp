@@ -35,6 +35,8 @@ void Clon::initObject() {
 	meleeRate_ = (player_->getStats().meleeRate_ / 2) * player_->getLiberation();
 	meleeDmg_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
 	distDmg_ = (player_->getStats().distDmg_ / 2) * player_->getLiberation();
+	distRange_ = (player_->getStats().distRange_ / 2) * player_->getLiberation();
+	buletSpeed_ = player_->getInfoEquip().fireGun_->getSpeed();
 	taunt();
 }
 
@@ -47,8 +49,7 @@ void Clon::shoot(Vector2D dir)
 		shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 		shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet),
-			shootPos, dir, distDmg_);
+		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir, distDmg_, distRange_, buletSpeed_);
 
 		//Se añade a los bucles del juegos
 		app_->getCurrState()->addRenderUpdateLists(bullet);
