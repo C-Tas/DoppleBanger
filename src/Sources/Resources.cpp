@@ -132,7 +132,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Cartographer, "../Sources/assets/npc/Navigator.png" },
 	{Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png"},
 
-		//Animaciones
+	
+	//Animaciones
+	//Player
 	{ PlayerIdleRightAnim, "../Sources/assets/player/animaciones/idle/idleDcha.png" },
 	{ PlayerIdleLeftAnim, "../Sources/assets/player/animaciones/idle/idleIz.png" },
 	{ PlayerIdleUpAnim, "../Sources/assets/player/animaciones/idle/idleTop.png" },
@@ -153,6 +155,27 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ClonSelfDestructionLeftAnim, "../Sources/assets/clon/autodestruccion/ClonLeftExplosion.png" },
 	{ ClonSelfDestructionUpAnim, "../Sources/assets/clon/autodestruccion/ClonBackExplosion.png" },
 	{ ClonSelfDestructionDownAnim, "../Sources/assets/clon/autodestruccion/ClonFrontExplosion.png" },
+	//Pumpkin
+		//Idle
+	{ PumpkinIdleRightAnim, "../Sources/assets/enemigos/pumpkin/Idle/calabazaIdleDer.png" },
+	{ PumpkinIdleLeftAnim, "../Sources/assets/enemigos/pumpkin/Idle/calabazaIdleIzq.png" },
+	{ PumpkinIdleUpAnim, "../Sources/assets/enemigos/pumpkin/Idle/calabazaIdleAtras.png" },
+	{ PumpkinIdleDownAnim, "../Sources/assets/enemigos/pumpkin/Idle/calabazaIdleDelante.png" },
+		//Explosion
+	{ PumpkinExpRightAnim, "../Sources/assets/enemigos/pumpkin/Explosion/calabazaExplDer.png" },
+	{ PumpkinExpLeftAnim, "../Sources/assets/enemigos/pumpkin/Explosion/calabazaExplIzq.png" },
+	{ PumpkinExpUpAnim, "../Sources/assets/enemigos/pumpkin/Explosion/calabazaExplAtras.png" },
+	{ PumpkinExpDownAnim, "../Sources/assets/enemigos/pumpkin/Explosion/calabazaExplDelante.png" },
+		//Attack
+	{ PumpkinAttackRightAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispDer.png" },
+	{ PumpkinAttackLeftAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispIzq.png" },
+	{ PumpkinAttackUpAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispAtras.png" },
+	{ PumpkinAttackDownAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispDelante.png" },
+		//Move
+	{ PumpkinMoveRightAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDer.png" },
+	{ PumpkinMoveLeftAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovIzq.png" },
+	{ PumpkinMoveUpAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovAtras.png" },
+	{ PumpkinMoveDownAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDelante.png" },
 
 		//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

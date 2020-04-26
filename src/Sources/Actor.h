@@ -111,9 +111,9 @@ protected:
 	//Es el enemigo visto desde la entidad
 	GameObject* currEnemy_ = nullptr;
 	//Actual dirección a la que mira la entidad
+	DIR currDir_ = DIR::DOWN;
 	//Puntero al audio manager
 	AudioManager* am_ = nullptr;
-	DIR currDir_ = DIR::DOWN;
 
 	//Constructor vacío
 	Actor() {};
