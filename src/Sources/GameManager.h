@@ -259,6 +259,8 @@ public:
 	//Indica si estamos o no en el barco
 	inline void setOnShip(bool onShip) { onShip_ = onShip; };
 
+	//Reseteo del inventario
+	void resetInventory();
 	//Asigna el puntero al inventario
 	inline void setInventoryPointer(lista inv) { inventory_ = inv; };
 	//Asigna el puntero al alijo

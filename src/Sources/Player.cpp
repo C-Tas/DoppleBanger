@@ -194,6 +194,8 @@ bool Player::update()
 	else if (currState_ == STATE::DYING) {
 		app_->getAudioManager()->playChannel(Resources::Dying, 0, 0);
 		//Tendría que hacer la animación de muerte
+		//Cuando se acabe la animación es cuando muere y se puede resetear el juego
+		dead_ = true;
 		return true;
 	}
 

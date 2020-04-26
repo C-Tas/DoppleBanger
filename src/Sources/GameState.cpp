@@ -26,7 +26,7 @@ void GameState::update() {
 	rendersToRemove_.clear();
 
 	for (auto it = objRendToRemove_.begin(); it != objRendToRemove_.end(); ++it) {
-		gameObjects_.remove(*it);
+		gameObjects_.remove(*it); 
 		objectsToRender_.remove(*it);
 		if ((*it) != nullptr) {
 			delete (*it);

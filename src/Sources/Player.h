@@ -78,7 +78,8 @@ public:
 	void initSkills();
 
 #pragma region Getters
-	Clon* getClon() { return clon_; };
+	const bool getDead() { return dead_; };
+	const Clon* getClon() { return clon_; };
 	const int getLiberation() { return liberation_; };
 	const int getMoney() { return money_; };
 	const double getMaxHealth() { return HEALTH; }; //Faltaria poner una variable que lleve la vida maxima sin ser cte
@@ -144,6 +145,7 @@ public:
 
 
 private:
+	bool dead_ = false;
 	bool attacking_ = false;
 	int money_ = 0;
 	HandleEvents* eventHandler_ = nullptr;

@@ -62,4 +62,6 @@ protected:
 	const int H_MOUSE_POINTER = 32;
 
 	virtual void initState();
+	//Resetea la partida de acuerdo al GDD
+	void resetGame();
 };

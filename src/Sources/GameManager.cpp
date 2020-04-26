@@ -41,6 +41,12 @@ const Point2D GameManager::getPlayerPos()
 	return player_->getPos();
 }
 
+void GameManager::resetInventory()
+{
+	for (InventoryButton* ob : *inventory_) delete ob;
+	inventory_->clear();
+}
+
 void GameManager::setSkillCooldown(bool cooldown, Key key)
 {
 	skillsCooldown[(int)key] = cooldown;
