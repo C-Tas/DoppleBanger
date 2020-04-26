@@ -1,6 +1,7 @@
 ﻿#include "Enemy.h"
 #include "PlayState.h"
 #include "GameManager.h"
+#include "Collisions.h"
 
 void Enemy::die()
 {
@@ -74,16 +75,14 @@ void Enemy::initObject()
 
 //Devuelve true si el enemigo que tengo está a rango
 bool Enemy::onRange() {
-	if (currEnemy_ == nullptr) {
-		return false;
+	if (currEnemy_ != nullptr) {
+		Point2D center = getCenter();
+		Point2D currEnemyCenter = currEnemy_->getCenter();
+		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
+			center.getX(), center.getY(), currStats_.distRange_))
+		{
+			return true;
+		}
 	}
-	SDL_Rect rangeAttack = { getPosX() - currStats_.distRange_ - (getScaleX() / 2)  ,
-	getPosY() - currStats_.distRange_ - (getScaleY() / 2),currStats_.distRange_ * 2, currStats_.distRange_ * 2 };;
-	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return false;
 }

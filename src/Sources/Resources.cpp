@@ -184,6 +184,10 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	{ WolfHowl ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
 	{ WolfAttack ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
 	{ WolfDie ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" },
+	{ MonkeyIdle ,"../Sources/assets/efectos_sonido/monkey/monoIdle.wav" },
+	{ MonkeyAttack ,"../Sources/assets/efectos_sonido/monkey/monoAttack.wav" },
+	{ MonkeyShoot ,"../Sources/assets/efectos_sonido/monkey/monoShoot.wav" },
+	{ MonkeyDie ,"../Sources/assets/efectos_sonido/monkey/monoDie.ogg" },
 
 	//Player
 	{ Walk	  ,"../Sources/assets/efectos_sonido/player/walk.wav" },

@@ -215,6 +215,12 @@ public:
 		WolfHowl,
 		WolfAttack,
 		WolfDie,
+
+		//Efectos para el mono
+		MonkeyIdle,
+		MonkeyAttack,
+		MonkeyShoot,
+		MonkeyDie,
 		
 		//player
 		Walk,
