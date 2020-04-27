@@ -8,7 +8,7 @@ private:
 	virtual void initObject() {};
 
 public:
-	Boots(double price, double speed, double armor, equipType type) : Equipment(type) {
+	Boots(Application* app, double price, double speed, double armor, equipType type) : Equipment(app, type) {
 		price_ = price;
 		modifiers_.moveSpeed_ = speed;
 		modifiers_.armor_ = armor;

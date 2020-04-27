@@ -8,7 +8,7 @@ private:
 	virtual void initObject() {};
 
 public:
-	Gun(double price, double distDamage, double distRate, equipType type) : Equipment(type) {
+	Gun(Application* app, double price, double distDamage, double distRate, equipType type) : Equipment(app, type) {
 		price_ = price;
 		modifiers_.distDmg_ = distDamage;
 		modifiers_.distRate_ = distRate;

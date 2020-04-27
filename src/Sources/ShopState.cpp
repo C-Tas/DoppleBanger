@@ -59,13 +59,13 @@ ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(
 
 #ifdef _DEBUG
 
-	Gloves* guante0 = new Gloves(20.0, 10, 10, equipType::GlovesII);
-	Gloves* guante1 = new Gloves(20.0, 10, 10, equipType::GlovesII);
-	Gloves* guante2 = new Gloves(20.0, 10, 10, equipType::GlovesII);
-	Gloves* guante3 = new Gloves(20.0, 10, 10, equipType::GlovesII);
-	Gloves* guante4 = new Gloves(20.0, 10, 10, equipType::GlovesII);
-	Gloves* guante5 = new Gloves(20.0, 10, 10, equipType::GlovesII);
-	Gloves* guante6 = new Gloves(20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante0 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante1 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante2 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante3 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante4 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante5 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesII);
+	Gloves* guante6 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesII);
 
 	addToInventory(guante0);
 	addToInventory(guante1);
@@ -76,17 +76,17 @@ ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(
 	addToInventory(guante6);
 
 
-	Gloves* guante11 = new Gloves(20.0, 10, 10, equipType::GlovesI);
-	Gloves* guante12 = new Gloves(20.0, 10, 10, equipType::GlovesI);
-	Gloves* guante13 = new Gloves(20.0, 10, 10, equipType::GlovesI);
-	Gloves* guante14 = new Gloves(20.0, 10, 10, equipType::GlovesI);
-	Gloves* guante15 = new Gloves(20.0, 10, 10, equipType::GlovesI);
-	Gloves* guante16 = new Gloves(20.0, 10, 10, equipType::GlovesI);
-	Gloves* guante17 = new Gloves(20.0, 10, 10, equipType::GlovesI);
-	Gloves* guante18 = new Gloves(20.0, 10, 10, equipType::GlovesI);
-	Gloves* guante19 = new Gloves(20.0, 10, 10, equipType::GlovesI);
-	Gloves* guante20 = new Gloves(20.0, 10, 10, equipType::GlovesI);
-	Gloves* guante21 = new Gloves(20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante11 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante12 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante13 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante14 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante15 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante16 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante17 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante18 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante19 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante20 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
+	Gloves* guante21 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
 
 	addToShop(guante11);
 	addToShop(guante12);
@@ -240,7 +240,7 @@ void ShopState::sellObj()
 	{
 		if (select_->getIterator() == ListPos)++ListPos;
 		select_->Enable(true);
-		player_->addMoney(select_->getObject()->getPrice());
+		gm_->addInventoryGold(select_->getObject()->getPrice());
 		inventoryList_.erase(select_->getIterator());
 		delete select_;
 		select_ = nullptr;
@@ -290,11 +290,11 @@ void ShopState::addToShop(Equipment* ob)
 
 void ShopState::buyObj()
 {
-	if (select_ != nullptr && player_->getMoney() >= select_->getObject()->getPrice() && select_->getId() == 1)
+	if (select_ != nullptr && gm_->getInventoryGold() >= select_->getObject()->getPrice() && select_->getId() == 1)
 	{
 		if (select_->getIterator() == shopListPos)++shopListPos;
 		select_->Enable(true);
-		player_->addMoney(-select_->getObject()->getPrice());
+		gm_->addInventoryGold(-select_->getObject()->getPrice());
 		addToInventory(select_->getObject());
 		shopList_.erase(select_->getIterator());
 	}

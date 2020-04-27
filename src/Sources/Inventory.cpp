@@ -90,13 +90,13 @@ Inventory::Inventory(Application* app) :GameState(app) {
 	string nombre = "guantes1";
 	string desc = "duantes1";
 	
-	Gloves* guante0 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesII);
-	Gloves* guante1 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante2 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante3 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante4 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante5 = new Gloves(20.0, 10.0, 10.0, equipType::GlovesI);
-	Armor* armor = new Armor(20.0, 10.0, 10.0, equipType::ArmorII);
+	Gloves* guante0 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesII);
+	Gloves* guante1 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	Gloves* guante2 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	Gloves* guante3 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	Gloves* guante4 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	Gloves* guante5 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	Armor* armor = new Armor(app_, 20.0, 10.0, 10.0, equipType::ArmorII);
 
 	addToInventory(guante0);
 	addToInventory(guante1);

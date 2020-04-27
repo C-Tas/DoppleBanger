@@ -16,13 +16,13 @@ enum class equipType {
 };
 enum class potionType { Health, Mana, Speed, Damage, Armor, Crit };
 enum class ObjectType { Equipment, Usable };
-class Item
+class Item : public GameObject
 {
 protected:
 	double price_ = 0;
 	double quantity_ = 0;
 	ObjectType objectType_;
-	Item(ObjectType objectType, double quantity = 1) : quantity_(quantity), objectType_(objectType) {};
+	Item(Application* app, ObjectType objectType, double quantity = 1) : GameObject(app, Vector2D(0, 0), Vector2D(0, 0)), quantity_(quantity), objectType_(objectType) {};
 	virtual void initObject() = 0;
 public:
 	~Item() {};

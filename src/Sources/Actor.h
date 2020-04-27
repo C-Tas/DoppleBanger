@@ -26,7 +26,7 @@ class Actor : public Dynamic
 public:
 #pragma region setters
 	void setHealth(double stat) { currStats_.health_ = stat; };
-	void setMana(double stat) { currStats_.Mana = stat; };
+	void setMana(double stat) { currStats_.mana_ = stat; };
 	void setManaReg(double stat) { currStats_.manaReg_ = stat; };
 	void setArmor(double stat) { currStats_.armor_ = stat; };
 	void setMeleeDmg(double stat) { currStats_.meleeDmg_ = stat; };
@@ -41,7 +41,7 @@ public:
 
 #pragma region getters
 	double getHealth() { return currStats_.health_; };
-	double getMana() { return currStats_.Mana; };
+	double getMana() { return currStats_.mana_; };
 	double getManaReg() { return currStats_.manaReg_; };
 	double getArmor() { return currStats_.armor_; };
 	double getMeleeDmg() { return currStats_.meleeDmg_; };
@@ -56,7 +56,7 @@ public:
 
 #pragma region addition
 	void addHealth(double stat) { currStats_.health_ += stat; };
-	void addMana(double stat) { currStats_.Mana += stat; };
+	void addMana(double stat) { currStats_.mana_ += stat; };
 	void addManaReg(double stat) { currStats_.manaReg_ += stat; };
 	void addArmor(double stat) { currStats_.armor_ += stat; };
 	void addMeleeDmg(double stat) { currStats_.meleeDmg_ += stat; };
@@ -71,7 +71,7 @@ public:
 
 #pragma region substraction
 	void removeHealth(double stat) { currStats_.health_ -= stat; };
-	void removeMana(double stat) { currStats_.Mana -= stat; };
+	void removeMana(double stat) { currStats_.mana_ -= stat; };
 	void removeManaReg(double stat) { currStats_.manaReg_ -= stat; };
 	void removeArmor(double stat) { currStats_.armor_ -= stat; };
 	void removeMeleeDamage(double stat) { currStats_.meleeDmg_ -= stat; };

@@ -57,9 +57,9 @@ const void HUD::draw() {
 }
 
 bool HUD::update() {
-	currentLife_ = dynamic_cast<Player*>(gm_->getPlayer())->getHealth();
+	currentLife_ = gm_->getPlayer()->getHealth();
 	propLife_ = currentLife_ / maxLife_;
-	clipLife_.h = life_->getHeight() * propLife_; //vidaAct * AltTotal / VidaMax
+	clipLife_.h = life_->getHeight() * propLife_;	//vidaAct * AltTotal / VidaMax
 	clipLife_.y = life_->getHeight() - clipLife_.h;
 
 	currentMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getMana();
@@ -156,11 +156,11 @@ void HUD::initObject() {
 	clipLife_.y = 0;
 	clipLife_.w = life_->getWidth();
 	clipLife_.h = life_->getHeight();
-	maxLife_ = dynamic_cast<Player*>(gm_->getPlayer())->getMaxHealth();
+ 	maxLife_ = gm_->getPlayer()->getMaxHealth();
 
 	xMana_ = app_->getWindowWidth() / 10;
 	yMana_ = app_->getWindowHeight() * 11 / 13;
-	maxMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getMaxMana();
+	maxMana_ = gm_->getPlayer()->getMaxMana();
 
 	//Tamaño del cooldown
 	cdRect_.w = cdRect_.h = app_->getWindowWidth() * 2 / 35;

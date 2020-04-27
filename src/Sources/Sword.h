@@ -7,7 +7,7 @@ private:
 	virtual void initObject() {};
 
 public:
-	Sword(double price, double meleeDamage, double meleeRate, equipType type) : Equipment(type) {
+	Sword(Application* app, double price, double meleeDamage, double meleeRate, equipType type) : Equipment(app, type) {
 		price_ = price;
 		modifiers_.meleeDmg_ = meleeDamage;
 		modifiers_.meleeRate_ = meleeRate;

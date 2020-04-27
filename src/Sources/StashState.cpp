@@ -143,10 +143,10 @@ void StashState::initState() {
 	//Creo aqu� objetos para comprobar funcionalidad
 	#ifdef _DEBUG
 
-	Gun* gun  = new Gun(0, 0, 0, equipType::ShotgunI);
-	Gun* gun1 = new Gun(0, 0, 0, equipType::ShotgunI);
-	Gun* gun2 = new Gun(0, 0, 0, equipType::ShotgunI);
-	Gun* gun3 = new Gun(0, 0, 0, equipType::ShotgunI);
+	Gun* gun  = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
+	Gun* gun1 = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
+	Gun* gun2 = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
+	Gun* gun3 = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
 
 	
 	InventoryButton* b = new InventoryButton(app_, Vector2D(100, 400), Vector2D(125, 50), gun, callbackSelectObject);

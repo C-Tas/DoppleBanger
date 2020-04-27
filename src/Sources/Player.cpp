@@ -33,11 +33,15 @@ void Player::initObject()
 
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
-	equip_.armor_ = new Armor(10, 10, 10, equipType::ArmorI);
-	equip_.gloves_ = new Gloves(10, 10, 10, equipType::GlovesI);
-	equip_.boots_ = new Boots(10, 10, 10, equipType::BootsI);
-	equip_.sword_ = new Sword(10, 10, 10, equipType::SaberI);
-	equip_.gun_ = new Gun(10, 10, 10, equipType::PistolI);
+	equip_.armor_ = new Armor(app_, 10, 10, 10, equipType::ArmorI);
+	equip_.gloves_ = new Gloves(app_, 10, 10, 10, equipType::GlovesI);
+	equip_.boots_ = new Boots(app_, 10, 10, 10, equipType::BootsI);
+	equip_.sword_ = new Sword(app_, 10, 10, 10, equipType::SaberI);
+	equip_.gun_ = new Gun(app_, 10, 10, 10, equipType::PistolI);
+
+	//DEBUG
+	equip_.potions_[0] = new usable(app_, potionType::Speed);
+	equip_.potions_[1] = new usable(app_, potionType::Speed);
 }
 
 void Player::load(jute::jValue& mainJson)
@@ -51,22 +55,22 @@ void Player::loadObjects(jute::jValue& mainJson) {
 	//Objetos equipados
 	for (int i = 0; i < 2; i++) {
 		if (mainJson["objects"][i].as_string() == "Health") {
-			equip_.potions_[i] = new usable(potionType::Health);
+			equip_.potions_[i] = new usable(app_, potionType::Health);
 		}
 		else if (mainJson["objects"][i].as_string() == "Mana") {
-			equip_.potions_[i] = new usable(potionType::Mana);
+			equip_.potions_[i] = new usable(app_, potionType::Mana);
 		}
 		else if (mainJson["objects"][i].as_string() == "Speed") {
-			equip_.potions_[i] = new usable(potionType::Speed);
+			equip_.potions_[i] = new usable(app_, potionType::Speed);
 		}
 		else if (mainJson["objects"][i].as_string() == "Armor") {
-			equip_.potions_[i] = new usable(potionType::Armor);
+			equip_.potions_[i] = new usable(app_, potionType::Armor);
 		}
 		else if (mainJson["objects"][i].as_string() == "Dmg") {
-			equip_.potions_[i] = new usable(potionType::Damage);
+			equip_.potions_[i] = new usable(app_, potionType::Damage);
 		}
 		else if (mainJson["objects"][i].as_string() == "Crit") {
-			equip_.potions_[i] = new usable(potionType::Crit);
+			equip_.potions_[i] = new usable(app_, potionType::Crit);
 		}
 	}
 }
@@ -84,31 +88,31 @@ void Player::loadEquip(jute::jValue& mainJson) {
 	double auxStat1 = mainJson["equipment"][0]["health"].as_double();
 	double auxStat2 = mainJson["equipment"][0]["armor"].as_double();
 	equipType auxType = (equipType)mainJson["equipment"][0]["name"].as_int();
-	equip_.armor_ = new Armor(auxPrice, auxStat1, auxStat2, auxType);
+	equip_.armor_ = new Armor(app_, auxPrice, auxStat1, auxStat2, auxType);
 	//Guantes
 	auxPrice = mainJson["equipment"][1]["price"].as_double();
 	auxStat1 = mainJson["equipment"][1]["critic"].as_double();
 	auxStat2 = mainJson["equipment"][1]["armor"].as_double();
 	auxType = (equipType)mainJson["equipment"][1]["name"].as_int();
-	equip_.gloves_ = new Gloves(auxPrice, auxStat1, auxStat2, auxType);
+	equip_.gloves_ = new Gloves(app_, auxPrice, auxStat1, auxStat2, auxType);
 	//Botas
 	auxPrice = mainJson["equipment"][2]["price"].as_double();
 	auxStat1 = mainJson["equipment"][2]["speed"].as_double();
 	auxStat2 = mainJson["equipment"][2]["armor"].as_double();
 	auxType = (equipType)mainJson["equipment"][2]["name"].as_int();
-	equip_.boots_ = new Boots(auxPrice, auxStat1, auxStat2, auxType);
+	equip_.boots_ = new Boots(app_, auxPrice, auxStat1, auxStat2, auxType);
 	//Espada
 	auxPrice = mainJson["equipment"][3]["price"].as_double();
 	auxStat1 = mainJson["equipment"][3]["damage"].as_double();
 	auxStat2 = mainJson["equipment"][3]["rate"].as_double();
 	auxType = (equipType)mainJson["equipment"][3]["name"].as_int();
-	equip_.sword_ = new Sword(auxPrice, auxStat1, auxStat2, auxType);
+	equip_.sword_ = new Sword(app_, auxPrice, auxStat1, auxStat2, auxType);
 	//Pistola
 	auxPrice = mainJson["equipment"][4]["price"].as_double();
 	auxStat1 = mainJson["equipment"][4]["damage"].as_double();
 	auxStat2 = mainJson["equipment"][4]["rate"].as_double();
 	auxType = (equipType)mainJson["equipment"][4]["name"].as_int();
-	equip_.gun_ = new Gun(auxPrice, auxStat1, auxStat2, auxType);
+	equip_.gun_ = new Gun(app_, auxPrice, auxStat1, auxStat2, auxType);
 }
 
 void Player::initSkills()
@@ -168,15 +172,13 @@ bool Player::update()
 		initShoot();
 	}
 
-	//para utilizar las pociones
+	
 	if (eventHandler_->isKeyDown(SDLK_1) && equip_.potions_[0] != nullptr && !equip_.potions_[0]->isUsed()) {
-		PotionTime1 = SDL_GetTicks();
-		usePotion(equip_.potions_[0]);
+		usePotion(equip_.potions_[0], 0);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 	}
 	if (eventHandler_->isKeyDown(SDLK_2) && equip_.potions_[1] != nullptr && !equip_.potions_[1]->isUsed()) {
-		PotionTime2 = SDL_GetTicks();
-		usePotion(equip_.potions_[1]);
+		usePotion(equip_.potions_[1], 1);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 	}
 
@@ -530,50 +532,88 @@ void Player::activeInvincible()
 }
 
 void Player::decreaseMana(double mana) {
-	currStats_.Mana -= mana;
-	if (currStats_.Mana <= 0) currStats_.Mana = 0;
+	currStats_.mana_ -= mana;
+	if (currStats_.mana_ <= 0) currStats_.mana_ = 0;
 }
 
-void Player::usePotion(usable* potion) {
+void Player::usePotion(usable* potion, int key) {
+	double auxValue = potion->getValue();
 	switch (potion->getType())
 	{
 	case potionType::Health:
-		currStats_.health_ = currStats_.health_ * (1 + potion->getValue() / 100);
+		currStats_.health_ = maxHealth_ * (1 + (auxValue / 100));
+		if (currStats_.health_ > maxHealth_) currStats_.health_ = maxHealth_;
 		break;
 	case potionType::Mana:
-		currStats_.Mana = currStats_.Mana * (1 + potion->getValue() / 100);
-		cout << currStats_.Mana << endl;
+		currStats_.mana_ = maxMana_ * (1 + auxValue / 100);
+		if (currStats_.mana_ > MANA) currStats_.mana_ = MANA;
 		break;
 	case potionType::Speed:
-		currStats_.moveSpeed_ += potion->getValue();
+		if (!potionUsing_[0]) {
+			cout << "Suma velocidad" << endl;
+			currStats_.moveSpeed_ += auxValue;
+			potionUsing_[0] = true;
+		}
+		timerPotion_[0] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		break;
 	case potionType::Damage:
-		currStats_.meleeDmg_ = currStats_.meleeDmg_ * (1 + potion->getValue() / 100);
-		currStats_.distDmg_ = currStats_.distDmg_ * (1 + potion->getValue() / 100);
+		if (!potionUsing_[1]) {
+			currStats_.meleeDmg_ = currStats_.meleeDmg_ * (1 + auxValue / 100);
+			currStats_.distDmg_ = currStats_.distDmg_ * (1 + auxValue / 100);
+			potionUsing_[1] = true;
+		}
+		timerPotion_[1] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		break;
 	case potionType::Armor:
-		currStats_.armor_ += potion->getValue();
+		if (!potionUsing_[2]) {
+			currStats_.armor_ += auxValue;
+			potionUsing_[2] = true;
+		}
+		timerPotion_[2] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		break;
 	case potionType::Crit:
-		currStats_.crit_ += potion->getValue();
+		if (!potionUsing_[3]) {
+			currStats_.crit_ += auxValue;
+			potionUsing_[3] = true;
+		}
+		timerPotion_[3] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		break;
 	}
 
+	app_->getCurrState()->addUpdateList(potion);
+	equip_.potions_[key] = nullptr;
 	potion->use();
 }
 
-void Player::desactivePotion(usable* potion){
-	//Pocion1
-	//Si la pocion se usa 
-	if (equip_.potions_[0] != nullptr && equip_.potions_[0] == potion) {
-		//app_->getCurrState()->removeRenderUpdateList(equip_.potions_[0]);
-		equip_.potions_[0] = nullptr;
-	}
-	//Pocion2
-	//Si la pocion se usa
-	if (equip_.potions_[1] != nullptr && equip_.potions_[1] == potion) {
-		//app_->getCurrState()->removeRenderUpdateList(equip_.potions_[1]);
-		equip_.potions_[1] = nullptr;
+void Player::desactiveBuffPotion(usable* potion, int timerPos){
+	//Como se ha hecho previamente, se ha guardado el momento en el que se usó la poción
+	//de esa manera, si se vuelve a usar una poción del mismo tipo, se resetea timerPotion_[timerPos]
+	//por lo que unicamente quitara el debufo cuando se cumpla ese tiempo
+	if ((SDL_GetTicks() - timerPotion_[timerPos]) / 1000 > potion->getTime()) {
+		double auxValue = potion->getValue();
+		switch (potion->getType())
+		{
+		case potionType::Speed:
+			currStats_.moveSpeed_ -= auxValue;
+			timerPotion_[0] = false;
+			break;
+		case potionType::Damage:
+			currStats_.meleeDmg_ = currStats_.meleeDmg_ / (1 + auxValue / 100);
+			currStats_.distDmg_ = currStats_.distDmg_ / (1 + auxValue / 100);
+			timerPotion_[1] = false;
+			break;
+		case potionType::Armor:
+			currStats_.armor_ -= auxValue;
+			timerPotion_[2] = false;
+			break;
+		case potionType::Crit:
+			currStats_.crit_ -= auxValue;
+			timerPotion_[3] = false;
+			break;
+		default:
+			break;
+		}
+		cout << "Fin del efecto" << endl;
 	}
 }
 

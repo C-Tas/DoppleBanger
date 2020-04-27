@@ -1,5 +1,7 @@
 #include "usable.h"
 #include "Player.h"
+#include "Application.h"
+#include "GameState.h"
 
 void usable::initObject()
 {
@@ -8,10 +10,12 @@ void usable::initObject()
 	case potionType::Health:
 		price_ = HEALTH_PRICE;
 		value_ = HEALTH_VALUE;
+		time_ = 0;
 		break;
 	case potionType::Mana:
 		price_ = MANA_PRICE;
 		value_ = MANA_VALUE;
+		time_ = 0;
 		break;
 	case potionType::Speed:
 		price_ = SPEED_PRICE;
@@ -38,12 +42,13 @@ void usable::initObject()
 bool usable::update()
 {
 	if (used_) {
-		if (time_ <= -1) {
-			GameManager::instance()->getPlayer()->desactivePotion(this);
+		cout << (SDL_GetTicks() - useTime_) / 1000 << endl;
+		if (time_ <= 0) {
+			app_->getCurrState()->removeUpdateList(this);
 			return true;
 		}
-		else if (SDL_GetTicks() - useTime_ > time_) {
-			GameManager::instance()->getPlayer()->desactivePotion(this);
+		else if ((SDL_GetTicks() - useTime_) / 1000 > time_) {
+			desactivePotion();
 			return true;
 		}
 	}
@@ -54,5 +59,45 @@ bool usable::update()
 void usable::use()
 {
 	used_ = true;
-	useTime_ = SDL_GetTicks();
+	GameManager* gm_ = GameManager::instance();
+	switch (type_)
+	{
+	case potionType::Speed:
+		useTime_ = SDL_GetTicks();
+		break;
+	case potionType::Damage:
+		useTime_ = gm_->getPlayer()->getTimerPotion(1);
+		break;
+	case potionType::Armor:
+		useTime_ = gm_->getPlayer()->getTimerPotion(2);
+		break;
+	case potionType::Crit:
+		useTime_ = gm_->getPlayer()->getTimerPotion(3);
+		break;
+	default:
+		useTime_ = 0;
+		break;
+	}
+	
+}
+
+void usable::desactivePotion()
+{
+	GameManager* gm_ = GameManager::instance();
+	switch (type_)
+	{
+	case potionType::Speed:
+		gm_->getPlayer()->desactiveBuffPotion(this, 0);
+		break;
+	case potionType::Damage:
+		gm_->getPlayer()->desactiveBuffPotion(this, 1);
+		break;
+	case potionType::Armor:
+		gm_->getPlayer()->desactiveBuffPotion(this, 2);
+		break;
+	case potionType::Crit:
+		gm_->getPlayer()->desactiveBuffPotion(this, 3);
+		break;
+	}
+	app_->getCurrState()->removeUpdateList(this);
 }

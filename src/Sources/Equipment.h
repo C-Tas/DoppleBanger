@@ -10,7 +10,7 @@ protected:
 	virtual void initObject() = 0;
 public:
 	//Crea un item equipable del tipo dado
-	Equipment(equipType type) : Item(ObjectType::Equipment), type_(type) {};
+	Equipment(Application* app, equipType type) : Item(app, ObjectType::Equipment), type_(type) {};
 	virtual ~Equipment() {}; //Destructora generica
 
 	virtual bool update() { return false; };

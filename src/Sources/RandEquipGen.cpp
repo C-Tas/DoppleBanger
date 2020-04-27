@@ -35,7 +35,7 @@ Equipment* RandEquipGen::genEquip(int type)
 		health = rn_->nextInt(7 * area, 16 * area);
 		armor = rn_->nextInt(3 * area, 8 * area);
 		price = rn_->nextInt(2 * area, 4 * area);
-		obj = new Armor(price, health, armor, (equipType)type);
+		obj = new Armor(app_, price, health, armor, (equipType)type);
 		break;
 
 	//Velocidad y armadura
@@ -43,7 +43,7 @@ Equipment* RandEquipGen::genEquip(int type)
 		speed = rn_->nextInt(1 * area, 4 * area);
 		armor = rn_->nextInt(2 * area, 6 * area);
 		price = rn_->nextInt(1 * area, 2 * area);
-		obj = new Boots(price, speed, armor, (equipType)type);
+		obj = new Boots(app_, price, speed, armor, (equipType)type);
 		break;
 
 	//Cr�tico y armadura
@@ -51,7 +51,7 @@ Equipment* RandEquipGen::genEquip(int type)
 		crit = rn_->nextInt(3 * area, 8 * area);
 		armor = rn_->nextInt(1 * area, 3 * area);
 		price = rn_->nextInt(1 * area, 4 * area);
-		obj = new Gloves(price, crit, armor, (equipType)type);
+		obj = new Gloves(app_, price, crit, armor, (equipType)type);
 		break;
 
 	//Ad y velocidad de ataque
@@ -60,7 +60,7 @@ Equipment* RandEquipGen::genEquip(int type)
 		ad = rn_->nextInt(5 * area, 16 * area);
 		meleeRate = rn_->nextInt(3 * area, 6 * area);
 		price = rn_->nextInt(3 * area, 5 * area);
-		obj = new Sword(price, ad, meleeRate, (equipType)type);
+		obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 		break;
 
 	//Mas da�o que la espada
@@ -68,7 +68,7 @@ Equipment* RandEquipGen::genEquip(int type)
 		ad = rn_->nextInt(6 * area, 17 * area);
 		meleeRate = rn_->nextInt(1 * area, 4 * area);
 		price = rn_->nextInt(3 * area, 5 * area);
-		obj = new Sword(price, ad, meleeRate, (equipType)type);
+		obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 		break;
 
 	//Ap y velocidad de disparo
@@ -77,7 +77,7 @@ Equipment* RandEquipGen::genEquip(int type)
 		ad = rn_->nextInt(5 * area, 16 * area);
 		distRate = rn_->nextInt(2 * area, 4 * area);
 		price = rn_->nextInt(4 * area, 6 * area);
-		obj = new Gun(price, ad, distRate, (equipType)type);
+		obj = new Gun(app_, price, ad, distRate, (equipType)type);
 		break;
 
 	//Dispara en are recta con menos da�o y alcance que la escopeta
@@ -85,7 +85,7 @@ Equipment* RandEquipGen::genEquip(int type)
 		ad = rn_->nextInt(3 * area, 13 * area);
 		distRate = rn_->nextInt(1 * area, 2 * area);
 		price = rn_->nextInt(4 * area, 6 * area);
-		obj = new Gun(price, ad, distRate, (equipType)type);
+		obj = new Gun(app_, price, ad, distRate, (equipType)type);
 		break;
 	default:
 		return nullptr;

@@ -7,7 +7,7 @@ class Gloves : public Equipment
 private:
 	virtual void initObject() {};
 public:
-	Gloves(double price, double crit, double armor, equipType type) : Equipment(type) {
+	Gloves(Application* app, double price, double crit, double armor, equipType type) : Equipment(app, type) {
 		price_ = price;
 		modifiers_.crit_ = crit;
 		modifiers_.armor_ = armor;

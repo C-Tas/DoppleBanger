@@ -76,12 +76,11 @@ public:
 	#pragma region Getters
 		const Clon* getClon() { return clon_; };
 		const int getLiberation() { return liberation_; };
-		const int getMoney() { return money_; };
-		const double getMaxHealth() { return HEALTH; }; //Faltaria poner una variable que lleve la vida maxima sin ser cte
-		const double getMaxMana() { return MANA; }; //Faltaria poner una variable que lleve el mana maximo sin ser cte
+		const double getMaxHealth() { return maxHealth_; }; //Devuelve la vida maxima del player
+		const double getMaxMana() { return maxMana_; };		//Devuelve el mana maximo del player
 
 		const Vector2D getPreviousPos() { return previousPos_; }
-
+		 
 		const Stats& getStats() { return currStats_; };
 		//habilidades
 		//activa la pasiva invencible y aplica los efectos de esta
@@ -105,12 +104,7 @@ public:
 		void equip(Boots* boots) { equip_.boots_ = boots; };
 		void equip(Sword* sword) { equip_.sword_ = sword; };
 		void equip(Gun* gun) { equip_.gun_ = gun; };
-		void equipPotion1(usable* pot) { equip_.potions_[0] = pot; };
-		void equipPotion2(usable* pot) { equip_.potions_[1] = pot; };
-
-		void addMoney(int money) { money_ += money; };
-		void usePotion(usable* potion);
-		void desactivePotion(usable* potion);
+		void addMaxHealth(double addition) { maxHealth_ = addition; };
 		void setClonCoolDown() { cdSkills[3] = true; }
 		//Aumenta la cadencia de tiro del player
 		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
@@ -119,6 +113,17 @@ public:
 
 		//Carga el equipamiento del player
 		void load(jute::jValue& mainJson);
+	#pragma endregion
+	#pragma region Pociones
+		//Metodo para usar las pociones
+		void usePotion(usable* potion, int key);
+		//Metodo para desactivar el bufo de las pociones
+		void desactiveBuffPotion(usable* potion, int timerPos);
+		//Equipa pociones	
+		void equipPotion1(usable* pot) { equip_.potions_[0] = pot; };
+		void equipPotion2(usable* pot) { equip_.potions_[1] = pot; };
+		//Devuelve el instante en el que se usó la poción
+		const double getTimerPotion(int potion) { return timerPotion_[potion]; };
 	#pragma endregion
 	#pragma region Skills
 		///<summary>Método para crear las skills que tiene el player
@@ -134,7 +139,6 @@ public:
 
 private:
 	bool attacking_ = false;
-	int money_ = 0;
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
 	Clon* clon_ = nullptr;
@@ -145,6 +149,10 @@ private:
 	vector<Skill*> skills_;
 	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
 	DIR lookAt;	//Hacia dónde mira
+	//Objetos
+	//<Speed, Damage, Armor, Crit>			
+	vector<bool> potionUsing_{ 0, 0, 0, 0 };	//Para saber si se está usando la poción y resetear el tiempo
+	vector<double> timerPotion_{ 0, 0, 0, 0 };	//Para guardar y restablecer el tiempo de las pociones
 #pragma region Animaciones
 	Texture* auxTx_ = nullptr;				//Textura de idle temporal, se borrará cuadno esté el idle
 	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
@@ -267,7 +275,8 @@ private:
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
 	const double MELEE_RATE = 1;		//Velocidad del ataque a melee en segundos
 	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos
-
+	double maxHealth_ = 1000;			//Representa la cantidad maxima de vida
+	double maxMana_ = 100;				//Representa la cantidad maxima de mana
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
 
