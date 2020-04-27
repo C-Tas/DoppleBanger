@@ -76,7 +76,7 @@ bool Player::update()
 		cout << "Fin rebote" << endl;
 		ricochet_ = false;
 	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0]!= nullptr) {
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0] != nullptr) {
 		skills_[0]->action();
 		GameManager::instance()->setSkillCooldown(true, Key::Q);
 		cdSkills[0] = true;
@@ -117,6 +117,11 @@ bool Player::update()
 		initShoot();
 	}
 
+	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::MIDDLE)) {
+		cout << getCenter().getX() << " " << getCenter().getY() << endl;
+	}
+
 	//para utilizar las pociones
 	if (eventHandler_->isKeyDown(SDLK_1)) {
 		if (equip_.potion1_ != nullptr && !equip_.potion1_->isUsed()) {
@@ -125,7 +130,7 @@ bool Player::update()
 			gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 		}
 	}
-	if (eventHandler_->isKeyDown(SDLK_2) ) {
+	if (eventHandler_->isKeyDown(SDLK_2)) {
 		if (equip_.potion2_ != nullptr && !equip_.potion2_->isUsed()) {
 			PotionTime2 = SDL_GetTicks();
 			equip_.potion2_->use(this);
@@ -216,7 +221,7 @@ void Player::initIdle()
 
 void Player::initMove()
 {
-	if (SDL_GetTicks() -  WALK_TIME > lastWalkSound_ ) {
+	if (SDL_GetTicks() - WALK_TIME > lastWalkSound_) {
 		lastWalkSound_ = SDL_GetTicks();
 		app_->getAudioManager()->playChannel(Resources::Walk, -1, 0);
 	}
@@ -331,7 +336,7 @@ void Player::shootAnim()
 {
 	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
 		shoot(mousePos_);
-		shooted_ = true; 
+		shooted_ = true;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();	//Activa el idle
@@ -340,7 +345,7 @@ void Player::shootAnim()
 
 void Player::meleeAnim()
 {
- 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
+	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
 		double totalDmg = currStats_.meleeDmg_;	//Daño total por si hace el Golpe Fuerte
 		if (empoweredAct_) { //Golpe fuerte
 			empoweredAct_ = false;
@@ -489,7 +494,7 @@ void Player::move(Point2D target)
 	dir_.setX(target.getX() - visPos.getX());
 	dir_.setY(target.getY() - visPos.getY());
 	dir_.normalize();
- 	initMove();
+	initMove();
 }
 
 void Player::attack(Enemy* obj)
@@ -538,10 +543,10 @@ void Player::usePotion(int value, potionType type) {
 	}
 }
 
-void Player::desactivePotion(){
+void Player::desactivePotion() {
 	//Pocion1
 	//Si la pocion uno esta usada
-	if (equip_.potion1_ != nullptr && equip_.potion1_->isUsed()  ) {
+	if (equip_.potion1_ != nullptr && equip_.potion1_->isUsed()) {
 		//si es de efecto permanente la borramos
 		if (equip_.potion1_->getDuration() <= -1) {
 			delete equip_.potion1_;

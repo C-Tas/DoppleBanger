@@ -11,12 +11,16 @@ bool Kraken::update() {
 	if (currEnemy_ == nullptr)
 		currEnemy_ = static_cast<Draw*>(GameManager::instance()->getPlayer());
 
-	if ((SDL_GetTicks() - lastAttack_) / 1000 > 5)
+
+
+	if ((SDL_GetTicks() - lastAttack_) / 1000 > 3)
 	{
-		//slam();
-		sweep();
+		swimInit();
 		lastAttack_ = SDL_GetTicks();
 	}
+	if (currState_ == STATE::SWIMMING && (SDL_GetTicks() - swimTime_) / 1000 > SWIM_DURATION)
+		swimEnd();
+
 	//Si ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendr�a que hacer la animaci�n de muerte?
@@ -114,6 +118,34 @@ void Kraken::sweep()
 	Tentacle* tentacle = new Tentacle(app_, this, tentPos, tentScale, (180 / M_PI) * angle, ATTACKS::SWEEP);
 	tentacles_.push_back(tentacle);
 	static_cast<PlayState*>(app_->getGameStateMachine()->getState())->addEnemy(tentacle);
+}
+
+void Kraken::swimInit()
+{
+	currState_ = STATE::SWIMMING;
+	//Empieza animación (cambiar el valor de swimTime)
+
+	//Se encuentra y guarda el índice de la posición más cercana al jugador y su distancia
+	Vector2D closest = Vector2D(-1, -1);
+	Player* player = static_cast<Player*>(GameManager::instance()->getPlayer());
+	for (int i = 0; i < NUM_KRAKEN_SPOTS; i++)
+	{
+		double dist = Vector2D(player->getCenter().getX() - krakenSpots_[i].getX(), player->getCenter().getY() - krakenSpots_[i].getY()).magnitude();
+		if (closest.getX() < 0 || dist < closest.getY())
+			closest.setVec(Vector2D(i, dist));
+	}
+	swimPos_.setVec(krakenSpots_[(int)closest.getX()]);
+
+	swimTime_ = SDL_GetTicks(); //Esto se tendría que hacer al acabar la animación
+}
+
+void Kraken::swimEnd()
+{
+	currState_ = STATE::IDLE;
+	//Empieza animación
+
+	pos_.setX(swimPos_.getX() - (scale_.getX() / 2));
+	pos_.setY(swimPos_.getY() - (scale_.getY() / 2));
 }
 
 void Kraken::tentDeath(Tentacle* obj)
