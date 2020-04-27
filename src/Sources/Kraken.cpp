@@ -7,10 +7,14 @@ Kraken::~Kraken()
 }
 
 bool Kraken::update() {
-	updateFrame();
-	if ((SDL_GetTicks() - lastAttack_) / 1000 > 3)
+
+	if (currEnemy_ == nullptr)
+		currEnemy_ = static_cast<Draw*>(GameManager::instance()->getPlayer());
+
+	if ((SDL_GetTicks() - lastAttack_) / 1000 > 5)
 	{
-		slam();
+		//slam();
+		sweep();
 		lastAttack_ = SDL_GetTicks();
 	}
 	//Si ha muerto
@@ -63,19 +67,51 @@ void Kraken::slam()
 	Vector2D tentPos;
 	//Tama�o relativo al del kraken
 	Vector2D tentScale = Vector2D(1.25 * scale_.getX(), scale_.getY() / 5);
-	Draw* player = static_cast<Draw*>(GameManager::instance()->getPlayer());
-	double deltaX = player->getCenter().getX() - getCenter().getX(), deltaY = player->getCenter().getY() - getCenter().getY();
+	double deltaX = currEnemy_->getCenter().getX() - getCenter().getX(), deltaY = currEnemy_->getCenter().getY() - getCenter().getY();
 
 	//Rotaci�n del tent�culo
-	if (deltaX != 0) angle = atan2(deltaY, deltaX);
-	else if (deltaY > 0) angle = M_PI / 2;
-	else angle = 3 * M_PI / 2;
+	angle = atan2(deltaY, deltaX);
 
 	//Dada la circunferencia y la posici�n del jugador se calcula la posici�n del kraken
 	tentPos.setX((((scale_.getX() * 1.1 + tentScale.getX()) / 2) * cos(angle) + getCenter().getX()) - (tentScale.getX() / 2));
 	tentPos.setY((((scale_.getX() * 1.1 + tentScale.getX()) / 2) * sin(angle) + getCenter().getY()) - (tentScale.getY() / 2));
 
-	Tentacle* tentacle = new Tentacle(app_, this, tentPos, tentScale, (180 / M_PI) * angle);
+	Tentacle* tentacle = new Tentacle(app_, this, tentPos, tentScale, (180 / M_PI) * angle, ATTACKS::SLAM);
+	tentacles_.push_back(tentacle);
+	static_cast<PlayState*>(app_->getGameStateMachine()->getState())->addEnemy(tentacle);
+}
+
+void Kraken::sweep()
+{
+	double angle = 0;
+	double deltaX = currEnemy_->getCenter().getX() - getCenter().getX(), deltaY = currEnemy_->getCenter().getY() - getCenter().getY();
+
+	Vector2D tentScale = Vector2D(1.25 * scale_.getX(), scale_.getY() / 5);
+	Vector2D tentPos;
+	//Si el jugador est� a la izquierda/derecha del kraken
+	if (abs(deltaX) > abs(deltaY))
+	{
+		//Rotaci�n del tent�culo
+		if (deltaX < 0)
+			angle = M_PI;
+		else
+			angle = 0;
+	}
+	//Si el jugador est� arriba/abajo
+	else
+	{
+		//Rotaci�n del tent�culo
+		if (deltaY > 0)
+			angle = M_PI / 2;
+		else
+			angle = 3 * M_PI / 2;
+	}
+
+
+	//Dado el �ngulo se calcula la posici�n en una circunferencia con el mismo radio que Slam()
+	tentPos.setX((((scale_.getX() * 1.1 + tentScale.getX()) / 2) * cos(angle) + getCenter().getX()) - (tentScale.getX() / 2));
+	tentPos.setY((((scale_.getY() * 1.1 + tentScale.getX()) / 2) * sin(angle) + getCenter().getY()) - (tentScale.getY() / 2));
+	Tentacle* tentacle = new Tentacle(app_, this, tentPos, tentScale, (180 / M_PI) * angle, ATTACKS::SWEEP);
 	tentacles_.push_back(tentacle);
 	static_cast<PlayState*>(app_->getGameStateMachine()->getState())->addEnemy(tentacle);
 }
@@ -84,4 +120,9 @@ void Kraken::tentDeath(Tentacle* obj)
 {
 	tentacles_.remove(obj);
 	obj->die();
+}
+
+void Kraken::lostAggro()
+{
+	currEnemy_ = nullptr;
 }

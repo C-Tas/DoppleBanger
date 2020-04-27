@@ -685,7 +685,6 @@ Skill* Player::createSkill(SkillName name)
 
 void Player::displace(Vector2D dir, int dist)
 {
-	cout << dir.getX() << " " << dir.getY() << " " << dir.angle() * (180 / M_PI) << endl;
 	pos_.setX(pos_.getX() + (dir.getX() * dist));
 	pos_.setY(pos_.getY() + (dir.getY() * dist));
 	stop();

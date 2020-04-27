@@ -4,13 +4,13 @@
 
 class Kraken;
 
+enum class ATTACKS { SLAM, SWEEP };
+
 class Tentacle : public Enemy
 {
 public:
-	Tentacle(Application* app, Kraken* kraken, Vector2D pos, Vector2D scale, double rot) : Enemy(app, pos, scale, rot), kraken_(kraken)
-	{
-		initObject();
-	};
+	Tentacle(Application* app, Kraken* kraken, Vector2D pos, Vector2D scale, double rot, ATTACKS attack) : Enemy(app, pos, scale, rot), kraken_(kraken), attack_(attack)
+		{  initObject(); };
 	virtual ~Tentacle() {};
 
 	virtual void onCollider();
@@ -23,40 +23,50 @@ private:
 	int attackFrames_ = 0;
 	//Puntero al kraken padre
 	Kraken* kraken_ = nullptr;
+	ATTACKS attack_;
 
-	//Area del colisión del tentáculo que se guarda para cuando ya ha caído
+	//Velocidad y direcciï¿½n en la que se mueve el tentï¿½culo en sweep
+	bool rotating_ = false;
+	double deltaAngle_ = 0; //Incremento del ï¿½ngulo de rotaciï¿½n
+	double speed_ = 500;
+	int turns_ = 0; //Nï¿½mero de giros
+	Vector2D sweepDir_;
+	Vector2D centerRot_; //Centro de rotaciï¿½n en relaciï¿½n a las esquinas cuando rotan
+	Vector2D initPos_; //Posiciï¿½n inicial
+
+	//Area del colisiï¿½n del tentï¿½culo que se guarda para cuando ya ha caï¿½do
 	SDL_Rect collArea_;
 
-	Anim spawnAnim_ = { 0, 0, 0, 0, false };
-	Anim idleAnim_ = { 0, 0, 0, 0, false };
-	Anim despawnAnim_ = { 0, 0, 0, 0, false };
+	Anim spawnAnim_ = { 0,0,0,0, false };
+	Anim idleAnim_ = { 0,0,0,0, false };
+	Anim despawnAnim_ = { 0,0,0,0, false };
 
 	void initObject();
 	void initAnims();
+	bool slamUpdate();
+	bool sweepUpdate();
 	virtual void initialStats() {};
 
-
 #pragma region Constantes
-	//Duración del tentáculo
-	const int TENTACLE_DURATION = 2;
-	//Duración del tentáculo cayendo
+	//Duraciï¿½n del tentï¿½culo
+	const int TENTACLE_DURATION = 5;
+	//Duraciï¿½n del tentï¿½culo cayendo
 	const int ATTACK_DURATION = 1;
 
-	//Tentáculo aparece
+	//Tentï¿½culo aparece
 	const int NUM_FRAMES_SPAWN = 0;
 	const uint W_FRAME_SPAWN = 0;
 	const uint H_FRAME_SPAWN = 0;
 	const int FRAME_RATE_SPAWN = 0;
-	//Tentáculo idle
+	//Tentï¿½culo idle
 	const int NUM_FRAMES_IDLE = 0;
 	const uint W_FRAME_IDLE = 0;
 	const uint H_FRAME_IDLE = 0;
 	const int FRAME_RATE_IDLE = 0;
-	//Tentáculo desaparece
+	//Tentï¿½culo desaparece
 	const int NUM_FRAMES_DESPAWN = 0;
 	const uint W_FRAME_DESPAWN = 0;
 	const uint H_FRAME_DESPAWN = 0;
 	const int FRAME_RATE_DESPAWN = 0;
 #pragma endregion
 };
-

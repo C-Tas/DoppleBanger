@@ -19,10 +19,11 @@ public:
 	virtual void onCollider() {};
 	void tentDeath(Tentacle* obj);
 	virtual void initialStats() {};
+	virtual void lostAggro();
 private:
 
 	int lastAttack_ = 0;
-	//Lista con los tentáculos invocados
+	//Lista con los tentï¿½culos invocados
 	list<Tentacle*> tentacles_;
 	//Posiciones en las que puede aparecer el kraken
 	Point2D krakenSpots_[6]
@@ -45,9 +46,10 @@ private:
 	//Inicializa las animaciones
 	void initAnims();
 	void slam();
+	void sweep();
 
 	//Constantes para crear las diferentes animaciones 
-	//(los valores puestos no son los correctos, a falta de hacer la animación del mono)
+	//(los valores puestos no son los correctos, a falta de hacer la animaciï¿½n del mono)
 #pragma region Constantes
 	//Idle
 	const int NUM_FRAMES_IDLE = 0;

@@ -51,6 +51,7 @@ public:
 	void shipCollisions();
 	///<summary>Para renderizar los textBox en caso de ser necesario</summary>
 	void drawTextBox();
+	///<summary>Devuelve los objetos en un area</summary>
 	list<Enemy*> getEnemiesInArea(Point2D center, int radius);
 
 #pragma region Remove
