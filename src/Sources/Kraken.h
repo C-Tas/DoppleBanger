@@ -27,7 +27,6 @@ private:
 
 	int lastAttack_ = 0;
 	int swimTime_ = 0;
-	Vector2D swimPos_; //Posición hacia la que está nadando
 	//Lista con los tent�culos invocados
 	list<Tentacle*> tentacles_;
 

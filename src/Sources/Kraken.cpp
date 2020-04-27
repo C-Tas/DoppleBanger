@@ -125,6 +125,14 @@ void Kraken::swimInit()
 	currState_ = STATE::SWIMMING;
 	//Empieza animación (cambiar el valor de swimTime)
 
+	swimTime_ = SDL_GetTicks(); //Esto se tendría que hacer al acabar la animación
+}
+
+void Kraken::swimEnd()
+{
+	currState_ = STATE::IDLE;
+	//Empieza animación
+
 	//Se encuentra y guarda el índice de la posición más cercana al jugador y su distancia
 	Vector2D closest = Vector2D(-1, -1);
 	Player* player = static_cast<Player*>(GameManager::instance()->getPlayer());
@@ -134,18 +142,8 @@ void Kraken::swimInit()
 		if (closest.getX() < 0 || dist < closest.getY())
 			closest.setVec(Vector2D(i, dist));
 	}
-	swimPos_.setVec(krakenSpots_[(int)closest.getX()]);
-
-	swimTime_ = SDL_GetTicks(); //Esto se tendría que hacer al acabar la animación
-}
-
-void Kraken::swimEnd()
-{
-	currState_ = STATE::IDLE;
-	//Empieza animación
-
-	pos_.setX(swimPos_.getX() - (scale_.getX() / 2));
-	pos_.setY(swimPos_.getY() - (scale_.getY() / 2));
+	pos_.setX(krakenSpots_[(int)closest.getX()].getX() - (scale_.getX() / 2));
+	pos_.setY(krakenSpots_[(int)closest.getX()].getY() - (scale_.getY() / 2));
 }
 
 void Kraken::tentDeath(Tentacle* obj)
