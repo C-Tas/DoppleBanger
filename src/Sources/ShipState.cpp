@@ -10,6 +10,7 @@
 #include "StashState.h"
 
 #include "Collisions.h" //Provisional
+#include "Pumpkin.h"
 
 
 #pragma region CallBacks
@@ -105,6 +106,7 @@ void ShipState::initState()
 	addRenderUpdateLists(player_);
 	addRenderUpdateLists(hud_);
 	startInstance_ = SDL_GetTicks();
+
 }
 
 void ShipState::update()

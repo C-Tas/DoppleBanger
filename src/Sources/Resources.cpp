@@ -246,8 +246,21 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	//{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
 
 	//Ship
-	{ Waves ,"../Sources/assets/efectos_sonido/ship/waves.wav" }
+	{ Waves ,"../Sources/assets/efectos_sonido/ship/waves.wav" },
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
+
+	//Calabaza
+	{ AgroPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/agro.mp3" },
+	{ AttackPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/attack.wav" },
+	{ ExplosionPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/explosion.wav" },
+	{ IdlePumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/idle1.mp3" },
+	{ IdlePumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/idle2.mp3" },
+	{ LaughPumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/laugh1.ogg" },
+	{ LaughPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/laugh2.ogg" },
+	{ LaughPumpkin3 ,"../Sources/assets/efectos_sonido/pumpkin/laugh3.ogg" },
+	{ MovePumpkin ,"../Sources/assets/efectos_sonido/pumpkin/move.mp3" },
+	{ TauntPumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/taunt.mp3" },
+	{ TauntPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/taunt1.mp3" }
 };
 
 vector <Resources::MusicInfo> Resources::musicRoutes{
