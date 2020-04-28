@@ -177,6 +177,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PumpkinMoveUpAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovAtras.png" },
 	{ PumpkinMoveDownAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDelante.png" },
 
+	//Magordito
+		//Kirin
+	{ Kirin, "../Sources/assets/enemigos/magordito/Kirin.png" },
+
 		//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
 	{ Stash, "../Sources/assets/colisionables/alijo.png" },

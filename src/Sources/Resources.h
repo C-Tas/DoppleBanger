@@ -186,6 +186,9 @@ public:
 		PumpkinMoveLeftAnim,
 		PumpkinMoveUpAnim,
 		PumpkinMoveDownAnim,
+		//Magordito
+			//Kirin
+		Kirin,
 
 		//Interactuables
 		Wheel,

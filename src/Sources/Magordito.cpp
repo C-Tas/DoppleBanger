@@ -16,10 +16,12 @@ bool Magordito::update() {
 		currState_ = STATE::ATTACKING;
 	}
 	if (currState_ == STATE::ATTACKING) {
-		if (onRange()) {
+		//A falta de cambiar el orden en función de la importancia de los ataques
+		if (onRange(KIRIN_RANGE_ATTACK)) {
 			if (KIRIN_CD <= SDL_GetTicks() - lastKirin_ ) {
 				kirin();
 			}
+			
 		}
 		else
 		{
@@ -42,9 +44,8 @@ void Magordito::initObject() {
 }
 
 void Magordito::initAnims() {
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
-	teleportAnim_ = Anim(NUM_FRAMES_TELEPORT, W_FRAME_TELEPORT, H_FRAME_TELEPORT, FRAME_RATE_TELEPORT, false);
-	kirinAnim_ = Anim(NUM_FRAMES_KIRIN, W_FRAME_KIRIN, H_FRAME_KIRIN, FRAME_RATE_KIRIN, false);
+	kirinAnim_ = Anim(KIRIN_FRAMES, W_FRAME_KIRIN, H_FRAME_KIRIN, KIRIN_FRAME_RATE, false);
+	kirinTx_.push_back(app_->getTextureManager()->getTexture(Resources::Kirin));
 }
 
 void Magordito::kirin()
@@ -55,6 +56,11 @@ void Magordito::kirin()
 		player_->receiveDamage(KIRIN_DMG);
 		cout << "KIRIN!" << endl;
 	}
+}
+
+void Magordito::initKirinAnim()
+{
+
 }
 
 void Magordito::initialStats()
