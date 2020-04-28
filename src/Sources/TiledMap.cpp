@@ -139,7 +139,6 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 {
 	if (objectType == "Monkey") {
 		MonkeyCoco* monkey = new MonkeyCoco(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
-		//state_->addRenderUpdateLists(monkey);
 		state_->addEnemy(monkey);
 		CollisionCtrl::instance()->addEnemy(monkey);
 	}
@@ -168,7 +167,6 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 	}
 	else if (objectType == "Kraken") {
 		Kraken* kraken = new Kraken(app_, pos, Vector2D(4*W_MONKEY, 4*H_MONKEY));
-		//state_->addRenderUpdateLists(monkey);
 		state_->addEnemy(kraken);
 		CollisionCtrl::instance()->addEnemy(kraken);
 	}
@@ -179,7 +177,7 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		//Añadir Pirata naufrago
 		//Falta añadir lo de patrol pero no estoy segura de como funciona
 		EnemyPirate* pirate = new EnemyPirate(app_, pos, Vector2D(W_ENEMYPIRATE, H_ENEMYPIRATE));
-		state_->addRenderUpdateLists(pirate);
+		state_->addEnemy(pirate);
 		CollisionCtrl::instance()->addEnemy(pirate);
 	}
 	else if (objectType == "Cleon") {

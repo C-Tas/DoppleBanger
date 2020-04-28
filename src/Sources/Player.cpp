@@ -29,6 +29,9 @@ void Player::initObject()
 	GameManager::instance()->setPlayer(this);
 	CollisionCtrl::instance()->setPlayer(this);
 
+	posCollision_ = Vector2D((scale_.getX() / 3), (scale_.getY() / 4));
+	scaleCollision_ = { scale_.getX() / 3, scale_.getY() / 2 };
+
 	//Equipamiento inicial del jugador
 	//Balancear los valores del equipamiento cuando sea necesario
 	//equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1), "Pechera", "helloWorld", 10, 10, 10); equip_.armor_->writeStats(); //Prueba

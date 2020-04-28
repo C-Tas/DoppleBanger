@@ -10,7 +10,7 @@ protected:
 	SDL_Rect collisionArea_{ 0,0,0,0 };
 
 	//Vectores que representan el tamaño y la posición de la caja de colisiones
-	Point2D scaleCollision_;
+	Point2D scaleCollision_ = scale_;
 	Point2D posCollision_ = pos_;	//Por el momento se está igualando a pos_, es provisional
 
 	///<summary>Constructor por defecto</summary>
@@ -52,6 +52,12 @@ public:
 		collisionArea_.h = scaleCollision_.getY();
 		return collisionArea_;
 	};
+	const Vector2D getColliderPos() {
+		return pos_ + posCollision_;
+	}
+	const Vector2D getColliderScale() {
+		return scaleCollision_;
+	}
 	///<summary>Establece el rect de colisiones con el valor de newRect</summary>
 	void setCollider(SDL_Rect newRect) { collisionArea_ = newRect; };
 	///<summary>Fija la rotación de las colisiones</summary>

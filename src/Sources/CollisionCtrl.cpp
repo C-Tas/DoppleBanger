@@ -35,7 +35,7 @@ void CollisionCtrl::islandCollisions() {
 	for (auto ob : obstacles_) {
 		
 		//Con jugador
-		if (Collisions::collides(Vector2D(player_->getCollider().x, player_->getCollider().y), player_->getCollider().w, player_->getCollider().h, 
+		if (Collisions::collides(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(), 
 			(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 			player_->stop();
 			(ob)->onCollider();
@@ -204,8 +204,8 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			//RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
 			//npc.object->getPosX() + npc.object->getScaleX() / 2, npc.object->getPosY() + npc.object->getScaleY() / 2, npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 0.11)) {
 
-			if (Collisions::collides(npc.object->getPos(), npc.object->getScaleX() * 0.8, npc.object->getScaleY() * 0.8,
-				player_->getPos(), player_->getScaleX() * 0.8, player_->getScaleY() * 0.8)) {
+			if (Collisions::collides(npc.object->getColliderPos(), npc.object->getColliderScale().getX(), npc.object->getColliderScale().getY(),
+				player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
 					player_->stop();
 					player_->setPos(player_->getPreviousPos());
 			}
@@ -242,8 +242,8 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 	///Colision con las paredes del barco
 	for (auto ob : obstacles_) {
 		//Con jugador
-		if (Collisions::collides(player_->getPos(), player_->getScaleX() * 0.6, player_->getScaleY() * 0.8,
-			(ob)->getPos(), (ob)->getScaleX() * 0.6, (ob)->getScaleY() * 0.8)) {
+		if (Collisions::collides(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+			(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 			player_->stop();
 			(ob)->onCollider();
 			player_->setPos(player_->getPreviousPos());

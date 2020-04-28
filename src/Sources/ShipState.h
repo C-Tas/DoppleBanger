@@ -13,6 +13,7 @@ public:
 	ShipState(Application* app) : PlayState(app) { initState(); }
 	virtual ~ShipState() { delete collisionMap_; }
 	void update();
+	
 
 private:
 	//Tiempo para que canten los piratas
@@ -28,7 +29,7 @@ private:
 	const std::string TILED_MAP = "../Sources/assets/mapas/barco/barco.tmx";
 	const int TILE_WIDTH_TILESET = 8;
 	const int TILE_HEIGHT_TILESET = 8;
-	const int TILE_DRAWING_SIZE =  (int)(app_->getWindowWidth()/60);
+	const int TILE_DRAWING_SIZE =  (app_->getWindowWidth()/62);
 	const int TILESET_COLS = 1;
 	const int TILESET_FILS = 1;
 
