@@ -1,6 +1,7 @@
 #include "Kraken.h"
 #include "CollisionCtrl.h"
 #include "PlayState.h"
+#include "Ink.h"
 
 Kraken::~Kraken()
 {
@@ -11,11 +12,10 @@ bool Kraken::update() {
 	if (currEnemy_ == nullptr)
 		currEnemy_ = static_cast<Draw*>(GameManager::instance()->getPlayer());
 
-
-
-	if ((SDL_GetTicks() - lastAttack_) / 1000 > 3)
+	if ((SDL_GetTicks() - lastAttack_) / 1000 > 5)
 	{
-		swimInit();
+		ink();
+		//swimInit();
 		lastAttack_ = SDL_GetTicks();
 	}
 	if (currState_ == STATE::SWIMMING && (SDL_GetTicks() - swimTime_) / 1000 > SWIM_DURATION)
@@ -63,6 +63,7 @@ void Kraken::initObject()
 	CollisionCtrl::instance()->addEnemy(this);
 	lastAttack_ = SDL_GetTicks();
 	initAnims();
+	swimInit();
 }
 
 void Kraken::slam()
@@ -144,6 +145,23 @@ void Kraken::swimEnd()
 	}
 	pos_.setX(krakenSpots_[(int)closest.getX()].getX() - (scale_.getX() / 2));
 	pos_.setY(krakenSpots_[(int)closest.getX()].getY() - (scale_.getY() / 2));
+}
+
+void Kraken::ink()
+{
+	Vector2D pos;
+	int numShots = AVERAGE_INK_SHOTS + ((rand() % NORMAL_DESVIATION * 2 + 1) - NORMAL_DESVIATION);
+	for (int i = 0; i < numShots; i++)
+	{
+		//El punto sale aleatoriamente entre dos radios, scaleX y 2 scaleX
+		int radius = rand() % (int)(scale_.getX()) + scale_.getX();
+		int angle = rand();
+		pos.setX(radius * cos(angle) + getCenter().getX());
+		pos.setY(radius * sin(angle) + getCenter().getY());
+
+		Ink* ink = new Ink(app_, pos, { 100, 100 });
+		app_->getGameStateMachine()->getState()->addRenderUpdateLists(ink);
+	}
 }
 
 void Kraken::tentDeath(Tentacle* obj)

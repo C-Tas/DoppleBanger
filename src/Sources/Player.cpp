@@ -112,6 +112,12 @@ bool Player::update()
 		GameManager::instance()->setSkillCooldown(false, Key::W);
 	}
 
+	if (slowed_ && (SDL_GetTicks() - slowTime_) / 1000 > slowDuration_)
+	{
+		currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
+		slowed_ = false;
+	}
+
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_) {
 		initShoot();
@@ -693,6 +699,25 @@ void Player::displace(Vector2D dir, int dist)
 	pos_.setX(pos_.getX() + (dir.getX() * dist));
 	pos_.setY(pos_.getY() + (dir.getY() * dist));
 	stop();
+}
+
+void Player::applySlow(double effect, double duration)
+{
+	if (!slowed_)
+	{
+		currStats_.moveSpeed_ -= currStats_.moveSpeed_ * effect;
+		slowEffect_ = effect;
+	}
+	else if (slowed_ && effect > slowEffect_)
+	{
+		currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
+		currStats_.moveSpeed_ -= currStats_.moveSpeed_ * effect;
+		slowEffect_ = effect;
+	}
+
+	slowed_ = true;
+	slowDuration_ = duration;
+	slowTime_ = SDL_GetTicks();
 }
 
 void Player::isEnemyDead(Actor* obj)

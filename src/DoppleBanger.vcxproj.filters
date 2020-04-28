@@ -7,8 +7,12 @@
     <ClCompile Include="SDL2_gfx\SDL2_rotozoom.cpp" />
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
+    <ClCompile Include="Sources\Armor.cpp" />
+    <ClCompile Include="Sources\Blunder.cpp" />
+    <ClCompile Include="Sources\Blunderbuss.cpp" />
     <ClCompile Include="Sources\Boots.cpp" />
     <ClCompile Include="Sources\AudioManager.cpp" />
+    <ClCompile Include="Sources\BoneBullet.cpp" />
     <ClCompile Include="Sources\Bullet.cpp" />
     <ClCompile Include="Sources\Button.cpp" />
     <ClCompile Include="Sources\Camera.cpp" />
@@ -64,6 +68,7 @@
     <ClCompile Include="Sources\ShipState.cpp" />
     <ClCompile Include="Sources\Skill.cpp" />
     <ClCompile Include="Sources\SkillButton.cpp" />
+    <ClCompile Include="Sources\Skeleton.cpp" />
     <ClCompile Include="Sources\SkillState.cpp" />
     <ClCompile Include="Sources\ShopState.cpp" />
     <ClCompile Include="Sources\SRandBasedGenerator.cpp" />
@@ -73,73 +78,37 @@
     <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\Tentacle.cpp" />
     <ClCompile Include="Sources\Sword.cpp" />
+    <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
+    <ClCompile Include="Sources\TiledMap.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\usable.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
     <ClCompile Include="Sources\WinState.cpp" />
     <ClCompile Include="Sources\Wolf.cpp" />
-    <ClCompile Include="Sources\TextBox.cpp" />
-    <ClCompile Include="Sources\Armor.cpp" />
-    <ClCompile Include="tmxLite\FreeFuncs.cpp">
-      <Filter>TXMLite</Filter>
-    </ClCompile>
-    <ClCompile Include="tmxLite\ImageLayer.cpp">
-      <Filter>TXMLite</Filter>
-    </ClCompile>
-    <ClCompile Include="tmxLite\LayerGroup.cpp">
-      <Filter>TXMLite</Filter>
-    </ClCompile>
-    <ClCompile Include="tmxLite\Map.cpp">
-      <Filter>TXMLite</Filter>
-    </ClCompile>
-    <ClCompile Include="tmxLite\miniz.c">
-      <Filter>TXMLite</Filter>
-    </ClCompile>
-    <ClCompile Include="tmxLite\Object.cpp">
-      <Filter>TXMLite</Filter>
-    </ClCompile>
-    <ClCompile Include="tmxLite\ObjectGroup.cpp">
-      <Filter>TXMLite</Filter>
-    <ClCompile Include="Sources\TextBox.cpp">
-      <Filter>GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="tmxLite\Property.cpp">
-      <Filter>TXMLite</Filter>
-    </ClCompile>
-    <ClCompile Include="tmxLite\pugixml.cpp">
-      <Filter>TXMLite</Filter>
-    </ClCompile>
-    <ClCompile Include="tmxLite\TileLayer.cpp">
-      <Filter>TXMLite</Filter>
-    </ClCompile>
-    <ClCompile Include="tmxLite\Tileset.cpp">
-      <Filter>TXMLite</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\TiledMap.cpp" />
-    <ClCompile Include="Sources\Chest.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\TextBox.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Blunderbuss.cpp" />
-    <ClCompile Include="Sources\Blunder.cpp">
-      <Filter>GameObjects\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Clon.cpp">
-      <Filter>GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\SkillState.cpp" />
-    <ClCompile Include="Sources\Skeleton.cpp" />
-    <ClCompile Include="Sources\BoneBullet.cpp" />
+    <ClCompile Include="tmxLite\FreeFuncs.cpp" />
+    <ClCompile Include="tmxLite\ImageLayer.cpp" />
+    <ClCompile Include="tmxLite\LayerGroup.cpp" />
+    <ClCompile Include="tmxLite\Map.cpp" />
+    <ClCompile Include="tmxLite\miniz.c" />
+    <ClCompile Include="tmxLite\Object.cpp" />
+    <ClCompile Include="tmxLite\ObjectGroup.cpp" />
+    <ClCompile Include="tmxLite\Property.cpp" />
+    <ClCompile Include="tmxLite\pugixml.cpp" />
+    <ClCompile Include="tmxLite\TileLayer.cpp" />
+    <ClCompile Include="tmxLite\Tileset.cpp" />
+    <ClCompile Include="Sources\Ink.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
+    <ClInclude Include="Sources\Armor.h" />
+    <ClInclude Include="Sources\Blunder.h" />
+    <ClInclude Include="Sources\Blunderbuss.h" />
     <ClInclude Include="Sources\Boots.h" />
+    <ClInclude Include="Sources\BoneBullet.h" />
     <ClInclude Include="Sources\Bullet.h" />
     <ClInclude Include="Sources\AudioManager.h" />
     <ClInclude Include="Sources\Button.h" />
@@ -199,6 +168,7 @@
     <ClInclude Include="Sources\SelectLevelState.h" />
     <ClInclude Include="Sources\ShipState.h" />
     <ClInclude Include="Sources\ShopState.h" />
+    <ClInclude Include="Sources\Skeleton.h" />
     <ClInclude Include="Sources\Skill.h" />
     <ClInclude Include="Sources\SkillButton.h" />
     <ClInclude Include="Sources\SkillState.h" />
@@ -213,6 +183,7 @@
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
+    <ClInclude Include="Sources\TiledMap.h" />
     <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\usable.h" />
     <ClInclude Include="Sources\Vector2D.h" />
@@ -221,163 +192,22 @@
     <ClInclude Include="Sources\WinState.h" />
     <ClInclude Include="Sources\Wolf.h" />
     <ClInclude Include="Sources\WhirlwindSkill.h" />
-    <ClInclude Include="Sources\Armor.h" />
-    <ClInclude Include="tmxLite\Config.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\FreeFuncs.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\ImageLayer.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\Layer.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\LayerGroup.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\Log.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\Map.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\miniz.h">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\Object.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\ObjectGroup.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\Property.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\pugiconfig.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\pugixml.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\TileLayer.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\Tileset.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="tmxLite\Types.hpp">
-      <Filter>TXMLite</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\TiledMap.h" />
-    <ClInclude Include="Sources\SkillState.h" />
-    <ClInclude Include="Sources\Magordito.h">
-      <Filter>GameObjects\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\PerforateSkill.h">
-      <Filter>GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\RicochetSkill.h">
-      <Filter>GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Trigger.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\TextBox.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Inventory.h">
-      <Filter>GameStateMahcine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\InventoryButton.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\SkillButton.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\ShopState.h">
-      <Filter>GameStateMahcine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\ClonSkill.h">
-      <Filter>GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\ClonSelfDestructSkill.h">
-      <Filter>GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\EmpoweredSkill.h">
-      <Filter>GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\WhirlwindSkill.h">
-      <Filter>GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\VisualElement.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\TextBox.h" />
-    <ClInclude Include="Sources\Skill.h">
-      <Filter>GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Clon.h">
-      <Filter>GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\TextBox.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Bullet.h" />
-    <ClInclude Include="Sources\TextBox.h" />
-    <ClInclude Include="Sources\Bullet.h" />
-    <ClInclude Include="Sources\TextBox.h" />
-    <ClInclude Include="Sources\PlayerBullet.h">
-      <Filter>GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\TextBox.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Camera.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Chest.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\TextBox.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Blunderbuss.h" />
-    <ClInclude Include="Sources\Blunder.h">
-      <Filter>GameObjects\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\SkillState.h" />
-    <ClInclude Include="Sources\Skeleton.h" />
-    <ClInclude Include="Sources\BoneBullet.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="GameStateMahcine">
-      <UniqueIdentifier>{d538f83c-0557-4cbe-a452-42e8e3968f13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObjects">
-      <UniqueIdentifier>{c5536575-d02b-4f4d-8d72-1800aef28992}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObjects\Player">
-      <UniqueIdentifier>{e21c04b9-58ae-4984-a421-9fb01bada395}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObjects\Enemies">
-      <UniqueIdentifier>{952c0873-2367-4bf9-b469-0d3be470d7b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObjects\Objects">
-      <UniqueIdentifier>{f2935c27-7ca3-41b6-949d-815427c9942a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers">
-      <UniqueIdentifier>{a341b240-0598-4e28-8fc2-3c8469445904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools">
-      <UniqueIdentifier>{06ef5a17-8315-4334-a756-1e91f63a7fa1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObjects\SDL_gfx">
-      <UniqueIdentifier>{af832b6e-25fd-4f01-ab1c-db404ba0f52c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TXMLite">
-      <UniqueIdentifier>{0c93a675-c0e6-42d8-9f18-ef086b886b38}</UniqueIdentifier>
-    </Filter>
+    <ClInclude Include="tmxLite\Config.hpp" />
+    <ClInclude Include="tmxLite\FreeFuncs.hpp" />
+    <ClInclude Include="tmxLite\ImageLayer.hpp" />
+    <ClInclude Include="tmxLite\Layer.hpp" />
+    <ClInclude Include="tmxLite\LayerGroup.hpp" />
+    <ClInclude Include="tmxLite\Log.hpp" />
+    <ClInclude Include="tmxLite\Map.hpp" />
+    <ClInclude Include="tmxLite\miniz.h" />
+    <ClInclude Include="tmxLite\Object.hpp" />
+    <ClInclude Include="tmxLite\ObjectGroup.hpp" />
+    <ClInclude Include="tmxLite\Property.hpp" />
+    <ClInclude Include="tmxLite\pugiconfig.hpp" />
+    <ClInclude Include="tmxLite\pugixml.hpp" />
+    <ClInclude Include="tmxLite\TileLayer.hpp" />
+    <ClInclude Include="tmxLite\Tileset.hpp" />
+    <ClInclude Include="tmxLite\Types.hpp" />
+    <ClInclude Include="Sources\Ink.h" />
   </ItemGroup>
 </Project>

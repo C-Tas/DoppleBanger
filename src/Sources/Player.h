@@ -59,6 +59,8 @@ public:
 	void createClon();
 	//Mueve al jugador una distancia en una direccion
 	void displace(Vector2D dir, int dist);
+	//Aplica una ralentiazación al jugador
+	void applySlow(double slow, double duration);
 	//Si se ha muerto el enemigo al que está atacando el jugador se setea a nullptr
 	void isEnemyDead(Actor* obj);
 	//Cambia de estado a muriendo
@@ -147,6 +149,10 @@ public:
 private:
 	bool dead_ = false;
 	bool attacking_ = false;
+	bool slowed_ = false;
+	double slowDuration_ = 0;
+	double slowEffect_ = 0;
+	double slowTime_ = 0;
 	int money_ = 0;
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
