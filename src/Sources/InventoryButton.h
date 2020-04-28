@@ -32,7 +32,9 @@ public:
 	bool isEquipped() { return equipped; }
 	void Enable(bool e) { equipped = e; }
 	virtual ~InventoryButton() {
-		if(!equipped) delete object_;};
+		if(!equipped)
+			delete object_;
+	};
 
 	//iterator
 	void setIterator(list <InventoryButton*> ::iterator iterator) { inventoryIterator_ = iterator; }

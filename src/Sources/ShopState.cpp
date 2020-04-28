@@ -6,6 +6,7 @@
 #include "Boots.h"
 #include "Sword.h"
 #include "Gun.h"
+#include "usable.h"
 
 void callForwardListS(Application* app) {
 	dynamic_cast<ShopState*>(app->getCurrState())->forwardList();
@@ -74,7 +75,6 @@ ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(
 	addToInventory(guante4);
 	addToInventory(guante5);
 	addToInventory(guante6);
-
 
 	Gloves* guante11 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);
 	Gloves* guante12 = new Gloves(app_, 20.0, 10, 10, equipType::GlovesI);

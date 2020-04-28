@@ -37,11 +37,7 @@ void Player::initObject()
 	equip_.gloves_ = new Gloves(app_, 10, 10, 10, equipType::GlovesI);
 	equip_.boots_ = new Boots(app_, 10, 10, 10, equipType::BootsI);
 	equip_.sword_ = new Sword(app_, 10, 10, 10, equipType::SaberI);
-	equip_.gun_ = new Gun(app_, 10, 10, 10, equipType::PistolI);
-
-	//DEBUG
-	equip_.potions_[0] = new usable(app_, potionType::Speed);
-	equip_.potions_[1] = new usable(app_, potionType::Speed);
+	equip_.gun_ = new Gun(app_, 10, 10, 10, equipType::PistolI); 
 }
 
 void Player::load(jute::jValue& mainJson)
@@ -126,10 +122,6 @@ void Player::initSkills()
 		gm_->setSkillEquiped(skill, (Key)i);
 		i++;
 	}
-	//esto es una prueba
-
-	gm_->setObjectEquipped(ObjectName::Health, Key::One);
-	gm_->setObjectEquipped(ObjectName::Mana, Key::Two);
 }
 
 bool Player::update()
@@ -556,17 +548,17 @@ void Player::usePotion(usable* potion, int key) {
 		}
 		timerPotion_[0] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		break;
-	case potionType::Damage:
+	case potionType::Armor:
 		if (!potionUsing_[1]) {
-			currStats_.meleeDmg_ = currStats_.meleeDmg_ * (1 + auxValue / 100);
-			currStats_.distDmg_ = currStats_.distDmg_ * (1 + auxValue / 100);
+			currStats_.armor_ += auxValue;
 			potionUsing_[1] = true;
 		}
 		timerPotion_[1] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		break;
-	case potionType::Armor:
+	case potionType::Damage:
 		if (!potionUsing_[2]) {
-			currStats_.armor_ += auxValue;
+			currStats_.meleeDmg_ = currStats_.meleeDmg_ * (1 + auxValue / 100);
+			currStats_.distDmg_ = currStats_.distDmg_ * (1 + auxValue / 100);
 			potionUsing_[2] = true;
 		}
 		timerPotion_[2] = SDL_GetTicks();	//Se resetea el tiempo de duración
@@ -597,13 +589,13 @@ void Player::desactiveBuffPotion(usable* potion, int timerPos){
 			currStats_.moveSpeed_ -= auxValue;
 			timerPotion_[0] = false;
 			break;
+		case potionType::Armor:
+			currStats_.armor_ -= auxValue;
+			timerPotion_[1] = false;
+			break;
 		case potionType::Damage:
 			currStats_.meleeDmg_ = currStats_.meleeDmg_ / (1 + auxValue / 100);
 			currStats_.distDmg_ = currStats_.distDmg_ / (1 + auxValue / 100);
-			timerPotion_[1] = false;
-			break;
-		case potionType::Armor:
-			currStats_.armor_ -= auxValue;
 			timerPotion_[2] = false;
 			break;
 		case potionType::Crit:
@@ -613,7 +605,6 @@ void Player::desactiveBuffPotion(usable* potion, int timerPos){
 		default:
 			break;
 		}
-		cout << "Fin del efecto" << endl;
 	}
 }
 

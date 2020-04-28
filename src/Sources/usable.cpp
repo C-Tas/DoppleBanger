@@ -42,7 +42,6 @@ void usable::initObject()
 bool usable::update()
 {
 	if (used_) {
-		cout << (SDL_GetTicks() - useTime_) / 1000 << endl;
 		if (time_ <= 0) {
 			app_->getCurrState()->removeUpdateList(this);
 			return true;
@@ -63,12 +62,12 @@ void usable::use()
 	switch (type_)
 	{
 	case potionType::Speed:
-		useTime_ = SDL_GetTicks();
-		break;
-	case potionType::Damage:
-		useTime_ = gm_->getPlayer()->getTimerPotion(1);
+		useTime_ = gm_->getPlayer()->getTimerPotion(0);
 		break;
 	case potionType::Armor:
+		useTime_ = gm_->getPlayer()->getTimerPotion(1);
+		break;
+	case potionType::Damage:
 		useTime_ = gm_->getPlayer()->getTimerPotion(2);
 		break;
 	case potionType::Crit:

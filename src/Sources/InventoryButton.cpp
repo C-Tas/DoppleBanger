@@ -28,7 +28,7 @@ void InventoryButton::initTextureEquipment()
 		texture_ = auxTx->getTexture(Resources::Armor1);
 		break;
 	case equipType::ArmorII:
-		texture_ = auxTx->getTexture(Resources::Armor2);
+ 		texture_ = auxTx->getTexture(Resources::Armor2);
 		break;
 	case equipType::GlovesI:
 		texture_ = auxTx->getTexture(Resources::Gloves1);
@@ -110,4 +110,5 @@ bool InventoryButton::update() {
 
 void InventoryButton::setObject(Equipment* ob){
 	object_ = ob;
+	initObject();
 }

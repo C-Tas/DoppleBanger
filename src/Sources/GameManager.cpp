@@ -349,8 +349,8 @@ void GameManager::loadHUD(jute::jValue& mainJson)
 		else if (mainJson["objects"][i].as_string() == "Armor") {
 			objectsEquipped_[i] = ObjectName::Armor;
 		}
-		else if (mainJson["objects"][i].as_string() == "Dmg") {
-			objectsEquipped_[i] = ObjectName::Dmg;
+		else if (mainJson["objects"][i].as_string() == "Damage") {
+			objectsEquipped_[i] = ObjectName::Damage;
 		}
 		else if (mainJson["objects"][i].as_string() == "Crit") {
 			objectsEquipped_[i] = ObjectName::Crit;

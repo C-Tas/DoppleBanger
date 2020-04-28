@@ -89,17 +89,7 @@ enum class Key : int {
 };
 #pragma endregion
 #pragma region Objetos
-enum class ObjectName : int {
-	Unequipped,
-
-	//Pociones
-	Health,
-	Mana,
-	Speed,
-	Armor,
-	Dmg,
-	Crit
-};
+enum class ObjectName : int { Health, Mana, Speed, Armor, Damage, Crit, Unequipped};
 #pragma endregion
 
 class GameManager {

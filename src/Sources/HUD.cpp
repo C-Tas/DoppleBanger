@@ -31,7 +31,7 @@ const void HUD::draw() {
  	int i = 0;
 	for (i = 0; i < ICON_AMOUNT; i++) {
 		if (icons[i] != nullptr) {
-			if (i < 4 && cdKeys[i]) cdBg_->render(cdRect_);
+ 			if (i < 4 && cdKeys[i]) cdBg_->render(cdRect_);
 			icons[i]->render(iconRect);
 		}
 		//Actualiza el rect
@@ -217,7 +217,7 @@ Texture* HUD::createObjectIcon(int key) {
 	case ObjectName::Armor:
 		return app_->getTextureManager()->getTexture(Resources::ArmorPot);
 		break;
-	case ObjectName::Dmg:
+	case ObjectName::Damage:
 		return app_->getTextureManager()->getTexture(Resources::DmgPot);
 		break;
 	case ObjectName::Crit:
