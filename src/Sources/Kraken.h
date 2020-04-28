@@ -24,6 +24,7 @@ public:
 private:
 	int lastAttack_ = 0;
 	int swimTime_ = 0;
+
 	//Lista con los tent�culos invocados
 	list<Tentacle*> tentacles_;
 
@@ -57,11 +58,11 @@ private:
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animaci�n del kraken)
 #pragma region Constantes
+	const int ATTACK_RATE = 5;
 	//Tiempo desde que se sumerge hasta que emerge
 	const double SWIM_DURATION = 1;
 	const int AVERAGE_INK_SHOTS = 7;
 	const int NORMAL_DESVIATION = 2;
-
 	//Idle
 	const int NUM_FRAMES_IDLE = 0;
 	const uint W_FRAME_IDLE = 0;
@@ -96,7 +97,7 @@ private:
 	const double MELEE_RANGE = 0;
 	const double DIST_RANGE = 0;
 	const double MOVE_SPEED = 0;
-	const double MELEE_RATE = 0;
-	const double DIST_RATE = 0;
+	const double MELEE_RATE = 5;
+	const double DIST_RATE = 5;
 #pragma endregion
 };

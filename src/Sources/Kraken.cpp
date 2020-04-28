@@ -12,12 +12,39 @@ bool Kraken::update() {
 	if (currEnemy_ == nullptr)
 		currEnemy_ = static_cast<Draw*>(GameManager::instance()->getPlayer());
 
-	if ((SDL_GetTicks() - lastAttack_) / 1000 > 5)
+
+
+	if ((SDL_GetTicks() - lastAttack_) / 1000 > MELEE_RATE)
 	{
-		ink();
-		//swimInit();
+		int probSwim, probInk, probSweep, probSlam;
+		if ((currEnemy_->getPos() - getCenter()).magnitude() < 1.5 * scale_.getX())
+		{
+			//Frecuencias acumuladas de los ataques
+			//Probabilidad acumulada de slam es siempre 100 por que es el ultimo
+			probSwim = 10;
+			probInk = 30;
+			probSweep = 60;
+		}
+		else
+		{
+			probSwim = 50;
+			probInk = 80;
+			probSweep = 90;
+		}
+
+		int attack = rand() % 100;
+		if (attack < probSwim)
+			swimInit();
+		else if (attack < probInk)
+			ink();
+		else if (attack < probSweep)
+			sweep();
+		else
+			slam();
+
 		lastAttack_ = SDL_GetTicks();
 	}
+
 	if (currState_ == STATE::SWIMMING && (SDL_GetTicks() - swimTime_) / 1000 > SWIM_DURATION)
 		swimEnd();
 
