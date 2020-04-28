@@ -150,6 +150,7 @@ void Kraken::swimEnd()
 void Kraken::ink()
 {
 	Vector2D pos;
+	Vector2D scale = Vector2D(scale_.getX() / 5, scale_.getY() / 5);
 	int numShots = AVERAGE_INK_SHOTS + ((rand() % NORMAL_DESVIATION * 2 + 1) - NORMAL_DESVIATION);
 	for (int i = 0; i < numShots; i++)
 	{
@@ -159,9 +160,12 @@ void Kraken::ink()
 		pos.setX(radius * cos(angle) + getCenter().getX());
 		pos.setY(radius * sin(angle) + getCenter().getY());
 
-		Ink* ink = new Ink(app_, pos, { 100, 100 });
+		Ink* ink = new Ink(app_, this, pos, scale);
 		app_->getGameStateMachine()->getState()->addRenderUpdateLists(ink);
 	}
+
+	Ink* ink = new Ink(app_, this, { 1148, 1800 }, scale);
+	app_->getGameStateMachine()->getState()->addRenderUpdateLists(ink);
 }
 
 void Kraken::tentDeath(Tentacle* obj)

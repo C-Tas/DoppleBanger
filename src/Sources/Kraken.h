@@ -22,11 +22,6 @@ public:
 	virtual void lostAggro();
 
 private:
-	//Tiempo desde que se sumerge hasta que emerge
-	double SWIM_DURATION = 1;
-	int AVERAGE_INK_SHOTS = 7;
-	int NORMAL_DESVIATION = 2;
-
 	int lastAttack_ = 0;
 	int swimTime_ = 0;
 	//Lista con los tent�culos invocados
@@ -62,6 +57,11 @@ private:
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animaci�n del kraken)
 #pragma region Constantes
+	//Tiempo desde que se sumerge hasta que emerge
+	const double SWIM_DURATION = 1;
+	const int AVERAGE_INK_SHOTS = 7;
+	const int NORMAL_DESVIATION = 2;
+
 	//Idle
 	const int NUM_FRAMES_IDLE = 0;
 	const uint W_FRAME_IDLE = 0;
@@ -91,7 +91,7 @@ private:
 	const double MANA_REG = 0;
 	const double ARMOR = 10;
 	const double MELEE_DMG = 50;
-	const double DIST_DMG = 0;
+	const double DIST_DMG = 50;
 	const double CRIT = 0;
 	const double MELEE_RANGE = 0;
 	const double DIST_RANGE = 0;
