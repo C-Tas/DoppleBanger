@@ -1,5 +1,6 @@
 #pragma once
 #include "Button.h"
+#include "jute.h"
 #include <list>
 using namespace std;
 
@@ -44,4 +45,13 @@ public:
 	void setObject(Equipment* ob);
 	Item* getObject() { return object_; }
 	void setNewCallBack(CallBackOnClickInventory* newCallBack) { callBackInventory_ = newCallBack; };
+
+	#pragma region Guardar/Cargar
+	//Guarda las propiedades del boton en el contenedor
+	void saveButton(jute::jValue& container);
+	//Guarda las propiedades del equipamiento
+	void saveEquipButton(jute::jValue& container);
+	//Guarda las propiedades de la poción
+	void savePotButton(jute::jValue& container);
+	#pragma region
 };

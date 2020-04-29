@@ -170,17 +170,15 @@ private:
 		//Guarda los datos en el json pasado como parámetro
 		void save(ofstream& slot);
 		//Guarda los datos de tipo JNUMBER
-		void saveJNUMBER(ofstream& slot, jute::jValue& mainJson);
+		void saveJNUMBER(jute::jValue& mainJson);
 		//Guarda las misiones
-		void saveMissions(ofstream& slot, jute::jValue& mainJson);
+		void saveMissions(jute::jValue& mainJson);
 		//Guarda las habilidades equipadas
-		void saveSkills(ofstream& slot, jute::jValue& mainJson);
+		void saveSkills(jute::jValue& mainJson);
 		//Guarda el equipamiento del player
-		void saveEquipment(ofstream& slot, jute::jValue& mainJson);
+		void saveEquipment(jute::jValue& mainJson);
 		//Guarda el inventario
-		void saveInventory(ofstream& slot, jute::jValue& mainJson);
-		//Guarda el alijo
-		void saveStash(ofstream& slot, jute::jValue& mainJson);
+		void saveInventory_Stash(jute::jValue& mainJson);
 		#pragma endregion
 		#pragma region Cargar
 		//Carga los datos desde el json pasado como parámetro
@@ -369,7 +367,6 @@ public:
 	//aplicacion
 	inline void setApp(Application* app) { 
 		app_ = app;
-		cout << "jaja";
 	}
 #pragma endregion
 	//Para añadir objetos al inventario

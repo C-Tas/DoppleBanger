@@ -61,23 +61,21 @@ void GameManager::save(ofstream& slot)
 	//Json principal donde se guardará toda la info
 	jValue mainJson(jType::JOBJECT);
 	//Variables numericas
-	saveJNUMBER(slot, mainJson);
+	saveJNUMBER(mainJson);
 	//Misiones empezadas
-	saveMissions(slot, mainJson);
+	saveMissions(mainJson);
 	//Habilidades equipadas
-	saveSkills(slot, mainJson);
+	saveSkills(mainJson);
 	//Objetos equipados
-	saveEquipment(slot, mainJson);
+	saveEquipment(mainJson);
 	//Inventario
-	saveInventory(slot, mainJson);
-	//Alijo
-	saveStash(slot, mainJson);
+	saveInventory_Stash(mainJson);
 	//Se guarda todo en el archivo
 	slot << mainJson.to_string();
 	slot.close();
 }
 
-void GameManager::saveJNUMBER(ofstream& slot, jute::jValue& mainJson)
+void GameManager::saveJNUMBER(jute::jValue& mainJson)
 {
 	jValue aux(jType::JNUMBER);
 	//Isla actual
@@ -104,7 +102,7 @@ void GameManager::saveJNUMBER(ofstream& slot, jute::jValue& mainJson)
 	mainJson.add_property("clon", aux);
 }
 
-void GameManager::saveMissions(ofstream& slot, jute::jValue& mainJson)
+void GameManager::saveMissions(jute::jValue& mainJson)
 {
 	jValue questStarted(jType::JARRAY);
 	jValue aux(jType::JBOOLEAN);
@@ -134,7 +132,7 @@ void GameManager::saveMissions(ofstream& slot, jute::jValue& mainJson)
 	mainJson.add_property("questFinished", questFinished);
 }
 
-void GameManager::saveSkills(ofstream& slot, jute::jValue& mainJson)
+void GameManager::saveSkills(jute::jValue& mainJson)
 {
 	jValue skillEquippedValue(jType::JARRAY);
 	jValue aux(jType::JSTRING);
@@ -165,7 +163,7 @@ void GameManager::saveSkills(ofstream& slot, jute::jValue& mainJson)
 	mainJson.add_property("skills", skillEquippedValue);
 }
 
-void GameManager::saveEquipment(ofstream& slot, jute::jValue& mainJson)
+void GameManager::saveEquipment(jute::jValue& mainJson)
 {
 	jValue equipValue(jType::JARRAY);
 	jValue aux(jType::JSTRING);
@@ -253,13 +251,18 @@ void GameManager::saveEquipment(ofstream& slot, jute::jValue& mainJson)
 				aux.set_string(to_string(vEquip[i]->getSpeed()));
 				equip[i].add_property("speed", aux);
 			}
-			else if (auxType == equipType::SwordI || auxType == equipType::SwordII 
-				|| auxType == equipType::SaberI || auxType == equipType::SaberII
-				|| auxType == equipType::PistolI || auxType == equipType::PistolII
-				|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
+			else if (auxType == equipType::SwordI || auxType == equipType::SwordII
+				|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
 				aux.set_string(to_string(vEquip[i]->getMeleeRate()));
 				equip[i].add_property("rate", aux);
 				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
+				equip[i].add_property("damage", aux);
+			}
+			else if(auxType == equipType::PistolI || auxType == equipType::PistolII
+				|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
+				aux.set_string(to_string(vEquip[i]->getDistRate()));
+				equip[i].add_property("rate", aux);
+				aux.set_string(to_string(vEquip[i]->getDistDmg()));
 				equip[i].add_property("damage", aux);
 			}
 		}
@@ -268,12 +271,15 @@ void GameManager::saveEquipment(ofstream& slot, jute::jValue& mainJson)
 	mainJson.add_property("equipment", equipValue);
 }
 
-void GameManager::saveInventory(ofstream& slot, jute::jValue& mainJson)
+void GameManager::saveInventory_Stash(jute::jValue& mainJson)
 {
-}
+	jValue inv_(jType::JARRAY);
+	for (InventoryButton* ob : *inventory_) ob->saveButton(inv_);
+	mainJson.add_property("inventory", inv_);
 
-void GameManager::saveStash(ofstream& slot, jute::jValue& mainJson)
-{
+	jValue st_(jType::JARRAY);
+	for (InventoryButton* ob : *stash_) ob->saveButton(st_);
+	mainJson.add_property("stash", st_);
 }
 
 void GameManager::load(string jsonName)

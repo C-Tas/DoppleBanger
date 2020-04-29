@@ -3,13 +3,14 @@
   "unlockedIsland": 2,
   "currGold": 300,
   "stashGold": 1000,
-  "skillPoints": 997,
-  "precision": 1000,
-  "melee": 1000,
-  "clon": 1000,
+  "skillPoints": 1000,
+  "precision": 999,
+  "melee": 999,
+  "clon": 999,
   "questStarted": [false, false],
   "questFinished": [false, false],
-  "skills": ["Torbellino", "Perforante", "Explosion"],
+  "skills": ["null", "null", "null"],
+  "objects": ["null", "null"],
   "equipment": [{
       "name": 0,
       "price": 10,
@@ -26,19 +27,70 @@
       "armor": 10.000000,
       "speed": 10.000000
     }, {
-      "name": 8,
+      "name": 6,
       "price": 10,
-      "rate": 10.000000,
-      "damage": 10.000000,
       "rate": 10.000000,
       "damage": 10.000000
     }, {
       "name": 10,
       "price": 10,
-      "rate": 0.000000,
-      "damage": 0.000000,
       "rate": 10.000000,
       "damage": 10.000000
     }],
-  "objects": [null, null]
+  "inventory": [{
+      "type": 0,
+      "name": 3,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "critic": 10.000000
+    }, {
+      "type": 0,
+      "name": 2,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "critic": 10.000000
+    }, {
+      "type": 0,
+      "name": 2,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "critic": 10.000000
+    }, {
+      "type": 0,
+      "name": 2,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "critic": 10.000000
+    }, {
+      "type": 0,
+      "name": 2,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "critic": 10.000000
+    }, {
+      "type": 0,
+      "name": 2,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "critic": 10.000000
+    }, {
+      "type": 1,
+      "name": 3
+    }, {
+      "type": 1,
+      "name": 2
+    }, {
+      "type": 1,
+      "name": 4
+    }, {
+      "type": 1,
+      "name": 0
+    }, {
+      "type": 1,
+      "name": 1
+    }, {
+      "type": 1,
+      "name": 1
+    }],
+  "stash": []
 }

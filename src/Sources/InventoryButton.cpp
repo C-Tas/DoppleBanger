@@ -1,6 +1,11 @@
 #include "InventoryButton.h"
 #include "HandleEvents.h"
 #include "Equipment.h"
+#include "Armor.h"
+#include "Gloves.h"
+#include "Boots.h"
+#include "Sword.h"
+#include "Gun.h"
 #include "usable.h"
 
 void InventoryButton::initObject()
@@ -111,4 +116,87 @@ bool InventoryButton::update() {
 void InventoryButton::setObject(Equipment* ob){
 	object_ = ob;
 	initObject();
+}
+
+void InventoryButton::saveButton(jute::jValue& container)
+{
+	switch (object_->getObjectType())
+	{
+	case ObjectType::Equipment:
+		saveEquipButton(container);
+		break;
+	case ObjectType::Usable:
+		savePotButton(container);
+		break;
+	}
+}
+
+void InventoryButton::saveEquipButton(jute::jValue& container)
+{
+	jute::jValue jObj_(jute::jType::JOBJECT);
+	jute::jValue aux(jute::jType::JNUMBER);
+	Equipment* auxEquip_ = dynamic_cast<Equipment*>(object_);
+	//Nombre
+	aux.set_string(to_string((int)object_->getObjectType()));
+	jObj_.add_property("type", aux);
+	equipType auxType = auxEquip_->getEquipType();
+	aux.set_string(to_string((int)auxType));
+	jObj_.add_property("name", aux);
+	//Precio
+	aux.set_string(to_string(auxEquip_->getPrice()));
+	jObj_.add_property("price", aux);
+	//Atributos del objeto
+	if (auxType == equipType::ArmorI || auxType == equipType::ArmorII) {
+		Armor* auxArmor = dynamic_cast<Armor*>(auxEquip_);
+		aux.set_string(to_string(auxArmor->getArmor()));
+		jObj_.add_property("armor", aux);
+		aux.set_string(to_string(auxArmor->getHealth()));
+		jObj_.add_property("health", aux);
+	}
+	else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
+		Gloves* auxGloves = dynamic_cast<Gloves*>(auxEquip_);
+		aux.set_string(to_string(auxGloves->getArmor()));
+		jObj_.add_property("armor", aux);
+		aux.set_string(to_string(auxGloves->getCrit()));
+		jObj_.add_property("critic", aux);
+	}
+	else if (auxType == equipType::BootsI || auxType == equipType::BootsII) {
+		Boots* auxBoots = dynamic_cast<Boots*>(auxEquip_);
+		aux.set_string(to_string(auxBoots->getArmor()));
+		jObj_.add_property("armor", aux);
+		aux.set_string(to_string(auxBoots->getSpeed()));
+		jObj_.add_property("speed", aux);
+	}
+	else if (auxType == equipType::SwordI || auxType == equipType::SwordII
+		|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
+		Sword* auxSword = dynamic_cast<Sword*>(auxEquip_);
+		aux.set_string(to_string(auxSword->getMeleeRate()));
+		jObj_.add_property("rate", aux);
+		aux.set_string(to_string(auxSword->getMeleeDmg()));
+		jObj_.add_property("damage", aux);
+	}
+	else if (auxType == equipType::PistolI || auxType == equipType::PistolII
+		|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
+		Gun* auxGun = dynamic_cast<Gun*>(auxEquip_);
+		aux.set_string(to_string(auxGun->getDistRate()));
+		jObj_.add_property("rate", aux);
+		aux.set_string(to_string(auxGun->getDistDmg()));
+		jObj_.add_property("damage", aux);
+	}
+
+	container.add_element(jObj_);
+}
+
+void InventoryButton::savePotButton(jute::jValue& container)
+{
+	jute::jValue jObj_(jute::jType::JOBJECT);
+	jute::jValue aux(jute::jType::JNUMBER);
+	usable* auxUsable_ = dynamic_cast<usable*>(object_);
+	//Nombre
+	aux.set_string(to_string((int)object_->getObjectType()));
+	jObj_.add_property("type", aux);
+	aux.set_string(to_string((int)auxUsable_->getType()));
+	jObj_.add_property("name", aux);
+
+	container.add_element(jObj_);
 }
