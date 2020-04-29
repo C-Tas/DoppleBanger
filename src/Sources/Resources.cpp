@@ -118,7 +118,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ArmorPot, "../Sources/assets/hud/iconos/armorPot.png" },
 	{ DmgPot, "../Sources/assets/hud/iconos/dmgPot.png" },
 	{ CritPot, "../Sources/assets/hud/iconos/critPot.png" },
-	{ PotionBG, "../Sources/assets/hud/potionBG.png" },
+	{ PotionBG, "../Sources/assets/hud/potionBGF.png" },
 
 	//Sprites
 	{ Dragon,"../Sources/assets/enemigos/dragon.png"},
