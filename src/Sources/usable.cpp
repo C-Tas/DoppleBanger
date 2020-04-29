@@ -30,6 +30,7 @@ void usable::initObject()
 	case potionType::Armor:
 		price_ = ARMOR_PRICE;
 		value_ = ARMOR_VALUE;
+		time_ = ARMOR_TIME;
 		break;
 	case potionType::Crit:
 		price_ = CRIT_PRICE;

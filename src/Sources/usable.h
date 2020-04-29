@@ -17,10 +17,10 @@ private:
 	const double ARMOR_TIME = 4;	//Tiempo en segundos que durá la poción
 	const double CRIT_TIME = 4;		//Tiempo en segundos que durá la poción
 
-	const double HEALTH_PRICE = 10;	//Precio de la pocion
+	const double HEALTH_PRICE = 10;		//Precio de la pocion
 	const double MANA_PRICE = 10;		//Precio de la pocion
 	const double SPEED_PRICE = 10;		//Precio de la pocion
-	const double DAMAGE_PRICE = 10;	//Precio de la pocion
+	const double DAMAGE_PRICE = 10;		//Precio de la pocion
 	const double ARMOR_PRICE = 10;		//Precio de la pocion
 	const double CRIT_PRICE = 10;		//Precio de la pocion
 #pragma endregion

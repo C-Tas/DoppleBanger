@@ -24,11 +24,11 @@ const void HUD::draw() {
 	int aux = 0;
 	for (int i = 0; i <= 3; i++) {
 		if (potionsHUD_[i].active_) {
-			potionsHUD_[i].potionBackground_->setDestiny({ 0, aux * 100, 200, 100 });
-			potionsHUD_[i].potionHUD_->setDestiny({ 0, aux * 100, 100, 100 });
+			potionsHUD_[i].potionBackground_->setDestiny({ 0, (int)(aux * app_->getWindowHeight() * 0.1111), (int)(app_->getWindowWidth() * 0.125), (int)(app_->getWindowHeight() * 0.1111)});	//Fondo
+			potionsHUD_[i].potionHUD_->setDestiny({ (int)(app_->getWindowWidth() * 0.0063), (int)(app_->getWindowHeight() * 0.0167 + aux * app_->getWindowHeight() * 0.1111), (int)(app_->getWindowWidth() * 0.0438), (int)(app_->getWindowHeight() * 0.0778)});	//Pocion
 			potionsHUD_[i].potionBackground_->draw();
 			potionsHUD_[i].potionHUD_->draw();
-			potionsHUD_[i].potionTimeHUD_->render({ 100, aux * 100, 100, 100 });
+			potionsHUD_[i].potionTimeHUD_->render({ (int)(app_->getWindowWidth() * 0.0625), (int)(app_->getWindowHeight() * 0.0167 + aux * app_->getWindowHeight() * 0.1111), (int)(app_->getWindowWidth() * 0.0438), (int)(app_->getWindowHeight() * 0.0778)});	//Tiempo
 			aux++;
 		}
 	}
@@ -73,11 +73,10 @@ const void HUD::draw() {
 bool HUD::update() {
 	for (int i = 0; i <= 3; i++) {
 		if (potionsHUD_[i].active_) {
-			potionsHUD_[i].potionTimeHUD_ = new Texture(app_->getRenderer(), to_string((int)(potionsHUD_[i].duration_ - ((SDL_GetTicks() - potionsHUD_[i].time_)) / 1000.0)),
+			potionsHUD_[i].potionTimeHUD_ = new Texture(app_->getRenderer(), to_string((int)(potionsHUD_[i].duration_ - ((SDL_GetTicks() - potionsHUD_[i].time_)) / 1000.0) + 1),
 				app_->getFontManager()->getFont(Resources::RETRO), SDL_Color{ (0,0,0,1) });
 			if ((potionsHUD_[i].active_) && (potionsHUD_[i].duration_ <= ((SDL_GetTicks() - potionsHUD_[i].time_) / 1000.0))) {
 				potionsHUD_[i].active_ = false;
-
 			}
 		}
 	}
@@ -251,16 +250,16 @@ potionHUD HUD::createPotionHUD(int key)
 	switch (key)
 	{
 	case 0:
-		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::SpeedPot));
+		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::SpeedPot));	//Velocidad
 		break;
 	case 1:
-		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::HealthPot));
+		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::ArmorPot));	//Defensa
 		break;
 	case 2:
-		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::DmgPot));
+		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::DmgPot));	//Daño
 		break;
 	case 3:
-		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::CritPot));
+		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::CritPot));	//Crítico
 		break;
 	default:
 		break;

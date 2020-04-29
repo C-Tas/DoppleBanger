@@ -88,25 +88,25 @@ void Inventory::initState(){
 
 #ifdef _DEBUG
 
-	Gloves* guante0 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesII);
-	Gloves* guante1 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante2 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante3 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante4 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante5 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	//Gloves* guante0 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesII);
+	//Gloves* guante1 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	//Gloves* guante2 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	//Gloves* guante3 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	//Gloves* guante4 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	//Gloves* guante5 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
 	usable* potion1 = new usable(app_, potionType::Armor);
 	usable* potion2 = new usable(app_, potionType::Speed);
 	usable* potion3 = new usable(app_, potionType::Damage);
 	usable* potion4 = new usable(app_, potionType::Health);
 	usable* potion5 = new usable(app_, potionType::Mana);
-	usable* potion6 = new usable(app_, potionType::Mana);
+	usable* potion6 = new usable(app_, potionType::Crit);
 
-	addToInventory(guante0);
-	addToInventory(guante1);
-	addToInventory(guante2);
-	addToInventory(guante3);
-	addToInventory(guante4);
-	addToInventory(guante5);
+	//addToInventory(guante0);
+	//addToInventory(guante1);
+	//addToInventory(guante2);
+	//addToInventory(guante3);
+	//addToInventory(guante4);
+	//addToInventory(guante5);
 	addToInventory(potion1);
 	addToInventory(potion2);
 	addToInventory(potion3);
