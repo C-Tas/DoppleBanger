@@ -208,15 +208,17 @@ public:
 		delete inventory_;
 		delete stash_;
 		//Se borra el equipo
-		delete currEquip_.armor_;
-		delete currEquip_.gloves_;
-		delete currEquip_.boots_;
-		delete currEquip_.sword_;
-		delete currEquip_.gun_;
+		if (currEquip_.armor_ != nullptr) delete currEquip_.armor_;
+		if (currEquip_.gloves_ != nullptr) delete currEquip_.gloves_;
+		if (currEquip_.boots_ != nullptr) delete currEquip_.boots_;
+		if (currEquip_.sword_ != nullptr) delete currEquip_.sword_;
+		if (currEquip_.gun_ != nullptr) delete currEquip_.gun_;
 		for (int i = 0; i < currEquip_.potions_.size(); i++) {
-			delete currEquip_.potions_.at(i);
+			if(currEquip_.potions_.at(i) != nullptr)
+				delete currEquip_.potions_.at(i);
 		}
 	}
+
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {
 		if (instance_.get() == nullptr) {
@@ -348,6 +350,8 @@ public:
 	//Asigna al puntero de player
 	inline void setPlayer(Player* player) { player_ = player; };
 	//Equipamiento
+	//Inicializa el equipamiento base
+	playerEquipment& initEquipment();
 	void setArmor(Armor* armor) { currEquip_.armor_ = armor; };
 	void setGloves(Gloves* armor) { currEquip_.gloves_ = armor; };
 	void setBoots(Boots* armor) { currEquip_.boots_ = armor; };
@@ -363,7 +367,10 @@ public:
 	//borra al clon
 	inline void deleteClon() { clon_ = nullptr; };
 	//aplicacion
-	inline void setApp(Application* app) { app_ = app; }
+	inline void setApp(Application* app) { 
+		app_ = app;
+		cout << "jaja";
+	}
 #pragma endregion
 	//Para añadir objetos al inventario
 	void addToInventory(Equipment* ob);

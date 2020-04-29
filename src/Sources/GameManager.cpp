@@ -22,11 +22,6 @@ GameManager::GameManager() {
 	for (int i = 0; i < (int)missions::Size; i++) {
 		missionsComplete[i] = false;
 	}
-	currEquip_.armor_ = new Armor(app_, 10, 10, 10, equipType::ArmorI);
-	currEquip_.gloves_ = new Gloves(app_, 10, 10, 10, equipType::GlovesI);
-	currEquip_.boots_ = new Boots(app_, 10, 10, 10, equipType::BootsI);
-	currEquip_.sword_ = new Sword(app_, 10, 10, 10, equipType::SwordI);
-	currEquip_.gun_ = new Gun(app_, 10, 10, 10, equipType::PistolI);
 }
 void GameManager::saveSlot1()
 {
@@ -470,16 +465,15 @@ void GameManager::resetGame()
 	stash_->clear();
 
 	//Reseteo del equipamiento, se vuelve al inicial, sin pociones
-	delete currEquip_.armor_;
-	delete currEquip_.gloves_;
-	delete currEquip_.boots_;
-	delete currEquip_.sword_;
-	delete currEquip_.gun_;
-	currEquip_.armor_ = new Armor(app_, 10, 10, 10, equipType::ArmorI);
-	currEquip_.gloves_ = new Gloves(app_, 10, 10, 10, equipType::GlovesI);
-	currEquip_.boots_ = new Boots(app_, 10, 10, 10, equipType::BootsI);
-	currEquip_.sword_ = new Sword(app_, 10, 10, 10, equipType::SwordI);
-	currEquip_.gun_ = new Gun(app_, 10, 10, 10, equipType::PistolI);
+	delete currEquip_.armor_; currEquip_.armor_ = nullptr;
+	delete currEquip_.gloves_; currEquip_.gloves_ = nullptr;
+	delete currEquip_.boots_; currEquip_.boots_ = nullptr;
+	delete currEquip_.sword_; currEquip_.sword_ = nullptr;
+	delete currEquip_.gun_; currEquip_.gun_ = nullptr;
+	for (int i = 0; i < currEquip_.potions_.size(); i++) {
+		delete currEquip_.potions_[i];
+		currEquip_.potions_[i] = nullptr;
+	}
 }
 
 const int GameManager::getFontSize()
@@ -528,6 +522,15 @@ void GameManager::setObjectEquipped(ObjectName newObject, Key key)
 {
 	objectsEquipped_[(int)key - (int)Key::One] = newObject;
 	hud_->updateKey((int)key);
+}
+
+playerEquipment& GameManager::initEquipment(){
+	currEquip_.armor_ = new Armor(app_, 10, 10, 10, equipType::ArmorI);
+	currEquip_.gloves_ = new Gloves(app_, 10, 10, 10, equipType::GlovesI);
+	currEquip_.boots_ = new Boots(app_, 10, 10, 10, equipType::BootsI);
+	currEquip_.sword_ = new Sword(app_, 10, 10, 10, equipType::SwordI);
+	currEquip_.gun_ = new Gun(app_, 10, 10, 10, equipType::PistolI);
+	return currEquip_;
 }
 
 void GameManager::addToInventory(Equipment* ob) {

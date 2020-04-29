@@ -32,10 +32,11 @@ void Player::initObject()
 	CollisionCtrl::instance()->setPlayer(this);
 
 	//Equipamiento inicial del jugador
-	playerEquipment auxEquip = gm_->getEquip();
+	playerEquipment auxEquip = gm_->initEquipment();
 	armor_ = auxEquip.armor_;
 	gloves_ = auxEquip.gloves_;
 	boots_ = auxEquip.boots_;
+	sword_ = auxEquip.sword_;
 	gun_ = auxEquip.gun_;
 	potions_ = auxEquip.potions_;
 }
