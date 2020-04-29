@@ -23,7 +23,6 @@ public:
 	void createWolves(int numWolves);
 	void createChest(int numChest);
 	void createNPC();
-	//void addKills() { kills += 1; }
 #pragma endregion
 protected:
 	//Dimensiones de las entidades

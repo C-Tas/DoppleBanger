@@ -11,12 +11,17 @@
 #include "checkML.h"
 #include "jute.h"
 
-class Application;
-
 using namespace std;
 class Item;
-class Player;
 using lista = list<InventoryButton*>*;
+class Application;
+class Player;
+class Armor;
+class Gloves;
+class Boots;
+class Sword;
+class Gun;
+class usable;
 
 //Enumerados que representan la �ltima isla desbloqueada
 enum class Zone : int {
@@ -92,6 +97,21 @@ enum class Key : int {
 enum class ObjectName : int { Health, Mana, Speed, Armor, Damage, Crit, Unequipped};
 #pragma endregion
 
+struct playerEquipment
+{
+	//Equipamiento del jugador
+	Armor* armor_ = nullptr;
+	Gloves* gloves_ = nullptr;
+	Boots* boots_ = nullptr;
+	Sword* sword_ = nullptr;
+	Gun* gun_ = nullptr;
+
+	vector<usable*> potions_{
+		nullptr,
+		nullptr
+	};
+};
+
 class GameManager {
 private:
 	//Puntero unico para evitar copias
@@ -135,6 +155,8 @@ private:
 
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
 	Player* player_ = nullptr;
+	//Equipamento del player
+	playerEquipment currEquip_;
 	//Puntero al clon
 	GameObject* clon_ = nullptr;
 	//Puntero al HUD
@@ -155,16 +177,22 @@ private:
 		void saveSkills(ofstream& slot, jute::jValue& mainJson);
 		//Guarda el equipamiento del player
 		void saveEquipment(ofstream& slot, jute::jValue& mainJson);
+		//Guarda el inventario
+		void saveInventory(ofstream& slot, jute::jValue& mainJson);
+		//Guarda el alijo
+		void saveStash(ofstream& slot, jute::jValue& mainJson);
 		#pragma endregion
 		#pragma region Cargar
 		//Carga los datos desde el json pasado como parámetro
 		void load(string jsonName);
 		//Carga los datos de tipo JNUMBER
 		void loadJNUMBER(jute::jValue& mainJson);
-		//Carga las misiones
-		void loadMissions(jute::jValue& mainJson);
 		//Carga las habilidades
 		void loadSkills(jute::jValue& mainJson);
+		//Carga las misiones
+		void loadMissions(jute::jValue& mainJson);
+		//Carga el equipamiento
+		void loadEquipment(jute::jValue& mainJson);
 		//Carga las texturas del HUD
 		void loadHUD(jute::jValue& mainJson);
 		#pragma endregion
@@ -172,18 +200,22 @@ private:
 
 public:
 	//Constructor vacio
-	GameManager() {
-		unlockedIslands_ = Island::Volcanic;
-		for (int i = 0; i < (int)missions::Size; i++) {
-			missionsComplete[i] = false;
-		}
-	}
+	GameManager();
 	//Destructor
 	~GameManager() {
 		for (InventoryButton* ob : *inventory_)delete ob;
 		for (InventoryButton* ob : *stash_)delete ob;
 		delete inventory_;
 		delete stash_;
+		//Se borra el equipo
+		delete currEquip_.armor_;
+		delete currEquip_.gloves_;
+		delete currEquip_.boots_;
+		delete currEquip_.sword_;
+		delete currEquip_.gun_;
+		for (int i = 0; i < currEquip_.potions_.size(); i++) {
+			delete currEquip_.potions_.at(i);
+		}
 	}
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {
@@ -265,6 +297,8 @@ public:
 	const Point2D getPlayerPos();
 	//Devuelve al jugador
 	Player* getPlayer() { return player_; };
+	//Devuelve el equipamiento del player
+	playerEquipment getEquip() { return currEquip_; };
 	//Devuelve al clon
 	GameObject* getClon() { return clon_; };
 	
@@ -313,6 +347,15 @@ public:
 
 	//Asigna al puntero de player
 	inline void setPlayer(Player* player) { player_ = player; };
+	//Equipamiento
+	void setArmor(Armor* armor) { currEquip_.armor_ = armor; };
+	void setGloves(Gloves* armor) { currEquip_.gloves_ = armor; };
+	void setBoots(Boots* armor) { currEquip_.boots_ = armor; };
+	void setSword(Sword* armor) { currEquip_.sword_ = armor; };
+	void setGun(Gun* armor) { currEquip_.gun_ = armor; };
+	void setPotion(int slot, usable* newPot) {
+		currEquip_.potions_.at(slot) = newPot;
+	}
 	//Asigna al puntero de clon
 	inline void setClon(GameObject* clon) { clon_ = clon; };
 	//Asigna el puntero de hud

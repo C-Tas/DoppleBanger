@@ -14,21 +14,6 @@ class Sword;
 class Gun;
 class usable;
 
-struct playerEquipment
-{
-	//Equipamiento del jugador
-	Armor* armor_ = nullptr;
-	Gloves* gloves_ = nullptr;
-	Boots* boots_ = nullptr;
-	Sword* sword_ = nullptr;
-	Gun* gun_ = nullptr;
-
-	vector<usable*> potions_{
-		nullptr,
-		nullptr
-	};
-};
-
 class Player : public Actor
 {
 public:
@@ -85,8 +70,6 @@ public:
 		//habilidades
 		//activa la pasiva invencible y aplica los efectos de esta
 		void activeInvincible();
-		//Devuelve la información del equipment
-		playerEquipment& const getInfoEquip() { return equip_; }
 	
 	#pragma endregion
 	#pragma region Setters
@@ -99,11 +82,11 @@ public:
 		inline void setLiberation1() { liberation_ = 1; };
 		inline void setLiberation2( ) { liberation_ = 2; };
 
-		void equip(Armor* armor) { equip_.armor_ = armor; };
-		void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
-		void equip(Boots* boots) { equip_.boots_ = boots; };
-		void equip(Sword* sword) { equip_.sword_ = sword; };
-		void equip(Gun* gun) { equip_.gun_ = gun; };
+		void equip(Armor* armor) { armor_ = armor; gm_->setArmor(armor); };
+		void equip(Gloves* gloves) { gloves_ = gloves; gm_->setGloves(gloves); };
+		void equip(Boots* boots) { boots_ = boots; gm_->setBoots(boots);};
+		void equip(Sword* sword) { sword_ = sword; gm_->setSword(sword);};
+		void equip(Gun* gun) { gun_ = gun; gm_->setGun(gun);};
 		void addMaxHealth(double addition) { maxHealth_ = addition; };
 		void setClonCoolDown() { cdSkills[3] = true; }
 		//Aumenta la cadencia de tiro del player
@@ -112,7 +95,7 @@ public:
 		void activateEmpowered() { empoweredAct_ = true; };
 
 		//Carga el equipamiento del player
-		void load(jute::jValue& mainJson);
+		void load();
 	#pragma endregion
 	#pragma region Pociones
 		//Metodo para usar las pociones
@@ -120,8 +103,8 @@ public:
 		//Metodo para desactivar el bufo de las pociones
 		void desactiveBuffPotion(usable* potion, int timerPos);
 		//Equipa pociones	
-		void equipPotion1(usable* pot) { equip_.potions_[0] = pot; };
-		void equipPotion2(usable* pot) { equip_.potions_[1] = pot; };
+		void equipPotion1(usable* pot) { potions_[0] = pot; gm_->setPotion(0, potions_[0]); };
+		void equipPotion2(usable* pot) { potions_[1] = pot; gm_->setPotion(1, potions_[1]); };
 		//Devuelve el instante en el que se usó la poción
 		const double getTimerPotion(int potion) { return timerPotion_[potion]; };
 	#pragma endregion
@@ -250,7 +233,6 @@ private:
 	const int TIME_RICO = 4;	//En segundos
 	int lastTimeRico_ = 0;		//Momento en el que se usa rebote
 #pragma endregion
-
 //<summary>Variables de los cooldowns del jugador</summary>
 #pragma region Cooldowns
 	double clonCooldown_ = 2;		//Cooldown del clon
@@ -260,7 +242,6 @@ private:
 	double meleeTime_ = 0;			//Momento del último ataque
 	double shotTime_ = 0;			//Momento del �ltimo disparo
 #pragma endregion
-
 //<summary>Estadisticas iniciales del jugador</summary>
 #pragma region Stats
 	const double HEALTH = 1000;			//Vida
@@ -289,13 +270,12 @@ private:
 #pragma endregion
 	virtual void initObject();
 	void updateDir(Vector2D dir);
-	playerEquipment equip_;
 	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
-
-	#pragma region Cargar
-	//Equipa los objetos guardados en el Json
-	void loadObjects(jute::jValue& mainJson);
-	void loadEquip(jute::jValue& mainJson);
-	#pragma endregion
+	Armor* armor_ = nullptr;	//Pechera
+	Gloves* gloves_ = nullptr;	//Guantes
+	Boots* boots_ = nullptr;	//Botas
+	Sword* sword_ = nullptr;	//Espada
+	Gun* gun_ = nullptr;		//Pistola
+	vector<usable*> potions_{ nullptr, nullptr };	//Pociones
 };

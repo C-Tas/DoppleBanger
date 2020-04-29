@@ -1,24 +1,24 @@
 {
   "currIsland": 0,
-  "unlockedIsland": 2,
-  "currGold": 1300,
+  "unlockedIsland": 0,
+  "currGold": 0,
   "stashGold": 0,
-  "skillPoints": 1000,
-  "precision": 999,
-  "melee": 999,
-  "clon": 999,
+  "skillPoints": 0,
+  "precision": 0,
+  "melee": 0,
+  "clon": 0,
   "questStarted": [false, false],
   "questFinished": [false, false],
   "skills": ["null", "null", "null"],
-  "objects": ["null", "null"],
+  "objects": ["Health", "Armor"],
   "equipment": [{
       "name": 0,
       "price": 10,
       "armor": 10.000000,
       "health": 10.000000
     }, {
-      "name": 2,
-      "price": 10,
+      "name": 3,
+      "price": 20,
       "armor": 10.000000,
       "critic": 10.000000
     }, {
@@ -27,7 +27,7 @@
       "armor": 10.000000,
       "speed": 10.000000
     }, {
-      "name": 8,
+      "name": 6,
       "price": 10,
       "rate": 10.000000,
       "damage": 10.000000

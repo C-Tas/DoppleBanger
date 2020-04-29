@@ -32,83 +32,22 @@ void Player::initObject()
 	CollisionCtrl::instance()->setPlayer(this);
 
 	//Equipamiento inicial del jugador
-	//Balancear los valores del equipamiento cuando sea necesario
-	equip_.armor_ = new Armor(app_, 10, 10, 10, equipType::ArmorI);
-	equip_.gloves_ = new Gloves(app_, 10, 10, 10, equipType::GlovesI);
-	equip_.boots_ = new Boots(app_, 10, 10, 10, equipType::BootsI);
-	equip_.sword_ = new Sword(app_, 10, 10, 10, equipType::SaberI);
-	equip_.gun_ = new Gun(app_, 10, 10, 10, equipType::PistolI); 
+	playerEquipment auxEquip = gm_->getEquip();
+	armor_ = auxEquip.armor_;
+	gloves_ = auxEquip.gloves_;
+	boots_ = auxEquip.boots_;
+	gun_ = auxEquip.gun_;
+	potions_ = auxEquip.potions_;
 }
 
-void Player::load(jute::jValue& mainJson)
+void Player::load()
 {
-	//Equipa los objetos guardados en el Json
-	loadObjects(mainJson);
-	loadEquip(mainJson);
-}
-
-void Player::loadObjects(jute::jValue& mainJson) {
-	//Objetos equipados
-	for (int i = 0; i < 2; i++) {
-		if (mainJson["objects"][i].as_string() == "Health") {
-			equip_.potions_[i] = new usable(app_, potionType::Health);
-		}
-		else if (mainJson["objects"][i].as_string() == "Mana") {
-			equip_.potions_[i] = new usable(app_, potionType::Mana);
-		}
-		else if (mainJson["objects"][i].as_string() == "Speed") {
-			equip_.potions_[i] = new usable(app_, potionType::Speed);
-		}
-		else if (mainJson["objects"][i].as_string() == "Armor") {
-			equip_.potions_[i] = new usable(app_, potionType::Armor);
-		}
-		else if (mainJson["objects"][i].as_string() == "Dmg") {
-			equip_.potions_[i] = new usable(app_, potionType::Damage);
-		}
-		else if (mainJson["objects"][i].as_string() == "Crit") {
-			equip_.potions_[i] = new usable(app_, potionType::Crit);
-		}
-	}
-}
-
-void Player::loadEquip(jute::jValue& mainJson) {
-	//Se comprueba que no haya equipo ya definido
-	if (equip_.armor_ != nullptr) delete equip_.armor_;
-	if (equip_.gloves_ != nullptr) delete equip_.gloves_;
-	if (equip_.boots_ != nullptr) delete equip_.boots_;
-	if (equip_.sword_ != nullptr) delete equip_.sword_;
-	if (equip_.gun_ != nullptr) delete equip_.gun_;
-
-	//Pechera
-	double auxPrice = mainJson["equipment"][0]["price"].as_double();
-	double auxStat1 = mainJson["equipment"][0]["health"].as_double();
-	double auxStat2 = mainJson["equipment"][0]["armor"].as_double();
-	equipType auxType = (equipType)mainJson["equipment"][0]["name"].as_int();
-	equip_.armor_ = new Armor(app_, auxPrice, auxStat1, auxStat2, auxType);
-	//Guantes
-	auxPrice = mainJson["equipment"][1]["price"].as_double();
-	auxStat1 = mainJson["equipment"][1]["critic"].as_double();
-	auxStat2 = mainJson["equipment"][1]["armor"].as_double();
-	auxType = (equipType)mainJson["equipment"][1]["name"].as_int();
-	equip_.gloves_ = new Gloves(app_, auxPrice, auxStat1, auxStat2, auxType);
-	//Botas
-	auxPrice = mainJson["equipment"][2]["price"].as_double();
-	auxStat1 = mainJson["equipment"][2]["speed"].as_double();
-	auxStat2 = mainJson["equipment"][2]["armor"].as_double();
-	auxType = (equipType)mainJson["equipment"][2]["name"].as_int();
-	equip_.boots_ = new Boots(app_, auxPrice, auxStat1, auxStat2, auxType);
-	//Espada
-	auxPrice = mainJson["equipment"][3]["price"].as_double();
-	auxStat1 = mainJson["equipment"][3]["damage"].as_double();
-	auxStat2 = mainJson["equipment"][3]["rate"].as_double();
-	auxType = (equipType)mainJson["equipment"][3]["name"].as_int();
-	equip_.sword_ = new Sword(app_, auxPrice, auxStat1, auxStat2, auxType);
-	//Pistola
-	auxPrice = mainJson["equipment"][4]["price"].as_double();
-	auxStat1 = mainJson["equipment"][4]["damage"].as_double();
-	auxStat2 = mainJson["equipment"][4]["rate"].as_double();
-	auxType = (equipType)mainJson["equipment"][4]["name"].as_int();
-	equip_.gun_ = new Gun(app_, auxPrice, auxStat1, auxStat2, auxType);
+	playerEquipment auxEquip = gm_->getEquip();
+	armor_ = auxEquip.armor_;
+	gloves_ = auxEquip.gloves_;
+	boots_ = auxEquip.boots_;
+	gun_ = auxEquip.gun_;
+	potions_ = auxEquip.potions_;
 }
 
 void Player::initSkills()
@@ -165,12 +104,12 @@ bool Player::update()
 	}
 
 	
-	if (eventHandler_->isKeyDown(SDLK_1) && equip_.potions_[0] != nullptr && !equip_.potions_[0]->isUsed()) {
-		usePotion(equip_.potions_[0], 0);
+	if (eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr && !potions_[0]->isUsed()) {
+		usePotion(potions_[0], 0);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 	}
-	if (eventHandler_->isKeyDown(SDLK_2) && equip_.potions_[1] != nullptr && !equip_.potions_[1]->isUsed()) {
-		usePotion(equip_.potions_[1], 1);
+	if (eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr && !potions_[1]->isUsed()) {
+		usePotion(potions_[1], 1);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 	}
 
@@ -573,7 +512,8 @@ void Player::usePotion(usable* potion, int key) {
 	}
 
 	app_->getCurrState()->addUpdateList(potion);
-	equip_.potions_[key] = nullptr;
+	potions_[key] = nullptr;
+	gm_->setPotion(key, nullptr);
 	potion->use();
 }
 
@@ -622,15 +562,6 @@ Player::~Player()
 	//Temporal para no dejar basura
 	for (int i = 0; i < skills_.size(); i++) {
 		delete skills_[i];
-	}
-
-	delete equip_.armor_;
-	delete equip_.gloves_;
-	delete equip_.boots_;
-	delete equip_.sword_;
-	delete equip_.gun_;
-	for (int i = 0; i < equip_.potions_.size(); i++) {
-		delete equip_.potions_[i];
 	}
 }
 

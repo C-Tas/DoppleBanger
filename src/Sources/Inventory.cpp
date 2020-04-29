@@ -76,7 +76,7 @@ void Inventory::initState(){
 	//Cogemos los objetos equpados de player
 	player_ = gameManager_->getPlayer();
 
-	playerEquipment aux = player_->getInfoEquip();
+	playerEquipment aux = gm_->getEquip();
 
 	if (aux.armor_ != nullptr) equipment_.armor_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.armor_, callSelectObject, true);
 	if (aux.gloves_ != nullptr) equipment_.gloves_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.gloves_, callSelectObject, true);
