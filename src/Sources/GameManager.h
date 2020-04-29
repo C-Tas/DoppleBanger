@@ -301,6 +301,8 @@ public:
 	playerEquipment getEquip() { return currEquip_; };
 	//Devuelve al clon
 	GameObject* getClon() { return clon_; };
+	//Devuelve el HUD
+	HUD* getHUD() { return hud_; };
 	
 #pragma endregion
 

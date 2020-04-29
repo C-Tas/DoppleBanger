@@ -2,6 +2,16 @@
 #include <list>
 #include "VisualElement.h"
 
+struct potionHUD
+{
+	bool active_ = false;
+	double duration_;
+	double time_;
+	VisualElement* potionBackground_;
+	VisualElement* potionHUD_;
+	Texture* potionTimeHUD_;
+};
+
 class HUD : public Draw
 {
 public:
@@ -16,9 +26,13 @@ public:
 	void updateKey(int key);
 	//Actualiza el estado del cooldown
 	void setSkillCooldown(bool cooldown, int key);
+	//Crea el HUD de los objetos consumidos
+	void showPotionHUD(int index, double duration, double time);
+	//Estructura del HUD de las pociones
 
 private:
 	list<VisualElement*> elementsHUD_;	//Lista de los elementos del HUD
+	vector<potionHUD> potionsHUD_;		//Lista de las pociones del HUD | 0 vel, 1 def, 2 dañ, 3 crit
 	GameManager* gm_ = nullptr; //GameManager
 	#pragma region Iconos
 	//Contiene todos los iconos
@@ -75,6 +89,8 @@ private:
 	void createBg(Texture* tx, const SDL_Rect& destRect);
 	//Crea las texturas para las habilidades
 	Texture* createSkillIcon(int key);
+	//Crea las texturas para las el HUD de las pociones
+	potionHUD createPotionHUD(int key);
 	//Crea las texturas para los objetos
 	Texture* createObjectIcon(int key);
 };
