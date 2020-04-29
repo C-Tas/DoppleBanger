@@ -274,7 +274,7 @@ void CollisionCtrl::drawTextBox() {
 		npcCollision.object->getTextBox()->dialogMerchant();
 		break;
 	case Chef:
-		npcCollision.object->getTextBox()->dialogChef(onShip);
+		npcCollision.object->getTextBox()->dialogChef(onShip, numConversation_);
 		break;
 	case Morty:
 		npcCollision.object->getTextBox()->dialogMorty(onShip);
@@ -286,6 +286,8 @@ void CollisionCtrl::drawTextBox() {
 		npcCollision.object->getTextBox()->dialogSkeleton(onShip);
 	case Cartographer:
 		npcCollision.object->getTextBox()->dialogCartographer(onShip);
+	default:
+		numConversation_ = 0;
 	}
 	npcCollision.id = Nobody;
 	npcCollision.object = nullptr;

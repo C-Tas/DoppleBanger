@@ -82,6 +82,8 @@ public:
 #pragma region Add
 	///<summary>Setea el player</summary>
 	void setPlayer(Player* player) { player_ = player; };
+	//Cambia a la siguiente conversación
+	void nextConversation() { numConversation_++; };
 
 	//Islas
 	///<summary>A�ade un nuevo obst�culo</summary>
@@ -129,6 +131,8 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 
 	Player* player_ = nullptr;
 	vector<NPCsInfo> npcs_;	//Si estamos en el barco habrá varios, si estamos en una isla habrá como mucho uno
+
+	int numConversation_ = 0;
 
 	//Islas
 	list<Obstacle*> obstacles_;

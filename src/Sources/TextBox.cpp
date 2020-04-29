@@ -5,6 +5,7 @@
 #include "ShopState.h"
 #include "Player.h"
 #include "SDL_macros.h"
+#include "CollisionCtrl.h"
 
 //Cada línea de los diálogos/descripciones se tiene que renderizar por separado para poder generar los saltos de línea.
 //Lo relacionado con textos aparece aquí y no en Resources para no sobrecargar dicha clase.
@@ -18,6 +19,11 @@ void TextBox::goShopState(Application* app)
 {
 	dynamic_cast<Player*>(app->getGameManager()->getPlayer())->stop();
 	app->getGameStateMachine()->pushState(new ShopState(app));
+}
+
+void TextBox::nextConversation(Application* app) {
+	dynamic_cast<Player*>(app->getGameManager()->getPlayer())->stop();
+	CollisionCtrl::instance()->nextConversation();
 }
 
 void TextBox::initDialog() {
@@ -75,28 +81,37 @@ void TextBox::dialogMerchant() {
 	shopButton_->update();
 }
 
-void TextBox::dialogChef(bool unlock) {
+void TextBox::dialogChef(bool unlock, int num) {
 	initDialog();
 	//Diálogo del chef cuando lo hemos desbloqueado
 	if (unlock) {
+		Texture text;
+		switch (num) {
+		case 0:
+			text.loadFromText(app_->getRenderer(), "Yo soy un ejemplo de un NPC que aún no ha sido desbloqueado, falta gestionar el comienzo y final de las misiones", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
+			text.loadFromText(app_->getRenderer(), "secundarias, que pertenecen a otra historia (concretamente 'Misión secundaria - Gallego en problemas').", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+			text.loadFromText(app_->getRenderer(), "Los textos están ajustados para un tamaño mínimo de ventana 1600x900, si se hace más grande, el texto queda", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 3));
+
+			button_->draw();
+			button_->update();
+			break;
+		case 1:
+			text.loadFromText(app_->getRenderer(), "marginado a la izquierda pero no queda mal, pero si se hace una ventana más pequeña el texto no entra.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing));
+
+			text.loadFromText(app_->getRenderer(), "Aún así habrá que tener un tamaño mínimo, porque otros elementos también desbordan con una ventana pequeña.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+			break;
+		}
 	}
 	//Diálogo del chef cuando aún está bloqueado
 	else {
-		Texture text(app_->getRenderer(), "Yo soy un ejemplo de un NPC que aún no ha sido desbloqueado, falta gestionar el comienzo y final de las misiones", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + lineSpacing);
 
-		text.loadFromText(app_->getRenderer(), "secundarias, que pertenecen a otra historia (concretamente 'Misión secundaria - Gallego en problemas').", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 2));
-
-		text.loadFromText(app_->getRenderer(), "Los textos están ajustados para un tamaño mínimo de ventana 1600x900, si se hace más grande, el texto queda", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 3));
-
-		text.loadFromText(app_->getRenderer(), "marginado a la izquierda pero no queda mal, pero si se hace una ventana más pequeña el texto no entra.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 4));
-
-		text.loadFromText(app_->getRenderer(), "Aún así habrá que tener un tamaño mínimo, porque otros elementos también desbordan con una ventana pequeña.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 5));
 	}
 }
 

@@ -12,7 +12,10 @@ protected:
 	const int lineSpacing = GameManager::instance()->getFontSize() * 1.5;	//Interlineado y márgenes del texto
 
 	Button* shopButton_ = nullptr;
+	Button* button_ = nullptr;
+
 	static void goShopState(Application* app);
+	static void nextConversation(Application* app);
 
 public:
 	///<summary>Constructora del textBox de diálogo</summary>
@@ -23,11 +26,14 @@ public:
 		dest.y = app_->getWindowHeight() - dest.h;
 
 		shopButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToShopButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 }, 
-			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, goShopState); 
+			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, goShopState);
+
+		button_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::RightArrow), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 17),  (double)(app_->getWindowHeight() / 20) }, nextConversation);
 	};
 	///<summary>Constructora del textBox de descripción</summary>
 	TextBox(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
-	~TextBox() { delete shopButton_; };
+	~TextBox() { delete shopButton_; delete button_; };
 
 	///<summary>Carga el textBox de diálogo inicial</summary>
 	void initDialog();
@@ -43,7 +49,7 @@ public:
 	void dialogMerchant();
 
 	///<summary>Frases del chef, tanto desbloqueado como no</summary>
-	void dialogChef(bool unlock);
+	void dialogChef(bool unlock, int num);
 
 	///<summary>Frases de Morty, tanto desbloqueado como no</summary>
 	void dialogMorty(bool unlock);

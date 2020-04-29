@@ -72,13 +72,14 @@ public:
 		}
 		else return false;
 	};
-	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
+	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); onCollision_ = true; };
 	///<summary>Método para crear las skills que tiene el player
 	///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
 	void initSkills();
 
 #pragma region Getters
 	const bool getDead() { return dead_; };
+	const bool getOnCollision() { return onCollision_; };
 	const int getLiberation() { return liberation_; };
 	const int getMoney() { return money_; };
 	const double getMaxHealth() { return HEALTH; }; //Faltaria poner una variable que lleve la vida maxima sin ser cte
@@ -105,7 +106,8 @@ public:
 		app_->getAudioManager()->playChannel(Resources::Ricochet, 0, 3);
 		ricochet_ = ricochet; 
 		lastTimeRico_ = SDL_GetTicks(); };
-
+	//Setea si el player ha colisionado
+	void setOnCollision(bool coll) { onCollision_ = coll; };
 	void decreaseMana(double mana);
 	inline void setLiberation1() { liberation_ = 1; };
 	inline void setLiberation2( ) { liberation_ = 2; };
@@ -147,6 +149,7 @@ public:
 private:
 	bool dead_ = false;
 	bool attacking_ = false;
+	bool onCollision_ = false;
 	int money_ = 0;
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
