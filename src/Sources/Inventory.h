@@ -50,7 +50,6 @@ private:
 public:
 	Inventory(Application* app) :GameState(app) { initState(); };
 	virtual ~Inventory() ;
-	void addToInventory(Item* ob);
 	virtual void draw() const;
 	virtual void update();
 	//Selecciona el objeto clickados

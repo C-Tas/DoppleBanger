@@ -170,7 +170,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Boots1, "../Sources/assets/Equipamiento/botas.png"},
 	{ Boots2, "../Sources/assets/Equipamiento/zapatos.png" },
 	{ Sword1, "../Sources/assets/Equipamiento/espada1.png" },
-	{ Sword1, "../Sources/assets/Equipamiento/espada2.png" },
+	{ Sword2, "../Sources/assets/Equipamiento/espada2.png" },
 	{ Saber1, "../Sources/assets/Equipamiento/sable1.png" },
 	{ Saber2, "../Sources/assets/Equipamiento/sable2.png" },
 	{ Gun1, "../Sources/assets/Equipamiento/pistola1.png"},

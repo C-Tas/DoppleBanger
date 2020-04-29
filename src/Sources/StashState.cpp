@@ -143,7 +143,7 @@ void StashState::initState() {
 	//Creo aqu� objetos para comprobar funcionalidad
 	#ifdef _DEBUG
 
-	Gun* gun  = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
+	/*Gun* gun  = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
 	Gun* gun1 = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
 	Gun* gun2 = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
 	Gun* gun3 = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
@@ -161,7 +161,7 @@ void StashState::initState() {
 	
 	b = new InventoryButton(app_, Vector2D(100, 400), Vector2D(125, 50), gun2, callbackSelectObject);
 	it = inventory_.objects_->insert(inventory_.objects_->end(), b);
-	b->setIterator(it);
+	b->setIterator(it);*/
 
 	#endif // _DEBUG
 	///Reasignamos el callback y el estado puesto que si se borra el antiguo stash, no se podrá seleccionar 

@@ -59,6 +59,7 @@ public:
 	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
 
 	#pragma region Getters
+		const bool isEquipInit() { return initEquip_; };
 		const Clon* getClon() { return clon_; };
 		const int getLiberation() { return liberation_; };
 		const double getMaxHealth() { return maxHealth_; }; //Devuelve la vida maxima del player
@@ -73,6 +74,8 @@ public:
 	
 	#pragma endregion
 	#pragma region Setters
+		//Para saber si hay que inicializar el equipamiento
+		void setinitEquip(bool init) { initEquip_ = init; };
 		//Activa la perforación
 		void setPerforate(bool perforate) { perforate_ = perforate; };
 		//Activa el rebote y el momento en el que se usa
@@ -122,6 +125,7 @@ public:
 
 private:
 	bool attacking_ = false;
+	bool initEquip_ = true;	//Para saber si hiay que inicializar el equipamiento
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
 	Clon* clon_ = nullptr;

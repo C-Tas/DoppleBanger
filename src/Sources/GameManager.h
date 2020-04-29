@@ -193,6 +193,12 @@ private:
 		void loadEquipment(jute::jValue& mainJson);
 		//Carga las texturas del HUD
 		void loadHUD(jute::jValue& mainJson);
+		//Carga el inventario
+		void loadInventory(jute::jValue& mainJson);
+		//Carga un objeto de tipo Equipment
+		void loadEquipType(jute::jValue& mainJson, string tag, int i);
+		//Carga un objeto de tipo usable
+		void loadUsableType(jute::jValue& mainJson, string tag, int i);
 		#pragma endregion
 	#pragma endregion
 
@@ -370,5 +376,5 @@ public:
 	}
 #pragma endregion
 	//Para añadir objetos al inventario
-	void addToInventory(Equipment* ob);
+	void addToInventory(Item* ob);
 };

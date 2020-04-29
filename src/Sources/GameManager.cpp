@@ -273,13 +273,21 @@ void GameManager::saveEquipment(jute::jValue& mainJson)
 
 void GameManager::saveInventory_Stash(jute::jValue& mainJson)
 {
+	//Guarda el inventario
 	jValue inv_(jType::JARRAY);
 	for (InventoryButton* ob : *inventory_) ob->saveButton(inv_);
 	mainJson.add_property("inventory", inv_);
+	//Guarda número de objetos del inventario
+	jValue aux(jType::JNUMBER);
+	aux.set_string(to_string(inventory_->size()));
+	mainJson.add_property("inventorySize", aux);
 
 	jValue st_(jType::JARRAY);
 	for (InventoryButton* ob : *stash_) ob->saveButton(st_);
 	mainJson.add_property("stash", st_);
+	//Guarda número de objetos del alijo
+	aux.set_string(to_string(stash_->size()));
+	mainJson.add_property("stashSize", aux);
 }
 
 void GameManager::load(string jsonName)
@@ -294,7 +302,8 @@ void GameManager::load(string jsonName)
 	loadEquipment(mainJson);
 	//HUD
 	loadHUD(mainJson);
-	
+	//Inventario
+	loadInventory(mainJson);
 }
 
 void GameManager::loadJNUMBER(jute::jValue& mainJson){
@@ -359,34 +368,34 @@ void GameManager::loadEquipment(jute::jValue& mainJson){
 	if (currEquip_.gun_ != nullptr) delete currEquip_.gun_;
 
 	//Pechera
+	equipType auxType = (equipType)mainJson["equipment"][0]["name"].as_int();
 	double auxPrice = mainJson["equipment"][0]["price"].as_double();
 	double auxStat1 = mainJson["equipment"][0]["health"].as_double();
 	double auxStat2 = mainJson["equipment"][0]["armor"].as_double();
-	equipType auxType = (equipType)mainJson["equipment"][0]["name"].as_int();
 	currEquip_.armor_ = new Armor(app_, auxPrice, auxStat1, auxStat2, auxType);
 	//Guantes
+	auxType = (equipType)mainJson["equipment"][1]["name"].as_int();
 	auxPrice = mainJson["equipment"][1]["price"].as_double();
 	auxStat1 = mainJson["equipment"][1]["critic"].as_double();
 	auxStat2 = mainJson["equipment"][1]["armor"].as_double();
-	auxType = (equipType)mainJson["equipment"][1]["name"].as_int();
 	currEquip_.gloves_ = new Gloves(app_, auxPrice, auxStat1, auxStat2, auxType);
 	//Botas
+	auxType = (equipType)mainJson["equipment"][2]["name"].as_int();
 	auxPrice = mainJson["equipment"][2]["price"].as_double();
 	auxStat1 = mainJson["equipment"][2]["speed"].as_double();
 	auxStat2 = mainJson["equipment"][2]["armor"].as_double();
-	auxType = (equipType)mainJson["equipment"][2]["name"].as_int();
 	currEquip_.boots_ = new Boots(app_, auxPrice, auxStat1, auxStat2, auxType);
 	//Espada
+	auxType = (equipType)mainJson["equipment"][3]["name"].as_int();
 	auxPrice = mainJson["equipment"][3]["price"].as_double();
 	auxStat1 = mainJson["equipment"][3]["damage"].as_double();
 	auxStat2 = mainJson["equipment"][3]["rate"].as_double();
-	auxType = (equipType)mainJson["equipment"][3]["name"].as_int();
 	currEquip_.sword_ = new Sword(app_, auxPrice, auxStat1, auxStat2, auxType);
 	//Pistola
+	auxType = (equipType)mainJson["equipment"][4]["name"].as_int();
 	auxPrice = mainJson["equipment"][4]["price"].as_double();
 	auxStat1 = mainJson["equipment"][4]["damage"].as_double();
 	auxStat2 = mainJson["equipment"][4]["rate"].as_double();
-	auxType = (equipType)mainJson["equipment"][4]["name"].as_int();
 	currEquip_.gun_ = new Gun(app_, auxPrice, auxStat1, auxStat2, auxType);
 	player_->load();
 }
@@ -443,6 +452,78 @@ void GameManager::loadHUD(jute::jValue& mainJson)
 	}
 	//Habilidades equipadas
 	loadSkills(mainJson);
+}
+
+void GameManager::loadInventory(jute::jValue& mainJson)
+{
+	//Carga del inventario
+	//Tamaño
+	int size = mainJson["inventorySize"].as_int();
+	ObjectType aux;
+	for (int i = 0; i < size; i++) {
+		//Tipo de objeto
+		aux = (ObjectType)mainJson["inventory"][i]["type"].as_int();
+		switch (aux)
+		{
+		case ObjectType::Equipment:
+			loadEquipType(mainJson, "inventory", i);
+			break;
+		case ObjectType::Usable:
+			loadUsableType(mainJson, "inventory", i);
+			break;
+		}
+	}
+}
+
+void GameManager::loadEquipType(jute::jValue& mainJson, string tag, int i)
+{
+	//Tipo de equipamiento
+	equipType auxType = (equipType)mainJson[tag][i]["name"].as_int();
+	//Precio del objeto
+	double auxPrice = mainJson[tag][i]["price"].as_double();
+	double auxStat1 = 0;
+	double auxStat2 = 0;
+	//Seleccion de tipo
+	if (auxType == equipType::ArmorI || auxType == equipType::ArmorII) {
+		auxStat1 = mainJson[tag][i]["health"].as_double();
+		auxStat2 = mainJson[tag][i]["armor"].as_double();
+		Armor* loadArmor = new Armor(app_, auxPrice, auxStat1, auxStat2, auxType);
+		addToInventory(loadArmor);
+	}
+	else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
+		auxStat1 = mainJson[tag][i]["critic"].as_double();
+		auxStat2 = mainJson[tag][i]["armor"].as_double();
+		Gloves* loadGloves = new Gloves(app_, auxPrice, auxStat1, auxStat2, auxType);
+		addToInventory(loadGloves);
+	}
+	else if (auxType == equipType::BootsI || auxType == equipType::BootsII) {
+		auxStat1 = mainJson[tag][i]["speed"].as_double();
+		auxStat2 = mainJson[tag][i]["armor"].as_double();
+		Boots* loadBoots = new Boots(app_, auxPrice, auxStat1, auxStat2, auxType);
+		addToInventory(loadBoots);
+	}
+	else if (auxType == equipType::SwordI || auxType == equipType::SwordII
+		|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
+		auxStat1 = mainJson[tag][i]["rate"].as_double();
+		auxStat2 = mainJson[tag][i]["damage"].as_double();
+		Sword* loadSword = new Sword(app_, auxPrice, auxStat1, auxStat2, auxType);
+		addToInventory(loadSword);
+	}
+	else if (auxType == equipType::PistolI || auxType == equipType::PistolII
+		|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
+		auxStat1 = mainJson[tag][i]["rate"].as_double();
+		auxStat2 = mainJson[tag][i]["damage"].as_double();
+		Gun* loadGun = new Gun(app_, auxPrice, auxStat1, auxStat2, auxType);
+		addToInventory(loadGun);
+	}
+}
+
+void GameManager::loadUsableType(jute::jValue& mainJson, string tag, int i)
+{
+	//Tipo de equipamiento
+	potionType auxType = (potionType)mainJson[tag][i]["name"].as_int();
+	usable* loadPot = new usable(app_, auxType);
+	addToInventory(loadPot);
 }
 
 void GameManager::resetGame()
@@ -531,15 +612,22 @@ void GameManager::setObjectEquipped(ObjectName newObject, Key key)
 }
 
 playerEquipment& GameManager::initEquipment(){
-	currEquip_.armor_ = new Armor(app_, 10, 10, 10, equipType::ArmorI);
-	currEquip_.gloves_ = new Gloves(app_, 10, 10, 10, equipType::GlovesI);
-	currEquip_.boots_ = new Boots(app_, 10, 10, 10, equipType::BootsI);
-	currEquip_.sword_ = new Sword(app_, 10, 10, 10, equipType::SwordI);
-	currEquip_.gun_ = new Gun(app_, 10, 10, 10, equipType::PistolI);
+	//Nos basta saber con que la pechera no esta equipada para saber si hay que inicializar
+	//ya que el player no se puede desnudar, siempre va a tener estas 5 piezas iniciales al menos
+	//por otro lado, las pociones se van a borrar en caso de que se vuelva al MainMenuState
+	//pero no hace falta hacer nada con ellas al cambiar de estados
+	//Esta comprobacion esta para que no se pierda lo que se lleve equipado al cambiar del barco a la isla
+	if (currEquip_.armor_ == nullptr) { 
+		currEquip_.armor_ = new Armor(app_, 10, 10, 10, equipType::ArmorI);
+		currEquip_.gloves_ = new Gloves(app_, 10, 10, 10, equipType::GlovesI);
+		currEquip_.boots_ = new Boots(app_, 10, 10, 10, equipType::BootsI);
+		currEquip_.sword_ = new Sword(app_, 10, 10, 10, equipType::SwordI);
+		currEquip_.gun_ = new Gun(app_, 10, 10, 10, equipType::PistolI);
+	}
 	return currEquip_;
 }
 
-void GameManager::addToInventory(Equipment* ob) {
+void GameManager::addToInventory(Item* ob) {
 	//creamos un boton
 	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);
 	//A�adimos el boton a la lista y le asignamos un iterador con su posicion

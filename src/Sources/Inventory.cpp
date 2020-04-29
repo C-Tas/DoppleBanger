@@ -70,11 +70,8 @@ void Inventory::initState(){
 	goToSkillsButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos, { 610, 120 }, callSkillsState);
 	addRenderUpdateLists(goToSkillsButton_);
 
-	//Cogemos la lista de objetos del gameManager
-	GameManager* gameManager_ = GameManager::instance();
-	inventoryList_ = gameManager_->getInventory();
 	//Cogemos los objetos equpados de player
-	player_ = gameManager_->getPlayer();
+	player_ = gm_->getPlayer();
 
 	playerEquipment aux = gm_->getEquip();
 
@@ -88,11 +85,11 @@ void Inventory::initState(){
 
 #ifdef _DEBUG
 
-	Gloves* guante0 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesII);
+	/*Armor* guante0 = new Armor(app_, 20.0, 10.0, 10.0, equipType::ArmorI);
 	Gloves* guante1 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante2 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante3 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
-	Gloves* guante4 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
+	Boots* guante2 = new Boots(app_, 20.0, 10.0, 10.0, equipType::BootsI);
+	Sword* guante3 = new Sword(app_, 20.0, 10.0, 10.0, equipType::SwordII);
+	Gun* guante4 = new Gun(app_, 20.0, 10.0, 10.0, equipType::PistolII);
 	Gloves* guante5 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
 	usable* potion1 = new usable(app_, potionType::Armor);
 	usable* potion2 = new usable(app_, potionType::Speed);
@@ -101,20 +98,21 @@ void Inventory::initState(){
 	usable* potion5 = new usable(app_, potionType::Mana);
 	usable* potion6 = new usable(app_, potionType::Mana);
 
-	addToInventory(guante0);
-	addToInventory(guante1);
-	addToInventory(guante2);
-	addToInventory(guante3);
-	addToInventory(guante4);
-	addToInventory(guante5);
-	addToInventory(potion1);
-	addToInventory(potion2);
-	addToInventory(potion3);
-	addToInventory(potion4);
-	addToInventory(potion5);
-	addToInventory(potion6);
+	gm_->addToInventory(guante0);
+	gm_->addToInventory(guante1);
+	gm_->addToInventory(guante2);
+	gm_->addToInventory(guante3);
+	gm_->addToInventory(guante4);
+	gm_->addToInventory(guante5);
+	gm_->addToInventory(potion1);
+	gm_->addToInventory(potion2);
+	gm_->addToInventory(potion3);
+	gm_->addToInventory(potion4);
+	gm_->addToInventory(potion5);
+	gm_->addToInventory(potion6);*/
 #endif
-
+	//Cogemos la lista de objetos del gameManager
+	inventoryList_ = gm_->getInventory();
 	ListPos = inventoryList_->begin();
 
 	///Reasignamos el callback y el estado puesto que si se borra el antiguo inventario, no se podr� seleccionar 
@@ -160,20 +158,6 @@ void Inventory::deleteObj() {
 
 		}
 		//lo borramos de la lista
-		
-	}
-}
-//Hay que quitarle pero todavia no puedo
-void Inventory::addToInventory(Item* ob) {
-	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 },ob, callSelectObject);
-	//le asignamos al objeto su boton
-	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
-	list <InventoryButton*>::iterator it = inventoryList_->insert(inventoryList_->end(), b);
-	b->setIterator(it);
-	//comprobamos si es el primer objeto de la lista
-	if (it == inventoryList_->begin()) {
-		ListPos = inventoryList_->begin();//iniciamos el puntero
 	}
 }
 
