@@ -45,7 +45,7 @@ bool Pumpkin::update() {
 	updateFrame();
 	//Si la calabaza ha muerto
 	if (currState_ == STATE::DYING) {
-		
+		applyRewards();
 		return explosionAnim();
 	}
 	//Si la calabaza no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
@@ -106,8 +106,8 @@ void Pumpkin::follow() {
 	}
 }
 void Pumpkin::initObject() {
-	setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
 	Enemy::initObject();
+	initRewards();
 	explosionRange_ = getScaleX();
 }
 void Pumpkin::lostAgro()
@@ -199,6 +199,15 @@ void Pumpkin::initAnims()
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveLeftAnim));
 	
 	initIdle();
+}
+void Pumpkin::initRewards()
+{
+	minGold = 30;
+	maxGold = 50;
+	minArchievementPoints = 2;
+	maxArchievementPoints = 10;
+	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
+	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
 void Pumpkin::initIdle()
 {

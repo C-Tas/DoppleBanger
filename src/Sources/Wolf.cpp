@@ -49,6 +49,7 @@ bool Wolf::update() {
 		if (!app_->getMute()) {
 			app_->getAudioManager()->playChannel(Resources::AudioId::WolfDie, 0, 3);
 		}
+		applyRewards();
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
@@ -176,6 +177,7 @@ void Wolf::attack() {
 void Wolf::initObject() {
 	Enemy::initObject();
 	setTexture(app_->getTextureManager()->getTexture(Resources::WolfFront));
+	initRewards();
 	rangeVision_ = 80;//numero magico
 }
 
@@ -239,4 +241,14 @@ void Wolf::initialStats()
 	MELEE_RATE = 1500;
 	DIST_RATE = 1500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+}
+
+void Wolf::initRewards()
+{
+	minGold = 30;
+	maxGold = 50;
+	minArchievementPoints = 2;
+	maxArchievementPoints = 10;
+	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
+	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }

@@ -59,6 +59,7 @@ void Kraken::initObject()
 	CollisionCtrl::instance()->addEnemy(this);
 	lastAttack_ = SDL_GetTicks();
 	initAnims();
+	initRewards();
 }
 
 void Kraken::slam()
@@ -125,4 +126,14 @@ void Kraken::tentDeath(Tentacle* obj)
 void Kraken::lostAggro()
 {
 	currEnemy_ = nullptr;
+}
+
+void Kraken::initRewards()
+{
+	minGold = 30;
+	maxGold = 50;
+	minArchievementPoints = 2;
+	maxArchievementPoints = 10;
+	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
+	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }

@@ -16,6 +16,16 @@ public:
 	//Cuando se crea un clon se fija como nuevo objetivo
 	virtual void newEnemy(GameObject* obj) { currEnemy_ = obj; };
 protected:
+	//Rango de puntos de hazaña de la calabaza
+	int maxArchievementPoints = 0;
+	int minArchievementPoints = 0;
+	//Rango de oro que da la calabaza
+	int maxGold = 0;
+	int minGold = 0;
+	//Puntos de hazaña que da esta entidad
+	int achievementPoints_ = 0;
+	//Oro que esta entidad da
+	int goldPoints_ = 0;
 	//Último ataque
 	Uint32 lastHit = 0;
 	//Rango de visión de la entidad
@@ -43,6 +53,10 @@ protected:
 	virtual void initAnims() {};
 	//en cada enemigo establece las stats de los enemigos
 	virtual void initialStats() = 0;
+	//inicializa los puntos de hazaña y el oro que da esta entidad
+	virtual void initRewards() = 0;
+	//Aplica los rewards al player
+	virtual void applyRewards();
 #pragma region stats
 	  double HEALTH = 0;
 	  double MANA = 0;

@@ -18,6 +18,7 @@ public:
 	const virtual void draw();
 	virtual void receiveDamage(int dmg);
 
+
 private:
 	int spawnTime_ = 0;
 	int attackFrames_ = 0;
@@ -45,7 +46,8 @@ private:
 	void initAnims();
 	bool slamUpdate();
 	bool sweepUpdate();
-	virtual void initialStats() {};
+	virtual void initialStats() {};	
+	virtual void initRewards() {};
 
 #pragma region Constantes
 	//Duraci�n del tent�culo

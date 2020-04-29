@@ -13,6 +13,7 @@ bool MonkeyCoco::update() {
 	if (currState_ == STATE::DYING) {
 		//Tendr�a que hacer la animaci�n de muerte?
 		//Cuando acabe la animaci�n, lo mata
+		applyRewards();
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
@@ -70,6 +71,7 @@ void MonkeyCoco::initObject() {
 	Enemy::initObject();
 	setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
 	initAnims();
+	initRewards();
 }
 
 void MonkeyCoco::initialStats()
@@ -91,3 +93,13 @@ void MonkeyCoco::initialStats()
 
 //Gesti�n de las colisiones
 void MonkeyCoco::onCollider() {};
+
+void MonkeyCoco::initRewards()
+{
+	minGold = 30;
+	maxGold = 50;
+	minArchievementPoints = 2;
+	maxArchievementPoints = 10;
+	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
+	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
+}
