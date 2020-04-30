@@ -117,11 +117,11 @@ private:
 	//Puntero unico para evitar copias
 	static unique_ptr<GameManager> instance_;
 	//Puntos de haza�a
-	int achievementPoints_ = 1000;
+	int achievementPoints_ = 0;
 	//Cantidad de dinero almacenada en el inventario
-	int inventoryGold_ = 300;
+	int inventoryGold_ = 0;
 	//Cantidad de dinero almacenada en el alijo
-	int stashGold = 1000;
+	int stashGold = 0;
 	//Enum de la �ltima isla desbloqueada
 	Island unlockedIslands_ = Island::Caribbean;
 	//Enum de la isla actual
@@ -129,11 +129,11 @@ private:
 	//Maximo de los puntos de hazaña
 	int maxPoints_ = 1000;
 	//Puntos de haza�a gastados en la rama precisi�n
-	int precisionPoints_ = maxPoints_ - 1;
+	int precisionPoints_ = 0;
 	//Puntos de haza�a gastados e la rama melee
-	int meleePoints_ = maxPoints_ - 1;
+	int meleePoints_ = 0;
 	//Puntos de haza�a gastados de la rama ghost
-	int clonPoints_ = maxPoints_ - 1;
+	int clonPoints_ = 0;
 	//Puntero a la lista de item del inventario
 	list<InventoryButton*>* inventory_ = new list<InventoryButton*>;
 	//Puntero a la lista de items del alijo
@@ -247,8 +247,10 @@ public:
 	//Cargar slot3
 	void loadSlot3();
 	//Resetea los valores del juego para una partida nueva
-	void resetGame();
+	//cuando se vuelva al menú principal
+	void resetGameManager();
 #pragma endregion
+
 #pragma region getters
 	//Devuelve true si la misi�n ha sido pasada
 	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };

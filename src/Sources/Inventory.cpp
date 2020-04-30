@@ -83,34 +83,6 @@ void Inventory::initState(){
 	if (aux.potions_[0] != nullptr)	equipment_.potion1_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[0], callSelectObject, true);
 	if (aux.potions_[1] != nullptr)	equipment_.potion2_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[1], callSelectObject, true);
 
-#ifdef _DEBUG
-
-	/*Armor* guante0 = new Armor(app_, 20.0, 10.0, 10.0, equipType::ArmorI);
-	Gloves* guante1 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
-	Boots* guante2 = new Boots(app_, 20.0, 10.0, 10.0, equipType::BootsI);
-	Sword* guante3 = new Sword(app_, 20.0, 10.0, 10.0, equipType::SwordII);
-	Gun* guante4 = new Gun(app_, 20.0, 10.0, 10.0, equipType::PistolII);
-	Gloves* guante5 = new Gloves(app_, 20.0, 10.0, 10.0, equipType::GlovesI);
-	usable* potion1 = new usable(app_, potionType::Armor);
-	usable* potion2 = new usable(app_, potionType::Speed);
-	usable* potion3 = new usable(app_, potionType::Damage);
-	usable* potion4 = new usable(app_, potionType::Health);
-	usable* potion5 = new usable(app_, potionType::Mana);
-	usable* potion6 = new usable(app_, potionType::Mana);
-
-	gm_->addToInventory(guante0);
-	gm_->addToInventory(guante1);
-	gm_->addToInventory(guante2);
-	gm_->addToInventory(guante3);
-	gm_->addToInventory(guante4);
-	gm_->addToInventory(guante5);
-	gm_->addToInventory(potion1);
-	gm_->addToInventory(potion2);
-	gm_->addToInventory(potion3);
-	gm_->addToInventory(potion4);
-	gm_->addToInventory(potion5);
-	gm_->addToInventory(potion6);*/
-#endif
 	//Cogemos la lista de objetos del gameManager
 	inventoryList_ = gm_->getInventory();
 	ListPos = inventoryList_->begin();
@@ -149,7 +121,6 @@ void Inventory::deleteObj() {
 	if (select_ != nullptr) {
 		// comprobamos que no se trate de un elemento equipado
 		if (!select_->isEquipped()) {
-			
 			if (select_->getIterator() == ListPos)++ListPos;
 			inventoryList_->erase(select_->getIterator());
 			//Eliminamos el objeto
@@ -157,7 +128,6 @@ void Inventory::deleteObj() {
 			select_ = nullptr;
 
 		}
-		//lo borramos de la lista
 	}
 }
 
@@ -181,6 +151,7 @@ void Inventory::selectEquipment(){
 	//comprobamos de que tipo es
 	Equipment* auxEquip = static_cast<Equipment*>(select_->getObject());
 	equipType auxType = auxEquip->getEquipType();
+	//Seleccion del tipo de equipamiento (Pechera, Guantes, Botas, Espada o Pistola)
 	if (auxType == equipType::ArmorI || auxType == equipType::ArmorII) {
 		changeEquipment(equipment_.armor_);
 		player_->equip(static_cast<Armor*>(auxEquip));
@@ -211,7 +182,7 @@ void Inventory::selectEquipment(){
 
 void Inventory::equipPotion() {
 	//Si ya hay un objeto equipado
-	if (slotPotion == 0) {
+	if (slotPotion == 0 && (equipment_.potion1_ == nullptr || equipment_.potion2_ != nullptr)) {
 		if (equipment_.potion1_ != nullptr) {
 			//Se desequipa el objeto actual
 			equipment_.potion1_->Enable(false);
@@ -233,7 +204,7 @@ void Inventory::equipPotion() {
 
 		slotPotion = 1;
 	}
-	else if (slotPotion == 1) {
+	else {
 		if (equipment_.potion2_ != nullptr) {
 			//Se desequipa el objeto actual
 			equipment_.potion2_->Enable(false);
@@ -319,6 +290,7 @@ void Inventory::draw()const {
 	double posx, posy, sizeX, sizeY;
 	
 	// falta ajustar la posicion de los botones
+	//Posicionamiento del equipo actual
 	if (equipment_.gloves_ != nullptr) {
 		 posx = 2.6 * (double)(app_->getWindowWidth() / 21);
 		 posy = 3 * (double)(app_->getWindowHeight() / 10);

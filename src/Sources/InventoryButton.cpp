@@ -145,7 +145,7 @@ void InventoryButton::saveEquipButton(jute::jValue& container)
 	//Precio
 	aux.set_string(to_string(auxEquip_->getPrice()));
 	jObj_.add_property("price", aux);
-	//Atributos del objeto
+	//seleccion de objeto (Pechera, Guantes, Botas, Espada, Pistola)
 	if (auxType == equipType::ArmorI || auxType == equipType::ArmorII) {
 		Armor* auxArmor = dynamic_cast<Armor*>(auxEquip_);
 		aux.set_string(to_string(auxArmor->getArmor()));

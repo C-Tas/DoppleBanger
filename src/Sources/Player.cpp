@@ -56,9 +56,9 @@ void Player::initSkills()
 	vector<SkillName> skillsEquipped_ = gm_->getAllSkillsEquipped();
 	int i = 0;
 	SkillName skill;
-	for (SkillName ob : skillsEquipped_) {
+	for (SkillName& ob : skillsEquipped_) {
 		skill = gm_->getEquippedSkill((Key)i);
-		skills_.push_back(createSkill(skill));
+		skills_.at(i) = createSkill(skill);
 		gm_->setSkillEquiped(skill, (Key)i);
 		i++;
 	}
@@ -473,11 +473,11 @@ void Player::usePotion(usable* potion, int key) {
 	switch (potion->getType())
 	{
 	case potionType::Health:
-		currStats_.health_ = maxHealth_ * (1 + (auxValue / 100));
+		currStats_.health_ += maxHealth_ * auxValue / 100;
 		if (currStats_.health_ > maxHealth_) currStats_.health_ = maxHealth_;
 		break;
 	case potionType::Mana:
-		currStats_.mana_ = maxMana_ * (1 + auxValue / 100);
+		currStats_.mana_ += maxMana_ * auxValue / 100;
 		if (currStats_.mana_ > MANA) currStats_.mana_ = MANA;
 		break;
 	case potionType::Speed:
@@ -523,25 +523,26 @@ void Player::desactiveBuffPotion(usable* potion, int timerPos){
 	//de esa manera, si se vuelve a usar una poción del mismo tipo, se resetea timerPotion_[timerPos]
 	//por lo que unicamente quitara el debufo cuando se cumpla ese tiempo
 	if ((SDL_GetTicks() - timerPotion_[timerPos]) / 1000 > potion->getTime()) {
+		cout << "Entra" << endl;
 		double auxValue = potion->getValue();
 		switch (potion->getType())
 		{
 		case potionType::Speed:
 			currStats_.moveSpeed_ -= auxValue;
-			timerPotion_[0] = false;
+			potionUsing_[0] = false;
 			break;
 		case potionType::Armor:
 			currStats_.armor_ -= auxValue;
-			timerPotion_[1] = false;
+			potionUsing_[1] = false;
 			break;
 		case potionType::Damage:
 			currStats_.meleeDmg_ = currStats_.meleeDmg_ / (1 + auxValue / 100);
 			currStats_.distDmg_ = currStats_.distDmg_ / (1 + auxValue / 100);
-			timerPotion_[2] = false;
+			potionUsing_[2] = false;
 			break;
 		case potionType::Crit:
 			currStats_.crit_ -= auxValue;
-			timerPotion_[3] = false;
+			potionUsing_[3] = false;
 			break;
 		default:
 			break;
@@ -560,10 +561,13 @@ void Player::createClon()
 
 Player::~Player()
 {
-	//Temporal para no dejar basura
-	for (int i = 0; i < skills_.size(); i++) {
-		delete skills_[i];
+	for (Skill* ob : skills_) {
+		delete ob; ob = nullptr;
 	}
+	//Temporal para no dejar basura
+	/*for (int i = 0; i < skills_.size(); i++) {
+		delete skills_[i];
+	}*/
 }
 
 void Player::shout()

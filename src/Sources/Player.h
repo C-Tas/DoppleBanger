@@ -105,7 +105,7 @@ public:
 		void usePotion(usable* potion, int key);
 		//Metodo para desactivar el bufo de las pociones
 		void desactiveBuffPotion(usable* potion, int timerPos);
-		//Equipa pociones	
+		//Equipa pociones
 		void equipPotion1(usable* pot) { potions_[0] = pot; gm_->setPotion(0, potions_[0]); };
 		void equipPotion2(usable* pot) { potions_[1] = pot; gm_->setPotion(1, potions_[1]); };
 		//Devuelve el instante en el que se usó la poción
@@ -133,7 +133,7 @@ private:
 	Vector2D previousPos_;
 
 	//Habilidades
-	vector<Skill*> skills_;
+	vector<Skill*> skills_ = { nullptr, nullptr, nullptr, nullptr};
 	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
 	DIR lookAt;	//Hacia dónde mira
 	//Objetos

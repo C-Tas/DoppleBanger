@@ -73,7 +73,6 @@ void StashState::draw() const
 
 	//Escribimos la informaci�n del boton seleccionado
 	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render(DESCRIPTION_RECT);
-	
 }
 
 void StashState::update()
@@ -124,8 +123,6 @@ void StashState::initState() {
 	//Boton para pasar el dinero del inventario al alijo
 	addRenderUpdateLists(new Button(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((37 * (app_->getWindowWidth() / 70))+10,MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToStash));
 
-
-
 	//Cogemos la referencia al dinero de gameManager
 	stash_.money_ = gm_->getStashGold();
 	inventory_.money_ = gm_->getInventoryGold();
@@ -138,29 +135,6 @@ void StashState::initState() {
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
 	stashMoneyTex_ = new Texture(app_->getRenderer(), to_string(stash_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
 	//Creo aqu� objetos para comprobar funcionalidad
-	#ifdef _DEBUG
-
-	/*Gun* gun  = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
-	Gun* gun1 = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
-	Gun* gun2 = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
-	Gun* gun3 = new Gun(app_, 0, 0, 0, equipType::ShotgunI);
-
-	
-	InventoryButton* b = new InventoryButton(app_, Vector2D(100, 400), Vector2D(125, 50), gun, callbackSelectObject);
-	auto it = stash_.objects_->insert(stash_.objects_->end(),b);
-	b->setIterator(it);
-	b = new InventoryButton(app_, Vector2D(100, 400), Vector2D(125, 50), gun1, callbackSelectObject);
-	it = stash_.objects_->insert(stash_.objects_->end(), b);
-	b->setIterator(it);
-	b = new InventoryButton(app_, Vector2D(100, 400), Vector2D(125, 50), gun3, callbackSelectObject);
-	it = stash_.objects_->insert(stash_.objects_->end(), b);
-	b->setIterator(it);
-	
-	b = new InventoryButton(app_, Vector2D(100, 400), Vector2D(125, 50), gun2, callbackSelectObject);
-	it = inventory_.objects_->insert(inventory_.objects_->end(), b);
-	b->setIterator(it);*/
-
-	#endif // _DEBUG
 
 	//Cogemos la referencia de las listas que hay en GameManager
 	stash_.objects_ = gm_->getStash();

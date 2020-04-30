@@ -24,7 +24,11 @@ void GameStateMachine::popState() {
 	}
 }
 void GameStateMachine::clearAllStateExceptFirst() {
-	for (int i = 0; i < gameStateStack_.size() + 1; i++) popState();
+	while (gameStateStack_.size() > 1) {
+		popState();
+	}
+	//Se necesita resetear para saber si existen partidas guardadas y así actualizar 
+	//el botón de cargar partida de la interfaz de MainMenuState
 	gameStateStack_.top()->resetState();
-	GameManager::instance()->resetGame();
+	GameManager::instance()->resetGameManager();
 }

@@ -1,16 +1,16 @@
 {
   "currIsland": 0,
-  "unlockedIsland": 0,
-  "currGold": 0,
+  "unlockedIsland": 2,
+  "currGold": 1300,
   "stashGold": 0,
-  "skillPoints": 0,
-  "precision": 0,
-  "melee": 0,
-  "clon": 0,
+  "skillPoints": 1000,
+  "precision": 999,
+  "melee": 999,
+  "clon": 999,
   "questStarted": [false, false],
   "questFinished": [false, false],
-  "skills": ["null", "null", "null"],
-  "objects": ["null", "Mana"],
+  "skills": ["GolpeFuerte", "Rebote", "null"],
+  "objects": ["Health", "Mana"],
   "equipment": [{
       "name": 0,
       "price": 10,
@@ -76,15 +76,18 @@
     }, {
       "type": 1,
       "name": 3
-    }],
-  "inventorySize": 8,
-  "stash": [{
+    }, {
       "type": 0,
       "name": 12,
       "price": 0.000000,
       "rate": 0.000000,
       "damage": 0.000000
     }, {
+      "type": 1,
+      "name": 1
+    }],
+  "inventorySize": 10,
+  "stash": [{
       "type": 0,
       "name": 12,
       "price": 0.000000,
@@ -103,14 +106,11 @@
       "rate": 10.000000,
       "damage": 10.000000
     }, {
-      "type": 1,
-      "name": 1
-    }, {
       "type": 0,
       "name": 3,
       "price": 20.000000,
       "armor": 10.000000,
       "critic": 10.000000
     }],
-  "stashSize": 6
+  "stashSize": 4
 }

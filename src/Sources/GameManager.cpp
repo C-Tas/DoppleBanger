@@ -23,6 +23,7 @@ GameManager::GameManager() {
 		missionsComplete[i] = false;
 	}
 }
+#pragma region Callbacks Guardar/Cargar
 void GameManager::saveSlot1()
 {
 	ofstream slot_("../Sources/save_data/save1.json");
@@ -55,7 +56,8 @@ void GameManager::loadSlot3()
 {
 	load("../Sources/save_data/save3.json");
 }
-
+#pragma endregion
+#pragma region Guardar
 void GameManager::save(ofstream& slot)
 {
 	//Json principal donde se guardará toda la info
@@ -106,6 +108,7 @@ void GameManager::saveMissions(jute::jValue& mainJson)
 {
 	jValue questStarted(jType::JARRAY);
 	jValue aux(jType::JBOOLEAN);
+	//Misiones empezadas
 	for (int i = 0; i < missionsStarted.size(); i++) {
 		switch (missionsStarted[i])
 		{
@@ -136,6 +139,7 @@ void GameManager::saveSkills(jute::jValue& mainJson)
 {
 	jValue skillEquippedValue(jType::JARRAY);
 	jValue aux(jType::JSTRING);
+	//Miramos qué habilidad esta equipada
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
 		switch (skillsEquipped_[i])
 		{
@@ -207,8 +211,7 @@ void GameManager::saveEquipment(jute::jValue& mainJson)
 		currEquip_.boots_,
 		currEquip_.sword_,
 		currEquip_.gun_
-	};	
-
+	};
 	//Información del equipamiento que se va a guardar
 	vector<jValue> equip{
 		(jType::JOBJECT),
@@ -217,7 +220,7 @@ void GameManager::saveEquipment(jute::jValue& mainJson)
 		(jType::JOBJECT),
 		(jType::JOBJECT)
 	};
-	//const enum equipType { Armor_, Boots_, Gloves_, Sword_, Saber_, Pistol_, Shotgun_ };
+	//const enum equipType { Armor_, Gloves_, Boots_, Sword_, Saber_, Pistol_, Shotgun_ };
 	for (int i = 0; i < vEquip.size(); i++) {
 		if (vEquip[i] == nullptr) {
 			aux.set_type(jType::JSTRING);
@@ -233,6 +236,7 @@ void GameManager::saveEquipment(jute::jValue& mainJson)
 			aux.set_string(to_string((int)vEquip[i]->getPrice()));
 			equip[i].add_property("price", aux);
 			equipType auxType = vEquip[i]->getEquipType();
+			//Seleccion de equipo (Pechera, Guantes, Botas, Espada, Pistola)
 			if (auxType == equipType::ArmorI || auxType == equipType::ArmorII) {
 				aux.set_string(to_string(vEquip[i]->getArmor()));
 				equip[i].add_property("armor", aux);
@@ -290,7 +294,8 @@ void GameManager::saveInventory_Stash(jute::jValue& mainJson)
 	aux.set_string(to_string(stash_->size()));
 	mainJson.add_property("stashSize", aux);
 }
-
+#pragma endregion
+#pragma region Cargar
 void GameManager::load(string jsonName)
 {
 	parser parser_;
@@ -401,33 +406,9 @@ void GameManager::loadEquipment(jute::jValue& mainJson){
 	player_->load();
 }
 
-void GameManager::loadSkills(jute::jValue& mainJson)
-{
-	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
-		if (mainJson["skills"][i].as_string() == "null") {
-			setSkillEquiped(SkillName::Unequipped, (Key)i);
-		}
-		else if (mainJson["skills"][i].as_string() == "GolpeFuerte") {
-			setSkillEquiped(SkillName::GolpeFuerte, (Key)i);
-		}
-		else if (mainJson["skills"][i].as_string() == "Torbellino") {
-			setSkillEquiped(SkillName::Torbellino, (Key)i);
-		}
-		else if (mainJson["skills"][i].as_string() == "Perforante") {
-			setSkillEquiped(SkillName::DisparoPerforante, (Key)i);
-		}
-		else if (mainJson["skills"][i].as_string() == "Rebote") {
-			setSkillEquiped(SkillName::Rebote, (Key)i);
-		}
-		else if (mainJson["skills"][i].as_string() == "Explosion") {
-			setSkillEquiped(SkillName::Explosion, (Key)i);
-		}
-	}
-	player_->initSkills();
-}
-
 void GameManager::loadHUD(jute::jValue& mainJson)
 {
+	//Seleccion de pociones
 	for (int i = 0; i < 2; i++) {
 		if (mainJson["objects"][i].as_string() == "null") {
 			objectsEquipped_[i] = ObjectName::Unequipped;
@@ -453,6 +434,36 @@ void GameManager::loadHUD(jute::jValue& mainJson)
 	}
 	//Habilidades equipadas
 	loadSkills(mainJson);
+}
+
+void GameManager::loadSkills(jute::jValue& mainJson)
+{
+	//Seleccion de skill
+	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
+		if (mainJson["skills"][i].as_string() == "null") {
+			setSkillEquiped(SkillName::Unequipped, (Key)i);
+		}
+		else if (mainJson["skills"][i].as_string() == "GolpeFuerte") {
+			setSkillEquiped(SkillName::GolpeFuerte, (Key)i);
+			player_->setSkillAt(i, player_->createSkill(SkillName::GolpeFuerte));
+		}
+		else if (mainJson["skills"][i].as_string() == "Torbellino") {
+			setSkillEquiped(SkillName::Torbellino, (Key)i);
+			player_->setSkillAt(i, player_->createSkill(SkillName::Torbellino));
+		}
+		else if (mainJson["skills"][i].as_string() == "Perforante") {
+			setSkillEquiped(SkillName::DisparoPerforante, (Key)i);
+			player_->setSkillAt(i, player_->createSkill(SkillName::DisparoPerforante));
+		}
+		else if (mainJson["skills"][i].as_string() == "Rebote") {
+			setSkillEquiped(SkillName::Rebote, (Key)i);
+			player_->setSkillAt(i, player_->createSkill(SkillName::Rebote));
+		}
+		else if (mainJson["skills"][i].as_string() == "Explosion") {
+			setSkillEquiped(SkillName::Explosion, (Key)i);
+			player_->setSkillAt(i, player_->createSkill(SkillName::Explosion));
+		}
+	}
 }
 
 void GameManager::loadInventory_Stash(jute::jValue& mainJson)
@@ -549,24 +560,32 @@ void GameManager::loadUsableType(jute::jValue& mainJson, string tag, int i)
 	if(tag == "inventory") addToInventory(loadPot);
 	else if (tag == "stash") addToStash(loadPot);
 }
+#pragma endregion
 
-void GameManager::resetGame()
+void GameManager::resetGameManager()
 {
+	//Reset isla actual
 	currIsland_ = Island::Caribbean;
+	//Reset islas desbloqueadas
 	unlockedIslands_ = Island::Caribbean;
+	//Reset oro acumulado
 	inventoryGold_ = 0;
 	stashGold = 0;
+	//Reset puntos de hazaña
 	achievementPoints_ = 0;
 	precisionPoints_ = 0;
 	meleePoints_ = 0;
 	clonPoints_ = 0;
+	//Reset misiones
 	for (int i = 0; i < missionsStarted.size(); i++) {
 		missionsStarted[i] = false;
 		missionsComplete[i] = false;
 	}
+	//Reset habildades
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
 		skillsEquipped_[i] = SkillName::Unequipped;
 	}
+	//Reset objetos
 	for (int i = 0; i < objectsEquipped_.size(); i++) {
 		objectsEquipped_[i] = ObjectName::Unequipped;
 	}

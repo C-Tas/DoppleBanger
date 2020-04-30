@@ -52,9 +52,8 @@ public:
 	virtual ~Inventory() ;
 	virtual void draw() const;
 	virtual void update();
-	//Selecciona el objeto clickados
+	//Selecciona el objeto clickado
 	void selectObject(InventoryButton* ob);
-
 	//Equipa un objeto
 	void equipObject();
 	//Elimina un objeto del inventario
