@@ -186,6 +186,19 @@ public:
 		PumpkinMoveLeftAnim,
 		PumpkinMoveUpAnim,
 		PumpkinMoveDownAnim,
+		ClonIdleRightAnim,
+		ClonIdleLeftAnim,
+		ClonIdleUpAnim,
+		ClonIdleDownAnim,
+		ClonMeleeRightAnim,
+		ClonMeleeLeftAnim,
+		ClonMeleeUpAnim,
+		ClonMeleeDownAnim,
+		ClonShootRightAnim,
+		ClonShootLeftAnim,
+		ClonShootUpAnim,
+		ClonShootDownAnim,
+
 
 		//Interactuables
 		Wheel,

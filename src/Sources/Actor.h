@@ -89,6 +89,8 @@ public:
 	virtual void onCollider() = 0;
 	//Calcula hacia dónde mira en función del objetivo
 	void updateDirVisObjective(GameObject* objective);
+	//Calcula hacia dónde mira en función de la posición del raton
+	void updateDirVisMouse();
 	//<summary>Establece la direccion del movimiento</summary>	
 	virtual void move(Point2D target) {};
 	//Método para gestionar el daño recibido 
