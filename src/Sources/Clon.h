@@ -30,8 +30,6 @@ public:
 	int getCost() { return cost_; };
 
 private:
-	const double DURATION_ = 60; //En segundos
-	const int CLON_TAUNT_RANGE = 500;
 	int meleeDmg_ = 0;
 	int distDmg_ = 0;
 	int cost_ = 10;
