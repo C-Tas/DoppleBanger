@@ -282,6 +282,7 @@ void GameManager::saveInventory_Stash(jute::jValue& mainJson)
 	aux.set_string(to_string(inventory_->size()));
 	mainJson.add_property("inventorySize", aux);
 
+	//Guarda el alijo
 	jValue st_(jType::JARRAY);
 	for (InventoryButton* ob : *stash_) ob->saveButton(st_);
 	mainJson.add_property("stash", st_);
@@ -303,7 +304,7 @@ void GameManager::load(string jsonName)
 	//HUD
 	loadHUD(mainJson);
 	//Inventario
-	loadInventory(mainJson);
+	loadInventory_Stash(mainJson);
 }
 
 void GameManager::loadJNUMBER(jute::jValue& mainJson){
@@ -454,7 +455,7 @@ void GameManager::loadHUD(jute::jValue& mainJson)
 	loadSkills(mainJson);
 }
 
-void GameManager::loadInventory(jute::jValue& mainJson)
+void GameManager::loadInventory_Stash(jute::jValue& mainJson)
 {
 	//Carga del inventario
 	//Tamaño
@@ -473,6 +474,23 @@ void GameManager::loadInventory(jute::jValue& mainJson)
 			break;
 		}
 	}
+
+	//Carga el alijo
+	//Tamaño
+	size = mainJson["stashSize"].as_int();
+	for (int i = 0; i < size; i++) {
+		//Tipo de objeto
+		aux = (ObjectType)mainJson["stash"][i]["type"].as_int();
+		switch (aux)
+		{
+		case ObjectType::Equipment:
+			loadEquipType(mainJson, "stash", i);
+			break;
+		case ObjectType::Usable:
+			loadUsableType(mainJson, "stash", i);
+			break;
+		}
+	}
 }
 
 void GameManager::loadEquipType(jute::jValue& mainJson, string tag, int i)
@@ -488,33 +506,38 @@ void GameManager::loadEquipType(jute::jValue& mainJson, string tag, int i)
 		auxStat1 = mainJson[tag][i]["health"].as_double();
 		auxStat2 = mainJson[tag][i]["armor"].as_double();
 		Armor* loadArmor = new Armor(app_, auxPrice, auxStat1, auxStat2, auxType);
-		addToInventory(loadArmor);
+		if (tag == "inventory") addToInventory(loadArmor);
+		else if (tag == "stash") addToStash(loadArmor);
 	}
 	else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
 		auxStat1 = mainJson[tag][i]["critic"].as_double();
 		auxStat2 = mainJson[tag][i]["armor"].as_double();
 		Gloves* loadGloves = new Gloves(app_, auxPrice, auxStat1, auxStat2, auxType);
-		addToInventory(loadGloves);
+		if (tag == "inventory") addToInventory(loadGloves);
+		else if (tag == "stash") addToStash(loadGloves);
 	}
 	else if (auxType == equipType::BootsI || auxType == equipType::BootsII) {
 		auxStat1 = mainJson[tag][i]["speed"].as_double();
 		auxStat2 = mainJson[tag][i]["armor"].as_double();
 		Boots* loadBoots = new Boots(app_, auxPrice, auxStat1, auxStat2, auxType);
-		addToInventory(loadBoots);
+		if (tag == "inventory") addToInventory(loadBoots);
+		else if (tag == "stash") addToStash(loadBoots);
 	}
 	else if (auxType == equipType::SwordI || auxType == equipType::SwordII
 		|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
 		auxStat1 = mainJson[tag][i]["rate"].as_double();
 		auxStat2 = mainJson[tag][i]["damage"].as_double();
 		Sword* loadSword = new Sword(app_, auxPrice, auxStat1, auxStat2, auxType);
-		addToInventory(loadSword);
+		if (tag == "inventory") addToInventory(loadSword);
+		else if (tag == "stash") addToStash(loadSword);
 	}
 	else if (auxType == equipType::PistolI || auxType == equipType::PistolII
 		|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
 		auxStat1 = mainJson[tag][i]["rate"].as_double();
 		auxStat2 = mainJson[tag][i]["damage"].as_double();
 		Gun* loadGun = new Gun(app_, auxPrice, auxStat1, auxStat2, auxType);
-		addToInventory(loadGun);
+		if (tag == "inventory") addToInventory(loadGun);
+		else if (tag == "stash") addToStash(loadGun);
 	}
 }
 
@@ -523,7 +546,8 @@ void GameManager::loadUsableType(jute::jValue& mainJson, string tag, int i)
 	//Tipo de equipamiento
 	potionType auxType = (potionType)mainJson[tag][i]["name"].as_int();
 	usable* loadPot = new usable(app_, auxType);
-	addToInventory(loadPot);
+	if(tag == "inventory") addToInventory(loadPot);
+	else if (tag == "stash") addToStash(loadPot);
 }
 
 void GameManager::resetGame()
@@ -632,5 +656,14 @@ void GameManager::addToInventory(Item* ob) {
 	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);
 	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
 	list <InventoryButton*>::iterator it = inventory_->insert(inventory_->end(), b);
+	b->setIterator(it);
+}
+
+void GameManager::addToStash(Item* ob)
+{
+	//creamos un boton
+	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);
+	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
+	list <InventoryButton*>::iterator it = stash_->insert(stash_->end(), b);
 	b->setIterator(it);
 }

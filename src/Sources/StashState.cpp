@@ -125,9 +125,6 @@ void StashState::initState() {
 	addRenderUpdateLists(new Button(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((37 * (app_->getWindowWidth() / 70))+10,MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToStash));
 
 
-	//Cogemos la referencia de las listas que hay en GameManager
-	stash_.objects_ = gm_->getStash();
-	inventory_.objects_ = gm_->getInventory();
 
 	//Cogemos la referencia al dinero de gameManager
 	stash_.money_ = gm_->getStashGold();
@@ -164,6 +161,10 @@ void StashState::initState() {
 	b->setIterator(it);*/
 
 	#endif // _DEBUG
+
+	//Cogemos la referencia de las listas que hay en GameManager
+	stash_.objects_ = gm_->getStash();
+	inventory_.objects_ = gm_->getInventory();
 	///Reasignamos el callback y el estado puesto que si se borra el antiguo stash, no se podrá seleccionar 
 	//ninguno de los objetos al no estar la función en la misma direccion de memoria
 	for (auto ob = inventory_.objects_->begin(); ob != inventory_.objects_->end(); ++ob) {
@@ -251,10 +252,8 @@ void StashState::changeBetweenLists()
 			//actualizamos iterador
 			selected_->setIterator(it);
 			if (stash_.objects_->size() == 0) stash_.firstDrawn = stash_.objects_->begin();
-			
 		}
 		else {
-
 			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
 			//Insertamos en la otra lista
 			it = stash_.objects_->insert(stash_.objects_->end(), selected_);
