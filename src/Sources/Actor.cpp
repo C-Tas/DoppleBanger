@@ -1,4 +1,5 @@
 #include "Actor.h"
+#include "HandleEvents.h"
 
 //Inicialliza los stats
 void Actor::initStats(double health, double mana, double manaReg, double armor, double meleeDmg, double distDmg, double crit,
@@ -24,6 +25,25 @@ void Actor::updateDirVisObjective(GameObject* objective) {
 			else if (angle >= -135.0) currDir_ = DIR::UP;
 			else currDir_ = DIR::LEFT;
 		}
+	}
+}
+
+void Actor::updateDirVisMouse()
+{
+	Vector2D mousePos_ = HandleEvents::instance()->getRelativeMousePos();
+	Vector2D center = getCenter();		//Punto de referencia
+	Vector2D dir = mousePos_ - center;	//Vector dirección
+	dir.normalize();
+	double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
+	if (angle >= 0) {
+		if (angle <= 45.0) currDir_ = DIR::RIGHT;
+		else if (angle < 135.0) currDir_ = DIR::DOWN;
+		else currDir_ = DIR::LEFT;
+	}
+	else {
+		if (angle >= -45.0) currDir_ = DIR::RIGHT;
+		else if (angle >= -135.0) currDir_ = DIR::UP;
+		else currDir_ = DIR::LEFT;
 	}
 }
 

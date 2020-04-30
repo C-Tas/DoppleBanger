@@ -33,9 +33,6 @@ public:
 
 	virtual bool update();
 	virtual void onCollider();
-
-	//Calcula hacia dónde mira el player en función del ratón
-	void updateDirVisMouse();
 	//Establece la direccion del movimiento
 	virtual void move(Point2D target);
 	//Dispara creando una bala en la posicion dir

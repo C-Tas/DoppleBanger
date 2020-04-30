@@ -14,6 +14,11 @@ bool Clon::update() {
 		else if (currState_ == STATE::ATTACKING) {
 			meleeAnim();
 		}
+		else if (currState_ == STATE::SHOOTING && currAnim_.currFrame_ == currAnim_.numberFrames_) {
+			currState_ = STATE::IDLE;
+			initIdle();
+		}
+		
 
 		Vector2D clonPos = getVisPos();
 		if (meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING ||
@@ -89,6 +94,24 @@ void Clon::initAnim() {
 	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_L_FRAME_RATE, false));
 	selfDestructTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonSelfDestructionLeftAnim));
 
+ 	//Animacion de disparo
+	//Arriba
+	shootAnims_.push_back(Anim(SHOOT_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SHOOT_U_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonShootUpAnim));
+	shootingFrame_.push_back(SHOOT_U_SHOOTINGFRAME);
+	//Derecha
+	shootAnims_.push_back(Anim(SHOOT_R_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SHOOT_R_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonShootRightAnim));
+	shootingFrame_.push_back(SHOOT_R_SHOOTINGFRAME);
+	//Abajo
+	shootAnims_.push_back(Anim(SHOOT_D_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SHOOT_D_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonShootDownAnim));
+	shootingFrame_.push_back(SHOOT_D_SHOOTINGFRAME);
+	//izquierda
+	shootAnims_.push_back(Anim(SHOOT_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SHOOT_L_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonShootLeftAnim));
+	shootingFrame_.push_back(SHOOT_L_SHOOTINGFRAME);
+
 	//currDir_ = DIR::LEFT;
 	initIdle();
 }
@@ -161,20 +184,36 @@ void Clon::initSelfDestruction() {
 	frame_.h = currAnim_.heightFrame_;
 }
 
-void Clon::shoot(Vector2D dir) {
+void Clon::initShoot(Vector2D dir)
+{
+	currState_ = STATE::SHOOTING;
+	//Actualizamos hacia donde está mirando
+	updateDirVisMouse();
+	texture_ = shootTx_[(int)currDir_];
+	currAnim_ = shootAnims_[(int)currDir_];
+
+	//Inicializamos la animación
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	shootingDir_ = dir;
+}
+
+void Clon::shoot() {
 	if (distDmg_ > 0)
 	{
 		//Se calcula la posici�n desde la cual se dispara la bala
 		Vector2D shootPos;
 		shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 		shootPos.setY(pos_.getY() + (scale_.getY() / 2));
-
-		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Rock),
-			shootPos, dir, distDmg_);
-
+		
+		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Rock),shootPos, shootingDir_, distDmg_);
+		
 		//Se añade a los bucles del juegos
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addPlayerBullet(bullet);
+		
 	}
 }
 

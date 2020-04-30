@@ -162,6 +162,11 @@ public:
 		ClonMeleeLeftAnim,
 		ClonMeleeUpAnim,
 		ClonMeleeDownAnim,
+		ClonShootRightAnim,
+		ClonShootLeftAnim,
+		ClonShootUpAnim,
+		ClonShootDownAnim,
+
 
 		//Interactuables
 		Wheel,
