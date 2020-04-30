@@ -35,8 +35,8 @@ void CollisionCtrl::islandCollisions() {
 	for (auto ob : obstacles_) {
 		
 		//Con jugador
-		if (Collisions::collides(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(), 
-			(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
+		if (Collisions::collides(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+			(ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY())) {
 			player_->stop();
 			(ob)->onCollider();
 			player_->setPos(player_->getPreviousPos());
@@ -60,6 +60,15 @@ void CollisionCtrl::islandCollisions() {
 				removeEnemyBullet(bullet);
 				bullet->onCollider();
 			}
+		}
+	}
+
+	for (auto ob : obstacleWithRotation_) {
+		if (Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+			player_->getCollisionRot(), (ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY(), ob->getCollisionRot())) {
+			player_->stop();
+			(ob)->onCollider();
+			player_->setPos(player_->getPreviousPos());
 		}
 	}
 

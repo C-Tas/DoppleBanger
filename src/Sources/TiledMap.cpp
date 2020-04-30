@@ -9,7 +9,7 @@
 #include "Kraken.h"
 
 TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, int tileTilesetHeight, int tileTilesetWidth, int tileSize, 
-	Texture* tileset, int filsTileset, int colsTileset,  Vector2D iniPos,  const list<int>& idCollisionTiles)
+	Texture* tileset, int filsTileset, int colsTileset,  Vector2D iniPos,  const list<int>& idCollisionTiles, const list<int>& idWallTiles)
 {
 	///Inicialización del mapa
 	tmx::Map map_;
@@ -27,6 +27,7 @@ TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, i
 	app_ = app;
 	iniPos_ = iniPos;
 	idCollisionTiles_ = idCollisionTiles;
+	idWallTiles_ = idWallTiles;
 	state_ = state;
 
 	//Si no se ha cargado el mapa lanzamos excepcion
@@ -59,18 +60,67 @@ const void TiledMap::draw()
 			{ (int)ob.tilesetPos_.getX(), (int)ob.tilesetPos_.getY(), tileset_.tileWidth_, tileset_.tileHeight_ });
 	}
 
+	//TEMPORAL, PARA COMPROBAR COLISIONES
+	for (Obstacle* ob : collidersToRender_) {
+		app_->getTextureManager()->getTexture(Resources::CollisionTile)->render({ (int)ob->getColliderPos().getX()-(int)Camera::instance()->getCamera().getX(), (int)ob->getColliderPos().getY() - (int)Camera::instance()->getCamera().getY(),
+			(int)ob->getColliderScale().getX(), (int)ob->getColliderScale().getY()}, ob->getCollisionRot());
+	}
+
 
 }
 
-void TiledMap::addIsometricObstacle(Tile tile)
+void TiledMap::setObstacleType(int gid, Obstacle* obstacle)
+{
+
+	//Tiles que son bloques (gid es su identificador en el tilemap)
+	if (gid >= 0 && gid < 76) obstacle->setObstacleType(ObstacleType::Block);
+	//upLeftBorder
+	else if (gid == 92 || gid == 120) obstacle->setObstacleType(ObstacleType::BorderUL);
+	//upRightBorder
+	else if (gid == 93 || gid == 121) obstacle->setObstacleType(ObstacleType::BorderUR);
+	//downLeftBorder
+	else if (gid == 95 || gid == 123) obstacle->setObstacleType(ObstacleType::BorderDL);
+	//downRightBorder
+	else if (gid == 94 || gid == 122) obstacle->setObstacleType(ObstacleType::BorderDR);
+	//Tomb1
+	else if (gid == 178) obstacle->setObstacleType(ObstacleType::Tomb1);
+	//Tomb2
+	else if (gid == 179) obstacle->setObstacleType(ObstacleType::Tomb2);
+	//LittleRock
+	else if (gid == 180) obstacle->setObstacleType(ObstacleType::LittleRock);
+	//BigRock
+	else if (gid == 181) obstacle->setObstacleType(ObstacleType::BigRock);
+	else if (gid == 161 || gid == 162|| gid == 163 ) obstacle->setObstacleType(ObstacleType::Skull);
+
+	collidersToRender_.push_back(obstacle);
+	//Una vez que se tiene el tipo del tile, le ajustamos su collider
+	obstacle->adjustTileCollider();
+}
+
+void TiledMap::addIsometricObstacle(Tile tile, int gid, tileType tileType_)
 {
 	SDL_Rect collisionArea = { (int)tile.worldPos_.getX() + (tileSize_ / 3), (int)tile.worldPos_.getY() + (tileSize_ / 4), (tileSize_ ), (tileSize_ ) };
 	Obstacle* newObstacle = new Obstacle(app_, collisionArea, app_->getTextureManager()->getTexture(Resources::CollisionTile), Vector2D(tile.worldPos_.getX() , tile.worldPos_.getY() + (tileSize_ / 8))
 		, Vector2D(tileSize_, (double)(tileSize_/2) + (double)(tileSize_/8)));
 	//Los añadimos a esta lista para luego poder borrarlos desde el propio mapa
 	mapObstacles_.push_back(newObstacle);
-	CollisionCtrl::instance()->addObstacle(newObstacle);
+	
+	//Vemos de que tipo es el obstáculo y se lo setteamos
+	setObstacleType(gid, newObstacle);
+
+	newObstacle->setGid(gid);
+
+	//Si es una pared, la marcamos como pared
+	if (tileType_ == tileType::Wall) {
+		newObstacle->isTileWall();
+		CollisionCtrl::instance()->addObstacle(newObstacle);
+	}
+	//Si es un obstáculo, lo añadimos como obstáculo
+	else if(tileType_ == tileType::Obstacle)
+		CollisionCtrl::instance()->addObstacleWithRotation(newObstacle);
+
 }
+
 
 void TiledMap::addOrthogonalObstacle(Tile tile)
 {
@@ -79,6 +129,7 @@ void TiledMap::addOrthogonalObstacle(Tile tile)
 	//Los añadimos a esta lista para luego poder borrarlos desde el propio mapa
 	mapObstacles_.push_back(newObstacle);
 	CollisionCtrl::instance()->addObstacle(newObstacle);
+
 }
 
 void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions)
@@ -109,7 +160,10 @@ void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles
 				tilesToRender.push_back(tile);
 
 				if (idCollisionTiles_.end() != find(idCollisionTiles_.begin(), idCollisionTiles_.end(), gid))
-					addIsometricObstacle(tile);
+					addIsometricObstacle(tile, gid - 1 ,tileType::Obstacle);
+				else if (idWallTiles_.end() != find(idWallTiles_.begin(), idWallTiles_.end(), gid))
+					addIsometricObstacle(tile, gid - 1, tileType::Wall);
+				
 			}
 			//Actualizamos la posición del mundo para el siguiente tile
 			auxY += (tileSize_ / 4);
@@ -120,9 +174,9 @@ void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles
 
 void TiledMap::createObjects(vector<tmx::Object> object_tiles,tmx::Vector2u map_tilesize, string objectType)
 {
+	
 	for (tmx::Object ob : object_tiles) {
 		tmx::Vector2f pos = ob.getPosition();
-
 		///TILESIZE_Y = TILESIZE_X/2 por la perspectiva isométrica de los tiles
 		pos.x /= map_tilesize.y;
 		pos.y /= map_tilesize.y;
@@ -189,6 +243,9 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		state_->setPlayer(player);
 		GameManager::instance()->setPlayer(player);
 		CollisionCtrl::instance()->setPlayer(player);
+		player->setColliderPos(Vector2D((player->getScale().getX() / 3), 2* (player->getScale().getY() / 4)));
+		player->setColliderScale(Vector2D((player->getScale().getX() / 3),  (player->getScale().getY() / 4)));
+
 	}
 	
 }
@@ -224,7 +281,6 @@ void TiledMap::createIsometricMap(const tmx::Map& map_)
 
 void TiledMap::createOrthogonalMap(const tmx::Map& map_)
 {
-	cout << "Creando mapa ortogonal" << endl;
 	//Cuantos tiles hay por fila y columna
 	tmx::Vector2u map_dimensions = map_.getTileCount();
 	//Tamaño de los tiles del mapa
@@ -244,7 +300,6 @@ void TiledMap::createOrthogonalMap(const tmx::Map& map_)
 		}
 	}
 }
-
 
 void TiledMap::createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions,tmx::Vector2u tilesize)
 {

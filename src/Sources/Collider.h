@@ -61,5 +61,8 @@ public:
 	///<summary>Establece el rect de colisiones con el valor de newRect</summary>
 	void setCollider(SDL_Rect newRect) { collisionArea_ = newRect; };
 	///<summary>Fija la rotación de las colisiones</summary>
-	void getCollisionRot(double rot) { collisionRot_ = rot; };
+	void setCollisionRot(double rot) { collisionRot_ = rot; };
+	void setColliderPos(Point2D pos) { posCollision_ = pos; }
+	void setColliderScale(Point2D pos) { scaleCollision_ = pos; }
+
 };

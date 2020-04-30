@@ -10,6 +10,8 @@
 #include "../tmxLite/Map.hpp"
 #include "PlayState.h"
 
+enum class tileType{Wall, Obstacle, Undefined};
+
 using namespace std;
 
 struct TilesetInfo {
@@ -40,7 +42,7 @@ public:
 	//cuantas filas y cuantas columnas tiene ese tileset, el ancho y el alto de los tiles, la posición donde quieres que se pinte la esquina superior
 	//izquierda del mapa (en perspectiva isométrica) y el tamaño con el que queremos pintar los tiles</summary>
 	TiledMap(Application* app_, PlayState* state,const string& filename, int tileTilesetHeight_, int tileTilesetWidth, int tileSize, Texture* tileset = nullptr, int filsTileset = 1 , int colsTileset = 1 ,
-		 Vector2D iniPos = Vector2D(0,0),  const list<int>& idCollisionTiles = {1});
+		Vector2D iniPos = Vector2D(0, 0), const list<int>& idCollisionTiles = { 1 }, const list<int>& idWallTiles = {});
 	
 	///<summary>Destructora del mapa, borra todos los obstaculos creados</summary>
 	~TiledMap();
@@ -58,13 +60,23 @@ private:
 	Vector2D iniPos_;
 	///<summary>Lista que contiene los id de los tiles que van a tener colision en este mapa</summary>
 	list<int>idCollisionTiles_;
+	///<summary>Lista que contiene los id de los tiles que son paredes en este mapa</summary>
+	list<int>idWallTiles_;
 	///<summary>Lista que contiene los tiles a renderizar, siendo los primeros los de las
 	///capas inferiores en tiled y empezando por la esquina superior izquierda</summary>
 	list<Tile> tilesToRender;
-	///<summary>Lista que contiene los objetos de tipo obstacle del mapa</summary>
+	///<summary>Lista que contiene los objetos de tipo obstacle del mapa. Todos los objetos que el player no
+	///vaya a poder atravesar deben de ir en esta lista</summary>
 	list<Obstacle*> mapObstacles_;
+	///<summary>Lista que contiene las paredes del juego. Los elementos que estén en esta lista deben de
+	///estar también incluidos a mapObstacles</summary>
+	list<Obstacle*> map_Walls;
+
+	list<Obstacle*> collidersToRender_;
 	///<summary>Puntero al estado en el que está el mapa</summary>
 	PlayState* state_ = nullptr;
+
+	void setObstacleType(int gid, Obstacle* obstacle);
 	
 #pragma region ObjectsSize
 	const int W_MONKEY = app_->getWindowWidth() / 20;
@@ -87,8 +99,9 @@ private:
 #pragma endregion
 
 	
-	///<summary>Método auxiliar para crear un tile que no se pueda atravesar (isométrico) (no ocupa todo el tamaño del tile)</summary>
-	void addIsometricObstacle(Tile tile);
+	///<summary>Método auxiliar para crear un tile que no se pueda atravesar (isométrico) (no ocupa todo el tamaño del tile)
+	//si el gid de ese tile corresponde con alguno de las paredes lo añade también a la correspondiente lista</summary>
+	void addIsometricObstacle(Tile tile, int gid, tileType tileType);
 	///<summary>Método auxiliar para crear un tile que no se pueda atravesar (ortogonal) (colision == tamaño de dibujado del tile)</summary>
 	void addOrthogonalObstacle(Tile tile);
 	
@@ -103,7 +116,6 @@ private:
 	///<summary>Método complementario a createObjects que, según el objectType(nombre de la capa)
 	///que le pases te crea un objeto de dicho tipo</summary>
 	void createElement(Vector2D pos, string objectType);
-
 	///<summary>Crea un mapa en perspectiva isométrica (niveles del juego)</summary>
 	void createIsometricMap(const tmx::Map & map_);
 	///<summary>Crea un mapa en perspectiva ortogonal (shipState)</summary>
