@@ -36,7 +36,7 @@ private:
 	int range_ = 0;
 	int meleeRate_ = 0;
 	double distRange_ = 0;
-	double buletSpeed_ = 0;
+	double buletSpeed_ = 1000;
 	double spawnTime_ = 0; //Ticks cuando se le hizo spawn
 	double meleeTime_ = 0; //Ticks cuando se atac� por �ltima vez
 	double duration_ = 0; //Duraci�n del clon

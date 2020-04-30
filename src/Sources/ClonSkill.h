@@ -6,7 +6,7 @@
 class ClonSkill : public Skill
 {
 private:
-	const int COOLDOWN = 5;
+	const int COOLDOWN = 10;
 	const int CLON_SPAWN_RANGE = 700;
 	const double MANA_COST = 10;
 
