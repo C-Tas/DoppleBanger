@@ -22,6 +22,22 @@ void Skeleton::updateAnim()
 	}
 }
 
+void Skeleton::initialStats() {
+	HEALTH = 100;
+	MANA = 100;
+	MANA_REG = 1;
+	ARMOR = 10;
+	MELEE_DMG = 0;
+	DIST_DMG = 100;
+	CRIT = 0;
+	MELEE_RANGE = 20;
+	DIST_RANGE = 250;
+	MOVE_SPEED = 100;
+	MELEE_RATE = 1;
+	DIST_RATE = 2500;
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+}
+
 
 void Skeleton::attack() {
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));

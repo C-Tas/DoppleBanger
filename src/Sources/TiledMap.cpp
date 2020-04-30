@@ -6,6 +6,7 @@
 #include "Crab.h"
 #include "EnemyPirate.h"
 #include "Wolf.h"
+#include "Skeleton.h"
 #include "Kraken.h"
 
 TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, int tileTilesetHeight, int tileTilesetWidth, int tileSize, 
@@ -162,6 +163,10 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 	}
 	else if (objectType == "Skeleton") {
 		//Añadir esqueleto
+		Skeleton* monkey = new Skeleton(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
+		//state_->addRenderUpdateLists(monkey);
+		state_->addEnemy(monkey);
+		CollisionCtrl::instance()->addEnemy(monkey);
 	}
 	else if (objectType == "Pumpkin") {
 		//Añadir calabaza
