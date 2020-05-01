@@ -67,8 +67,8 @@ private:
 	PlayState* state_ = nullptr;
 	
 #pragma region ObjectsSize
-	const int W_MONKEY = app_->getWindowWidth() / 20;
-	const int H_MONKEY = app_->getWindowHeight() / 15;
+	const int W_MONKEY = app_->getWindowWidth() / 12;
+	const int H_MONKEY = app_->getWindowHeight() / 5;
 
 	const int W_WOLF= app_->getWindowWidth() / 20;
 	const int H_WOLF = app_->getWindowHeight() / 15;
