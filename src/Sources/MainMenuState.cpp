@@ -3,10 +3,10 @@
 #include "CreditsState.h"
 #include "StoryState.h"
 #include "SaveLoadState.h"
-#include "Button.h"
 #include "Texture.h"
 #include "SDL_macros.h"
 #include "VisualElement.h"
+#include "BeerButton.h"
 
 #include "Clon.h"
 
@@ -31,41 +31,36 @@ void MainMenuState::initState()
 }
 
 void MainMenuState::createButtons() {
+	double winWidth = app_->getWindowWidth();
+	double winHeight = app_->getWindowHeight();
+
 	//creamos el boton para ir a los controles
-	Button* controlButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ControlsButton),
-		{ double(app_->getWindowWidth() / 2) - button_w * 1.5  ,(double)(app_->getWindowHeight() / 2) },
+	BeerButton* controlButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ControlsButton), 
+		{ (winWidth / 2) - button_w * 1.5  , (winHeight / 2) },
 		{ button_w  ,button_h }, goControlState);
-	gameObjects_.push_back(controlButton);
-	objectsToRender_.push_back(controlButton);
+	addRenderUpdateLists(controlButton);
 	//creamos el boton para ir a los creditos
-	Button* creditButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CreditsButton),
-		{ double(app_->getWindowWidth() / 2) + button_w / 2   , (double)(app_->getWindowHeight() / 2) },
+	BeerButton* creditButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CreditsButton),
+		{ (winWidth / 2) + button_w / 2   , (winHeight / 2) },
 		{ button_w  ,button_h }, goCreditsState);
-	gameObjects_.push_back(creditButton);
-	objectsToRender_.push_back(creditButton);
+	addRenderUpdateLists(creditButton);
 	//creamos el boton para jugar cargando el juego del archivo de guardado
-	Button* loadButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButton),
-		{ double(app_->getWindowWidth() / 2) - button_w * 1.5 ,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
+	BeerButton* loadButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButton),
+		{ (winWidth / 2) - button_w * 1.5 , (winHeight / 2) + button_h * 1.2 },
 		{ button_w,button_h }, goLoadState);
-	gameObjects_.push_back(loadButton);
-	objectsToRender_.push_back(loadButton);
+	addRenderUpdateLists(loadButton);
+
 	//creamos el boton para jugar sin cargar el juego del archivo de guardado
-	Button* playButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::PlayButton),
-		{ double(app_->getWindowWidth() / 2) + button_w / 2,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
+	BeerButton* playButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::PlayButton),
+		{ (winWidth / 2) + button_w / 2, (winHeight / 2) + button_h * 1.2 },
 		{ button_w,button_h }, goStoryState);
-	gameObjects_.push_back(playButton);
-	objectsToRender_.push_back(playButton);
+	addRenderUpdateLists(playButton);
 
 	//Boton para salir del juego
-	Button* exitButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ExitButton),
-		{ double(app_->getWindowWidth() / 2) - button_w / 2,double(app_->getWindowHeight() / 2) + button_h * 2.4 },
+	BeerButton* exitButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ExitButton),
+		{ (winWidth / 2) - button_w / 2, (winHeight / 2) + button_h * 2.4 },
 		{ button_w,button_h }, exitGame);
-	gameObjects_.push_back(exitButton);
-	objectsToRender_.push_back(exitButton);
-
-#ifdef _DEBUG
-	cout << "creados los botones correctamente"<<endl;
-#endif
+	addRenderUpdateLists(exitButton);
 }
 #pragma endregion
 #pragma region Cambios de estados

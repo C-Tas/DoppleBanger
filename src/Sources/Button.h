@@ -2,8 +2,6 @@
 #include "Draw.h"
 #include "Application.h"
 
-
-
 using CallBackOnClick = void (Application* app);
 
 class Button : public Draw

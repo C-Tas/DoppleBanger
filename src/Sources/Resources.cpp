@@ -29,6 +29,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ GoToInventoryAButton, "../Sources/assets/botones/InventoryButtonA.png"},
 	{ GoToInventoryBButton, "../Sources/assets/botones/InventoryButtonB.png"},
 	{ GoToShopButton, "../Sources/assets/botones/botonTienda.png"},
+	//Animaciones de botones
+	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},
 
 	//Interfaces
 	{ BackButton, "../Sources/assets/botones/volver.png"},

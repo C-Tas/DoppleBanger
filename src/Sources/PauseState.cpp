@@ -2,6 +2,7 @@
 #include "ControlsState.h"
 #include "GameManager.h"
 #include "VisualElement.h"
+#include "BeerButton.h"
 
 #pragma region CallBacks
 ///<summary>Reanuda la partida actual</summary>
@@ -63,17 +64,20 @@ void PauseState::initState()
 
 
 	//Bot�n de reanudar
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::ResumeButton), posButton, sizeButton, resume);
+	BeerButton* resumeButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::ResumeButton), posButton, sizeButton, resume);
+	addRenderUpdateLists(resumeButton);
 
 	//Bot�n de controles
 	posButton = posButton + Vector2D(0, winHeight / 4);
 	textButon.y = posButton.getY();
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::ControlsButton), posButton, sizeButton, showControls);
+	BeerButton* controlsButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::ControlsButton), posButton, sizeButton, showControls);
+	addRenderUpdateLists(controlsButton);
 
 	//Bot�n de men� principal
 	posButton = posButton + Vector2D(0, winHeight / 4 );
 	textButon.y = posButton.getY();
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState);
+	BeerButton* mainMenuButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState);
+	addRenderUpdateLists(mainMenuButton);
 	
 	//Bot�n de mute
 	//Se multiplica por la proporci�n winWidth/winHeight para hacer un cuadrado

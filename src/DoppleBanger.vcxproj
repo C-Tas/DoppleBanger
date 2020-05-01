@@ -26,6 +26,7 @@
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Armor.cpp" />
+    <ClCompile Include="Sources\BeerButton.cpp" />
     <ClCompile Include="Sources\Blunder.cpp" />
     <ClCompile Include="Sources\Blunderbuss.cpp" />
     <ClCompile Include="Sources\Boots.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Armor.h" />
+    <ClInclude Include="Sources\BeerButton.h" />
     <ClInclude Include="Sources\Blunder.h" />
     <ClInclude Include="Sources\Blunderbuss.h" />
     <ClInclude Include="Sources\Boots.h" />

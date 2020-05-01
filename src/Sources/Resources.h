@@ -45,6 +45,8 @@ public:
 		GoToSkillsAButton,
 		GoToSkillsBButton,
 		GoToShopButton,
+		//Animaciones de botones
+		BeerAnim,
 
 		//Punteros
 		MovementPointer,
