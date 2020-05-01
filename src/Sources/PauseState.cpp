@@ -62,21 +62,23 @@ void PauseState::initState()
 
 	SDL_Rect textButon = { posButton.getX(),posButton.getY(), sizeButton.getX(),sizeButton.getY() };
 
-
 	//Bot�n de reanudar
 	BeerButton* resumeButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::ResumeButton), posButton, sizeButton, resume);
+	resumeButton->setCurrentState(this);
 	addRenderUpdateLists(resumeButton);
 
 	//Bot�n de controles
 	posButton = posButton + Vector2D(0, winHeight / 4);
 	textButon.y = posButton.getY();
 	BeerButton* controlsButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::ControlsButton), posButton, sizeButton, showControls);
+	controlsButton->setCurrentState(this);
 	addRenderUpdateLists(controlsButton);
 
 	//Bot�n de men� principal
 	posButton = posButton + Vector2D(0, winHeight / 4 );
 	textButon.y = posButton.getY();
 	BeerButton* mainMenuButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState);
+	mainMenuButton->setCurrentState(this);
 	addRenderUpdateLists(mainMenuButton);
 	
 	//Bot�n de mute

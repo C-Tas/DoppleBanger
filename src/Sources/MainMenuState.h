@@ -4,17 +4,17 @@
 #include "Player.h" //Include temporal
 #include "Equipment.h" //Include temporal
 
+class BeerButton;
 class MainMenuState : public GameState
 {
 private:
-	Draw* bg_ = nullptr;
+	VisualElement* bg_ = nullptr;
+	BeerButton* buttonClicked_ = nullptr;
 	double button_h= 0;
 	double button_w = 0;
 	//Diferencia entre los botones en el eje y
 	double button_dif = 0;
-	Player* player_ = nullptr;
-	//Crab* crab_ = nullptr;
-
+	bool buttonClick_ = false;	//Para saber si se ha pulsado un boton
 protected:
 	///<summary>Se inicializa el menu</summary>
 	virtual void initState();
@@ -24,6 +24,12 @@ protected:
 public:
 	MainMenuState(Application* app = nullptr) :GameState(app) { initState(); };
 	virtual ~MainMenuState() {};
+
+	//Para decir que se ha pulsado un boton
+	void setButtonClick(bool buttonClick, BeerButton* buttonClicked){
+		buttonClick_ = buttonClick;
+		buttonClicked_ = buttonClicked;
+	};
 	///<summary>Nos lleva al estado controles</summary>
 	static void goControlState(Application* app);
 	///<summary>Nos lleva al estado creditos</summary>

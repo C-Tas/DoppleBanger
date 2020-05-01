@@ -31,6 +31,12 @@ public:
 	virtual void handleEvents();//Ejecuta los eventos de los objetos objectEvents_
 	virtual void createButton(Application* app, Texture* texture, Point2D pos, Vector2D scale, CallBackOnClick* callBack);
 
+	//Estos metodos sirven para no dar mas de un click en los botones de un menu
+	//cuando se ha hecho click en uno de ellos. Implementado tras la animacion
+	//de las cervezas
+	bool getButtonClick() { return buttonClicked_; };
+	void setButtonClick(bool buttonClicked) { buttonClicked_ = buttonClicked; };
+
 	///<summary>A�ade un objeto a la lista de gameObjects</summary>
 	void addUpdateList(GameObject* obj);
 	///<summary>A�ade un objeto a la lista de objectsToRender_</summary>
@@ -51,6 +57,7 @@ protected:
 		int x_ = 0;
 		int y_ = 0;
 	};
+	bool buttonClicked_ = false;	//Para saber cuándo se ha hehco click en un boton
 	///<summary>Lista con todos los objetos</summary>
 	list<GameObject*> gameObjects_;
 	///<summary>Lista con todos los objetos con metodo Draw()</summary>
