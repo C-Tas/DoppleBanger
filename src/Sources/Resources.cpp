@@ -197,6 +197,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ MonkeyShootUpAnim, "../Sources/assets/enemigos/monkey/shootDchaTop.png" },
 	{ MonkeyShootDownAnim, "../Sources/assets/enemigos/monkey/shootIzDown.png" },
 
+	//Magordito
+		//Kirin
+	{ Kirin, "../Sources/assets/enemigos/magordito/Kirin.png" },
+
 		//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
 	{ Stash, "../Sources/assets/colisionables/alijo.png" },

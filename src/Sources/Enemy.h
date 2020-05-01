@@ -37,6 +37,8 @@ protected:
 	virtual bool getEnemy(double n);
 	//Devuelve true si el target está dentro del rango de ataque
 	virtual bool onRange();
+	//Devuelve true si el target está dentro del rango de ataque en función de un rango en concreto
+	virtual bool onRange(double range);
 	//Inicializa al Enemy
 	virtual void initObject();
 	//Inicializa las animaciones

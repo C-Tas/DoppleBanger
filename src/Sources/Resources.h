@@ -206,6 +206,9 @@ public:
 		MonkeyShootLeftAnim,
 		MonkeyShootUpAnim,
 		MonkeyShootDownAnim,
+		//Magordito
+			//Kirin
+		Kirin,
 
 
 		//Interactuables

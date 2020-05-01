@@ -46,6 +46,9 @@ bool Pumpkin::update() {
 	//Si la calabaza ha muerto
 	if (currState_ == STATE::DYING) {
 		
+		if (currAnim_.currFrame_ == 0) {
+			initExplosion();
+		}
 		return explosionAnim();
 	}
 	if (currState_ == STATE::IDLE) {
@@ -85,7 +88,6 @@ bool Pumpkin::update() {
 			{
 				shootAnim();
 			}
-
 			//Tengo enemigo pero no a rango
 			else
 			{
@@ -252,13 +254,18 @@ void Pumpkin::initExplosion()
 }
 bool Pumpkin::explosionAnim()
 {
+	if (currEnemy_ == nullptr) {
+				static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
+		app_->getCurrState()->removeRenderUpdateLists(this);
+		return true;
+	}
 	if (!explosion_ && currAnim_.currFrame_ == FRAME_ACTION_EXPLOSION) {
 		explosion_ = true;
 		app_->getAudioManager()->haltChannel(6);
 		app_->getAudioManager()->haltChannel(5);
 		app_->getAudioManager()->playChannel(Resources::ExplosionPumpkin , 0, 5);
 		auto s = app_->getRandom()->nextInt(0,101);
-		if (s >= 100) {
+		if (s >= 75) {
 		app_->getAudioManager()->setChannelVolume(10, 6);
 		app_->getAudioManager()->playChannel(Resources::TauntPumpkin1, 0, 6);
 		}
@@ -267,6 +274,7 @@ bool Pumpkin::explosionAnim()
 		Point2D currEnemyCenter = currEnemy_->getCenter();
 		if (dmg != nullptr && RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
 			center.getX(), center.getY(), explosionRange_)) {
+
 			dmg->receiveDamage(currStats_.meleeDmg_);
 		}
 		return false;

@@ -85,3 +85,18 @@ bool Enemy::onRange() {
 	}
 	return false;
 }
+
+bool Enemy::onRange(double range) {
+	if (currEnemy_ == nullptr) {
+		return false;
+	}
+	SDL_Rect rangeAttack = { getPosX() - range - (getScaleX() / 2)  ,
+	getPosY() - range - (getScaleY() / 2),range * 2, range * 2 };;
+	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
