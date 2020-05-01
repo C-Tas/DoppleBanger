@@ -43,6 +43,8 @@ private:
 
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
 	const int W_H_MONKEY_FRAME = 100;		//Ancho del frame, estándar para todas
+	bool firstAttack = true;
+	bool firstIdle = true;
 
 	//Idle
 	vector<Anim> idleAnims_;

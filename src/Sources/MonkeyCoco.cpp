@@ -12,6 +12,8 @@ bool MonkeyCoco::update() {
 
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
+		app_->getAudioManager()->playChannel(Resources::MonkeyDie, 0, 3);
+
 		//Tendr�a que hacer la animaci�n de muerte?
 		//Cuando acabe la animaci�n, lo mata
 		app_->getCurrState()->removeRenderUpdateLists(this);
@@ -20,6 +22,11 @@ bool MonkeyCoco::update() {
 	//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
 	else if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
 		currState_ = STATE::SHOOTING;
+		if (firstAttack && onRange()) {
+			app_->getAudioManager()->playChannel(Resources::MonkeyAttack, 0, 1);
+			firstIdle = true;
+		}
+		firstAttack = false;
 	}
 
 	//Si el mono tiene enemigo y puede atacar
@@ -31,8 +38,13 @@ bool MonkeyCoco::update() {
 			}
 			//Tengo enemigo pero no a rango
 			else {
+				if (firstIdle) {
+					app_->getAudioManager()->playChannel(Resources::MonkeyIdle, 0, 1);
+					firstIdle = false;
+				}
 				initIdle();
 				currEnemy_ = nullptr;
+				firstAttack = true;
 			}
 			lastHit = SDL_GetTicks();
 		}
@@ -94,12 +106,13 @@ void MonkeyCoco::initObject() {
 }
 
 void MonkeyCoco::initialStats() {
+	rangeVision_ = 300;
 	HEALTH = 100;
 	MANA = 100;
 	MANA_REG = 1;
 	ARMOR = 10;
 	MELEE_DMG = 0;
-	DIST_DMG = 100;
+	DIST_DMG = 0;
 	CRIT = 0;
 	MELEE_RANGE = 0;
 	DIST_RANGE = 300;
@@ -168,8 +181,10 @@ void MonkeyCoco::initShoot() {
 
 void MonkeyCoco::shootAnim() {
 	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
+		app_->getAudioManager()->playChannel(Resources::MonkeyShoot, 0, 3);
 		attack();
 		shooted_ = true;
+		lastHit = SDL_GetTicks();
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();	//Activa el idle
