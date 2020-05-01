@@ -14,6 +14,10 @@ enum class ObstacleType {
 	LittleRock,
 	BigRock,
 	Skull,
+	Bush1,
+	Bush2,
+	Trunk,
+
 
 	_undefined,
 

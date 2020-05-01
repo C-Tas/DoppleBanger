@@ -34,14 +34,6 @@ void CollisionCtrl::islandCollisions() {
 	//Colisiones con obst�culos
 	for (auto ob : obstacles_) {
 		
-		//Con jugador
-		if (Collisions::collides(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
-			(ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY())) {
-			player_->stop();
-			(ob)->onCollider();
-			player_->setPos(player_->getPreviousPos());
-		}
-		
 		//Con balas del jugador
 		for (auto bullet : playerBullets_) {
 			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),

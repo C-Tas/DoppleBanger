@@ -71,8 +71,9 @@ private:
 	///<summary>Lista que contiene las paredes del juego. Los elementos que estén en esta lista deben de
 	///estar también incluidos a mapObstacles</summary>
 	list<Obstacle*> map_Walls;
-
-	list<Obstacle*> collidersToRender_;
+	///<summary>Lista que nos ayuda a la hora de debuggear las colisiones, descomentarla en todos los métodos para visualizar
+	//los colliders (no hay distinción entre los colliders que destruyen balas y los que no puede atravesar el jugador)</summary>
+	//list<Obstacle*> collidersToRender_;
 	///<summary>Puntero al estado en el que está el mapa</summary>
 	PlayState* state_ = nullptr;
 
@@ -97,6 +98,39 @@ private:
 	const int H_PLAYER = app_->getWindowHeight() / 6;
 
 #pragma endregion
+#pragma region TilesIdentifiers
+	//Primer tile con forma de cubo
+	const int FIRST_CUBE_TILE = 0;
+	//Último tile con forma de cubo 
+	const int LAST_CUBE_TILE = 76;
+
+	//Listas con los tiles de los bordes (siendo la primera textura del tile el 0)
+	const list<int> UPLEFT_BORDER_TILES = {92,120};
+	const list<int> UPRIGHT_BORDER_TILES = {93,121};
+	const list<int> DOWNLEFT_BORDER_TILES = {95,123};
+	const list<int> DOWNRIGHT_BORDER_TILES = {94,122};
+
+	//Lista con los tiles de calaveras
+	const list <int> SKULL_TILES = { 161,162,163 };
+
+	//Identificadores de los tiles con tumbas
+	const int TOMB1_TILE = 178;
+	const int TOMB2_TILE = 179;
+
+	//Identificadores con los tiles de las rocas
+	const int LITTLEROCK_TILE = 180;
+	const int BIGROCK_TILE = 181;
+
+	//Arbustos
+	const int BUSH1_TILE = 247;
+	const list <int>BUSH_TYPE2_TILE = { 251,252,253,254,255,256};
+
+	//Troncos de los árboles
+	const list <int> TRUNK_TILES = {286,287,288,289,290,291,292,293,294,295,296,297,298};
+
+
+#pragma endregion
+
 
 	
 	///<summary>Método auxiliar para crear un tile que no se pueda atravesar (isométrico) (no ocupa todo el tamaño del tile)

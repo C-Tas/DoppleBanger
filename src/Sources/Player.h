@@ -39,12 +39,6 @@ public:
 		eventHandler_ = HandleEvents::instance();
 	};
 
-	const virtual void draw() {
-		app_->getTextureManager()->getTexture(Resources::CollisionTile)->render({ (int)getColliderPos().getX() - (int)Camera::instance()->getCamera().getX(),
-			(int)getColliderPos().getY() - (int)Camera::instance()->getCamera().getY(), (int)scaleCollision_.getX(), (int)scaleCollision_.getY() }, SDL_FLIP_NONE);
-		Draw::draw();
-	};
-
 	virtual bool update();
 	virtual void onCollider();
 

@@ -61,38 +61,59 @@ const void TiledMap::draw()
 	}
 
 	//TEMPORAL, PARA COMPROBAR COLISIONES
-	for (Obstacle* ob : collidersToRender_) {
+	//Descomentar para visualizar
+	/*for (Obstacle* ob : collidersToRender_) {
 		app_->getTextureManager()->getTexture(Resources::CollisionTile)->render({ (int)ob->getColliderPos().getX()-(int)Camera::instance()->getCamera().getX(), (int)ob->getColliderPos().getY() - (int)Camera::instance()->getCamera().getY(),
 			(int)ob->getColliderScale().getX(), (int)ob->getColliderScale().getY()}, ob->getCollisionRot());
-	}
+	}*/
 
 
 }
 
 void TiledMap::setObstacleType(int gid, Obstacle* obstacle)
 {
-
 	//Tiles que son bloques (gid es su identificador en el tilemap)
-	if (gid >= 0 && gid < 76) obstacle->setObstacleType(ObstacleType::Block);
+	if (gid >= FIRST_CUBE_TILE && gid < LAST_CUBE_TILE)
+		obstacle->setObstacleType(ObstacleType::Block);
 	//upLeftBorder
-	else if (gid == 92 || gid == 120) obstacle->setObstacleType(ObstacleType::BorderUL);
+	else if (UPLEFT_BORDER_TILES.end() != find(UPLEFT_BORDER_TILES.begin(), UPLEFT_BORDER_TILES.end(), gid))
+		obstacle->setObstacleType(ObstacleType::BorderUL);
 	//upRightBorder
-	else if (gid == 93 || gid == 121) obstacle->setObstacleType(ObstacleType::BorderUR);
+	else if (UPRIGHT_BORDER_TILES.end() != find(UPRIGHT_BORDER_TILES.begin(), UPRIGHT_BORDER_TILES.end(), gid))
+		obstacle->setObstacleType(ObstacleType::BorderUR);
 	//downLeftBorder
-	else if (gid == 95 || gid == 123) obstacle->setObstacleType(ObstacleType::BorderDL);
+	else if (DOWNLEFT_BORDER_TILES.end() != find(DOWNLEFT_BORDER_TILES.begin(), DOWNLEFT_BORDER_TILES.end(), gid))
+		obstacle->setObstacleType(ObstacleType::BorderDL);
 	//downRightBorder
-	else if (gid == 94 || gid == 122) obstacle->setObstacleType(ObstacleType::BorderDR);
+	else if (DOWNRIGHT_BORDER_TILES.end() != find(DOWNRIGHT_BORDER_TILES.begin(), DOWNRIGHT_BORDER_TILES.end(), gid))
+		obstacle->setObstacleType(ObstacleType::BorderDR);
 	//Tomb1
-	else if (gid == 178) obstacle->setObstacleType(ObstacleType::Tomb1);
+	else if (gid == TOMB1_TILE)
+		obstacle->setObstacleType(ObstacleType::Tomb1);
 	//Tomb2
-	else if (gid == 179) obstacle->setObstacleType(ObstacleType::Tomb2);
+	else if (gid == TOMB2_TILE)
+		obstacle->setObstacleType(ObstacleType::Tomb2);
 	//LittleRock
-	else if (gid == 180) obstacle->setObstacleType(ObstacleType::LittleRock);
+	else if (gid == LITTLEROCK_TILE)
+		obstacle->setObstacleType(ObstacleType::LittleRock);
 	//BigRock
-	else if (gid == 181) obstacle->setObstacleType(ObstacleType::BigRock);
-	else if (gid == 161 || gid == 162|| gid == 163 ) obstacle->setObstacleType(ObstacleType::Skull);
+	else if (gid == BIGROCK_TILE)
+		obstacle->setObstacleType(ObstacleType::BigRock);
+	//Calaveras
+	else if (SKULL_TILES.end() != find(SKULL_TILES.begin(), SKULL_TILES.end(), gid))
+		obstacle->setObstacleType(ObstacleType::Skull);
+	//Bush1
+	else if (BUSH1_TILE == gid)
+		obstacle->setObstacleType(ObstacleType::Bush1);
+	else if (BUSH_TYPE2_TILE.end() != find(BUSH_TYPE2_TILE.begin(), BUSH_TYPE2_TILE.end(), gid))
+		obstacle->setObstacleType(ObstacleType::Bush2);
+	else if (TRUNK_TILES.end() != find(TRUNK_TILES.begin(), TRUNK_TILES.end(), gid))
+		obstacle->setObstacleType(ObstacleType::Trunk);
 
-	collidersToRender_.push_back(obstacle);
+	///TEMPORAL PARA VER LOS COLLIDERS
+	//Descomentar para visualizar
+	//collidersToRender_.push_back(obstacle);
+	
 	//Una vez que se tiene el tipo del tile, le ajustamos su collider
 	obstacle->adjustTileCollider();
 }
@@ -161,7 +182,7 @@ void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles
 
 				if (idCollisionTiles_.end() != find(idCollisionTiles_.begin(), idCollisionTiles_.end(), gid))
 					addIsometricObstacle(tile, gid - 1 ,tileType::Obstacle);
-				else if (idWallTiles_.end() != find(idWallTiles_.begin(), idWallTiles_.end(), gid))
+				if (idWallTiles_.end() != find(idWallTiles_.begin(), idWallTiles_.end(), gid))
 					addIsometricObstacle(tile, gid - 1, tileType::Wall);
 				
 			}

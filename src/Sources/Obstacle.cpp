@@ -24,7 +24,7 @@ void Obstacle::adjustTileCollider()
         }
         case ObstacleType::BorderUL: {
             posCollision_ = Vector2D((scale_.getX() / 10), (6 * (scale_.getY() / 7))-20);
-            collisionRot_ = -30;
+            collisionRot_ = -27;
             double aux = sqrt(pow((scale_.getY() / 4), 2) + pow((scale_.getX() / 2), 2));
             scaleCollision_ = Vector2D(aux, aux / 2);
             break; 
@@ -65,19 +65,34 @@ void Obstacle::adjustTileCollider()
             break;
         }
         case ObstacleType::Skull: {
-            posCollision_ = Vector2D(0, scale_.getY() / 2);
-            scaleCollision_ = Vector2D(2 * scale_.getX() / 2, scale_.getY() / 2);
+            posCollision_ = Vector2D(scale_.getX()/10, scale_.getY() / 2);
+            scaleCollision_ = Vector2D(scale_.getX() / 2, 2*scale_.getY()/3 );
+            break;
+        }
+        case ObstacleType::Bush1: {
+            posCollision_ = Vector2D(scale_.getX() / 4, scale_.getY() / 4);
+            scaleCollision_ = Vector2D(scale_.getX() / 2,  scale_.getY() / 2);
+            break;
+        }
+        case ObstacleType::Bush2: {
+            posCollision_ = Vector2D(scale_.getX() / 4, scale_.getY() /8);
+            scaleCollision_ = Vector2D(2*scale_.getX() / 3, scale_.getY());
+            break;
+        }
+        case ObstacleType::Trunk: {
+            posCollision_ = Vector2D(scale_.getX() /3, 0);
+            scaleCollision_ = Vector2D(scale_.getX() /4, 1.5*scale_.getY());
             break;
         }
         case ObstacleType::_undefined: {
             collisionArea_ = { 0,0,0,0 };
-            posCollision_ = pos_;
+            posCollision_ = Vector2D(0, 0);
             scaleCollision_ = Vector2D(0, 0);
             break; 
         }
         default: {
             collisionArea_ = { 0,0,0,0 };
-            posCollision_ = pos_;
+            posCollision_ = Vector2D(0, 0);
             scaleCollision_ = Vector2D(0, 0);
             break; 
         }
