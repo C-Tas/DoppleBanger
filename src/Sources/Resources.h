@@ -198,6 +198,14 @@ public:
 		ClonShootLeftAnim,
 		ClonShootUpAnim,
 		ClonShootDownAnim,
+		MonkeyIdleRightAnim,
+		MonkeyIdleLeftAnim,
+		MonkeyIdleUpAnim,
+		MonkeyIdleDownAnim,
+		MonkeyShootRightAnim,
+		MonkeyShootLeftAnim,
+		MonkeyShootUpAnim,
+		MonkeyShootDownAnim,
 
 
 		//Interactuables
@@ -252,6 +260,12 @@ public:
 		WolfHowl,
 		WolfAttack,
 		WolfDie,
+
+		//Efectos para el mono
+		MonkeyIdle,
+		MonkeyAttack,
+		MonkeyShoot,
+		MonkeyDie,
 		
 		//player
 		Walk,

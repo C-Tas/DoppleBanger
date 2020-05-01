@@ -188,6 +188,14 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PumpkinMoveLeftAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovIzq.png" },
 	{ PumpkinMoveUpAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovAtras.png" },
 	{ PumpkinMoveDownAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDelante.png" },
+	{ MonkeyIdleRightAnim, "../Sources/assets/enemigos/monkey/idleDchaDown.png" },
+	{ MonkeyIdleLeftAnim, "../Sources/assets/enemigos/monkey/idleIzTop.png" },
+	{ MonkeyIdleUpAnim, "../Sources/assets/enemigos/monkey/idleDchaTop.png" },
+	{ MonkeyIdleDownAnim, "../Sources/assets/enemigos/monkey/idleIzDown.png" },
+	{ MonkeyShootRightAnim, "../Sources/assets/enemigos/monkey/shootDchaDown.png" },
+	{ MonkeyShootLeftAnim, "../Sources/assets/enemigos/monkey/shootIzTop.png" },
+	{ MonkeyShootUpAnim, "../Sources/assets/enemigos/monkey/shootDchaTop.png" },
+	{ MonkeyShootDownAnim, "../Sources/assets/enemigos/monkey/shootIzDown.png" },
 
 		//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
@@ -219,6 +227,10 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	{ WolfHowl ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
 	{ WolfAttack ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
 	{ WolfDie ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" },
+	{ MonkeyIdle ,"../Sources/assets/efectos_sonido/monkey/monoIdle.wav" },
+	{ MonkeyAttack ,"../Sources/assets/efectos_sonido/monkey/monoAttack.wav" },
+	{ MonkeyShoot ,"../Sources/assets/efectos_sonido/monkey/monoShoot.wav" },
+	{ MonkeyDie ,"../Sources/assets/efectos_sonido/monkey/monoDie.ogg" },
 
 	//Player
 	{ Walk	  ,"../Sources/assets/efectos_sonido/player/walk.wav" },

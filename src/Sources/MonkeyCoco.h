@@ -17,52 +17,71 @@ public:
 
 	virtual bool update();
 	virtual void initObject();
-	virtual void onCollider();
+	virtual void onCollider() {};
 	//Cuando pierde agro del enemigo
 	virtual void lostAggro() { currEnemy_ = nullptr; };
 
 	virtual ~MonkeyCoco() {};
+
 private:
-	//Diferentes animaciones del mono
-	Anim attackAnim_ = { 0,0,0,0, false};
-	Anim walkAnim_ = { 0,0,0,0, true};
-	Anim idleAnim_ = { 0,0,0,0, true};
-
-
 	//Ataque del monkeyCoco
 	void attack();
 	//Inicializa las animaciones
 	void initAnims();
 	virtual void initialStats();
 
-	//Constantes para crear las diferentes animaciones 
-	//(los valores puestos no son los correctos, a falta de hacer la animaci�n del mono)
-#pragma region Constantes
-//Para el ataque
-	const int NUM_FRAMES_ATK = 10;
-	const int NUM_FRAMES_ROW_ATK = 3;
-	const uint W_FRAME_ATK = 200;
-	const uint H_FRAME_ATK = 200;
-	const int FRAME_RATE_ATK = 100;
-	const string NAME_ATK = "attack";
-	//Para el movimiento
-	const int NUM_FRAMES_MOV = 10;
-	const int NUM_FRAMES_ROW_MOV = 3;
-	const uint W_FRAME_MOV = 200;
-	const uint H_FRAME_MOV = 200;
-	const int FRAME_RATE_MOV = 100;
-	const string NAME_MOV = "walk";
-	//Para estar parado
-	const int NUM_FRAMES_IDLE = 10;
-	const int NUM_FRAMES_ROW_ADLE = 3;
-	const uint W_FRAME_IDLE = 200;
-	const uint H_FRAME_IDLE = 200;
-	const int FRAME_RATE_IDLE = 100;
-	const string NAME_IDLE = "idle";
+	//Calcula hacia dónde mira el mono en función del player (se redefine porque las vistas del mono son distintas que las del resto de enemigos)
+	virtual void updateDirVisObjective(GameObject* objective);
+
+#pragma region Animaciones
+	//Inicia la animación
+	void initIdle();
+	void initShoot();
+
+	//Controla la animación
+	void shootAnim();
+
+	int frameAction_ = 0;					//Frame en el que se realiza la acción
+	const int W_H_MONKEY_FRAME = 100;		//Ancho del frame, estándar para todas
+	bool firstAttack = true;
+	bool firstIdle = true;
+
+	//Idle
+	vector<Anim> idleAnims_;
+	vector<Texture*> idleTx_;
+	//Idle derecha abajo
+	const int IDLE_R_D_FRAMES = 9;			//Frames de la animación
+	const int IDLE_R_D_FRAME_RATE = 200;	//Frame rate
+	//Idle hacia derecha arriba
+	const int IDLE_R_U_FRAMES = 9;			//Frames de la animación
+	const int IDLE_R_U_FRAME_RATE = 200;	//Frame rate
+	//Idle hacia izquierda abajo
+	const int IDLE_L_D_FRAMES = 9;			//Frames de la animación
+	const int IDLE_L_D_FRAME_RATE = 200;	//Frame rate
+	//Idle hacia izquierda arriba
+	const int IDLE_L_U_FRAMES = 9;			//Frames de la animación
+	const int IDLE_L_U_FRAME_RATE = 200;	//Frame rate
+
+	//Disparo
+	bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
+	vector<Anim> shootAnims_;				//Vector de las animaciones
+	vector<Texture*> shootTx_;				//Vector de las texturas
+	//Disparo derecha abajo
+	const int SHOOT_R_D_FRAMES = 10;		//Frames de la animación
+	const int SHOOT_R_D_FRAME_RATE = 100;	//Frame rate
+	//Disparo hacia derecha arriba
+	const int SHOOT_R_U_FRAMES = 13;		//Frames de la animación
+	const int SHOOT_R_U_FRAME_RATE = 77;	//Frame rate
+	//Disparo hacia izquierda abajo
+	const int SHOOT_L_D_FRAMES = 11;		//Frames de la animación
+	const int SHOOT_L_D_FRAME_RATE = 91;	//Frame rate
+	//Disparo hacia izquierda arriba
+	const int SHOOT_L_U_FRAMES = 13;		//Frames de la animación
+	const int SHOOT_L_U_FRAME_RATE = 77;	//Frame rate
+
 	//Proyectil
 	const uint W_H_COCO = app_->getWindowHeight() / 40;		//Tama�o del coco
 	const double COCO_VEL = 700;							//Velocidad del coco
 	const double COCO_LIFE = 3;								//Vida del proyectil en segundos
-#pragma endregion
 #pragma endregion
 };
