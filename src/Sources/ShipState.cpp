@@ -10,6 +10,7 @@
 #include "StashState.h"
 
 #include "Collisions.h" //Provisional
+#include "Pumpkin.h"
 
 
 #pragma region CallBacks
@@ -104,6 +105,7 @@ void ShipState::initState()
 	Camera::instance()->updateCamera(W_WIN / 2, H_WIN / 2);
 
 	startInstance_ = SDL_GetTicks();
+
 }
 
 void ShipState::update()

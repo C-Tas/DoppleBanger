@@ -8,16 +8,17 @@
 #include "Wolf.h"
 #include "Skeleton.h"
 #include "Kraken.h"
+#include "Pumpkin.h"
 
 TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, int tileTilesetHeight, int tileTilesetWidth, int tileSize, 
 	Texture* tileset, int filsTileset, int colsTileset,  Vector2D iniPos,  const list<int>& idCollisionTiles)
 {
-	///Inicialización del mapa
+	///Inicializaciï¿½n del mapa
 	tmx::Map map_;
 	///Carga del mapa dado un archivo .tmx
 	bool success = map_.load(filename);
 
-	///Información del tileset
+	///Informaciï¿½n del tileset
 	tileset_.textureTileset_ = tileset;
 	tileset_.fils = filsTileset;
 	tileset_.cols = colsTileset;
@@ -53,7 +54,7 @@ TiledMap::~TiledMap()
 
 const void TiledMap::draw()
 {
-	///Con la información de cada tile, su posición en el mundo y la textura que va a usar, renderizamos todos
+	///Con la informaciï¿½n de cada tile, su posiciï¿½n en el mundo y la textura que va a usar, renderizamos todos
 	for (Tile ob : tilesToRender) {
 		tileset_.textureTileset_->render({ (int)(ob.worldPos_.getX()-Camera::instance()->getCamera().getX()), 
 			(int)(ob.worldPos_.getY()- Camera::instance()->getCamera().getY()),tileSize_, tileSize_ },
@@ -68,7 +69,7 @@ void TiledMap::addIsometricObstacle(Tile tile)
 	SDL_Rect collisionArea = { (int)tile.worldPos_.getX() + (tileSize_ / 3), (int)tile.worldPos_.getY() + (tileSize_ / 4), (tileSize_ ), (tileSize_ ) };
 	Obstacle* newObstacle = new Obstacle(app_, collisionArea, app_->getTextureManager()->getTexture(Resources::CollisionTile), Vector2D(tile.worldPos_.getX() , tile.worldPos_.getY() + (tileSize_ / 8))
 		, Vector2D(tileSize_, (double)(tileSize_/2) + (double)(tileSize_/8)));
-	//Los añadimos a esta lista para luego poder borrarlos desde el propio mapa
+	//Los aï¿½adimos a esta lista para luego poder borrarlos desde el propio mapa
 	mapObstacles_.push_back(newObstacle);
 	CollisionCtrl::instance()->addObstacle(newObstacle);
 }
@@ -77,7 +78,7 @@ void TiledMap::addOrthogonalObstacle(Tile tile)
 {
 	SDL_Rect collisionArea = { (int)tile.worldPos_.getX(), (int)tile.worldPos_.getY(), tileSize_ , tileSize_ };
 	Obstacle* newObstacle = new Obstacle(app_, collisionArea, nullptr, tile.worldPos_, Vector2D(tileSize_, tileSize_));
-	//Los añadimos a esta lista para luego poder borrarlos desde el propio mapa
+	//Los aï¿½adimos a esta lista para luego poder borrarlos desde el propio mapa
 	mapObstacles_.push_back(newObstacle);
 	CollisionCtrl::instance()->addObstacle(newObstacle);
 }
@@ -86,8 +87,8 @@ void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles
 {
 	///Recorremos toda la matriz que contiene la informacion de la capa que acabamos de coger
 	for (unsigned int y = 0; y < map_dimensions.y; y++) {
-		///Como está en perspectiva isométrica, vamos a guardar directamente 
-		///la información de la posición de los tiles teniendo en cuenta dicha
+		///Como estï¿½ en perspectiva isomï¿½trica, vamos a guardar directamente 
+		///la informaciï¿½n de la posiciï¿½n de los tiles teniendo en cuenta dicha
 		///perspectiva
 		double auxY = (iniPos_.getY() + ((double)(tileSize_ / 4) * y));
 		double auxX = (iniPos_.getX() - ((double)(tileSize_ / 2) * y));
@@ -96,23 +97,23 @@ void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles
 			int tileIndex = x + (y * map_dimensions.x);
 			int gid = layer_tiles[tileIndex].ID;
 
-			///Si el tile no es vacío
+			///Si el tile no es vacï¿½o
 			if (gid != 0) {
 				Tile tile;
-				//Lo guardamos en la posición del mapa que corresponda
+				//Lo guardamos en la posiciï¿½n del mapa que corresponda
 				tile.worldPos_ = { auxX, auxY };
-				//Guardamos la posición del tile en el tilemap
+				//Guardamos la posiciï¿½n del tile en el tilemap
 				//gid-1 porque nuestra textura 0 se corresponde con el identificador 1(en el archivo de tiled) 
-				//y así sucesivamente
+				//y asï¿½ sucesivamente
 				Vector2D aux = { (double)((gid - 1) % tileset_.cols),(double)((gid - 1) / tileset_.cols) };
 				tile.tilesetPos_ = { aux.getX() * tileset_.tileWidth_, aux.getY() * tileset_.tileHeight_ };
-				//Lo añadimos en la lista de tiles
+				//Lo aï¿½adimos en la lista de tiles
 				tilesToRender.push_back(tile);
 
 				if (idCollisionTiles_.end() != find(idCollisionTiles_.begin(), idCollisionTiles_.end(), gid))
 					addIsometricObstacle(tile);
 			}
-			//Actualizamos la posición del mundo para el siguiente tile
+			//Actualizamos la posiciï¿½n del mundo para el siguiente tile
 			auxY += (tileSize_ / 4);
 			auxX += (tileSize_ / 2);
 		}
@@ -124,11 +125,11 @@ void TiledMap::createObjects(vector<tmx::Object> object_tiles,tmx::Vector2u map_
 	for (tmx::Object ob : object_tiles) {
 		tmx::Vector2f pos = ob.getPosition();
 
-		///TILESIZE_Y = TILESIZE_X/2 por la perspectiva isométrica de los tiles
+		///TILESIZE_Y = TILESIZE_X/2 por la perspectiva isomï¿½trica de los tiles
 		pos.x /= map_tilesize.y;
 		pos.y /= map_tilesize.y;
 
-		//Posición en la que debería empezar a dibujarse según como estamos pintando el mapa
+		//Posiciï¿½n en la que deberï¿½a empezar a dibujarse segï¿½n como estamos pintando el mapa
 		double auxY = (iniPos_.getY() + ((double)(tileSize_ / 4) * pos.y) + ((tileSize_/4)* (double)pos.x));
 		double auxX = (iniPos_.getX() - ((double)(tileSize_ / 2) * pos.y) + ((tileSize_/2)* (double)pos.x));
 
@@ -145,31 +146,33 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		CollisionCtrl::instance()->addEnemy(monkey);
 	}
 	else if (objectType == "Chest") {
-		///Añadir cofre
+		///Aï¿½adir cofre
 	}
 	else if (objectType == "Crab") {
-		//Añadir cangrejo
+		//Aï¿½adir cangrejo
 		////Por ahora parece que no se pueden crear pero creo que es por las texturas
 		//Crab* crab = new Crab(app_, pos, Vector2D(W_CRAB, H_CRAB));
 		//state_->addEnemy(crab);
 		//CollisionCtrl::instance()->addEnemy(crab);
 	}
 	else if (objectType == "Wolf") {
-		//Añadir lobo
-		//Falta añadir lo de patrol pero no estoy segura de como funciona
+		//Aï¿½adir lobo
+		//Falta aï¿½adir lo de patrol pero no estoy segura de como funciona
 		Wolf* wolf = new Wolf(app_, pos, Vector2D(W_WOLF, H_WOLF));
 		state_->addEnemy(wolf);
 		CollisionCtrl::instance()->addEnemy(wolf);
 	}
 	else if (objectType == "Skeleton") {
-		//Añadir esqueleto
+		//Aï¿½adir esqueleto
 		Skeleton* monkey = new Skeleton(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
 		//state_->addRenderUpdateLists(monkey);
 		state_->addEnemy(monkey);
 		CollisionCtrl::instance()->addEnemy(monkey);
 	}
 	else if (objectType == "Pumpkin") {
-		//Añadir calabaza
+		Pumpkin* pumpkin = new Pumpkin(app_,pos,Vector2D(W_PUMPKIN,H_PUMPKIN));
+		state_->addEnemy(pumpkin);
+		CollisionCtrl::instance()->addEnemy(pumpkin);
 	}
 	else if (objectType == "Kraken") {
 		Kraken* kraken = new Kraken(app_, pos, Vector2D(4*W_MONKEY, 4*H_MONKEY));
@@ -178,17 +181,17 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		CollisionCtrl::instance()->addEnemy(kraken);
 	}
 	else if (objectType == "Magordito") {
-		//Añadir Magordito
+		//Aï¿½adir Magordito
 	}
 	else if (objectType == "EnemyPirate") {
-		//Añadir Pirata naufrago
-		//Falta añadir lo de patrol pero no estoy segura de como funciona
+		//Aï¿½adir Pirata naufrago
+		//Falta aï¿½adir lo de patrol pero no estoy segura de como funciona
 		EnemyPirate* pirate = new EnemyPirate(app_, pos, Vector2D(W_ENEMYPIRATE, H_ENEMYPIRATE));
 		state_->addRenderUpdateLists(pirate);
 		CollisionCtrl::instance()->addEnemy(pirate);
 	}
 	else if (objectType == "Cleon") {
-		//Añadir Cleon
+		//Aï¿½adir Cleon
 	}
 	else if (objectType == "Player") {
 		Player* player = new Player(app_, pos, Vector2D(W_PLAYER, H_PLAYER));
@@ -204,7 +207,7 @@ void TiledMap::createIsometricMap(const tmx::Map& map_)
 {
 	//Cuantos tiles hay por fila y columna
 	tmx::Vector2u map_dimensions = map_.getTileCount();
-	//Tamaño de los tiles del mapa
+	//Tamaï¿½o de los tiles del mapa
 	tmx::Vector2u map_tilesize = map_.getTileSize();
 	
 	///Cogemos todas las layers del archivo
@@ -234,7 +237,7 @@ void TiledMap::createOrthogonalMap(const tmx::Map& map_)
 	cout << "Creando mapa ortogonal" << endl;
 	//Cuantos tiles hay por fila y columna
 	tmx::Vector2u map_dimensions = map_.getTileCount();
-	//Tamaño de los tiles del mapa
+	//Tamaï¿½o de los tiles del mapa
 	tmx::Vector2u map_tilesize = map_.getTileSize();
 
 	///Cogemos todas las layers del archivo
@@ -263,15 +266,15 @@ void TiledMap::createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tile
 			int tileIndex = x + (y * map_dimensions.x);
 			int gid = layer_tiles[tileIndex].ID;
 
-			///Si el tile no es vacío
+			///Si el tile no es vacï¿½o
 			if (gid != 0) {
 				Tile tile;
-				//Lo guardamos en la posición del mapa que corresponda
+				//Lo guardamos en la posiciï¿½n del mapa que corresponda
 				tile.worldPos_ = { iniPos_.getX() + ((double)tileSize_* (double)x),iniPos_.getY()+((double)tileSize_* (double)y)};
 				Vector2D aux = { (double)((gid - 1) % tileset_.cols),(double)((gid - 1) / tileset_.cols) };
 				tile.tilesetPos_ = { aux.getX() * tileset_.tileWidth_, aux.getY() * tileset_.tileHeight_ };
 
-				//TEMPORAL, PARA QUE SE VEAN DONDE ESTÁN LAS COLISIONES
+				//TEMPORAL, PARA QUE SE VEAN DONDE ESTï¿½N LAS COLISIONES
 				//tilesToRender.push_back(tile);
 				
 				//En las capas ortogonales solo vamos a pintar la imagen, asi que cualquier tile que no sea vacio

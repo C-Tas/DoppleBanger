@@ -73,6 +73,9 @@ private:
 	const int W_WOLF= app_->getWindowWidth() / 20;
 	const int H_WOLF = app_->getWindowHeight() / 15;
 
+	const int W_PUMPKIN = app_->getWindowWidth() / 20;
+	const int H_PUMPKIN = app_->getWindowHeight() / 15;
+
 	const int W_CRAB = app_->getWindowWidth() / 20;
 	const int H_CRAB = app_->getWindowHeight() / 15;
 

@@ -304,7 +304,20 @@ public:
 		//Explosion,
 
 		//Ship
-		Waves
+		Waves,
+
+		//Calabaza
+		AgroPumpkin,
+		AttackPumpkin,
+		ExplosionPumpkin,
+		IdlePumpkin1,
+		IdlePumpkin2,
+		LaughPumpkin1,
+		LaughPumpkin2,
+		LaughPumpkin3,
+		MovePumpkin,
+		TauntPumpkin1,
+		TauntPumpkin2
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

@@ -1,5 +1,7 @@
 #pragma once
 #include "Enemy.h"
+
+/*Canales para reproducir sonidos 6 y 7 */
 class Pumpkin :
 	public Enemy
 {
@@ -36,6 +38,8 @@ private:
 	const int FRAME_ACTION_SHOOT = 10;
 	bool shooted_ = false;
 	//Idle
+	const int LAUGH_FRAME = 1;
+	const int IDLE_FRAME = 6;
 	void initIdle();
 	vector<Anim> idleAnims_;
 	vector<Texture*> idleTx_;
