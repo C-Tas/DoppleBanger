@@ -183,7 +183,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 	//Colisi�n con los objetos del barco
 	for (int i = 0; i < shipObjects_.size(); i++) {
-		if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
+		if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getColliderScale().getX(), player_->getScaleY() / 10,
 			shipObjects_[i].object->getPosX() + shipObjects_[i].object->getScaleX() / 2, shipObjects_[i].object->getPosY() + 
 			shipObjects_[i].object->getScaleY() / 2, shipObjects_[i].object->getScaleX(), shipObjects_[i].object->getScaleY())) {
 			player_->stop();

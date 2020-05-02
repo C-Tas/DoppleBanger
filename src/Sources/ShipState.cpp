@@ -98,6 +98,8 @@ void ShipState::initState()
 	player_ = new Player(app_, playerEntry_, Vector2D(W_PLAYER, H_PLAYER));
 	hud_ = new HUD(app_);
 	player_->initSkills();
+	player_->setColliderPos(Vector2D((player_->getScale().getX() / 3), 2 * (player_->getScale().getY() / 4)));
+	player_->setColliderScale(Vector2D((player_->getScale().getX() / 3), (player_->getScale().getY() / 4)));
 
 	Camera::instance()->updateCamera(W_WIN / 2, H_WIN / 2);
 	addRenderUpdateLists(player_);
