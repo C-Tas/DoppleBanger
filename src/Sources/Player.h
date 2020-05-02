@@ -58,6 +58,8 @@ public:
 	void displace(Vector2D dir, int dist);
 	//Si se ha muerto el enemigo al que está atacando el jugador se setea a nullptr
 	void isEnemyDead(Actor* obj);
+	//Regeneración de mana
+	void manaReg();
 	//Cambia de estado a muriendo
 	virtual void die() { currState_ = STATE::DYING; }
 	//Mata al clon
@@ -79,7 +81,7 @@ public:
 	const int getLiberation() { return liberation_; };
 	const int getMoney() { return money_; };
 	const double getMaxHealth() { return HEALTH; }; //Faltaria poner una variable que lleve la vida maxima sin ser cte
-	const double getMaxMana() { return MANA; }; //Faltaria poner una variable que lleve el mana maximo sin ser cte
+	const double getMaxMana() { return maxMana_; }; //Devuelve el mana máximo del Player
 	Clon* getClon() { return clon_; };
 
 	const Vector2D getPreviousPos() { return previousPos_; }
@@ -281,7 +283,8 @@ private:
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
 	const double MELEE_RATE = 1;		//Velocidad del ataque a melee en segundos
 	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos
-
+	double maxMana_ = 100;
+	double maxHealth_ = 100;
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
 	//Constantes para el delay de los efectos de sonido
