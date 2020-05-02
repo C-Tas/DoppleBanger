@@ -3,12 +3,13 @@
   "unlockedIsland": 2,
   "currGold": 300,
   "stashGold": 1000,
-  "skillPoints": 1000,
-  "precision": 999,
+  "skillPoints": 997,
+  "precision": 1000,
   "melee": 999,
   "clon": 999,
   "questStarted": [false, false],
   "questFinished": [false, false],
+  "unlockedSkills": [true, true, true, true, true, false, true, true, true, false],
   "skills": ["null", "Explosion", "null"],
   "objects": ["Speed", "Dmg"],
   "equipment": [{
@@ -50,18 +51,18 @@
       "type": 1,
       "name": 1
     }, {
-	  "type": 1,
-	  "name": 2
-	}, {
-	  "type": 1,
-	  "name": 3
-	}, {
-	  "type": 1,
-	  "name": 4
-	}, {
-	  "type": 1,
-	  "name": 5
-	}],
+      "type": 1,
+      "name": 2
+    }, {
+      "type": 1,
+      "name": 3
+    }, {
+      "type": 1,
+      "name": 4
+    }, {
+      "type": 1,
+      "name": 5
+    }],
   "inventorySize": 7,
   "stash": [{
       "type": 0,

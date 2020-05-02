@@ -10,21 +10,22 @@ void LoadState::backToPreviousState(Application* app)
 
 void LoadState::loadSlot1(Application* app)
 {
-	app->getGameStateMachine()->pushState(new ShipState(app));
+	app->getGameStateMachine()->changeState(new ShipState(app));
 	GameManager::instance()->loadSlot1();
 }
 
 void LoadState::loadSlot2(Application* app)
 {
-	app->getGameStateMachine()->pushState(new ShipState(app));
+	app->getGameStateMachine()->changeState(new ShipState(app));
 	GameManager::instance()->loadSlot2();
 }
 
 void LoadState::loadSlot3(Application* app)
 {
-	app->getGameStateMachine()->pushState(new ShipState(app));
+	app->getGameStateMachine()->changeState(new ShipState(app));
 	GameManager::instance()->loadSlot3();
 }
+
 void LoadState::initState()
 {
 	background_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::SaveLoadBackground));

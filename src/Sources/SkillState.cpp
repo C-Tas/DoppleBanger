@@ -17,14 +17,6 @@
 void SkillState::initState() {
 	player_ = gm_->getPlayer();
 
-	#ifdef _DEBUG	//PARA DEBUG
-	cout << "SKILLTATE" << endl;
-	cout << "TIENES " << gm_->getAchievementPoints() << " PUNTOS" << endl;
-	cout << "PRECISION " << gm_->getPresicionPoints() << " PUNTOS" << endl;
-	cout << "MELEE " << gm_->getMeleePoints() << " PUNTOS" << endl;
-	cout << "GHOST " << gm_->getGhostPoints() << " PUNTOS" << endl;
-	#endif
-
 	bg_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillMenu));
 	createButtons();
 	createTexts();
@@ -173,9 +165,6 @@ void SkillState::setSelectedSkillButton(SkillButton* button)
 	else {
 		selectedRectangle->setPos(Vector2D(button->getPosX() - 10, button->getPosY() - 10));
 	}
-#ifdef _DEBUG
-	cout << "Cambio de seleccion en el skill state" << endl;
-#endif // _DEBUG
 }
 
 void SkillState::equipSelectedSkill(Key key)
@@ -246,8 +235,8 @@ void SkillState::distancePointsActualized()
 
 void SkillState::ghostPointsActualized()
 {
-	function<void(Player*)> func1 = [](Player* player) { player->setLiberation1(); };
-	function<void(Player*)> func2 = [](Player* player) { player->setLiberation2(); };
+	function<void(Player*)> func1 = [](Player* player) { player->setLiberation(1); };
+	function<void(Player*)> func2 = [](Player* player) { player->setLiberation(2); };
 
 	auxPointsActualized(skillsTypeIterator[2], app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC),
 		app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC)
@@ -265,7 +254,6 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 		
 		if (p1 != nullptr) {
 			p1(player_);
-			cout << "1" << endl;
 		}
 	}
 	++aux;
@@ -275,7 +263,6 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 		gm_->setSkillUnlocked((*aux)->getSkillId());
 		if (p2 != nullptr) {
 			p2(player_);
-			cout << "2" << endl;
 
 		}
 	}
@@ -286,8 +273,6 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 		gm_->setSkillUnlocked((*aux)->getSkillId());
 		if (p3 != nullptr) {
 			p3(player_);
-			cout << "3" << endl;
-
 		}
 	}
 }
@@ -490,26 +475,16 @@ void SkillState::selectSkill(Application* app, SkillButton* button)
 
 void SkillState::assingToQKey(Application* app)
 {
-#ifdef _DEBUG
-	cout << "Asignado a la tecla Q" << endl;
-#endif // _DEBUG
 	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(Key::Q);
 }
 
 void SkillState::assingToWKey(Application* app)
 {
-#ifdef _DEBUG
-	cout << "Asignado a la tecla W" << endl;
-#endif // _DEBUG
 	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(Key::W);
 }
 
 void SkillState::assingToEKey(Application* app)
 {
-#ifdef _DEBUG
-	cout << "Asignado a la tecla E" << endl;
-#endif // _DEBUG
-
 	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(Key::E);
 }
 

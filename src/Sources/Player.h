@@ -82,8 +82,8 @@ public:
 		void setRicochet(bool ricochet) { ricochet_ = ricochet; lastTimeRico_ = SDL_GetTicks(); };
 
 		void decreaseMana(double mana);
-		inline void setLiberation1() { liberation_ = 1; };
-		inline void setLiberation2( ) { liberation_ = 2; };
+		inline void setLiberation(int level) { liberation_ = level; };
+		//inline void setLiberation2() { liberation_ = 2; };
 
 		void equip(Armor* armor) { armor_ = armor; gm_->setArmor(armor); };
 		void equip(Gloves* gloves) { gloves_ = gloves; gm_->setGloves(gloves); };
@@ -115,6 +115,7 @@ public:
 		///<summary>Método para crear las skills que tiene el player
 		///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
 		void initSkills();
+		void initPasives();
 		///<summary>Número máximo de skills equipables</summary>
 		Skill* getEquippedSkill(int key) { return skills_[key]; }
 		void setSkillAt(int key, Skill* skill) { 

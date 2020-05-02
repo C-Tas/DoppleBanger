@@ -63,24 +63,24 @@ enum class SkillType { Active, Pasive };
 
 //Nombre de cada una de las habilidades del jugador
 enum class SkillName : int {
-	//Enums auxiliares para las pasivas y para las habilidades que no están equipadas
-	Unequipped,
+	//Ataque a distancia
+	DisparoPerforante,
+	Raudo,
+	Rebote,
 
 	//Ataque melee
 	GolpeFuerte,
 	Invencible,
 	Torbellino,
 
-	//Ataque a distancia
-	DisparoPerforante,
-	Raudo,
-	Rebote,
-
 	//Clon
 	Clon,
 	LiberacionI,
 	Explosion,
 	LiberacionII,
+
+	//Enums auxiliares para las pasivas y para las habilidades que no están equipadas
+	Unequipped,
 };
 
 //Enum para identificar las teclas de las habilidades
@@ -145,7 +145,7 @@ private:
 	//Vector de cooldowns de las habilidades equipadas
 	vector<bool> skillsCooldown = { false, false, false, false };
 	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
-	vector<bool> skillsUnlocked_ = { false, false ,false, false, false, false, false, true, false, false, false }; //Clon inicializada por defecto
+	vector<bool> skillsUnlocked_ = { false, false ,false, false, false, false, true, false, false, false }; //Clon inicializada por defecto
 	//Vector que contiene los puntos invertidos en cada rama
 	vector<int> pointrTree_ = { 0, 0, 0 };
 	//Vector que contiene las habilidades equipadas

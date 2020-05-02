@@ -18,7 +18,7 @@ using namespace jute;
 unique_ptr<GameManager> GameManager::instance_;
 
 GameManager::GameManager() {
-	unlockedIslands_ = Island::Volcanic;
+	unlockedIslands_ = Island::Caribbean;
 	for (int i = 0; i < (int)missions::Size; i++) {
 		missionsComplete[i] = false;
 	}
@@ -137,9 +137,25 @@ void GameManager::saveMissions(jute::jValue& mainJson)
 
 void GameManager::saveSkills(jute::jValue& mainJson)
 {
-	jValue skillEquippedValue(jType::JARRAY);
-	jValue aux(jType::JSTRING);
+	//Habilidades desbloqueadas
+	jValue unlockedSkills(jType::JARRAY);
+	jValue aux(jType::JBOOLEAN);
+	for (int i = 0; i < skillsUnlocked_.size(); i++) {
+		switch (skillsUnlocked_[i])
+		{
+		case true:
+			aux.set_string("true");
+			break;
+		case false:
+			aux.set_string("false");
+			break;
+		}
+		unlockedSkills.add_element(aux);
+	}
+	mainJson.add_property("unlockedSkills", unlockedSkills);
 	//Miramos qué habilidad esta equipada
+	jValue skillEquippedValue(jType::JARRAY);
+	aux.set_type(jType::JSTRING);
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
 		switch (skillsEquipped_[i])
 		{
@@ -438,7 +454,21 @@ void GameManager::loadHUD(jute::jValue& mainJson)
 
 void GameManager::loadSkills(jute::jValue& mainJson)
 {
-	//Seleccion de skill
+	//Desbloqueadas
+	for (int i = 0; i < skillsUnlocked_.size(); i++) {
+		skillsUnlocked_[i] = mainJson["unlockedSkills"][i].as_bool();
+	}
+	//Activacion de las pasivas
+	if (skillsUnlocked_[(int)SkillName::Invencible])
+		player_->activeInvincible();
+	if (skillsUnlocked_[(int)SkillName::Raudo])
+		player_->activateSwiftGunslinger();
+	if (skillsUnlocked_[(int)SkillName::LiberacionII])
+		player_->setLiberation(2);
+	else if(skillsUnlocked_[(int)SkillName::LiberacionI])
+		player_->setLiberation(1);
+
+	//Equipadas
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
 		if (mainJson["skills"][i].as_string() == "null") {
 			setSkillEquiped(SkillName::Unequipped, (Key)i);

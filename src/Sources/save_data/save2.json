@@ -1,16 +1,17 @@
 {
   "currIsland": 0,
   "unlockedIsland": 2,
-  "currGold": 1300,
-  "stashGold": 0,
-  "skillPoints": 1000,
+  "currGold": 300,
+  "stashGold": 1000,
+  "skillPoints": 545,
   "precision": 999,
-  "melee": 999,
-  "clon": 999,
+  "melee": 664,
+  "clon": 332,
   "questStarted": [false, false],
   "questFinished": [false, false],
-  "skills": ["GolpeFuerte", "Rebote", "null"],
-  "objects": ["Health", "Mana"],
+  "unlockedSkills": [true, true, false, true, false, false, true, false, false, false],
+  "skills": ["null", "Explosion", "null"],
+  "objects": ["Speed", "Dmg"],
   "equipment": [{
       "name": 0,
       "price": 10,
@@ -27,15 +28,15 @@
       "armor": 10.000000,
       "speed": 10.000000
     }, {
-      "name": 6,
-      "price": 10,
+      "name": 7,
+      "price": 20,
       "rate": 10.000000,
       "damage": 10.000000
     }, {
-      "name": 12,
-      "price": 0,
-      "rate": 0.000000,
-      "damage": 0.000000
+      "name": 10,
+      "price": 10,
+      "rate": 10.000000,
+      "damage": 10.000000
     }],
   "inventory": [{
       "type": 0,
@@ -44,73 +45,61 @@
       "armor": 10.000000,
       "critic": 10.000000
     }, {
-      "type": 0,
-      "name": 2,
-      "price": 20.000000,
-      "armor": 10.000000,
-      "critic": 10.000000
+      "type": 1,
+      "name": 1
     }, {
-      "type": 0,
-      "name": 2,
-      "price": 20.000000,
-      "armor": 10.000000,
-      "critic": 10.000000
+      "type": 1,
+      "name": 1
     }, {
-      "type": 0,
-      "name": 2,
-      "price": 20.000000,
-      "armor": 10.000000,
-      "critic": 10.000000
+      "type": 1,
+      "name": 2
     }, {
-      "type": 0,
-      "name": 2,
-      "price": 20.000000,
-      "armor": 10.000000,
-      "critic": 10.000000
+      "type": 1,
+      "name": 3
     }, {
       "type": 1,
       "name": 4
     }, {
       "type": 1,
+      "name": 5
+    }],
+  "inventorySize": 7,
+  "stash": [{
+      "type": 0,
+      "name": 0,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "health": 10.000000
+    }, {
+      "type": 0,
+      "name": 4,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "speed": 10.000000
+    }, {
+      "type": 1,
       "name": 0
+    }, {
+      "type": 0,
+      "name": 2,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "critic": 10.000000
+    }, {
+      "type": 0,
+      "name": 11,
+      "price": 20.000000,
+      "rate": 10.000000,
+      "damage": 10.000000
     }, {
       "type": 1,
       "name": 3
     }, {
       "type": 0,
-      "name": 12,
-      "price": 0.000000,
-      "rate": 0.000000,
-      "damage": 0.000000
-    }, {
-      "type": 1,
-      "name": 1
-    }],
-  "inventorySize": 10,
-  "stash": [{
-      "type": 0,
-      "name": 12,
-      "price": 0.000000,
-      "rate": 0.000000,
-      "damage": 0.000000
-    }, {
-      "type": 0,
-      "name": 12,
-      "price": 0.000000,
-      "rate": 0.000000,
-      "damage": 0.000000
-    }, {
-      "type": 0,
-      "name": 10,
+      "name": 6,
       "price": 10.000000,
       "rate": 10.000000,
       "damage": 10.000000
-    }, {
-      "type": 0,
-      "name": 3,
-      "price": 20.000000,
-      "armor": 10.000000,
-      "critic": 10.000000
     }],
-  "stashSize": 4
+  "stashSize": 7
 }
