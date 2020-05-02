@@ -127,7 +127,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Azul, "../Sources/assets/enemigos/azul.png" },
 	{ Cleon, "../Sources/assets/enemigos/cleon/cleon.png" },
 	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
-	{ Merchant, "../Sources/assets/npc/mercader.png" },
+	{ Merchant, "../Sources/assets/npc/mercaderIdle.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
 	{ Cartographer, "../Sources/assets/npc/Navigator.png" },
 	{Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png"},

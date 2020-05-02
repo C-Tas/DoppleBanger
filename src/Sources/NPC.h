@@ -18,10 +18,10 @@ private:
 	const int FRAME_RATE_ELDERMAN = 200;
 
 	//Mercader
-	const int NUM_FRAMES_MERCHANT = 1;
-	const int W_FRAME_MERCHANT = 100;
-	const int H_FRAME_MERCHANT = 100;
-	const int FRAME_RATE_MERCHANT= 200;
+	const int NUM_FRAMES_MERCHANT =2;
+	const int W_FRAME_MERCHANT = 300;
+	const int H_FRAME_MERCHANT = 267;
+	const int FRAME_RATE_MERCHANT= 500;
 
 	//Cocinera
 	const int NUM_FRAMES_CHEF = 2;
