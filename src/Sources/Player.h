@@ -115,7 +115,6 @@ public:
 		///<summary>Método para crear las skills que tiene el player
 		///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
 		void initSkills();
-		void initPasives();
 		///<summary>Número máximo de skills equipables</summary>
 		Skill* getEquippedSkill(int key) { return skills_[key]; }
 		void setSkillAt(int key, Skill* skill) { 

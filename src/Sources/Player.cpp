@@ -65,11 +65,6 @@ void Player::initSkills()
 	initPasives();
 }
 
-void Player::initPasives()
-{
-
-}
-
 bool Player::update()
 {
 	updateFrame();
