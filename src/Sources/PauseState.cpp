@@ -8,6 +8,7 @@
 void PauseState::resume(Application* app)
 {
 	SDL_ShowCursor(SDL_DISABLE);
+	app->getAudioManager()->playMusic(Resources::Waves, -1);
 	app->getGameStateMachine()->popState();
 }
 ///<summary>Muestra los controles</summary>

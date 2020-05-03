@@ -25,7 +25,6 @@ void MainMenuState::initState()
 
 	//Cargamos música de fondo
 	app_->getAudioManager()->playMusic(Resources::MainTheme, -1);
-	app_->getAudioManager()->setMusicVolume(6);
 
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
@@ -81,6 +80,7 @@ void MainMenuState::goLoadState(Application* app) {
 };
 void MainMenuState::goStoryState(Application* app) {
 	app->getAudioManager()->playChannel(Resources::Shout, 0, 1);
+	app->getAudioManager()->playMusic(Resources::Storyboard, -1);
 	app->getGameManager()->setCompleteMission(missions::gallegaEnProblemas, false);
 	app->getGameManager()->setStartedMission(missions::gallegaEnProblemas, false);
 	app->getGameStateMachine()->pushState(new StoryState(app));

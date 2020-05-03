@@ -7,6 +7,9 @@ void SaveLoadState::goToGame(Application* app){
 }
 //mirar
 void SaveLoadState::goToMainMenu() {
+	//Cargamos música de fondo
+	app_->getAudioManager()->playMusic(Resources::MainTheme, -1);
+
 	app_->getGameStateMachine()->changeState(new MainMenuState(app_));
 	//AGUS
 	//app_->getStateMachine()->changeState(	MainMenuState(app_));

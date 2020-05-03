@@ -16,6 +16,7 @@
 //Callback del mercader para abrir la tienda
 void TextBox::goShopState(Application* app)
 {
+	app->getAudioManager()->playMusic(Resources::Shop, -1);
 	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	app->getGameStateMachine()->pushState(new ShopState(app));
 }

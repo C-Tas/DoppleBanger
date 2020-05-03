@@ -15,6 +15,7 @@ void callShopBackListS(Application* app) {
 }
 void callExitS(Application* app) {
 	SDL_ShowCursor(SDL_DISABLE);
+	app->getAudioManager()->playMusic(Resources::Waves, -1);
 	app->getGameStateMachine()->popState();
 }
 void callSelectObjectS(Application* app, InventoryButton* ob) {

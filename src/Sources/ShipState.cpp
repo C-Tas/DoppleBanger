@@ -114,8 +114,8 @@ void ShipState::update()
 
 	if (!songActive) {
 		cout << "Waves" << endl;
-		app_->getAudioManager()->playChannel(Resources::Waves, -1, 5);
-		app_->getAudioManager()->setChannelVolume(10, 5);
+		app_->getAudioManager()->playMusic(Resources::Waves, -1);
+		//app_->getAudioManager()->setMusicVolume(5);
 
 		songActive = true;
 	}

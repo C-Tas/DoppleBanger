@@ -88,6 +88,7 @@ void PlayState::checkPlayerActions() {
 		}
 	}
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
+		app_->getAudioManager()->playMusic(Resources::MainTheme, -1);
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
 	}
 	else if (eventHandler_->isKeyDown(SDLK_c)) {
