@@ -202,13 +202,14 @@ void ShopState::changeBetweenLists()
 
 		//Buscamos si el objeto selected est� en la lista del inventario
 		auto it = find(inventory_.firstDrawn, inventory_.objects_->end(), selected_);
-
+		
 		//Una vez sabemos a cual, lo intercambiamos de lista
 		if (it == inventory_.objects_->end()) {
 			selectedIsLastElement(shop_, SHOP_VISIBLE_ELEMENTS);
-			if (inventory_.money_ >= selected_->getObject()->getPrice()) 
+			if (gm_->getInventoryGold() >= selected_->getObject()->getPrice())
 			{
-				inventory_.money_ -= selected_->getObject()->getPrice();
+				gm_->addInventoryGold(-selected_->getObject()->getPrice());
+				moneyChange();
 				//Insertamos en la otra lista
 				it = inventory_.objects_->insert(inventory_.objects_->end(), selected_);
 				//Si no había ningún elemento en la lista, asignamos como por defecto el primero
@@ -222,7 +223,8 @@ void ShopState::changeBetweenLists()
 		}
 		else {
 			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
-			inventory_.money_ += selected_->getObject()->getPrice();
+			gm_->addInventoryGold(selected_->getObject()->getPrice());
+			moneyChange();
 			//Insertamos en la otra lista
 			it = shop_.objects_->insert(shop_.objects_->end(), selected_);
 			//Si no había ningún elemento en la lista, asignamos como por defecto el primero
@@ -322,5 +324,5 @@ void ShopState::selectedIsLastElement(ContainerSHOP& list_, int nVisibleElements
 void ShopState::moneyChange()
 {
 	delete inventoryMoneyTex_;
-	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
+	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(gm_->getInventoryGold()), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
 }
