@@ -5,7 +5,7 @@
 unique_ptr<GameManager> GameManager::instance_;
 
 void GameManager::initGameManager(int currGold, Island unlockedIslands, int achievementPoints) {
-	currGold_ = currGold;
+	inventoryGold_ = currGold;
 	unlockedIslands_ = unlockedIslands;
 	achievementPoints_ = achievementPoints;
 	app_ = new Application();
@@ -49,7 +49,7 @@ void GameManager::resetInventory()
 
 void GameManager::setSkillCooldown(bool cooldown, Key key)
 {
-	skillsCooldown[(int)key] = cooldown;
+	skillsCooldown_[(int)key] = cooldown;
 	if (!onShip_) hud_->setSkillCooldown(cooldown, (int)key);
 }
 

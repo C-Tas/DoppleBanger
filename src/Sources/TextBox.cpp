@@ -16,7 +16,7 @@
 //Callback del mercader para abrir la tienda
 void TextBox::goShopState(Application* app)
 {
-	dynamic_cast<Player*>(app->getGameManager()->getPlayer())->stop();
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	app->getGameStateMachine()->pushState(new ShopState(app));
 }
 
@@ -79,24 +79,31 @@ void TextBox::dialogChef(bool unlock) {
 	initDialog();
 	//Diálogo del chef cuando lo hemos desbloqueado
 	if (unlock) {
-
+		Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando ya lo hemos desbloqueado.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing);
 	}
 	//Diálogo del chef cuando aún está bloqueado
 	else {
-		Texture text(app_->getRenderer(), "Yo soy un ejemplo de un NPC que aún no ha sido desbloqueado, falta gestionar el comienzo y final de las misiones", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + lineSpacing);
+		//Mientras no se hayan matado todos los enemigos
+		if (gm_->getCounterEnemiesMission(missions::gallegaEnProblemas) < gm_->getEnemiesMission(missions::gallegaEnProblemas)) {
+			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la misión secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
-		text.loadFromText(app_->getRenderer(), "secundarias, que pertenecen a otra historia (concretamente 'Misión secundaria - Gallego en problemas').", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 2));
+			text.loadFromText(app_->getRenderer(), "'Gallego en problemas'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+		}
+		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
+		else {
+			gm_->setCompleteMission(missions::gallegaEnProblemas, true);
+			gm_->addInventoryGold(500);
+			gm_->setArchievementPoints(gm_->getAchievementPoints() + 1000);
 
-		text.loadFromText(app_->getRenderer(), "Los textos están ajustados para un tamaño mínimo de ventana 1600x900, si se hace más grande, el texto queda", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 3));
+			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la misión secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
-		text.loadFromText(app_->getRenderer(), "marginado a la izquierda pero no queda mal, pero si se hace una ventana más pequeña el texto no entra.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 4));
-
-		text.loadFromText(app_->getRenderer(), "Aún así habrá que tener un tamaño mínimo, porque otros elementos también desbordan con una ventana pequeña.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 5));
+			text.loadFromText(app_->getRenderer(), "'Gallego en problemas', después de esto el chef se añade a la lista de NPCs desbloquedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+		}
 	}
 }
 

@@ -80,6 +80,8 @@ void MainMenuState::goLoadState(Application* app) {
 };
 void MainMenuState::goStoryState(Application* app) {
 	app->getAudioManager()->playChannel(Resources::Shout, 0, 1);
+	app->getGameManager()->setCompleteMission(missions::gallegaEnProblemas, false);
+	app->getGameManager()->setStartedMission(missions::gallegaEnProblemas, false);
 	app->getGameStateMachine()->pushState(new StoryState(app));
 };
 void MainMenuState::exitGame(Application* app) {

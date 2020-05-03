@@ -106,14 +106,12 @@ private:
 	static const int NUM_MISION = 10;
 	//Puntero unico para evitar copias
 	static unique_ptr<GameManager> instance_;
-	//Cantidad de oro que genera en un nivel
-	int currGold_ = 0;
 	//Puntos de haza�a
 	int achievementPoints_ = 350;
 	//Cantidad de dinero almacenada en el inventario
-	int inventoryGold = 300;
+	int inventoryGold_ = 300;
 	//Cantidad de dinero almacenada en el alijo
-	int stashGold = 1000;
+	int stashGold_ = 1000;
 	//Booleano que indica si estamos en el barco
 	bool onShip_ = true;
 	//Enum de la �ltima isla desbloqueada
@@ -131,13 +129,18 @@ private:
 	//Puntero a la lista de items del alijo
 	list<InventoryButton*>* stash_ = new list<InventoryButton*>;
 	//Vector que representa las misiones secundarias completadas
-	vector<bool> missionsComplete = vector<bool>(NUM_MISION);
+	vector<bool> missionsComplete_ = vector<bool>(NUM_MISION);
 	//Vector que representa las misiones secundarias empezadas
-	vector<bool> missionsStarted = vector<bool>(NUM_MISION);
+	vector<bool> missionsStarted_ = vector<bool>(NUM_MISION);
 	//Vector de cooldowns de las habilidades equipadas
-	vector<bool> skillsCooldown = { false, false, false, false };
+	vector<bool> skillsCooldown_ = { false, false, false, false };
 	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
 	vector<bool> skillsUnlocked_ = { false, false ,false, false, false, false, false, true, false, false, false }; //Clon inicializada por defecto
+	//Vector que contiene la cantidad de enemigos que se han muerto de la mision correspondiente
+	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
+	vector<int> countEnemiesMission_ = { 0, 0, 0, 0};
+	//Vector que contiene el numero de enemigos que se tiene que matar en cada mision
+	vector<int> enemiesMission_ = { 3, 2, 2, 4 };
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
@@ -156,7 +159,7 @@ public:
 	GameManager() {
 		unlockedIslands_ = Island::Volcanic;
 		for (int i = 0; i < NUM_MISION; i++) {
-			missionsComplete[i] = false;
+			missionsComplete_[i] = false;
 		}
 	}
 	//Destructor
@@ -180,11 +183,11 @@ public:
 
 #pragma region getters
 	//Devuelve true si la misi�n ha sido pasada
-	const bool isThatMissionPass(missions mission) { return missionsComplete[(int)mission]; };
+	const bool isThatMissionPass(missions mission) { return missionsComplete_[(int)mission]; };
 	//Devuelve true si la misi�n est� empezada
-	const bool isThatMissionStarted(missions mission) { return missionsStarted[(int)mission]; };
+	const bool isThatMissionStarted(missions mission) { return missionsStarted_[(int)mission]; };
 	//Devuelve si está activo el cooldown de la habilidad
-	const bool getSkillCooldown(int skill) { return skillsCooldown[skill]; };
+	const bool getSkillCooldown(int skill) { return skillsCooldown_[skill]; };
 	//Devuelve si la skill está desbloqueda
 	const bool isSkillUnlocked(SkillName skill) { return skillsUnlocked_[(int)skill]; };
 	//Devuelve si la skill está equipada
@@ -193,18 +196,21 @@ public:
 	const bool getOnShip() { return onShip_; };
 
 	//Devuelve el oro conseguido
-	const int getGold() { return currGold_; };
+	const int getGold() { return inventoryGold_; };
 	//Devuelve los puntos de haza�a
 	const int getAchievementPoints() { return achievementPoints_; };
 	//Devuelve el dinero del inventario
-	const int getInventoryGold() { return inventoryGold; }
+	const int getInventoryGold() { return inventoryGold_; }
 	//Devuelve el dinero del alijo
-	const int getStashGold() { return stashGold; }
+	const int getStashGold() { return stashGold_; }
 		//Devuelve el tamaño de fuente según el tamaño de la ventana
 	const int getFontSize();
 	//Devuelve el total de misiones secundarias
 	const int getNumMission() { return NUM_MISION; };
-
+	//Devuelve el numero de enemigos muertos en cada mision
+	const int getCounterEnemiesMission(missions tagMission) { return countEnemiesMission_.at((int)tagMission); };
+	//Devuelve el numero de enemigos que hay que matar en cada mision
+	const int getEnemiesMission(missions tagMission) { return enemiesMission_.at((int)tagMission); };
 	//Devuelve el inventario
 	const lista getInventory() { return inventory_; };
 	//Devuelve el alijo
@@ -249,13 +255,13 @@ public:
 	//Asigna los puntos gastados a la rama Ghost
 	inline void setGhostPoints(int value) { ghost_ = (spentPoints)value; };
 	//Añade(+) /Quita(-) dinero del inventario
-	inline void addInventoryGold(int money) { inventoryGold += money; };
+	inline void addInventoryGold(int money) { inventoryGold_ += money; };
 	////Añade(+) /Quita(-) dinero del alijo
-	inline void addStashGold(int money) { stashGold += money; };
+	inline void addStashGold(int money) { stashGold_ += money; };
 	///Asigna money como cantidad de dinero en el inventario
-	inline void setInventoryGold(int money) { inventoryGold = money; };
+	inline void setInventoryGold(int money) { inventoryGold_ = money; };
 	///Asigna money como cantidad de dinero en el alijo
-	inline void setStashGold(int money) { stashGold = money; };
+	inline void setStashGold(int money) { stashGold_ = money; };
 	//Indica si estamos o no en el barco
 	inline void setOnShip(bool onShip) { onShip_ = onShip; };
 
@@ -265,11 +271,15 @@ public:
 	inline void setInventoryPointer(lista inv) { inventory_ = inv; };
 	//Asigna el puntero al alijo
 	inline void setStashPointer(lista stash) { stash_ = stash; };
-
+	
+	//Añade una muerte al contador de muertes de la mision
+	inline void addMissionCounter(missions tagMission) { countEnemiesMission_.at((int)tagMission)++; }
+	//Reinicia el contador de muertes de la mision
+	inline void resetMissionCounter(missions tagMission) { countEnemiesMission_.at((int)tagMission) = 0; }
 	//Completa una misi�n secundaria
-	inline void setCompleteMission(missions mission) { missionsComplete[(int)mission] = true; };
+	inline void setCompleteMission(missions mission, bool complete) { missionsComplete_[(int)mission] = complete; };
 	//Empieza una misi�n secundaria
-	inline void setStartedMission(missions mission) { missionsStarted[(int)mission] = true; };
+	inline void setStartedMission(missions mission, bool started) { missionsStarted_[(int)mission] = started; };
 	//Asigna a la ultima isla desbloqueada
 	inline void setUnlockedIslands(Island island) { unlockedIslands_ = island; };
 	//Asigna la nueva isla actual

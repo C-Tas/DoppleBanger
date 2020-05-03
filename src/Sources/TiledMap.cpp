@@ -61,8 +61,6 @@ const void TiledMap::draw()
 			(int)(ob.worldPos_.getY()- Camera::instance()->getCamera().getY()),tileSize_, tileSize_ },
 			{ (int)ob.tilesetPos_.getX(), (int)ob.tilesetPos_.getY(), tileset_.tileWidth_, tileset_.tileHeight_ });
 	}
-
-
 }
 
 void TiledMap::addIsometricObstacle(Tile tile)
@@ -196,6 +194,12 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 	}
 	else if (objectType == "Cleon") {
 		//A�adir Cleon
+	}
+	else if (objectType == "Chef") {
+		NPC* chef;
+		chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), pos, Vector2D(W_NPC_CHEF, H_NPC_CHEF), 2);
+		state_->addRenderUpdateLists(chef);
+		state_->addObject(chef);
 	}
 	else if (objectType == "Player") {
 		Player* player = new Player(app_, pos, Vector2D(W_PLAYER, H_PLAYER));

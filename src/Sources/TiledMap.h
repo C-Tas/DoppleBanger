@@ -67,25 +67,27 @@ private:
 	PlayState* state_ = nullptr;
 	
 #pragma region ObjectsSize
-	const int W_MONKEY = app_->getWindowWidth() / 12;
-	const int H_MONKEY = app_->getWindowHeight() / 5;
+	const double W_MONKEY = app_->getWindowWidth() / 12;
+	const double H_MONKEY = app_->getWindowHeight() / 5;
 
-	const int W_WOLF= app_->getWindowWidth() / 20;
-	const int H_WOLF = app_->getWindowHeight() / 15;
+	const double W_WOLF= app_->getWindowWidth() / 20;
+	const double H_WOLF = app_->getWindowHeight() / 15;
 
-	const int W_PUMPKIN = app_->getWindowWidth() / 20;
-	const int H_PUMPKIN = app_->getWindowHeight() / 15;
+	const double W_PUMPKIN = app_->getWindowWidth() / 20;
+	const double H_PUMPKIN = app_->getWindowHeight() / 15;
 
-	const int W_CRAB = app_->getWindowWidth() / 20;
-	const int H_CRAB = app_->getWindowHeight() / 15;
+	const double W_CRAB = app_->getWindowWidth() / 20;
+	const double H_CRAB = app_->getWindowHeight() / 15;
 
-	const int W_ENEMYPIRATE = app_->getWindowWidth() / 20;
-	const int H_ENEMYPIRATE = app_->getWindowHeight() / 15;
+	const double W_ENEMYPIRATE = app_->getWindowWidth() / 20;
+	const double H_ENEMYPIRATE = app_->getWindowHeight() / 15;
 
+	const double W_NPC_CHEF = app_->getWindowWidth() / 20;
+	const double H_NPC_CHEF = app_->getWindowHeight() / 8;
 
 	//Dimensiones de las entidades
-	const int W_PLAYER = app_->getWindowWidth() / 16;
-	const int H_PLAYER = app_->getWindowHeight() / 6;
+	const double W_PLAYER = app_->getWindowWidth() / 12;
+	const double H_PLAYER = app_->getWindowHeight() / 6;
 
 #pragma endregion
 

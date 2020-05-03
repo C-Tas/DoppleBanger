@@ -49,6 +49,11 @@ bool Wolf::update() {
 		if (!app_->getMute()) {
 			app_->getAudioManager()->playChannel(Resources::AudioId::WolfDie, 0, 3);
 		}
+
+		//Esta línea habría que moverla al cangrejo cuando esté hecho
+		GameManager* gm_ = GameManager::instance();
+		if (gm_->isThatMissionStarted(missions::gallegaEnProblemas)) gm_->addMissionCounter(missions::gallegaEnProblemas);
+
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}

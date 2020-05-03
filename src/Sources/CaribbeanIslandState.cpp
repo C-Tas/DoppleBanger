@@ -8,7 +8,6 @@
 #include "EndState.h"
 #include "WinState.h"
 
-
 void CaribbeanIslandState::update()
 {
 	if (enemies_.empty()) {
