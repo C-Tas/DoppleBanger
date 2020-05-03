@@ -88,6 +88,8 @@ public:
 	//Islas
 	///<summary>A�ade un nuevo obst�culo</summary>
 	void addObstacle(Obstacle* obstacle) { obstacles_.push_back(obstacle); };
+	///<summary>Añade un obstáculo que tiene rotación</summary>
+	void addObstacleWithRotation(Obstacle* obstacle) { obstacleWithRotation_.push_back(obstacle); }
 	///<summary>A�ade un nuevo enemigo</summary>
 	void addEnemy(Enemy* enem) { enemies_.push_back(enem); };
 	///<summary>Vac�a la lista de cofres y setea los nuevos</summary>
@@ -98,6 +100,7 @@ public:
 	void addEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); };
 	///<summary>A�ade un nuevo trigger</summary>
 	void addTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
+
 
 	//Barco
 	///<summary>Guarda un nuevo NPC a la lista</summary>
@@ -134,6 +137,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 
 	//Islas
 	list<Obstacle*> obstacles_;
+	list<Obstacle*> obstacleWithRotation_;
 	list<Enemy*> enemies_;
 	list<Chest*> chests_;
 	list<PlayerBullet*> playerBullets_;

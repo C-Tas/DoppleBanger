@@ -16,6 +16,8 @@ void NPC::initAnims() {
 		break;
 	case (int)CollisionCtrl::NPCsNames::Merchant:
 		npcIdle = { NUM_FRAMES_MERCHANT, W_FRAME_MERCHANT, H_FRAME_MERCHANT, FRAME_RATE_MERCHANT, true };
+		posCollision_ = { scale_.getX() / 5, scale_.getY() / 5 };
+		scaleCollision_ = { 7 * (scale_.getX() / 10), 3 * (scale_.getX() / 5) };
 		break;
 	case (int)CollisionCtrl::NPCsNames::Chef:
 		npcIdle = { NUM_FRAMES_CHEF, W_FRAME_CHEF, H_FRAME_CHEF, FRAME_RATE_CHEF, true };

@@ -35,13 +35,11 @@ protected:
 	const std::string ZONE2_TILEMAP = "../Sources/assets/mapas/Isla1-1/Isla 1.tmx";
 	///<summary>Direccion en la que se encuentra el archivo de Tiled del mapa de la zona 3</summary>
 	const std::string ZONE3_TILEMAP = "../Sources/assets/mapas/Isla1-1/Isla 1.tmx";
-	//Tiles que queremos que tengan la funcionalidad del colisionar
-	const list <int> collisionTilesIdZone1 = { 13,66,67,68,69,70,71,72,73,74,75,76,77,129,131,132,133,178,179,180,181,246,247,248,249,250,251,252,253,254};
+	//Tiles que queremos que el player no atraviese
+	const list <int> collisionTilesIdZone1 = {1,121,122,123,124,162,163,164,179,180,181,182,248,249,250,251,252,253,254,255,256,257,258,287,288,289,290,291,292,293,294,295,296,297,298,299 };
+	//Tiles que queremos que sean paredes (y por tanto que destruyan balas)
+	const list <int> wallTilesIdZone1 = { 12,13,162,163,164,179,180,181,182,248,249,250,251,252,253,254,255,256,257,258,287,288,289,290,291,292,293,294,295,296,297,298,299 };
 #pragma endregion
-	const int numMonkeys_ = 1;
-	const int numPirates_ = 2;
-	const int numWolves = 3;
-	const int numSkeletons = 1;
 
 	virtual void initState();
 	///<summary>Inicializa el mapa de la zona 1 de la isla</summary>
@@ -49,7 +47,7 @@ protected:
 	///<summary>Inicializa el mapa de la zona 2 de la isla
 	///Como todavía no está hecho hace falta definirlo</summary>
 	void initZone2();
-	///<summary>Inicializa el mapa de la zona 2 de la isla
+	///<summary>Inicializa el mapa de la zona 3 de la isla
 	///Como todavía no está hecho hace falta definirlo</summary>
 	void initZone3();
 

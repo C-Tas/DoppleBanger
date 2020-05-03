@@ -34,14 +34,6 @@ void CollisionCtrl::islandCollisions() {
 	//Colisiones con obst�culos
 	for (auto ob : obstacles_) {
 		
-		//Con jugador
-		if (Collisions::collides(Vector2D(player_->getCollider().x, player_->getCollider().y), player_->getCollider().w, player_->getCollider().h, 
-			(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
-			player_->stop();
-			(ob)->onCollider();
-			player_->setPos(player_->getPreviousPos());
-		}
-		
 		//Con balas del jugador
 		for (auto bullet : playerBullets_) {
 			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
@@ -60,6 +52,15 @@ void CollisionCtrl::islandCollisions() {
 				removeEnemyBullet(bullet);
 				bullet->onCollider();
 			}
+		}
+	}
+
+	for (auto ob : obstacleWithRotation_) {
+		if (Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+			player_->getCollisionRot(), (ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY(), ob->getCollisionRot())) {
+			player_->stop();
+			(ob)->onCollider();
+			player_->setPos(player_->getPreviousPos());
 		}
 	}
 
@@ -182,7 +183,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 	//Colisi�n con los objetos del barco
 	for (int i = 0; i < shipObjects_.size(); i++) {
-		if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
+		if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getColliderScale().getX(), player_->getScaleY() / 10,
 			shipObjects_[i].object->getPosX() + shipObjects_[i].object->getScaleX() / 2, shipObjects_[i].object->getPosY() + 
 			shipObjects_[i].object->getScaleY() / 2, shipObjects_[i].object->getScaleX(), shipObjects_[i].object->getScaleY())) {
 			player_->stop();
@@ -204,8 +205,8 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			//RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
 			//npc.object->getPosX() + npc.object->getScaleX() / 2, npc.object->getPosY() + npc.object->getScaleY() / 2, npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 0.11)) {
 
-			if (Collisions::collides(npc.object->getPos(), npc.object->getScaleX() * 0.8, npc.object->getScaleY() * 0.8,
-				player_->getPos(), player_->getScaleX() * 0.8, player_->getScaleY() * 0.8)) {
+			if (Collisions::collides(npc.object->getColliderPos(), npc.object->getColliderScale().getX(), npc.object->getColliderScale().getY(),
+				player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
 					player_->stop();
 					player_->setPos(player_->getPreviousPos());
 			}
@@ -242,8 +243,8 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 	///Colision con las paredes del barco
 	for (auto ob : obstacles_) {
 		//Con jugador
-		if (Collisions::collides(player_->getPos(), player_->getScaleX() * 0.6, player_->getScaleY() * 0.8,
-			(ob)->getPos(), (ob)->getScaleX() * 0.6, (ob)->getScaleY() * 0.8)) {
+		if (Collisions::collides(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+			(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
 			player_->stop();
 			(ob)->onCollider();
 			player_->setPos(player_->getPreviousPos());
