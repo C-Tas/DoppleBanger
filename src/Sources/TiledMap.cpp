@@ -222,6 +222,9 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 	}
 	else if (objectType == "Chest") {
 		///A�adir cofre
+		Chest* chest = new Chest(app_, pos, Vector2D(W_CHEST,H_CHEST));
+		state_->addRenderUpdateLists(chest);
+
 	}
 	else if (objectType == "Crab") {
 		//A�adir cangrejo

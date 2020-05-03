@@ -102,6 +102,10 @@ private:
 	const double W_PLAYER = app_->getWindowWidth() / 12;
 	const double H_PLAYER = app_->getWindowHeight() / 6;
 
+	const double W_CHEST = app_->getWindowWidth() / 12.8;
+	const double H_CHEST = app_->getWindowWidth() / 12.8;
+
+
 #pragma endregion
 #pragma region TilesIdentifiers
 	//Primer tile con forma de cubo
