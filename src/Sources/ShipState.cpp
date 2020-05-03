@@ -104,7 +104,7 @@ void ShipState::initState()
 
 	Camera::instance()->updateCamera(W_WIN / 2, H_WIN / 2);
 
-	startInstance_ = SDL_GetTicks();
+	//startInstance_ = SDL_GetTicks();
 
 }
 
@@ -112,9 +112,10 @@ void ShipState::update()
 {
 	PlayState::update();
 
-	if (!songActive && pirateSingers_ <= SDL_GetTicks() - startInstance_) {
+	if (!songActive) {
+		cout << "Waves" << endl;
 		app_->getAudioManager()->playChannel(Resources::Waves, -1, 5);
-		app_->getAudioManager()->setChannelVolume(5, 5);
+		app_->getAudioManager()->setChannelVolume(10, 5);
 
 		songActive = true;
 	}

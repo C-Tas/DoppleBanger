@@ -274,7 +274,7 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	//{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
 
 	//Ship
-	{ Waves ,"../Sources/assets/efectos_sonido/ship/waves.wav" },
+	{ Waves ,"../Sources/assets/efectos_sonido/background/shipMusic.wav" },
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 
 	//Calabaza

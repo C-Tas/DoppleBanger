@@ -198,7 +198,6 @@ bool Player::update()
 		dead_ = true;
 		return true;
 	}
-
 	return false;
 }
 

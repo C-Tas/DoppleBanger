@@ -27,7 +27,7 @@ void PauseState::goMainMenuState(Application* app) {
 /// es que se controlen en los sitios en los que se efect�an. En caso de que la m�sica vaya a sonar por canales habr� que hacer los respectivos cambios.
 ///</summary>
 void PauseState::muteGame(Application* app) {
-	if (app->getMute()) app->getAudioManager()->setMusicVolume(5); //Reanuda la m�sica
+	if (app->getMute()) app->getAudioManager()->setMusicVolume(6); //Reanuda la música
 	else app->getAudioManager()->setMusicVolume(0); //Pausa la m�sica
 
 	app->setMute(); //Cambia el booleano que controla el mute

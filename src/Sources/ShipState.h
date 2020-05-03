@@ -15,8 +15,6 @@ public:
 	void update();
 
 private:
-	//Tiempo para que canten los piratas
-	Uint32 pirateSingers_ = 18000;
 	Uint32 startInstance_ = 0;
 	bool songActive = false;
 
