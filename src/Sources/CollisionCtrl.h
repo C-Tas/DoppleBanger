@@ -67,6 +67,8 @@ public:
 	void removeEnemyBullet(Bullet* bullet) { enemyBulletsToErase_.push_back(bullet); };
 	///<summary>Quita un trigger de la lista</summary>
 	void removeTrigger(Trigger* trigger) { triggersToErase_.push_back(trigger); };
+	///<summary>Quita un nuevo colliders</summary>
+	void removeCollider(Collider* collider) { collidersToErase_.push_back(collider); };
 
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
 	void clearList() {
@@ -100,6 +102,8 @@ public:
 	void addEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); };
 	///<summary>A�ade un nuevo trigger</summary>
 	void addTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
+	///<summary>A�ade un nuevo colliders</summary>
+	void addCollider(Collider* collider) { colliders_.push_back(collider); };
 
 
 	//Barco
@@ -143,12 +147,14 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<PlayerBullet*> playerBullets_;
 	list<Bullet*> enemyBullets_;
 	list<Trigger*> triggers_;
+	list<Collider*> colliders_;
 
 	list<Enemy*> enemiesToErase_;
 	list<Chest*> chestsToErase_;
 	list<PlayerBullet*> playerBulletsToErase_;
 	list<Bullet*> enemyBulletsToErase_;
 	list<Trigger*> triggersToErase_;
+	list<Collider*> collidersToErase_;
 
 	//Barco
 	bool onShip = true;		//Para mandar si estamos en el barco o en una isla

@@ -1,6 +1,7 @@
 #include "Kraken.h"
 #include "CollisionCtrl.h"
 #include "PlayState.h"
+#include "Ink.h"
 
 Kraken::~Kraken()
 {
@@ -11,12 +12,42 @@ bool Kraken::update() {
 	if (currEnemy_ == nullptr)
 		currEnemy_ = static_cast<Draw*>(GameManager::instance()->getPlayer());
 
-	if ((SDL_GetTicks() - lastAttack_) / 1000 > 5)
+
+
+	if ((SDL_GetTicks() - lastAttack_) / 1000 > MELEE_RATE)
 	{
-		//slam();
-		sweep();
+		int probSwim, probInk, probSweep, probSlam;
+		if ((currEnemy_->getPos() - getCenter()).magnitude() < 1.5 * scale_.getX())
+		{
+			//Frecuencias acumuladas de los ataques
+			//Probabilidad acumulada de slam es siempre 100 por que es el ultimo
+			probSwim = 10;
+			probInk = 30;
+			probSweep = 60;
+		}
+		else
+		{
+			probSwim = 50;
+			probInk = 80;
+			probSweep = 90;
+		}
+
+		int attack = rand() % 100;
+		if (attack < probSwim)
+			swimInit();
+		else if (attack < probInk)
+			ink();
+		else if (attack < probSweep)
+			sweep();
+		else
+			slam();
+
 		lastAttack_ = SDL_GetTicks();
 	}
+
+	if (currState_ == STATE::SWIMMING && (SDL_GetTicks() - swimTime_) / 1000 > SWIM_DURATION)
+		swimEnd();
+
 	//Si ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendr�a que hacer la animaci�n de muerte?
@@ -59,6 +90,7 @@ void Kraken::initObject()
 	CollisionCtrl::instance()->addEnemy(this);
 	lastAttack_ = SDL_GetTicks();
 	initAnims();
+	swimInit();
 }
 
 void Kraken::slam()
@@ -114,6 +146,53 @@ void Kraken::sweep()
 	Tentacle* tentacle = new Tentacle(app_, this, tentPos, tentScale, (180 / M_PI) * angle, ATTACKS::SWEEP);
 	tentacles_.push_back(tentacle);
 	static_cast<PlayState*>(app_->getGameStateMachine()->getState())->addEnemy(tentacle);
+}
+
+void Kraken::swimInit()
+{
+	currState_ = STATE::SWIMMING;
+	//Empieza animación (cambiar el valor de swimTime)
+
+	swimTime_ = SDL_GetTicks(); //Esto se tendría que hacer al acabar la animación
+}
+
+void Kraken::swimEnd()
+{
+	currState_ = STATE::IDLE;
+	//Empieza animación
+
+	//Se encuentra y guarda el índice de la posición más cercana al jugador y su distancia
+	Vector2D closest = Vector2D(-1, -1);
+	Player* player = static_cast<Player*>(GameManager::instance()->getPlayer());
+	for (int i = 0; i < NUM_KRAKEN_SPOTS; i++)
+	{
+		double dist = Vector2D(player->getCenter().getX() - krakenSpots_[i].getX(), player->getCenter().getY() - krakenSpots_[i].getY()).magnitude();
+		if (closest.getX() < 0 || dist < closest.getY())
+			closest.setVec(Vector2D(i, dist));
+	}
+	pos_.setX(krakenSpots_[(int)closest.getX()].getX() - (scale_.getX() / 2));
+	pos_.setY(krakenSpots_[(int)closest.getX()].getY() - (scale_.getY() / 2));
+}
+
+void Kraken::ink()
+{
+	Vector2D pos;
+	Vector2D scale = Vector2D(scale_.getX() / 5, scale_.getY() / 5);
+	int numShots = AVERAGE_INK_SHOTS + ((rand() % NORMAL_DESVIATION * 2 + 1) - NORMAL_DESVIATION);
+	for (int i = 0; i < numShots; i++)
+	{
+		//El punto sale aleatoriamente entre dos radios, scaleX y 2 scaleX
+		int radius = rand() % (int)(scale_.getX()) + scale_.getX();
+		int angle = rand();
+		pos.setX(radius * cos(angle) + getCenter().getX());
+		pos.setY(radius * sin(angle) + getCenter().getY());
+
+		Ink* ink = new Ink(app_, this, pos, scale);
+		app_->getGameStateMachine()->getState()->addRenderUpdateLists(ink);
+	}
+
+	Ink* ink = new Ink(app_, this, { 1148, 1800 }, scale);
+	app_->getGameStateMachine()->getState()->addRenderUpdateLists(ink);
 }
 
 void Kraken::tentDeath(Tentacle* obj)

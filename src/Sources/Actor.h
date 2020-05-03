@@ -11,7 +11,8 @@ enum class STATE
 	DYING,
 	FOLLOWING,
 	PATROLLING,
-	SELFDESTRUCT
+	SELFDESTRUCT,
+	SWIMMING
 };
 
 //Enumerado para representar la dirección a la que mira una entidad

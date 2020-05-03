@@ -20,37 +20,49 @@ public:
 	void tentDeath(Tentacle* obj);
 	virtual void initialStats() {};
 	virtual void lostAggro();
-private:
 
+private:
 	int lastAttack_ = 0;
+	int swimTime_ = 0;
+
 	//Lista con los tent�culos invocados
 	list<Tentacle*> tentacles_;
+
 	//Posiciones en las que puede aparecer el kraken
-	Point2D krakenSpots_[6]
+	static const int NUM_KRAKEN_SPOTS = 6;
+	Point2D krakenSpots_[NUM_KRAKEN_SPOTS]
 	{
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
-		{0, 0},
+		{1148, 2063},
+		{1454, 2025},
+		{994, 1553},
+		{1398, 1375},
+		{1456, 1572},
+		{1363, 1138},
 	};
 
 	//Diferentes animaciones del kraken
-	Anim idleAnim_ = { 0,0,0,0 ,"" };
-	Anim inkAnim_ = { 0,0,0,0,"" };
-	Anim diveAnim_ = { 0,0,0,0 ,"" };
-	Anim exitAnim_ = { 0,0,0,0,"" };
+	Anim idleAnim_ = { 0,0,0,0,false };
+	Anim inkAnim_ = { 0,0,0,0,false };
+	Anim diveAnim_ = { 0,0,0,0,false };
+	Anim exitAnim_ = { 0,0,0,0,false };
 
 
 	//Inicializa las animaciones
 	void initAnims();
 	void slam();
 	void sweep();
+	void swimInit(); //Empieza la animación de sumergirse y calcula a donde nadar
+	void swimEnd(); //Se mueve a la posición calculada y empieza la animacion de emerger
+	void ink();
 
 	//Constantes para crear las diferentes animaciones 
-	//(los valores puestos no son los correctos, a falta de hacer la animaci�n del mono)
+	//(los valores puestos no son los correctos, a falta de hacer la animaci�n del kraken)
 #pragma region Constantes
+	const int ATTACK_RATE = 5;
+	//Tiempo desde que se sumerge hasta que emerge
+	const double SWIM_DURATION = 1;
+	const int AVERAGE_INK_SHOTS = 7;
+	const int NORMAL_DESVIATION = 2;
 	//Idle
 	const int NUM_FRAMES_IDLE = 0;
 	const uint W_FRAME_IDLE = 0;
@@ -80,12 +92,12 @@ private:
 	const double MANA_REG = 0;
 	const double ARMOR = 10;
 	const double MELEE_DMG = 50;
-	const double DIST_DMG = 0;
+	const double DIST_DMG = 50;
 	const double CRIT = 0;
 	const double MELEE_RANGE = 0;
 	const double DIST_RANGE = 0;
 	const double MOVE_SPEED = 0;
-	const double MELEE_RATE = 0;
-	const double DIST_RATE = 0;
+	const double MELEE_RATE = 5;
+	const double DIST_RATE = 5;
 #pragma endregion
 };

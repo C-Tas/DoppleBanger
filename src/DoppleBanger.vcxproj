@@ -59,6 +59,7 @@
     <ClCompile Include="Sources\Gun.cpp" />
     <ClCompile Include="Sources\HandleEvents.cpp" />
     <ClCompile Include="Sources\HUD.cpp" />
+    <ClCompile Include="Sources\Ink.cpp" />
     <ClCompile Include="Sources\interactuable.cpp" />
     <ClCompile Include="Sources\Inventory.cpp" />
     <ClCompile Include="Sources\InventoryButton.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Sources\Gloves.h" />
     <ClInclude Include="Sources\Gun.h" />
     <ClInclude Include="Sources\HandleEvents.h" />
+    <ClInclude Include="Sources\Ink.h" />
     <ClInclude Include="Sources\Kraken.h" />
     <ClInclude Include="Sources\Magordito.h" />
     <ClInclude Include="Sources\HUD.h" />

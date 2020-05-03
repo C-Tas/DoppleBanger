@@ -156,6 +156,14 @@ void CollisionCtrl::islandCollisions() {
 			trigg->onOverlap();
 		}
 	}*/
+
+	//Colisi�n colliders con jugador
+	for (auto collider : colliders_) {
+		if (Collisions::collides(collider->getPos(), collider->getScaleX(), collider->getScaleY(),
+			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+			collider->onCollider();
+		}
+	}
 }
 
 void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir la clase ShipObject

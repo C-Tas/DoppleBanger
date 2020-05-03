@@ -99,6 +99,7 @@
     <ClCompile Include="tmxLite\pugixml.cpp" />
     <ClCompile Include="tmxLite\TileLayer.cpp" />
     <ClCompile Include="tmxLite\Tileset.cpp" />
+    <ClCompile Include="Sources\Ink.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -207,5 +208,6 @@
     <ClInclude Include="tmxLite\TileLayer.hpp" />
     <ClInclude Include="tmxLite\Tileset.hpp" />
     <ClInclude Include="tmxLite\Types.hpp" />
+    <ClInclude Include="Sources\Ink.h" />
   </ItemGroup>
 </Project>
