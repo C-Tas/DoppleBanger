@@ -20,7 +20,7 @@ unique_ptr<GameManager> GameManager::instance_;
 GameManager::GameManager() {
 	unlockedIslands_ = Island::Caribbean;
 	for (int i = 0; i < (int)missions::Size; i++) {
-		missionsComplete[i] = false;
+		missionsComplete_[i] = false;
 	}
 }
 #pragma region Callbacks Guardar/Cargar
@@ -90,7 +90,7 @@ void GameManager::saveJNUMBER(jute::jValue& mainJson)
 	aux.set_string(to_string(inventoryGold_));
 	mainJson.add_property("currGold", aux);
 	//Oro del alijo
-	aux.set_string(to_string(stashGold));
+	aux.set_string(to_string(stashGold_));
 	mainJson.add_property("stashGold", aux);
 	//Puntos de hazaña actuales
 	aux.set_string(to_string(achievementPoints_));
@@ -109,8 +109,8 @@ void GameManager::saveMissions(jute::jValue& mainJson)
 	jValue questStarted(jType::JARRAY);
 	jValue aux(jType::JBOOLEAN);
 	//Misiones empezadas
-	for (int i = 0; i < missionsStarted.size(); i++) {
-		switch (missionsStarted[i])
+	for (int i = 0; i < missionsStarted_.size(); i++) {
+		switch (missionsStarted_[i])
 		{
 		case true:
 			aux.set_string("true");
@@ -122,8 +122,8 @@ void GameManager::saveMissions(jute::jValue& mainJson)
 	mainJson.add_property("questStarted", questStarted);
 	////Misiones completadas
 	jValue questFinished(jType::JARRAY);
-	for (int i = 0; i < missionsComplete.size(); i++) {
-		switch (missionsComplete[i])
+	for (int i = 0; i < missionsComplete_.size(); i++) {
+		switch (missionsComplete_[i])
 		{
 		case true:
 			aux.set_string("true");
@@ -332,7 +332,7 @@ void GameManager::loadJNUMBER(jute::jValue& mainJson){
 	currIsland_ = (Island)mainJson["currIsland"].as_int();
 	unlockedIslands_ = (Island)mainJson["unlockedIsland"].as_int();
 	inventoryGold_ = mainJson["currGold"].as_int();
-	stashGold = mainJson["stashGold"].as_int();
+	stashGold_ = mainJson["stashGold"].as_int();
 	achievementPoints_ = mainJson["skillPoints"].as_int();
 	precisionPoints_ = mainJson["precision"].as_int();
 	meleePoints_ = mainJson["melee"].as_int();
@@ -340,11 +340,11 @@ void GameManager::loadJNUMBER(jute::jValue& mainJson){
 }
 
 void GameManager::loadMissions(jute::jValue& mainJson){
-	for (int i = 0; i < missionsStarted.size(); i++) {
-		missionsStarted[i] = mainJson["questStarted"][i].as_bool();
+	for (int i = 0; i < missionsStarted_.size(); i++) {
+		missionsStarted_[i] = mainJson["questStarted"][i].as_bool();
 	}
-	for (int i = 0; i < missionsComplete.size(); i++) {
-		missionsComplete[i] = mainJson["questFinished"][i].as_bool();
+	for (int i = 0; i < missionsComplete_.size(); i++) {
+		missionsComplete_[i] = mainJson["questFinished"][i].as_bool();
 	}
 }
 
@@ -354,32 +354,26 @@ void GameManager::loadEquipment(jute::jValue& mainJson){
 		if (mainJson["objects"][i].as_string() == "Health") {
 			currEquip_.potions_[i] = new usable(app_, potionType::Health);
 			objectsEquipped_.at(i) = ObjectName::Health;
-			hud_->updateKey(i + (int)Key::One);
 		}
 		else if (mainJson["objects"][i].as_string() == "Mana") {
 			currEquip_.potions_[i] = new usable(app_, potionType::Mana);
 			objectsEquipped_.at(i) = ObjectName::Mana;
-			hud_->updateKey(i + (int)Key::One);
 		}
 		else if (mainJson["objects"][i].as_string() == "Speed") {
 			currEquip_.potions_[i] = new usable(app_, potionType::Speed);
 			objectsEquipped_.at(i) = ObjectName::Speed;
-			hud_->updateKey(i + (int)Key::One);
 		}
 		else if (mainJson["objects"][i].as_string() == "Armor") {
 			currEquip_.potions_[i] = new usable(app_, potionType::Armor);
 			objectsEquipped_.at(i) = ObjectName::Armor;
-			hud_->updateKey(i + (int)Key::One);
 		}
 		else if (mainJson["objects"][i].as_string() == "Dmg") {
 			currEquip_.potions_[i] = new usable(app_, potionType::Damage);
 			objectsEquipped_.at(i) = ObjectName::Damage;
-			hud_->updateKey(i + (int)Key::One);
 		}
 		else if (mainJson["objects"][i].as_string() == "Crit") {
 			currEquip_.potions_[i] = new usable(app_, potionType::Crit);
 			objectsEquipped_.at(i) = ObjectName::Crit;
-			hud_->updateKey(i + (int)Key::One);
 		}
 	}
 	//Se comprueba que no haya equipo ya definido (el equipamiento inicial)
@@ -600,16 +594,16 @@ void GameManager::resetGameManager()
 	unlockedIslands_ = Island::Caribbean;
 	//Reset oro acumulado
 	inventoryGold_ = 0;
-	stashGold = 0;
+	stashGold_ = 0;
 	//Reset puntos de hazaña
 	achievementPoints_ = 0;
 	precisionPoints_ = 0;
 	meleePoints_ = 0;
 	clonPoints_ = 0;
 	//Reset misiones
-	for (int i = 0; i < missionsStarted.size(); i++) {
-		missionsStarted[i] = false;
-		missionsComplete[i] = false;
+	for (int i = 0; i < missionsStarted_.size(); i++) {
+		missionsStarted_[i] = false;
+		missionsComplete_[i] = false;
 	}
 	//Reset habildades
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
@@ -687,7 +681,7 @@ void GameManager::setSkillEquiped(SkillName newSkill, Key key)
 
 void GameManager::setObjectEquipped(ObjectName newObject, Key key)
 {
-	objectsEquipped[(int)key - (int)Key::One] = newObject;
+	objectsEquipped_[(int)key - (int)Key::One] = newObject;
 	if (!onShip_) hud_->updateKey((int)key);
 }
 

@@ -20,7 +20,6 @@
 #include "Boots.h"
 #include "Sword.h"
 #include "Gun.h"
-#include "Blunder.h"
 #include "Blunderbuss.h"
 
 void Player::initObject()
@@ -264,7 +263,7 @@ void Player::initMelee()
 {
 	auto choice = app_->getRandom()->nextInt(Resources::Attack1, Resources::Attack6);
 	app_->getAudioManager()->playChannel(choice, 0, 1);
-	auto melee = app_->getRandom()->nextInt(Resources::Sword1, Resources::Sword6);
+	auto melee = app_->getRandom()->nextInt(Resources::SwordSound1, Resources::SwordSound6);
 	app_->getAudioManager()->playChannel(melee, 0, 3);
 	currState_ = STATE::ATTACKING;	//Cambio de estado
 	attacked_ = false;	//Aún no se ha atacado
@@ -400,9 +399,10 @@ void Player::shoot(Vector2D dir)
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 	shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-	if (currFireArm_ == FIREARM::PISTOL) {
+	equipType auxGunType = gun_->getEquipType();
+	if (auxGunType == equipType::PistolI || auxGunType == equipType::PistolII) {
 		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir,
-			currStats_.distDmg_, currStats_.distRange_, static_cast<Gun*>(equip_.fireGun_)->getBulletSpeed());
+			currStats_.distDmg_, gun_->getDistRange(), gun_->getBulletSpeed());
 		//Activa perforación en la bala
 		if (perforate_) {
 			bullet->setPerforate(perforate_);
@@ -416,9 +416,9 @@ void Player::shoot(Vector2D dir)
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addPlayerBullet(bullet);
 	}
-	else if (currFireArm_ == FIREARM::BLUNDERBUSS) {
+	else if (auxGunType == equipType::ShotgunI || auxGunType == equipType::ShotgunII) {
 		Blunderbuss* blunderbuss = new Blunderbuss(app_, app_->getTextureManager()->getTexture(Resources::MonkeyFront), shootPos, dir,
-			currStats_.distDmg_, currStats_.distRange_, static_cast<Blunder*>(equip_.fireGun_)->getBulletSpeed());
+			currStats_.distDmg_, gun_->getDistRange(), gun_->getBulletSpeed());
 		if (perforate_) {
 			blunderbuss->activatePerforate();
 			perforate_ = false;
@@ -562,39 +562,21 @@ void Player::desactiveBuffPotion(usable* potion, int timerPos){
 	}
 }
 
-void Player::changeFireArmStatus()
+void Player::changeDistWeaponStats(Gun* gun)
 {
-	switch (equip_.fireGun_->getType())
-	{
-	case equipType::Pistol_:
-		currFireArm_ = FIREARM::PISTOL;
-		break;
-	case equipType::Shotgun_:
-		currFireArm_ = FIREARM::SHOTGUN;
-		break;
-	case equipType::Blunderbuss_:
-		currFireArm_ = FIREARM::BLUNDERBUSS;
-		break;
-	default:
-		break;
-	}
-}
-
-void Player::changeDistWeaponStats(Equipment* newWeapon)
-{
-	if (equip_.fireGun_ != nullptr) {
+	if (gun_ != nullptr) {
 		//se quitan los stats del equipo anterior
-		currStats_.crit_ -= equip_.fireGun_->getCrit();
-		currStats_.distDmg_ -= equip_.fireGun_->getDistDmg();
-		currStats_.distRange_ -= equip_.fireGun_->getDistRange();
-		currStats_.distDmg_ -= equip_.fireGun_->getDistDmg();
+		currStats_.crit_ -= gun_->getCrit();
+		currStats_.distDmg_ -= gun_->getDistDmg();
+		currStats_.distRange_ -= gun_->getDistRange();
+		currStats_.distDmg_ -= gun_->getDistDmg();
 	}
 	//se agregan los stats del equipo nuevo
-	currStats_.crit_ += newWeapon->getCrit();
-	currStats_.distDmg_ += newWeapon->getDistDmg();
-	currStats_.distRange_ += newWeapon->getDistRange();
-	currStats_.distDmg_ += newWeapon->getDistDmg();
-	equip_.fireGun_ = newWeapon;
+	currStats_.crit_ += gun->getCrit();
+	currStats_.distDmg_ += gun->getDistDmg();
+	currStats_.distRange_ += gun->getDistRange();
+	currStats_.distDmg_ += gun->getDistDmg();
+	gun_ = gun;
 }
 
 void Player::createClon()

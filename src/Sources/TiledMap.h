@@ -46,10 +46,6 @@ public:
 	
 	///<summary>Destructora del mapa, borra todos los obstaculos creados</summary>
 	~TiledMap();
-	
-	///<summary>M�todo complementario a createObjects que, seg�n el objectType(nombre de la capa)
-	///que le pases te crea un objeto de dicho tipo</summary>
-	void createElement(Vector2D pos, string objectType);
 
 	///<summary>M�todo para pintar el mapa</summary>
 	const void draw();

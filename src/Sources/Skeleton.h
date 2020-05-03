@@ -53,8 +53,7 @@ protected:
 	void initAnims();
 	//Actualiza la actual animación
 	void updateAnim();
-	void initialStats() {};
+	void initialStats();
 
-	virtual void initialStats();
 };
 

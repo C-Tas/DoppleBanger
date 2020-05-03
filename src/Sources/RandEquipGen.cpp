@@ -1,7 +1,6 @@
 #include "RandEquipGen.h"
 #include "Application.h"
 #include "GameManager.h"
-#include "Blunder.h"
 
 #include "Armor.h"
 #include "Boots.h"
@@ -87,15 +86,6 @@ Equipment* RandEquipGen::genEquip(int type)
 		distRate = rn_->nextInt(1 * area, 2 * area);
 		price = rn_->nextInt(4 * area, 6 * area);
 		obj = new Gun(app_, price, ad, distRate, (equipType)type);
-		break;
-	case Blunderbuss_:
-		ad = rn_->nextInt(3 * area, 13 * area);
-		distRate = rn_->nextInt(4 * area, 6 * area);
-		price = rn_->nextInt(4 * area, 6 * area);
-		crit = rn_->nextInt(2 * area, 6 * area);
-		distRange = rn_->nextInt(1 * area, 2 * area);
-		distRange = distRange / 3;
-		obj = new Blunder(app_->getTextureManager()->getTexture(Resources::TextureId::Blunderbuss), "Trabuco", "Trabucón para el más perrón", price, ad, distRate, crit, distRange, type, BLUNDERBUSS_BULLET_SPEED);
 		break;
 	default:
 		return nullptr;

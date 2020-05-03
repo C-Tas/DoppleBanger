@@ -60,8 +60,9 @@ public:
 	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
 
 	#pragma region Getters
+		const bool getDead() { return dead_; };
 		const bool isEquipInit() { return initEquip_; };
-		const Clon* getClon() { return clon_; };
+		Clon* getClon() { return clon_; };
 		const int getLiberation() { return liberation_; };
 		const double getMaxHealth() { return maxHealth_; }; //Devuelve la vida maxima del player
 		const double getMaxMana() { return maxMana_; };		//Devuelve el mana maximo del player
@@ -95,17 +96,16 @@ public:
 		void equip(Gloves* gloves) { gloves_ = gloves; gm_->setGloves(gloves); };
 		void equip(Boots* boots) { boots_ = boots; gm_->setBoots(boots);};
 		void equip(Sword* sword) { sword_ = sword; gm_->setSword(sword);};
-		void equip(Gun* gun) { gun_ = gun; gm_->setGun(gun);};
+		void equip(Gun* gun) { 
+			changeDistWeaponStats(gun);
+			gm_->setGun(gun);
+		}
 		void addMaxHealth(double addition) { maxHealth_ = addition; };
 		void setClonCoolDown() { cdSkills[3] = true; }
 		//Aumenta la cadencia de tiro del player
 		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 		//Activa el ataque potenciado
 		void activateEmpowered() { empoweredAct_ = true; };
-	void equip(Equipment* newWeapon) { 
-		changeDistWeaponStats(newWeapon);
-		changeFireArmStatus(); 
-	}
 
 		//Carga el equipamiento del player
 		void load();
@@ -132,7 +132,6 @@ public:
 			skills_[key] = skill; }
 		vector <Skill*>& getSkillsArray() { return skills_; }
 	#pragma endregion
-	void setClonCoolDown() { cdSkills[3] = true; }
 
 private:
 	bool dead_ = false;
@@ -147,15 +146,12 @@ private:
 	Clon* clon_ = nullptr;
 
 	Vector2D previousPos_;
-	FIREARM currFireArm_;
 	//Habilidades
 	vector<Skill*> skills_ = { nullptr, nullptr, nullptr, nullptr};
 	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
 
-	//Cambia el tipo de arma actual equipada
-	void changeFireArmStatus();
 	//cambia los stats de un arma
-	void changeDistWeaponStats(Equipment* newWeapon);
+	void changeDistWeaponStats(Gun* newWeapon);
 
 	//Objetos
 	//<Speed, Damage, Armor, Crit>			
@@ -276,7 +272,7 @@ private:
 	const double DIST_DAMAGE = 1000;	//Daño a distancia y de las habilidades
 	const double CRIT = 0;				//Crítico
 	const double MELEE_RANGE = 20;		//Rango del ataque a melee
-	const double DIST_RANGE = 0;		//Rango del ataque a distancia
+	const double DIST_RANGE = 2;		//Rango del ataque a distancia
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
 	const double MELEE_RATE = 1;		//Velocidad del ataque a melee en segundos
 	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos

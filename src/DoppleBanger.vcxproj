@@ -28,7 +28,6 @@
     <ClCompile Include="Sources\AltarSkeleton.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Armor.cpp" />
-    <ClCompile Include="Sources\Blunder.cpp" />
     <ClCompile Include="Sources\Blunderbuss.cpp" />
     <ClCompile Include="Sources\Boots.cpp" />
     <ClCompile Include="Sources\AudioManager.cpp" />
@@ -62,7 +61,6 @@
     <ClCompile Include="Sources\HandleEvents.cpp" />
     <ClCompile Include="Sources\HUD.cpp" />
     <ClCompile Include="Sources\Ink.cpp" />
-    <ClCompile Include="Sources\interactuable.cpp" />
     <ClCompile Include="Sources\Inventory.cpp" />
     <ClCompile Include="Sources\InventoryButton.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
@@ -130,7 +128,6 @@
     <ClInclude Include="Sources\AltarSkeleton.h" />
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Armor.h" />
-    <ClInclude Include="Sources\Blunder.h" />
     <ClInclude Include="Sources\Blunderbuss.h" />
     <ClInclude Include="Sources\Boots.h" />
     <ClInclude Include="Sources\BoneBullet.h" />

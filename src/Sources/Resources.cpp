@@ -84,7 +84,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PauseBackground, "../Sources/assets/interfaces/pauseFondo.png" },
 	{ SaveLoadBackground, "../Sources/assets/interfaces/saveLoadBg.png" },
 	{ Controls, "../Sources/assets/interfaces/controles.png"},
-	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
+	{ InventoryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
 	{ SkillMenu, "../Sources/assets/interfaces/HabilidadesFondo.png" },
 	{ StashMenu, "../Sources/assets/interfaces/AlijoFondo.png"},
 	{ ShopMenu, "../Sources/assets/interfaces/TiendaFondo.png"},
@@ -175,9 +175,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
     { ClonIdleUpAnim, "../Sources/assets/clon/idle/ClonBackIdle.png" },
     { ClonIdleDownAnim, "../Sources/assets/clon/idle/ClonFrontIdle.png" },
 	{ ClonMeleeRightAnim, "../Sources/assets/clon/melee/ClonRightMelee.png" },
-	{ClonMeleeLeftAnim, "../Sources/assets/clon/melee/ClonLeftMelee.png" },
-	{ClonMeleeUpAnim, "../Sources/assets/clon/melee/ClonBackMelee.png" },
-	{ClonMeleeDownAnim, "../Sources/assets/clon/melee/ClonFrontMelee.png" },
+	{ ClonMeleeLeftAnim, "../Sources/assets/clon/melee/ClonLeftMelee.png" },
+	{ ClonMeleeUpAnim, "../Sources/assets/clon/melee/ClonBackMelee.png" },
+	{ ClonMeleeDownAnim, "../Sources/assets/clon/melee/ClonFrontMelee.png" },
 	//Pumpkin
 		//Idle
 	{ PumpkinIdleRightAnim, "../Sources/assets/enemigos/pumpkin/Idle/calabazaIdleDer.png" },
@@ -226,7 +226,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 
 	//Equipables
 	{ Armor1,"../Sources/assets/Equipamiento/armadura1.png" },
-	{ Armor1,"../Sources/assets/Equipamiento/armadura2.png" },
+	{ Armor2,"../Sources/assets/Equipamiento/armadura2.png" },
 	{ Gloves1, "../Sources/assets/Equipamiento/guantes1.png"},
 	{ Gloves2, "../Sources/assets/Equipamiento/guantes2.png"},
 	{ Boots1, "../Sources/assets/Equipamiento/botas.png"},
@@ -279,15 +279,14 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	{ WhirlwindSkill   ,"../Sources/assets/efectos_sonido/player/whirlwindSkill.wav"},
 	{ Pistol   ,"../Sources/assets/efectos_sonido/player/pistol.wav"},
 	{ Trabuco   ,"../Sources/assets/efectos_sonido/player/trabuco.wav"},
-	{ Sword1   ,"../Sources/assets/efectos_sonido/player/sword1.flac"},
-	{ Sword2  ,"../Sources/assets/efectos_sonido/player/sword2.flac"},
-	{ Sword3  ,"../Sources/assets/efectos_sonido/player/sword3.wav"},
-	{ Sword4  ,"../Sources/assets/efectos_sonido/player/sword4.aiff"},
-	{ Sword5  ,"../Sources/assets/efectos_sonido/player/sword5.wav"},
-	{ Sword6  ,"../Sources/assets/efectos_sonido/player/sword6.wav"},
+	{ SwordSound1   ,"../Sources/assets/efectos_sonido/player/sword1.flac"},
+	{ SwordSound2  ,"../Sources/assets/efectos_sonido/player/sword2.flac"},
+	{ SwordSound3  ,"../Sources/assets/efectos_sonido/player/sword3.wav"},
+	{ SwordSound4  ,"../Sources/assets/efectos_sonido/player/sword4.aiff"},
+	{ SwordSound5  ,"../Sources/assets/efectos_sonido/player/sword5.wav"},
+	{ SwordSound6  ,"../Sources/assets/efectos_sonido/player/sword6.wav"},
 	{ MeleeCrit  ,"../Sources/assets/efectos_sonido/player/meleeCrit.wav"},
 	{ DistCrit  ,"../Sources/assets/efectos_sonido/player/distCrit.wav"},
-
 
 	//Clon
 	//{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},

@@ -7,7 +7,6 @@
 #include "usable.h"
 #include "Player.h"
 #include "SkillState.h"
-#include "Blunder.h"
 
 using namespace std;
 
@@ -39,7 +38,7 @@ void Inventory::initState(){
 	//Fondo
 	SDL_ShowCursor(SDL_ENABLE);
 
-	background_ = app_->getTextureManager()->getTexture(Resources::InventaryMenu);
+	background_ = app_->getTextureManager()->getTexture(Resources::InventoryMenu);
 	Vector2D auxpos = Vector2D{ 12 * (double)(app_->getWindowWidth() / 14), 14 * (double)(app_->getWindowHeight() / 17) };
 	Vector2D auxSize = Vector2D{ (double)(app_->getWindowWidth() / 27),  (double)(app_->getWindowWidth() / 27) };
 	deleteButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::DeleteButton), auxpos, auxSize, callDeleteObject);

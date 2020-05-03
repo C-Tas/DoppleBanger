@@ -8,7 +8,7 @@ class Enemy;
 class Bullet : public Dynamic
 {
 public:
-	Bullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, int damage,
+	Bullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, double damage,
 		double lifeSpan = 2, double speed = 1000, Vector2D scale = { 20, 20 }, int col = 1) :
 		Dynamic(app, pos, scale), damage_(damage), lifeSpan_(lifeSpan), collisionsBeforeDestroy_(col) {
 		texture_ = texture;
@@ -27,7 +27,7 @@ public:
 			};
 
 	}
-	const int getDamage() { return damage_; }
+	const double getDamage() { return damage_; }
 	void collisionDetected() { collisionsBeforeDestroy_--; }
 	int numCollisions() { return collisionsBeforeDestroy_; }
 	void setDoDamage(bool dmg) { MakeDamage = dmg; }
@@ -39,7 +39,7 @@ protected:
 	double initTime_ = 0; //Ticks cuando se creo la bala
 	double currTime_ = 0; //Ticks en cada update
 	double speed_ = 0;
-	int Damage = 0;
+	double damage_ = 0;
 	bool enemyBullet_ = false;
 	bool deleting = false;
 	uint collisionsBeforeDestroy_ = 1;//Variable para aquellas balas que chac mas de una vez antes destruirse

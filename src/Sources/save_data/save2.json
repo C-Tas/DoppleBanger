@@ -7,8 +7,8 @@
   "precision": 999,
   "melee": 664,
   "clon": 332,
-  "questStarted": [false, false],
-  "questFinished": [false, false],
+  "questStarted": [false, false, false, false],
+  "questFinished": [false, false, false, false],
   "unlockedSkills": [true, true, false, true, false, false, true, false, false, false],
   "skills": ["null", "Explosion", "null"],
   "objects": ["Speed", "Dmg"],
@@ -33,7 +33,7 @@
       "rate": 10.000000,
       "damage": 10.000000
     }, {
-      "name": 10,
+      "name": 12,
       "price": 10,
       "rate": 10.000000,
       "damage": 10.000000

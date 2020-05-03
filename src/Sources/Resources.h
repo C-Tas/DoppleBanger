@@ -88,7 +88,7 @@ public:
 
 		//Fondos
 		MenuBackground,
-		InventaryMenu,
+		InventoryMenu,
 		PauseBackground,
 		SaveLoadBackground,
 		StashMenu,//
@@ -260,7 +260,7 @@ public:
 		Gun1,
 		Gun2,
 		ShotGun1,
-		ShotGun2
+		ShotGun2,
 
 		//Tilesets de los mapas
 		Tileset1,
@@ -312,17 +312,17 @@ public:
 		WhirlwindSkill,
 		Pistol,
 		Trabuco,
-		Sword1 ,
-		Sword2 ,
-		Sword3 ,
-		Sword4 ,
-		Sword5 ,
-		Sword6,
+		SwordSound1,
+		SwordSound2,
+		SwordSound3,
+		SwordSound4,
+		SwordSound5,
+		SwordSound6,
 		MeleeCrit,
 		DistCrit,
 
 		//CLon
-		//Explosion,
+		Explosion,
 
 		//Ship
 		Waves,

@@ -51,7 +51,7 @@ enum class missions : int {
 	gallegaEnProblemas = 0,
 	papelesSiniestros,
 	masValePajaroEnMano,
-	arlongPark
+	arlongPark,
 	//En caso de tener misión para el loro añadirla tb (o si se añade el esqueleto)
 
 	//Para saber el tamaño
@@ -82,7 +82,7 @@ enum class SkillName : int {
 	LiberacionII,
 
 	//Enums auxiliares para las pasivas y para las habilidades que no están equipadas
-	Unequipped,
+	Unequipped
 };
 
 //Enum para identificar las teclas de las habilidades
@@ -123,7 +123,7 @@ private:
 	//Cantidad de dinero almacenada en el inventario
 	int inventoryGold_ = 0;
 	//Cantidad de dinero almacenada en el alijo
-	int stashGold = 0;
+	int stashGold_ = 0;
 	//Booleano que indica si estamos en el barco
 	bool onShip_ = true;
 	//Enum de la �ltima isla desbloqueada
@@ -145,9 +145,9 @@ private:
 	//Puntero a la lista de items de la tienda
 	list<InventoryButton*>* shop_ = new list<InventoryButton*>;
 	//Vector que representa las misiones secundarias completadas
-	vector<bool> missionsComplete = vector<bool>((int)missions::Size);
+	vector<bool> missionsComplete_ = vector<bool>((int)missions::Size);
 	//Vector que representa las misiones secundarias empezadas
-	vector<bool> missionsStarted = vector<bool>((int)missions::Size);
+	vector<bool> missionsStarted_ = vector<bool>((int)missions::Size);
 	//Vector de cooldowns de las habilidades equipadas
 	vector<bool> skillsCooldown_ = { false, false, false, false };
 	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
@@ -283,11 +283,11 @@ public:
 	//Devuelve el dinero del inventario
 	const int getInventoryGold() { return inventoryGold_; }
 	//Devuelve el dinero del alijo
-	const int getStashGold() { return stashGold; }
+	const int getStashGold() { return stashGold_; }
 	//Devuelve el tamaño de fuente según el tamaño de la ventana
 	const int getFontSize();
 	//Devuelve el total de misiones secundarias
-	const int getNumMission() { return NUM_MISION; };
+	const int getNumMission() { return (int)missions::Size; };
 	//Devuelve el numero de enemigos muertos en cada mision
 	const int getCounterEnemiesMission(missions tagMission) { return countEnemiesMission_.at((int)tagMission); };
 	//Devuelve el numero de enemigos que hay que matar en cada mision
@@ -320,7 +320,7 @@ public:
 	//Devuelve la tecla en la que está equipada la habilidad
 	const Key getEquippedSkillKey(SkillName skill);
 	//Devuelve el objeto equipado
-	const ObjectName getObjectEquipped(Key key) { return objectsEquipped[(int)key - (int)Key::One]; };
+	const ObjectName getObjectEquipped(Key key) { return objectsEquipped_[(int)key - (int)Key::One]; };
 	
 	//Devuelve la posici�n del player
 	const Point2D getPlayerPos();

@@ -34,9 +34,8 @@ public:
 	double getSpeed() { return modifiers_.moveSpeed_; }; // Devuelve el valor de Speed
 	double getDistRate() { return modifiers_.distRate_; }; // Devuelve el valor de DistRate
 	double getMeleeRate() { return modifiers_.meleeRate_; }; // Devuelve el valor de MeleeRate
-	double getDistDmg() { return modifiers_.distDmg_; }//Devuelve el valor del da�o a distancia de un arma
 	double getDistRange() { return modifiers_.distRange_; }//devuelve el rango del arma a distancia
-	inline equipType getType()const { return type_; };
+	inline equipType getEquipType()const { return type_; };
 #pragma endregion
 	virtual void equip(Player* player) = 0;
 	virtual void remove(Player* player) = 0;

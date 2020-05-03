@@ -11,6 +11,7 @@
 #include "Magordito.h"
 #include "Altar.h"
 #include "Skeleton.h"
+#include "Pumpkin.h"
 
 TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, int tileTilesetHeight, int tileTilesetWidth, int tileSize, 
 	Texture* tileset, int filsTileset, int colsTileset,  Vector2D iniPos,  const list<int>& idCollisionTiles, const list<int>& idWallTiles)
@@ -214,8 +215,7 @@ void TiledMap::createObjects(vector<tmx::Object> object_tiles,tmx::Vector2u map_
 	}
 }
 
-void TiledMap::createElement(Vector2D pos, string objectType)
-{
+void TiledMap::createElement(Vector2D pos, string objectType){
 	if (objectType == "Monkey") {
 		MonkeyCoco* monkey = new MonkeyCoco(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
 		state_->addEnemy(monkey);
