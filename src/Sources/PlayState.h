@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include <list>
 #include "TiledMap.h"
+#include "AStar.hpp"
 
 class CollisionCtrl;
 class HUD;
@@ -45,6 +46,8 @@ public:
 	///<summary>Comprueba colisiones con los enemigos y devuelve el primer enemigo en caso de haber colisión</summary>
 	Enemy* collidesWithEnemy(Point2D pos, Vector2D scale) {};
 
+	AStar::Generator getGenerator() { return generator_; };
+
 protected:
 	Point2D playerEntry_ = Vector2D(0, 0);
 	//Singleton de colisiones
@@ -60,6 +63,8 @@ protected:
 	Draw* mousePointer;
 	const int W_MOUSE_POINTER = 32;
 	const int H_MOUSE_POINTER = 32;
+
+	AStar::Generator generator_;
 
 	virtual void initState();
 	//Resetea la partida de acuerdo al GDD

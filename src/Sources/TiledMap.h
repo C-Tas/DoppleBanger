@@ -47,6 +47,10 @@ public:
 	
 	///<summary>Método para pintar el mapa</summary>
 	const void draw();
+
+	Vector2D TileToPos(Vector2D tile);
+	Vector2D PosToTile(Vector2D pos);
+
 private:
 	///<summary>Puntero a la aplicación (Para crear objetos de tipo Obstacle)</summary>
 	Application* app_ = nullptr;
@@ -99,6 +103,7 @@ private:
 	
 	///<summary>Método auxiliar que crea una layer de tiles isométricas (y las almacena para dibujarlas)</summary>
 	void createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
+	void createIsometricPathLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
 	///<summary>Método auxiliar que crea una layer de tiles órtogonales</summary>
 	void createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, tmx::Vector2u tilesize);
 	

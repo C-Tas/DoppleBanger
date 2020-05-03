@@ -141,6 +141,8 @@ void PlayState::initState()
 	mousePointer->setScale(Vector2D(W_MOUSE_POINTER, H_MOUSE_POINTER));
 
 	collisionCtrl_ = CollisionCtrl::instance();
+	generator_.setHeuristic(AStar::Heuristic::euclidean);
+	generator_.setDiagonalMovement(true);
 }
 
 void PlayState::resetGame()

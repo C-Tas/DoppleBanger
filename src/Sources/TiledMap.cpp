@@ -11,8 +11,8 @@
 #include "Magordito.h"
 #include "Pumpkin.h"
 
-TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, int tileTilesetHeight, int tileTilesetWidth, int tileSize, 
-	Texture* tileset, int filsTileset, int colsTileset,  Vector2D iniPos,  const list<int>& idCollisionTiles)
+TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, int tileTilesetHeight, int tileTilesetWidth, int tileSize,
+	Texture* tileset, int filsTileset, int colsTileset, Vector2D iniPos, const list<int>& idCollisionTiles)
 {
 	///Inicializaci�n del mapa
 	tmx::Map map_;
@@ -57,17 +57,29 @@ const void TiledMap::draw()
 {
 	///Con la informaci�n de cada tile, su posici�n en el mundo y la textura que va a usar, renderizamos todos
 	for (Tile ob : tilesToRender) {
-		tileset_.textureTileset_->render({ (int)(ob.worldPos_.getX()-Camera::instance()->getCamera().getX()), 
-			(int)(ob.worldPos_.getY()- Camera::instance()->getCamera().getY()),tileSize_, tileSize_ },
+		tileset_.textureTileset_->render({ (int)(ob.worldPos_.getX() - Camera::instance()->getCamera().getX()),
+			(int)(ob.worldPos_.getY() - Camera::instance()->getCamera().getY()),tileSize_, tileSize_ },
 			{ (int)ob.tilesetPos_.getX(), (int)ob.tilesetPos_.getY(), tileset_.tileWidth_, tileset_.tileHeight_ });
 	}
 }
 
+Vector2D TiledMap::TileToPos(Vector2D tile)
+{
+	Vector2D pos = Vector2D(iniPos_.getX() + ((double)(tileSize_ / 2) * tile.getX()) , (iniPos_.getY() - ((double)(tileSize_ / 4) * tile.getY())));
+	return pos;
+}
+
+Vector2D TiledMap::PosToTile(Vector2D pos)
+{
+	Vector2D tile = Vector2D((pos.getX() - iniPos_.getX()) / (-(double)(tileSize_ / 2)), (pos.getY() - iniPos_.getY()) / (+(double)(tileSize_ / 4)));
+	return tile;
+}
+
 void TiledMap::addIsometricObstacle(Tile tile)
 {
-	SDL_Rect collisionArea = { (int)tile.worldPos_.getX() + (tileSize_ / 3), (int)tile.worldPos_.getY() + (tileSize_ / 4), (tileSize_ ), (tileSize_ ) };
-	Obstacle* newObstacle = new Obstacle(app_, collisionArea, app_->getTextureManager()->getTexture(Resources::CollisionTile), Vector2D(tile.worldPos_.getX() , tile.worldPos_.getY() + (tileSize_ / 8))
-		, Vector2D(tileSize_, (double)(tileSize_/2) + (double)(tileSize_/8)));
+	SDL_Rect collisionArea = { (int)tile.worldPos_.getX() + (tileSize_ / 3), (int)tile.worldPos_.getY() + (tileSize_ / 4), (tileSize_), (tileSize_) };
+	Obstacle* newObstacle = new Obstacle(app_, collisionArea, app_->getTextureManager()->getTexture(Resources::CollisionTile), Vector2D(tile.worldPos_.getX(), tile.worldPos_.getY() + (tileSize_ / 8))
+		, Vector2D(tileSize_, (double)(tileSize_ / 2) + (double)(tileSize_ / 8)));
 	//Los a�adimos a esta lista para luego poder borrarlos desde el propio mapa
 	mapObstacles_.push_back(newObstacle);
 	CollisionCtrl::instance()->addObstacle(newObstacle);
@@ -119,7 +131,24 @@ void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles
 	}
 }
 
-void TiledMap::createObjects(vector<tmx::Object> object_tiles,tmx::Vector2u map_tilesize, string objectType)
+void TiledMap::createIsometricPathLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions)
+{
+	///Recorremos toda la matriz que contiene la informacion de la capa que acabamos de coger
+	for (unsigned int y = 0; y < map_dimensions.y; y++) {
+		for (unsigned int x = 0; x < map_dimensions.x; x++) {
+
+			int tileIndex = x + (y * map_dimensions.x);
+			int gid = layer_tiles[tileIndex].ID;
+
+			///Si el tile no es vac�o
+			if (gid == 0) {
+				state_->getGenerator().addCollision({ x , y });
+			}
+		}
+	}
+}
+
+void TiledMap::createObjects(vector<tmx::Object> object_tiles, tmx::Vector2u map_tilesize, string objectType)
 {
 	for (tmx::Object ob : object_tiles) {
 		tmx::Vector2f pos = ob.getPosition();
@@ -129,8 +158,8 @@ void TiledMap::createObjects(vector<tmx::Object> object_tiles,tmx::Vector2u map_
 		pos.y /= map_tilesize.y;
 
 		//Posici�n en la que deber�a empezar a dibujarse seg�n como estamos pintando el mapa
-		double auxY = (iniPos_.getY() + ((double)(tileSize_ / 4) * pos.y) + ((tileSize_/4)* (double)pos.x));
-		double auxX = (iniPos_.getX() - ((double)(tileSize_ / 2) * pos.y) + ((tileSize_/2)* (double)pos.x));
+		double auxY = (iniPos_.getY() + ((double)(tileSize_ / 4) * pos.y) + ((tileSize_ / 4) * (double)pos.x));
+		double auxX = (iniPos_.getX() - ((double)(tileSize_ / 2) * pos.y) + ((tileSize_ / 2) * (double)pos.x));
 
 		createElement(Vector2D(auxX, auxY), objectType);
 	}
@@ -141,6 +170,8 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 	if (objectType == "Monkey") {
 		MonkeyCoco* monkey = new MonkeyCoco(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
 		//state_->addRenderUpdateLists(monkey);
+		monkey->setTileSize(tileSize_);
+		monkey->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
 		state_->addEnemy(monkey);
 		CollisionCtrl::instance()->addEnemy(monkey);
 	}
@@ -158,6 +189,8 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		//A�adir lobo
 		//Falta a�adir lo de patrol pero no estoy segura de como funciona
 		Wolf* wolf = new Wolf(app_, pos, Vector2D(W_WOLF, H_WOLF));
+		wolf->setTileSize(tileSize_);
+		wolf->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
 		state_->addEnemy(wolf);
 		CollisionCtrl::instance()->addEnemy(wolf);
 	}
@@ -165,23 +198,30 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		//A�adir esqueleto
 		Skeleton* monkey = new Skeleton(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
 		//state_->addRenderUpdateLists(monkey);
+		monkey->setTileSize(tileSize_);
+		monkey->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
 		state_->addEnemy(monkey);
 		CollisionCtrl::instance()->addEnemy(monkey);
 	}
 	else if (objectType == "Pumpkin") {
-		Pumpkin* pumpkin = new Pumpkin(app_,pos,Vector2D(W_PUMPKIN,H_PUMPKIN));
+		Pumpkin* pumpkin = new Pumpkin(app_, pos, Vector2D(W_PUMPKIN, H_PUMPKIN));
+		pumpkin->setTileSize(tileSize_);
+		pumpkin->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
 		state_->addEnemy(pumpkin);
 		CollisionCtrl::instance()->addEnemy(pumpkin);
 	}
 	else if (objectType == "Kraken") {
-		Kraken* kraken = new Kraken(app_, pos, Vector2D(4*W_MONKEY, 4*H_MONKEY));
+		Kraken* kraken = new Kraken(app_, pos, Vector2D(4 * W_MONKEY, 4 * H_MONKEY));
+		kraken->setTileSize(tileSize_);
 		//state_->addRenderUpdateLists(monkey);
 		state_->addEnemy(kraken);
 		CollisionCtrl::instance()->addEnemy(kraken);
 	}
 	else if (objectType == "Magordito") {
 		//A�adir Magordito
-		Magordito* magordito = new Magordito(app_,pos,Vector2D(W_WOLF,H_WOLF));
+		Magordito* magordito = new Magordito(app_, pos, Vector2D(W_WOLF, H_WOLF));
+		magordito->setTileSize(tileSize_);
+		magordito->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
 		state_->addEnemy(magordito);
 		CollisionCtrl::instance()->addEnemy(magordito);
 	}
@@ -189,6 +229,8 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		//A�adir Pirata naufrago
 		//Falta a�adir lo de patrol pero no estoy segura de como funciona
 		EnemyPirate* pirate = new EnemyPirate(app_, pos, Vector2D(W_ENEMYPIRATE, H_ENEMYPIRATE));
+		pirate->setTileSize(tileSize_);
+		pirate->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
 		state_->addRenderUpdateLists(pirate);
 		CollisionCtrl::instance()->addEnemy(pirate);
 	}
@@ -196,8 +238,7 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		//A�adir Cleon
 	}
 	else if (objectType == "Chef") {
-		NPC* chef;
-		chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), pos, Vector2D(W_NPC_CHEF, H_NPC_CHEF), 2);
+		NPC* chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), pos, Vector2D(W_NPC_CHEF, H_NPC_CHEF), 2);
 		state_->addRenderUpdateLists(chef);
 		state_->addObject(chef);
 	}
@@ -208,7 +249,7 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		GameManager::instance()->setPlayer(player);
 		CollisionCtrl::instance()->setPlayer(player);
 	}
-	
+
 }
 
 void TiledMap::createIsometricMap(const tmx::Map& map_)
@@ -217,7 +258,7 @@ void TiledMap::createIsometricMap(const tmx::Map& map_)
 	tmx::Vector2u map_dimensions = map_.getTileCount();
 	//Tama�o de los tiles del mapa
 	tmx::Vector2u map_tilesize = map_.getTileSize();
-	
+
 	///Cogemos todas las layers del archivo
 	auto& map_layers = map_.getLayers();
 	///Las recorremos una a una
@@ -228,7 +269,10 @@ void TiledMap::createIsometricMap(const tmx::Map& map_)
 			auto* tile_layer = dynamic_cast<tmx::TileLayer*>(layer.get());
 			//Cogemos los tiles de la Layer
 			auto layer_tiles = tile_layer->getTiles();
-			createIsometricTileLayer(layer_tiles, map_dimensions);
+			if (layer->getName() == "pathfinding")
+				createIsometricPathLayer(layer_tiles, map_dimensions);
+			else 
+				createIsometricTileLayer(layer_tiles, map_dimensions);
 		}
 		//Capas con objetos
 		else if (layer->getType() == tmx::Layer::Type::Object) {
@@ -264,13 +308,13 @@ void TiledMap::createOrthogonalMap(const tmx::Map& map_)
 }
 
 
-void TiledMap::createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions,tmx::Vector2u tilesize)
+void TiledMap::createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, tmx::Vector2u tilesize)
 {
 	///Recorremos toda la matriz que contiene la informacion de la capa que acabamos de coger
 	for (unsigned int y = 0; y < map_dimensions.y; ++y) {
 
 		for (unsigned int x = 0; x < map_dimensions.x; ++x) {
-			
+
 			int tileIndex = x + (y * map_dimensions.x);
 			int gid = layer_tiles[tileIndex].ID;
 
@@ -278,13 +322,13 @@ void TiledMap::createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tile
 			if (gid != 0) {
 				Tile tile;
 				//Lo guardamos en la posici�n del mapa que corresponda
-				tile.worldPos_ = { iniPos_.getX() + ((double)tileSize_* (double)x),iniPos_.getY()+((double)tileSize_* (double)y)};
+				tile.worldPos_ = { iniPos_.getX() + ((double)tileSize_ * (double)x),iniPos_.getY() + ((double)tileSize_ * (double)y) };
 				Vector2D aux = { (double)((gid - 1) % tileset_.cols),(double)((gid - 1) / tileset_.cols) };
 				tile.tilesetPos_ = { aux.getX() * tileset_.tileWidth_, aux.getY() * tileset_.tileHeight_ };
 
 				//TEMPORAL, PARA QUE SE VEAN DONDE EST�N LAS COLISIONES
 				//tilesToRender.push_back(tile);
-				
+
 				//En las capas ortogonales solo vamos a pintar la imagen, asi que cualquier tile que no sea vacio
 				//es un tile de colision
 				addOrthogonalObstacle(tile);
