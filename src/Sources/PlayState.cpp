@@ -67,10 +67,6 @@ void PlayState::checkPlayerActions() {
 	else if (eventHandler_->isKeyDown(SDLK_v)) {
 		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
 	}
-	else if (eventHandler_->isKeyDown(SDLK_t)) {
-		app_->getGameStateMachine()->pushState(new ShopState(app_, player_));
-	}
-
 }
 
 Enemy* PlayState::checkAttack() {

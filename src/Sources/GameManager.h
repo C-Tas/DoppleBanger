@@ -138,6 +138,8 @@ private:
 	list<InventoryButton*>* inventory_ = new list<InventoryButton*>;
 	//Puntero a la lista de items del alijo
 	list<InventoryButton*>* stash_ = new list<InventoryButton*>;
+	//Puntero a la lista de items de la tienda
+	list<InventoryButton*>* shop_ = new list<InventoryButton*>;
 	//Vector que representa las misiones secundarias completadas
 	vector<bool> missionsComplete = vector<bool>((int)missions::Size);
 	//Vector que representa las misiones secundarias empezadas
@@ -209,6 +211,8 @@ public:
 	~GameManager() {
 		for (InventoryButton* ob : *inventory_)delete ob;
 		for (InventoryButton* ob : *stash_)delete ob;
+		for (InventoryButton* ob : *shop_)delete ob;
+		delete shop_;
 		delete inventory_;
 		delete stash_;
 		//Se borra el equipo
@@ -276,6 +280,8 @@ public:
 	const lista getInventory() { return inventory_; };
 	//Devuelve el alijo
 	const lista getStash() { return stash_; };
+	//Devuelve la tienda
+	const lista getStash() { return shop_; };
 
 	//Devuelve el vector de skills
 	const vector<SkillName>& getAllSkillsEquipped() { return skillsEquipped_; }

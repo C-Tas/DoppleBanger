@@ -87,6 +87,7 @@ public:
 		SaveLoadBackground,
 		StashMenu,//
 		SkillMenu,
+		ShopMenu,
 		Scene1,
 		Scene2,
 		Scene3,

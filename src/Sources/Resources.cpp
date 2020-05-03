@@ -81,6 +81,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
 	{ SkillMenu, "../Sources/assets/interfaces/HabilidadesFondo.png" },
 	{ StashMenu, "../Sources/assets/interfaces/AlijoFondo.png"},
+	{ ShopMenu, "../Sources/assets/interfaces/TiendaFondo.png"},
 	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
 	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
 	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},

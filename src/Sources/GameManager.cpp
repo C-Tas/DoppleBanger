@@ -623,7 +623,8 @@ void GameManager::resetGameManager()
 	inventory_->clear();
 	for (InventoryButton* ob : *stash_)delete ob;
 	stash_->clear();
-
+	for (InventoryButton* ob : *shop_)delete ob;
+	shop_->clear();
 	//Reseteo del equipamiento, se vuelve al inicial, sin pociones
 	delete currEquip_.armor_; currEquip_.armor_ = nullptr;
 	delete currEquip_.gloves_; currEquip_.gloves_ = nullptr;
