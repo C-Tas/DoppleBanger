@@ -281,7 +281,7 @@ public:
 	//Devuelve el alijo
 	const lista getStash() { return stash_; };
 	//Devuelve la tienda
-	const lista getStash() { return shop_; };
+	const lista getShop() { return shop_; };
 
 	//Devuelve el vector de skills
 	const vector<SkillName>& getAllSkillsEquipped() { return skillsEquipped_; }

@@ -62,7 +62,7 @@ void Player::initSkills()
 		gm_->setSkillEquiped(skill, (Key)i);
 		i++;
 	}
-	initPasives();
+	
 }
 
 bool Player::update()
