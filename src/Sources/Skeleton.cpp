@@ -64,6 +64,7 @@ bool Skeleton::update() {
 	if (currState_ == STATE::DYING) {
 		// animación de muerte si la tiene
 		//Cuando acabe la animación, lo mata
+		applyRewards();
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
@@ -96,4 +97,14 @@ bool Skeleton::update() {
 
 	updateAnim();
 	return false;
+}
+
+void Skeleton::initRewards()
+{
+	minGold = 30;
+	maxGold = 50;
+	minArchievementPoints = 2;
+	maxArchievementPoints = 10;
+	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
+	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }

@@ -13,6 +13,7 @@ public:
 	
 
 	virtual bool update();
+	virtual void initRewards();
 	virtual void initObject();
 	//virtual void onCollider();
 	virtual ~Skeleton() {};

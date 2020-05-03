@@ -80,3 +80,13 @@ void Magordito::initialStats()
 	DIST_RATE = 2500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
+
+void Magordito::initRewards()
+{
+	minGold = 30;
+	maxGold = 50;
+	minArchievementPoints = 2;
+	maxArchievementPoints = 10;
+	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
+	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
+}

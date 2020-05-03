@@ -11,6 +11,7 @@ public:
 	virtual bool update();
 	virtual void onCollider() {};
 	virtual void initialStats();
+	virtual void initRewards();
 private:
 	//puntero al player
 	Player* player_ = nullptr;
