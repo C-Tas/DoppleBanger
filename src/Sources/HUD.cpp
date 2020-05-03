@@ -11,6 +11,12 @@ HUD::~HUD() {
 		delete(*it);
 	}
 	elementsHUD_.clear();
+	for (int i = 0; i < POTIONS_AMOUNT; i++)
+	{
+		if (potionsHUD_[i].potionBackground_ != nullptr) delete potionsHUD_[i].potionBackground_;
+		if (potionsHUD_[i].potionHUD_ != nullptr) delete potionsHUD_[i].potionHUD_;
+		if (potionsHUD_[i].potionTimeHUD_ != nullptr) delete potionsHUD_[i].potionTimeHUD_;
+	}
 }
 
 const void HUD::draw() {
@@ -22,7 +28,9 @@ const void HUD::draw() {
 	}
 
 	int aux = 0;
-	for (int i = 0; i <= 3; i++) {
+
+	//Muestra la duracion de las pociones
+	for (int i = 0; i < POTIONS_AMOUNT; i++) {
 		if (potionsHUD_[i].active_) {
 			potionsHUD_[i].potionBackground_->setDestiny({ 0, (int)(aux * app_->getWindowHeight() * 0.1111), (int)(app_->getWindowWidth() * 0.125), (int)(app_->getWindowHeight() * 0.1111)});	//Fondo
 			potionsHUD_[i].potionHUD_->setDestiny({ (int)(app_->getWindowWidth() * 0.0063), (int)(app_->getWindowHeight() * 0.0167 + aux * app_->getWindowHeight() * 0.1111), (int)(app_->getWindowWidth() * 0.0438), (int)(app_->getWindowHeight() * 0.0778)});	//Pocion
@@ -71,8 +79,10 @@ const void HUD::draw() {
 }
 
 bool HUD::update() {
-	for (int i = 0; i <= 3; i++) {
+	//Actualiza el tiempo de las pociones y las desactiva al llegar a 0
+	for (int i = 0; i < POTIONS_AMOUNT; i++) {
 		if (potionsHUD_[i].active_) {
+			if (potionsHUD_[i].potionTimeHUD_ != nullptr) delete potionsHUD_[i].potionTimeHUD_;
 			potionsHUD_[i].potionTimeHUD_ = new Texture(app_->getRenderer(), to_string((int)(potionsHUD_[i].duration_ - ((SDL_GetTicks() - potionsHUD_[i].time_)) / 1000.0) + 1),
 				app_->getFontManager()->getFont(Resources::RETRO), SDL_Color{ (0,0,0,1) });
 			if ((potionsHUD_[i].active_) && (potionsHUD_[i].duration_ <= ((SDL_GetTicks() - potionsHUD_[i].time_) / 1000.0))) {
@@ -199,12 +209,8 @@ void HUD::initObject() {
 	cdRect_.y = app_->getWindowHeight() * 6 / 7;
 	#pragma endregion
 
-	#pragma region UsableItems
-	for (int i = 0; i <= 3; i++) {
-		potionsHUD_.push_back(createPotionHUD(i));
-		cout << "Creado el HUD de la pocion " << i << endl;
-	}
-	#pragma endregion
+	//Crea el HUD de las pociones
+	for (int i = 0; i < POTIONS_AMOUNT; i++) potionsHUD_.push_back(createPotionHUD(i));
 }
 
 void HUD::createBg(Texture* tx, const SDL_Rect& destRect) {

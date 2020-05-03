@@ -60,6 +60,7 @@ private:
 	
 	#pragma region Constantes
 	const int ICON_AMOUNT = 6;
+	const int POTIONS_AMOUNT = 4;
 	//Tamaño de los iconos
 	const int W_H_ICON = app_->getWindowHeight() / 16;
 	//Separación entre cada icono
