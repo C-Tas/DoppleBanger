@@ -116,34 +116,18 @@ void CollisionCtrl::islandCollisions() {
 			switch (npcs_[0].id) {
 			case Chef:
 				npcCollision.id = Chef;
-				if (newNpc && GameManager::instance()->isThatMissionPass(missions::gallegaEnProblemas)) {
-					npcs_.push_back(npcs_[0]);
-					newNpc = false;
-				}
 				break;
 			case Morty:
 				npcCollision.id = Morty;
-				if (newNpc && GameManager::instance()->isThatMissionPass(missions::papelesSiniestros)) {
-					npcs_.push_back(npcs_[0]);
-					newNpc = false;
-				}
 				break;
 			case Parrot:
 				npcCollision.id = Parrot;
-				if (newNpc && GameManager::instance()->isThatMissionPass(missions::masValePajaroEnMano)) {
-					npcs_.push_back(npcs_[0]);
-					newNpc = false;
-				}
 				break;
 			case Skeleton:
 				npcCollision.id = Skeleton;
 				break;
 			case Cartographer:
 				npcCollision.id = Cartographer;
-				if (newNpc && GameManager::instance()->isThatMissionPass(missions::arlongPark)) {
-					npcs_.push_back(npcs_[0]);
-					newNpc = false;
-				}
 				break;
 			}
 		}

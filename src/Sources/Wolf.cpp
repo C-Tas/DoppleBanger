@@ -51,7 +51,8 @@ bool Wolf::update() {
 		}
 
 		//Esta línea habría que moverla al cangrejo cuando esté hecho
-		if (app_->getGameManager()->isThatMissionStarted(missions::gallegaEnProblemas)) dynamic_cast<CaribbeanIslandState*>(app_->getCurrState())->addMissionConter();
+		GameManager* gm_ = GameManager::instance();
+		if (gm_->isThatMissionStarted(missions::gallegaEnProblemas)) gm_->addMissionCounter(missions::gallegaEnProblemas);
 
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;

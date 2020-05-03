@@ -134,6 +134,11 @@ private:
 	vector<bool> skillsCooldown = { false, false, false, false };
 	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
 	vector<bool> skillsUnlocked_ = { false, false ,false, false, false, false, false, true, false, false, false }; //Clon inicializada por defecto
+	//Vector que contiene la cantidad de enemigos que se han muerto de la mision correspondiente
+	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
+	vector<int> countEnemiesMission = { 0, 0, 0, 0};
+	//Vector que contiene el numero de enemigos que se tiene que matar en cada mision
+	vector<int> enemiesMission = { 3, 2, 2, 4 };
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
@@ -198,7 +203,10 @@ public:
 	const int getFontSize();
 	//Devuelve el total de misiones secundarias
 	const int getNumMission() { return NUM_MISION; };
-
+	//Devuelve el numero de enemigos muertos en cada mision
+	const int getCounterEnemiesMission(missions tagMission) { return countEnemiesMission.at((int)tagMission); };
+	//Devuelve el numero de enemigos que hay que matar en cada mision
+	const int getEnemiesMission(missions tagMission) { return enemiesMission.at((int)tagMission); };
 	//Devuelve el inventario
 	const lista getInventory() { return inventory_; };
 	//Devuelve el alijo
@@ -255,7 +263,11 @@ public:
 	inline void setInventoryPointer(lista inv) { inventory_ = inv; };
 	//Asigna el puntero al alijo
 	inline void setStashPointer(lista stash) { stash_ = stash; };
-
+	
+	//Añade una muerte al contador de muertes de la mision
+	inline void addMissionCounter(missions tagMission) { countEnemiesMission.at((int)tagMission)++; }
+	//Reinicia el contador de muertes de la mision
+	inline void resetMissionCounter(missions tagMission) { countEnemiesMission.at((int)tagMission) = 0; }
 	//Completa una misi�n secundaria
 	inline void setCompleteMission(missions mission, bool complete) { missionsComplete[(int)mission] = complete; };
 	//Empieza una misi�n secundaria

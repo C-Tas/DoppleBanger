@@ -17,8 +17,6 @@ public:
 
 	virtual void update();
 
-	void addMissionConter();
-
 #pragma region Provisional
 	void createMonkey(int numMonkeys);
 	void createPirates(int numPirates);

@@ -16,7 +16,7 @@
 //Callback del mercader para abrir la tienda
 void TextBox::goShopState(Application* app)
 {
-	dynamic_cast<Player*>(app->getGameManager()->getPlayer())->stop();
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	app->getGameStateMachine()->pushState(new ShopState(app));
 }
 
@@ -84,16 +84,20 @@ void TextBox::dialogChef(bool unlock) {
 	}
 	//Diálogo del chef cuando aún está bloqueado
 	else {
-		//Si la misión secundaria aún no se ha completado
-		if (!app_->getGameManager()->isThatMissionPass(missions::gallegaEnProblemas)) {
+		//Mientras no se hayan matado todos los enemigos
+		if (gm_->getCounterEnemiesMission(missions::gallegaEnProblemas) < gm_->getEnemiesMission(missions::gallegaEnProblemas)) {
 			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la misión secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
 			text.loadFromText(app_->getRenderer(), "'Gallego en problemas'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
 		}
-		//Si se completa la misión y se habla con el chef se desbloquea
+		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
 		else {
+			gm_->setCompleteMission(missions::gallegaEnProblemas, true);
+			gm_->addInventoryGold(500);
+			gm_->setArchievementPoints(gm_->getAchievementPoints() + 1000);
+
 			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la misión secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 

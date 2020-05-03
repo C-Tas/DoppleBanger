@@ -75,6 +75,8 @@ public:
 		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
 		//Listas del barco
 		npcs_.clear(); shipObjects_.clear(); newNpc = true;
+		npcCollision.id = Nobody;
+		npcCollision.object = nullptr;
 	};
 #pragma endregion
 

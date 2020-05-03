@@ -21,15 +21,6 @@ void CaribbeanIslandState::update()
 	}
 }
 
-void CaribbeanIslandState::addMissionConter() {
-	missionCounter++;
-	if (missionCounter == NUM_WOLVES) {
-		gm_->setCompleteMission(missions::gallegaEnProblemas, true);
-		gm_->addInventoryGold(500);
-		gm_->setArchievementPoints(gm_->getAchievementPoints() + 1000);
-	}
-}
-
 void CaribbeanIslandState::initState()
 {
 	//Borramos la lista de objetos del CollisionCtrl
@@ -43,12 +34,13 @@ void CaribbeanIslandState::initState()
 	createPirates(NUM_PIRATES);
 	createWolves(NUM_WOLVES);
 
+	//Esto deberia en el initZone correspondiente para que no empiece la mision desde la 
+	//zona 1 de la isla. Por si lo queremos poner en la zona 3, por ejemplo.
 	//Creamos la misión secundaria si no se ha completado aún
 	if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
 		//Reiniciamos el contador de muertes para cumplir la misión y creamos el NPC
 		gm_->setStartedMission(missions::gallegaEnProblemas, true);
-		missionCounter = 0;
-		missionPass = false;
+		gm_->resetMissionCounter(missions::gallegaEnProblemas);
 		createNPC();
 	}
 
