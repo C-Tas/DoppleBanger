@@ -72,6 +72,12 @@ void Enemy::initObject()
 	initAnims();
 }
 
+void Enemy::applyRewards()
+{
+	GameManager::instance()->addInventoryGold(goldPoints_);
+	GameManager::instance()->addArchievementPoints(achievementPoints_);
+}
+
 //Devuelve true si el enemigo que tengo está a rango
 bool Enemy::onRange() {
 	if (currEnemy_ != nullptr) {

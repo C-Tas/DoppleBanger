@@ -94,4 +94,5 @@ private:
 	//Genera la posición a la que se mueve el pirata en función de su rango 
 	void selectTarget();
 	virtual void initialStats();
+	virtual void initRewards();
 };

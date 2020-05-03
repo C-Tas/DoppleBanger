@@ -20,7 +20,7 @@ public:
 	void tentDeath(Tentacle* obj);
 	virtual void initialStats() {};
 	virtual void lostAggro();
-
+	virtual void initRewards();
 private:
 	int lastAttack_ = 0;
 	int swimTime_ = 0;

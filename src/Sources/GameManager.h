@@ -246,6 +246,8 @@ public:
 #pragma endregion
 
 #pragma region setters
+	//Suma puntos de hazaña
+	inline void addArchievementPoints(int value) { achievementPoints_ += value; }
 	//Asigna los archievement points
 	inline void setArchievementPoints(int value) { achievementPoints_ = value; };
 	//Asigna los puntos gastados a la rama precision
