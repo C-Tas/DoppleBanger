@@ -87,7 +87,6 @@ void CollisionCtrl::islandCollisions() {
 				}
 			}
 		}
-
 	}
 
 	//Colisi�n bala del enemigo con jugador

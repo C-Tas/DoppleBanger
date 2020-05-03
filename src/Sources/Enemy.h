@@ -15,6 +15,8 @@ public:
 	virtual void lostAggro() {};
 	//Cuando se crea un clon se fija como nuevo objetivo
 	virtual void newEnemy(GameObject* obj) { currEnemy_ = obj; };
+	//Devuelve el tag 
+	string getTag() { return tag_; }
 protected:
 	//Rango de puntos de hazaña de la calabaza
 	int maxArchievementPoints = 0;
@@ -30,6 +32,8 @@ protected:
 	Uint32 lastHit = 0;
 	//Rango de visión de la entidad
 	double rangeVision_ = 0;
+	//Tag del enemy
+	string tag_ = "";
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores serán los puestos, si se le pasan valores los editara</summary>
 	Enemy(Application* app = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0,0 }, double rot = 0)
 		:Actor(app, pos, scale, rot) {};

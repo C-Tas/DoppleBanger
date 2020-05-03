@@ -132,6 +132,32 @@ Enemy* PlayState::findClosestEnemy(Point2D pos) {
 	return obj;
 }
 
+Enemy* PlayState::getEnemyByTag(string tag)
+{
+	for (auto i = gameObjects_.begin(); i != gameObjects_.end(); i++) {
+		auto aux = dynamic_cast<Enemy*>(*(i));
+		if (aux != nullptr && aux->getTag() == tag) {
+			return aux;
+		}
+	}
+}
+
+void PlayState::swapRenders(GameObject* obj, GameObject* other)
+{
+	for (auto i = objectsToRender_.begin(); i != objectsToRender_.end(); i++) {
+		if ((*i) == obj) {
+			for (auto e = objectsToRender_.begin(); e != objectsToRender_.end(); e++) {
+				if ((*e) == other) {
+					auto aux = (*i);
+					(*i) = (*e);
+					(*e) = aux;
+					return;
+				}
+			}
+		}
+	}
+}
+
 void PlayState::initState()
 {
 	//Desactivamos el puntero para poder renderizar los punteros del juego

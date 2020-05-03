@@ -40,11 +40,14 @@ void Skeleton::initialStats() {
 
 
 void Skeleton::attack() {
-	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
-	BoneBullet* bone = new BoneBullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
-		getCenter(), dir, currStats_.distDmg_, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
-	app_->getCurrState()->addRenderUpdateLists(bone);
-	CollisionCtrl::instance()->addEnemyBullet(bone);
+	if (currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
+		lastHit = SDL_GetTicks();
+		Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
+		BoneBullet* bone = new BoneBullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
+			getCenter(), dir, currStats_.distDmg_, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
+		app_->getCurrState()->addRenderUpdateLists(bone);
+		CollisionCtrl::instance()->addEnemyBullet(bone);
+	}
 }
 
 void Skeleton::initObject() {
@@ -53,8 +56,12 @@ void Skeleton::initObject() {
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
-	CollisionCtrl::instance()->addEnemy(this);
 	initAnims();
+}
+
+void Skeleton::lostAggro()
+{
+	currEnemy_ = nullptr;
 }
 
 bool Skeleton::update() {

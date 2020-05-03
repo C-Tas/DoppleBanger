@@ -24,6 +24,8 @@
     <ClCompile Include="SDL2_gfx\SDL2_imageFilter.cpp" />
     <ClCompile Include="SDL2_gfx\SDL2_rotozoom.cpp" />
     <ClCompile Include="Sources\Actor.cpp" />
+    <ClCompile Include="Sources\Altar.cpp" />
+    <ClCompile Include="Sources\AltarSkeleton.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Armor.cpp" />
     <ClCompile Include="Sources\Blunder.cpp" />
@@ -66,6 +68,7 @@
     <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\Kraken.cpp" />
     <ClCompile Include="Sources\Magordito.cpp" />
+    <ClCompile Include="Sources\MagorditoIA.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\MainMenuState.cpp" />
     <ClCompile Include="Sources\MonkeyCoco.cpp" />
@@ -121,6 +124,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
+    <ClInclude Include="Sources\Altar.h" />
+    <ClInclude Include="Sources\AltarSkeleton.h" />
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Armor.h" />
     <ClInclude Include="Sources\Blunder.h" />
@@ -164,6 +169,7 @@
     <ClInclude Include="Sources\Kraken.h" />
     <ClInclude Include="Sources\Magordito.h" />
     <ClInclude Include="Sources\HUD.h" />
+    <ClInclude Include="Sources\MagorditoIA.h" />
     <ClInclude Include="Sources\Obstacle.h" />
     <ClInclude Include="Sources\MonkeyCoco.h" />
     <ClInclude Include="Sources\PerforateSkill.h" />

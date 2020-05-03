@@ -532,6 +532,12 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="18" name="Player">
+  <object id="11" gid="245" x="4273.7" y="3678.06" width="256" height="256"/>
+ </objectgroup>
+ <objectgroup id="20" name="Magordito">
+  <object id="18" gid="162" x="3509.15" y="2189.27" width="256" height="256"/>
+ </objectgroup>
  <objectgroup id="15" name="Monkey" offsetx="0" offsety="-56">
   <object id="4" gid="222" x="2369" y="3747" width="256" height="256"/>
   <object id="5" gid="222" x="2370" y="3978" width="256" height="256"/>

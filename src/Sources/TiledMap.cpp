@@ -9,7 +9,8 @@
 #include "Skeleton.h"
 #include "Kraken.h"
 #include "Magordito.h"
-#include "Pumpkin.h"
+#include "Altar.h"
+#include "Skeleton.h"
 
 TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, int tileTilesetHeight, int tileTilesetWidth, int tileSize, 
 	Texture* tileset, int filsTileset, int colsTileset,  Vector2D iniPos,  const list<int>& idCollisionTiles, const list<int>& idWallTiles)
@@ -241,11 +242,9 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		CollisionCtrl::instance()->addEnemy(wolf);
 	}
 	else if (objectType == "Skeleton") {
-		//A�adir esqueleto
-		Skeleton* monkey = new Skeleton(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
-		//state_->addRenderUpdateLists(monkey);
-		state_->addEnemy(monkey);
-		CollisionCtrl::instance()->addEnemy(monkey);
+		Skeleton* skeleton = new Skeleton(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
+		state_->addEnemy(skeleton);
+		CollisionCtrl::instance()->addEnemy(skeleton);
 	}
 	else if (objectType == "Pumpkin") {
 		Pumpkin* pumpkin = new Pumpkin(app_,pos,Vector2D(W_PUMPKIN,H_PUMPKIN));
@@ -289,6 +288,12 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		player->setColliderScale(Vector2D((player->getScale().getX() / 3),  (player->getScale().getY() / 4)));
 
 	}
+	else if (objectType == "Altar") {
+		Altar* altar = new Altar(app_, pos, { 100,100 });
+		state_->addRenderUpdateLists(altar);
+		altar->createMobs(state_);
+	}
+
 	
 }
 

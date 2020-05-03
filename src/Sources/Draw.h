@@ -18,6 +18,7 @@ protected:
 		bool loop_;	// Para saber si se repite
 		Anim(int numberFrames, int widthFrame, int heightFrame, int frameRate, bool loop) :
 		numberFrames_(numberFrames), widthFrame_(widthFrame), heightFrame_(heightFrame), frameRate_(frameRate), loop_(loop) {}
+		~Anim() {};
 	};
 	Anim currAnim_{ 0,0,0,0,false };
 	//Textura del objeto
@@ -64,7 +65,7 @@ public:
 		GameObject(app, Vector2D((double)dest.x, (double)dest.y), Vector2D((double)dest.w, (double)dest.h)), texture_(texture), destiny_(dest) {};
 
 	//Destructora de Draw
-	virtual ~Draw() {};
+	virtual ~Draw() { texture_ = nullptr; };
 
 	//<metodo comun para renderizar tanto imagenes con un solo frame como con varios"
 	const virtual void draw();

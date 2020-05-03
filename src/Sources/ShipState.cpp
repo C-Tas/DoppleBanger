@@ -9,8 +9,8 @@
 #include "SaveLoadState.h"
 #include "StashState.h"
 
+#include "Magordito.h"
 #include "Collisions.h" //Provisional
-#include "Pumpkin.h"
 
 
 #pragma region CallBacks

@@ -39,6 +39,7 @@ public:
 	void setMoveSpeed(double stat) { currStats_.moveSpeed_ = stat; };
 	void setMeleeRate(double stat) { currStats_.meleeRate_ = stat; };
 	void setDistRate(double stat) { currStats_.distRate_ = stat; };
+	void setEnemy(GameObject* newEnemy) { currEnemy_ = newEnemy; }
 #pragma endregion
 
 #pragma region getters

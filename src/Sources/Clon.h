@@ -22,6 +22,9 @@ public:
 	void changeDuration(double dur) { duration_ = dur; }	//En caso de que se pueda modificar la duraci�n
 	
 	void initSelfDestruction();
+	void addEnemy(GameObject* enemy) { 
+		enemies_.push_back(static_cast<Enemy*>(enemy)); 
+	}
 	//<summary>Método para iniciar la animación de disparo del clon, recibe un vector2D que es la dirección hacia la que dispara</summary>
 	void initShoot(Vector2D dir);
 

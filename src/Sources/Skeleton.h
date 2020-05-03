@@ -10,15 +10,14 @@ public:
 		:Enemy(app, pos, scale) {
 		initObject();
 	};
-	
-
 	virtual bool update();
 	virtual void initRewards();
 	virtual void initObject();
+	virtual void lostAggro();
 	//virtual void onCollider();
 	virtual ~Skeleton() {};
-private:
-	//Último ataque
+protected:
+	//�ltimo ataque
 	Uint32 lastHit = 0;
 	//Último frame de animación
 	Uint32 lasFrame_ = 0;
@@ -54,6 +53,7 @@ private:
 	void initAnims();
 	//Actualiza la actual animación
 	void updateAnim();
+	void initialStats() {};
 
 	virtual void initialStats();
 };

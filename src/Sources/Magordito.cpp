@@ -6,7 +6,7 @@ bool Magordito::update() {
 	updateFrame();
 	//Si Magordito muere
 	if (currState_ == STATE::DYING) {
-		//Desbloqueamos la última isla
+		//Desbloqueamos la ï¿½ltima isla
 		GameManager::instance()->setUnlockedIslands(Island::Volcanic);
 		CollisionCtrl::instance()->removeEnemy(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);
@@ -16,17 +16,16 @@ bool Magordito::update() {
 		currState_ = STATE::ATTACKING;
 	}
 	if (currState_ == STATE::ATTACKING) {
-		//A falta de cambiar el orden en función de la importancia de los ataques
+		//Si el player estï¿½ cerca y no tengo enfriamiento en el teleport
+		if (TP_CD <= SDL_GetTicks() - lastTeleport_) {
+			enemyIsTooClose();
+		}
 		if (onRange(KIRIN_RANGE_ATTACK)) {
 			if (KIRIN_CD <= SDL_GetTicks() - lastKirin_ ) {
 				kirin();
 			}
-			
 		}
-		else
-		{
-			//teleport?
-		}
+		
 	}
 	
 	return false;
@@ -41,6 +40,7 @@ void Magordito::initObject() {
 	initAnims();
 	currState_ = STATE::IDLE;
 	player_ = GameManager::instance()->getPlayer();
+	tag_ = "Magordito";
 }
 
 void Magordito::initAnims() {
@@ -50,17 +50,38 @@ void Magordito::initAnims() {
 
 void Magordito::kirin()
 {
-	lastKirin_ = SDL_GetTicks();
-	auto kirinRect = SDL_Rect{ (int)player_->getPosX(),(int)player_->getPosY(),(int)AREA_DMG_W,(int)AREA_DMG_H };
-	if (SDL_HasIntersection(&kirinRect, &player_->getDestiny())) {
-		player_->receiveDamage(KIRIN_DMG);
-		cout << "KIRIN!" << endl;
+	if (currEnemy_ != nullptr) {
+		lastKirin_ = SDL_GetTicks();
+		auto kirinRect = SDL_Rect{ (int)currEnemy_->getPosX(),(int)currEnemy_->getPosY(),(int)AREA_DMG_W,(int)AREA_DMG_H };
+		if (SDL_HasIntersection(&kirinRect, &player_->getDestiny())) {
+			auto enem = dynamic_cast<Player*>(currEnemy_);
+			if (enem) {
+				player_->receiveDamage(KIRIN_DMG);
+				cout << "KIRIN!" << endl;
+			}
+
+		}
 	}
+
 }
 
 void Magordito::initKirinAnim()
 {
 
+}
+
+inline bool Magordito::enemyIsTooClose()
+{
+	SDL_Rect range = { (int)(getPosX() - RANGE_TO_TP) ,(int)(getPosY() - RANGE_TO_TP) , (int)(RANGE_TO_TP * 2) , (int)(RANGE_TO_TP * 2) };
+	auto enem = dynamic_cast<Draw*>(currEnemy_);
+	if (SDL_HasIntersection(&range, &enem->getDestiny())) {
+		teleport();
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void Magordito::initialStats()
@@ -79,6 +100,23 @@ void Magordito::initialStats()
 	MELEE_RATE = 1;
 	DIST_RATE = 2500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+}
+
+//TODO
+void Magordito::teleport()
+{
+	lastTeleport_ = SDL_GetTicks();
+	cout << "TP \n";
+	auto choice = app_->getRandom()->nextInt(0, altars.size());
+	pos_.setVec(altars[choice]->getPos());
+	auto clon = dynamic_cast<Clon*>(currEnemy_);
+	if(clon != nullptr){ altars[choice]->setEnemyToMobs(clon); }
+	altars[choice]->activeResurrect();
+}
+
+void Magordito::lostAggro()
+{
+	currEnemy_ = GameManager::instance()->getPlayer(); 
 }
 
 void Magordito::initRewards()
