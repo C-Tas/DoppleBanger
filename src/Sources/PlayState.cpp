@@ -1,6 +1,5 @@
 ﻿#include "Collisions.h"
 #include "PlayState.h"
-#include "SaveLoadState.h"
 #include "SelectLevelState.h"
 #include "ShipState.h"
 #include "StashState.h"
@@ -11,8 +10,9 @@
 #include "HUD.h"
 #include "conio.h"
 
-//Provisional -- testeo
-#include "ShipState.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Obstacle.h"
 
 
 void PlayState::draw() const {
@@ -95,15 +95,6 @@ void PlayState::checkPlayerActions() {
 	}
 	else if (eventHandler_->isKeyDown(SDLK_v)) {
 		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
-	}
-	else if (eventHandler_->isKeyDown(SDLK_t)) {
-		app_->getGameStateMachine()->pushState(new ShopState(app_, player_));
-	}
-
-	//Testeo
-	else if (eventHandler_->isKeyDown(SDLK_s)) {
-		if (dynamic_cast<ShipState*>(app_->getCurrState()) == nullptr)
-			app_->getGameStateMachine()->changeState(new ShipState(app_));
 	}
 }
 

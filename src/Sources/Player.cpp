@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "SDL_macros.h"
-#include "GameManager.h"
 #include "CollisionCtrl.h"
 #include "Collisions.h"
 #include "GameState.h"
@@ -16,6 +15,11 @@
 #include "RicochetSkill.h"
 #include "PerforateSkill.h"
 #include "usable.h"
+#include "Armor.h"
+#include "Gloves.h"
+#include "Boots.h"
+#include "Sword.h"
+#include "Gun.h"
 #include "Blunder.h"
 #include "Blunderbuss.h"
 
@@ -33,18 +37,23 @@ void Player::initObject()
 	scaleCollision_ = { scale_.getX() / 3, scale_.getY() / 2 };
 
 	//Equipamiento inicial del jugador
-	//Balancear los valores del equipamiento cuando sea necesario
-	//equip_.armor_ = new Armor(app_->getTextureManager()->getTexture(Resources::TextureId::Armor1), "Pechera", "helloWorld", 10, 10, 10); equip_.armor_->writeStats(); //Prueba
-	equip_.gloves_ = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Gloves1), "Guantes", "helloWorld", 10, 10, 10); equip_.gloves_->writeStats(); //Prueba
-	equip_.boots_ = new Boots(app_->getTextureManager()->getTexture(Resources::TextureId::Boots1), "Botas", "helloWorld", 10, 10, 10); equip_.boots_->writeStats(); //Prueba
-	equip_.sword_ = new Sword(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), "Sable", "helloWorld", 10, 10, 10, Saber_); equip_.sword_->writeStats(); //Prueba
-	//equip_.gun_ = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), "Pistola", "helloWorld", 10, 10, 10, Pistol_); equip_.gun_->writeStats(); //Prueba
-	auto  fireWeapon = app_->genEquip(equipType::Pistol_);
-	equip(fireWeapon);
-	//equip(new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Gun1), "Pistola", "pipota", 10, 10, 10, Pistol_, 1000));
-	equip_.fireGun_->writeStats();
-	equip_.potion1_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, -1);	//Prueba
-	equip_.potion2_ = new usable(app_->getTextureManager()->getTexture(Resources::TextureId::ManaPot), "ManaPot", "helajieoie", 10, potionType::mana_, 10, -1);	//Prueba
+	playerEquipment auxEquip = gm_->initEquipment();
+	armor_ = auxEquip.armor_;
+	gloves_ = auxEquip.gloves_;
+	boots_ = auxEquip.boots_;
+	sword_ = auxEquip.sword_;
+	gun_ = auxEquip.gun_;
+	potions_ = auxEquip.potions_;
+}
+
+void Player::load()
+{
+	playerEquipment auxEquip = gm_->getEquip();
+	armor_ = auxEquip.armor_;
+	gloves_ = auxEquip.gloves_;
+	boots_ = auxEquip.boots_;
+	gun_ = auxEquip.gun_;
+	potions_ = auxEquip.potions_;
 }
 
 void Player::initSkills()
@@ -52,16 +61,13 @@ void Player::initSkills()
 	vector<SkillName> skillsEquipped_ = gm_->getAllSkillsEquipped();
 	int i = 0;
 	SkillName skill;
-	for (SkillName ob : skillsEquipped_) {
+	for (SkillName& ob : skillsEquipped_) {
 		skill = gm_->getEquippedSkill((Key)i);
-		skills_.push_back(createSkill(skill));
+		skills_.at(i) = createSkill(skill);
 		gm_->setSkillEquiped(skill, (Key)i);
 		i++;
 	}
-	//esto es una prueba
-
-	gm_->setObjectEquipped(ObjectName::Health, Key::One);
-	gm_->setObjectEquipped(ObjectName::Mana, Key::Two);
+	
 }
 
 bool Player::update()
@@ -76,7 +82,6 @@ bool Player::update()
 	}
 	//Cuando se acabe el tiempo de ricochet, se pone a false
 	if (ricochet_ && (SDL_GetTicks() - lastTimeRico_) / 1000 > TIME_RICO) {
-		cout << "Fin rebote" << endl;
 		ricochet_ = false;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0] != nullptr) {
@@ -99,22 +104,6 @@ bool Player::update()
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE) && !app_->getMute()) shout();
 
-	//Para testeo
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_8)) {
-		if (skills_[0] != nullptr) delete skills_[0];
-		skills_[0] = new RicochetSkill(this);
-		cdSkills[0] = false;
-		gm_->setSkillEquiped(SkillName::Rebote, Key::Q);
-		GameManager::instance()->setSkillCooldown(false, Key::Q);
-	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_9)) {
-		if (skills_[1] != nullptr) delete skills_[1];
-		skills_[1] = new PerforateSkill(this);
-		cdSkills[1] = false;
-		gm_->setSkillEquiped(SkillName::DisparoPerforante, Key::W);
-		GameManager::instance()->setSkillCooldown(false, Key::W);
-	}
-
 	if (slowed_ && (SDL_GetTicks() - slowTime_) / 1000 > slowDuration_)
 	{
 		currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
@@ -130,25 +119,15 @@ bool Player::update()
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::MIDDLE)) {
 		cout << getCenter().getX() << " " << getCenter().getY() << endl;
 	}
-
-	//para utilizar las pociones
-	if (eventHandler_->isKeyDown(SDLK_1)) {
-		if (equip_.potion1_ != nullptr && !equip_.potion1_->isUsed()) {
-			PotionTime1 = SDL_GetTicks();
-			equip_.potion1_->use(this);
-			gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
-		}
+	
+	if (eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr && !potions_[0]->isUsed()) {
+		usePotion(potions_[0], 0);
+		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 	}
-	if (eventHandler_->isKeyDown(SDLK_2)) {
-		if (equip_.potion2_ != nullptr && !equip_.potion2_->isUsed()) {
-			PotionTime2 = SDL_GetTicks();
-			equip_.potion2_->use(this);
-			gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
-		}
+	if (eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr && !potions_[1]->isUsed()) {
+		usePotion(potions_[1], 1);
+		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 	}
-
-	//comprobamos si hay que desactivar las pociones
-	desactivePotion();
 
 	Enemy* objective = static_cast<Enemy*>(currEnemy_);
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
@@ -500,62 +479,85 @@ void Player::decreaseMana(double mana) {
 	if (currStats_.mana_ <= 0) currStats_.mana_ = 0;
 }
 
-
-void Player::usePotion(int value, potionType type) {
+void Player::usePotion(usable* potion, int key) {
 	app_->getAudioManager()->playChannel(Resources::Drink, 0, 1);
-	switch (type)
+	double auxValue = potion->getValue();
+	switch (potion->getType())
 	{
-	case live_:
-		currStats_.health_ += value;
+	case potionType::Health:
+		currStats_.health_ += maxHealth_ * auxValue / 100;
+		if (currStats_.health_ > maxHealth_) currStats_.health_ = maxHealth_;
 		break;
-	case mana_:
-		currStats_.mana_ += value;
-		cout << currStats_.mana_ << endl;
+	case potionType::Mana:
+		currStats_.mana_ += maxMana_ * auxValue / 100;
+		if (currStats_.mana_ > MANA) currStats_.mana_ = MANA;
 		break;
-	case velocity_:
-		currStats_.moveSpeed_ += value;
+	case potionType::Speed:
+		if (!potionUsing_[0]) {
+			cout << "Suma velocidad" << endl;
+			currStats_.moveSpeed_ += auxValue;
+			potionUsing_[0] = true;
+		}
+		timerPotion_[0] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		break;
-	case damage_:
-		currStats_.meleeDmg_ += value;
+	case potionType::Armor:
+		if (!potionUsing_[1]) {
+			currStats_.armor_ += auxValue;
+			potionUsing_[1] = true;
+		}
+		timerPotion_[1] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		break;
-	case defense_:
-		currStats_.armor_ += value;
+	case potionType::Damage:
+		if (!potionUsing_[2]) {
+			currStats_.meleeDmg_ = currStats_.meleeDmg_ * (1 + auxValue / 100);
+			currStats_.distDmg_ = currStats_.distDmg_ * (1 + auxValue / 100);
+			potionUsing_[2] = true;
+		}
+		timerPotion_[2] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		break;
-	case critic_:
-		currStats_.crit_ += value;
+	case potionType::Crit:
+		if (!potionUsing_[3]) {
+			currStats_.crit_ += auxValue;
+			potionUsing_[3] = true;
+		}
+		timerPotion_[3] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		break;
 	}
+
+	app_->getCurrState()->addUpdateList(potion);
+	potions_[key] = nullptr;
+	gm_->setPotion(key, nullptr);
+	potion->use();
 }
 
-void Player::desactivePotion() {
-	//Pocion1
-	//Si la pocion uno esta usada
-	if (equip_.potion1_ != nullptr && equip_.potion1_->isUsed()) {
-		//si es de efecto permanente la borramos
-		if (equip_.potion1_->getDuration() <= -1) {
-			delete equip_.potion1_;
-			equip_.potion1_ = nullptr;
-		}
-		//Si no, miramos si ha pasado el tiempo de duracion
-		else if ((SDL_GetTicks() - PotionTime1) >= equip_.potion1_->getDuration()) {
-			usePotion(-(equip_.potion1_->getValue()), equip_.potion1_->getType());//quitamos el valor de la pocion
-			delete equip_.potion1_;// eliminamos la pocion
-			equip_.potion1_ = nullptr;
-		}
-	}
-	//Pocion2
-	//Si la pocion uno esta usada
-	if (equip_.potion2_ != nullptr && equip_.potion2_->isUsed()) {
-		//si es de efecto permanente la borramos
-		if (equip_.potion2_->getDuration() <= -1) {
-			delete equip_.potion2_;
-			equip_.potion2_ = nullptr;
-		}
-		//Si no, miramos si ha pasado el tiempo de duracion
-		else if ((SDL_GetTicks() - PotionTime2) >= equip_.potion2_->getDuration()) {
-			usePotion(-(equip_.potion2_->getValue()), equip_.potion2_->getType());//quitamos el valor de la pocion
-			delete equip_.potion2_;// eliminamos la pocion
-			equip_.potion2_ = nullptr;
+void Player::desactiveBuffPotion(usable* potion, int timerPos){
+	//Como se ha hecho previamente, se ha guardado el momento en el que se usó la poción
+	//de esa manera, si se vuelve a usar una poción del mismo tipo, se resetea timerPotion_[timerPos]
+	//por lo que unicamente quitara el debufo cuando se cumpla ese tiempo
+	if ((SDL_GetTicks() - timerPotion_[timerPos]) / 1000 > potion->getTime()) {
+		cout << "Entra" << endl;
+		double auxValue = potion->getValue();
+		switch (potion->getType())
+		{
+		case potionType::Speed:
+			currStats_.moveSpeed_ -= auxValue;
+			potionUsing_[0] = false;
+			break;
+		case potionType::Armor:
+			currStats_.armor_ -= auxValue;
+			potionUsing_[1] = false;
+			break;
+		case potionType::Damage:
+			currStats_.meleeDmg_ = currStats_.meleeDmg_ / (1 + auxValue / 100);
+			currStats_.distDmg_ = currStats_.distDmg_ / (1 + auxValue / 100);
+			potionUsing_[2] = false;
+			break;
+		case potionType::Crit:
+			currStats_.crit_ -= auxValue;
+			potionUsing_[3] = false;
+			break;
+		default:
+			break;
 		}
 	}
 }
@@ -608,18 +610,13 @@ void Player::createClon()
 
 Player::~Player()
 {
-	//Temporal para no dejar basura
-	for (int i = 0; i < skills_.size(); i++) {
-		delete skills_[i];
+	for (Skill* ob : skills_) {
+		delete ob; ob = nullptr;
 	}
-
-	delete equip_.armor_;
-	delete equip_.gloves_;
-	delete equip_.boots_;
-	delete equip_.sword_;
-	delete equip_.fireGun_;
-	delete equip_.potion1_;
-	delete equip_.potion2_;
+	//Temporal para no dejar basura
+	/*for (int i = 0; i < skills_.size(); i++) {
+		delete skills_[i];
+	}*/
 }
 
 void Player::shout()

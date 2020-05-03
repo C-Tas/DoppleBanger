@@ -1,10 +1,10 @@
 #pragma once
 #include "GameState.h"
 #include <array>
-#include "VisualElement.h"
+
+class VisualElement;
 
 using CallBackOnClick = void(Application * App);
-
 class SelectLevelState :
 	public GameState
 {

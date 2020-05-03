@@ -1,10 +1,9 @@
 #include "SkillState.h"
-#include "Button.h"
-#include "Texture.h"
 #include "GameManager.h"
 #include "Inventory.h"
 #include "Player.h"
 #include "TextBox.h"
+#include "SkillButton.h"
 #include "Skill.h"
 #include "VisualElement.h"
 #include "RicochetSkill.h"
@@ -16,22 +15,7 @@
 
 
 void SkillState::initState() {
-	SDL_ShowCursor(SDL_ENABLE);
-
-	////QUITA EL COMENTARIO PARA DEBUGUEAR | LAS SKILLS SE DESBLOQUEAN EN 33,66 Y 100 PUNTOS EN LA RAMA
-	GameManager::instance()->setPrecisionPoints(99);
-	GameManager::instance()->setMeleePoints(99);
-	GameManager::instance()->setGhostPoints(99);
-
 	player_ = gm_->getPlayer();
-
-	#ifdef _DEBUG	//PARA DEBUG
-	cout << "SKILLTATE" << endl;
-	cout << "TIENES " << gm_->getAchievementPoints() << " PUNTOS" << endl;
-	cout << "PRECISION " << (int)gm_->getPresicionPoints() << " PUNTOS" << endl;
-	cout << "MELEE " << (int)gm_->getMeleePoints() << " PUNTOS" << endl;
-	cout << "GHOST " << (int)gm_->getGhostPoints() << " PUNTOS" << endl;
-	#endif
 
 	bg_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillMenu));
 	createButtons();
@@ -93,13 +77,13 @@ void SkillState::updateBars() {
 		switch (i)
 		{
 		case 0:	//Barra verde
-			aux.w = (int)(0.3313 * app_->getWindowWidth() * (int)gm_->getPresicionPoints() / 100);
+			aux.w = (int)(0.3313 * app_->getWindowWidth() * gm_->getPresicionPoints() / maxPoints);
 			break;
 		case 1:	//Barra amarilla
-			aux.w = (int)(0.3313 * app_->getWindowWidth() * (int)gm_->getMeleePoints() / 100);
+			aux.w = (int)(0.3313 * app_->getWindowWidth() * gm_->getMeleePoints() / maxPoints);
 			break;
 		case 2:	//Barra azul
-			aux.w = (int)(0.3313 * app_->getWindowWidth() * (int)gm_->getGhostPoints() / 100);
+			aux.w = (int)(0.3313 * app_->getWindowWidth() * gm_->getGhostPoints() / maxPoints);
 			break;
 		default:
 			break;
@@ -157,7 +141,7 @@ void SkillState::createSkillsIcons()
 
 void SkillState::renderSkillsEquipped()const
 {
-	vector<SkillName> aux = GameManager::instance()->getAllSkillsEquipped();
+	vector<SkillName> aux = gm_->getAllSkillsEquipped();
 	int i = 0;
 	for (SkillName name : aux) {
 		Texture* auxTex = getTextureFromSkill(name);
@@ -181,9 +165,6 @@ void SkillState::setSelectedSkillButton(SkillButton* button)
 	else {
 		selectedRectangle->setPos(Vector2D(button->getPosX() - 10, button->getPosY() - 10));
 	}
-#ifdef _DEBUG
-	cout << "Cambio de seleccion en el skill state" << endl;
-#endif // _DEBUG
 }
 
 void SkillState::equipSelectedSkill(Key key)
@@ -239,7 +220,7 @@ void SkillState::meleePointsActualized()
 
 	auxPointsActualized(skillsTypeIterator[1], app_->getTextureManager()->getTexture(Resources::TextureId::SkillGolpeFuerteC),
 		app_->getTextureManager()->getTexture(Resources::TextureId::SkillInvencibleC),
-		app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC), (int)gm_->getMeleePoints(),
+		app_->getTextureManager()->getTexture(Resources::TextureId::SkillTorbellinoC), gm_->getMeleePoints(),
 		nullptr, func, nullptr);
 }
 
@@ -249,17 +230,17 @@ void SkillState::distancePointsActualized()
 
 	auxPointsActualized(skillsTypeIterator[0], app_->getTextureManager()->getTexture(Resources::TextureId::SkillPerforanteC),
 		app_->getTextureManager()->getTexture(Resources::TextureId::SkillRaudoC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC),
-		(int)gm_->getPresicionPoints(), nullptr, func, nullptr);
+		gm_->getPresicionPoints(), nullptr, func, nullptr);
 }
 
 void SkillState::ghostPointsActualized()
 {
-	function<void(Player*)> func1 = [](Player* player) { player->setLiberation1(); };
-	function<void(Player*)> func2 = [](Player* player) { player->setLiberation2(); };
+	function<void(Player*)> func1 = [](Player* player) { player->setLiberation(1); };
+	function<void(Player*)> func2 = [](Player* player) { player->setLiberation(2); };
 
 	auxPointsActualized(skillsTypeIterator[2], app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC),
 		app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC), app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC)
-		, (int)gm_->getGhostPoints(), func1, nullptr, func2);
+		, gm_->getGhostPoints(), func1, nullptr, func2);
 }
 
 void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* t1, Texture* t2, Texture* t3, int points, std::function<void(Player*)> p1, std::function<void(Player*)> p2, std::function<void(Player*)> p3)
@@ -273,7 +254,6 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 		
 		if (p1 != nullptr) {
 			p1(player_);
-			cout << "1" << endl;
 		}
 	}
 	++aux;
@@ -283,7 +263,6 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 		gm_->setSkillUnlocked((*aux)->getSkillId());
 		if (p2 != nullptr) {
 			p2(player_);
-			cout << "2" << endl;
 
 		}
 	}
@@ -294,8 +273,6 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 		gm_->setSkillUnlocked((*aux)->getSkillId());
 		if (p3 != nullptr) {
 			p3(player_);
-			cout << "3" << endl;
-
 		}
 	}
 }
@@ -466,33 +443,30 @@ void SkillState::goToInventaryState(Application* app) {
 }
 
 void SkillState::increasePrecisionBranch(Application* app) {
-	if (GameManager::instance()->getAchievementPoints() > 0 && (int)GameManager::instance()->getPresicionPoints() < 100) {	//Comprueba que tenga puntos de haza�a que invertir y que la rama no tenga ya 100 puntos (m�ximo)
-		GameManager::instance()->setPrecisionPoints((int)GameManager::instance()->getPresicionPoints() + 1);				//Aumenta en uno los puntos de esta rama
-		GameManager::instance()->setArchievementPoints(GameManager::instance()->getAchievementPoints() - 1);				//Reduce en uno los puntos de haza�a
+	GameManager* gm = GameManager::instance();
+	if (gm->getAchievementPoints() > 0 && gm->getPresicionPoints() < gm->getMaxPoints()) {	//Comprueba que tenga puntos de haza�a que invertir y que la rama no tenga ya el maximo
+		gm->setPrecisionPoints(gm->getPresicionPoints() + 1);				//Aumenta en uno los puntos de esta rama
+		gm->setArchievementPoints(gm->getAchievementPoints() - 1);				//Reduce en uno los puntos de haza�a
 		dynamic_cast<SkillState*>(app->getCurrState())->distancePointsActualized();
-		cout << "PRECISION " << (int)GameManager::instance()->getPresicionPoints() << " PUNTOS" << endl; //PARA DEBUG
 	}
-	cout << "TE QUEDAN " << (int)GameManager::instance()->getAchievementPoints() << " PUNTOS" << endl;
 };
 
 void SkillState::increaseMeleeBranch(Application* app) {
-	if (GameManager::instance()->getAchievementPoints() > 0 && (int)GameManager::instance()->getMeleePoints() < 100) {
-		GameManager::instance()->setMeleePoints((int)GameManager::instance()->getMeleePoints() + 1);
-		GameManager::instance()->setArchievementPoints(GameManager::instance()->getAchievementPoints() - 1);
+	GameManager* gm = GameManager::instance();
+	if (gm->getAchievementPoints() > 0 && gm->getMeleePoints() < gm->getMaxPoints()) {
+		gm->setMeleePoints(gm->getMeleePoints() + 1);
+		gm->setArchievementPoints(gm->getAchievementPoints() - 1);
 		dynamic_cast<SkillState*>(app->getCurrState())->meleePointsActualized();
-		cout << "MELEE " << (int)GameManager::instance()->getMeleePoints() << " PUNTOS" << endl;
 	}
-	cout << "TE QUEDAN " << (int)GameManager::instance()->getAchievementPoints() << " PUNTOS" << endl;
 };
 
 void SkillState::increaseGhostBranch(Application* app) {
-	if (GameManager::instance()->getAchievementPoints() > 0 && (int)GameManager::instance()->getGhostPoints() < 100) {
-		GameManager::instance()->setGhostPoints((int)GameManager::instance()->getGhostPoints() + 1);
-		GameManager::instance()->setArchievementPoints(GameManager::instance()->getAchievementPoints() - 1);
+	GameManager* gm = GameManager::instance();
+	if (gm->getAchievementPoints() > 0 && gm->getGhostPoints() < gm->getMaxPoints()) {
+		gm->setGhostPoints(gm->getGhostPoints() + 1);
+		gm->setArchievementPoints(gm->getAchievementPoints() - 1);
 		dynamic_cast<SkillState*>(app->getCurrState())->ghostPointsActualized();
-		cout << "GHOST " << (int)GameManager::instance()->getGhostPoints() << " PUNTOS" << endl;
 	}
-	cout << "TE QUEDAN " << (int)GameManager::instance()->getAchievementPoints() << " PUNTOS" << endl;
 }
 
 void SkillState::selectSkill(Application* app, SkillButton* button)
@@ -502,26 +476,16 @@ void SkillState::selectSkill(Application* app, SkillButton* button)
 
 void SkillState::assingToQKey(Application* app)
 {
-#ifdef _DEBUG
-	cout << "Asignado a la tecla Q" << endl;
-#endif // _DEBUG
 	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(Key::Q);
 }
 
 void SkillState::assingToWKey(Application* app)
 {
-#ifdef _DEBUG
-	cout << "Asignado a la tecla W" << endl;
-#endif // _DEBUG
 	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(Key::W);
 }
 
 void SkillState::assingToEKey(Application* app)
 {
-#ifdef _DEBUG
-	cout << "Asignado a la tecla E" << endl;
-#endif // _DEBUG
-
 	dynamic_cast<SkillState*>(app->getCurrState())->equipSelectedSkill(Key::E);
 }
 

@@ -1,8 +1,5 @@
 #pragma once
 #include "GameState.h"
-#include "Crab.h" //Include temporal
-#include "Player.h" //Include temporal
-#include "Equipment.h" //Include temporal
 
 class MainMenuState : public GameState
 {
@@ -12,12 +9,13 @@ private:
 	double button_w = 0;
 	//Diferencia entre los botones en el eje y
 	double button_dif = 0;
-	Player* player_ = nullptr;
 	//Crab* crab_ = nullptr;
 
-protected:
 	///<summary>Se inicializa el menu</summary>
 	virtual void initState();
+	//Para comprobar si existen partidas guardadas
+	bool isExistingDataGame();
+protected:
 	///<summary>crea los 4 botones necesarios del main menu</summary>
 	void createButtons();
 

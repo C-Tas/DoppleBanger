@@ -9,13 +9,19 @@
 #include "Clon.h"
 #include "HUD.h"
 #include "checkML.h"
-
-class Application;
+#include "jute.h"
 
 using namespace std;
 class Item;
-class Player;
 using lista = list<InventoryButton*>*;
+class Application;
+class Player;
+class Armor;
+class Gloves;
+class Boots;
+class Sword;
+class Gun;
+class usable;
 
 //Enumerados que representan la �ltima isla desbloqueada
 enum class Zone : int {
@@ -35,7 +41,7 @@ enum class Island : int {
 	Spooky,
 	Volcanic
 };
-enum class spentPoints : int {
+enum class PointsTree : int {
 	Precision = 0,
 	Melee = 0,
 	Ghost = 0
@@ -47,6 +53,9 @@ enum class missions : int {
 	masValePajaroEnMano,
 	arlongPark
 	//En caso de tener misión para el loro añadirla tb (o si se añade el esqueleto)
+
+	//Para saber el tamaño
+	Size
 };
 
 #pragma region Skills
@@ -56,24 +65,24 @@ enum class SkillType { Active, Pasive };
 
 //Nombre de cada una de las habilidades del jugador
 enum class SkillName : int {
-	//Enums auxiliares para las pasivas y para las habilidades que no están equipadas
-	Unequipped,
+	//Ataque a distancia
+	DisparoPerforante,
+	Raudo,
+	Rebote,
 
 	//Ataque melee
 	GolpeFuerte,
 	Invencible,
 	Torbellino,
 
-	//Ataque a distancia
-	DisparoPerforante,
-	Raudo,
-	Rebote,
-
 	//Clon
 	Clon,
 	LiberacionI,
 	Explosion,
 	LiberacionII,
+
+	//Enums auxiliares para las pasivas y para las habilidades que no están equipadas
+	Unequipped,
 };
 
 //Enum para identificar las teclas de las habilidades
@@ -87,55 +96,64 @@ enum class Key : int {
 };
 #pragma endregion
 #pragma region Objetos
-enum class ObjectName : int {
-	Unequipped,
-
-	//Pociones
-	Health,
-	Mana,
-	Speed,
-	Armor,
-	Dmg,
-	Crit
-};
+enum class ObjectName : int { Health, Mana, Speed, Armor, Damage, Crit, Unequipped};
 #pragma endregion
+
+struct playerEquipment
+{
+	//Equipamiento del jugador
+	Armor* armor_ = nullptr;
+	Gloves* gloves_ = nullptr;
+	Boots* boots_ = nullptr;
+	Sword* sword_ = nullptr;
+	Gun* gun_ = nullptr;
+
+	vector<usable*> potions_{
+		nullptr,
+		nullptr
+	};
+};
 
 class GameManager {
 private:
-	//Numero de misiones secundarias
-	static const int NUM_MISION = 10;
 	//Puntero unico para evitar copias
 	static unique_ptr<GameManager> instance_;
 	//Puntos de haza�a
-	int achievementPoints_ = 350;
+	int achievementPoints_ = 0;
 	//Cantidad de dinero almacenada en el inventario
-	int inventoryGold_ = 300;
+	int inventoryGold_ = 0;
 	//Cantidad de dinero almacenada en el alijo
-	int stashGold_ = 1000;
+	int stashGold = 0;
 	//Booleano que indica si estamos en el barco
 	bool onShip_ = true;
 	//Enum de la �ltima isla desbloqueada
 	Island unlockedIslands_ = Island::Caribbean;
 	//Enum de la isla actual
 	Island currIsland_ = Island::Caribbean;
+	//Maximo de los puntos de hazaña
+	int maxPoints_ = 1000;
 	//Puntos de haza�a gastados en la rama precisi�n
-	spentPoints precision_ = spentPoints::Precision;
+	int precisionPoints_ = 0;
 	//Puntos de haza�a gastados e la rama melee
-	spentPoints melee_ = spentPoints::Melee;
+	int meleePoints_ = 0;
 	//Puntos de haza�a gastados de la rama ghost
-	spentPoints ghost_ = spentPoints::Ghost;
+	int clonPoints_ = 0;
 	//Puntero a la lista de item del inventario
 	list<InventoryButton*>* inventory_ = new list<InventoryButton*>;
 	//Puntero a la lista de items del alijo
 	list<InventoryButton*>* stash_ = new list<InventoryButton*>;
+	//Puntero a la lista de items de la tienda
+	list<InventoryButton*>* shop_ = new list<InventoryButton*>;
 	//Vector que representa las misiones secundarias completadas
-	vector<bool> missionsComplete_ = vector<bool>(NUM_MISION);
+	vector<bool> missionsComplete = vector<bool>((int)missions::Size);
 	//Vector que representa las misiones secundarias empezadas
-	vector<bool> missionsStarted_ = vector<bool>(NUM_MISION);
+	vector<bool> missionsStarted = vector<bool>((int)missions::Size);
 	//Vector de cooldowns de las habilidades equipadas
 	vector<bool> skillsCooldown_ = { false, false, false, false };
 	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
-	vector<bool> skillsUnlocked_ = { false, false ,false, false, false, false, false, true, false, false, false }; //Clon inicializada por defecto
+	vector<bool> skillsUnlocked_ = { false, false ,false, false, false, false, true, false, false, false }; //Clon inicializada por defecto
+	//Vector que contiene los puntos invertidos en cada rama
+	vector<int> pointrTree_ = { 0, 0, 0 };
 	//Vector que contiene la cantidad de enemigos que se han muerto de la mision correspondiente
 	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
 	vector<int> countEnemiesMission_ = { 0, 0, 0, 0};
@@ -144,31 +162,80 @@ private:
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
-	vector<ObjectName> objectsEquipped = { ObjectName::Unequipped, ObjectName::Unequipped };
+	vector<ObjectName> objectsEquipped_ = { ObjectName::Unequipped, ObjectName::Unequipped };
 
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
 	Player* player_ = nullptr;
+	//Equipamento del player
+	playerEquipment currEquip_;
 	//Puntero al clon
 	GameObject* clon_ = nullptr;
 	//Puntero al HUD
 	HUD* hud_ = nullptr;
 	//puntero a la aplicacion
 	Application* app_ = nullptr;
+
+	//Metodos para guardar y cargar partida
+	#pragma region Guardar/Cargar
+		#pragma region Guardar
+		//Guarda los datos en el json pasado como parámetro
+		void save(ofstream& slot);
+		//Guarda los datos de tipo JNUMBER
+		void saveJNUMBER(jute::jValue& mainJson);
+		//Guarda las misiones
+		void saveMissions(jute::jValue& mainJson);
+		//Guarda las habilidades equipadas
+		void saveSkills(jute::jValue& mainJson);
+		//Guarda el equipamiento del player
+		void saveEquipment(jute::jValue& mainJson);
+		//Guarda el inventario
+		void saveInventory_Stash(jute::jValue& mainJson);
+		#pragma endregion
+		#pragma region Cargar
+		//Carga los datos desde el json pasado como parámetro
+		void load(string jsonName);
+		//Carga los datos de tipo JNUMBER
+		void loadJNUMBER(jute::jValue& mainJson);
+		//Carga las habilidades
+		void loadSkills(jute::jValue& mainJson);
+		//Carga las misiones
+		void loadMissions(jute::jValue& mainJson);
+		//Carga el equipamiento
+		void loadEquipment(jute::jValue& mainJson);
+		//Carga las texturas del HUD
+		void loadHUD(jute::jValue& mainJson);
+		//Carga el inventario
+		void loadInventory_Stash(jute::jValue& mainJson);
+		//Carga un objeto de tipo Equipment
+		void loadEquipType(jute::jValue& mainJson, string tag, int i);
+		//Carga un objeto de tipo usable
+		void loadUsableType(jute::jValue& mainJson, string tag, int i);
+		#pragma endregion
+	#pragma endregion
+
 public:
 	//Constructor vacio
-	GameManager() {
-		unlockedIslands_ = Island::Volcanic;
-		for (int i = 0; i < NUM_MISION; i++) {
-			missionsComplete_[i] = false;
-		}
-	}
+	GameManager();
 	//Destructor
 	~GameManager() {
 		for (InventoryButton* ob : *inventory_)delete ob;
 		for (InventoryButton* ob : *stash_)delete ob;
+		for (InventoryButton* ob : *shop_)delete ob;
+		delete shop_;
 		delete inventory_;
 		delete stash_;
+		//Se borra el equipo
+		if (currEquip_.armor_ != nullptr) delete currEquip_.armor_;
+		if (currEquip_.gloves_ != nullptr) delete currEquip_.gloves_;
+		if (currEquip_.boots_ != nullptr) delete currEquip_.boots_;
+		if (currEquip_.sword_ != nullptr) delete currEquip_.sword_;
+		if (currEquip_.gun_ != nullptr) delete currEquip_.gun_;
+		for (int i = 0; i < currEquip_.potions_.size(); i++) {
+			if(currEquip_.potions_.at(i) != nullptr)
+				delete currEquip_.potions_.at(i);
+		}
 	}
+
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {
 		if (instance_.get() == nullptr) {
@@ -178,8 +245,24 @@ public:
 	}
 	GameManager(GameManager&) = delete;
 	GameManager& operator=(const GameManager&) = delete;
-	//Inicializa el oro, la actual isla y los puntos de haza�a
-	inline void initGameManager(int currGold, Island unlockedIslands, int achievementPoints);
+
+#pragma region Guardar/Cargar
+	//Guardar en slot1
+	void saveSlot1();
+	//Guardar en slot2
+	void saveSlot2();
+	//Guardar en slot3
+	void saveSlot3();
+	//Cargar slot1
+	void loadSlot1();
+	//Cargar slot2
+	void loadSlot2();
+	//Cargar slot3
+	void loadSlot3();
+	//Resetea los valores del juego para una partida nueva
+	//cuando se vuelva al menú principal
+	void resetGameManager();
+#pragma endregion
 
 #pragma region getters
 	//Devuelve true si la misi�n ha sido pasada
@@ -195,15 +278,13 @@ public:
 	//Devuelve si estamos o no en la isla
 	const bool getOnShip() { return onShip_; };
 
-	//Devuelve el oro conseguido
-	const int getGold() { return inventoryGold_; };
 	//Devuelve los puntos de haza�a
 	const int getAchievementPoints() { return achievementPoints_; };
 	//Devuelve el dinero del inventario
 	const int getInventoryGold() { return inventoryGold_; }
 	//Devuelve el dinero del alijo
-	const int getStashGold() { return stashGold_; }
-		//Devuelve el tamaño de fuente según el tamaño de la ventana
+	const int getStashGold() { return stashGold; }
+	//Devuelve el tamaño de fuente según el tamaño de la ventana
 	const int getFontSize();
 	//Devuelve el total de misiones secundarias
 	const int getNumMission() { return NUM_MISION; };
@@ -215,6 +296,9 @@ public:
 	const lista getInventory() { return inventory_; };
 	//Devuelve el alijo
 	const lista getStash() { return stash_; };
+	//Devuelve la tienda
+	const lista getShop() { return shop_; };
+
 	//Devuelve el n�mero de islas desbloqueadas
 	const Island getUnlockedIslands() { return unlockedIslands_; };
 	//Devuelve la isla actual
@@ -222,12 +306,14 @@ public:
 	//Devuelve el vector de skills
 	const vector<SkillName>& getAllSkillsEquipped() { return skillsEquipped_; }
 
+	//Devuelve el máximo de los puntos de hazaña
+	const int getMaxPoints() { return maxPoints_; };
 	//Devuelve los puntos gastados en la rama presici�n
-	const spentPoints getPresicionPoints() { return precision_; };
+	const int getPresicionPoints() { return precisionPoints_; };
 	//Devuelve los puntos gastados en la rama melee
-	const spentPoints getMeleePoints() { return melee_; };
+	const int getMeleePoints() { return meleePoints_; };
 	//Devuelve los puntos gastados en la rama fantasma
-	const spentPoints getGhostPoints() { return ghost_; };
+	const int getGhostPoints() { return clonPoints_; };
 	
 	//Devuele la habilidad asignada en la tecla
 	const SkillName getEquippedSkill(Key key) { return skillsEquipped_[(int)key]; }
@@ -240,6 +326,8 @@ public:
 	const Point2D getPlayerPos();
 	//Devuelve al jugador
 	Player* getPlayer() { return player_; };
+	//Devuelve el equipamiento del player
+	playerEquipment getEquip() { return currEquip_; };
 	//Devuelve al clon
 	GameObject* getClon() { return clon_; };
 	
@@ -251,17 +339,17 @@ public:
 	//Asigna los archievement points
 	inline void setArchievementPoints(int value) { achievementPoints_ = value; };
 	//Asigna los puntos gastados a la rama precision
-	inline void setPrecisionPoints(int value) { precision_ = (spentPoints)value; };
+	inline void setPrecisionPoints(int value) { precisionPoints_ = value; };
 	//Asigna los puntos gastados a la rama melee
-	inline void setMeleePoints(int value) { melee_ = (spentPoints)value; };
+	inline void setMeleePoints(int value) { meleePoints_ = value; };
 	//Asigna los puntos gastados a la rama Ghost
-	inline void setGhostPoints(int value) { ghost_ = (spentPoints)value; };
+	inline void setGhostPoints(int value) { clonPoints_ = value; };
 	//Añade(+) /Quita(-) dinero del inventario
-	inline void addInventoryGold(int money) { inventoryGold_ += money; };
+	inline void addInventoryGold(int money) { inventoryGold_ += money; }
 	////Añade(+) /Quita(-) dinero del alijo
 	inline void addStashGold(int money) { stashGold_ += money; };
 	///Asigna money como cantidad de dinero en el inventario
-	inline void setInventoryGold(int money) { inventoryGold_ = money; };
+	inline void setInventoryGold(int money) { inventoryGold_ = money; }
 	///Asigna money como cantidad de dinero en el alijo
 	inline void setStashGold(int money) { stashGold_ = money; };
 	//Indica si estamos o no en el barco
@@ -298,6 +386,17 @@ public:
 
 	//Asigna al puntero de player
 	inline void setPlayer(Player* player) { player_ = player; };
+	//Equipamiento
+	//Inicializa el equipamiento base
+	playerEquipment& initEquipment();
+	void setArmor(Armor* armor) { currEquip_.armor_ = armor; };
+	void setGloves(Gloves* armor) { currEquip_.gloves_ = armor; };
+	void setBoots(Boots* armor) { currEquip_.boots_ = armor; };
+	void setSword(Sword* armor) { currEquip_.sword_ = armor; };
+	void setGun(Gun* armor) { currEquip_.gun_ = armor; };
+	void setPotion(int slot, usable* newPot) {
+		currEquip_.potions_.at(slot) = newPot;
+	}
 	//Asigna al puntero de clon
 	inline void setClon(GameObject* clon) { clon_ = clon; };
 	//Asigna el puntero de hud
@@ -309,5 +408,7 @@ public:
 	inline void setApp(Application* app) { app_ = app; };
 #pragma endregion
 	//Para añadir objetos al inventario
-	void addToInventory(Equipment* ob);
+	void addToInventory(Item* ob);
+	//Para añadir objetos al alijo
+	void addToStash(Item* ob);
 };

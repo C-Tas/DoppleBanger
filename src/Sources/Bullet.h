@@ -39,7 +39,7 @@ protected:
 	double initTime_ = 0; //Ticks cuando se creo la bala
 	double currTime_ = 0; //Ticks en cada update
 	double speed_ = 0;
-	int damage_ = 0;
+	int Damage = 0;
 	bool enemyBullet_ = false;
 	bool deleting = false;
 	uint collisionsBeforeDestroy_ = 1;//Variable para aquellas balas que chac mas de una vez antes destruirse

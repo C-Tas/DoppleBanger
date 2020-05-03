@@ -1,5 +1,13 @@
 #include "SkillButton.h"
 
+SkillButton::SkillButton(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickSkill* callBack, SkillName name, SkillType type, CallBackOnPointerOver* callbackOnPoint) :
+	Button(app, texture, pos, scale, nullptr), type_(type) {
+	callbackSkill_ = callBack; handleEvents_ = HandleEvents::instance(); id = name;
+	callbackOnPoint_ = callbackOnPoint;
+	unlocked_ = GameManager::instance()->isSkillUnlocked(name);
+	asign_ = GameManager::instance()->isSkillAsign(name);
+}
+
 bool SkillButton::update()
 {
 	SDL_Point mouse = { handleEvents_->getRealMousePos().getX(), handleEvents_->getRealMousePos().getY() };

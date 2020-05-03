@@ -3,14 +3,14 @@
 
 void Gun::equip(Player* player)
 {
-	player->addMeleeDmg(ad_);
-	player->addDistRate(distRate_);
+	player->addDistDmg(modifiers_.distDmg_);
+	player->addDistRate(modifiers_.distRate_);
 }
 
 void Gun::remove(Player* player)
 {
-	player->removeAd(ad_);
-	player->removeDistRate(distRate_);
+	player->removeDistDamage(modifiers_.distDmg_);
+	player->removeDistRate(modifiers_.distRate_);
 }
 
 void Gun::initStats()

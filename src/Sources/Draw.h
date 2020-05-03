@@ -1,7 +1,5 @@
 ﻿#pragma once
 #include "GameObject.h"
-#include "Texture.h"
-#include "SDL.h"
 #include <iostream>
 #include "Camera.h"
 

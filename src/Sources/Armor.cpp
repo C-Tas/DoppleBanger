@@ -1,14 +1,17 @@
 #include "Armor.h"
 #include "Player.h"
 
+
 void Armor::equip(Player* player)
 {
-	player->addHealth(health_);
-	player->addArmor(armor_);
+	//Modifica la vida maxima, antes modificaba solo la vida actual
+	player->addMaxHealth(modifiers_.health_);
+	player->addArmor(modifiers_.armor_);
 }
 
 void Armor::remove(Player* player)
 {
-	player->removeHealth(health_);
-	player->removeArmor(armor_);
+	//Modifica la vida maxima, antes modificaba solo la vida actual
+	player->addMaxHealth(-modifiers_.health_);
+	player->removeArmor(modifiers_.armor_);
 }

@@ -45,6 +45,14 @@ public:
 		GoToSkillsAButton,
 		GoToSkillsBButton,
 		GoToShopButton,
+		SaveGame1,
+		SaveGame2,
+		SaveGame3,
+		LoadGame1,
+		LoadGame2,
+		LoadGame3,
+		LoadGameNull,
+		LoadButtonNull,
 
 		//Punteros
 		MovementPointer,
@@ -82,8 +90,10 @@ public:
 		MenuBackground,
 		InventaryMenu,
 		PauseBackground,
+		SaveLoadBackground,
 		StashMenu,//
 		SkillMenu,
+		ShopMenu,
 		Scene1,
 		Scene2,
 		Scene3,
@@ -237,12 +247,20 @@ public:
 		Coco,
 
 		//Equipables
-		Gun1,
-		Gloves1,
-		Boots1,
-		Gloves2,
 		Armor1,
-		Blunderbuss,
+		Armor2,
+		Gloves1,
+		Gloves2,
+		Boots1,
+		Boots2,
+		Sword1,
+		Sword2,
+		Saber1,
+		Saber2,
+		Gun1,
+		Gun2,
+		ShotGun1,
+		ShotGun2
 
 		//Tilesets de los mapas
 		Tileset1,

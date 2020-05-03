@@ -19,9 +19,6 @@ public:
 	void popState();
 	void pushState(GameState* gameState) { gameStateStack_.push(gameState); };
 	void changeState(GameState* gameState) { popState(); gameStateStack_.push(gameState);};
-	void clearAllStateExceptFirst() { 
-		for (int i = 0; i < gameStateStack_.size(); i++) 
-		{ popState(); } 
-	}
+	void clearAllStateExceptFirst();
 };
 

@@ -25,14 +25,8 @@ protected:
 
 public: 
 	///<summary>Constructora de SkillButton</summary>
-	SkillButton(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickSkill* callBack, 
-		SkillName name, SkillType type, CallBackOnPointerOver* callbackOnPoint):
-		Button(app, texture, pos, scale, nullptr), type_(type) {
-		callbackSkill_ = callBack; handleEvents_ = HandleEvents::instance(); id = name;
-		callbackOnPoint_ = callbackOnPoint;
-		unlocked_ = GameManager::instance()->isSkillUnlocked(name);
-		asign_ = GameManager::instance()->isSkillAsign(name);
-	}
+	SkillButton(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickSkill* callBack,
+		SkillName name, SkillType type, CallBackOnPointerOver* callbackOnPoint);
 	///<summary>Destructora</summary>
 	virtual ~SkillButton() {};
 	virtual bool update();

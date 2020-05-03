@@ -31,7 +31,7 @@ private:
 
 	#pragma region Vida y mana
 	Texture* life_ = nullptr;		//Textura de la vida
-	int mana_ = 0;
+	int Mana = 0;
 	SDL_Rect clipLife_;				//Contenido de vida
 	Sint16 xMana_ = 0;				//Coordenada x del centro de la circunferencia
 	Sint16 yMana_ = 0;				//Coordenada y del centro de la circunferencia

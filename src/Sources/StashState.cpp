@@ -1,5 +1,10 @@
 #include "StashState.h"
 #include "GameManager.h"
+#include "Armor.h"
+#include "Gloves.h"
+#include "Boots.h"
+#include "Sword.h"
+#include "Gun.h"
 
 #pragma region Callbacks
 
@@ -69,7 +74,6 @@ void StashState::draw() const
 
 	//Escribimos la informaci�n del boton seleccionado
 	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render(DESCRIPTION_RECT);
-	
 }
 
 void StashState::update()
@@ -123,57 +127,22 @@ void StashState::initState() {
 	//Boton para pasar el dinero del inventario al alijo
 	addRenderUpdateLists(new Button(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((37 * (app_->getWindowWidth() / 70))+10,MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToStash));
 
-
-	//Cogemos la referencia de las listas que hay en GameManager
-	stash_.objects_ = gm_->getStash();
-	inventory_.objects_ = gm_->getInventory();
-
 	//Cogemos la referencia al dinero de gameManager
 	stash_.money_ = gm_->getStashGold();
 	inventory_.money_ = gm_->getInventoryGold();
 
 	//Posici�n de los textos del alijo e inventario
-	stash_.moneyText = { 5*(app_->getWindowWidth()/16), MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT }; //width es el ancho de cada n�mero 
-	inventory_.moneyText = { 4*(app_->getWindowWidth()/5)-10,MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT };
+	stash_.moneyText = { 5 * (app_->getWindowWidth() / 16), MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT }; //width es el ancho de cada n�mero 
+	inventory_.moneyText = { 4 * (app_->getWindowWidth() / 5) - 10,MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT };
 
 	//Texturas con texto
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
 	stashMoneyTex_ = new Texture(app_->getRenderer(), to_string(stash_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
 	//Creo aqu� objetos para comprobar funcionalidad
-	#ifdef _DEBUG
-	
-	cout << "Creando Objetos de prueba en el initState" << endl;
 
-	Equipment* gun = app_->getEquipGen()->genEquip(equipType::Pistol_);
-	Equipment* gun1 = app_->getEquipGen()->genEquip(equipType::Shotgun_);
-	Equipment* gun2 = app_->getEquipGen()->genEquip(equipType::Blunderbuss_);
-	Equipment* gun3 = app_->getEquipGen()->genEquip(equipType::Pistol_);
-
-	/*Gun* gun = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon),"pistolaDefault", "uwu1",0,0,0,Shotgun_);
-	Gun* gun1 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu2", 0, 0, 0, Shotgun_);
-	Gun* gun2 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu3", 0, 0, 0, Shotgun_);
-	Gun* gun3 = new Gun(app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), "pistolaDefault", "uwu4", 0, 0, 0, Shotgun_);*/
-
-	
-	InventoryButton* b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun, callbackSelectObject);
-	auto it = stash_.objects_->insert(stash_.objects_->end(),b);
-	b->setIterator(it);
-	b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun1, callbackSelectObject);
-	it = stash_.objects_->insert(stash_.objects_->end(), b);
-	b->setIterator(it);
-	b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun3, callbackSelectObject);
-	it = stash_.objects_->insert(stash_.objects_->end(), b);
-	b->setIterator(it);
-	
-	b = new InventoryButton(app_,  app_->getTextureManager()->getTexture(Resources::TextureId::Gun1),
-		Vector2D(100, 400), Vector2D(125, 50), gun2, callbackSelectObject);
-	it = inventory_.objects_->insert(inventory_.objects_->end(), b);
-	b->setIterator(it);
-
-	#endif // _DEBUG
+	//Cogemos la referencia de las listas que hay en GameManager
+	stash_.objects_ = gm_->getStash();
+	inventory_.objects_ = gm_->getInventory();
 	///Reasignamos el callback y el estado puesto que si se borra el antiguo stash, no se podrá seleccionar 
 	//ninguno de los objetos al no estar la función en la misma direccion de memoria
 	for (auto ob = inventory_.objects_->begin(); ob != inventory_.objects_->end(); ++ob) {
@@ -237,7 +206,7 @@ void StashState::selectObject(InventoryButton* button)
 {
 	selected_ = button;
 	if (selectedObjectDescription_ != nullptr)delete selectedObjectDescription_;
-	selectedObjectDescription_ = new Texture(app_->getRenderer(), selected_->getObject()->getItemDescription(), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
+	selectedObjectDescription_ = new Texture(app_->getRenderer(), "Descripcion Temporal", app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
 }
 
 void StashState::changeBetweenLists()
@@ -261,10 +230,8 @@ void StashState::changeBetweenLists()
 			//actualizamos iterador
 			selected_->setIterator(it);
 			if (stash_.objects_->size() == 0) stash_.firstDrawn = stash_.objects_->begin();
-			
 		}
 		else {
-
 			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
 			//Insertamos en la otra lista
 			it = stash_.objects_->insert(stash_.objects_->end(), selected_);

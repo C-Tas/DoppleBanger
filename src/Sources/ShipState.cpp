@@ -1,17 +1,13 @@
 #include "ShipState.h"
-#include "GameManager.h"
-#include "Player.h"
 #include "ShipObject.h"
+#include "Player.h"
+#include "GameManager.h"
+#include "SaveState.h"
+#include "StashState.h"
+#include "SelectLevelState.h"
 #include "CaribbeanIslandState.h"
 #include "SpookyIslandState.h"
 #include "VolcanicIslandState.h"
-#include "SelectLevelState.h"
-#include "SaveLoadState.h"
-#include "StashState.h"
-
-#include "Magordito.h"
-#include "Collisions.h" //Provisional
-
 
 #pragma region CallBacks
 //Callback para cambiar de GameState e ir a la isla actual
@@ -40,7 +36,7 @@ void ShipState::goMap(Application* app)
 //Callback para ir al menu de guardado
 void ShipState::goSaveState(Application* app)
 {
-	app->getGameStateMachine()->pushState(new SaveLoadState(app, false));
+	app->getGameStateMachine()->pushState(new SaveState(app));
 }
 #pragma endregion
 

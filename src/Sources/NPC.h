@@ -2,7 +2,6 @@
 #include "Collider.h"
 #include "TextBox.h"
 
-
 class NPC : public Collider {
 private:
 	TextBox* txtBox_ = nullptr;

@@ -2,13 +2,11 @@
 #include "ControlsState.h"
 #include "CreditsState.h"
 #include "StoryState.h"
-#include "SaveLoadState.h"
+#include "LoadState.h"
 #include "Button.h"
-#include "Texture.h"
 #include "SDL_macros.h"
 #include "VisualElement.h"
-
-#include "Clon.h"
+#include <fstream>
 
 using namespace std;
 
@@ -29,6 +27,22 @@ void MainMenuState::initState()
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
 }
+bool MainMenuState::isExistingDataGame()
+{
+	ifstream slot1("../Sources/save_data/save1.json");
+	ifstream slot2("../Sources/save_data/save2.json");
+	ifstream slot3("../Sources/save_data/save3.json");
+	if (slot1.fail() && slot2.fail() && slot3.fail()) {
+		slot1.close();
+		slot2.close();
+		slot3.close();
+		return false;
+	}
+	slot1.close();
+	slot2.close();
+	slot3.close();
+	return true;
+}
 
 void MainMenuState::createButtons() {
 	//creamos el boton para ir a los controles
@@ -44,9 +58,17 @@ void MainMenuState::createButtons() {
 	gameObjects_.push_back(creditButton);
 	objectsToRender_.push_back(creditButton);
 	//creamos el boton para jugar cargando el juego del archivo de guardado
-	Button* loadButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButton),
-		{ double(app_->getWindowWidth() / 2) - button_w * 1.5 ,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
-		{ button_w,button_h }, goLoadState);
+	Button* loadButton = nullptr;
+	if (!isExistingDataGame()) {
+		loadButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButtonNull),
+			{ double(app_->getWindowWidth() / 2) - button_w * 1.5 ,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
+			{ button_w,button_h }, nullptr);	
+	}
+	else {
+		loadButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButton),
+			{ double(app_->getWindowWidth() / 2) - button_w * 1.5 ,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
+			{ button_w,button_h }, goLoadState);
+	}
 	gameObjects_.push_back(loadButton);
 	objectsToRender_.push_back(loadButton);
 	//creamos el boton para jugar sin cargar el juego del archivo de guardado
@@ -76,7 +98,7 @@ void MainMenuState::goCreditsState(Application* app) {
 	app->getGameStateMachine()->pushState(new CreditsState(app));
 };
 void MainMenuState::goLoadState(Application* app) {
-	app->getGameStateMachine()->pushState(new SaveLoadState(app, true)); //TRUE => LOAD //FALSE => SAVE
+	app->getGameStateMachine()->pushState(new LoadState(app));
 };
 void MainMenuState::goStoryState(Application* app) {
 	app->getAudioManager()->playChannel(Resources::Shout, 0, 1);
