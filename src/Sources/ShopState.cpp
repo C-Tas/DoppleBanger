@@ -12,6 +12,7 @@
 
 void ShopState::backToPrevious(Application* app) {
 	app->getGameStateMachine()->popState();
+	SDL_ShowCursor(SDL_DISABLE);
 }
 
 void ShopState::callbackAdvanceInventoryPage(Application* app) {
@@ -92,6 +93,7 @@ void ShopState::update()
 }
 
 void ShopState::initState() {
+	SDL_ShowCursor(SDL_ENABLE);
 	//Fondo
 	background_ = app_->getTextureManager()->getTexture(Resources::TextureId::ShopMenu);
 

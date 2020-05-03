@@ -3,6 +3,7 @@
 
 void SaveState::backToPreviousState(Application* app) {
 	app->getGameStateMachine()->popState();
+	SDL_ShowCursor(SDL_DISABLE);
 }
 void SaveState::saveSlot1() {
 	GameManager::instance()->saveSlot1();
@@ -16,6 +17,7 @@ void SaveState::saveSlot3() {
 
 void SaveState::initState()
 {
+	SDL_ShowCursor(SDL_ENABLE);
 	background_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::SaveLoadBackground));
 	addRenderUpdateLists(background_);
 

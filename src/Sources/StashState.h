@@ -100,7 +100,6 @@ private:
 	void selectedIsLastElement(Container & list_, int nVisibleElements);
 	///<summary>M�todo auxiliar para actualizar los valores en los textos del dinero al cambiarlos</summary>
 	void moneyChange();
-
 public:
 	///<summary>Constructora del StashState</summary>
 	StashState(Application* app = nullptr) : GameState(app) { initState(); };
