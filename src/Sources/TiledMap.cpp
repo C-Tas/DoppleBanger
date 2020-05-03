@@ -253,7 +253,7 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		CollisionCtrl::instance()->addEnemy(pumpkin);
 	}
 	else if (objectType == "Kraken") {
-		Kraken* kraken = new Kraken(app_, pos, Vector2D(4*W_MONKEY, 4*H_MONKEY));
+		Kraken* kraken = new Kraken(app_, pos, Vector2D(W_KRAKEN,H_KRAKEN));
 		state_->addEnemy(kraken);
 		CollisionCtrl::instance()->addEnemy(kraken);
 	}
