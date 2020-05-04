@@ -286,7 +286,6 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		CollisionCtrl::instance()->setPlayer(player);
 		player->setColliderPos(Vector2D((player->getScale().getX() / 3), 2* (player->getScale().getY() / 4)));
 		player->setColliderScale(Vector2D((player->getScale().getX() / 3),  (player->getScale().getY() / 4)));
-
 	}
 	else if (objectType == "Altar") {
 		Altar* altar = new Altar(app_, pos, { 100,100 });

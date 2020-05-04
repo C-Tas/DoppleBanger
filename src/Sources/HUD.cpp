@@ -57,12 +57,14 @@ const void HUD::draw() {
 }
 
 bool HUD::update() {
-	currentLife_ = gm_->getPlayer()->getHealth();
+ 	currentLife_ = player_->getHealth();
+	maxLife_ = player_->getMaxHealth();
 	propLife_ = currentLife_ / maxLife_;
 	clipLife_.h = life_->getHeight() * propLife_;	//vidaAct * AltTotal / VidaMax
 	clipLife_.y = life_->getHeight() - clipLife_.h;
 
-	currentMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getMana();
+	currentMana_ = player_->getMana();
+	maxMana_ = player_->getMaxMana();
 	propMana_ = currentMana_ / maxMana_;
 	endMana_ = (MAX_DEGREES_MANA * propMana_) + START_MANA;	//Proporción de vida para el arco del maná
 	if (endMana_ <= 90) endMana_ = 90;
@@ -151,16 +153,17 @@ void HUD::initObject() {
 
 	#pragma region Life&Mana
 	//Inicializamos la vida al máximo
+	player_ = gm_->getPlayer();
 	life_ = app_->getTextureManager()->getTexture(Resources::LifeHUD);
 	clipLife_.x = 0;
 	clipLife_.y = 0;
 	clipLife_.w = life_->getWidth();
 	clipLife_.h = life_->getHeight();
- 	maxLife_ = gm_->getPlayer()->getMaxHealth();
+ 	maxLife_ = player_->getMaxHealth();
 
 	xMana_ = app_->getWindowWidth() / 10;
 	yMana_ = app_->getWindowHeight() * 11 / 13;
-	maxMana_ = gm_->getPlayer()->getMaxMana();
+	maxMana_ = player_->getMaxMana();
 
 	//Tamaño del cooldown
 	cdRect_.w = cdRect_.h = app_->getWindowWidth() * 2 / 35;

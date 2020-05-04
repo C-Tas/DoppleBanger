@@ -62,15 +62,15 @@
     }, {
       "type": 1,
       "name": 5
-    }],
-  "inventorySize": 7,
-  "stash": [{
+    }, {
       "type": 0,
-      "name": 0,
+      "name": 1,
       "price": 20.000000,
       "armor": 10.000000,
-      "health": 10.000000
-    }, {
+      "health": 1000.000000
+    }],
+  "inventorySize": 8,
+  "stash": [{
       "type": 0,
       "name": 4,
       "price": 20.000000,
@@ -101,5 +101,5 @@
       "rate": 10.000000,
       "damage": 10.000000
     }],
-  "stashSize": 7
+  "stashSize": 6
 }

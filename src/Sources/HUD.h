@@ -2,6 +2,7 @@
 #include <list>
 #include "VisualElement.h"
 
+class Player;
 class HUD : public Draw
 {
 public:
@@ -20,6 +21,7 @@ public:
 private:
 	list<VisualElement*> elementsHUD_;	//Lista de los elementos del HUD
 	GameManager* gm_ = nullptr; //GameManager
+	Player* player_ = nullptr;
 	#pragma region Iconos
 	//Contiene todos los iconos
 	vector<Texture*> icons;

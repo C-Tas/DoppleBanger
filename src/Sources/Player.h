@@ -100,7 +100,7 @@ public:
 			changeDistWeaponStats(gun);
 			gm_->setGun(gun);
 		}
-		void addMaxHealth(double addition) { maxHealth_ = addition; };
+		void addMaxHealth(double addition) { maxHealth_ += addition; };
 		void setClonCoolDown() { cdSkills[3] = true; }
 		//Aumenta la cadencia de tiro del player
 		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
@@ -264,8 +264,8 @@ private:
 #pragma endregion
 //<summary>Estadisticas iniciales del jugador</summary>
 #pragma region Stats
-	const double HEALTH = 1000;			//Vida
-	const double MANA = 100;			//Mana
+	double maxHealth_ = 1000;			//Representa la cantidad maxima de vida
+	double maxMana_ = 100;				//Representa la cantidad maxima de mana
 	const double MANA_REG = 1;			//Regeneración de maná por segundo
 	const double ARMOR = 10;			//Armadura
 	const double MELEE_DAMAGE = 100;	//Daño a melee
@@ -276,8 +276,6 @@ private:
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
 	const double MELEE_RATE = 1;		//Velocidad del ataque a melee en segundos
 	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos
-	double maxHealth_ = 1000;			//Representa la cantidad maxima de vida
-	double maxMana_ = 100;				//Representa la cantidad maxima de mana
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
 	//Constantes para el delay de los efectos de sonido

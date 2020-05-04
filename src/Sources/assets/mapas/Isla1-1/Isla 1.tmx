@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="27" nextobjectid="73">
+<map version="1.2" tiledversion="1.3.4" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="27" nextobjectid="73">
  <tileset firstgid="1" source="DoppleBanger.tsx"/>
  <layer id="7" name="Fondo" width="50" height="55">
   <data encoding="csv">
@@ -532,12 +532,6 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="18" name="Player">
-  <object id="11" gid="245" x="4273.7" y="3678.06" width="256" height="256"/>
- </objectgroup>
- <objectgroup id="20" name="Magordito">
-  <object id="18" gid="162" x="3509.15" y="2189.27" width="256" height="256"/>
- </objectgroup>
  <objectgroup id="15" name="Monkey" offsetx="0" offsety="-56">
   <object id="4" gid="222" x="2369" y="3747" width="256" height="256"/>
   <object id="5" gid="222" x="2370" y="3978" width="256" height="256"/>

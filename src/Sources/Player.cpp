@@ -27,7 +27,7 @@ void Player::initObject()
 	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	gm_ = GameManager::instance();
 	eventHandler_ = HandleEvents::instance();
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DAMAGE, DIST_DAMAGE, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initStats(maxHealth_, maxMana_, MANA_REG, ARMOR, MELEE_DAMAGE, DIST_DAMAGE, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	initAnims();
 	GameManager::instance()->setPlayer(this);
 	CollisionCtrl::instance()->setPlayer(this);
@@ -38,10 +38,15 @@ void Player::initObject()
 	//Equipamiento inicial del jugador
 	playerEquipment auxEquip = gm_->initEquipment();
 	armor_ = auxEquip.armor_;
+	armor_->equip(this);
 	gloves_ = auxEquip.gloves_;
+	gloves_->equip(this);
 	boots_ = auxEquip.boots_;
+	boots_->equip(this);
 	sword_ = auxEquip.sword_;
+	sword_->equip(this);
 	gun_ = auxEquip.gun_;
+	gun_->equip(this);
 	potions_ = auxEquip.potions_;
 }
 
@@ -49,9 +54,15 @@ void Player::load()
 {
 	playerEquipment auxEquip = gm_->getEquip();
 	armor_ = auxEquip.armor_;
+	armor_->equip(this);
 	gloves_ = auxEquip.gloves_;
+	gloves_->equip(this);
 	boots_ = auxEquip.boots_;
+	boots_->equip(this);
+	sword_ = auxEquip.sword_;
+	sword_->equip(this);
 	gun_ = auxEquip.gun_;
+	gun_->equip(this);
 	potions_ = auxEquip.potions_;
 }
 
@@ -66,7 +77,6 @@ void Player::initSkills()
 		gm_->setSkillEquiped(skill, (Key)i);
 		i++;
 	}
-	
 }
 
 bool Player::update()
@@ -316,8 +326,8 @@ void Player::meleeAnim()
 			meleeTime_ = empoweredTime_;
 		}
 
-		static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
-		if (static_cast<Enemy*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
+		static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
+		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
 		attacked_ = true;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
@@ -401,8 +411,8 @@ void Player::shoot(Vector2D dir)
 
 	equipType auxGunType = gun_->getEquipType();
 	if (auxGunType == equipType::PistolI || auxGunType == equipType::PistolII) {
-		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Rock), shootPos, dir,
-			currStats_.distDmg_, gun_->getDistRange(), gun_->getBulletSpeed());
+		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,
+			currStats_.distDmg_, currStats_.distRange_, gun_->getBulletSpeed());
 		//Activa perforación en la bala
 		if (perforate_) {
 			bullet->setPerforate(perforate_);
@@ -417,8 +427,8 @@ void Player::shoot(Vector2D dir)
 		CollisionCtrl::instance()->addPlayerBullet(bullet);
 	}
 	else if (auxGunType == equipType::ShotgunI || auxGunType == equipType::ShotgunII) {
-		Blunderbuss* blunderbuss = new Blunderbuss(app_, app_->getTextureManager()->getTexture(Resources::MonkeyFront), shootPos, dir,
-			currStats_.distDmg_, gun_->getDistRange(), gun_->getBulletSpeed());
+		Blunderbuss* blunderbuss = new Blunderbuss(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,
+			currStats_.distDmg_, currStats_.distRange_, gun_->getBulletSpeed());
 		if (perforate_) {
 			blunderbuss->activatePerforate();
 			perforate_ = false;
@@ -490,7 +500,7 @@ void Player::usePotion(usable* potion, int key) {
 		break;
 	case potionType::Mana:
 		currStats_.mana_ += maxMana_ * auxValue / 100;
-		if (currStats_.mana_ > MANA) currStats_.mana_ = MANA;
+		if (currStats_.mana_ > maxMana_) currStats_.mana_ = maxMana_;
 		break;
 	case potionType::Speed:
 		if (!potionUsing_[0]) {
@@ -679,6 +689,8 @@ void Player::applySlow(double effect, double duration)
 
 void Player::isEnemyDead(Actor* obj)
 {
-	if (obj == currEnemy_)
+	if (obj == currEnemy_) {
+		attacking_ = false;
 		currEnemy_ = nullptr;
+	}
 }

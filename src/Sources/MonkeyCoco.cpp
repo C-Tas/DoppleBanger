@@ -111,7 +111,7 @@ void MonkeyCoco::initialStats() {
 	MANA_REG = 1;
 	ARMOR = 10;
 	MELEE_DMG = 0;
-	DIST_DMG = 0;
+	DIST_DMG = 200;
 	CRIT = 0;
 	MELEE_RANGE = 0;
 	DIST_RANGE = 300;
