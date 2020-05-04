@@ -32,7 +32,7 @@ void TextBox::initDialog() {
 	whiteRect->render(dest);
 
 	//Comentario al final de la caja de texto
-	Texture pressAnyKey(app_->getRenderer(), "Al�jate para dejar de hablar >>", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x99999999) });
+	Texture pressAnyKey(app_->getRenderer(), "Aléjate para dejar de hablar >>", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x99999999) });
 	pressAnyKey.render(app_->getWindowWidth() - pressAnyKey.getWidth() - lineSpacing, app_->getWindowHeight() - pressAnyKey.getHeight() - lineSpacing);
 }
 
@@ -44,7 +44,7 @@ void TextBox::initDescription(Point2D pos) {
 	dest.y = pos.getY();
 }
 
-#pragma region Di�logos
+#pragma region Dialogos
 void TextBox::dialogElderMan(int isle) {
 	initDialog();
 	dest.x = lineSpacing;
@@ -88,24 +88,18 @@ void TextBox::dialogChef(bool unlock, int num) {
 		Texture text;
 		switch (num) {
 		case 0:
-			text.loadFromText(app_->getRenderer(), "Yo soy un ejemplo de un NPC que a�n no ha sido desbloqueado, falta gestionar el comienzo y final de las misiones", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "Cocinera desbloqueada, pulse la flechita para seguir hablando", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), "secundarias, que pertenecen a otra historia (concretamente 'Misi�n secundaria - Gallego en problemas').", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "o vete para dejar de hablar.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
-
-			text.loadFromText(app_->getRenderer(), "Los textos est�n ajustados para un tama�o m�nimo de ventana 1600x900, si se hace m�s grande, el texto queda", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + (lineSpacing * 3));
 
 			button_->draw();
 			button_->update();
 			break;
 		case 1:
-			text.loadFromText(app_->getRenderer(), "marginado a la izquierda pero no queda mal, pero si se hace una ventana m�s peque�a el texto no entra.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "Besos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing));
-
-			text.loadFromText(app_->getRenderer(), "A�n as� habr� que tener un tama�o m�nimo, porque otros elementos tambi�n desbordan con una ventana peque�a.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + (lineSpacing * 2));
 			break;
 		}
 	}
@@ -113,7 +107,7 @@ void TextBox::dialogChef(bool unlock, int num) {
 	else {
 		//Mientras no se hayan matado todos los enemigos
 		if (gm_->getCounterEnemiesMission(missions::gallegaEnProblemas) < gm_->getEnemiesMission(missions::gallegaEnProblemas)) {
-			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la misi�n secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la misión secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
 			text.loadFromText(app_->getRenderer(), "'Gallego en problemas'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -125,10 +119,10 @@ void TextBox::dialogChef(bool unlock, int num) {
 			gm_->addInventoryGold(500);
 			gm_->setArchievementPoints(gm_->getAchievementPoints() + 1000);
 
-			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la misi�n secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la misión secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), "'Gallego en problemas', despu�s de esto el chef se a�ade a la lista de NPCs desbloquedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "'Gallego en problemas', después de esto el chef se a�ade a la lista de NPCs desbloquedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
 		}
 	}
@@ -170,13 +164,13 @@ void TextBox::dialogSkeleton(bool unlock) {
 	initDialog();
 	//Di�logo del esqueleto cuando lo hemos desbloqueado
 	if (unlock) {
-		Texture text(app_->getRenderer(), "Este lindo esqueletito es una prueba de la generaci�n de un NPC desbloquado. Para ello se han cambiado un poco las", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		Texture text(app_->getRenderer(), "Este lindo esqueletito es una prueba de la generación de un NPC desbloquado. Para ello se han cambiado un poco las", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + lineSpacing);
 
-		text.loadFromText(app_->getRenderer(), "colisiones con los NPCs, que podr�n reajustarse cuando se cambien las im�genes para gestionar qu� partes se", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.loadFromText(app_->getRenderer(), "colisiones con los NPCs, que podrán reajustarse cuando se cambien las im�genes para gestionar qué partes se", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
-		text.loadFromText(app_->getRenderer(), "renderizan por encima y qu� por debajo del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.loadFromText(app_->getRenderer(), "renderizan por encima y qué por debajo del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + (lineSpacing * 3));
 	}
 	//Di�logo del esqueleto cuando a�n est� bloqueado
@@ -368,7 +362,7 @@ void TextBox::Clon()
 
 	text.loadFromText(app_->getRenderer(), "desde su posicion", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
-	
+
 }
 
 void TextBox::LiberationI()
@@ -377,7 +371,7 @@ void TextBox::LiberationI()
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
 	text.loadFromText(app_->getRenderer(), "al 50 % del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(dest.x + lineSpacing, dest.y + (lineSpacing*2));
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
 }
 
@@ -397,7 +391,7 @@ void TextBox::Explosion()
 
 	text.loadFromText(app_->getRenderer(), "enemigos cercanos al clon. El clon ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
-	
+
 	text.loadFromText(app_->getRenderer(), "desaparece tras su uso.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 
@@ -410,7 +404,7 @@ void TextBox::Raudo()
 
 	text.loadFromText(app_->getRenderer(), "de disparo del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
-	
+
 }
 void TextBox::GolpeFuerte()
 {
@@ -419,7 +413,7 @@ void TextBox::GolpeFuerte()
 
 	text.loadFromText(app_->getRenderer(), "siguiente ataque basico.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
-		
+
 }
 void TextBox::Invencible()
 {
@@ -428,7 +422,7 @@ void TextBox::Invencible()
 
 	text.loadFromText(app_->getRenderer(), "del jugador de manera permanente.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
-		
+
 }
 void TextBox::Rebote()
 {
@@ -440,8 +434,8 @@ void TextBox::Rebote()
 
 	text.loadFromText(app_->getRenderer(), " entre los enemigos cercanos. ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
-	
-	
+
+
 }
 void TextBox::Perforador()
 {
@@ -456,8 +450,8 @@ void TextBox::Perforador()
 
 	text.loadFromText(app_->getRenderer(), "de la bala.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
-	
-	
+
+
 }
 void TextBox::Torbellino()
 {
@@ -469,6 +463,6 @@ void TextBox::Torbellino()
 
 	text.loadFromText(app_->getRenderer(), "que se encuentren cerca.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
-		
+
 }
 #pragma endregion
