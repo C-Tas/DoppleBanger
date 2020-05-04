@@ -28,7 +28,12 @@ public:
 	virtual void handleEvents();//Ejecuta los eventos de los objetos objectEvents_
 	//Crea botones con un callback con parámetro Application*
 	virtual void createButton(Application* app, Texture* texture, Point2D pos, Vector2D scale, CallBackOnClick* callBack);
-
+	//Crea botones con un callback sin parametros
+	virtual void createButton2(NoParCallBack* callBack, Application* app, Texture* texture, Point2D pos, Vector2D scale);
+	//Crea botones con la animacion de las cervezas
+	virtual void createBeerButton(Application* app, Texture* texture, Point2D pos, Vector2D scale, CallBackOnClick* callBack, GameState* gs);
+	//Crea botones con la animacion de las cervezas
+	virtual void createBeerButton2(NoParCallBack* callBack, Application* app, Texture* texture, Point2D pos, Vector2D scale, GameState* gs);
 	//Estos metodos sirven para no dar mas de un click en los botones de un menu
 	//cuando se ha hecho click en uno de ellos. Implementado tras la animacion
 	//de las cervezas

@@ -9,6 +9,12 @@ BeerButton::BeerButton(Application* app, Texture* texture, Vector2D pos, Vector2
 	initAnims();
 }
 
+BeerButton::BeerButton(NoParCallBack* callBack, Application* app, Texture* texture, Vector2D pos, Vector2D scale) :
+	Button(callBack, app, nullptr, pos, scale){
+	buttonTx_ = texture;
+	initAnims();
+}
+
 bool BeerButton::update(){
 	//Solo entrara cuando no se haya pulsado ningun otro boton o se haya pulsado este
 	if (!currentState_->getButtonClick() || clicked_) {
@@ -18,7 +24,8 @@ bool BeerButton::update(){
 
 		if (clicked_ && currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 			resetButton();
-			cbClick_(app_);
+			if (cbClick_ != nullptr) cbClick_(app_);
+			else if (cb_ != nullptr) cb_();
 			return true;
 		}
 		//Si esta el raton encima del boton y no ha sido clickado

@@ -63,26 +63,22 @@ void PauseState::initState()
 	SDL_Rect textButon = { posButton.getX(),posButton.getY(), sizeButton.getX(),sizeButton.getY() };
 
 	//Bot�n de reanudar
-	BeerButton* resumeButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::ResumeButton), posButton, sizeButton, resume);
-	resumeButton->setCurrentState(this);
-	addRenderUpdateLists(resumeButton);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::ResumeButton), posButton, sizeButton, resume, this);
 
 	//Bot�n de controles
 	posButton = posButton + Vector2D(0, winHeight / 4);
 	textButon.y = posButton.getY();
-	BeerButton* controlsButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::ControlsButton), posButton, sizeButton, showControls);
-	controlsButton->setCurrentState(this);
-	addRenderUpdateLists(controlsButton);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::ControlsButton), posButton, sizeButton, showControls, this);
 
 	//Bot�n de men� principal
 	posButton = posButton + Vector2D(0, winHeight / 4 );
 	textButon.y = posButton.getY();
-	BeerButton* mainMenuButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState);
-	mainMenuButton->setCurrentState(this);
-	addRenderUpdateLists(mainMenuButton);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState, this);
 	
 	//Bot�n de mute
 	//Se multiplica por la proporci�n winWidth/winHeight para hacer un cuadrado
+	//No se crea con el metodo createButton porque se necesita un puntero a él directo
+	//para cambiar la textura al hacer el mute
 	sizeButton = Vector2D(winWidth / 20, (winHeight / 20) * (winWidth / winHeight));
 	posButton = Vector2D(winWidth - (sizeButton.getX() * 1.5), sizeButton.getY() / 2);
 	

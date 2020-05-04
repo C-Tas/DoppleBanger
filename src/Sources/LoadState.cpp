@@ -65,13 +65,13 @@ void LoadState::createLoadButton(ifstream& slot, int numSlot, Vector2D pos, Vect
 		switch (numSlot)
 		{
 			case 1:
-				createButton(app_, app_->getTextureManager()->getTexture(Resources::LoadGame1), pos, scale, loadSlot1);
+				createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::LoadGame1), pos, scale, loadSlot1, this);
 				break;
 			case 2:
-				createButton(app_, app_->getTextureManager()->getTexture(Resources::LoadGame2), pos, scale, loadSlot2);
+				createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::LoadGame2), pos, scale, loadSlot2, this);
 				break;
 			case 3:																				
-				createButton(app_, app_->getTextureManager()->getTexture(Resources::LoadGame3), pos, scale, loadSlot3);
+				createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::LoadGame3), pos, scale, loadSlot3, this);
 				break;
 		}
 	}

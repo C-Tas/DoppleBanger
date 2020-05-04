@@ -7,6 +7,8 @@ class BeerButton : public Button
 {
 public:
 	BeerButton(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* cb);
+	//Constructora de botón con callback sin parámetros
+	BeerButton(NoParCallBack* callBack, Application* app, Texture* texture, Vector2D pos, Vector2D scale);
 	~BeerButton() {};
 
 	virtual bool update();

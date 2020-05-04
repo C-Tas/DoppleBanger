@@ -89,12 +89,15 @@ void PlayState::checkPlayerActions() {
 	}
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
+		player_->stop();
 	}
 	else if (eventHandler_->isKeyDown(SDLK_c)) {
 		app_->getGameStateMachine()->pushState(new Inventory(app_));
+		player_->stop();
 	}
 	else if (eventHandler_->isKeyDown(SDLK_v)) {
 		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
+		player_->stop();
 	}
 }
 

@@ -1,5 +1,6 @@
 #include "GameState.h"
 #include "CollisionCtrl.h"
+#include "BeerButton.h"
 
 GameState::~GameState() {
 	//Borra todos los objetos de la lista de gameObjects
@@ -67,6 +68,20 @@ void GameState::createButton2(NoParCallBack* callBack, Application* app, Texture
 {
 	Button* button = new Button(callBack, app, texture, pos, scale); //Crea boton
 	addRenderUpdateLists(button); //Lo mete en las listas de objetos y de dibujado
+}
+
+void GameState::createBeerButton(Application* app, Texture* texture, Point2D pos, Vector2D scale, CallBackOnClick* callBack, GameState* gs)
+{
+	BeerButton* newBeerButton = new BeerButton(app, texture, pos, scale, callBack);
+	newBeerButton->setCurrentState(gs);
+	addRenderUpdateLists(newBeerButton);
+}
+
+void GameState::createBeerButton2(NoParCallBack* callBack, Application* app, Texture* texture, Point2D pos, Vector2D scale, GameState* gs)
+{
+	BeerButton* newBeerButton = new BeerButton(callBack, app, texture, pos, scale); //Crea boton
+	newBeerButton->setCurrentState(gs);
+	addRenderUpdateLists(newBeerButton);
 }
 
 void GameState::addUpdateList(GameObject* obj) {

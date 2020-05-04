@@ -49,45 +49,35 @@ void MainMenuState::createButtons() {
 	double winHeight = app_->getWindowHeight();
 
 	//creamos el boton para ir a los controles
-	BeerButton* controlButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ControlsButton), 
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ControlsButton),
 		{ (winWidth / 2) - button_w * 1.5  , (winHeight / 2) },
-		{ button_w  ,button_h }, goControlState);
-	controlButton->setCurrentState(this);
-	addRenderUpdateLists(controlButton);
+		{ button_w  ,button_h }, goControlState, this);
 	//creamos el boton para ir a los creditos
-	BeerButton* creditButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CreditsButton),
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CreditsButton),
 		{ (winWidth / 2) + button_w / 2   , (winHeight / 2) },
-		{ button_w  ,button_h }, goCreditsState);
-	creditButton->setCurrentState(this);
-	addRenderUpdateLists(creditButton);
+		{ button_w  ,button_h }, goCreditsState, this);
 	//creamos el boton para jugar cargando el juego del archivo de guardado
 	Button* loadButton = nullptr;
 	if (!isExistingDataGame()) {
-		loadButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButtonNull),
+		createButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButtonNull),
 			{ double(app_->getWindowWidth() / 2) - button_w * 1.5 ,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
-			{ button_w,button_h }, nullptr);	
+			{ button_w,button_h }, nullptr);
 	}
 	else {
-		loadButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButton),
+		createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButton),
 			{ double(app_->getWindowWidth() / 2) - button_w * 1.5 ,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
-			{ button_w,button_h }, goLoadState);
+			{ button_w,button_h }, goLoadState, this);
 	}
-	loadButton->setCurrentState(this);
-	addRenderUpdateLists(loadButton);
 
 	//creamos el boton para jugar sin cargar el juego del archivo de guardado
-	BeerButton* playButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::PlayButton),
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::PlayButton),
 		{ (winWidth / 2) + button_w / 2, (winHeight / 2) + button_h * 1.2 },
-		{ button_w,button_h }, goStoryState);
-	playButton->setCurrentState(this);
-	addRenderUpdateLists(playButton);
+		{ button_w,button_h }, goStoryState, this);
 
 	//Boton para salir del juego
-	BeerButton* exitButton = new BeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ExitButton),
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ExitButton),
 		{ (winWidth / 2) - button_w / 2, (winHeight / 2) + button_h * 2.4 },
-		{ button_w,button_h }, exitGame);
-	exitButton->setCurrentState(this);
-	addRenderUpdateLists(exitButton);
+		{ button_w,button_h }, exitGame, this);
 }
 #pragma endregion
 #pragma region Cambios de estados
