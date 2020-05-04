@@ -174,10 +174,17 @@ public:
 		PlayerMeleeLeftAnim,
 		PlayerMeleeUpAnim,
 		PlayerMeleeDownAnim,
+		//clon
+			
 		ClonSelfDestructionRightAnim,
 		ClonSelfDestructionLeftAnim,
 		ClonSelfDestructionUpAnim,
 		ClonSelfDestructionDownAnim,
+			//desaparecer
+		ClonVanishRightAnim,
+		ClonVanishLeftAnim,
+		ClonVanishDownAnim,
+		ClonVanishUpAnim,
 		//Calabaza
 			//Idle
 		PumpkinIdleRightAnim,

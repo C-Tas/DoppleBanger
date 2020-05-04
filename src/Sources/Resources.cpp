@@ -165,6 +165,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PlayerMeleeLeftAnim, "../Sources/assets/player/animaciones/melee/meleeIz.png" },
 	{ PlayerMeleeUpAnim, "../Sources/assets/player/animaciones/melee/meleeTop.png" },
 	{ PlayerMeleeDownAnim, "../Sources/assets/player/animaciones/melee/meleeDown.png" },
+	//clon
 	{ ClonSelfDestructionRightAnim, "../Sources/assets/clon/autodestruccion/ClonRightExplosion.png" },
 	{ ClonSelfDestructionLeftAnim, "../Sources/assets/clon/autodestruccion/ClonLeftExplosion.png" },
 	{ ClonSelfDestructionUpAnim, "../Sources/assets/clon/autodestruccion/ClonBackExplosion.png" },
@@ -181,6 +182,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ClonMeleeLeftAnim, "../Sources/assets/clon/melee/ClonLeftMelee.png" },
 	{ ClonMeleeUpAnim, "../Sources/assets/clon/melee/ClonBackMelee.png" },
 	{ ClonMeleeDownAnim, "../Sources/assets/clon/melee/ClonFrontMelee.png" },
+	{ ClonVanishRightAnim ,"../Sources/assets/clon/desaparecer/vanishDer.png"},
+	{ ClonVanishLeftAnim, "../Sources/assets/clon/desaparecer/vanishLeft.png"},
+	{ ClonVanishDownAnim, "../Sources/assets/clon/desaparecer/vanishDown.png" },
+	{ ClonVanishUpAnim, "../Sources/assets/clon/desaparecer/vanishTop.png" },
 	//Pumpkin
 		//Idle
 	{ PumpkinIdleRightAnim, "../Sources/assets/enemigos/pumpkin/Idle/calabazaIdleDer.png" },

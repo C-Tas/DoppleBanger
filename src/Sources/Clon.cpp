@@ -114,6 +114,20 @@ void Clon::initAnim() {
 	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonShootLeftAnim));
 	shootingFrame_.push_back(SHOOT_L_SHOOTINGFRAME);
 
+	//Animación de desaparecer
+	//Arriba
+	vanishAnims_.push_back(Anim(VANISH_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, VANISH_U_FRAME_RATE, false));
+	vanishTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonVanishUpAnim));
+	//Derecha																					
+	vanishAnims_.push_back(Anim(VANISH_R_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, VANISH_R_FRAME_RATE, false));
+	vanishTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonVanishRightAnim));
+	//Abajo
+	vanishAnims_.push_back(Anim(VANISH_D_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, VANISH_D_FRAME_RATE, false));
+	vanishTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonVanishDownAnim));
+	//Izquierda
+	vanishAnims_.push_back(Anim(VANISH_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, VANISH_L_FRAME_RATE, false));
+	vanishTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonVanishLeftAnim));
+
 	//currDir_ = DIR::LEFT;
 	initIdle();
 }
