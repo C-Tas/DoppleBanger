@@ -42,13 +42,11 @@ private:
 	///<summary>Tama�o de los botones que son "cuadrados"</summary>
 	const Vector2D CLOSE_BUTTON_SIZE = { app_->getWindowHeight() / 15, app_->getWindowHeight() / 16 };
 	///<summary>Posicion en y en la que se pintan las flechas para avanzar/retroceder en el inventario/tienda </summary>
-	const int ARROW_ROW = (16 * (app_->getWindowHeight() / 50));
+	const int ARROW_ROW = (23 * (app_->getWindowHeight() / 100));
 	///<summary>Posicion en y en la que se pintan los botones para mover el dinero entre el inventario/tienda</summary>
-	const int MONEY_BUTTON_ROW = 13 * (app_->getWindowHeight() / 50);
+	const int MONEY_BUTTON_ROW = 28 * (app_->getWindowHeight() / 50);
 	///<summary>Posici�n en x en la que se pintan los botones de cerrar tienda</summary>
 	const int CLOSE_BUTTON_COLUMN = (9 * (app_->getWindowWidth() / 10));
-	///<summary>Posici�n en x en la que se pintan los botones de borrar objeto y cambiar de lista</summary>
-	const int FUNCTIONALITY_BUTTONS_COLUMN = CLOSE_BUTTON_COLUMN - 10;
 	///<summary>Ancho en p�xeles de un caracter</summary>
 	const int FONT_WIDTH = (app_->getWindowWidth() / 60);
 	///<summary>Alto en p�xeles de un caracter</summary>
@@ -57,10 +55,12 @@ private:
 	const int MONEY_TEXT_OFFSET = app_->getWindowWidth() / 100;
 	///<summary>Número de elementos por fila que apareceran tanto en la tienda como en el inventario</summary>
 	const int ELEMENTS_PER_ROW = 2;
+	///<summary>Posici�n en x en la que se pintan los botones de borrar objeto y cambiar de lista</summary>
+	const int FUNCTIONALITY_BUTTONS_ROW = MONEY_BUTTON_ROW;
 	///<summary>Distancia entre los elementos del tienda</summary>
 	const Vector2D DISTANCE_BETWEEN_ELEMENTS = { (app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8) };
 	///<summary>Posicion en el eje y en la que se empieza a dibujar las listas de objetos</summary>
-	const int FIRST_ELEMENT_Y = (long long int)(app_->getWindowHeight() / 3) + (long long int)(app_->getWindowHeight() / 12);
+	const int FIRST_ELEMENT_Y = (long long int)(app_->getWindowHeight() / 4) + (long long int)(app_->getWindowHeight() / 12);
 	///<summary>Posición en la que se va a pintar el primer elemento de la lista del tienda</summary>
 	const Vector2D FIRST_SHOP_ELEMENT = Vector2D((app_->getWindowWidth() / 9), FIRST_ELEMENT_Y);
 	///<summary>Posición en la que se va a pintar el primer elemento de la lista del inventario</summary>
@@ -68,7 +68,7 @@ private:
 	///<summary>Tamaño de los objetos de tipo Gun</summary>
 	const Vector2D GUN_SIZE = Vector2D(app_->getWindowWidth() / 12, app_->getWindowHeight() / 18);
 	///<summary>Posición del Rect de las descripciones</summary>
-	const SDL_Rect DESCRIPTION_RECT = { (app_->getWindowWidth() / 2) + 30, 3 * (app_->getWindowHeight() / 4) - 30, 2 * (app_->getWindowWidth() / 7), 4 * (app_->getWindowHeight() / 21) };
+	const SDL_Rect DESCRIPTION_RECT = { (app_->getWindowWidth() / 2) + 50, 3 * (app_->getWindowHeight() / 4) - 50, 2 * (app_->getWindowWidth() / 7), 4 * (app_->getWindowHeight() / 21) };
 
 #pragma endregion
 

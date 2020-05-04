@@ -98,32 +98,28 @@ void ShopState::initState() {
 	background_ = app_->getTextureManager()->getTexture(Resources::TextureId::ShopMenu);
 
 	//Bot�n de avanzar la p�gina del inventario
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D((56 * (app_->getWindowWidth() / 70)), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceInventoryPage));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow)*/, Vector2D((57 * (app_->getWindowWidth() / 70)), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceInventoryPage));
 	//Bot�n de volver a la p�gina anterior del inventario
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D(43 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousInventoryPage));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow)*/, Vector2D(45 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousInventoryPage));
 
 	//Bot�n de avanzar la p�gina de la tienda
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D(22 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceShopPage));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow)*/, Vector2D(45 * (app_->getWindowWidth() / 140), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceShopPage));
 	//Bot�n de volver a la p�gina anterior de la tienda
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow), Vector2D((14 * (app_->getWindowWidth() / 70)) + 10, ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousShopPage));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow)*/, Vector2D((29 * (app_->getWindowWidth() / 140)) + 10, ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousShopPage));
 
 	//Bot�n para cambiar el objeto de una lista a otra
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 6 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackChangeBetweenLists));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton)*/, Vector2D(45 * (app_->getWindowWidth() / 64), FUNCTIONALITY_BUTTONS_ROW), Vector2D(2*BUTTON_SIZE, BUTTON_SIZE), callbackChangeBetweenLists));
 	//Bot�n para eliminar el objeto seleccionado
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton), Vector2D(FUNCTIONALITY_BUTTONS_COLUMN, 7 * (app_->getWindowHeight() / 9)), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton)*/, Vector2D( 26 * (app_->getWindowWidth() / 32), FUNCTIONALITY_BUTTONS_ROW), Vector2D(2*BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
 
 	//Bot�n de volver al estado anterior
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX), Vector2D(CLOSE_BUTTON_COLUMN, 2 * (double)(app_->getWindowHeight() / 9)), CLOSE_BUTTON_SIZE, backToPrevious));
-
-	//Boton para pasar el dinero de la tienda al inventario
-	addRenderUpdateLists(new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MoneyButton), Vector2D((7 * (app_->getWindowWidth() / 70)), MONEY_BUTTON_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAddMoneyToInventary));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX)*/, Vector2D(CLOSE_BUTTON_COLUMN, 2 * (double)(app_->getWindowHeight() / 9)), CLOSE_BUTTON_SIZE, backToPrevious));
 
 	//Cogemos la referencia al dinero de gameManager
 	inventory_.money_ = gm_->getInventoryGold();
 
 	//Posicion de los textos de la tienda e inventario
-	shop_.moneyText = { 5 * (app_->getWindowWidth() / 16), MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT }; //width es el ancho de cada n�mero 
-	inventory_.moneyText = { 4 * (app_->getWindowWidth() / 5) - 10,MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT };
+	inventory_.moneyText = { 25 * (app_->getWindowWidth() / 40),MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT };
 
 	//Texturas con texto
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
