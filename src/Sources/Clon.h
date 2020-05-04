@@ -22,6 +22,7 @@ public:
 	void changeDuration(double dur) { duration_ = dur; }	//En caso de que se pueda modificar la duraci�n
 	
 	void initSelfDestruction();
+	void initVanish();
 	void addEnemy(GameObject* enemy) { 
 		enemies_.push_back(static_cast<Enemy*>(enemy)); 
 	}

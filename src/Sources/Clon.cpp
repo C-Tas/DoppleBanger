@@ -32,7 +32,16 @@ bool Clon::update() {
 			initMelee();
 		}
 	}
-	else if (alive_) player_->killClon();
+	else if (alive_){
+		if (currState_ != STATE::VANISH){
+			initVanish();
+		}
+		if (currAnim_.currFrame_ == currAnim_.numberFrames_ -1 ) {
+			player_->killClon();
+		}
+		
+	}
+
 
 	return false;
 }
@@ -194,6 +203,16 @@ void Clon::initSelfDestruction() {
 	//Aquí no hace falta actualizar la dirección porque se autodestruirá en la dirección que estuviese previamente
 	texture_ = selfDestructTx_[(int)currDir_];
 	currAnim_ = selfDestructAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+void Clon::initVanish() {
+	currState_ = STATE::VANISH;
+	//Aquí no hace falta actualizar la dirección porque desaparecerá en la dirección que estuviese previamente
+	texture_ = vanishTx_[(int)currDir_];
+	currAnim_ = vanishAnims_[(int)currDir_];
 
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
