@@ -129,11 +129,11 @@ bool Player::update()
 		cout << getCenter().getX() << " " << getCenter().getY() << endl;
 	}
 	
-	if (eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr && !potions_[0]->isUsed()) {
+	if (!gm_->getOnShip() && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr && !potions_[0]->isUsed()) {
 		usePotion(potions_[0], 0);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 	}
-	if (eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr && !potions_[1]->isUsed()) {
+	if (!gm_->getOnShip() && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr && !potions_[1]->isUsed()) {
 		usePotion(potions_[1], 1);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 	}
