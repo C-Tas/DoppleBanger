@@ -53,6 +53,8 @@ public:
 		LoadGame3,
 		LoadGameNull,
 		LoadButtonNull,
+		//Animaciones de botones
+		BeerAnim,
 
 		//Punteros
 		MovementPointer,
