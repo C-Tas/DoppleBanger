@@ -3,6 +3,17 @@
 #include "VisualElement.h"
 
 class Player;
+
+struct potionHUD
+{
+	bool active_ = false;
+	double duration_;
+	double time_;
+	VisualElement* potionBackground_;
+	VisualElement* potionHUD_;
+	Texture* potionTimeHUD_;
+};
+
 class HUD : public Draw
 {
 public:
@@ -11,15 +22,19 @@ public:
 
 	const virtual void draw();
 	virtual bool update();
-	//Estos dos métodos tienen que ser llamados sólo una vez, por lo que se llaman
+	//Estos dos mï¿½todos tienen que ser llamados sï¿½lo una vez, por lo que se llaman
 	//desde GameManager al configurar las teclas en el inventario o en el skillState
 	//Actualiza la textura asignada a la tecla
 	void updateKey(int key);
 	//Actualiza el estado del cooldown
 	void setSkillCooldown(bool cooldown, int key);
+	//Crea el HUD de los objetos consumidos
+	void showPotionHUD(int index, double duration, double time);
+	//Estructura del HUD de las pociones
 
 private:
 	list<VisualElement*> elementsHUD_;	//Lista de los elementos del HUD
+	vector<potionHUD> potionsHUD_;		//Lista de las pociones del HUD | 0 vel, 1 def, 2 daï¿½, 3 crit
 	GameManager* gm_ = nullptr; //GameManager
 	Player* player_ = nullptr;
 	#pragma region Iconos
@@ -38,19 +53,20 @@ private:
 	Sint16 xMana_ = 0;				//Coordenada x del centro de la circunferencia
 	Sint16 yMana_ = 0;				//Coordenada y del centro de la circunferencia
 	Sint16 endMana_ = 270;			//Punto donde termina de pintar la circunferencia
-	double propLife_ = 1.0;			//Proporción de vida
-	double propMana_ = 1.0;			//Proporción del maná
+	double propLife_ = 1.0;			//Proporciï¿½n de vida
+	double propMana_ = 1.0;			//Proporciï¿½n del manï¿½
 	double currentLife_ = 0.0;		//Vida actual
-	double currentMana_ = 0.0;		//Maná actual
-	double maxLife_ = 0.0;			//Vida máxima
-	double maxMana_ = 0.0;			//Maná máximo
+	double currentMana_ = 0.0;		//Manï¿½ actual
+	double maxLife_ = 0.0;			//Vida mï¿½xima
+	double maxMana_ = 0.0;			//Manï¿½ mï¿½ximo
 	#pragma endregion
 	
 	#pragma region Constantes
 	const int ICON_AMOUNT = 6;
-	//Tamaño de los iconos
+	const int POTIONS_AMOUNT = 4;
+	//Tamaï¿½o de los iconos
 	const int W_H_ICON = app_->getWindowHeight() / 16;
-	//Separación entre cada icono
+	//Separaciï¿½n entre cada icono
 	const int DISTANCE_BTW_ICON = app_->getWindowWidth() / 17.15;
 
 	//Timon
@@ -68,7 +84,7 @@ private:
 	//Vida
 	const uint W_H_LIFE = app_->getWindowHeight() * 2 / 15;
 	const Sint16 START_MANA = 90;			//Punto donde empieza a pintar la circunferencia
-	const Sint16 MAX_DEGREES_MANA = 180;	//Grados máximos del arco de maná
+	const Sint16 MAX_DEGREES_MANA = 180;	//Grados mï¿½ximos del arco de manï¿½
 	#pragma endregion
 
 	//Inicializa el objeto
@@ -77,6 +93,8 @@ private:
 	void createBg(Texture* tx, const SDL_Rect& destRect);
 	//Crea las texturas para las habilidades
 	Texture* createSkillIcon(int key);
+	//Crea las texturas para las el HUD de las pociones
+	potionHUD createPotionHUD(int key);
 	//Crea las texturas para los objetos
 	Texture* createObjectIcon(int key);
 };

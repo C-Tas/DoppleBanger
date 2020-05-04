@@ -133,6 +133,7 @@ public:
 		ArmorPot,
 		DmgPot,
 		CritPot,
+		PotionBG,
 
 		//Sprites
 		Dragon,

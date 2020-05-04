@@ -30,6 +30,7 @@ void usable::initObject()
 	case potionType::Armor:
 		price_ = ARMOR_PRICE;
 		value_ = ARMOR_VALUE;
+		time_ = ARMOR_TIME;
 		break;
 	case potionType::Crit:
 		price_ = CRIT_PRICE;
@@ -47,7 +48,9 @@ bool usable::update()
 			return true;
 		}
 		else if ((SDL_GetTicks() - useTime_) / 1000 > time_) {
+
 			desactivePotion();
+			cout << "pocion desactivada" << endl;
 			return true;
 		}
 	}

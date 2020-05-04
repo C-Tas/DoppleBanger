@@ -12,15 +12,15 @@ private:
 	const double ARMOR_VALUE = 10;	//Cantidad de daño que se sumara
 	const double CRIT_VALUE = 10;	//Cantidad de critico que se sumara
 
-	const double SPEED_TIME = 3;	//Tiempo en segundos que durá la poción
+	const double SPEED_TIME = 15;	//Tiempo en segundos que durá la poción
 	const double DAMAGE_TIME = 3.5;	//Tiempo en segundos que durá la poción
 	const double ARMOR_TIME = 4;	//Tiempo en segundos que durá la poción
 	const double CRIT_TIME = 4;		//Tiempo en segundos que durá la poción
 
-	const double HEALTH_PRICE = 10;	//Precio de la pocion
+	const double HEALTH_PRICE = 10;		//Precio de la pocion
 	const double MANA_PRICE = 10;		//Precio de la pocion
 	const double SPEED_PRICE = 10;		//Precio de la pocion
-	const double DAMAGE_PRICE = 10;	//Precio de la pocion
+	const double DAMAGE_PRICE = 10;		//Precio de la pocion
 	const double ARMOR_PRICE = 10;		//Precio de la pocion
 	const double CRIT_PRICE = 10;		//Precio de la pocion
 #pragma endregion
