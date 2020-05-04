@@ -510,7 +510,6 @@ void Player::usePotion(usable* potion, int key) {
 		timerPotion_[0] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		//Muestra la cuenta atras del tiempo de la pocion en el HUD, tambien le reestablece el tiempo si la poción vuelve a activarse
 		gm_->getHUD()->showPotionHUD(0, potion->getTime(), timerPotion_[0]);
-		cout << "pocion speed usada" << endl;
 		break;
 	case potionType::Armor:
 		if (!potionUsing_[1]) {
@@ -521,7 +520,6 @@ void Player::usePotion(usable* potion, int key) {
 		timerPotion_[1] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		//Muestra la cuenta atras del tiempo de la pocion en el HUD, tambien le reestablece el tiempo si la poción vuelve a activarse
 		gm_->getHUD()->showPotionHUD(1, potion->getTime(), timerPotion_[1]);
-		cout << "pocion defensa usada" << endl;
 		break;
 	case potionType::Damage:
 		if (!potionUsing_[2]) {
@@ -532,7 +530,6 @@ void Player::usePotion(usable* potion, int key) {
 		timerPotion_[2] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		//Muestra la cuenta atras del tiempo de la pocion en el HUD, tambien le reestablece el tiempo si la poción vuelve a activarse
 		gm_->getHUD()->showPotionHUD(2, potion->getTime(), timerPotion_[2]);
-		cout << "pocion daño usada" << endl;
 		break;
 	case potionType::Crit:
 		if (!potionUsing_[3]) {
@@ -542,7 +539,6 @@ void Player::usePotion(usable* potion, int key) {
 		timerPotion_[3] = SDL_GetTicks();	//Se resetea el tiempo de duración
 		//Muestra la cuenta atras del tiempo de la pocion en el HUD, tambien le reestablece el tiempo si la poción vuelve a activarse
 		gm_->getHUD()->showPotionHUD(3, potion->getTime(), timerPotion_[3]);
-		cout << "pocion critico usada" << endl;
 		break;
 	}
 
@@ -557,7 +553,6 @@ void Player::desactiveBuffPotion(usable* potion, int timerPos){
 	//de esa manera, si se vuelve a usar una poción del mismo tipo, se resetea timerPotion_[timerPos]
 	//por lo que unicamente quitara el debufo cuando se cumpla ese tiempo
 	if ((SDL_GetTicks() - timerPotion_[timerPos]) / 1000 > potion->getTime()) {
-		cout << "Entra" << endl;
 		double auxValue = potion->getValue();
 		switch (potion->getType())
 		{

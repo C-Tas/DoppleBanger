@@ -50,7 +50,6 @@ bool usable::update()
 		else if ((SDL_GetTicks() - useTime_) / 1000 > time_) {
 
 			desactivePotion();
-			cout << "pocion desactivada" << endl;
 			return true;
 		}
 	}
