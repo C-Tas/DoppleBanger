@@ -15,6 +15,7 @@
 
 
 void SkillState::initState() {
+	SDL_ShowCursor(SDL_ENABLE);
 	player_ = gm_->getPlayer();
 
 	bg_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillMenu));
