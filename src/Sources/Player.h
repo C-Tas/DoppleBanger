@@ -57,15 +57,16 @@ public:
 		}
 		else return false;
 	};
-	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
+	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); onCollision_ = true; };
 
 	#pragma region Getters
 		const bool getDead() { return dead_; };
+	const bool getOnCollision() { return onCollision_; };
 		const bool isEquipInit() { return initEquip_; };
-		Clon* getClon() { return clon_; };
 		const int getLiberation() { return liberation_; };
 		const double getMaxHealth() { return maxHealth_; }; //Devuelve la vida maxima del player
 		const double getMaxMana() { return maxMana_; };		//Devuelve el mana maximo del player
+		Clon* getClon() { return clon_; };
 
 		const Vector2D getPreviousPos() { return previousPos_; }
 		 
@@ -87,6 +88,8 @@ public:
 		lastTimeRico_ = SDL_GetTicks(); };
 		//Para saber si hay que inicializar el equipamiento
 		void setinitEquip(bool init) { initEquip_ = init; };
+	//Setea si el player ha colisionado
+	void setOnCollision(bool coll) { onCollision_ = coll; };
 
 		void decreaseMana(double mana);
 		inline void setLiberation(int level) { liberation_ = level; };
@@ -136,6 +139,7 @@ public:
 private:
 	bool dead_ = false;
 	bool attacking_ = false;
+	bool onCollision_ = false;
 	bool initEquip_ = true;	//Para saber si hiay que inicializar el equipamiento
 	bool slowed_ = false;
 	double slowDuration_ = 0;

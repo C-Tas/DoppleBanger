@@ -81,11 +81,11 @@ void PlayState::checkPlayerActions() {
 		if (obj != nullptr) {
 			player_->attack(obj);
 		}
-		//else if NPC
-		else {
+		else if (!player_->getOnCollision()) {
 			player_->updateDirVisMouse();
 			player_->move(eventHandler_->getRelativeMousePos());
 		}
+		else player_->setOnCollision(false);
 	}
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
