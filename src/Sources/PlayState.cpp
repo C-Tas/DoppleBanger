@@ -134,6 +134,7 @@ Enemy* PlayState::findClosestEnemy(Point2D pos) {
 
 void PlayState::initState()
 {
+	generator_ = new AStar::Generator();
 	//Desactivamos el puntero para poder renderizar los punteros del juego
 	SDL_ShowCursor(SDL_DISABLE);
 	//Creamos nuestro nuevo puntero
@@ -141,8 +142,8 @@ void PlayState::initState()
 	mousePointer->setScale(Vector2D(W_MOUSE_POINTER, H_MOUSE_POINTER));
 
 	collisionCtrl_ = CollisionCtrl::instance();
-	generator_.setHeuristic(AStar::Heuristic::euclidean);
-	generator_.setDiagonalMovement(true);
+	generator_->setHeuristic(AStar::Heuristic::euclidean);
+	generator_->setDiagonalMovement(false);
 }
 
 void PlayState::resetGame()

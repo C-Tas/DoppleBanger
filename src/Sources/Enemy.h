@@ -16,18 +16,18 @@ public:
 	//Cuando se crea un clon se fija como nuevo objetivo
 	virtual void newEnemy(GameObject* obj) { currEnemy_ = obj; };
 
-	void setTileSize(Uint32 tileSize) { tileSize_ = tileSize; };
+	void setIniPosMap_(Vector2D pos) { iniPosMap_ = pos; };
 	void setPathPos(AStar::Vec2i pos) { pathPos_ = pos; };
-	
-	Uint32 getTileSize() { return tileSize_; };
+
+	Vector2D getIniPosMap_() { return iniPosMap_; };
 	AStar::Vec2i getPathPos() { return pathPos_; };
 protected:
 	//Ultimo actualizacion del AStar
-	Uint32 lastPath = 0;
-	AStar::CoordinateList* pathing_;
-	AStar::CoordinateList::iterator lastMove_;
+	AStar::CoordinateList pathing_;
+	//Posicion en el mapa de tiled
 	AStar::Vec2i pathPos_;
-	Uint32 tileSize_;
+	//Posicion inicial del mapa
+	Vector2D iniPosMap_;
 	//Último ataque
 	Uint32 lastHit = 0;
 	//Rango de visión de la entidad
@@ -57,19 +57,22 @@ protected:
 	virtual void initAnims() {};
 	//en cada enemigo establece las stats de los enemigos
 	virtual void initialStats() = 0;
+
+	Vector2D PosToTile(Vector2D pos);
+	Vector2D TileToPos(Vector2D tile);
 #pragma region stats
-	  double HEALTH = 0;
-	  double MANA = 0;
-	  double MANA_REG = 0;
-	  double ARMOR = 0;
-	  double MELEE_DMG = 0;
-	  double DIST_DMG = 0;
-	  double CRIT = 0;
-	  double MELEE_RANGE = 0;
-	  double DIST_RANGE = 0;
-	  double MOVE_SPEED = 0;
-	  double MELEE_RATE = 0;
-	  double DIST_RATE = 0;
+	double HEALTH = 0;
+	double MANA = 0;
+	double MANA_REG = 0;
+	double ARMOR = 0;
+	double MELEE_DMG = 0;
+	double DIST_DMG = 0;
+	double CRIT = 0;
+	double MELEE_RANGE = 0;
+	double DIST_RANGE = 0;
+	double MOVE_SPEED = 0;
+	double MELEE_RATE = 0;
+	double DIST_RATE = 0;
 #pragma endregion
 
 };

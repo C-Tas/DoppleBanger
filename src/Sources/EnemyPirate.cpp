@@ -111,9 +111,14 @@ bool EnemyPirate::update() {
 
 void EnemyPirate::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
-	target_.setVec(posToReach);
-	dir_.setX(posToReach.getX() - getCenter().getX());
-	dir_.setY(posToReach.getY() - getCenter().getY());
+	if ((getCenter() - target_).magnitude() <= 0.05)
+	{
+		pathPos_ = { (int)PosToTile(target_).getX(), (int)PosToTile(target_).getY() };
+		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
+		if (pathing_.size() > 1)
+			target_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+	}
+	dir_.setVec(target_ - getCenter());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
@@ -261,5 +266,5 @@ void EnemyPirate::initialStats()
 	MOVE_SPEED = 250;
 	MELEE_RATE = 1500;
 	DIST_RATE = 1500;
-	initStats(HEALTH,MANA, MANA_REG,ARMOR,MELEE_DMG,DIST_DMG,CRIT,MELEE_RANGE,DIST_RANGE,MOVE_SPEED,MELEE_RATE,DIST_RATE);
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }

@@ -145,6 +145,9 @@ private:
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
 	vector<ObjectName> objectsEquipped = { ObjectName::Unequipped, ObjectName::Unequipped };
+	//Constante del tamaño de pintado de los tiles
+	const int tileSize = 128;
+ 
 
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
 	Player* player_ = nullptr;
@@ -194,6 +197,8 @@ public:
 	const bool isSkillAsign(SkillName skill);
 	//Devuelve si estamos o no en la isla
 	const bool getOnShip() { return onShip_; };
+
+	const int getTileSize() { return tileSize; };
 
 	//Devuelve el oro conseguido
 	const int getGold() { return inventoryGold_; };

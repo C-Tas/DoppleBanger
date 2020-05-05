@@ -30,7 +30,8 @@ TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, i
 	app_ = app;
 	iniPos_ = iniPos;
 	idCollisionTiles_ = idCollisionTiles;
-	state_ = state;
+	state_ = state;	
+	state_->getGenerator()->setWorldSize({(int)map_.getTileCount().x,  (int)map_.getTileCount().y });
 
 	//Si no se ha cargado el mapa lanzamos excepcion
 	if (!success)throw exception("Mapa no cargado correctamente");
@@ -63,16 +64,16 @@ const void TiledMap::draw()
 	}
 }
 
-Vector2D TiledMap::TileToPos(Vector2D tile)
-{
-	Vector2D pos = Vector2D(iniPos_.getX() + ((double)(tileSize_ / 2) * tile.getX()) , (iniPos_.getY() - ((double)(tileSize_ / 4) * tile.getY())));
-	return pos;
-}
-
 Vector2D TiledMap::PosToTile(Vector2D pos)
 {
-	Vector2D tile = Vector2D((pos.getX() - iniPos_.getX()) / (-(double)(tileSize_ / 2)), (pos.getY() - iniPos_.getY()) / (+(double)(tileSize_ / 4)));
-	return tile;
+	return Vector2D(round((pos.getX() - iniPos_.getX() + 2 * (pos.getY() - iniPos_.getY())) / GameManager::instance()->getTileSize()),
+					round(((pos.getX() - iniPos_.getX()) - 2 * (pos.getY() - iniPos_.getY())) / (-1 * GameManager::instance()->getTileSize())));
+}
+
+Vector2D TiledMap::TileToPos(Vector2D tile)
+{
+	return Vector2D((iniPos_.getX() - ((double)(GameManager::instance()->getTileSize() / 2) * tile.getY()) + ((double)(GameManager::instance()->getTileSize() / 2) * (double)tile.getX())),
+					(iniPos_.getY() + ((double)(GameManager::instance()->getTileSize() / 4) * tile.getY()) + ((double)(GameManager::instance()->getTileSize() / 4) * (double)tile.getX())));
 }
 
 void TiledMap::addIsometricObstacle(Tile tile)
@@ -140,9 +141,9 @@ void TiledMap::createIsometricPathLayer(vector<tmx::TileLayer::Tile> layer_tiles
 			int tileIndex = x + (y * map_dimensions.x);
 			int gid = layer_tiles[tileIndex].ID;
 
-			///Si el tile no es vac�o
+			///Si el tile es vac�o
 			if (gid == 0) {
-				state_->getGenerator().addCollision({ x , y });
+				state_->getGenerator()->addCollision({ (int)x , (int)y });
 			}
 		}
 	}
@@ -170,8 +171,8 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 	if (objectType == "Monkey") {
 		MonkeyCoco* monkey = new MonkeyCoco(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
 		//state_->addRenderUpdateLists(monkey);
-		monkey->setTileSize(tileSize_);
-		monkey->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
+		monkey->setIniPosMap_(iniPos_);
+		monkey->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addEnemy(monkey);
 		CollisionCtrl::instance()->addEnemy(monkey);
 	}
@@ -189,8 +190,8 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		//A�adir lobo
 		//Falta a�adir lo de patrol pero no estoy segura de como funciona
 		Wolf* wolf = new Wolf(app_, pos, Vector2D(W_WOLF, H_WOLF));
-		wolf->setTileSize(tileSize_);
-		wolf->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
+		wolf->setIniPosMap_(iniPos_);
+		wolf->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addEnemy(wolf);
 		CollisionCtrl::instance()->addEnemy(wolf);
 	}
@@ -198,21 +199,21 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		//A�adir esqueleto
 		Skeleton* monkey = new Skeleton(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
 		//state_->addRenderUpdateLists(monkey);
-		monkey->setTileSize(tileSize_);
-		monkey->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
+		monkey->setIniPosMap_(iniPos_);
+		monkey->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addEnemy(monkey);
 		CollisionCtrl::instance()->addEnemy(monkey);
 	}
 	else if (objectType == "Pumpkin") {
 		Pumpkin* pumpkin = new Pumpkin(app_, pos, Vector2D(W_PUMPKIN, H_PUMPKIN));
-		pumpkin->setTileSize(tileSize_);
-		pumpkin->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
+		pumpkin->setIniPosMap_(iniPos_);
+		pumpkin->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addEnemy(pumpkin);
 		CollisionCtrl::instance()->addEnemy(pumpkin);
 	}
 	else if (objectType == "Kraken") {
 		Kraken* kraken = new Kraken(app_, pos, Vector2D(4 * W_MONKEY, 4 * H_MONKEY));
-		kraken->setTileSize(tileSize_);
+		kraken->setIniPosMap_(iniPos_);
 		//state_->addRenderUpdateLists(monkey);
 		state_->addEnemy(kraken);
 		CollisionCtrl::instance()->addEnemy(kraken);
@@ -220,8 +221,8 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 	else if (objectType == "Magordito") {
 		//A�adir Magordito
 		Magordito* magordito = new Magordito(app_, pos, Vector2D(W_WOLF, H_WOLF));
-		magordito->setTileSize(tileSize_);
-		magordito->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
+		magordito->setIniPosMap_(iniPos_);
+		magordito->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addEnemy(magordito);
 		CollisionCtrl::instance()->addEnemy(magordito);
 	}
@@ -229,8 +230,8 @@ void TiledMap::createElement(Vector2D pos, string objectType)
 		//A�adir Pirata naufrago
 		//Falta a�adir lo de patrol pero no estoy segura de como funciona
 		EnemyPirate* pirate = new EnemyPirate(app_, pos, Vector2D(W_ENEMYPIRATE, H_ENEMYPIRATE));
-		pirate->setTileSize(tileSize_);
-		pirate->setPathPos({ PosToTile(pos).getX(),PosToTile(pos).getY() });
+		pirate->setIniPosMap_(iniPos_);
+		pirate->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addRenderUpdateLists(pirate);
 		CollisionCtrl::instance()->addEnemy(pirate);
 	}
@@ -271,7 +272,7 @@ void TiledMap::createIsometricMap(const tmx::Map& map_)
 			auto layer_tiles = tile_layer->getTiles();
 			if (layer->getName() == "pathfinding")
 				createIsometricPathLayer(layer_tiles, map_dimensions);
-			else 
+			else
 				createIsometricTileLayer(layer_tiles, map_dimensions);
 		}
 		//Capas con objetos

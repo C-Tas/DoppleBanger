@@ -269,7 +269,7 @@ private:
 
 //<summary>Estadisticas iniciales del jugador</summary>
 #pragma region Stats
-	const double HEALTH = 1000;			//Vida
+	const double HEALTH = numeric_limits<double>::max(); //1000;			//Vida
 	const double MANA = 100;			//Mana
 	const double MANA_REG = 1;			//Regeneración de maná por segundo
 	const double ARMOR = 10;			//Armadura
