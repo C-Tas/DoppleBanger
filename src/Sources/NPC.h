@@ -29,10 +29,10 @@ private:
 	const int FRAME_RATE_CHEF= 500;
 
 	//Morty
-	const int NUM_FRAMES_MORTY = 0;
-	const int W_FRAME_MORTY = 0;
-	const int H_FRAME_MORTY = 0;
-	const int FRAME_RATE_MORTY= 0;
+	const int NUM_FRAMES_MORTY = 3;
+	const int W_FRAME_MORTY = 333;
+	const int H_FRAME_MORTY = 645;
+	const int FRAME_RATE_MORTY= 300;
 
 	//Loro
 	const int NUM_FRAMES_PARROT = 0;

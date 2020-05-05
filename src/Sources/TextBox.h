@@ -53,7 +53,7 @@ public:
 	void dialogChef(bool unlock, int num);
 
 	///<summary>Frases de Morty, tanto desbloqueado como no</summary>
-	void dialogMorty(bool unlock);
+	void dialogMorty(bool unlock, int num);
 
 	///<summary>Frases del loro, se genera una al azar</summary>
 	void dialogParrot();

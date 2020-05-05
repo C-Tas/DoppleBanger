@@ -11,6 +11,10 @@ bool MonkeyCoco::update() {
 	if (currState_ == STATE::DYING) {
 		app_->getAudioManager()->playChannel(Resources::MonkeyDie, 0, 3);
 
+		//Esta línea habría que moverla al cangrejo cuando esté hecho
+		GameManager* gm_ = GameManager::instance();
+		if (gm_->isThatMissionStarted(missions::papelesSiniestros)) gm_->addMissionCounter(missions::papelesSiniestros);
+
 		//Tendr�a que hacer la animaci�n de muerte?
 		//Cuando acabe la animaci�n, lo mata
 		applyRewards();

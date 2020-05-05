@@ -145,6 +145,7 @@ public:
 		Merchant,
 		SkeletonMusician,
 		Cartographer,
+		Morty,
 
 		//Bosses
 		Magordito,

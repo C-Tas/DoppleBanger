@@ -144,8 +144,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Merchant, "../Sources/assets/npc/mercaderIdle.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
 	{ Cartographer, "../Sources/assets/npc/Navigator.png" },
-	{Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png"},
-
+	{ Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png" },
+	{ Morty, "../Sources/assets/npc/idleMorty.png" },
 	
 	//Animaciones
 	//Player

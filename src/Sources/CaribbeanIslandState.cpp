@@ -8,6 +8,15 @@
 #include "EndState.h"
 #include "WinState.h"
 
+CaribbeanIslandState::~CaribbeanIslandState() { 
+	if (currentMap_ != nullptr)delete currentMap_;
+	//Reseteo de misiones
+	if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
+		gm_->setStartedMission(missions::gallegaEnProblemas, false);
+		gm_->resetMissionCounter(missions::gallegaEnProblemas);
+	}
+};
+
 void CaribbeanIslandState::update()
 {
 	if (enemies_.empty()) {
@@ -41,6 +50,15 @@ void CaribbeanIslandState::initState()
 
 void CaribbeanIslandState::initZone1()
 {
+	//Se inicia la mision de la cocinera si no se ha completado ya
+	/*if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
+		gm_->setStartedMission(missions::gallegaEnProblemas, true);
+	}*/
+
+	if (!gm_->isThatMissionPass(missions::papelesSiniestros)) {
+		gm_->setStartedMission(missions::papelesSiniestros, true);
+	}
+
 	//Creamos el mapa
 	currentMap_ = new TiledMap(app_, this, ZONE1_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
 		TILESET_FILS, TILESET_COLS,  Vector2D(app_->getWindowWidth() / 2, 0),  collisionTilesIdZone1, wallTilesIdZone1);

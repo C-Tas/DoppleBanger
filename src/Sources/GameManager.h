@@ -156,9 +156,10 @@ private:
 	vector<int> pointrTree_ = { 0, 0, 0 };
 	//Vector que contiene la cantidad de enemigos que se han muerto de la mision correspondiente
 	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<int> countEnemiesMission_ = { 0, 0, 0, 0};
+	vector<int> countEnemiesMission_ = { 0, 0, 0, 0 };
 	//Vector que contiene el numero de enemigos que se tiene que matar en cada mision
-	vector<int> enemiesMission_ = { 3, 2, 2, 4 };
+	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
+	vector<int> enemiesMission_ = { 3, 3, 2, 4 };
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados

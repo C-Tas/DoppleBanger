@@ -3,14 +3,17 @@
 #include "Texture.h"
 #include "Vector2D.h"
 #include "checkML.h"
-#include "Application.h"
 #include <list>
-#include "Obstacle.h"
 #include "../tmxLite/TileLayer.hpp"
 #include "../tmxLite/Map.hpp"
-#include "PlayState.h"
+#include "Application.h"
 
 enum class tileType{Wall, Obstacle, Undefined};
+
+class Obstacle;
+class PlayState;
+class GameManager;
+class CollisionCtrl;
 
 using namespace std;
 
@@ -50,6 +53,8 @@ public:
 	///<summary>M�todo para pintar el mapa</summary>
 	const void draw();
 private:
+	CollisionCtrl* collisionCtrl_ = nullptr;
+	GameManager* gm_ = nullptr;
 	///<summary>Puntero a la aplicaci�n (Para crear objetos de tipo Obstacle)</summary>
 	Application* app_ = nullptr;
 	///<summary>Tileset del mapa que estamos cargando</summary>
@@ -101,6 +106,9 @@ private:
 	const double W_NPC_CHEF = app_->getWindowWidth() / 20;
 	const double H_NPC_CHEF = app_->getWindowHeight() / 8;
 
+	const double W_NPC_MORTY= app_->getWindowWidth() / 20;
+	const double H_NPC_MORTY= app_->getWindowHeight() / 8;
+
 	//Dimensiones de las entidades
 	const double W_PLAYER = app_->getWindowWidth() / 12;
 	const double H_PLAYER = app_->getWindowHeight() / 6;
@@ -142,9 +150,6 @@ private:
 
 
 #pragma endregion
-
-
-	
 	///<summary>M�todo auxiliar para crear un tile que no se pueda atravesar (isom�trico) (no ocupa todo el tama�o del tile)
 	//si el gid de ese tile corresponde con alguno de las paredes lo a�ade tambi�n a la correspondiente lista</summary>
 	void addIsometricObstacle(Tile tile, int gid, tileType tileType);
@@ -166,6 +171,4 @@ private:
 	void createIsometricMap(const tmx::Map & map_);
 	///<summary>Crea un mapa en perspectiva ortogonal (shipState)</summary>
 	void createOrthogonalMap(const tmx::Map& map_);
-
 };
-
