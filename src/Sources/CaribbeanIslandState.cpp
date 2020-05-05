@@ -15,6 +15,14 @@ CaribbeanIslandState::~CaribbeanIslandState() {
 		gm_->setStartedMission(missions::gallegaEnProblemas, false);
 		gm_->resetMissionCounter(missions::gallegaEnProblemas);
 	}
+	if (!gm_->isThatMissionPass(missions::papelesSiniestros)) {
+		gm_->setStartedMission(missions::papelesSiniestros, false);
+		gm_->resetMissionCounter(missions::papelesSiniestros);
+	}
+	if (!gm_->isThatMissionPass(missions::arlongPark)) {
+		gm_->setStartedMission(missions::arlongPark, false);
+		gm_->resetMissionCounter(missions::arlongPark);
+	}
 };
 
 void CaribbeanIslandState::update()
@@ -55,8 +63,12 @@ void CaribbeanIslandState::initZone1()
 		gm_->setStartedMission(missions::gallegaEnProblemas, true);
 	}*/
 
-	if (!gm_->isThatMissionPass(missions::papelesSiniestros)) {
+	/*if (!gm_->isThatMissionPass(missions::papelesSiniestros)) {
 		gm_->setStartedMission(missions::papelesSiniestros, true);
+	}*/
+
+	if (!gm_->isThatMissionPass(missions::arlongPark)) {
+		gm_->setStartedMission(missions::arlongPark, true);
 	}
 
 	//Creamos el mapa

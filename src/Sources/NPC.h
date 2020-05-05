@@ -47,10 +47,10 @@ private:
 	const int FRAME_RATE_SKELETON = 200;
 
 	//Cartógrafa
-	const int NUM_FRAMES_CARTOGRAPHER = 1;
-	const int W_FRAME_CARTOGRAPHER = 50;
-	const int H_FRAME_CARTOGRAPHER = 70;
-	const int FRAME_RATE_CARTOGRAPHER = 200;
+	const int NUM_FRAMES_CARTOGRAPHER = 5;
+	const int W_FRAME_CARTOGRAPHER = 100;
+	const int H_FRAME_CARTOGRAPHER = 100;
+	const int FRAME_RATE_CARTOGRAPHER = 150;
 #pragma endregion
 
 protected:

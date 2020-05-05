@@ -159,7 +159,7 @@ private:
 	vector<int> countEnemiesMission_ = { 0, 0, 0, 0 };
 	//Vector que contiene el numero de enemigos que se tiene que matar en cada mision
 	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<int> enemiesMission_ = { 3, 3, 2, 4 };
+	vector<int> enemiesMission_ = { 3, 3, 2, 3 };
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados

@@ -64,8 +64,8 @@ private:
 	const double W_MERCHANT = W_WIN * 2 / 19;
 	const double H_MERCHANT = H_WIN * 2 / 9;
 
-	const double W_CHEF = W_WIN / 20;
-	const double H_CHEF = H_WIN / 8;
+	const double W_CHEF = W_WIN / 22;
+	const double H_CHEF = H_WIN / 6;
 
 	const double W_MORTY = W_WIN / 14;
 	const double H_MORTY = H_WIN / 5;
@@ -76,8 +76,8 @@ private:
 	const double W_SKELETON = W_WIN / 20;
 	const double H_SKELETON = H_WIN / 10;
 
-	const double W_CARTOGRAPHER = W_WIN / 12;
-	const double H_CARTOGRAPHER = H_WIN / 6;
+	const double W_CARTOGRAPHER = W_WIN / 6;
+	const double H_CARTOGRAPHER = H_WIN / 3;
 	#pragma region
 
 	void initState();

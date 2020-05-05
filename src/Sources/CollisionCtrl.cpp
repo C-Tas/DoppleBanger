@@ -292,10 +292,13 @@ void CollisionCtrl::drawTextBox() {
 		break;
 	case NPCsNames::Skeleton:
 		npcCollision.object->getTextBox()->dialogSkeleton(onShip);
+		break;
 	case NPCsNames::Cartographer:
-		npcCollision.object->getTextBox()->dialogCartographer(onShip);
+		npcCollision.object->getTextBox()->dialogCartographer(onShip, numConversation_);
+		break;
 	default:
 		numConversation_ = 0;
+		break;
 	}
 	npcCollision.id = NPCsNames::Nobody;
 	npcCollision.object = nullptr;

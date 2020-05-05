@@ -545,7 +545,7 @@
   <object id="69" gid="166" x="4568.24" y="3081.7" width="256" height="256"/>
   <object id="70" gid="166" x="1345.52" y="3486.24" width="256" height="256"/>
  </objectgroup>
- <objectgroup id="26" name="Morty">
+ <objectgroup id="26" name="Nami">
   <object id="72" gid="169" x="4269" y="3031" width="256" height="256"/>
  </objectgroup>
  <objectgroup id="16" name="Crab"/>

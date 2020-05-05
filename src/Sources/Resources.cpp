@@ -143,7 +143,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
 	{ Merchant, "../Sources/assets/npc/mercaderIdle.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
-	{ Cartographer, "../Sources/assets/npc/Navigator.png" },
+	{ Cartographer, "../Sources/assets/npc/idleCartografa.png" },
 	{ Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png" },
 	{ Morty, "../Sources/assets/npc/idleMorty.png" },
 	
