@@ -123,12 +123,12 @@ void ShipState::createNPCs() {
 	elderman = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), Vector2D(W_WIN / 3, (double)H_WIN / 7), Vector2D(W_ELDERMAN, H_ELDERMAN), 0);
 	addRenderUpdateLists(elderman);
 
-	//NPC* merchant;
-	//merchant = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Merchant), Vector2D((double)W_WIN / 30, (double)H_WIN * 3 / 5), Vector2D(W_MERCHANT, H_MERCHANT), 1);
-	//addRenderUpdateLists(merchant);
+	NPC* merchant;
+	merchant = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Merchant), Vector2D((double)W_WIN / 30, (double)H_WIN * 3 / 5), Vector2D(W_MERCHANT, H_MERCHANT), 1);
+	addRenderUpdateLists(merchant);
 
 	//Comprobamos si los NPCs restantes están desbloqueados
-	if (true /*gm_->isThatMissionPass(missions::gallegaEnProblemas)*/) {
+	if (gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
 		NPC* chef;
 		chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), Vector2D((double)W_WIN * 3 / 14, H_WIN / 35), Vector2D(W_CHEF, H_CHEF), 2);
 		addRenderUpdateLists(chef);
