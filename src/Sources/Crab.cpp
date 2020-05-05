@@ -1,21 +1,34 @@
 #include "Crab.h"
+#include "Player.h"
 #include <iostream>
 
 bool Crab::update() {
 	updateFrame(); //Redefinir
-	move(targetsVector_.at(actualTarget_));
 #ifdef _DEBUG
 
 #endif // _DEBUG
-	if (currState_ == STATE::ATTACKING) {
-		
+if(currState_==STATE::DYING){}
+else
+{
+	if (currState_ == STATE::PATROLLING&&!getEnemy(10)) {
+		move(targetsVector_.at(actualTarget_));
 	}
-	else if (currState_ == STATE::DYING) {
-		return true;
+	else
+	{
+		//Si entramos en este caso indica que el enemigo esta al alcance ya que es el factor que rechazo el anterior if y así tiene coste O(1) y no coste O(getenemy)
+		if (currState_ == STATE::PATROLLING) {
+			currState_ = STATE::ATTACKING;
+		}
+		//Se vuelve a comprobar la posicion del enemigo ya que sino podria no parar de atacar
+		if (currState_ == STATE::ATTACKING&&getEnemy(10)) {
+			attack();
+		}
+		else
+		{
+			currState_ = STATE::PATROLLING;
+		}
 	}
-	else if (currState_ == STATE::IDLE) {
-		
-	}
+}
 
 	return false;
 }
@@ -38,19 +51,17 @@ void Crab::move(Point2D target)
 	}
 }
 void Crab::attack() { 
-	Vector2D visPos = getVisPos();
-	if (visPos.getX() < 200 && visPos.getX() > 150 && visPos.getY() < 500 && visPos.getX() > 150) {
-		//doDamage();//falta definir en enemy
-		currState_ = STATE::ATTACKING;
+	auto dmg = dynamic_cast<Player*>(currEnemy_);
+	if (dmg != nullptr) {
+		dmg->receiveDamage(currStats_.meleeDmg_);
+	}
 		currAnim_ = attackAnim_;
 	}
-}
 
 void Crab::initObject()
 {
 	texture_ = app_->getTextureManager()->getTexture(Resources::CrabAttack);
-	collisionArea_ = SDL_Rect{ (pos_.getX(), pos_.getY(), W_COLLISION, H_COLLISION) };
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DAMAGE, DIST_DAMAGE, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	Enemy::initObject();
 	initAnims();
 }
 
@@ -59,4 +70,19 @@ void Crab::initAnims()
 	//Cambiar los n�meros magicos
 	attackAnim_ = Anim(NUM_FRAMES_ATK, W_CLIP_ATK, H_CLIP_ATK, 10, false);
 	//Faltan las otras animaciones
+}
+void Crab::initialStats(){
+		  HEALTH = 1000;
+	  MANA = 0;
+	  MANA_REG = 0;
+	  ARMOR = 1000;
+	  MELEE_DMG = 1000;
+	  DIST_DMG = 0;
+	  CRIT = 0;
+	  MELEE_RANGE = 50;
+	  DIST_RANGE = 0;
+	  MOVE_SPEED = 100;
+	  MELEE_RATE = 1;
+	  DIST_RATE = 2;
+	  initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }

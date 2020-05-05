@@ -7,7 +7,7 @@ class Crab : public Enemy
 public:
 	virtual bool update();
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores ser?n los puestos, si se le pasan valores los editara</summary>
-	Crab(Application* app, Point2D pos, Vector2D scale) : Enemy(app, pos, scale) { initObject(); }
+	Crab(Application* app, Point2D pos, Vector2D scale, vector<Vector2D> positions = {}) : Enemy(app, pos, scale),targetsVector_(positions) { initObject(); }
 	//<summary>Constructor por copia</summary>
 	Crab(Crab& other) :Enemy(other.app_, other.pos_, other.scale_) { initAnims(); };
 	//<summary>Constructor por movimiento<summary>
@@ -33,20 +33,6 @@ private:
 	Anim attackAnim_{ 0,0,0,0, false };
 #pragma endregion
 	//<summary>Estadisticas del cangrejo</summary>
-#pragma region ConstStats
-	const double HEALTH = 1000;
-	const double MANA = 0;
-	const double MANA_REG = 0;
-	const double ARMOR = 1000;
-	const double MELEE_DAMAGE = 1000;
-	const double DIST_DAMAGE = 0;
-	const double CRIT = 0;
-	const double MELEE_RANGE = 50;
-	const double DIST_RANGE = 0;
-	const double MOVE_SPEED = 100;
-	const double MELEE_RATE = 1;
-	const double DIST_RATE = 2;
-#pragma endregion
 	///<summary>vector con todos los objetivos del cangrejo</summary>
 	vector<Point2D> targetsVector_;
 	///<summary>posicion del vector al que se dirige</summary>
@@ -59,5 +45,6 @@ private:
 	virtual void initObject();
 	//Crea las animaciones
 	virtual void initAnims();
+	virtual void initialStats();
 
 };

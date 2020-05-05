@@ -24,4 +24,6 @@ VolcanicIslandState::VolcanicIslandState(Application* app): PlayState(app)
 #endif // _DEBUG
 	//Crab* dragon = new Crab(app_, { app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), app_->getTextureManager()->getTexture(Resources::TextureId::Timon) }, { 0,0 }, { 120,120 }, { 0,0,120,120 }, { 1,0,0,0,0,0,0,0,100,0,0 }, { 0,0,144,133 }, { 3,1 }, { {450,60},{200,200},{50,60} });
 	//addEnemy(dragon);
+	//Player* p = new Player(app_, { 0,0 }, {100,100});
+	Crab* crab = new Crab(app_, { 120,120 }, { 100,100 }, { {0,0},{120,120},{0,120}});
 }
