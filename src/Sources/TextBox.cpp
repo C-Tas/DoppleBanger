@@ -115,11 +115,8 @@ void TextBox::dialogChef(bool unlock, int num) {
 		}
 		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
 		else {
-			if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
-				gm_->setCompleteMission(missions::gallegaEnProblemas, true);
-				gm_->addInventoryGold(500);
-				gm_->addArchievementPoints(1000);
-			}
+			if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) gm_->setCompleteMission(missions::gallegaEnProblemas, true);
+
 			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la mision secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
@@ -163,11 +160,7 @@ void TextBox::dialogMorty(bool unlock, int num) {
 		}
 		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
 		else {
-			if (!gm_->isThatMissionPass(missions::papelesSiniestros)) {
-				gm_->setCompleteMission(missions::papelesSiniestros, true);
-				gm_->addInventoryGold(500);
-				gm_->addArchievementPoints(1000);
-			}
+			if (!gm_->isThatMissionPass(missions::papelesSiniestros)) gm_->setCompleteMission(missions::papelesSiniestros, true);
 
 			Texture text(app_->getRenderer(), "Muchas gracias. Ahora me unire a tu tripulacion, asi que hazme hueco.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
@@ -248,11 +241,7 @@ void TextBox::dialogCartographer(bool unlock, int num) {
 		}
 		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
 		else {
-			if (!gm_->isThatMissionPass(missions::arlongPark)) {
-				gm_->setCompleteMission(missions::arlongPark, true);
-				gm_->addInventoryGold(500);
-				gm_->addArchievementPoints(1000);
-			}
+			if (!gm_->isThatMissionPass(missions::arlongPark)) gm_->setCompleteMission(missions::arlongPark, true);
 
 			Texture text(app_->getRenderer(), "Muchas gracias. Ahora me unire a tu tripulacion, asi que hazme hueco.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
