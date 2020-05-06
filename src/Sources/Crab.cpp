@@ -10,7 +10,7 @@ bool Crab::update() {
 if(currState_==STATE::DYING){}
 else
 {
-	if (currState_ == STATE::PATROLLING&&!getEnemy(10)) {
+	if (currState_ == STATE::PATROLLING&&!getEnemy(rangeVision_)) {
 		move(targetsVector_.at(actualTarget_));
 	}
 	else
@@ -20,7 +20,8 @@ else
 			currState_ = STATE::ATTACKING;
 		}
 		//Se vuelve a comprobar la posicion del enemigo ya que sino podria no parar de atacar
-		if (currState_ == STATE::ATTACKING&&getEnemy(10)) {
+		//cambairr a on range
+		if (currState_ == STATE::ATTACKING&&onRange()) {
 			attack();
 		}
 		else
@@ -63,6 +64,7 @@ void Crab::initObject()
 	texture_ = app_->getTextureManager()->getTexture(Resources::CrabAttack);
 	Enemy::initObject();
 	initAnims();
+	rangeVision_ = 10;
 }
 
 void Crab::initAnims()
