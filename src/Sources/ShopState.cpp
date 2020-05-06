@@ -1,324 +1,324 @@
-#include "ShopState.h"
+﻿#include "ShopState.h"
 #include "Player.h"
+#include "InventoryButton.h"
+#include "Armor.h"
+#include "Gloves.h"
+#include "Boots.h"
+#include "Sword.h"
+#include "Gun.h"
+#include "usable.h"
 
-void callForwardListS(Application* app) {
-	dynamic_cast<ShopState*>(app->getCurrState())->forwardList();
-}
-void callBackListS(Application* app) {
-	dynamic_cast<ShopState*>(app->getCurrState())->backList();
-}
-void callShopForwardListS(Application* app) {
-	dynamic_cast<ShopState*>(app->getCurrState())->ShopForwardList();
-}
-void callShopBackListS(Application* app) {
-	dynamic_cast<ShopState*>(app->getCurrState())->ShopBackList();
-}
-void callExitS(Application* app) {
-	SDL_ShowCursor(SDL_DISABLE);
+#pragma region Callbacks
+
+void ShopState::backToPrevious(Application* app) {
 	app->getGameStateMachine()->popState();
-}
-void callSelectObjectS(Application* app, InventoryButton* ob) {
-	dynamic_cast<ShopState*>(app->getCurrState())->selectObject(ob);
-}
-void callSellObjectS(Application* app) {
-	dynamic_cast<ShopState*>(app->getCurrState())->sellObj();
-}
-void callBuyObjectS(Application* app) {
-	dynamic_cast<ShopState*>(app->getCurrState())->buyObj();
+	SDL_ShowCursor(SDL_DISABLE);
 }
 
-ShopState::ShopState(Application* app, Player* player) :GameState(app), player_(player)
+void ShopState::callbackAdvanceInventoryPage(Application* app) {
+	dynamic_cast<ShopState*>(app->getCurrState())->advanceInventoryPage();
+}
+
+void ShopState::callbackAdvanceShopPage(Application* app) {
+	dynamic_cast<ShopState*>(app->getCurrState())->advanceShopPage();
+}
+
+void ShopState::callbackPreviousInventoryPage(Application* app) {
+	dynamic_cast<ShopState*>(app->getCurrState())->previousInventoryPage();
+}
+
+void ShopState::callbackPreviousShopPage(Application* app) {
+	dynamic_cast<ShopState*>(app->getCurrState())->previousShopPage();
+}
+
+void ShopState::callbackSelectObject(Application* app, InventoryButton* button)
 {
-	SDL_ShowCursor(SDL_ENABLE);
-
-	sellButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Dragon), Vector2D{ 50,500 }, Vector2D{ 50,50 }, callSellObjectS);
-	addUpdateList(sellButton_);
-	addRenderList(sellButton_);
-	advanceButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D{ 700,100 }, Vector2D{ 50,50 }, callForwardListS);
-	addUpdateList(advanceButton_);
-	addRenderList(advanceButton_);
-	gobackButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::BackButton), Vector2D{ 500,100 }, Vector2D{ 50,50 }, callBackListS);
-	addUpdateList(gobackButton_);
-	addRenderList(gobackButton_);
-	exitButton_ = new Button(app, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), Vector2D{ 1300,100 }, Vector2D{ 50,50 }, callExitS);
-	addUpdateList(exitButton_);
-	addRenderList(exitButton_);
-
-	buyButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground), Vector2D{ 50,700 }, Vector2D{ 50,50 }, callBuyObjectS, 1);
-	addUpdateList(buyButton_);
-	addRenderList(buyButton_);
-	shopAdvanceButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow), Vector2D{ 300,100 }, Vector2D{ 50,50 }, callShopForwardListS, 1);
-	addUpdateList(shopAdvanceButton_);
-	addRenderList(shopAdvanceButton_);
-	shopGobackButton_ = new Button(app,  app_->getTextureManager()->getTexture(Resources::TextureId::BackButton), Vector2D{ 100,100 }, Vector2D{ 50,50 }, callShopBackListS, 1);
-	addUpdateList(shopGobackButton_);
-	addRenderList(shopGobackButton_);
-
-#ifdef _DEBUG
-	string nombre = "gloves";
-	string desc = "desc";
-
-	Gloves* guante0 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante1 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante2 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante3 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante4 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante5 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-	Gloves* guante6 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), nombre, desc, 20.0, 10, 10);
-
-	addToInventory(guante0);
-	addToInventory(guante1);
-	addToInventory(guante2);
-	addToInventory(guante3);
-	addToInventory(guante4);
-	addToInventory(guante5);
-	addToInventory(guante6);
-
-
-	Gloves* guante11 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante12 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante13 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante14 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante15 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante16 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante17 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante18 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante19 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante20 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-	Gloves* guante21 = new Gloves(app_->getTextureManager()->getTexture(Resources::TextureId::Controls), nombre, desc, 20.0, 10, 10);
-
-	addToShop(guante11);
-	addToShop(guante12);
-	addToShop(guante13);
-	addToShop(guante14);
-	addToShop(guante15);
-	addToShop(guante16);
-	addToShop(guante17);
-	addToShop(guante18);
-	addToShop(guante19);
-	addToShop(guante20);
-	addToShop(guante21);
-
-#endif
-
+	dynamic_cast<ShopState*>(app->getCurrState())->selectObject(button);
 }
 
-ShopState::~ShopState()
+void ShopState::callbackChangeBetweenLists(Application* app)
 {
-	for (InventoryButton* object : shopList_) {
-		delete object;
-		object = nullptr;
-	}
-	shopList_.clear();
-
-	for (InventoryButton* object : inventoryList_) {
-		delete object;
-		object = nullptr;
-	}
-
-	inventoryList_.clear();
+	dynamic_cast<ShopState*>(app->getCurrState())->changeBetweenLists();
 }
 
-void ShopState::addToInventory(Item* ob)
+void ShopState::callbackDeleteObject(Application* app)
 {
-	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_, ob->getItemTexture(), Vector2D(300, 400), Vector2D(50, 50), ob, callSelectObjectS);
-	//le asignamos al objeto su boton
-	ob->setButton(b);
-	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
-	list <InventoryButton*>::iterator it = inventoryList_.insert(inventoryList_.end(), b);
-	b->setIterator(it);
-	//comprobamos si es el primer objeto de la lista
-	if (it == inventoryList_.begin()) {
-		ListPos = inventoryList_.begin();//iniciamos el puntero
-	}
+	dynamic_cast<ShopState*>(app->getCurrState())->deleteObject();
 }
+
+void ShopState::callbackAddMoneyToInventary(Application* app)
+{
+	dynamic_cast<ShopState*>(app->getCurrState())->addMoneyToInventory();
+}
+
+#pragma endregion
 
 void ShopState::draw() const
 {
-	GameState::draw();//dibujamos todos los botones normales
-	//Despues dibujaremos SOLO los botones de la lista que salen por pantalla
-	if (!inventoryList_.empty()) {
-		list<InventoryButton*>::iterator aux = ListPos;
-		InventoryButton* auxOb = nullptr;
-		// posiciones estandar de los botones
-		int x = 700;
-		int y = 200;
-		int i = 0;
-		//dibujamos los objetos de la primera columna
-		while (i < VIEW_LIST / 2 && aux != inventoryList_.end()) {
-			//#ifdef _DEBUG
-			//		cout << "entramos en el bucle" << endl;
-			//#endif
-			auxOb = *aux;
-			auxOb->setPos(Vector2D{ double(x),double(y + (i * 100)) });
-			auxOb->draw();//desreferenciamos el puntero
-			aux++;
-			i++;
-		}
-		//dibujamos los objetos de la segunda colmna
-		int j = 0;
-		while (j < VIEW_LIST / 2 && aux != inventoryList_.end()) {
-			auxOb = *aux;
-			auxOb->setPos(Vector2D{ double(x + 100),double(y + (j * 100)) });
-			auxOb->draw();//desreferenciamos el puntero
-			aux++;
-			j++;
-		}
-	}
-	if(!shopList_.empty())
-	{
-		list<InventoryButton*>::iterator aux = shopListPos;
-		InventoryButton* auxOb = nullptr;
-		// posiciones estandar de los botones
-		int x = 200;
-		int y = 200;
-		int i = 0;
-		//dibujamos los objetos de la primera columna
-		while (i < SHOP_VIEW_LIST / 2 && aux != shopList_.end()) {
-			auxOb = *aux;
-			auxOb->setPos(Vector2D{ double(x),double(y + (i * 100)) });
-			auxOb->draw();//desreferenciamos el puntero
-			aux++;
-			i++;
-		}
-		//dibujamos los objetos de la segunda colmna
-		int j = 0;
-		while (j < SHOP_VIEW_LIST / 2 && aux != shopList_.end()) {
-			auxOb = *aux;
-			auxOb->setPos(Vector2D{ double(x + 100),double(y + (j * 100)) });
-			auxOb->draw();//desreferenciamos el puntero
-			aux++;
-			j++;
-		}
-	}
+	//Dibujamos el fondo (de momento es el provisional)
+	background_->render({ 0, 0, app_->getWindowWidth(), app_->getWindowHeight() });
+
+	//Dibujamos todos los botones
+	GameState::draw();
+
+	//Dibujamos la cantidad de oro que hay en ambos inventarios
+	inventoryMoneyTex_->render({ inventory_.moneyText.x, inventory_.moneyText.y, inventory_.moneyText.w * nOfDigits(inventory_.money_) ,inventory_.moneyText.h });
+
+	//Dibujamos los objetos visibles en el inventario y en la tienda
+	//Primer vector determina donde se posiciona el primer objeto y el segundo la distancia en x e y entre objetos
+	drawList(shop_.objects_, shop_.firstDrawn, SHOP_VISIBLE_ELEMENTS, FIRST_SHOP_ELEMENT, DISTANCE_BETWEEN_ELEMENTS, ELEMENTS_PER_ROW);
+	drawList(inventory_.objects_, inventory_.firstDrawn, INVENTORY_VISIBLE_ELEMENTS, FIRST_INVENTORY_ELEMENT, DISTANCE_BETWEEN_ELEMENTS, ELEMENTS_PER_ROW);
+
+	//Escribimos la informaci�n del boton seleccionado
+	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render(DESCRIPTION_RECT);
 }
 
 void ShopState::update()
 {
-	//Comprobamos si la lista del inventario no esta vacia, si no lo esta se actualizan los objetos de la lista
-	if (!inventoryList_.empty()) 
-	{
-		list<InventoryButton*>::iterator aux = ListPos;
-		InventoryButton* auxOb = nullptr;
-		int i = 0;
-		//Actualizaremos SOLO los botones de la lista que salen por pantalla
-		while (i < VIEW_LIST && aux != inventoryList_.end()) 
-		{
-			auxOb = *aux;
-			auxOb->update();//desreferenciamos el puntero
-			aux++;
-			i++;
-		}
+	//update de los objetos del inventario que hay en pantalla
+	auto it = inventory_.firstDrawn;
+	for (int i = 0; it != inventory_.objects_->end() && i < INVENTORY_VISIBLE_ELEMENTS; i++) {
+		(*it)->update();
+		++it;
 	}
-
-	if (!shopList_.empty()) 
-	{
-		list<InventoryButton*>::iterator aux = shopListPos;
-		InventoryButton* auxOb = nullptr;
-		int i = 0;
-		//Actualizaremos SOLO los botones de la lista que salen por pantalla
-		while (i < SHOP_VIEW_LIST && aux != shopList_.end()) 
-		{
-			auxOb = *aux;
-			auxOb->update();//desreferenciamos el puntero
-			aux++;
-			i++;
-		}
+	//update de los objetos de la tienda que hay en pantalla
+	it = shop_.firstDrawn;
+	//advance(it, stash_.page_ * STASH_VISIBLE_ELEMENTS);
+	for (int i = 0; it != shop_.objects_->end() && i < SHOP_VISIBLE_ELEMENTS; i++) {
+		(*it)->update();
+		++it;
 	}
-	//Actualizamos los objetos normales
+	//Update de todos los botones
 	GameState::update();
 }
 
-void ShopState::selectObject(InventoryButton* ob)
-{
-	select_ = ob;
+void ShopState::initState() {
+	SDL_ShowCursor(SDL_ENABLE);
+	//Fondo
+	background_ = app_->getTextureManager()->getTexture(Resources::TextureId::ShopMenu);
+
+	//Bot�n de avanzar la p�gina del inventario
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow)*/, Vector2D((57 * (app_->getWindowWidth() / 70)), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceInventoryPage));
+	//Bot�n de volver a la p�gina anterior del inventario
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow)*/, Vector2D(45 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousInventoryPage));
+
+	//Bot�n de avanzar la p�gina de la tienda
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow)*/, Vector2D(45 * (app_->getWindowWidth() / 140), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceShopPage));
+	//Bot�n de volver a la p�gina anterior de la tienda
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow)*/, Vector2D((29 * (app_->getWindowWidth() / 140)) + 10, ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousShopPage));
+
+	//Bot�n para cambiar el objeto de una lista a otra
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton)*/, Vector2D(45 * (app_->getWindowWidth() / 64), FUNCTIONALITY_BUTTONS_ROW), Vector2D(2*BUTTON_SIZE, BUTTON_SIZE), callbackChangeBetweenLists));
+	//Bot�n para eliminar el objeto seleccionado
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton)*/, Vector2D( 26 * (app_->getWindowWidth() / 32), FUNCTIONALITY_BUTTONS_ROW), Vector2D(2*BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
+
+	//Bot�n de volver al estado anterior
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX)*/, Vector2D(CLOSE_BUTTON_COLUMN, 2 * (double)(app_->getWindowHeight() / 9)), CLOSE_BUTTON_SIZE, backToPrevious));
+
+	//Cogemos la referencia al dinero de gameManager
+	inventory_.money_ = gm_->getInventoryGold();
+
+	//Posicion de los textos de la tienda e inventario
+	inventory_.moneyText = { 25 * (app_->getWindowWidth() / 40),MONEY_BUTTON_ROW + MONEY_TEXT_OFFSET, FONT_WIDTH,FONT_HEIGHT };
+
+	//Texturas con texto
+	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
+
+	//Cogemos la referencia de las listas que hay en GameManager
+	shop_.objects_ = gm_->getShop();
+	inventory_.objects_ = gm_->getInventory();
+	///Reasignamos el callback y el estado puesto que si se borra el antiguo Shop, no se podrá seleccionar 
+	//ninguno de los objetos al no estar la función en la misma direccion de memoria
+	for (auto ob = inventory_.objects_->begin(); ob != inventory_.objects_->end(); ++ob) {
+		(*ob)->setNewCallBack(callbackSelectObject);
+		(*ob)->setCurrentState(this);
+	}
+	for (auto ob = shop_.objects_->begin(); ob != shop_.objects_->end(); ++ob) {
+		(*ob)->setNewCallBack(callbackSelectObject);
+		(*ob)->setCurrentState(this);
+	}
+
+	inventory_.firstDrawn = inventory_.objects_->begin();
+	shop_.firstDrawn = shop_.objects_->begin();
 }
 
-void ShopState::sellObj()
+void ShopState::endState()
 {
-	if (select_ != nullptr && select_->getId() == 0)
-	{
-		if (select_->getIterator() == ListPos)++ListPos;
-		select_->Enable(true);
-		player_->addMoney(select_->getObject()->getItemPrice());
-		inventoryList_.erase(select_->getIterator());
-		delete select_;
-		select_ = nullptr;
+	gm_->setInventoryGold(inventory_.money_);
+
+	delete inventoryMoneyTex_;
+	delete selectedObjectDescription_;
+}
+
+#pragma region privateCallbacks
+
+void ShopState::advanceInventoryPage() {
+	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
+	if (((inventory_.page_ + 1) * INVENTORY_VISIBLE_ELEMENTS) < inventory_.objects_->size()) {
+		inventory_.page_++;
+		advance(inventory_.firstDrawn, INVENTORY_VISIBLE_ELEMENTS);
 	}
 }
 
-void ShopState::deleteObj()
+void ShopState::previousInventoryPage()
+{	//Si el primer elemento de la p�gina anterior del la lista no es negativo(no existe), retrocedemos
+	if (((inventory_.page_ - 1) * INVENTORY_VISIBLE_ELEMENTS) >= 0) {
+		inventory_.page_--;
+		advance(inventory_.firstDrawn, -INVENTORY_VISIBLE_ELEMENTS);
+	}
+}
+
+void ShopState::advanceShopPage()
+{	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
+	if ((shop_.page_ + 1) * SHOP_VISIBLE_ELEMENTS < shop_.objects_->size()) {
+		shop_.page_++;
+		advance(shop_.firstDrawn, SHOP_VISIBLE_ELEMENTS);
+	}
+}
+
+void ShopState::previousShopPage()
+{	//Si el primer elemento de la p�gina anterior del la lista no es negativo(no existe), retrocedemos
+	if ((shop_.page_ - 1) * SHOP_VISIBLE_ELEMENTS >= 0) {
+		shop_.page_--;
+		advance(shop_.firstDrawn, -SHOP_VISIBLE_ELEMENTS);
+	}
+}
+
+void ShopState::selectObject(InventoryButton* button)
 {
-	inventoryList_.erase(select_->getIterator());
-
-	//Eliminamos el objeto
-	delete select_;
-	select_ = nullptr;
+	selected_ = button;
+	if (selectedObjectDescription_ != nullptr)delete selectedObjectDescription_;
+	selectedObjectDescription_ = new Texture(app_->getRenderer(), "Descripcion Temporal", app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
 }
 
-//boton que avanza en la lista para mostrar los siguientes elementos, en este caso avazara el iterador
-void ShopState::forwardList() {
-	int aux = advanced;
-	aux += 1;
-	if ((aux * VIEW_LIST) <= inventoryList_.size()) {
-		advanced = aux;
-		advance(ListPos, VIEW_LIST);//avanzamos el iterador
-	}
-}
-//metodo para retroceder en la lista del inventario
-void ShopState::backList() {
-	int aux = advanced;
-	aux -= 1;
-	if ((aux * VIEW_LIST) >= 0) {
-		advanced = aux;
-		advance(ListPos, -VIEW_LIST);//retrocedemos el iterador
-	}
-}
-
-void ShopState::addToShop(Equipment* ob)
+void ShopState::changeBetweenLists()
 {
-	//creamos un boton
-	InventoryButton* b = new InventoryButton(app_,  ob->getItemTexture(), Vector2D{ 300,400 }, Vector2D{ 50,50 }, ob, callSelectObjectS, false,1);
-	//le asignamos al objeto su boton
-	ob->setButton(b);
-	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
-	list <InventoryButton*>::iterator it = shopList_.insert(shopList_.end(), b);
-	b->setIterator(it);
-	//comprobamos si es el primer objeto de la lista
-	if (it == shopList_.begin()) {
-		shopListPos = shopList_.begin();//iniciamos el puntero
+	//Comprobamos si hay algun elemento seleccionado
+	if (selected_ != nullptr) {
+
+		//Buscamos si el objeto selected est� en la lista del inventario
+		auto it = find(inventory_.firstDrawn, inventory_.objects_->end(), selected_);
+		
+		//Una vez sabemos a cual, lo intercambiamos de lista
+		if (it == inventory_.objects_->end()) {
+			selectedIsLastElement(shop_, SHOP_VISIBLE_ELEMENTS);
+			if (gm_->getInventoryGold() >= selected_->getObject()->getPrice())
+			{
+				gm_->addInventoryGold(-selected_->getObject()->getPrice());
+				moneyChange();
+				//Insertamos en la otra lista
+				it = inventory_.objects_->insert(inventory_.objects_->end(), selected_);
+				//Si no había ningún elemento en la lista, asignamos como por defecto el primero
+				if (inventory_.objects_->end() == inventory_.firstDrawn)inventory_.firstDrawn = inventory_.objects_->begin();
+				//Lo quitamos de la inicial
+				shop_.objects_->erase(selected_->getIterator());
+				//actualizamos iterador
+				selected_->setIterator(it);
+				if (shop_.objects_->size() == 0) shop_.firstDrawn = shop_.objects_->begin();
+			}
+		}
+		else {
+			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
+			gm_->addInventoryGold(selected_->getObject()->getPrice());
+			moneyChange();
+			//Insertamos en la otra lista
+			it = shop_.objects_->insert(shop_.objects_->end(), selected_);
+			//Si no había ningún elemento en la lista, asignamos como por defecto el primero
+			if (shop_.objects_->end() == shop_.firstDrawn)shop_.firstDrawn = shop_.objects_->begin();
+			//Lo quitamos
+			inventory_.objects_->erase(selected_->getIterator());
+			//actualizamos iterador
+			selected_->setIterator(it);
+			if (inventory_.objects_->size() == 0)inventory_.firstDrawn = inventory_.objects_->begin();
+		}
 	}
 }
 
-void ShopState::buyObj()
+void ShopState::deleteObject()
 {
-	if (select_ != nullptr && player_->getMoney() >= select_->getObject()->getItemPrice() && select_->getId() == 1)
-	{
-		if (select_->getIterator() == shopListPos)++shopListPos;
-		select_->Enable(true);
-		player_->addMoney(-select_->getObject()->getItemPrice());
-		addToInventory(select_->getObject());
-		shopList_.erase(select_->getIterator());
+	//Comprobamos si hay alg�n elemento seleccionado
+	if (selected_ != nullptr) {
+
+		//Buscamos si el objeto selected est� en la lista del inventario
+		auto it = find(inventory_.firstDrawn, inventory_.objects_->end(), selected_);
+
+		//Quitamos el objeto de la lista en la que se encuentra
+		if (it == inventory_.objects_->end()) {
+			selectedIsLastElement(shop_, SHOP_VISIBLE_ELEMENTS);
+			shop_.objects_->erase(selected_->getIterator());
+			if (shop_.objects_->size() == 0) shop_.firstDrawn = shop_.objects_->begin();
+		}
+		else
+		{
+			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
+			inventory_.objects_->erase(selected_->getIterator());
+			if (inventory_.objects_->size() == 0)inventory_.firstDrawn = inventory_.objects_->begin();
+		}
+
+		//Borramos el objeto
+		delete selected_;
+		//Borramos la textura con la descripci�n del antiguo objeto seleccionado
+		delete selectedObjectDescription_;
+		//Ponemos el puntero a null para evitar posibles errores
+		selected_ = nullptr;
+		selectedObjectDescription_ = nullptr;
+
 	}
 }
 
-void ShopState::ShopForwardList()
+void ShopState::addMoneyToInventory()
 {
-	int aux = shopAdvanced;
-	aux += 1;
-	if ((aux * SHOP_VIEW_LIST) <= shopList_.size()) {
-		shopAdvanced = aux;
-		advance(shopListPos, SHOP_VIEW_LIST);//avanzamos el iterador
+	inventory_.money_ += shop_.money_;
+	shop_.money_ = 0;
+	moneyChange();
+}
+
+#pragma endregion
+
+void ShopState::drawList(list<InventoryButton*>* list_, list<InventoryButton*>::iterator it, const int elemsPerPage, Vector2D iniElemPos, Vector2D distanceBetween, int elementsPerRow)const
+{
+	//Si existe la lista y no est� vac�a la dibujamos
+	if (list_ != nullptr && !list_->empty()) {
+		int i = 0;
+		auto aux = it;
+		while (aux != list_->end() && i < elemsPerPage / elementsPerRow) {//filas
+			int j = 0;
+			while (aux != list_->end() && j < elementsPerRow) {//columnas
+				(*aux)->setPos({ iniElemPos.getX() + distanceBetween.getX() * j, iniElemPos.getY() + distanceBetween.getY() * i });
+				(*aux)->draw();
+				++aux;
+				j++;
+			}
+			i++;
+		}
 	}
 }
 
-void ShopState::ShopBackList()
+int ShopState::nOfDigits(int n) const
 {
-	int aux = shopAdvanced;
-	aux -= 1;
-	if ((aux * SHOP_VIEW_LIST) >= 0) {
-		shopAdvanced = aux;
-		advance(shopListPos, -SHOP_VIEW_LIST);//retrocedemos el iterador
+	int i = 1;
+	while (n / 10 > 0) {
+		n /= 10;
+		i++;
 	}
+	return i;
+	return 0;
+}
+
+void ShopState::selectedIsLastElement(ContainerSHOP& list_, int nVisibleElements)
+{
+	auto aux = list_.objects_->begin();
+	advance(aux, list_.page_ * nVisibleElements);
+
+	if (selected_->getIterator() == list_.firstDrawn && list_.firstDrawn == aux && aux != --list_.objects_->end())++list_.firstDrawn;
+	else if (selected_->getIterator() == list_.firstDrawn && list_.firstDrawn != list_.objects_->begin() && list_.firstDrawn == --list_.objects_->end()) {
+		advance(list_.firstDrawn, -nVisibleElements);
+		list_.page_--;
+	}
+}
+
+void ShopState::moneyChange()
+{
+	delete inventoryMoneyTex_;
+	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(gm_->getInventoryGold()), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
 }

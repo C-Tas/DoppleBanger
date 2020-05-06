@@ -1,32 +1,18 @@
 #pragma once
 #include "Actor.h"
 #include "Clon.h"
-#include "usable.h"
 #include "HandleEvents.h"
 #include <array>
 #include "GameManager.h"
+#include "jute.h"
+
 class Skill;
-
-//Enumerado que representa el tipo de arma que tiene equipada
-enum class FIREARM
-{
-	PISTOL,
-	BLUNDERBUSS,
-	SHOTGUN
-};
-
-struct playerEquipment
-{
-	//Equipamiento del jugador
-	Armor* armor_ = nullptr;
-	Gloves* gloves_ = nullptr;
-	Boots* boots_ = nullptr;
-	Sword* sword_ = nullptr;
-	Equipment* fireGun_ = nullptr;
-	
-	usable* potion1_ = nullptr;
-	usable* potion2_ = nullptr;
-};
+class Armor;
+class Gloves;
+class Boots;
+class Sword;
+class Gun;
+class usable;
 
 class Player : public Actor
 {
@@ -41,9 +27,6 @@ public:
 
 	virtual bool update();
 	virtual void onCollider();
-
-	//Calcula hacia dónde mira el player en función del ratón
-	void updateDirVisMouse();
 	//Establece la direccion del movimiento
 	virtual void move(Point2D target);
 	//Dispara creando una bala en la posicion dir
@@ -59,6 +42,8 @@ public:
 	void createClon();
 	//Mueve al jugador una distancia en una direccion
 	void displace(Vector2D dir, int dist);
+	//Aplica una ralentiazación al jugador
+	void applySlow(double slow, double duration);
 	//Si se ha muerto el enemigo al que está atacando el jugador se setea a nullptr
 	void isEnemyDead(Actor* obj);
 	//Cambia de estado a muriendo
@@ -72,27 +57,23 @@ public:
 		}
 		else return false;
 	};
-	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); };
-	///<summary>Método para crear las skills que tiene el player
-	///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
-	void initSkills();
+	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); onCollision_ = true; };
 
-#pragma region Getters
-	const bool getDead() { return dead_; };
-	const int getLiberation() { return liberation_; };
-	const int getMoney() { return money_; };
-	const double getMaxHealth() { return HEALTH; }; //Faltaria poner una variable que lleve la vida maxima sin ser cte
-	const double getMaxMana() { return MANA; }; //Faltaria poner una variable que lleve el mana maximo sin ser cte
-	Clon* getClon() { return clon_; };
+	#pragma region Getters
+		const bool getDead() { return dead_; };
+	const bool getOnCollision() { return onCollision_; };
+		const bool isEquipInit() { return initEquip_; };
+		const int getLiberation() { return liberation_; };
+		const double getMaxHealth() { return maxHealth_; }; //Devuelve la vida maxima del player
+		const double getMaxMana() { return maxMana_; };		//Devuelve el mana maximo del player
+		Clon* getClon() { return clon_; };
 
-	const Vector2D getPreviousPos() { return previousPos_; }
-
-	const Stats& getStats() { return currStats_; };
-	//habilidades
-	//activa la pasiva invencible y aplica los efectos de esta
-	void activeInvincible();
-	//Devuelve la información del equipment
-	playerEquipment& const getInfoEquip() { return equip_; }
+		const Vector2D getPreviousPos() { return previousPos_; }
+		 
+		const Stats& getStats() { return currStats_; };
+		//habilidades
+		//activa la pasiva invencible y aplica los efectos de esta
+		void activeInvincible();
 	
 #pragma endregion
 #pragma region Setters
@@ -105,64 +86,81 @@ public:
 		app_->getAudioManager()->playChannel(Resources::Ricochet, 0, 3);
 		ricochet_ = ricochet; 
 		lastTimeRico_ = SDL_GetTicks(); };
+		//Para saber si hay que inicializar el equipamiento
+		void setinitEquip(bool init) { initEquip_ = init; };
+	//Setea si el player ha colisionado
+	void setOnCollision(bool coll) { onCollision_ = coll; };
 
-	void decreaseMana(double mana);
-	inline void setLiberation1() { liberation_ = 1; };
-	inline void setLiberation2( ) { liberation_ = 2; };
+		void decreaseMana(double mana);
+		inline void setLiberation(int level) { liberation_ = level; };
+		//inline void setLiberation2() { liberation_ = 2; };
 
-	void equip(Armor* armor) { equip_.armor_ = armor; };
-	void equip(Gloves* gloves) { equip_.gloves_ = gloves; };
-	void equip(Boots* boots) { equip_.boots_ = boots; };
-	void equip(Sword* sword) { equip_.sword_ = sword; };
-	void equip(Equipment* newWeapon) { 
-		changeDistWeaponStats(newWeapon);
-		changeFireArmStatus(); 
-	}
-	void equipPotion1(usable* pot) { equip_.potion1_ = pot; };
-	void equipPotion2(usable* pot) { equip_.potion2_ = pot; };
+		void equip(Armor* armor) { armor_ = armor; gm_->setArmor(armor); };
+		void equip(Gloves* gloves) { gloves_ = gloves; gm_->setGloves(gloves); };
+		void equip(Boots* boots) { boots_ = boots; gm_->setBoots(boots);};
+		void equip(Sword* sword) { sword_ = sword; gm_->setSword(sword);};
+		void equip(Gun* gun) { 
+			changeDistWeaponStats(gun);
+			gm_->setGun(gun);
+		}
+		void addMaxHealth(double addition) { maxHealth_ += addition; };
+		void setClonCoolDown() { cdSkills[3] = true; }
+		//Aumenta la cadencia de tiro del player
+		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
+		//Activa el ataque potenciado
+		void activateEmpowered() { empoweredAct_ = true; };
 
-	void addMoney(int money) { money_ += money; };
-	void usePotion(int value, potionType type);
-	void desactivePotion();
-	void setClonCoolDown() { cdSkills[3] = true; }
-	//Aumenta la cadencia de tiro del player
-	void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
-	//Activa el ataque potenciado
-	void activateEmpowered() {
-		app_->getAudioManager()->playChannel(Resources::EmpoweredSkill, 0, 3);
-		empoweredAct_ = true; 
-	};
-#pragma endregion
-
-#pragma region Skills
-	///<summary>Número máximo de skills equipables</summary>
-	Skill* getEquippedSkill(int key) { return skills_[key]; }
-	void setSkillAt(int key, Skill* skill) { 
-		if(skills_[key]!= nullptr)delete skills_[key]; 
-		skills_[key] = skill; }
-	vector <Skill*>& getSkillsArray() { return skills_; }
-#pragma endregion
-
+		//Carga el equipamiento del player
+		void load();
+	#pragma endregion
+	#pragma region Pociones
+		//Metodo para usar las pociones
+		void usePotion(usable* potion, int key);
+		//Metodo para desactivar el bufo de las pociones
+		void desactiveBuffPotion(usable* potion, int timerPos);
+		//Equipa pociones
+		void equipPotion1(usable* pot) { potions_[0] = pot; gm_->setPotion(0, potions_[0]); };
+		void equipPotion2(usable* pot) { potions_[1] = pot; gm_->setPotion(1, potions_[1]); };
+		//Devuelve el instante en el que se usó la poción
+		const double getTimerPotion(int potion) { return timerPotion_[potion]; };
+	#pragma endregion
+	#pragma region Skills
+		///<summary>Método para crear las skills que tiene el player
+		///se llama desde el initState del playState porque es necesario que esté creado el HUD</summary>
+		void initSkills();
+		///<summary>Número máximo de skills equipables</summary>
+		Skill* getEquippedSkill(int key) { return skills_[key]; }
+		void setSkillAt(int key, Skill* skill) { 
+			if(skills_[key]!= nullptr)delete skills_[key]; 
+			skills_[key] = skill; }
+		vector <Skill*>& getSkillsArray() { return skills_; }
+	#pragma endregion
 
 private:
 	bool dead_ = false;
 	bool attacking_ = false;
-	int money_ = 0;
+	bool onCollision_ = false;
+	bool initEquip_ = true;	//Para saber si hiay que inicializar el equipamiento
+	bool slowed_ = false;
+	double slowDuration_ = 0;
+	double slowEffect_ = 0;
+	double slowTime_ = 0;
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
 	Clon* clon_ = nullptr;
 
 	Vector2D previousPos_;
-	FIREARM currFireArm_;
 	//Habilidades
-	vector<Skill*> skills_;
+	vector<Skill*> skills_ = { nullptr, nullptr, nullptr, nullptr};
 	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
 
-	//Cambia el tipo de arma actual equipada
-	void changeFireArmStatus();
 	//cambia los stats de un arma
-	void changeDistWeaponStats(Equipment* newWeapon);
+	void changeDistWeaponStats(Gun* newWeapon);
 
+	//Objetos
+	//<Speed, Damage, Armor, Crit>			
+	vector<bool> potionUsing_{ 0, 0, 0, 0 };	//Para saber si se está usando la poción y resetear el tiempo
+	vector<double> timerPotion_{ 0, 0, 0, 0 };	//Para guardar y restablecer el tiempo de las pociones
 #pragma region Animaciones
 	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
@@ -259,7 +257,6 @@ private:
 	const int TIME_RICO = 4;	//En segundos
 	int lastTimeRico_ = 0;		//Momento en el que se usa rebote
 #pragma endregion
-
 //<summary>Variables de los cooldowns del jugador</summary>
 #pragma region Cooldowns
 	double clonCooldown_ = 2;		//Cooldown del clon
@@ -269,22 +266,20 @@ private:
 	double meleeTime_ = 0;			//Momento del último ataque
 	double shotTime_ = 0;			//Momento del �ltimo disparo
 #pragma endregion
-
 //<summary>Estadisticas iniciales del jugador</summary>
 #pragma region Stats
-	const double HEALTH = 1000;			//Vida
-	const double MANA = 100;			//Mana
+	double maxHealth_ = 1000;			//Representa la cantidad maxima de vida
+	double maxMana_ = 100;				//Representa la cantidad maxima de mana
 	const double MANA_REG = 1;			//Regeneración de maná por segundo
 	const double ARMOR = 10;			//Armadura
-	const double MELEE_DAMAGE = 0;	//Daño a melee
+	const double MELEE_DAMAGE = 100;	//Daño a melee
 	const double DIST_DAMAGE = 1000;	//Daño a distancia y de las habilidades
 	const double CRIT = 0;				//Crítico
 	const double MELEE_RANGE = 20;		//Rango del ataque a melee
-	const double DIST_RANGE = 0;		//Rango del ataque a distancia
+	const double DIST_RANGE = 2;		//Rango del ataque a distancia
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
 	const double MELEE_RATE = 1;		//Velocidad del ataque a melee en segundos
 	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos
-
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
 	//Constantes para el delay de los efectos de sonido
@@ -306,7 +301,12 @@ private:
 #pragma endregion
 	virtual void initObject();
 	void updateDir(Vector2D dir);
-	playerEquipment equip_;
 	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
 	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
+	Armor* armor_ = nullptr;	//Pechera
+	Gloves* gloves_ = nullptr;	//Guantes
+	Boots* boots_ = nullptr;	//Botas
+	Sword* sword_ = nullptr;	//Espada
+	Gun* gun_ = nullptr;		//Pistola
+	vector<usable*> potions_{ nullptr, nullptr };	//Pociones
 };

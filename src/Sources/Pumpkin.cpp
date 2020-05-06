@@ -46,10 +46,32 @@ bool Pumpkin::update() {
 	//Si la calabaza ha muerto
 	if (currState_ == STATE::DYING) {
 		
+		if (currAnim_.currFrame_ == 0) {
+			initExplosion();
+		}
+		applyRewards();
 		return explosionAnim();
 	}
-	//Si la calabaza no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
+	if (currState_ == STATE::IDLE) {
+		if (currAnim_.currFrame_ == LAUGH_FRAME) {
+			auto posi = app_->getRandom()->nextInt(0, 18);
+			if (posi >= 17) {
+				auto laughChoice = app_->getRandom()->nextInt(Resources::LaughPumpkin1, Resources::LaughPumpkin3 + 1);
+				app_->getAudioManager()->playChannel(laughChoice, 0, 6);
+				app_->getAudioManager()->setChannelVolume(5, 6);
+			}
+		}
+		else if (currAnim_.currFrame_ == IDLE_FRAME) {
+			auto posi = app_->getRandom()->nextInt(0, 13);
+			if (posi >= 12) {
+				auto choice = app_->getRandom()->nextInt(Resources::IdlePumpkin1, Resources::IdlePumpkin2 + 1);
+				app_->getAudioManager()->playChannel(choice, 0, 5);
+			}
+		}
+	}
+	//Si la calabaza no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo mï¿½s cercano
 	if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
+		app_->getAudioManager()->playChannel(Resources::AgroPumpkin, 0, 6);
 		initAttack();
 	}
 	//Si la calabaza tiene enemigo y puede atacar
@@ -67,7 +89,6 @@ bool Pumpkin::update() {
 			{
 				shootAnim();
 			}
-
 			//Tengo enemigo pero no a rango
 			else
 			{
@@ -85,7 +106,9 @@ void Pumpkin::disAttack() {
 #ifdef _DEBUG
 	cout << "hey";
 #endif // _DEBUG
-
+	app_->getAudioManager()->haltChannel(6);
+	app_->getAudioManager()->haltChannel(5);
+	app_->getAudioManager()->playChannel(Resources::AttackPumpkin, 0, 6);
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
 	Bullet* seed = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
 		getCenter(), dir, currStats_.distDmg_, seedLife, seedVel, Vector2D(wHSeed, wHSeed));
@@ -106,8 +129,8 @@ void Pumpkin::follow() {
 	}
 }
 void Pumpkin::initObject() {
-	setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
 	Enemy::initObject();
+	initRewards();
 	explosionRange_ = getScaleX();
 }
 void Pumpkin::lostAgro()
@@ -142,7 +165,7 @@ void Pumpkin::move(Point2D posToReach) {
 }
 void Pumpkin::initAnims()
 {
-	//Animación de idle
+	//Animaciï¿½n de idle
 		//Arriba
 	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, IDLE_U_FRAME_RATE, true));
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinIdleUpAnim));
@@ -156,7 +179,7 @@ void Pumpkin::initAnims()
 	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, IDLE_L_FRAME_RATE, true));
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinIdleLeftAnim));
 
-	//Animación de ataque
+	//Animaciï¿½n de ataque
 		//Arriba
 	attackAnims_.push_back(Anim(ATTACK_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, ATTACK_U_FRAME_RATE, false));
 	attackTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinAttackUpAnim));
@@ -170,7 +193,7 @@ void Pumpkin::initAnims()
 	attackAnims_.push_back(Anim(ATTACK_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, ATTACK_L_FRAME_RATE, false));
 	attackTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinAttackLeftAnim));
 	
-	//Animación de explosión
+	//Animaciï¿½n de explosiï¿½n
 		//Arriba
 	explosionAnims_.push_back(Anim(EXPLOSION_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, EXPLOSION_U_FRAME_RATE, false));
 	explosionTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinExpUpAnim));
@@ -184,7 +207,7 @@ void Pumpkin::initAnims()
 	explosionAnims_.push_back(Anim(EXPLOSION_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, EXPLOSION_L_FRAME_RATE, false));
 	explosionTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinExpLeftAnim));
 	
-	//Animación de movimiento
+	//Animaciï¿½n de movimiento
 		//Arriba
 	moveAnims_.push_back(Anim(MOVE_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, MOVE_U_FRAME_RATE, true));
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveUpAnim));
@@ -199,6 +222,15 @@ void Pumpkin::initAnims()
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveLeftAnim));
 	
 	initIdle();
+}
+void Pumpkin::initRewards()
+{
+	minGold = 30;
+	maxGold = 50;
+	minArchievementPoints = 2;
+	maxArchievementPoints = 10;
+	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
+	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
 void Pumpkin::initIdle()
 {
@@ -233,13 +265,27 @@ void Pumpkin::initExplosion()
 }
 bool Pumpkin::explosionAnim()
 {
+	if (currEnemy_ == nullptr) {
+				static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
+		app_->getCurrState()->removeRenderUpdateLists(this);
+		return true;
+	}
 	if (!explosion_ && currAnim_.currFrame_ == FRAME_ACTION_EXPLOSION) {
 		explosion_ = true;
+		app_->getAudioManager()->haltChannel(6);
+		app_->getAudioManager()->haltChannel(5);
+		app_->getAudioManager()->playChannel(Resources::ExplosionPumpkin , 0, 5);
+		auto s = app_->getRandom()->nextInt(0,101);
+		if (s >= 75) {
+		app_->getAudioManager()->setChannelVolume(10, 6);
+		app_->getAudioManager()->playChannel(Resources::TauntPumpkin1, 0, 6);
+		}
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = currEnemy_->getCenter();
 		if (dmg != nullptr && RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
 			center.getX(), center.getY(), explosionRange_)) {
+
 			dmg->receiveDamage(currStats_.meleeDmg_);
 		}
 		return false;
@@ -257,6 +303,7 @@ bool Pumpkin::explosionAnim()
 }
 void Pumpkin::initMove()
 {
+	app_->getAudioManager()->playChannel(Resources::MovePumpkin, -1, 6);
 	currState_ = STATE::FOLLOWING;
 	texture_ = moveTx_[(int)currDir_];
 	currAnim_ = moveAnims_[(int)currDir_];
@@ -264,13 +311,12 @@ void Pumpkin::initMove()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 }
-
 //Testeo
 void Pumpkin::updateDirVisEnemy() {
 	if (currEnemy_ != nullptr) {
 		Vector2D center = getCenter();		//Punto de referencia
 		Vector2D enemyCenter = currEnemy_->getCenter();
-		Vector2D dir = enemyCenter - center;		//Vector dirección
+		Vector2D dir = enemyCenter - center;		//Vector direcciï¿½n
 		dir.normalize();
 		double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
 		if (angle >= 0) {

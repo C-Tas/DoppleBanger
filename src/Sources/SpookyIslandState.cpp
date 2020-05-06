@@ -22,9 +22,6 @@ void SpookyIslandState::initState()
 SpookyIslandState::SpookyIslandState(Application* app) : PlayState(app)
 {
 	initState();
-	#ifdef _DEBUG
-	printf("SpookyIsland");
-	#endif
 }
 
 SpookyIslandState::~SpookyIslandState()

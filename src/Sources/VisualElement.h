@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Draw.h"
 
 //Clase pensada para elementos estáticos que no dependen de la cámara, como fondos de menús, etc.

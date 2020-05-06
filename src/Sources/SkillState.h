@@ -1,12 +1,12 @@
 #pragma once
 #include "GameState.h"
-#include "SkillButton.h"
 #include <array>
 #include <functional>
 
 class Skill;
 class Player;
 class VisualElement;
+class SkillButton;
 
 class SkillState :
 	public GameState
@@ -17,6 +17,7 @@ private:
 	Draw* bars_ [3] = { nullptr, nullptr, nullptr };		//El relleno de las Barras
 	Button* goToInventary_ = nullptr;
 	Texture* totalPoints_ = nullptr;		//Puntos totales de hazaña
+	int maxPoints = gm_->getMaxPoints();	//Puntos de hazaña máximo de las ramas
 	list <SkillButton*> skillsIcons_;	//Botones que contienen las skills en si mismas
 	array <list<SkillButton*>::iterator, 3> skillsTypeIterator;		//array auxiliar para cuando se cambian las texturas 
 																	//al desbloquear las habilidades
@@ -43,9 +44,9 @@ private:
 	{ (int)(0.8381 * app_->getWindowWidth()), (int)(0.8089 * app_->getWindowHeight()), (int)(0.0425 * app_->getWindowWidth()), (int)(0.0433 * app_->getWindowHeight()) } };
 
 	///<summary>Constantes con los puntos para desbloquear las habilidades</summary>
-	const int UNLOCK_FIRST_SKILL = 33;
-	const int UNLOCK_SECOND_SKILL = 66;
-	const int UNLOCK_THRID_SKILL = 100;
+	const double UNLOCK_FIRST_SKILL = maxPoints / 3;
+	const double UNLOCK_SECOND_SKILL = maxPoints * 2 / 3;
+ 	const double UNLOCK_THRID_SKILL = maxPoints;
 
 	
 protected:

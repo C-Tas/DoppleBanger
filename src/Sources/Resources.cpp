@@ -29,6 +29,16 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ GoToInventoryAButton, "../Sources/assets/botones/InventoryButtonA.png"},
 	{ GoToInventoryBButton, "../Sources/assets/botones/InventoryButtonB.png"},
 	{ GoToShopButton, "../Sources/assets/botones/botonTienda.png"},
+	{ SaveGame1, "../Sources/assets/botones/saveGame1.png"},
+	{ SaveGame2, "../Sources/assets/botones/saveGame2.png"},
+	{ SaveGame3, "../Sources/assets/botones/saveGame3.png"},
+	{ LoadGame1, "../Sources/assets/botones/loadGame1.png"},
+	{ LoadGame2, "../Sources/assets/botones/loadGame2.png"},
+	{ LoadGame3, "../Sources/assets/botones/loadGame3.png"},
+	{ LoadGameNull, "../Sources/assets/botones/loadGameNull.png"},
+	{ LoadButtonNull, "../Sources/assets/botones/loadButtonNull.png"},
+	//Animaciones de botones
+	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},
 
 	//Interfaces
 	{ BackButton, "../Sources/assets/botones/volver.png"},
@@ -71,15 +81,18 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ SkillTorbellinoC, "../Sources/assets/skills/torbellinoHab.png" },
 	{ SkillTorbellinoBN, "../Sources/assets/skills/torbellinoHabBN.png" },
 
+	//Interfaces
 	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
 	{ PauseBackground, "../Sources/assets/interfaces/pauseFondo.png" },
-	{ Controls, "../Sources/assets/interfaces/controles.png" },
-	{ InventaryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
+	{ SaveLoadBackground, "../Sources/assets/interfaces/saveLoadBg.png" },
+	{ Controls, "../Sources/assets/interfaces/controles.png"},
+	{ InventoryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
 	{ SkillMenu, "../Sources/assets/interfaces/HabilidadesFondo.png" },
-	{ StashMenu, "../Sources/assets/interfaces/AlijoFondo.png" },
-	{ Scene1, "../Sources/assets/interfaces/Scene1.png" },
-	{ Scene2, "../Sources/assets/interfaces/Scene2.png" },
-	{ Scene3, "../Sources/assets/interfaces/Scene3.png" },
+	{ StashMenu, "../Sources/assets/interfaces/AlijoFondo.png"},
+	{ ShopMenu, "../Sources/assets/interfaces/TiendaFondo.png"},
+	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
+	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
+	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
 	{ TextBox, "../Sources/assets/interfaces/textBoxBg.png" },
 	{ Ship, "../Sources/assets/interfaces/barco.png" },
 	{ Table, "../Sources/assets/interfaces/mesa.png" },
@@ -114,6 +127,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ArmorPot, "../Sources/assets/hud/iconos/armorPot.png" },
 	{ DmgPot, "../Sources/assets/hud/iconos/dmgPot.png" },
 	{ CritPot, "../Sources/assets/hud/iconos/critPot.png" },
+	{ PotionBG, "../Sources/assets/hud/potionBGF.png" },
 
 		//Sprites
 	{ Dragon,"../Sources/assets/enemigos/dragon.png" },
@@ -127,7 +141,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Azul, "../Sources/assets/enemigos/azul.png" },
 	{ Cleon, "../Sources/assets/enemigos/cleon/cleon.png" },
 	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
-	{ Merchant, "../Sources/assets/npc/mercader.png" },
+	{ Merchant, "../Sources/assets/npc/mercaderIdle.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
 	{ Cartographer, "../Sources/assets/npc/Navigator.png" },
 	{Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png"},
@@ -155,6 +169,18 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ClonSelfDestructionLeftAnim, "../Sources/assets/clon/autodestruccion/ClonLeftExplosion.png" },
 	{ ClonSelfDestructionUpAnim, "../Sources/assets/clon/autodestruccion/ClonBackExplosion.png" },
 	{ ClonSelfDestructionDownAnim, "../Sources/assets/clon/autodestruccion/ClonFrontExplosion.png" },
+	{ ClonShootRightAnim, "../Sources/assets/clon/disparo/ClonRightShooting.png" },
+	{ ClonShootLeftAnim, "../Sources/assets/clon/disparo/ClonLeftShooting.png" },
+	{ ClonShootUpAnim, "../Sources/assets/clon/disparo/ClonBackShooting.png" },
+	{ ClonShootDownAnim, "../Sources/assets/clon/disparo/ClonFrontShooting.png" },
+	{ ClonIdleRightAnim, "../Sources/assets/clon/idle/ClonRightIdle.png" },
+    { ClonIdleLeftAnim, "../Sources/assets/clon/idle/ClonLeftIdle.png" },
+    { ClonIdleUpAnim, "../Sources/assets/clon/idle/ClonBackIdle.png" },
+    { ClonIdleDownAnim, "../Sources/assets/clon/idle/ClonFrontIdle.png" },
+	{ ClonMeleeRightAnim, "../Sources/assets/clon/melee/ClonRightMelee.png" },
+	{ ClonMeleeLeftAnim, "../Sources/assets/clon/melee/ClonLeftMelee.png" },
+	{ ClonMeleeUpAnim, "../Sources/assets/clon/melee/ClonBackMelee.png" },
+	{ ClonMeleeDownAnim, "../Sources/assets/clon/melee/ClonFrontMelee.png" },
 	//Pumpkin
 		//Idle
 	{ PumpkinIdleRightAnim, "../Sources/assets/enemigos/pumpkin/Idle/calabazaIdleDer.png" },
@@ -176,6 +202,18 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PumpkinMoveLeftAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovIzq.png" },
 	{ PumpkinMoveUpAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovAtras.png" },
 	{ PumpkinMoveDownAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDelante.png" },
+	{ MonkeyIdleRightAnim, "../Sources/assets/enemigos/monkey/idleDchaDown.png" },
+	{ MonkeyIdleLeftAnim, "../Sources/assets/enemigos/monkey/idleIzTop.png" },
+	{ MonkeyIdleUpAnim, "../Sources/assets/enemigos/monkey/idleDchaTop.png" },
+	{ MonkeyIdleDownAnim, "../Sources/assets/enemigos/monkey/idleIzDown.png" },
+	{ MonkeyShootRightAnim, "../Sources/assets/enemigos/monkey/shootDchaDown.png" },
+	{ MonkeyShootLeftAnim, "../Sources/assets/enemigos/monkey/shootIzTop.png" },
+	{ MonkeyShootUpAnim, "../Sources/assets/enemigos/monkey/shootDchaTop.png" },
+	{ MonkeyShootDownAnim, "../Sources/assets/enemigos/monkey/shootIzDown.png" },
+
+	//Magordito
+		//Kirin
+	{ Kirin, "../Sources/assets/enemigos/magordito/Kirin.png" },
 
 		//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
@@ -189,13 +227,21 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Rock, "../Sources/assets/colisionables/roca.png" },
 	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
 
-		//Equipables
-	{ Gun1, "../Sources/assets/Equipamiento/pistola1.png" },
-	{ Gloves1, "../Sources/assets/Equipamiento/Gloves.png" },
-	{ Boots1, "../Sources/assets/Equipamiento/botas.png" },
-	{ Gloves2, "../Sources/assets/Equipamiento/Guantes2.png" },
-	{ Armor1,"../Sources/assets/Equipamiento/Armadura1.png" },
-	{ Blunderbuss ,"../Sources/assets/Equipamiento/trabuco.png" },
+	//Equipables
+	{ Armor1,"../Sources/assets/Equipamiento/armadura1.png" },
+	{ Armor2,"../Sources/assets/Equipamiento/armadura2.png" },
+	{ Gloves1, "../Sources/assets/Equipamiento/guantes1.png"},
+	{ Gloves2, "../Sources/assets/Equipamiento/guantes2.png"},
+	{ Boots1, "../Sources/assets/Equipamiento/botas.png"},
+	{ Boots2, "../Sources/assets/Equipamiento/zapatos.png" },
+	{ Sword1, "../Sources/assets/Equipamiento/espada1.png" },
+	{ Sword2, "../Sources/assets/Equipamiento/espada2.png" },
+	{ Saber1, "../Sources/assets/Equipamiento/sable1.png" },
+	{ Saber2, "../Sources/assets/Equipamiento/sable2.png" },
+	{ Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
+	{ Gun2, "../Sources/assets/Equipamiento/pistola2.png" },
+	{ ShotGun1, "../Sources/assets/Equipamiento/trabuco1.png" },
+	{ ShotGun2, "../Sources/assets/Equipamiento/trabuco2.png" },
 
 	//Tilesets de los mapas
 	{Tileset1, "../Sources/assets/mapas/Isla1-1/tileset_v2.png"},
@@ -207,6 +253,10 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	{ WolfHowl ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
 	{ WolfAttack ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
 	{ WolfDie ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" },
+	{ MonkeyIdle ,"../Sources/assets/efectos_sonido/monkey/monoIdle.wav" },
+	{ MonkeyAttack ,"../Sources/assets/efectos_sonido/monkey/monoAttack.wav" },
+	{ MonkeyShoot ,"../Sources/assets/efectos_sonido/monkey/monoShoot.wav" },
+	{ MonkeyDie ,"../Sources/assets/efectos_sonido/monkey/monoDie.ogg" },
 
 	//Player
 	{ Walk	  ,"../Sources/assets/efectos_sonido/player/walk.wav" },
@@ -232,22 +282,34 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	{ WhirlwindSkill   ,"../Sources/assets/efectos_sonido/player/whirlwindSkill.wav"},
 	{ Pistol   ,"../Sources/assets/efectos_sonido/player/pistol.wav"},
 	{ Trabuco   ,"../Sources/assets/efectos_sonido/player/trabuco.wav"},
-	{ Sword1   ,"../Sources/assets/efectos_sonido/player/sword1.flac"},
-	{ Sword2  ,"../Sources/assets/efectos_sonido/player/sword2.flac"},
-	{ Sword3  ,"../Sources/assets/efectos_sonido/player/sword3.wav"},
-	{ Sword4  ,"../Sources/assets/efectos_sonido/player/sword4.aiff"},
-	{ Sword5  ,"../Sources/assets/efectos_sonido/player/sword5.wav"},
-	{ Sword6  ,"../Sources/assets/efectos_sonido/player/sword6.wav"},
+	{ SwordSound1   ,"../Sources/assets/efectos_sonido/player/sword1.flac"},
+	{ SwordSound2  ,"../Sources/assets/efectos_sonido/player/sword2.flac"},
+	{ SwordSound3  ,"../Sources/assets/efectos_sonido/player/sword3.wav"},
+	{ SwordSound4  ,"../Sources/assets/efectos_sonido/player/sword4.aiff"},
+	{ SwordSound5  ,"../Sources/assets/efectos_sonido/player/sword5.wav"},
+	{ SwordSound6  ,"../Sources/assets/efectos_sonido/player/sword6.wav"},
 	{ MeleeCrit  ,"../Sources/assets/efectos_sonido/player/meleeCrit.wav"},
 	{ DistCrit  ,"../Sources/assets/efectos_sonido/player/distCrit.wav"},
-
 
 	//Clon
 	//{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
 
 	//Ship
-	{ Waves ,"../Sources/assets/efectos_sonido/ship/waves.wav" }
+	{ Waves ,"../Sources/assets/efectos_sonido/ship/waves.wav" },
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
+
+	//Calabaza
+	{ AgroPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/agro.mp3" },
+	{ AttackPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/attack.wav" },
+	{ ExplosionPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/explosion.wav" },
+	{ IdlePumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/idle1.mp3" },
+	{ IdlePumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/idle2.mp3" },
+	{ LaughPumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/laugh1.ogg" },
+	{ LaughPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/laugh2.ogg" },
+	{ LaughPumpkin3 ,"../Sources/assets/efectos_sonido/pumpkin/laugh3.ogg" },
+	{ MovePumpkin ,"../Sources/assets/efectos_sonido/pumpkin/move.mp3" },
+	{ TauntPumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/taunt.mp3" },
+	{ TauntPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/taunt1.mp3" }
 };
 
 vector <Resources::MusicInfo> Resources::musicRoutes{

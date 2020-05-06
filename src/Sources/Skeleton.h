@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Enemy.h"
 #include <vector>
 
@@ -10,16 +10,16 @@ public:
 		:Enemy(app, pos, scale) {
 		initObject();
 	};
-	
-
 	virtual bool update();
+	virtual void initRewards();
 	virtual void initObject();
+	virtual void lostAggro();
 	//virtual void onCollider();
 	virtual ~Skeleton() {};
-private:
-	//Último ataque
+protected:
+	//ï¿½ltimo ataque
 	Uint32 lastHit = 0;
-	//Último frame de animación
+	//Ãšltimo frame de animaciÃ³n
 	Uint32 lasFrame_ = 0;
 	//Diferentes animaciones del esqueleto
 	//Anim moveAnim_ = { 0,0,0,0,false };
@@ -43,35 +43,17 @@ private:
 	
 	int Distance;											//distancia que recorre el hueso a la ida y a la vuelta
 
-	//Estadisticas iniciales del esqueleto
-#pragma region Stats
-	const double HEALTH = 100;
-	const double MANA = 100;
-	const double MANA_REG = 1;
-	const double ARMOR = 10;
-	const double MELEE_DMG = 0;
-	const double DIST_DMG = 100;
-	const double CRIT = 0;
-	const double MELEE_RANGE = 20;
-	const double DIST_RANGE = 250;
-	const double MOVE_SPEED = 100;
-	const double MELEE_RATE = 1;
-	const double DIST_RATE = 2500;
-#pragma endregion
-
 	//Entero que representa la cantidad de frames que tiene para las animaciones
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet
 	const SDL_Rect FIRST_FRAME = { 0,0,0,0 };
 	//Ataque del esqueleto
 	void attack();
-	//Gestiona las diferentes animaciones que tiene el esqueleto
-	void changeAnim(Anim& newAnim);
 	//Inicializa todas las animaciones
 	void initAnims();
-	//Actualiza la actual animación
+	//Actualiza la actual animaciÃ³n
 	void updateAnim();
-
+	void initialStats();
 
 };
 

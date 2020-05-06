@@ -24,9 +24,11 @@
     <ClCompile Include="SDL2_gfx\SDL2_imageFilter.cpp" />
     <ClCompile Include="SDL2_gfx\SDL2_rotozoom.cpp" />
     <ClCompile Include="Sources\Actor.cpp" />
+    <ClCompile Include="Sources\Altar.cpp" />
+    <ClCompile Include="Sources\AltarSkeleton.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Armor.cpp" />
-    <ClCompile Include="Sources\Blunder.cpp" />
+    <ClCompile Include="Sources\BeerButton.cpp" />
     <ClCompile Include="Sources\Blunderbuss.cpp" />
     <ClCompile Include="Sources\Boots.cpp" />
     <ClCompile Include="Sources\AudioManager.cpp" />
@@ -59,12 +61,15 @@
     <ClCompile Include="Sources\Gun.cpp" />
     <ClCompile Include="Sources\HandleEvents.cpp" />
     <ClCompile Include="Sources\HUD.cpp" />
-    <ClCompile Include="Sources\interactuable.cpp" />
+    <ClCompile Include="Sources\Ink.cpp" />
     <ClCompile Include="Sources\Inventory.cpp" />
     <ClCompile Include="Sources\InventoryButton.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
+    <ClCompile Include="Sources\jute.cpp" />
     <ClCompile Include="Sources\Kraken.cpp" />
+    <ClCompile Include="Sources\LoadState.cpp" />
     <ClCompile Include="Sources\Magordito.cpp" />
+    <ClCompile Include="Sources\MagorditoIA.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\MainMenuState.cpp" />
     <ClCompile Include="Sources\MonkeyCoco.cpp" />
@@ -80,7 +85,7 @@
     <ClCompile Include="Sources\RandEquipGen.cpp" />
     <ClCompile Include="Sources\Resources.cpp" />
     <ClCompile Include="Sources\RicochetSkill.cpp" />
-    <ClCompile Include="Sources\SaveLoadState.cpp" />
+    <ClCompile Include="Sources\SaveState.cpp" />
     <ClCompile Include="Sources\SDL_macros.cpp" />
     <ClCompile Include="Sources\SelectLevelState.cpp" />
     <ClCompile Include="Sources\ShipState.cpp" />
@@ -120,9 +125,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
+    <ClInclude Include="Sources\Altar.h" />
+    <ClInclude Include="Sources\AltarSkeleton.h" />
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Armor.h" />
-    <ClInclude Include="Sources\Blunder.h" />
+    <ClInclude Include="Sources\BeerButton.h" />
     <ClInclude Include="Sources\Blunderbuss.h" />
     <ClInclude Include="Sources\Boots.h" />
     <ClInclude Include="Sources\BoneBullet.h" />
@@ -159,14 +166,17 @@
     <ClInclude Include="Sources\Gloves.h" />
     <ClInclude Include="Sources\Gun.h" />
     <ClInclude Include="Sources\HandleEvents.h" />
+    <ClInclude Include="Sources\Ink.h" />
+    <ClInclude Include="Sources\jute.h" />
     <ClInclude Include="Sources\Kraken.h" />
+    <ClInclude Include="Sources\LoadState.h" />
     <ClInclude Include="Sources\Magordito.h" />
     <ClInclude Include="Sources\HUD.h" />
+    <ClInclude Include="Sources\MagorditoIA.h" />
     <ClInclude Include="Sources\Obstacle.h" />
     <ClInclude Include="Sources\MonkeyCoco.h" />
     <ClInclude Include="Sources\PerforateSkill.h" />
     <ClInclude Include="Sources\Physics.h" />
-    <ClInclude Include="Sources\interactuable.h" />
     <ClInclude Include="Sources\Inventory.h" />
     <ClInclude Include="Sources\InventoryButton.h" />
     <ClInclude Include="Sources\Item.h" />
@@ -180,7 +190,7 @@
     <ClInclude Include="Sources\RandEquipGen.h" />
     <ClInclude Include="Sources\Resources.h" />
     <ClInclude Include="Sources\RicochetSkill.h" />
-    <ClInclude Include="Sources\SaveLoadState.h" />
+    <ClInclude Include="Sources\SaveState.h" />
     <ClInclude Include="Sources\SDL_macros.h" />
     <ClInclude Include="Sources\SelectLevelState.h" />
     <ClInclude Include="Sources\ShipState.h" />

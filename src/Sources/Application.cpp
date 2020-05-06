@@ -12,7 +12,7 @@ Application::Application(GameStateMachine* state) {
 	gameManager_->setApp(this);
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState);
+	machine_->pushState(startState)/*new CaribbeanIslandState(this))*/;
 }
 
 Application::~Application() {

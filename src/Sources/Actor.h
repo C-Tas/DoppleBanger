@@ -11,7 +11,8 @@ enum class STATE
 	DYING,
 	FOLLOWING,
 	PATROLLING,
-	SELFDESTRUCT
+	SELFDESTRUCT,
+	SWIMMING
 };
 
 //Enumerado para representar la dirección a la que mira una entidad
@@ -38,6 +39,7 @@ public:
 	void setMoveSpeed(double stat) { currStats_.moveSpeed_ = stat; };
 	void setMeleeRate(double stat) { currStats_.meleeRate_ = stat; };
 	void setDistRate(double stat) { currStats_.distRate_ = stat; };
+	void setEnemy(GameObject* newEnemy) { currEnemy_ = newEnemy; }
 #pragma endregion
 
 #pragma region getters
@@ -76,8 +78,8 @@ public:
 	void removeMana(double stat) { currStats_.mana_ -= stat; };
 	void removeManaReg(double stat) { currStats_.manaReg_ -= stat; };
 	void removeArmor(double stat) { currStats_.armor_ -= stat; };
-	void removeAd(double stat) { currStats_.meleeDmg_ -= stat; };
-	void removeAp(double stat) { currStats_.distDmg_ -= stat; };
+	void removeMeleeDamage(double stat) { currStats_.meleeDmg_ -= stat; };
+	void removeDistDamage(double stat) { currStats_.distDmg_ -= stat; };
 	void removeCrit(double stat) { currStats_.crit_ -= stat; };
 	void removeMeleeRange(double stat) { currStats_.meleeRange_ -= stat; };
 	void removeDistRange(double stat) { currStats_.distRange_ -= stat; };
@@ -89,6 +91,8 @@ public:
 	virtual void onCollider() = 0;
 	//Calcula hacia dónde mira en función del objetivo
 	void updateDirVisObjective(GameObject* objective);
+	//Calcula hacia dónde mira en función de la posición del raton
+	void updateDirVisMouse();
 	//<summary>Establece la direccion del movimiento</summary>	
 	virtual void move(Point2D target) {};
 	//Método para gestionar el daño recibido 

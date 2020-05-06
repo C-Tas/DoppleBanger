@@ -4,12 +4,19 @@
 #include "GameManager.h"
 #include <array>
 #include "Player.h"
+#include "SDL_macros.h"
 
 HUD::~HUD() {
 	for (auto it = elementsHUD_.begin(); it != elementsHUD_.end(); ++it) {
 		delete(*it);
 	}
 	elementsHUD_.clear();
+	for (int i = 0; i < POTIONS_AMOUNT; i++)
+	{
+		if (potionsHUD_[i].potionBackground_ != nullptr) delete potionsHUD_[i].potionBackground_;
+		if (potionsHUD_[i].potionHUD_ != nullptr) delete potionsHUD_[i].potionHUD_;
+		if (potionsHUD_[i].potionTimeHUD_ != nullptr) delete potionsHUD_[i].potionTimeHUD_;
+	}
 }
 
 const void HUD::draw() {
@@ -19,10 +26,25 @@ const void HUD::draw() {
 	for (auto it = elementsHUD_.begin(); it != elementsHUD_.end(); ++it) {
 		(*it)->draw();
 	}
+
+	int aux = 0;
+
+	//Muestra la duracion de las pociones
+	for (int i = 0; i < POTIONS_AMOUNT; i++) {
+		if (potionsHUD_[i].active_) {
+			potionsHUD_[i].potionBackground_->setDestiny({ 0, (int)(aux * app_->getWindowHeight() * 0.1111), (int)(app_->getWindowWidth() * 0.125), (int)(app_->getWindowHeight() * 0.1111)});	//Fondo
+			potionsHUD_[i].potionHUD_->setDestiny({ (int)(app_->getWindowWidth() * 0.0063), (int)(app_->getWindowHeight() * 0.0167 + aux * app_->getWindowHeight() * 0.1111), (int)(app_->getWindowWidth() * 0.0438), (int)(app_->getWindowHeight() * 0.0778)});	//Pocion
+			potionsHUD_[i].potionBackground_->draw();
+			potionsHUD_[i].potionHUD_->draw();
+			potionsHUD_[i].potionTimeHUD_->render({ (int)(app_->getWindowWidth() * 0.0625), (int)(app_->getWindowHeight() * 0.0167 + aux * app_->getWindowHeight() * 0.1111), (int)(app_->getWindowWidth() * 0.0438), (int)(app_->getWindowHeight() * 0.0778)});	//Tiempo
+			aux++;
+		}
+	}
+
 	SDL_Rect iconRect;
-	//Tamaño estándar de los iconos
+	//Tamaï¿½o estï¿½ndar de los iconos
 	iconRect.w = iconRect.h = W_H_ICON;
-	//Posición inicial de los primeros iconos
+	//Posiciï¿½n inicial de los primeros iconos
 	iconRect.x = app_->getWindowWidth() * 8 / 25; 
 	iconRect.y = app_->getWindowHeight() * 15 / 17;
 	cdRect_.x = (app_->getWindowWidth() / 2) - W_SKILLS / 2;
@@ -31,7 +53,7 @@ const void HUD::draw() {
  	int i = 0;
 	for (i = 0; i < ICON_AMOUNT; i++) {
 		if (icons[i] != nullptr) {
-			if (i < 4 && cdKeys[i]) cdBg_->render(cdRect_);
+ 			if (i < 4 && cdKeys[i]) cdBg_->render(cdRect_);
 			icons[i]->render(iconRect);
 		}
 		//Actualiza el rect
@@ -42,7 +64,7 @@ const void HUD::draw() {
 		else iconRect.x += app_->getWindowWidth() / 10.4;
 	}
 
-	//Para los puntos de hazaña
+	//Para los puntos de hazaï¿½a
 	iconRect.x = app_->getWindowWidth() * 9 / 10;
 	iconRect.y = app_->getWindowHeight() * 15 / 18;
 	Texture points(app_->getRenderer(), to_string(gm_->getAchievementPoints()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -57,14 +79,29 @@ const void HUD::draw() {
 }
 
 bool HUD::update() {
-	currentLife_ = dynamic_cast<Player*>(gm_->getPlayer())->getHealth();
+	//Actualiza el tiempo de las pociones y las desactiva al llegar a 0
+	for (int i = 0; i < POTIONS_AMOUNT; i++) {
+		if (potionsHUD_[i].active_) {
+			if (potionsHUD_[i].potionTimeHUD_ != nullptr) delete potionsHUD_[i].potionTimeHUD_;
+			potionsHUD_[i].potionTimeHUD_ = new Texture(app_->getRenderer(), to_string((int)(potionsHUD_[i].duration_ - ((SDL_GetTicks() - potionsHUD_[i].time_)) / 1000.0) + 1),
+				app_->getFontManager()->getFont(Resources::RETRO), SDL_Color{ (0,0,0,1) });
+			if ((potionsHUD_[i].active_) && (potionsHUD_[i].duration_ <= ((SDL_GetTicks() - potionsHUD_[i].time_) / 1000.0))) {
+				potionsHUD_[i].active_ = false;
+			}
+		}
+	}
+
+ 	currentLife_ = player_->getHealth();
+	maxLife_ = player_->getMaxHealth();
+	currentLife_ = gm_->getPlayer()->getHealth();
 	propLife_ = currentLife_ / maxLife_;
-	clipLife_.h = life_->getHeight() * propLife_; //vidaAct * AltTotal / VidaMax
+	clipLife_.h = life_->getHeight() * propLife_;	//vidaAct * AltTotal / VidaMax
 	clipLife_.y = life_->getHeight() - clipLife_.h;
 
-	currentMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getMana();
+	currentMana_ = player_->getMana();
+	maxMana_ = player_->getMaxMana();
 	propMana_ = currentMana_ / maxMana_;
-	endMana_ = (MAX_DEGREES_MANA * propMana_) + START_MANA;	//Proporción de vida para el arco del maná
+	endMana_ = (MAX_DEGREES_MANA * propMana_) + START_MANA;	//Proporciï¿½n de vida para el arco del manï¿½
 	if (endMana_ <= 90) endMana_ = 90;
 	return false;
 }
@@ -107,8 +144,16 @@ void HUD::setSkillCooldown(bool cooldown, int key) {
 	}
 }
 
+//Le dice a la pocion en que momento se ha activado, y cual es su duraciï¿½n
+void HUD::showPotionHUD(int index, double duration, double time)
+{
+	potionsHUD_[index].active_ = true;
+	potionsHUD_[index].duration_ = duration;
+	potionsHUD_[index].time_ = time;
+}
+
 void HUD::initObject() {
-	//Inicialización del GameManager
+	//Inicializaciï¿½n del GameManager
 	gm_ = GameManager::instance();
 	gm_->setHUD(this);
 	SDL_Rect destRect;
@@ -135,7 +180,7 @@ void HUD::initObject() {
 	#pragma endregion
 
 	#pragma region Skills&Objects
-	//Aisgna la textura a la tecla correspondiente y se añaden al vector
+	//Aisgna la textura a la tecla correspondiente y se aï¿½aden al vector
 	icons.push_back(createSkillIcon((int)Key::Q));
 	icons.push_back(createSkillIcon((int)Key::W));
 	icons.push_back(createSkillIcon((int)Key::E));
@@ -150,22 +195,26 @@ void HUD::initObject() {
 	#pragma endregion
 
 	#pragma region Life&Mana
-	//Inicializamos la vida al máximo
+	//Inicializamos la vida al mï¿½ximo
+	player_ = gm_->getPlayer();
 	life_ = app_->getTextureManager()->getTexture(Resources::LifeHUD);
 	clipLife_.x = 0;
 	clipLife_.y = 0;
 	clipLife_.w = life_->getWidth();
 	clipLife_.h = life_->getHeight();
-	maxLife_ = dynamic_cast<Player*>(gm_->getPlayer())->getMaxHealth();
+ 	maxLife_ = player_->getMaxHealth();
 
 	xMana_ = app_->getWindowWidth() / 10;
 	yMana_ = app_->getWindowHeight() * 11 / 13;
-	maxMana_ = dynamic_cast<Player*>(gm_->getPlayer())->getMaxMana();
+	maxMana_ = player_->getMaxMana();
 
-	//Tamaño del cooldown
+	//Tamaï¿½o del cooldown
 	cdRect_.w = cdRect_.h = app_->getWindowWidth() * 2 / 35;
 	cdRect_.y = app_->getWindowHeight() * 6 / 7;
 	#pragma endregion
+
+	//Crea el HUD de las pociones
+	for (int i = 0; i < POTIONS_AMOUNT; i++) potionsHUD_.push_back(createPotionHUD(i));
 }
 
 void HUD::createBg(Texture* tx, const SDL_Rect& destRect) {
@@ -199,6 +248,35 @@ Texture* HUD::createSkillIcon(int key) {
 	return nullptr;
 }
 
+potionHUD HUD::createPotionHUD(int key)
+{
+	potionHUD newPotion;
+	newPotion.active_ = false;
+	newPotion.time_ = 0;
+	newPotion.duration_ = 0;
+	newPotion.potionBackground_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::PotionBG));
+	newPotion.potionTimeHUD_ = new Texture(app_->getRenderer(), to_string(newPotion.duration_),
+		app_->getFontManager()->getFont(Resources::RETRO), SDL_Color{ (0,0,0,1) });
+	switch (key)
+	{
+	case 0:
+		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::SpeedPot));	//Velocidad
+		break;
+	case 1:
+		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::ArmorPot));	//Defensa
+		break;
+	case 2:
+		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::DmgPot));	//Daï¿½o
+		break;
+	case 3:
+		newPotion.potionHUD_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::CritPot));	//Crï¿½tico
+		break;
+	default:
+		break;
+	}
+	return newPotion;
+}
+
 Texture* HUD::createObjectIcon(int key) {
 	switch (gm_->getObjectEquipped((Key)key))
 	{
@@ -217,7 +295,7 @@ Texture* HUD::createObjectIcon(int key) {
 	case ObjectName::Armor:
 		return app_->getTextureManager()->getTexture(Resources::ArmorPot);
 		break;
-	case ObjectName::Dmg:
+	case ObjectName::Damage:
 		return app_->getTextureManager()->getTexture(Resources::DmgPot);
 		break;
 	case ObjectName::Crit:

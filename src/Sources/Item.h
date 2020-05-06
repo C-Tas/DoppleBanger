@@ -1,37 +1,43 @@
 #pragma once
-#include "Texture.h"
+#include "GameObject.h"
+
 class Player;
 
-class Inventory;
-class InventoryButton;
-
-class Item
+enum class equipType {
+	ArmorI, ArmorII,
+	GlovesI, GlovesII,
+	BootsI, BootsII,
+	SwordI, SwordII,
+	SaberI, SaberII,
+	PistolI, PistolII,
+	ShotgunI, ShotgunII,
+	//Tamaño del enum
+	Size
+};
+enum class potionType { Health, Mana, Speed, Armor, Damage, Crit };
+enum class ObjectType { Equipment, Usable };
+class Item : public GameObject
 {
-private:
-	string itemName_, itemDescription_;
-	Texture* itemTexture_;
-	double itemQuantity_, itemPrice_;
-	InventoryButton* inventoryButton_;
-	Inventory* inventory_;
-	
+protected:
+	double price_ = 0;
+	double quantity_ = 0;
+	ObjectType objectType_;
+	Item(Application* app, ObjectType objectType, double quantity = 1) : GameObject(app, Vector2D(0, 0), Vector2D(0, 0)), quantity_(quantity), objectType_(objectType) {};
+	virtual void initObject() = 0;
 public:
-	Item(Texture* tex, string name, string desc, double price, double quantity = 1) { itemTexture_ = tex; itemName_ = name; itemDescription_ = desc; itemQuantity_ = quantity; itemPrice_ = price; };
-	Item() { itemTexture_ = nullptr; itemName_ = ""; itemDescription_ = ""; itemQuantity_ = 1; itemPrice_ = 0; };
-	~Item() { itemTexture_ = nullptr; };
-	void setItemDescription(string desc) { itemDescription_ = desc; };
-	void setItemName(string name) { itemName_ = name; };
-	void setItemTexture(Texture* tex) { itemTexture_ = tex; };
-	void setItemQuantity(double d) { itemQuantity_ = d; };
-	void setItemPrice(double name) { itemPrice_ = name; };
-	void setButton(InventoryButton* button) { inventoryButton_ = button; };
-
-	string getItemDescription() { return itemDescription_; };
-	string getItemName() { return itemName_; };
-	Texture* getItemTexture() { return itemTexture_; };
-	double getItemQuantity() { return itemQuantity_; };
-	double getItemPrice() { return itemPrice_; };
-	InventoryButton* getButton() { return inventoryButton_; }; // Devuelve el boton
-
+	~Item() {};
+	virtual bool update() = 0;
 	virtual void equip(Player* player) = 0;
 	virtual void remove(Player* player) = 0;
+
+	#pragma region Getters
+		double getQuantity() { return quantity_; };
+		double getPrice() { return price_; };
+		ObjectType getObjectType() { return objectType_; };
+	#pragma endregion
+	#pragma region Setters
+		void setQuantity(double quantity) { quantity_ = quantity; };
+		void setPrice(double price) { price_ = price; };
+	#pragma endregion
+
 };

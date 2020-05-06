@@ -1,16 +1,13 @@
 #include "ShipState.h"
-#include "GameManager.h"
-#include "Player.h"
 #include "ShipObject.h"
+#include "Player.h"
+#include "GameManager.h"
+#include "SaveState.h"
+#include "StashState.h"
+#include "SelectLevelState.h"
 #include "CaribbeanIslandState.h"
 #include "SpookyIslandState.h"
 #include "VolcanicIslandState.h"
-#include "SelectLevelState.h"
-#include "SaveLoadState.h"
-#include "StashState.h"
-
-#include "Collisions.h" //Provisional
-
 
 #pragma region CallBacks
 //Callback para cambiar de GameState e ir a la isla actual
@@ -39,7 +36,7 @@ void ShipState::goMap(Application* app)
 //Callback para ir al menu de guardado
 void ShipState::goSaveState(Application* app)
 {
-	app->getGameStateMachine()->pushState(new SaveLoadState(app, false));
+	app->getGameStateMachine()->pushState(new SaveState(app));
 }
 #pragma endregion
 
@@ -50,7 +47,7 @@ void ShipState::initState()
 	gm_->setOnShip(true);
 
 	collisionMap_ = new TiledMap(app_, this, TILED_MAP, TILE_HEIGHT_TILESET, TILE_WIDTH_TILESET,TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::CollisionTile),
-		TILESET_FILS, TILESET_COLS, Vector2D(-TILE_DRAWING_SIZE, -TILE_DRAWING_SIZE));
+		TILESET_FILS, TILESET_COLS, Vector2D(0, 0));
 
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Ship));
 	addRenderUpdateLists(background_);
@@ -94,17 +91,17 @@ void ShipState::initState()
 	createNPCs();	//Método de testeo de los NPCs del barco, faltaría hacer uno definitivo para todos los NPCs desbloqueados
 
 	////Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
-	player_ = new Player(app_, Vector2D(0, 0), Vector2D(0, 0));
-	hud_ = new HUD(app_);
+	playerEntry_= Vector2D((W_WIN - W_PLAYER * 4), ((H_WIN * 3 / 4) - H_PLAYER));
+	player_ = new Player(app_, playerEntry_, Vector2D(W_PLAYER, H_PLAYER));
 	player_->initSkills();
-	playerEntry_ = Vector2D((W_WIN - W_PLAYER * 4), ((H_WIN * 3 / 4) - H_PLAYER));
-	player_->setPos(playerEntry_);
 	player_->setScale(Vector2D(W_PLAYER, H_PLAYER));
+	player_->setColliderPos(Vector2D((player_->getScale().getX() / 3), 2 * (player_->getScale().getY() / 4)));
+	player_->setColliderScale(Vector2D((player_->getScale().getX() / 3), (player_->getScale().getY() / 4)));
+
 	Camera::instance()->updateCamera(W_WIN / 2, H_WIN / 2);
-	//player_->setElementsHUD();
 	addRenderUpdateLists(player_);
-	addRenderUpdateLists(hud_);
 	startInstance_ = SDL_GetTicks();
+
 }
 
 void ShipState::update()

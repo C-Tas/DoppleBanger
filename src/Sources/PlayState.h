@@ -1,14 +1,14 @@
 ﻿#pragma once
 #include "GameState.h"
 #include "CollisionCtrl.h"
-#include "Player.h"
-#include "Obstacle.h"
-#include "Enemy.h"
 #include <list>
 #include "TiledMap.h"
 
 class CollisionCtrl;
 class HUD;
+class Player;
+class Enemy;
+class Obstacle;
 
 class PlayState : public GameState
 {
@@ -44,7 +44,10 @@ public:
 	Enemy* findClosestEnemy(Point2D pos);
 	///<summary>Comprueba colisiones con los enemigos y devuelve el primer enemigo en caso de haber colisión</summary>
 	Enemy* collidesWithEnemy(Point2D pos, Vector2D scale) {};
-
+	//Devuelve el primer enemigo en función de un tag
+	Enemy* getEnemyByTag(string tag);
+	//intercambia posiciones de dos objetos en el orden de renderizado
+	void swapRenders(GameObject* obj, GameObject* other);
 protected:
 	Point2D playerEntry_ = Vector2D(0, 0);
 	//Singleton de colisiones

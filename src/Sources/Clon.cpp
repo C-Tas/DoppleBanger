@@ -11,6 +11,14 @@ bool Clon::update() {
 		if (currState_ == STATE::SELFDESTRUCT && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
 			player_->killClon();
 		}
+		else if (currState_ == STATE::ATTACKING) {
+			meleeAnim();
+		}
+		else if (currState_ == STATE::SHOOTING && currAnim_.currFrame_ == currAnim_.numberFrames_) {
+			currState_ = STATE::IDLE;
+			initIdle();
+		}
+		
 
 		Vector2D clonPos = getVisPos();
 		if (meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING ||
@@ -20,10 +28,8 @@ bool Clon::update() {
 		else if (meleeDmg_ > 0 && ((SDL_GetTicks() - meleeTime_) / 1000) > meleeRate_)
 		{
 			cout << "\nClon ataque\n";
-			objective_->receiveDamage(meleeDmg_);
-			if (objective_->getState() == STATE::DYING)
-				enemies_.remove(static_cast<Enemy*>(objective_));
-			meleeTime_ = SDL_GetTicks();
+			
+			initMelee();
 		}
 	}
 	else if (alive_) player_->killClon();
@@ -41,11 +47,41 @@ void Clon::initObject() {
 	meleeDmg_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
 	distDmg_ = (player_->getStats().distDmg_ / 2) * player_->getLiberation();
 	distRange_ = (player_->getStats().distRange_ / 2) * player_->getLiberation();
-	buletSpeed_ = player_->getInfoEquip().fireGun_->getSpeed();
+	//buletSpeed_ = player_->getInfoEquip().fireGun_->getSpeed(); //Si no la bala del clon no se mueve
 	taunt();
+	initAnim();
 }
 
 void Clon::initAnim() {
+
+	//Animación de idle  --> Cambiar los Resource mas tarde
+	//Arriba
+	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_U_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonIdleUpAnim));
+	//Derecha																						
+	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_R_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonIdleRightAnim));
+	//Abajo																							
+	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_D_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonIdleDownAnim));
+	//Izquierda																						
+	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, IDLE_L_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonIdleLeftAnim));
+
+	//Animación de melee
+	//Arriba
+	meleeAnims_.push_back(Anim(MELEE_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, MELEE_U_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonMeleeUpAnim));
+	//Derecha
+	meleeAnims_.push_back(Anim(MELEE_R_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, MELEE_R_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonMeleeRightAnim));
+	//Abajo
+	meleeAnims_.push_back(Anim(MELEE_D_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, MELEE_D_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonMeleeDownAnim));
+	//Izquierda
+	meleeAnims_.push_back(Anim(MELEE_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, MELEE_L_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonMeleeLeftAnim));
+
 	//Animación de autodestrucción
 	//Arriba
 	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_U_FRAME_RATE, false));
@@ -59,6 +95,83 @@ void Clon::initAnim() {
 	//Izquierda
 	selfDestructAnims_.push_back(Anim(SELFDESTRUCT_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SELFDESTRUCT_L_FRAME_RATE, false));
 	selfDestructTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonSelfDestructionLeftAnim));
+
+ 	//Animacion de disparo
+	//Arriba
+	shootAnims_.push_back(Anim(SHOOT_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SHOOT_U_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonShootUpAnim));
+	shootingFrame_.push_back(SHOOT_U_SHOOTINGFRAME);
+	//Derecha
+	shootAnims_.push_back(Anim(SHOOT_R_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SHOOT_R_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonShootRightAnim));
+	shootingFrame_.push_back(SHOOT_R_SHOOTINGFRAME);
+	//Abajo
+	shootAnims_.push_back(Anim(SHOOT_D_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SHOOT_D_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonShootDownAnim));
+	shootingFrame_.push_back(SHOOT_D_SHOOTINGFRAME);
+	//izquierda
+	shootAnims_.push_back(Anim(SHOOT_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, SHOOT_L_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonShootLeftAnim));
+	shootingFrame_.push_back(SHOOT_L_SHOOTINGFRAME);
+
+	//currDir_ = DIR::LEFT;
+	initIdle();
+}
+
+void Clon::initIdle() {
+	currState_ = STATE::IDLE;
+	texture_ = idleTx_[(int)currDir_];
+	currAnim_ = idleAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Clon::initMelee()
+{
+	currState_ = STATE::ATTACKING;	//Cambio de estado
+	attacked_ = false;	//Aún no se ha atacado
+	updateDirVisObjective(static_cast<PlayState*>(app_->getGameStateMachine()->getState())->findClosestEnemy(pos_));	//Hacia dónde está el enemigo
+	texture_ = meleeTx_[(int)currDir_];
+	currAnim_ = meleeAnims_[(int)currDir_];
+	//Frame exacto del ataque
+	switch (currDir_)
+	{
+	case DIR::UP:
+		frameAction_ = 2;
+		break;
+	case DIR::RIGHT:
+		frameAction_ = 3;
+		break;
+	case DIR::DOWN:
+		frameAction_ = 3;
+		break;
+	case DIR::LEFT:
+		frameAction_ = 3;
+		break;
+	}
+
+	//Se inicia el frame
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+	meleeTime_ = SDL_GetTicks();
+}
+
+void Clon::meleeAnim() {
+
+	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
+		objective_->receiveDamage(meleeDmg_);
+		if (objective_->getState() == STATE::DYING)
+			enemies_.remove(static_cast<Enemy*>(objective_));
+		meleeTime_ = SDL_GetTicks();
+		attacked_ = true;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();
+	}
+
 }
 
 void Clon::initSelfDestruction() {
@@ -73,7 +186,23 @@ void Clon::initSelfDestruction() {
 	frame_.h = currAnim_.heightFrame_;
 }
 
-void Clon::shoot(Vector2D dir) {
+void Clon::initShoot(Vector2D dir)
+{
+	currState_ = STATE::SHOOTING;
+	//Actualizamos hacia donde está mirando
+	updateDirVisMouse();
+	texture_ = shootTx_[(int)currDir_];
+	currAnim_ = shootAnims_[(int)currDir_];
+
+	//Inicializamos la animación
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	shootingDir_ = dir;
+}
+
+void Clon::shoot() {
 	if (distDmg_ > 0)
 	{
 		//Se calcula la posici�n desde la cual se dispara la bala
@@ -81,11 +210,13 @@ void Clon::shoot(Vector2D dir) {
 		shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 		shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir, distDmg_, distRange_, buletSpeed_);
+
+		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, shootingDir_, distDmg_, distRange_, buletSpeed_);
 
 		//Se añade a los bucles del juegos
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addPlayerBullet(bullet);
+		
 	}
 }
 

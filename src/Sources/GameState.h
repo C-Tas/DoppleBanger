@@ -1,16 +1,12 @@
 #pragma once
 
-#include "GameObject.h"
-#include "Draw.h"
 #include "Application.h"
-#include "SDL.h"
-#include "Texture.h"
-#include "Resources.h"
 #include "HandleEvents.h"
-#include "Button.h"
-#include <list>
-#include "checkML.h"
 #include "GameManager.h"
+#include <list>
+
+class Draw;
+class Button;
 
 using namespace std;
 using uint = unsigned int;
@@ -26,10 +22,23 @@ public:
 	virtual void draw() const;//Renderiza todos los objetos en la lista de objectToRender_
 	///<summary>Actualiza todos los objetos en la lista de gameObjects_</summary>
 	virtual void update();
+	//Para reiniciar el estado
+	void resetState();
 	///<summary>Maneja los eventos de todos los objetos en la lista de objectEvents_</summary>
-	///<summary>A�ade un objeto a la lista de gameObjects</summary>
 	virtual void handleEvents();//Ejecuta los eventos de los objetos objectEvents_
+	//Crea botones con un callback con parámetro Application*
 	virtual void createButton(Application* app, Texture* texture, Point2D pos, Vector2D scale, CallBackOnClick* callBack);
+	//Crea botones con un callback sin parametros
+	virtual void createButton2(NoParCallBack* callBack, Application* app, Texture* texture, Point2D pos, Vector2D scale);
+	//Crea botones con la animacion de las cervezas
+	virtual void createBeerButton(Application* app, Texture* texture, Point2D pos, Vector2D scale, CallBackOnClick* callBack, GameState* gs);
+	//Crea botones con la animacion de las cervezas
+	virtual void createBeerButton2(NoParCallBack* callBack, Application* app, Texture* texture, Point2D pos, Vector2D scale, GameState* gs);
+	//Estos metodos sirven para no dar mas de un click en los botones de un menu
+	//cuando se ha hecho click en uno de ellos. Implementado tras la animacion
+	//de las cervezas
+	bool getButtonClick() { return buttonClicked_; };
+	void setButtonClick(bool buttonClicked) { buttonClicked_ = buttonClicked; };
 
 	///<summary>A�ade un objeto a la lista de gameObjects</summary>
 	void addUpdateList(GameObject* obj);
@@ -51,6 +60,7 @@ protected:
 		int x_ = 0;
 		int y_ = 0;
 	};
+	bool buttonClicked_ = false;	//Para saber cuándo se ha hehco click en un boton
 	///<summary>Lista con todos los objetos</summary>
 	list<GameObject*> gameObjects_;
 	///<summary>Lista con todos los objetos con metodo Draw()</summary>

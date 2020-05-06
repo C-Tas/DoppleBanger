@@ -22,13 +22,32 @@ void Skeleton::updateAnim()
 	}
 }
 
+void Skeleton::initialStats() {
+	HEALTH = 100;
+	MANA = 100;
+	MANA_REG = 1;
+	ARMOR = 10;
+	MELEE_DMG = 0;
+	DIST_DMG = 100;
+	CRIT = 0;
+	MELEE_RANGE = 20;
+	DIST_RANGE = 250;
+	MOVE_SPEED = 100;
+	MELEE_RATE = 1;
+	DIST_RATE = 2500;
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+}
+
 
 void Skeleton::attack() {
-	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
-	BoneBullet* bone = new BoneBullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
-		getCenter(), dir, currStats_.distDmg_, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
-	app_->getCurrState()->addRenderUpdateLists(bone);
-	CollisionCtrl::instance()->addEnemyBullet(bone);
+	if (currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
+		lastHit = SDL_GetTicks();
+		Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
+		BoneBullet* bone = new BoneBullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
+			getCenter(), dir, currStats_.distDmg_, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
+		app_->getCurrState()->addRenderUpdateLists(bone);
+		CollisionCtrl::instance()->addEnemyBullet(bone);
+	}
 }
 
 void Skeleton::initObject() {
@@ -37,8 +56,12 @@ void Skeleton::initObject() {
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
-	CollisionCtrl::instance()->addEnemy(this);
 	initAnims();
+}
+
+void Skeleton::lostAggro()
+{
+	currEnemy_ = nullptr;
 }
 
 bool Skeleton::update() {
@@ -48,6 +71,7 @@ bool Skeleton::update() {
 	if (currState_ == STATE::DYING) {
 		// animación de muerte si la tiene
 		//Cuando acabe la animación, lo mata
+		applyRewards();
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
@@ -80,4 +104,14 @@ bool Skeleton::update() {
 
 	updateAnim();
 	return false;
+}
+
+void Skeleton::initRewards()
+{
+	minGold = 30;
+	maxGold = 50;
+	minArchievementPoints = 2;
+	maxArchievementPoints = 10;
+	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
+	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }

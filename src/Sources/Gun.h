@@ -5,17 +5,20 @@
 class Gun : public Equipment
 {
 private:
-	equipType type_;
-	int ad_ = 0;
-	double crit_ = 0;
+	virtual void initObject();
 	double bulletSpeed_ = 0;
-	double distRate_ = 0;
-	double disRange_ = 0 ;
-
+	//variables para las diferentes velocidades de las balas
+	const double PISTOL_BULLET_SPEED = 1000;
+	const double SHOTGUN_BULLET_SPEED = 500;
+	//Vida de la bala en segundos
+	const double PISTOL_BULLET_RANGE = 2;
+	const double SHOTGUN_BULLET_RANGE = 1;
 public:
-	Gun(Texture* texture, string name, string desc, double price, int ad, double distRate, double crit, double disRange, equipType type, double bulletSpeed) :
-		Equipment(texture, name, desc, price, type), ad_(ad), crit_(crit), distRate_(distRate), disRange_(disRange), type_(type), bulletSpeed_(bulletSpeed) {
-		initStats();
+	Gun(Application* app, double price, double distDamage, double distRate, equipType type) : Equipment(app, type) {
+		price_ = price;
+		modifiers_.distDmg_ = distDamage;
+		modifiers_.distRate_ = distRate;
+		initObject();
 	};
 	virtual ~Gun() {};
 
@@ -25,16 +28,7 @@ public:
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
 
-	virtual void writeStats() {
-		std::cout << type_ << "\n";
-		std::cout << "ad: " << ad_ << "\n";
-		std::cout << "distRate: " << distRate_ << "\n";
-	};
-	//Devuelve el tipo del arma
-	inline virtual equipType getType() const { return type_; };
-	//Devuelve la velocidad de las balas
-	inline double getBulletSpeed() { return bulletSpeed_; }
-	//Inicializa los stats de la pistola
-	void initStats();
+	//Devuelve la velocidad de la bala
+	double getBulletSpeed() { return bulletSpeed_; };
 };
 

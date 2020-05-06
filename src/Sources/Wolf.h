@@ -70,4 +70,5 @@ private:
 	void selectTarget();
 
 	virtual void initialStats();
+	virtual void initRewards();
 };

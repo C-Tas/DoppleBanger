@@ -51,6 +51,7 @@ public:
 	void shipCollisions();
 	///<summary>Para renderizar los textBox en caso de ser necesario</summary>
 	void drawTextBox();
+	///<summary>Devuelve los objetos en un area</summary>
 	list<Enemy*> getEnemiesInArea(Point2D center, int radius);
 
 #pragma region Remove
@@ -66,6 +67,8 @@ public:
 	void removeEnemyBullet(Bullet* bullet) { enemyBulletsToErase_.push_back(bullet); };
 	///<summary>Quita un trigger de la lista</summary>
 	void removeTrigger(Trigger* trigger) { triggersToErase_.push_back(trigger); };
+	///<summary>Quita un nuevo colliders</summary>
+	void removeCollider(Collider* collider) { collidersToErase_.push_back(collider); };
 
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
 	void clearList() {
@@ -74,17 +77,23 @@ public:
 		chests_.clear(); triggers_.clear(); enemiesToErase_.clear(); chestsToErase_.clear();
 		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
 		//Listas del barco
-		npcs_.clear(); shipObjects_.clear();
+		npcs_.clear(); shipObjects_.clear(); newNpc = true;
+		npcCollision.id = Nobody;
+		npcCollision.object = nullptr;
 	};
 #pragma endregion
 
 #pragma region Add
 	///<summary>Setea el player</summary>
 	void setPlayer(Player* player) { player_ = player; };
+	//Cambia a la siguiente conversación
+	void nextConversation() { numConversation_++; };
 
 	//Islas
 	///<summary>A�ade un nuevo obst�culo</summary>
 	void addObstacle(Obstacle* obstacle) { obstacles_.push_back(obstacle); };
+	///<summary>Añade un obstáculo que tiene rotación</summary>
+	void addObstacleWithRotation(Obstacle* obstacle) { obstacleWithRotation_.push_back(obstacle); }
 	///<summary>A�ade un nuevo enemigo</summary>
 	void addEnemy(Enemy* enem) { enemies_.push_back(enem); };
 	///<summary>Vac�a la lista de cofres y setea los nuevos</summary>
@@ -95,6 +104,9 @@ public:
 	void addEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); };
 	///<summary>A�ade un nuevo trigger</summary>
 	void addTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
+	///<summary>A�ade un nuevo colliders</summary>
+	void addCollider(Collider* collider) { colliders_.push_back(collider); };
+
 
 	//Barco
 	///<summary>Guarda un nuevo NPC a la lista</summary>
@@ -129,22 +141,28 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	Player* player_ = nullptr;
 	vector<NPCsInfo> npcs_;	//Si estamos en el barco habrá varios, si estamos en una isla habrá como mucho uno
 
+	int numConversation_ = 0;
+
 	//Islas
 	list<Obstacle*> obstacles_;
+	list<Obstacle*> obstacleWithRotation_;
 	list<Enemy*> enemies_;
 	list<Chest*> chests_;
 	list<PlayerBullet*> playerBullets_;
 	list<Bullet*> enemyBullets_;
 	list<Trigger*> triggers_;
+	list<Collider*> colliders_;
 
 	list<Enemy*> enemiesToErase_;
 	list<Chest*> chestsToErase_;
 	list<PlayerBullet*> playerBulletsToErase_;
 	list<Bullet*> enemyBulletsToErase_;
 	list<Trigger*> triggersToErase_;
+	list<Collider*> collidersToErase_;
 
 	//Barco
-	bool onShip = true;
+	bool onShip = true;		//Para mandar si estamos en el barco o en una isla
+	bool newNpc = true;	//Para que los NPCs solo se agreguen una vez a la lista de desbloqueados
 	NPCsInfo npcCollision;
 	vector<ShipObjectsInfo> shipObjects_;
 

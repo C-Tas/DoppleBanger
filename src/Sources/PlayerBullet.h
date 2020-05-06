@@ -3,7 +3,7 @@
 class PlayerBullet : public Bullet
 {
 public:
-	PlayerBullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, int damage, double lifeSpan,double bulletSpeed) :
+	PlayerBullet(Application* app, Texture* texture, Vector2D pos, Vector2D dir, double damage, double lifeSpan, double bulletSpeed) :
 		Bullet(app, texture, pos, dir, damage){
 		lifeSpan_ = lifeSpan;
 		speed_ = bulletSpeed;

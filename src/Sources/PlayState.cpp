@@ -1,6 +1,5 @@
 ﻿#include "Collisions.h"
 #include "PlayState.h"
-#include "SaveLoadState.h"
 #include "SelectLevelState.h"
 #include "ShipState.h"
 #include "StashState.h"
@@ -10,6 +9,10 @@
 #include "Inventory.h"
 #include "HUD.h"
 #include "conio.h"
+
+#include "Player.h"
+#include "Enemy.h"
+#include "Obstacle.h"
 
 
 void PlayState::draw() const {
@@ -78,25 +81,24 @@ void PlayState::checkPlayerActions() {
 		if (obj != nullptr) {
 			player_->attack(obj);
 		}
-		//else if NPC
-		else {
+		else if (!player_->getOnCollision()) {
 			player_->updateDirVisMouse();
 			player_->move(eventHandler_->getRelativeMousePos());
 		}
+		else player_->setOnCollision(false);
 	}
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
+		player_->stop();
 	}
 	else if (eventHandler_->isKeyDown(SDLK_c)) {
 		app_->getGameStateMachine()->pushState(new Inventory(app_));
+		player_->stop();
 	}
 	else if (eventHandler_->isKeyDown(SDLK_v)) {
 		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
+		player_->stop();
 	}
-	else if (eventHandler_->isKeyDown(SDLK_t)) {
-		app_->getGameStateMachine()->pushState(new ShopState(app_, player_));
-	}
-
 }
 
 Enemy* PlayState::checkAttack() {
@@ -122,6 +124,32 @@ Enemy* PlayState::findClosestEnemy(Point2D pos) {
 			obj = (*it);
 
 	return obj;
+}
+
+Enemy* PlayState::getEnemyByTag(string tag)
+{
+	for (auto i = gameObjects_.begin(); i != gameObjects_.end(); i++) {
+		auto aux = dynamic_cast<Enemy*>(*(i));
+		if (aux != nullptr && aux->getTag() == tag) {
+			return aux;
+		}
+	}
+}
+
+void PlayState::swapRenders(GameObject* obj, GameObject* other)
+{
+	for (auto i = objectsToRender_.begin(); i != objectsToRender_.end(); i++) {
+		if ((*i) == obj) {
+			for (auto e = objectsToRender_.begin(); e != objectsToRender_.end(); e++) {
+				if ((*e) == other) {
+					auto aux = (*i);
+					(*i) = (*e);
+					(*e) = aux;
+					return;
+				}
+			}
+		}
+	}
 }
 
 void PlayState::initState()

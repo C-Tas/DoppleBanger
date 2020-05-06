@@ -45,6 +45,16 @@ public:
 		GoToSkillsAButton,
 		GoToSkillsBButton,
 		GoToShopButton,
+		SaveGame1,
+		SaveGame2,
+		SaveGame3,
+		LoadGame1,
+		LoadGame2,
+		LoadGame3,
+		LoadGameNull,
+		LoadButtonNull,
+		//Animaciones de botones
+		BeerAnim,
 
 		//Punteros
 		MovementPointer,
@@ -80,10 +90,12 @@ public:
 
 		//Fondos
 		MenuBackground,
-		InventaryMenu,
+		InventoryMenu,
 		PauseBackground,
+		SaveLoadBackground,
 		StashMenu,//
 		SkillMenu,
+		ShopMenu,
 		Scene1,
 		Scene2,
 		Scene3,
@@ -121,6 +133,7 @@ public:
 		ArmorPot,
 		DmgPot,
 		CritPot,
+		PotionBG,
 
 		//Sprites
 		Dragon,
@@ -186,6 +199,30 @@ public:
 		PumpkinMoveLeftAnim,
 		PumpkinMoveUpAnim,
 		PumpkinMoveDownAnim,
+		ClonIdleRightAnim,
+		ClonIdleLeftAnim,
+		ClonIdleUpAnim,
+		ClonIdleDownAnim,
+		ClonMeleeRightAnim,
+		ClonMeleeLeftAnim,
+		ClonMeleeUpAnim,
+		ClonMeleeDownAnim,
+		ClonShootRightAnim,
+		ClonShootLeftAnim,
+		ClonShootUpAnim,
+		ClonShootDownAnim,
+		MonkeyIdleRightAnim,
+		MonkeyIdleLeftAnim,
+		MonkeyIdleUpAnim,
+		MonkeyIdleDownAnim,
+		MonkeyShootRightAnim,
+		MonkeyShootLeftAnim,
+		MonkeyShootUpAnim,
+		MonkeyShootDownAnim,
+		//Magordito
+			//Kirin
+		Kirin,
+
 
 		//Interactuables
 		Wheel,
@@ -213,12 +250,20 @@ public:
 		Coco,
 
 		//Equipables
-		Gun1,
-		Gloves1,
-		Boots1,
-		Gloves2,
 		Armor1,
-		Blunderbuss,
+		Armor2,
+		Gloves1,
+		Gloves2,
+		Boots1,
+		Boots2,
+		Sword1,
+		Sword2,
+		Saber1,
+		Saber2,
+		Gun1,
+		Gun2,
+		ShotGun1,
+		ShotGun2,
 
 		//Tilesets de los mapas
 		Tileset1,
@@ -239,6 +284,12 @@ public:
 		WolfHowl,
 		WolfAttack,
 		WolfDie,
+
+		//Efectos para el mono
+		MonkeyIdle,
+		MonkeyAttack,
+		MonkeyShoot,
+		MonkeyDie,
 		
 		//player
 		Walk,
@@ -264,20 +315,33 @@ public:
 		WhirlwindSkill,
 		Pistol,
 		Trabuco,
-		Sword1 ,
-		Sword2 ,
-		Sword3 ,
-		Sword4 ,
-		Sword5 ,
-		Sword6,
+		SwordSound1,
+		SwordSound2,
+		SwordSound3,
+		SwordSound4,
+		SwordSound5,
+		SwordSound6,
 		MeleeCrit,
 		DistCrit,
 
 		//CLon
-		//Explosion,
+		Explosion,
 
 		//Ship
-		Waves
+		Waves,
+
+		//Calabaza
+		AgroPumpkin,
+		AttackPumpkin,
+		ExplosionPumpkin,
+		IdlePumpkin1,
+		IdlePumpkin2,
+		LaughPumpkin1,
+		LaughPumpkin2,
+		LaughPumpkin3,
+		MovePumpkin,
+		TauntPumpkin1,
+		TauntPumpkin2
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

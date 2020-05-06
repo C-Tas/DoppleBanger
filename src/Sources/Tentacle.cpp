@@ -1,29 +1,120 @@
 #include "Tentacle.h"
 #include "CollisionCtrl.h"
 #include "Kraken.h"
+#include "Collisions.h"
 
 bool Tentacle::update()
 {
-	//Mientras dure el tentáculo
-	if ((SDL_GetTicks() - spawnTime_) / 1000 < TENTACLE_DURATION)
+	//Si el tentï¿½culo estï¿½ cayendo
+	if (currState_ == STATE::FOLLOWING)
 	{
-		switch (currState_)
+		if ((SDL_GetTicks() - spawnTime_) / 1000 < ATTACK_DURATION)
+			;//Animaciï¿½n tentï¿½culo cayendo
+		else {
+			//Una vez cae se le asigna su hitbox
+			collisionArea_ = collArea_;
+			setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
+			currState_ = STATE::ATTACKING;
+			//Durante 1 frame se hace daï¿½o al jugador
+		}
+	}
+	else
+	{
+		//Dependiendo del ataque para el que se ha invocado
+		switch (attack_)
 		{
-		case STATE::FOLLOWING:
-			if ((SDL_GetTicks() - spawnTime_) / 1000 < ATTACK_DURATION)
-				;//Animación tentáculo cayendo
-			else {
-				collisionArea_ = collArea_;
-				setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
-				currState_ = STATE::ATTACKING;
-				//Durante 1 frame se hace daño al jugador
-			}
+		case ATTACKS::SLAM:
+			return slamUpdate();
 			break;
-		case STATE::ATTACKING:
-			//Después de ese frame hace de pared
-			currState_ = STATE::IDLE;
+		case ATTACKS::SWEEP:
+			return sweepUpdate();
 			break;
 		}
+	}
+	return false;
+}
+
+bool Tentacle::sweepUpdate()
+{
+	//Mientras no haya llegado a la posiciï¿½n inicial con un margen de error (y no haya hecho ningï¿½n giro para que funcione la primera vez)
+	if (turns_ < 4 || !((abs(pos_.getX() - initPos_.getX()) < (kraken_->getScaleX() * 0.05)) && (abs(pos_.getY() - initPos_.getY()) < (kraken_->getScaleY() * 0.05))))
+	{
+		if (!rotating_)
+		{
+			pos_.setVec(pos_.getVec() + (sweepDir_ * speed_ * app_->getDeltaTime()));
+			double deltaY = (kraken_->getScaleX() - kraken_->getScaleY()) / 2;
+
+			//Comprobaciones de si el tentï¿½culo ha llegado a una de las esquinas en las que gira (dependientes de pos y scale de kraken)
+			if (abs(collisionRot_ - 0) <= 1 && pos_.getY() + scale_.getY() / 2 > kraken_->getPosY() + kraken_->getScaleY())
+			{
+				collisionRot_ = 0;
+				centerRot_ = Vector2D(getCenter().getX() - scale_.getX() / 2, getCenter().getY());
+				rotating_ = true;
+			}
+			else if (abs(collisionRot_ - 270) <= 1 && pos_.getX() + scale_.getX() / 2 > kraken_->getPosX() + kraken_->getScaleX())
+			{
+				collisionRot_ = 270;
+				centerRot_ = Vector2D(getCenter().getX(), getCenter().getY() + scale_.getX() / 2);
+				rotating_ = true;
+			}
+			else if (abs(collisionRot_ - 180) <= 1 && pos_.getY() + scale_.getY() / 2 < kraken_->getPosY())
+			{
+				collisionRot_ = 180;
+				centerRot_ = Vector2D(getCenter().getX() + scale_.getX() / 2, getCenter().getY());
+				rotating_ = true;
+			}
+			else if (abs(collisionRot_ - 90) <= 1 && pos_.getX() + scale_.getX() / 2 < kraken_->getPosX())
+			{
+				collisionRot_ = 90;
+				centerRot_ = Vector2D(getCenter().getX(), getCenter().getY() - scale_.getX() / 2);
+				rotating_ = true;
+			}
+		}
+		else
+		{
+			//Cuando llega a una esquina rota cada frame en base a un movimiento circular uniforme con velocidad angular
+			double angle = collisionRot_ * (M_PI / 180);
+			deltaAngle_ += (speed_ * app_->getDeltaTime() / (scale_.getX() / 2));
+			angle += (speed_ * app_->getDeltaTime() / (scale_.getX() / 2));
+			pos_.setX((centerRot_.getX() + (scale_.getX() / 2) * cos(angle)) - scale_.getX() / 2);
+			pos_.setY((centerRot_.getY() + (scale_.getX() / 2) * sin(angle)) - scale_.getY() / 2);
+			collisionRot_ = (180 / M_PI) * atan2(getCenter().getY() - centerRot_.getY(), getCenter().getX() - centerRot_.getX());
+
+			//Si ha completado el giro
+			if (deltaAngle_ >= M_PI / 2)
+			{
+				rotating_ = false;
+				deltaAngle_ = 0;
+				collisionRot_ = round(collisionRot_);
+				if (collisionRot_ == -90) collisionRot_ = 270;
+				sweepDir_ = Vector2D(cos(collisionRot_ * (M_PI / 180) + M_PI / 2), sin(collisionRot_ * (M_PI / 180) + M_PI / 2));
+				turns_++;
+			}
+		}
+
+	}
+	//Si ha hecho su recorrido y no se estï¿½ muriendo se muere
+	else if (currState_ != STATE::DYING)
+	{
+		kraken_->tentDeath(this);
+		app_->getCurrState()->removeRenderUpdateLists(this);
+		return true;
+	}
+	return false;
+
+}
+
+bool Tentacle::slamUpdate()
+{
+	//Mientras dure el tentï¿½culo
+	if ((SDL_GetTicks() - spawnTime_) / 1000 < TENTACLE_DURATION)
+	{
+		if (currState_ == STATE::ATTACKING)
+		{
+			//Despuï¿½s de ese frame hace de pared
+			currState_ = STATE::IDLE;
+		}
+		return false;
 	}
 	//Cuando muere le dice al kraken que lo mate
 	else if (currState_ != STATE::DYING)
@@ -32,7 +123,6 @@ bool Tentacle::update()
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
-	return false;
 }
 
 void Tentacle::initObject()
@@ -40,12 +130,17 @@ void Tentacle::initObject()
 	setTexture(app_->getTextureManager()->getTexture(Resources::BlueBar));
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
+	//Empieza sin hitbox asï¿½ que se guarda en una variable a parte
 	collArea_ = SDL_Rect({ (int)pos_.getX(), (int)pos_.getY(), (int)scaleCollision_.getX(), (int)scaleCollision_.getY() });
 	collisionArea_ = SDL_Rect({ 0, 0, 0, 0 });
 	CollisionCtrl::instance()->addEnemy(this);
 	initAnims();
 	spawnTime_ = SDL_GetTicks();
+	//El tentï¿½culo empieza cayendo
 	currState_ = STATE::FOLLOWING;
+	double angle = collisionRot_ * (M_PI / 180) + M_PI / 2;
+	sweepDir_ = Vector2D(cos(angle), sin(angle));
+	initPos_ = pos_;
 }
 
 //Inicializa todas las animaciones
@@ -59,54 +154,57 @@ void Tentacle::initAnims()
 void Tentacle::onCollider()
 {
 	Player* player = static_cast<Player*>(GameManager::instance()->getPlayer());
-	if (currState_ == STATE::ATTACKING)
+	if (Collisions::collidesWithRotation(player->getPos(), player->getScaleX(), player->getScaleY(),player->getCollisionRot(), pos_, scale_.getX(), scale_.getY(), collisionRot_))
 	{
-		cout << collisionRot_ << endl;
-		double radians = collisionRot_ * (M_PI / 180);
-		Point2D p1, p2;
-		Vector2D dir;
+		if (currState_ == STATE::ATTACKING)
+		{
 
-		player->receiveDamage(kraken_->getMeleeDmg());
+			double radians = collisionRot_ * (M_PI / 180);
+			Point2D p1, p2;
+			Vector2D dir;
 
-		double a, b, c, d;
+			player->receiveDamage(kraken_->getMeleeDmg());
 
-		// y = mx + b 
-		// a = m; c = a* (-x0) + y0 
-		// y - y0 = a * (x-x0)
-		// ax + c = y = bx + d 
-		// P((d-c)/ (a - b), (a*d -b*c)/(a-b))
+			double a, b, c, d;
 
-		a = tan(radians + M_PI / 2);
-		b = tan(radians);
-		c = tan(radians + M_PI / 2) * -(player->getCenter().getX()) + player->getCenter().getY();
-		d = tan(radians) * -(pos_.getX()) + pos_.getY();
+			// y = mx + b 
+			// a = m; c = a* (-x0) + y0 
+			// y - y0 = a * (x-x0)
+			// ax + c = y = bx + d 
+			// P((d-c)/ (a - b), (a*d -b*c)/(a-b))
 
-		p1.setX((d - c) / (a - b));
-		p1.setY((a * d - b * c) / (a - b));
+			a = tan(radians + M_PI / 2);
+			b = tan(radians);
+			c = tan(radians + M_PI / 2) * -(player->getCenter().getX()) + player->getCenter().getY();
+			d = tan(radians) * -(pos_.getX()) + pos_.getY();
 
-		d = tan(radians) * -(pos_.getX() + scale_.getX()) + pos_.getY() + scale_.getY();
+			p1.setX((d - c) / (a - b));
+			p1.setY((a * d - b * c) / (a - b));
 
-		p2.setX((d - c) / (a - b));
-		p2.setY((a * d - b * c) / (a - b));
+			d = tan(radians) * -(pos_.getX() + scale_.getX()) + pos_.getY() + scale_.getY();
 
-		if ((p2 - player->getCenter()).magnitude() < (p1 - player->getCenter()).magnitude())
-			dir = (p2 - player->getCenter());
-		else
-			dir = (p1 - player->getCenter());
+			p2.setX((d - c) / (a - b));
+			p2.setY((a * d - b * c) / (a - b));
 
-		dir.normalize();
+			if ((p2 - player->getCenter()).magnitude() < (p1 - player->getCenter()).magnitude())
+				dir = (p2 - player->getCenter());
+			else
+				dir = (p1 - player->getCenter());
 
-		int margin = scale_.getY() * 0.6 + (player->getScaleX() / 2 + player->getScaleY() / 2);
-		player->displace( dir, margin);
+			dir.normalize();
 
+			int margin = scale_.getY() * 0.6 + (player->getScaleX() / 2 + player->getScaleY() / 2);
+			player->displace(dir, margin);
+
+		}
+		else if (currState_ == STATE::IDLE)
+			player->stop();
 	}
-	else if (currState_ == STATE::IDLE)
-		player->stop();
 }
 
 void Tentacle::receiveDamage(int dmg)
 {
-	//Daño hecho al tentáculo daña al kraken
+	//Daï¿½o hecho al tentï¿½culo daï¿½a al kraken
 	kraken_->receiveDamage(dmg);
 }
 

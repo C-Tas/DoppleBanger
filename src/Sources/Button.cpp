@@ -5,7 +5,12 @@
 Button::Button(Application* app, Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClick* callBack, int id)
 	: Draw(app, pos, scale), cbClick_(callBack) {
 	setTexture(texture);
-	//call = 0;
+	id_ = id;
+};
+
+Button::Button(NoParCallBack* callBack, Application* app, Texture* texture, Vector2D pos, Vector2D scale)
+	: Draw(app, pos, scale), cb_(callBack) {
+	setTexture(texture);
 };
 
 //Button::Button(Application* app, GameState* state,Texture* texture, Vector2D pos, Vector2D scale, CallBackOnClickMenu* callBackMenu, int id)
@@ -19,8 +24,8 @@ bool Button::update() {
 	SDL_Point mouse = { aux.getX(), aux.getY() };
 
 	if (SDL_PointInRect(&mouse, &getDestiny()) && input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
-		/*if (call == 0)*/ cbClick_(app_);
-		//else if (call == 1) ButtonCallBackMenu(currentState_);
+		if (cbClick_ != nullptr) cbClick_(app_);
+		else if (cb_ != nullptr) cb_();
 		return true;
 	}
 	else return false;

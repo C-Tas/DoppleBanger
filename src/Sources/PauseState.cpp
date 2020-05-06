@@ -2,6 +2,7 @@
 #include "ControlsState.h"
 #include "GameManager.h"
 #include "VisualElement.h"
+#include "BeerButton.h"
 
 #pragma region CallBacks
 ///<summary>Reanuda la partida actual</summary>
@@ -61,22 +62,23 @@ void PauseState::initState()
 
 	SDL_Rect textButon = { posButton.getX(),posButton.getY(), sizeButton.getX(),sizeButton.getY() };
 
-
 	//Bot�n de reanudar
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::ResumeButton), posButton, sizeButton, resume);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::ResumeButton), posButton, sizeButton, resume, this);
 
 	//Bot�n de controles
 	posButton = posButton + Vector2D(0, winHeight / 4);
 	textButon.y = posButton.getY();
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::ControlsButton), posButton, sizeButton, showControls);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::ControlsButton), posButton, sizeButton, showControls, this);
 
 	//Bot�n de men� principal
 	posButton = posButton + Vector2D(0, winHeight / 4 );
 	textButon.y = posButton.getY();
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState, this);
 	
 	//Bot�n de mute
 	//Se multiplica por la proporci�n winWidth/winHeight para hacer un cuadrado
+	//No se crea con el metodo createButton porque se necesita un puntero a él directo
+	//para cambiar la textura al hacer el mute
 	sizeButton = Vector2D(winWidth / 20, (winHeight / 20) * (winWidth / winHeight));
 	posButton = Vector2D(winWidth - (sizeButton.getX() * 1.5), sizeButton.getY() / 2);
 	

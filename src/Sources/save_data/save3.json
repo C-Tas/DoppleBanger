@@ -1,0 +1,105 @@
+{
+  "currIsland": 0,
+  "unlockedIsland": 2,
+  "currGold": 300,
+  "stashGold": 1000,
+  "skillPoints": 997,
+  "precision": 1000,
+  "melee": 999,
+  "clon": 999,
+  "questStarted": [false, false, false, false],
+  "questFinished": [false, false, false, false],
+  "unlockedSkills": [true, true, true, true, true, false, true, true, true, false],
+  "skills": ["null", "Explosion", "null"],
+  "objects": ["Speed", "Dmg"],
+  "equipment": [{
+      "name": 0,
+      "price": 10,
+      "armor": 10.000000,
+      "health": 10.000000
+    }, {
+      "name": 2,
+      "price": 10,
+      "armor": 10.000000,
+      "critic": 10.000000
+    }, {
+      "name": 4,
+      "price": 10,
+      "armor": 10.000000,
+      "speed": 10.000000
+    }, {
+      "name": 7,
+      "price": 20,
+      "rate": 10.000000,
+      "damage": 10.000000
+    }, {
+      "name": 10,
+      "price": 10,
+      "rate": 10.000000,
+      "damage": 10.000000
+    }],
+  "inventory": [{
+      "type": 0,
+      "name": 2,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "critic": 10.000000
+    }, {
+      "type": 1,
+      "name": 1
+    }, {
+      "type": 1,
+      "name": 1
+    }, {
+      "type": 1,
+      "name": 2
+    }, {
+      "type": 1,
+      "name": 3
+    }, {
+      "type": 1,
+      "name": 4
+    }, {
+      "type": 1,
+      "name": 5
+    }, {
+      "type": 0,
+      "name": 1,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "health": 1000.000000
+    }],
+  "inventorySize": 8,
+  "stash": [{
+      "type": 0,
+      "name": 4,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "speed": 10.000000
+    }, {
+      "type": 1,
+      "name": 0
+    }, {
+      "type": 0,
+      "name": 2,
+      "price": 20.000000,
+      "armor": 10.000000,
+      "critic": 10.000000
+    }, {
+      "type": 0,
+      "name": 11,
+      "price": 20.000000,
+      "rate": 10.000000,
+      "damage": 10.000000
+    }, {
+      "type": 1,
+      "name": 3
+    }, {
+      "type": 0,
+      "name": 6,
+      "price": 10.000000,
+      "rate": 10.000000,
+      "damage": 10.000000
+    }],
+  "stashSize": 6
+}

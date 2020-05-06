@@ -1,13 +1,15 @@
 #pragma once
 #include "Enemy.h"
+
+/*Canales para reproducir sonidos 6 y 7 */
 class Pumpkin :
 	public Enemy
 {
 private:
-	 uint wHSeed = app_->getWindowHeight() / 40;		//Tamaño de la semilla
-	 double seedVel = 700;							//Velocidad de la semilla
-	 double seedLife = 3;								//Vida del proyectil en segundos
-	 double explosionRange_ = 0;
+	uint wHSeed = app_->getWindowHeight() / 40;		//Tamaño de la semilla
+	double seedVel = 700;							//Velocidad de la semilla
+	double seedLife = 3;								//Vida del proyectil en segundos
+	double explosionRange_ = 0;
 	///<summary>Devuelve si hay un enemigo en rango y establece cual es el más cercano </summary>
 	bool onDistRange();
 	///<summary>Devuelve si hay un enemigo en rango melee y establece cual es el más cercano </summary>
@@ -28,6 +30,8 @@ private:
 	void onCollider() { initExplosion(); }
 	//Inicializa todas las animaciones
 	void initAnims();
+	//inicializa las recompenzas que la calabaza da
+	virtual void initRewards();
 
 #pragma region Anims
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
@@ -36,6 +40,8 @@ private:
 	const int FRAME_ACTION_SHOOT = 10;
 	bool shooted_ = false;
 	//Idle
+	const int LAUGH_FRAME = 1;
+	const int IDLE_FRAME = 6;
 	void initIdle();
 	vector<Anim> idleAnims_;
 	vector<Texture*> idleTx_;

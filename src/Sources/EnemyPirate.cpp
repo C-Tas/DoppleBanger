@@ -1,7 +1,5 @@
 #include "EnemyPirate.h"
-#include <iostream>
 #include "GameManager.h"
-#include "Resources.h"
 #include "Bullet.h"
 #include "CollisionCtrl.h"
 #include "CaribbeanIslandState.h"
@@ -192,6 +190,7 @@ void EnemyPirate::attack() {
 //Inicializa al al pirata
 void EnemyPirate::initObject() {
 	Enemy::initObject();
+	initRewards();
 	setTexture(app_->getTextureManager()->getTexture(Resources::PlayerFront));
 	rangeVision_ = VIS_RANGE;
 }
@@ -262,4 +261,14 @@ void EnemyPirate::initialStats()
 	MELEE_RATE = 1500;
 	DIST_RATE = 1500;
 	initStats(HEALTH,MANA, MANA_REG,ARMOR,MELEE_DMG,DIST_DMG,CRIT,MELEE_RANGE,DIST_RANGE,MOVE_SPEED,MELEE_RATE,DIST_RATE);
+}
+
+void EnemyPirate::initRewards()
+{
+	minGold = 30;
+	maxGold = 50;
+	minArchievementPoints = 2;
+	maxArchievementPoints = 10;
+	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
+	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }

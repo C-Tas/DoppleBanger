@@ -5,6 +5,7 @@
 #include "GameManager.h"
 #include "Button.h"
 #include "Draw.h"
+#include "VisualElement.h"
 
 void backShip(Application* app) {
 	SDL_ShowCursor(SDL_DISABLE);

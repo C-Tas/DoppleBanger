@@ -3,12 +3,12 @@
 
 void Sword::equip(Player* player)
 {
-	player->addMeleeDmg(ad_);
-	player->addMeleeRate(meleeRate_);
+	player->addMeleeDmg(modifiers_.meleeDmg_);
+	player->addMeleeRate(modifiers_.meleeRate_);
 }
 
 void Sword::remove(Player* player)
 {
-	player->removeAd(ad_);
-	player->removeMeleeRate(meleeRate_);
+	player->removeMeleeDamage(modifiers_.meleeDmg_);
+	player->removeMeleeRate(modifiers_.meleeRate_);
 }

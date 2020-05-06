@@ -1,13 +1,14 @@
 ﻿#include "Enemy.h"
 #include "PlayState.h"
 #include "GameManager.h"
+#include "Collisions.h"
 
 void Enemy::die()
 {
 	static_cast<Player*>(GameManager::instance()->getPlayer())->isEnemyDead(this);
 	Actor::die();
-	CollisionCtrl::instance()->removeEnemy(this);
-	static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
+	//CollisionCtrl::instance()->removeEnemy(this);
+	//static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 }
 
 Vector2D Enemy::isPlayerInRange(double rangeAttack)
@@ -69,16 +70,34 @@ void Enemy::initObject()
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	initAnims();
-	CollisionCtrl::instance()->addEnemy(this);
+}
+
+void Enemy::applyRewards()
+{
+	GameManager::instance()->addInventoryGold(goldPoints_);
+	GameManager::instance()->addArchievementPoints(achievementPoints_);
 }
 
 //Devuelve true si el enemigo que tengo está a rango
 bool Enemy::onRange() {
+	if (currEnemy_ != nullptr) {
+		Point2D center = getCenter();
+		Point2D currEnemyCenter = currEnemy_->getCenter();
+		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
+			center.getX(), center.getY(), currStats_.distRange_))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Enemy::onRange(double range) {
 	if (currEnemy_ == nullptr) {
 		return false;
 	}
-	SDL_Rect rangeAttack = { getPosX() - currStats_.distRange_ - (getScaleX() / 2)  ,
-	getPosY() - currStats_.distRange_ - (getScaleY() / 2),currStats_.distRange_ * 2, currStats_.distRange_ * 2 };;
+	SDL_Rect rangeAttack = { getPosX() - range - (getScaleX() / 2)  ,
+	getPosY() - range - (getScaleY() / 2),range * 2, range * 2 };;
 	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
 		return true;
 	}

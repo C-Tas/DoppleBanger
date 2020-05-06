@@ -5,13 +5,14 @@
 class Armor : public Equipment
 {
 private:
-	equipType type_;
-	int health_ = 0;
-	int armor_ = 0;
+	virtual void initObject() {};
 
 public:
-	Armor(Texture* texture, string name, string desc, double price, int health, int armor) :
-		Equipment(texture, name, desc, price, Armor_), health_(health), armor_(armor), type_(Armor_) {};
+	Armor(Application* app, double price, double health, double armor, equipType type) : Equipment(app, type) {
+		price_ = price;
+		modifiers_.health_ = health;
+		modifiers_.armor_ = armor;
+	};
 	virtual ~Armor() {};
 
 	//Equipar dicho equipamiento
@@ -19,10 +20,4 @@ public:
 
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
-
-	virtual void writeStats() {
-		std::cout << type_ << "\n";
-		std::cout << "health: " << health_ << "\n";
-		std::cout << "armor: " << armor_ << "\n";
-	};
 };
