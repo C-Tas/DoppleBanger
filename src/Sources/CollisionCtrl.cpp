@@ -18,7 +18,7 @@ void CollisionCtrl::islandCollisions() {
 	chestsToErase_.clear();
 	//Quitamos a las balas de las listas
 	for (auto it = playerBulletsToErase_.begin(); it != playerBulletsToErase_.end(); ++it) {
-		playerBullets_.remove(*it);
+ 		playerBullets_.remove(*it);
 	}
 	playerBulletsToErase_.clear();
 	for (auto it = enemyBulletsToErase_.begin(); it != enemyBulletsToErase_.end(); ++it) {
@@ -76,13 +76,15 @@ void CollisionCtrl::islandCollisions() {
 			for (auto bullet : playerBullets_) {
 				if (Collisions::collidesWithRotation(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(), bullet->getCollisionRot(),
 					enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot())) {
-					enem->receiveDamage(bullet->getDamage());
-					if (bullet->getRicochet()) {	//Cuando esté rebotando
-						bullet->searchEnemy(enemies_, enem);
-					}
-					else if (!bullet->getPerforate()) {	//Cuando no esté perforando
-						removePlayerBullet(bullet);
-						bullet->onCollider();
+					if (bullet != nullptr) {
+						enem->receiveDamage(bullet->getDamage());
+						if (bullet->getRicochet()) {	//Cuando esté rebotando
+							bullet->searchEnemy(enemies_, enem);
+						}
+						else if (!bullet->getPerforate()) {	//Cuando no esté perforando
+							removePlayerBullet(bullet);
+							bullet->onCollider();
+						}
 					}
 				}
 			}
@@ -111,8 +113,8 @@ void CollisionCtrl::islandCollisions() {
 	if (npcs_.size() > 0) {
 		if (Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX() * 1.1, npcs_[0].object->getScaleY() * 1.1,
 			player_->getPos(), player_->getScaleX() * 1.1, player_->getScaleY() * 1.1)) {
-			if (Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX(), npcs_[0].object->getScaleY(),
-				player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+			if (Collisions::collides(npcs_[0].object->getColliderPos(), npcs_[0].object->getColliderScale().getX(), npcs_[0].object->getColliderScale().getY(),
+				player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
 				player_->stop();
 				player_->setPos(player_->getPreviousPos());
 			}
