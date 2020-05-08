@@ -147,6 +147,8 @@ private:
 	bool dead_ = false;
 	bool attacking_ = false;
 	int money_ = 0;
+	int timeRegMana_ = 1000; //tiempo regeneracion de mana = 1 seg
+	int lastReg_ = 0;
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
 	Clon* clon_ = nullptr;
@@ -273,7 +275,7 @@ private:
 #pragma region Stats
 	const double HEALTH = 1000;			//Vida
 	const double MANA = 100;			//Mana
-	const double MANA_REG = 5;			//Regeneración de maná por segundo
+	const double MANA_REG = 1;			//Regeneración de maná por segundo
 	const double ARMOR = 10;			//Armadura
 	const double MELEE_DAMAGE = 100;	//Daño a melee
 	const double DIST_DAMAGE = 1000;	//Daño a distancia y de las habilidades

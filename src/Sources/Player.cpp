@@ -73,8 +73,7 @@ bool Player::update()
 	}
 
 	//Regeneramos mana
-	if (currStats_.mana_ < maxMana_) { manaReg(); }
-
+	if (SDL_GetTicks() - lastReg_ > timeRegMana_) { manaReg(); }
 
 	//Cuando se acabe el tiempo de ricochet, se pone a false
 	if (ricochet_ && (SDL_GetTicks() - lastTimeRico_) / 1000 > TIME_RICO) {
@@ -208,9 +207,13 @@ bool Player::update()
 }
 
 void Player::manaReg() {
-	currStats_.mana_ = maxMana_ * (1 + (currStats_.manaReg_ / 100))* app_->getDeltaTime();
-	if (currStats_.mana_ >= maxMana_)
+	
+	cout << "patatas";
+	currStats_.mana_ += maxMana_ * (currStats_.manaReg_ / 100);
+	if (currStats_.mana_ > maxMana_)
 		currStats_.mana_ = maxMana_;
+
+	lastReg_ = SDL_GetTicks();
 }
 
 
