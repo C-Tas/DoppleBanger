@@ -166,6 +166,12 @@ void CollisionCtrl::islandCollisions() {
 }
 
 void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir la clase ShipObject
+		//Quitamos a las balas de las listas
+	for (auto it = playerBulletsToErase_.begin(); it != playerBulletsToErase_.end(); ++it) {
+		playerBullets_.remove(*it);
+	}
+	playerBulletsToErase_.clear();
+
 	Vector2D mousePos = input_->getRelativeMousePos();	//Guardamos la posici�n del rat�n
 	//Comprobamos si se ha hecho click
 	if (input_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
@@ -198,8 +204,10 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 			//Si el objeto en concreto hab�a sido pulsado
 			if (shipObjects_[i].click) {
-				shipObjects_[i].click = false;
-				shipObjects_[i].object->onCollider();
+				if (i != 3 || !GameManager::instance()->onTutorial()) {
+					shipObjects_[i].click = false;
+					shipObjects_[i].object->onCollider();
+				}
 			}
 		}
 	}
@@ -256,6 +264,35 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			(ob)->onCollider();
 			player_->setPos(player_->getPreviousPos());
 		}
+		for (auto bullet : playerBullets_) {
+			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
+				//M�todo para destruir bala
+				removePlayerBullet(bullet);
+				bullet->onCollider();
+			}
+		}
+	}
+}
+
+void CollisionCtrl::tutorialCollision()
+{
+	if (bottle_ != nullptr && GameManager::instance()->getVenancioPhase() == 1) {
+		for (auto bullet : playerBullets_) {
+			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+				bottle_->getPos(), bottle_->getScaleX(), bottle_->getScaleY())) {
+				bottle_->onCollider();
+				bullet->onCollider();
+				bottle_ = nullptr;
+			}
+		}
+	}
+	if (dummy_ != nullptr && GameManager::instance()->getVenancioPhase() == 2) {
+		if (player_->isDummyAttack() && Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
+			dummy_->getPos(), dummy_->getScaleX(), dummy_->getScaleY())) {
+			dummy_->onCollider();
+			dummy_ = nullptr;
+		}
 	}
 }
 
@@ -276,7 +313,7 @@ void CollisionCtrl::drawTextBox() {
 	//Generamos un textbox si se ha dado alguna colisión con un NPC
 	switch (npcCollision.id) {
 	case ElderMan:
-		npcCollision.object->getTextBox()->dialogElderMan(-1);
+		npcCollision.object->getTextBox()->dialogElderMan();
 		break;
 	case Merchant:
 		npcCollision.object->getTextBox()->dialogMerchant();

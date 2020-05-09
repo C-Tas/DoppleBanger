@@ -223,9 +223,12 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Chest, "../Sources/assets/colisionables/cofreAnim.png" },
 	{ Bullet, "../Sources/assets/colisionables/bullet.png" },
 
-		//Colisionable
+	//Colisionable
 	{ Rock, "../Sources/assets/colisionables/roca.png" },
 	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
+		//Tutorial
+	{ Bottle ,"../Sources/assets/Colisionables/coca-cola.png" },
+	{ Dummy ,"../Sources/assets/Colisionables/dummyTutorial.png" },
 
 	//Equipables
 	{ Armor1,"../Sources/assets/Equipamiento/armadura1.png" },

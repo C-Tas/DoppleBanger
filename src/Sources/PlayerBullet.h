@@ -1,5 +1,6 @@
 #pragma once
 #include "Bullet.h"
+
 class PlayerBullet : public Bullet
 {
 public:
@@ -7,7 +8,6 @@ public:
 		Bullet(app, texture, pos, dir, damage){
 		lifeSpan_ = lifeSpan;
 		speed_ = bulletSpeed;
-		scale_ = Vector2D(W_H_BULLET, W_H_BULLET);
 	};
 	~PlayerBullet() {};
 

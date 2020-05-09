@@ -234,6 +234,9 @@ public:
 
 		//Colsionable
 		Rock,
+			//Tutorial
+		Bottle,
+		Dummy,
 
 		//Textos
 		PlayText,

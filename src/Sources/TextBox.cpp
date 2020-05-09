@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "SDL_macros.h"
 #include "CollisionCtrl.h"
+#include "ShipState.h"
+#include "tutorialState.h"
 
 //Cada l�nea de los di�logos/descripciones se tiene que renderizar por separado para poder generar los saltos de l�nea.
 //Lo relacionado con textos aparece aqu� y no en Resources para no sobrecargar dicha clase.
@@ -24,6 +26,19 @@ void TextBox::goShopState(Application* app)
 void TextBox::nextConversation(Application* app) {
 	dynamic_cast<Player*>(app->getGameManager()->getPlayer())->stop();
 	CollisionCtrl::instance()->nextConversation();
+}
+
+void TextBox::skipTutorial(Application* app)
+{
+	GameManager::instance()->deactiveTutorial();
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
+	app->getGameStateMachine()->pushState(new ShipState(app));
+}
+
+void TextBox::nextTutorialVenancio(Application* app)
+{
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
+	GameManager::instance()->nextPhaseVenancio();
 }
 
 void TextBox::initDialog() {
@@ -45,31 +60,75 @@ void TextBox::initDescription(Point2D pos) {
 }
 
 #pragma region Dialogos
-void TextBox::dialogElderMan(int isle) {
+void TextBox::dialogElderMan() {
 	initDialog();
-	dest.x = lineSpacing;
-	dest.y = app_->getWindowHeight() - dest.h;
-
-	//Viaje a la isla caribe�a
-	if (isle == 0) {
-		Texture text(app_->getRenderer(), "Frase 1...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + lineSpacing);
-
-		text.loadFromText(app_->getRenderer(), "Frase 2...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 2));
+	skipTutorial_->draw();
+	skipTutorial_->update();
+	
+	Texture text;
+	if (GameManager::instance()->onTutorial()) {
+		auto aux = dynamic_cast<tutorialState*>(app_->getCurrState());
+		if (aux && aux->isCurrTaskComplete()) {
+			GameManager::instance()->nextPhaseVenancio();
+			aux->currTaskincomplete();
+		}
+		switch (GameManager::instance()->getVenancioPhase())
+		{
+		case 0:
+			tutorialButton_->draw();
+			tutorialButton_->update();
+			text.loadFromText(app_->getRenderer(), "No todo el mundo necesita un taca-taca para morverse...", 
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			break;
+		case 1:
+			text.loadFromText(app_->getRenderer(), "Aprende a disparar...",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			break;
+		case 2:
+			text.loadFromText(app_->getRenderer(), "Habilidades y ataque a melee",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			break;
+		case 3:
+			text.loadFromText(app_->getRenderer(), "Inventario...",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			break;
+		case 4:
+			text.loadFromText(app_->getRenderer(), "Fin del tutorial...",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			break;
+		default:
+			break;
+		}
 	}
-	//Viaje a la isla fantasmal
-	else if (isle == 1) {
+	else
+	{
+		/*//Viaje a la isla caribe�a
+		if (isle == 0) {
+			Texture text(app_->getRenderer(), "Frase 1...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
-	}
-	//Viaje a la isla volc�nica
-	else if (isle == 2) {
+			text.loadFromText(app_->getRenderer(), "Frase 2...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+		}
+		//Viaje a la isla fantasmal
+		else if (isle == 1) {
 
-	}
-	//Di�logo en el barco
-	else {
+		}
+		//Viaje a la isla volc�nica
+		else if (isle == 2) {
 
+		}
+		//Di�logo en el barco
+		else {
+
+		}*/
 	}
+
 }
 
 void TextBox::dialogMerchant() {

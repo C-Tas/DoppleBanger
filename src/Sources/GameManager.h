@@ -213,6 +213,10 @@ private:
 		#pragma endregion
 	#pragma endregion
 
+	//Fases de los NPCS
+		bool tutorial = false;
+		int venancioFase = 0;
+
 public:
 	//Constructor vacio
 	GameManager();
@@ -413,4 +417,14 @@ public:
 	void addToInventory(Item* ob);
 	//Para añadir objetos al alijo
 	void addToStash(Item* ob);
+
+	//tutorial
+	void activeTutorial() { tutorial = true; }
+	void deactiveTutorial() { tutorial = false; }
+	bool onTutorial() { return tutorial; }
+
+	//SettesNPC
+	void nextPhaseVenancio() { venancioFase++; }
+	//GettersNPC
+	int getVenancioPhase() { return venancioFase; }
 };
