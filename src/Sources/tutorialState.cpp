@@ -1,5 +1,6 @@
 ﻿#include "tutorialState.h"
 #include "tutorialObject.h"
+#include "Chest.h"
 
 void tutorialState::update()
 {
@@ -15,9 +16,17 @@ void tutorialState::update()
 		}
 		break;
 	case 2:
-		//crear botella
+		//crear dummy
 		if (!dummyCreated_) {
+			gm_->setSkillUnlocked(SkillName::GolpeFuerte);
 			createDummy();
+		}
+		break;
+	case 3:
+		//crear cofre
+		if (!chestCreated_) {
+			
+			createChest();
 		}
 		break;
 	default:
@@ -116,7 +125,15 @@ void tutorialState::createDummy()
 	dummyPos_ = Vector2D(app_->getWindowWidth() / 3, app_->getWindowHeight() * 7 / 10 );
 	tutorialObject* dummy = new tutorialObject(app_, dummyPos_, Vector2D(100, 100), app_->getTextureManager()->getTexture(Resources::Dummy));
 	collisionCtrl_->setDummy(dummy);
-	dynamic_cast<PlayState*>(app_->getCurrState())->addEnemy(dummy);
+	addEnemy(dummy);
 	addRenderUpdateLists(dummy);
 	collisionCtrl_->addEnemy(dummy);
+}
+
+void tutorialState::createChest()
+{
+	chestCreated_ = true;
+	Chest* chest = new Chest(app_,dummyPos_,Vector2D(150,150));
+	collisionCtrl_->addChest(chest);
+	addRenderUpdateLists(chest);
 }

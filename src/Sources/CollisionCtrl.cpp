@@ -264,15 +264,17 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			(ob)->onCollider();
 			player_->setPos(player_->getPreviousPos());
 		}
-		for (auto bullet : playerBullets_) {
-			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
-				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
-				//M�todo para destruir bala
-				removePlayerBullet(bullet);
-				bullet->onCollider();
-			}
-		}
+		//for (auto bullet : playerBullets_) {
+		//	if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+		//		(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
+		//		//M�todo para destruir bala
+		//		removePlayerBullet(bullet);
+		//		bullet->onCollider();
+		//	}
+		//}
 	}
+
+
 }
 
 void CollisionCtrl::tutorialCollision()
@@ -292,6 +294,14 @@ void CollisionCtrl::tutorialCollision()
 			dummy_->getPos(), dummy_->getScaleX(), dummy_->getScaleY())) {
 			dummy_->onCollider();
 			dummy_ = nullptr;
+		}
+	}
+	//Colisi�n cofres con jugador
+	for (auto chest : chests_) {
+		if (Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
+			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+			chest->onCollider();
+			removeChest(chest);	//Para que no pueda volver a abrirse el mismo cofre
 		}
 	}
 }
