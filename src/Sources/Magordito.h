@@ -19,7 +19,6 @@ public:
 	inline void setAltar(Altar* altar) { altars.push_back(altar); }
 	virtual void lostAggro();
 private:
-
 	//puntero al player
 	Player* player_ = nullptr;
 	//Vector de altares
@@ -30,22 +29,44 @@ private:
 	const double AREA_DMG_H = 100;
 	const double KIRIN_DMG = 50;
 	const double KIRIN_CD = 1000;
-	const double KIRIN_RANGE_ATTACK = 200;
+	const double KIRIN_RANGE_ATTACK = 500;
 #pragma endregion
 
 #pragma region ANIMS
+	//Inicia la animación
+	void initIdle();
+	void initTeleport();
+
+	//Gestor de animacion
+	void teleportAnim();
+	int frameAction_ = 0;					//Frame en el que se realiza la acción
+	bool firstAttack = true;
+	bool firstIdle = true;
+
+	const int W_H_FRAME = 100;
+	//Idle
+	vector<Anim> idleAnims_;
+	vector<Texture*> idleTx_;
+	const int IDLE_FRAMES = 7;
+	const int IDLE_FRAME_RATE = 200;
+
+	//Viaje Astral
+	vector<Anim> tpAnims_;
+	vector<Texture*> tpTx_;
+	const int TP_FRAMES = 13;
+	const int TP_FRAME_RATE = 90;
+
 	//Kirin
 	Draw* kirinA = nullptr;
 	Anim kirinAnim_ = { 0,0,0,0,false };
-	vector<Anim> kirinAnims_;
-	vector<Texture*> kirinTx_;
 	const int KIRIN_FRAMES = 7;				//Frames de la animaci�n
 	const int KIRIN_FRAME_RATE = 500;		//Frame rate
 	const int W_FRAME_KIRIN = 128;
 	const int H_FRAME_KIRIN = 512;
+
+	//Calcula hacia dónde mira en función del player
+	virtual void updateDirVisObjective(GameObject* objective);
 #pragma endregion
-
-
 
 	//Posiciones de los puntos de teletransporte
 	Point2D MagorditoSpots_[5] {

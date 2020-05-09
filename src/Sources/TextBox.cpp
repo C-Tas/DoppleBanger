@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "SDL_macros.h"
 #include "CollisionCtrl.h"
+#include "Armor.h"
 
 //Cada l�nea de los di�logos/descripciones se tiene que renderizar por separado para poder generar los saltos de l�nea.
 //Lo relacionado con textos aparece aqu� y no en Resources para no sobrecargar dicha clase.
