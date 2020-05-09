@@ -102,3 +102,27 @@ void usable::desactivePotion()
 	}
 	app_->getCurrState()->removeUpdateList(this);
 }
+
+void usable::getDescription(TextBox* tex)
+{
+	switch (type_) {
+	case potionType::Armor:
+		tex->defensePotion();
+		break;
+	case potionType::Crit:
+		tex->criticPotion;
+		break;
+	case potionType::Damage :
+		tex->damagePotion();
+		break;
+	case potionType::Health :
+		tex->lifePotion();
+		break;
+	case potionType::Mana:
+		tex->manaPotion();
+		break;
+	case potionType::Speed:
+		tex->velocityPotion();
+		break;
+	}
+}

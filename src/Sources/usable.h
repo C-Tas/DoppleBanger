@@ -46,6 +46,7 @@ public:
 	const double getValue() { return value_; };
 	const potionType getType() { return type_; };
 	const bool isUsed() { return used_; };
+	virtual void getDescription(TextBox* tex);
 
 };
 
