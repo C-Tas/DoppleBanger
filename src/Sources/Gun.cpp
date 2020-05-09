@@ -1,5 +1,6 @@
 #include "Gun.h"
 #include "Player.h"
+#include "TextBox.h"
 
 void Gun::initObject()
 {

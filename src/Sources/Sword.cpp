@@ -1,5 +1,6 @@
 #include "Sword.h"
 #include "Player.h"
+#include "TextBox.h"
 
 void Sword::equip(Player* player)
 {

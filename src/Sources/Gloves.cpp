@@ -1,5 +1,6 @@
 #include "Gloves.h"
 #include "Player.h"
+#include "TextBox.h"
 
 void Gloves::equip(Player* player)
 {

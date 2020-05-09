@@ -1,5 +1,6 @@
 #include "Armor.h"
 #include "Player.h"
+#include "TextBox.h"
 
 
 void Armor::equip(Player* player)

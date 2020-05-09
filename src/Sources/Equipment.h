@@ -17,15 +17,15 @@ public:
 
 	
 #pragma region Getters
-	virtual double getHealth() { }; // Devuelve el valor de Health
-	virtual double getArmor() { }; // Devuelve el valor de Armor
-	virtual double getMeleeDmg() {}; // Devuelve el valor de AD
-	virtual double getDistDmg() { }; // Devuelve el valor de DistDamage
-	virtual double getCrit() { }; // Devuelve el valor de Crit
-	virtual double getSpeed() {  }; // Devuelve el valor de Speed
-	virtual double getDistRate() {  }; // Devuelve el valor de DistRate
-	virtual double getMeleeRate() {  }; // Devuelve el valor de MeleeRate
-	virtual double getDistRange() {  }//devuelve el rango del arma a distancia
+	virtual double getHealth() { return 0; }; // Devuelve el valor de Health
+	virtual double getArmor() { return 0; }; // Devuelve el valor de Armor
+	virtual double getMeleeDmg() { return 0; }; // Devuelve el valor de AD
+	virtual double getDistDmg() { return 0; }; // Devuelve el valor de DistDamage
+	virtual double getCrit() { return 0; }; // Devuelve el valor de Crit
+	virtual double getSpeed() { return 0; }; // Devuelve el valor de Speed
+	virtual double getDistRate() { return 0; }; // Devuelve el valor de DistRate
+	virtual double getMeleeRate() { return 0; }; // Devuelve el valor de MeleeRate
+	virtual double getDistRange() { return 0; }//devuelve el rango del arma a distancia
 	virtual inline equipType getEquipType()const { return type_; };
 #pragma endregion
 	virtual void equip(Player* player) = 0;

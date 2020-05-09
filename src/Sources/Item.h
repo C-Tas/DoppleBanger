@@ -1,8 +1,9 @@
 #pragma once
 #include "GameObject.h"
-#include "TextBox.h"
+
 
 class Player;
+class TextBox;
 
 enum class equipType {
 	ArmorI, ArmorII,

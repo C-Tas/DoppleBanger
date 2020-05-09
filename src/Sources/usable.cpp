@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "Application.h"
 #include "GameState.h"
+#include "TextBox.h"
+
 
 void usable::initObject()
 {
@@ -110,7 +112,7 @@ void usable::getDescription(TextBox* tex)
 		tex->defensePotion();
 		break;
 	case potionType::Crit:
-		tex->criticPotion;
+		tex->criticPotion();
 		break;
 	case potionType::Damage :
 		tex->damagePotion();

@@ -1,5 +1,6 @@
 #include "Boots.h"
 #include "Player.h"
+#include "TextBox.h"
 
 void Boots::equip(Player* player)
 {
