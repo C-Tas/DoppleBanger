@@ -62,4 +62,5 @@ public:
 	void forwardList();
 	//Itera hacia la anterior pagina de la lista
 	void backList();
+
 };

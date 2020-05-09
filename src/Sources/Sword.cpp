@@ -3,12 +3,18 @@
 
 void Sword::equip(Player* player)
 {
-	player->addMeleeDmg(modifiers_.meleeDmg_);
-	player->addMeleeRate(modifiers_.meleeRate_);
+	player->addMeleeDmg(meleeDmg_);
+	player->addMeleeRate(meleeRate_);
 }
 
 void Sword::remove(Player* player)
 {
-	player->removeMeleeDamage(modifiers_.meleeDmg_);
-	player->removeMeleeRate(modifiers_.meleeRate_);
+	player->removeMeleeDamage(meleeDmg_);
+	player->removeMeleeRate(meleeRate_);
+}
+
+void Sword::getDescription(TextBox* tex)
+{
+	if (type_ == equipType::SwordI) tex->swordCaribbean();
+	else if (type_ == equipType::SwordII) tex->saberSpooky();
 }

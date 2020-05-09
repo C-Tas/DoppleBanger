@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "TextBox.h"
 
 class Player;
 
@@ -39,5 +40,6 @@ public:
 		void setQuantity(double quantity) { quantity_ = quantity; };
 		void setPrice(double price) { price_ = price; };
 	#pragma endregion
+		virtual void getDescription(TextBox* tex) = 0;
 
 };
