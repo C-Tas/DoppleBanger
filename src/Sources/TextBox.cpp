@@ -230,50 +230,61 @@ void TextBox::dialogCleon(bool defeated) {
 
 #pragma region Descripciones
 void TextBox::armorCaribbean() {
-	Texture text(app_->getRenderer(), "Esta armadura te permitira defanderte mejor de los ataques", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	Texture text(app_->getRenderer(), "Esta armadura te permitira ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "defanderte mejor de los ataques", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+
 }
 
 void TextBox::armorSpooky() {
 	Texture text(app_->getRenderer(), "Aumenta tu vitalidad y tu defensa", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 	text.loadFromText(app_->getRenderer(), "con esta espeluznante armadura", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + (lineSpacing * 2));
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
 }
 
 void TextBox::glovesCaribbean() {
-	Texture text(app_->getRenderer(), "Haz tus golpes mas fuertes y certeros", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	Texture text(app_->getRenderer(), "Haz tus golpes mas fuertes ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "y certeros", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 }
 
 void TextBox::glovesSpooky() {
-	Texture text(app_->getRenderer(), "Golpea a tus enemigos con mas fuerza y precisión", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	Texture text(app_->getRenderer(), "Golpea a tus enemigos ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "con mas fuerza y precisión", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 }
 
 void TextBox::bootsCaribbean() {
 	Texture text(app_->getRenderer(), "Corre todo lo que puedas", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 	text.loadFromText(app_->getRenderer(), "estas botas no te fallarán", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + (lineSpacing * 2));
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 }
 
 void TextBox::bootsSpooky() {
 	Texture text(app_->getRenderer(), "Ahora podrás ir mas rápido", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 	text.loadFromText(app_->getRenderer(), "perfectas para una huida rápida", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + (lineSpacing * 2));
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 }
 
 void TextBox::swordCaribbean() {
-	Texture text(app_->getRenderer(), "Con esta espada tus golpes serán más fuertes", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	Texture text(app_->getRenderer(), "Con esta espada tus ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "golpes serán más fuertes", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 	
 }
 void TextBox::swordSpooky() {
-	Texture text(app_->getRenderer(), "Una espada ligera con la que gorpear mas rápido", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	Texture text(app_->getRenderer(), "Una espada ligera con ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "la que gorpear mas rápido", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 }
 
 void TextBox::saberCaribbean() {
@@ -283,27 +294,31 @@ void TextBox::saberSpooky() {
 }
 
 void TextBox::pistolCaribbean() {
-	Texture text(app_->getRenderer(), "Realiza disparos más rápidos y certeros", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	Texture text(app_->getRenderer(), "Realiza disparos más rápidos", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), " y certeros", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 }
 
 void TextBox::pistolSpooky() {
-	Texture text(app_->getRenderer(), "Realiza disparos mas rapidos y certeros", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	Texture text(app_->getRenderer(), "Dispara mas lejos, ningun ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "enemigo fuera de alcance", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 }
 
 void TextBox::blunderbussCaribbean() {
 	Texture text(app_->getRenderer(), "Lanza varias balas a la vez", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 	text.loadFromText(app_->getRenderer(), "¡No hay forma de fallar!", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + (lineSpacing * 2));
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 }
 
 void TextBox::blunderbussSpooky() {
 	Texture text(app_->getRenderer(), "Mata a varios enemigos a la vez", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + lineSpacing);
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 	text.loadFromText(app_->getRenderer(), "Adios a los problemas de masas", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-	text.render(lineSpacing, dest.y + (lineSpacing * 2));
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 }
 
 void TextBox::lifePotion() {

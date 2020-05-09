@@ -38,8 +38,8 @@ private:
 	virtual void initState();
 
 	//metodos privados
-	void printInformation() {};
-	void printPlayerInfo(){};
+	void printInformation() const;
+	
 	//Selecciona el tipo de Equipamiento qu� es
 	void selectEquipment();
 	//Cambia el tipo del equipo por otro nuevo
@@ -47,6 +47,9 @@ private:
 	//Equipa una pocion
 	int slotPotion = 0;	//Para saber en que posicion colocar la nueva pocion
 	void equipPotion();
+	//donde se van a poner las descripciones
+	Point2D descriptionPoint{ 0,0 };//{ 890,350,450,40 };
+	TextBox* descriptionBox;
 public:
 	Inventory(Application* app) :GameState(app) { initState(); };
 	virtual ~Inventory() ;

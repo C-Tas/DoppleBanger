@@ -7,6 +7,8 @@
 #include "usable.h"
 #include "Player.h"
 #include "SkillState.h"
+#include "TextBox.h"
+#include "SDL_macros.h"
 
 using namespace std;
 
@@ -97,11 +99,16 @@ void Inventory::initState(){
 	for (auto ob = inventoryList_->begin(); ob != inventoryList_->end(); ++ob) {
 		(*ob)->setNewCallBack(callSelectObject);
 	}
+	//descripcion de objetos
+	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.777), (double)(app_->getWindowHeight()/1.38));
+	 descriptionBox = new TextBox(app_, descriptionPoint);
 }
+
+
 
 void Inventory::selectObject(InventoryButton* ob) {
 	select_ = ob;
-	printInformation();//este metodo todabia no hace nada
+	
 }
 
 void Inventory::equipObject() {
@@ -358,6 +365,52 @@ void Inventory::draw()const {
 		equipment_.potion2_->setScale(Vector2D{ sizeX,sizeY });
 		equipment_.potion2_->draw();
 	}
+
+	//pintar textos
+	//descripcion objetos
+	if (select_ != nullptr) {
+		select_->getObject()->getDescription(descriptionBox);
+	}
+	//stats del player
+	printInformation();
+}
+
+void Inventory::printInformation() const
+{
+	double posx, posy;
+	posx = (double)(app_->getWindowWidth() / 6.4); posy = (double)(app_->getWindowHeight() / 1.343);
+	Texture liveText(app_->getRenderer(), to_string((int)player_->getHealth()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	liveText.render(posx , posy);
+
+	posx = (double)(app_->getWindowWidth() / 6.4); posy = (double)(app_->getWindowHeight() / 1.25);
+	Texture manaText(app_->getRenderer(), to_string((int)player_->getMana()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	manaText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 5.517); posy = (double)(app_->getWindowHeight() / 1.168);
+	Texture armorText(app_->getRenderer(), to_string((int)player_->getArmor()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	armorText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 2.6);  posy = (double)(app_->getWindowHeight() / 1.451);
+	Texture damageText(app_->getRenderer(), to_string((int)player_->getMeleeDmg()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	damageText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 2.424); posy = (double)(app_->getWindowHeight() / 1.343);
+	Texture criticText(app_->getRenderer(), to_string((int)player_->getCrit()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	criticText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 2.285); posy =  (double)(app_->getWindowHeight() / 1.25);
+	Texture speedText(app_->getRenderer(), to_string((int)player_->getMoveSpeed()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	speedText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 2.318); posy =  (double)(app_->getWindowHeight() / 1.168);
+	Texture rateText(app_->getRenderer(), to_string((int)player_->getMeleeRate()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	rateText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 1.454); posy = (double)(app_->getWindowHeight() / 3.83);
+	Texture moneyText(app_->getRenderer(), to_string((int)gm_->getInventoryGold()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	moneyText.render(posx, posy);
+	
+
 }
 
 void Inventory::update() {
@@ -425,4 +478,5 @@ Inventory::~Inventory() {
 	delete equipment_.boots_;
 	delete equipment_.potion1_;
 	delete equipment_.potion2_;
+	delete descriptionBox;
 }
