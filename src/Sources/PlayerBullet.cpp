@@ -8,7 +8,7 @@ bool PlayerBullet::update()
 
 	//Si se le ha acabado el tiempo de vida
 	if ((currTime_ - initTime_) / 1000 > lifeSpan_) {
-		CollisionCtrl::instance()->removePlayerBullet(this);
+ 		CollisionCtrl::instance()->removePlayerBullet(this);
 		onCollider();
 	}
 	else {
