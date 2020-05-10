@@ -17,5 +17,7 @@ void Sword::remove(Player* player)
 void Sword::getDescription(TextBox* tex)
 {
 	if (type_ == equipType::SwordI) tex->swordCaribbean();
-	else if (type_ == equipType::SwordII) tex->saberSpooky();
+	else if (type_ == equipType::SwordII) tex->swordSpooky();
+	else if (type_ == equipType::SaberI) tex->saberCaribbean();
+	else if (type_ == equipType::SaberI) tex->saberSpooky();
 }

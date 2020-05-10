@@ -304,9 +304,21 @@ void TextBox::swordSpooky() {
 }
 
 void TextBox::saberCaribbean() {
+	Texture text(app_->getRenderer(), "Sable Caribbean ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Una sable pesado con", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "rebanacabezas", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::saberSpooky() {
+	Texture text(app_->getRenderer(), "Sable Spooky ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Una sable resistente ", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "y bien afilado", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::pistolCaribbean() {
