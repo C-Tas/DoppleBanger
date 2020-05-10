@@ -165,6 +165,7 @@ void ShopState::endState()
 
 	delete inventoryMoneyTex_;
 	delete selectedObjectDescription_;
+	delete descriptionBox;
 }
 
 #pragma region privateCallbacks

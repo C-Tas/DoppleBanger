@@ -176,6 +176,7 @@ void StashState::endState()
 	delete inventoryMoneyTex_;
 	delete stashMoneyTex_;
 	delete selectedObjectDescription_;
+	delete descriptionBox;
 }
 
 #pragma region privateCallbacks
