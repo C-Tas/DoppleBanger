@@ -139,6 +139,7 @@ public:
 private:
 	bool dead_ = false;
 	bool attacking_ = false;
+	bool firstAttack_ = true;
 	bool onCollision_ = false;
 	bool initEquip_ = true;	//Para saber si hiay que inicializar el equipamiento
 	bool slowed_ = false;

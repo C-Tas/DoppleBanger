@@ -78,11 +78,11 @@ void PlayState::checkPlayerActions() {
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 	{
 		Enemy* obj; obj = checkAttack();
+		player_->updateDirVisMouse();
 		if (obj != nullptr) {
 			player_->attack(obj);
 		}
 		else if (!player_->getOnCollision()) {
-			player_->updateDirVisMouse();
 			player_->move(eventHandler_->getRelativeMousePos());
 		}
 		else player_->setOnCollision(false);
