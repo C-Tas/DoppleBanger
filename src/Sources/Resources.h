@@ -229,7 +229,14 @@ public:
 		SkeletonIdleLeftAnim,
 		SkeletonIdleUpAnim,
 		SkeletonIdleDownAnim,
-
+		SkeletonAttackRightAnim,
+		SkeletonAttackLeftAnim,
+		SkeletonAttackUpAnim,
+		SkeletonAttackDownAnim,
+		SkeletonMoveRightAnim,
+		SkeletonMoveLeftAnim,
+		SkeletonMoveDownAnim,
+		SkeletonMoveUpAnim,
 		//Interactuables
 		Wheel,
 		Stash,

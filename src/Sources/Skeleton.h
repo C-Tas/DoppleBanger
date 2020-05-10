@@ -54,6 +54,7 @@ protected:
 	//Actualiza la actual animación
 	void updateAnim();
 	void initialStats();
+	void updateDirVisEnemy();
 
 #pragma region Anims
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
@@ -61,6 +62,7 @@ protected:
 	const int H_SKELETON_FRAME = 45;			//Alto del frame, estándar para todas
 	const int FRAME_ACTION_SHOOT = 10;
 	bool shooted_ = false;
+
 	//Idle
 	const int LAUGH_FRAME = 1;
 	const int IDLE_FRAME = 6;
@@ -79,5 +81,41 @@ protected:
 	//Idle hacia abajo
 	const int IDLE_D_FRAMES = 16;			//Frames de la animación
 	const int IDLE_D_FRAME_RATE = 100;		//Frame rate
+
+	//Disparo
+	void initShoot();
+	bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
+	vector<Anim> shootAnims_;				//Vector de las animaciones
+	vector<Texture*> shootTx_;				//Vector de las texturas
+	//Disparo derecha abajo
+	const int SHOOT_R_D_FRAMES = 10;		//Frames de la animación
+	const int SHOOT_R_D_FRAME_RATE = 100;	//Frame rate
+	//Disparo hacia derecha arriba
+	const int SHOOT_R_U_FRAMES = 13;		//Frames de la animación
+	const int SHOOT_R_U_FRAME_RATE = 77;	//Frame rate
+	//Disparo hacia izquierda abajo
+	const int SHOOT_L_D_FRAMES = 11;		//Frames de la animación
+	const int SHOOT_L_D_FRAME_RATE = 91;	//Frame rate
+	//Disparo hacia izquierda arriba
+	const int SHOOT_L_U_FRAMES = 13;		//Frames de la animación
+	const int SHOOT_L_U_FRAME_RATE = 77;	//Frame rate
+
+	//Movimiento
+	void initMove();
+	void updateDirVisEnemy();
+	vector<Anim> moveAnims_;
+	vector<Texture*> moveTx_;
+	//Movimiento derecha
+	const int MOVE_R_FRAMES = 12;			//Frames de la animación
+	const int MOVE_R_FRAME_RATE = 36;		//Frame rate
+	//Movimiento hacia arriba
+	const int MOVE_U_FRAMES = 12;			//Frames de la animación
+	const int MOVE_U_FRAME_RATE = 36;		//Frame rate
+	//Movimiento hacia izquierda
+	const int MOVE_L_FRAMES = 12;			//Frames de la animación
+	const int MOVE_L_FRAME_RATE = 36;		//Frame rate
+	//Movimiento hacia abajo
+	const int MOVE_D_FRAMES = 12;			//Frames de la animación
+	const int MOVE_D_FRAME_RATE = 36;		//Frame rate
 };
 

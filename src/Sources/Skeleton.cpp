@@ -29,7 +29,6 @@ void Skeleton::initialStats() {
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
-
 void Skeleton::attack() {
 	if (currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
 		lastHit = SDL_GetTicks();
@@ -107,6 +106,27 @@ void Skeleton::initRewards()
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
 
+void Skeleton::updateDirVisEnemy() 
+{
+	if (currEnemy_ != nullptr) {
+		Vector2D center = getCenter();		//Punto de referencia
+		Vector2D enemyCenter = currEnemy_->getCenter();
+		Vector2D dir = enemyCenter - center;		//Vector direcci�n
+		dir.normalize();
+		double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
+		if (angle >= 0) {
+			if (angle <= 45.0) currDir_ = DIR::RIGHT;
+			else if (angle < 135.0) currDir_ = DIR::DOWN;
+			else currDir_ = DIR::LEFT;
+		}
+		else {
+			if (angle >= -45.0) currDir_ = DIR::RIGHT;
+			else if (angle >= -135.0) currDir_ = DIR::UP;
+			else currDir_ = DIR::LEFT;
+		}
+	}
+}
+
 void Skeleton::initAnims() 
 {
 	//Animaci�n de idle
@@ -133,6 +153,46 @@ void Skeleton::initIdle()
 	currState_ = STATE::IDLE;
 	texture_ = idleTx_[(int)currDir_];
 	currAnim_ = idleAnims_[(int)currDir_];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Skeleton::initShoot() {
+	currState_ = STATE::SHOOTING;	//Cambio de estado
+	shooted_ = false;	//Aún no se ha creado la bala
+	updateDirVisObjective(currEnemy_);	//Hacia dónde mira
+	texture_ = shootTx_[(int)currDir_];
+	currAnim_ = shootAnims_[(int)currDir_];
+
+	//Asigna el frame donde ocurrirá la acción
+	switch (currDir_)
+	{
+	case DIR::UP:		//Derecha arriba
+		frameAction_ = 10;
+		break;
+	case DIR::RIGHT:	//Derecha abajo
+		frameAction_ = 9;
+		break;
+	case DIR::DOWN:		//Izquierda abajo
+		frameAction_ = 10;
+		break;
+	case DIR::LEFT:		//Izquierda arriba
+		frameAction_ = 10;
+	}
+
+	//Inicio de lso frames
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Skeleton::initMove()
+{
+	app_->getAudioManager()->playChannel(Resources::MovePumpkin, -1, 6);
+	currState_ = STATE::FOLLOWING;
+	texture_ = moveTx_[(int)currDir_];
+	currAnim_ = moveAnims_[(int)currDir_];
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
