@@ -36,7 +36,7 @@ void LoadState::initState()
 	double winHeight = app_->getWindowHeight();
 
 	Vector2D scaleButton(winWidth / 6, winHeight / 15);
-	Vector2D posButton(scaleButton.getX() / 2, scaleButton.getY());
+	Vector2D posButton(scaleButton.getX() / 2, scaleButton.getY() / 4);
 	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), posButton, scaleButton, backToPreviousState, this); //Boton "Volver"
 
 	//Botón partida 1
