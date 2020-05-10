@@ -276,6 +276,9 @@ public:
 		MainTheme,
 		ShipSingers,
 		Caribbean,
+		Waves,
+		Shop,
+		Storyboard,
 
 		//Efectos de sonido
 		Agro,
@@ -326,9 +329,6 @@ public:
 
 		//CLon
 		Explosion,
-
-		//Ship
-		Waves,
 
 		//Calabaza
 		AgroPumpkin,

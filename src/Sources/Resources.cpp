@@ -293,9 +293,6 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 
 	//Clon
 	//{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
-
-	//Ship
-	{ Waves ,"../Sources/assets/efectos_sonido/ship/waves.wav" },
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 
 	//Calabaza
@@ -313,9 +310,12 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 };
 
 vector <Resources::MusicInfo> Resources::musicRoutes{
-	{ MainTheme ,"../Sources/assets/music/mainTheme.mp3" },
+	{ MainTheme ,"../Sources/assets/music/background/menuMusic.mp3" },
 	{ ShipSingers ,"../Sources/assets/music/ShipSingers.mp3" },
-	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" }
+	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" },
+	{ Waves ,"../Sources/assets/music/background/shipMusic.wav" },
+	{ Shop ,"../Sources/assets/music/background/shopMusic.mp3" },
+	{ Storyboard ,"../Sources/assets/music/background/storyboardMusic.mp3" }
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 };
 

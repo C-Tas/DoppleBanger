@@ -29,6 +29,10 @@ void ShopState::callbackPreviousInventoryPage(Application* app) {
 
 void ShopState::callbackPreviousShopPage(Application* app) {
 	dynamic_cast<ShopState*>(app->getCurrState())->previousShopPage();
+void callExitS(Application* app) {
+	SDL_ShowCursor(SDL_DISABLE);
+	app->getAudioManager()->playMusic(Resources::Waves, -1);
+	app->getGameStateMachine()->popState();
 }
 
 void ShopState::callbackSelectObject(Application* app, InventoryButton* button)
