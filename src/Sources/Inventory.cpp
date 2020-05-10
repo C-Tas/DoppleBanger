@@ -419,7 +419,7 @@ void Inventory::printCompareObject() const
 	double posx1,posx2, posy;
 	posx1 = /*(double)(app_->getWindowWidth() / 1.777);*/950;
 	posx2 = 1160;
-	posy = /*(double)(app_->getWindowHeight() / 1.343);*/760;
+	posy = /*(double)(app_->getWindowHeight() / 1.343);*/770;
 	int aux1, aux2;
 	
 	if (select_ != nullptr && select_->getObject()->getObjectType() == ObjectType::Equipment ) {
@@ -435,11 +435,11 @@ void Inventory::printCompareObject() const
 				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.armor_->getObject())->getArmor());
 			}
 			else {
-				aux1 = static_cast<Equipment*>(select_->getObject())->getHealth() + static_cast<Equipment*>(equipment_.armor_->getObject())->getHealth();
-				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() + static_cast<Equipment*>(equipment_.armor_->getObject())->getArmor();
-				if (aux1 >= 0) auxcolor1 = SDL_Color({ 0,255,0,0 });//verde
+				aux1 = static_cast<Equipment*>(select_->getObject())->getHealth() - static_cast<Equipment*>(equipment_.armor_->getObject())->getHealth();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() - static_cast<Equipment*>(equipment_.armor_->getObject())->getArmor();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
-				if (aux2 >= 0) auxcolor2 = SDL_Color({ 0,255,0,0 });//verde
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
 				auxTex1 = "Vida: " + to_string(aux1);
 				auxTex2 = "Defensa: " + to_string(aux2);
@@ -453,11 +453,11 @@ void Inventory::printCompareObject() const
 				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getArmor());
 			}
 			else {
-				aux1 = static_cast<Equipment*>(select_->getObject())->getCrit() + static_cast<Equipment*>(equipment_.gloves_->getObject())->getCrit();
-				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() + static_cast<Equipment*>(equipment_.gloves_->getObject())->getArmor();
-				if (aux1 >= 0) auxcolor1 = SDL_Color({ 0,255,0,0 });//verde
+				aux1 = static_cast<Equipment*>(select_->getObject())->getCrit() - static_cast<Equipment*>(equipment_.gloves_->getObject())->getCrit();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() - static_cast<Equipment*>(equipment_.gloves_->getObject())->getArmor();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
-				if (aux2 >= 0) auxcolor2 = SDL_Color({ 0,255,0,0 });//verde
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
 				auxTex1 = "Critico: " + to_string(aux1);
 				auxTex2 = "Defensa: " + to_string(aux2);
@@ -471,11 +471,11 @@ void Inventory::printCompareObject() const
 				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.boots_->getObject())->getArmor());
 			}
 			else {
-				aux1 = static_cast<Equipment*>(select_->getObject())->getSpeed() + static_cast<Equipment*>(equipment_.boots_->getObject())->getSpeed();
-				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() + static_cast<Equipment*>(equipment_.boots_->getObject())->getArmor();
-				if (aux1 >= 0) auxcolor1 = SDL_Color({ 0,255,0,0 });//verde
+				aux1 = static_cast<Equipment*>(select_->getObject())->getSpeed() - static_cast<Equipment*>(equipment_.boots_->getObject())->getSpeed();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() - static_cast<Equipment*>(equipment_.boots_->getObject())->getArmor();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
-				if (aux2 >= 0) auxcolor2 = SDL_Color({ 0,255,0,0 });//verde
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
 				auxTex1 = "Velocidad: " + to_string(aux1);
 				auxTex2 = "Defensa: " + to_string(aux2);
@@ -491,11 +491,11 @@ void Inventory::printCompareObject() const
 				auxTex2 = "AtaqueVel.: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeRate());
 			}
 			else {
-				aux1 = static_cast<Equipment*>(select_->getObject())->getMeleeDmg() + static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg();
-				aux2 = static_cast<Equipment*>(select_->getObject())->getMeleeRate() + static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeRate();
-				if (aux1 >= 0) auxcolor1 = SDL_Color({ 0,255,0,0 });//verde
+				aux1 = static_cast<Equipment*>(select_->getObject())->getMeleeDmg() - static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getMeleeRate() - static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeRate();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
-				if (aux2 >= 0) auxcolor2 = SDL_Color({ 0,255,0,0 });//verde
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
 				auxTex1 = "daño: " + to_string(aux1);
 				auxTex2 = "AtaqueVel.: " + to_string(aux2);
@@ -512,11 +512,11 @@ void Inventory::printCompareObject() const
 				auxTex2 = "DisparoVel.: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getDistRate());
 			}
 			else {
-				aux1 = static_cast<Equipment*>(select_->getObject())->getDistDmg() + static_cast<Equipment*>(equipment_.sword_->getObject())->getDistDmg();
-				aux2 = static_cast<Equipment*>(select_->getObject())->getDistRate() + static_cast<Equipment*>(equipment_.sword_->getObject())->getDistRate();
-				if (aux1 >= 0) auxcolor1 = SDL_Color({ 0,255,0,0 });//verde
+				aux1 = static_cast<Equipment*>(select_->getObject())->getDistDmg() - static_cast<Equipment*>(equipment_.sword_->getObject())->getDistDmg();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getDistRate() - static_cast<Equipment*>(equipment_.sword_->getObject())->getDistRate();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
-				if (aux2 >= 0) auxcolor2 = SDL_Color({ 0,255,0,0 });//verde
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
 				auxTex1 = "daño: " + to_string(aux1);
 				auxTex2 = "DisparoVel.: " + to_string(aux2);
