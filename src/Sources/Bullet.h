@@ -21,11 +21,10 @@ public:
 	void initObject(Vector2D pos, Vector2D dir);
 	virtual bool update();
 	virtual void onCollider() {
-			if (!deleting) {
-				deleting = true;
-				app_->getCurrState()->removeRenderUpdateLists(this);
-			};
-
+		if (!deleting) {
+			deleting = true;
+			app_->getCurrState()->removeRenderUpdateLists(this);
+		};
 	}
 	const double getDamage() { return damage_; }
 	void collisionDetected() { collisionsBeforeDestroy_--; }

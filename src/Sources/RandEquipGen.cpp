@@ -27,7 +27,7 @@ Equipment* RandEquipGen::genEquip(int type)
 	double meleeRate, distRate, distRange;
 
 	Equipment* obj;
-	int area = (int)gameManager_->getUnlockedIslands();
+	int area = (int)gameManager_->getUnlockedIslands() + 1;
 	switch ((equipType)type)
 	{
 	//Vida y armadura

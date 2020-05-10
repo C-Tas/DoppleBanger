@@ -2,8 +2,7 @@
 #include "Enemy.h"
 
 /*Canales para reproducir sonidos 6 y 7 */
-class Pumpkin :
-	public Enemy
+class Pumpkin : public Enemy
 {
 private:
 	uint wHSeed = app_->getWindowHeight() / 40;		//Tamaño de la semilla

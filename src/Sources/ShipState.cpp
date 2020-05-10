@@ -127,7 +127,7 @@ void ShipState::loadState(){
 
 	if (gm_->isThatMissionPass(missions::papelesSiniestros)) {
 		NPC* morty;
-		morty = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Morty), Vector2D(W_WIN * 10 / 12, H_WIN / 3), Vector2D(W_MORTY, H_MORTY), 3);
+		morty = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Morty), Vector2D(W_WIN * 8 / 9, H_WIN / 2), Vector2D(W_MORTY, H_MORTY), 3);
 		addRenderUpdateLists(morty);
 	}
 
@@ -170,7 +170,7 @@ void ShipState::createNPCs() {
 
 	if (gm_->isThatMissionPass(missions::papelesSiniestros)) {
 		NPC* morty;
-		morty = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Morty), Vector2D(W_WIN *10 / 12, H_WIN / 3), Vector2D(W_MORTY, H_MORTY), 3);
+		morty = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Morty), Vector2D(W_WIN *10 / 12, H_WIN / 4), Vector2D(W_MORTY, H_MORTY), 3);
 		addRenderUpdateLists(morty);
 	}
 

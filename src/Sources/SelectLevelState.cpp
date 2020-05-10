@@ -25,6 +25,8 @@ SelectLevelState::SelectLevelState(Application* app)
 
 void SelectLevelState::initState() {
 	SDL_ShowCursor(SDL_ENABLE);
+	double winWidth = app_->getWindowWidth();
+	double winHeight = app_->getWindowHeight();
 
 	//Button* newIslandButton;
 
@@ -37,9 +39,10 @@ void SelectLevelState::initState() {
 	else if (gm->getUnlockedIslands() == Island::Volcanic)  map_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::Map3));
 	addRenderUpdateLists(map_);
 #pragma endregion
-
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), Vector2D(100, 100),
-		Vector2D(100, 100), backShip);
+	Vector2D scaleButton(winWidth / 6, winHeight / 15);
+	Vector2D posButton(scaleButton.getX() / 2, scaleButton.getY());
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), posButton,
+		scaleButton, backShip, this);
 	////Bucle que genera los botones para pasar a las distintas islas según el numero que hayan sido desbloqueadas
 	//for (int i = 0; i < functions_.size() && i < islandsUnlocked_; i++) {
 	//	newIslandButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Timon),

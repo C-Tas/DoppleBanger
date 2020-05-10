@@ -292,6 +292,14 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 			state_->addObject(morty);
 		}
 	}
+	else if (objectType == "Nami") {
+		if (!gm_->isThatMissionPass(missions::arlongPark)) {
+			NPC* nami;			
+			nami = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cartographer), pos, Vector2D(W_NPC_NAMI, H_NPC_NAMI), 6);
+			state_->addRenderUpdateLists(nami);
+			state_->addObject(nami);
+		}
+	}
 	else if (objectType == "Player") {
 		Player* player = new Player(app_, pos, Vector2D(W_PLAYER, H_PLAYER));
 		state_->addRenderUpdateLists(player);

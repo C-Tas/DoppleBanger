@@ -6,7 +6,6 @@
 #include "PlayState.h"
 
 bool Pumpkin::onDistRange() {
-
 	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = getCenter();
@@ -266,7 +265,7 @@ void Pumpkin::initExplosion()
 bool Pumpkin::explosionAnim()
 {
 	if (currEnemy_ == nullptr) {
-				static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
+		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}

@@ -120,7 +120,6 @@ private:
 	const int SELFDESTRUCT_D_FRAMES = 8;			//Frames de la animación
 	const int SELFDESTRUCT_D_FRAME_RATE = 100;		//Frame rate
 
-
 	//Disparo
 	vector<Anim> shootAnims_;				//Vector de las animaciones
 	vector<Texture*> shootTx_;				//Vector de las texturas

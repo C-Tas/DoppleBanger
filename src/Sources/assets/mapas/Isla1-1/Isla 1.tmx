@@ -542,11 +542,11 @@
  </objectgroup>
  <objectgroup id="25" name="Chest">
   <object id="68" gid="166" x="3465.21" y="1736.24" width="256" height="256"/>
-  <object id="69" gid="166" x="4568.24" y="3081.7" width="256" height="256"/>
+  <object id="69" gid="166" x="4736" y="3200" width="256" height="256"/>
   <object id="70" gid="166" x="1345.52" y="3486.24" width="256" height="256"/>
  </objectgroup>
- <objectgroup id="26" name="Morty">
-  <object id="72" gid="169" x="4269" y="3031" width="256" height="256"/>
+ <objectgroup id="26" name="Nami">
+  <object id="72" gid="169" x="4352" y="3200" width="128" height="128"/>
  </objectgroup>
  <objectgroup id="16" name="Crab"/>
  <objectgroup id="18" name="Player">

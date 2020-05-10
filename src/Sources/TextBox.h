@@ -62,7 +62,7 @@ public:
 	void dialogSkeleton(bool unlock);
 
 	///<summary>Frases de la cartógrafa</summary>
-	void dialogCartographer(bool unlock);
+	void dialogCartographer(bool unlock, int num = 0);
 
 	///<summary>Frase del Kraken al empezar/acabar la batalla</summary>
 	void dialogKraken(bool defeated);

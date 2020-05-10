@@ -224,8 +224,11 @@ void Clon::die() {
 	GameManager* gm = GameManager::instance();
 	gm->setClon(nullptr);
 	app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
+	taunt();
 	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
-		(*it)->lostAggro();
+		if ((*it) != nullptr) {
+			(*it)->lostAggro();
+		}
 	alive_ = false;
 }
 
