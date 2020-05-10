@@ -78,6 +78,13 @@ void ShopState::draw() const
 	if (selected_ != nullptr) {
 		selected_->getObject()->getDescription(descriptionBox);
 	}
+	double posx1 = (double)(app_->getWindowWidth() / 1.684);//950;
+	double posy = (double)(app_->getWindowHeight() / 1.184);//770;
+
+	if (selected_ != nullptr) {
+		Texture potionText(app_->getRenderer(), "Precio: " + to_string((int)selected_->getObject()->getPrice()), app_->getFontManager()->getFont(Resources::FontId::RETRO), SDL_Color({ 0,0,0,1 }));
+		potionText.render(posx1, posy);
+	}
 }
 
 void ShopState::update()
@@ -148,7 +155,7 @@ void ShopState::initState() {
 	inventory_.firstDrawn = inventory_.objects_->begin();
 	shop_.firstDrawn = shop_.objects_->begin();
 	//descripcion de objetos
-	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.777), (double)(app_->getWindowHeight() / 1.38));
+	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.777), (double)(app_->getWindowHeight() / 1.45));//,620
 	descriptionBox = new TextBox(app_, descriptionPoint);
 }
 

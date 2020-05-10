@@ -382,7 +382,7 @@ void TextBox::velocityPotion() {
 	text.loadFromText(app_->getRenderer(), " aumentando la velocidad de movimiento.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 
-	
+};
 
 void TextBox::damagePotion() {
 	Texture text(app_->getRenderer(), "Poci�n de da�o:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });

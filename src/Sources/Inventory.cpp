@@ -417,9 +417,9 @@ void Inventory::printInformation() const
 void Inventory::printCompareObject() const
 {
 	double posx1,posx2, posy;
-	posx1 = /*(double)(app_->getWindowWidth() / 1.777);*/950;
-	posx2 = 1160;
-	posy = /*(double)(app_->getWindowHeight() / 1.343);*/770;
+	posx1 = (double)(app_->getWindowWidth() / 1.684);//950;
+	posx2 = (double)(app_->getWindowWidth() / 1.379);//1160
+	posy = (double)(app_->getWindowHeight() / 1.169);//770;
 	int aux1, aux2;
 	
 	if (select_ != nullptr && select_->getObject()->getObjectType() == ObjectType::Equipment ) {
