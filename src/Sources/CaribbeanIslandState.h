@@ -41,7 +41,7 @@ protected:
 	//Tiles que queremos que sean paredes (y por tanto que destruyan balas)
 	const list <int> wallTilesIdZone1 = { 12,13,162,163,164,179,180,181,182,248,249,250,251,252,253,254,255,256,257,258,287,288,289,290,291,292,293,294,295,296,297,298,299 };
 	//Tiles que queremos que sean paredes (y por tanto que destruyan balas)
-	const list <int> wallTilesIdZone2 = { 45,248,249,250,251,252,253,254,255,256,257,258,287,288,289,290,291,292,293,294,295,296,297,298,299 };
+	const list <int> wallTilesIdZone2 = { 45,179,180,181,182,248,249,250,251,252,253,254,255,256,257,258,287,288,289,290,291,292,293,294,295,296,297,298 };
 #pragma endregion
 
 	virtual void initState();
