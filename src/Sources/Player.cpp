@@ -330,6 +330,7 @@ void Player::meleeAnim()
 		if (currEnemy_ == nullptr) {
 			attacking_ = false;
 			firstAttack_ = true;
+			dir_ = Vector2D(0, 0);
 		}
 		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
 		attacked_ = true;
