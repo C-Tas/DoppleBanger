@@ -12,7 +12,7 @@ public:
 	//<summary>Constructor de la isla caribeña</summary>
 	CaribbeanIslandState(Application* app) : PlayState(app) { initState(); }
 	//<summary>Destructor de la isla caribeña</summary>
-	virtual ~CaribbeanIslandState() { if (currentMap_ != nullptr)delete currentMap_; gm_->setStartedMission(missions::gallegaEnProblemas, false); };
+	virtual ~CaribbeanIslandState();
 
 	virtual void update();
 	virtual void draw()const { 

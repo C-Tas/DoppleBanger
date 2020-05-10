@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "CollisionCtrl.h"
 #include <string>
+#include "PlayState.h"
 
 bool MonkeyCoco::update() {
 	updateFrame();
@@ -11,10 +12,17 @@ bool MonkeyCoco::update() {
 	if (currState_ == STATE::DYING) {
 		app_->getAudioManager()->playChannel(Resources::MonkeyDie, 0, 3);
 
+		//Esta línea habría que moverla al cangrejo cuando esté hecho
+		GameManager* gm_ = GameManager::instance();
+		if (gm_->isThatMissionStarted(missions::arlongPark))
+ 			gm_->addMissionCounter(missions::arlongPark);
+
 		//Tendr�a que hacer la animaci�n de muerte?
 		//Cuando acabe la animaci�n, lo mata
 		applyRewards();
 		app_->getCurrState()->removeRenderUpdateLists(this);
+		CollisionCtrl::instance()->removeEnemy(this);
+		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 		return true;
 	}
 	//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano

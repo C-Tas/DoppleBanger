@@ -10,6 +10,7 @@ public:
 		scale_ = Vector2D(W_H_BULLET, W_H_BULLET);
 	};
 	~PlayerBullet() {};
+	virtual bool update();
 
 	//Para saber si está activada la perforación
 	const bool getPerforate() { return perforate_; };

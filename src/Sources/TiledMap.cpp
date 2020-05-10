@@ -12,10 +12,14 @@
 #include "Altar.h"
 #include "Skeleton.h"
 #include "Pumpkin.h"
+#include "PlayState.h"
+#include "GameManager.h"
 
 TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, int tileTilesetHeight, int tileTilesetWidth, int tileSize, 
 	Texture* tileset, int filsTileset, int colsTileset,  Vector2D iniPos,  const list<int>& idCollisionTiles, const list<int>& idWallTiles)
 {
+	collisionCtrl_ = CollisionCtrl::instance();
+	gm_ = GameManager::instance();
 	///Inicializaci�n del mapa
 	tmx::Map map_;
 	///Carga del mapa dado un archivo .tmx
@@ -139,11 +143,11 @@ void TiledMap::addIsometricObstacle(Tile tile, int gid, tileType tileType_)
 	//Si es una pared, la marcamos como pared
 	if (tileType_ == tileType::Wall) {
 		newObstacle->isTileWall();
-		CollisionCtrl::instance()->addObstacle(newObstacle);
+		collisionCtrl_->addObstacle(newObstacle);
 	}
 	//Si es un obst�culo, lo a�adimos como obst�culo
 	else if(tileType_ == tileType::Obstacle)
-		CollisionCtrl::instance()->addObstacleWithRotation(newObstacle);
+		collisionCtrl_->addObstacleWithRotation(newObstacle);
 
 }
 
@@ -154,7 +158,7 @@ void TiledMap::addOrthogonalObstacle(Tile tile)
 	Obstacle* newObstacle = new Obstacle(app_, collisionArea, nullptr, tile.worldPos_, Vector2D(tileSize_, tileSize_));
 	//Los a�adimos a esta lista para luego poder borrarlos desde el propio mapa
 	mapObstacles_.push_back(newObstacle);
-	CollisionCtrl::instance()->addObstacle(newObstacle);
+	collisionCtrl_->addObstacle(newObstacle);
 
 }
 
@@ -219,7 +223,7 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 	if (objectType == "Monkey") {
 		MonkeyCoco* monkey = new MonkeyCoco(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
 		state_->addEnemy(monkey);
-		CollisionCtrl::instance()->addEnemy(monkey);
+		collisionCtrl_->addEnemy(monkey);
 	}
 	else if (objectType == "Chest") {
 		///A�adir cofre
@@ -232,58 +236,76 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		////Por ahora parece que no se pueden crear pero creo que es por las texturas
 		//Crab* crab = new Crab(app_, pos, Vector2D(W_CRAB, H_CRAB));
 		//state_->addEnemy(crab);
-		//CollisionCtrl::instance()->addEnemy(crab);
+		//collisionCtrl_->addEnemy(crab);
 	}
 	else if (objectType == "Wolf") {
 		//A�adir lobo
 		//Falta a�adir lo de patrol pero no estoy segura de como funciona
 		Wolf* wolf = new Wolf(app_, pos, Vector2D(W_WOLF, H_WOLF));
 		state_->addEnemy(wolf);
-		CollisionCtrl::instance()->addEnemy(wolf);
+		collisionCtrl_->addEnemy(wolf);
 	}
 	else if (objectType == "Skeleton") {
 		Skeleton* skeleton = new Skeleton(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
 		state_->addEnemy(skeleton);
-		CollisionCtrl::instance()->addEnemy(skeleton);
+		collisionCtrl_->addEnemy(skeleton);
 	}
 	else if (objectType == "Pumpkin") {
 		Pumpkin* pumpkin = new Pumpkin(app_,pos,Vector2D(W_PUMPKIN,H_PUMPKIN));
 		state_->addEnemy(pumpkin);
-		CollisionCtrl::instance()->addEnemy(pumpkin);
+		collisionCtrl_->addEnemy(pumpkin);
 	}
 	else if (objectType == "Kraken") {
 		Kraken* kraken = new Kraken(app_, pos, Vector2D(W_KRAKEN,H_KRAKEN));
 		state_->addEnemy(kraken);
-		CollisionCtrl::instance()->addEnemy(kraken);
+		collisionCtrl_->addEnemy(kraken);
 	}
 	else if (objectType == "Magordito") {
 		//A�adir Magordito
 		Magordito* magordito = new Magordito(app_,pos,Vector2D(W_WOLF,H_WOLF));
 		state_->addEnemy(magordito);
-		CollisionCtrl::instance()->addEnemy(magordito);
+		collisionCtrl_->addEnemy(magordito);
 	}
 	else if (objectType == "EnemyPirate") {
 		//A�adir Pirata naufrago
 		//Falta a�adir lo de patrol pero no estoy segura de como funciona
 		EnemyPirate* pirate = new EnemyPirate(app_, pos, Vector2D(W_ENEMYPIRATE, H_ENEMYPIRATE));
 		state_->addEnemy(pirate);
-		CollisionCtrl::instance()->addEnemy(pirate);
+		collisionCtrl_->addEnemy(pirate);
 	}
 	else if (objectType == "Cleon") {
 		//A�adir Cleon
 	}
 	else if (objectType == "Chef") {
-		NPC* chef;
-		chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), pos, Vector2D(W_NPC_CHEF, H_NPC_CHEF), 2);
-		state_->addRenderUpdateLists(chef);
-		state_->addObject(chef);
+		if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
+			NPC* chef;
+			chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), pos, Vector2D(W_NPC_CHEF, H_NPC_CHEF), 2);
+			state_->addRenderUpdateLists(chef);
+			state_->addObject(chef);
+		}
+	}
+	else if (objectType == "Morty") {
+		if (!gm_->isThatMissionPass(missions::papelesSiniestros)) {
+			NPC* morty;
+			morty = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Morty), pos, Vector2D(W_NPC_MORTY, H_NPC_MORTY), 3);
+			state_->addRenderUpdateLists(morty);
+			state_->addObject(morty);
+		}
+	}
+	else if (objectType == "Nami") {
+		if (!gm_->isThatMissionPass(missions::arlongPark)) {
+			NPC* nami;			
+			nami = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cartographer), pos, Vector2D(W_NPC_NAMI, H_NPC_NAMI), 6);
+			state_->addRenderUpdateLists(nami);
+			state_->addObject(nami);
+		}
 	}
 	else if (objectType == "Player") {
 		Player* player = new Player(app_, pos, Vector2D(W_PLAYER, H_PLAYER));
 		state_->addRenderUpdateLists(player);
 		state_->setPlayer(player);
-		GameManager::instance()->setPlayer(player);
-		CollisionCtrl::instance()->setPlayer(player);
+		gm_->setPlayer(player);
+		collisionCtrl_->setPlayer(player);
 		player->setColliderPos(Vector2D((player->getScale().getX() / 3), 2* (player->getScale().getY() / 4)));
 		player->setColliderScale(Vector2D((player->getScale().getX() / 3),  (player->getScale().getY() / 4)));
 	}

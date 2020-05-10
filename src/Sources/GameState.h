@@ -53,7 +53,8 @@ public:
 	///<summary>A�ade un objeto a las listas de objectsToRemove_ y rendersToRemove_</summary>
 	void removeRenderUpdateLists(Draw* obj);
 
-
+	//Sirve para cargar el estado
+	virtual void loadState() {};
 protected:
 	struct textBoxInfo {
 		Texture* txt_ = nullptr;

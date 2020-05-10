@@ -23,7 +23,7 @@ void TextBox::goShopState(Application* app)
 }
 
 void TextBox::nextConversation(Application* app) {
-	dynamic_cast<Player*>(app->getGameManager()->getPlayer())->stop();
+	app->getGameManager()->getPlayer()->stop();
 	CollisionCtrl::instance()->nextConversation();
 }
 
@@ -33,7 +33,7 @@ void TextBox::initDialog() {
 	whiteRect->render(dest);
 
 	//Comentario al final de la caja de texto
-	Texture pressAnyKey(app_->getRenderer(), "Aléjate para dejar de hablar >>", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x99999999) });
+	Texture pressAnyKey(app_->getRenderer(), "Alejate para dejar de hablar >>", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x99999999) });
 	pressAnyKey.render(app_->getWindowWidth() - pressAnyKey.getWidth() - lineSpacing, app_->getWindowHeight() - pressAnyKey.getHeight() - lineSpacing);
 }
 
@@ -108,7 +108,7 @@ void TextBox::dialogChef(bool unlock, int num) {
 	else {
 		//Mientras no se hayan matado todos los enemigos
 		if (gm_->getCounterEnemiesMission(missions::gallegaEnProblemas) < gm_->getEnemiesMission(missions::gallegaEnProblemas)) {
-			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la misión secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la mision secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
 			text.loadFromText(app_->getRenderer(), "'Gallego en problemas'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -116,28 +116,59 @@ void TextBox::dialogChef(bool unlock, int num) {
 		}
 		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
 		else {
-			gm_->setCompleteMission(missions::gallegaEnProblemas, true);
-			gm_->addInventoryGold(500);
-			gm_->setArchievementPoints(gm_->getAchievementPoints() + 1000);
+			if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) gm_->setCompleteMission(missions::gallegaEnProblemas, true);
 
-			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la misión secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la mision secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), "'Gallego en problemas', después de esto el chef se a�ade a la lista de NPCs desbloquedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "'Gallego en problemas', despues de esto el chef se a�ade a la lista de NPCs desbloquedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
 		}
 	}
 }
 
-void TextBox::dialogMorty(bool unlock) {
+void TextBox::dialogMorty(bool unlock, int num) {
 	initDialog();
-	//Di�logo de Morty cuando lo hemos desbloqueado
+	//Di�logo del chef cuando lo hemos desbloqueado
 	if (unlock) {
+		Texture text;
+		switch (num) {
+		case 0:
+			text.loadFromText(app_->getRenderer(), "Gracias por rescatarme de esa isla tan siniestra. Los lobos leprosos me dan escalofrios.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
+			button_->draw();
+			button_->update();
+			break;
+		case 1:
+			text.loadFromText(app_->getRenderer(), "Ahora podre fumar tranquilo...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing));
+			break;
+		}
 	}
-	//Di�logo de Morty cuando a�n est� bloqueado
+	//Di�logo del chef cuando a�n est� bloqueado
 	else {
+		//Mientras no se hayan matado todos los enemigos
+		if (gm_->getCounterEnemiesMission(missions::papelesSiniestros) < gm_->getEnemiesMission(missions::papelesSiniestros)) {
+			Texture text(app_->getRenderer(), "Por ahora, como no estoy en mi isla, mata 3 monos para hacer la prueba de desbloquearme. Vuelve cuando lo", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
+			text.loadFromText(app_->getRenderer(), "hayas hecho y te dare recompensas.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+			text.loadFromText(app_->getRenderer(), "Tengo mucho mono. Por favor, date prisa!", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 3));
+		}
+		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
+		else {
+			if (!gm_->isThatMissionPass(missions::papelesSiniestros)) gm_->setCompleteMission(missions::papelesSiniestros, true);
+
+			Texture text(app_->getRenderer(), "Muchas gracias. Ahora me unire a tu tripulacion, asi que hazme hueco.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+
+			text.loadFromText(app_->getRenderer(), "'Ah si! Toma esto como muestra de agradecimiento.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+		}
 	}
 }
 
@@ -168,10 +199,10 @@ void TextBox::dialogSkeleton(bool unlock) {
 		Texture text(app_->getRenderer(), "Este lindo esqueletito es una prueba de la generación de un NPC desbloquado. Para ello se han cambiado un poco las", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + lineSpacing);
 
-		text.loadFromText(app_->getRenderer(), "colisiones con los NPCs, que podrán reajustarse cuando se cambien las im�genes para gestionar qué partes se", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.loadFromText(app_->getRenderer(), "colisiones con los NPCs, que podran reajustarse cuando se cambien las im�genes para gestionar que partes se", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
-		text.loadFromText(app_->getRenderer(), "renderizan por encima y qué por debajo del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.loadFromText(app_->getRenderer(), "renderizan por encima y que por debajo del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + (lineSpacing * 3));
 	}
 	//Di�logo del esqueleto cuando a�n est� bloqueado
@@ -180,15 +211,45 @@ void TextBox::dialogSkeleton(bool unlock) {
 	}
 }
 
-void TextBox::dialogCartographer(bool unlock) {
+void TextBox::dialogCartographer(bool unlock, int num) {
 	initDialog();
-	//Di�logo de la cart�grafa cuando la hemos desbloqueado
+	//Di�logo del chef cuando lo hemos desbloqueado
 	if (unlock) {
+		Texture text;
+		switch (num) {
+		case 0:
+			text.loadFromText(app_->getRenderer(), "Una vez servi a alguien como tu, con un sombrero de paja, pero parecido.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
+			button_->draw();
+			button_->update();
+			break;
+		case 1:
+			text.loadFromText(app_->getRenderer(), "Contigo me siento segura.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing));
+			break;
+		}
 	}
-	//Di�logo de la cart�grafa cuando a�n est� bloqueada
+	//Di�logo del chef cuando a�n est� bloqueado
 	else {
+		//Mientras no se hayan matado todos los enemigos
+		if (gm_->getCounterEnemiesMission(missions::arlongPark) < gm_->getEnemiesMission(missions::arlongPark)) {
+			Texture text(app_->getRenderer(), "Ayudame a acabar con Arlong y sus secuaces. Por ahora tienes que acabar con 3 monos. Cuando", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
+			text.loadFromText(app_->getRenderer(), "hayas acabado vuelve y te dare recompensas.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+		}
+		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
+		else {
+			if (!gm_->isThatMissionPass(missions::arlongPark)) gm_->setCompleteMission(missions::arlongPark, true);
+
+			Texture text(app_->getRenderer(), "Muchas gracias. Ahora me unire a tu tripulacion, asi que hazme hueco.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+
+			text.loadFromText(app_->getRenderer(), "'Ah si! Toma esto como muestra de agradecimiento.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+		}
 	}
 }
 

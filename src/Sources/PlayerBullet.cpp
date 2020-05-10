@@ -2,6 +2,24 @@
 #include "CollisionCtrl.h"
 #include "Collisions.h"
 
+bool PlayerBullet::update()
+{
+	currTime_ = SDL_GetTicks();
+
+	//Si se le ha acabado el tiempo de vida
+	if ((currTime_ - initTime_) / 1000 > lifeSpan_) {
+ 		CollisionCtrl::instance()->removePlayerBullet(this);
+		onCollider();
+	}
+	else {
+		double delta = app_->getDeltaTime();
+		pos_.setX(pos_.getX() + (dir_.getX() * (speed_ * delta)));
+		pos_.setY(pos_.getY() + (dir_.getY() * (speed_ * delta)));
+	}
+
+	return false;
+}
+
 void PlayerBullet::searchEnemy(list<Enemy*> enemies, Enemy* currEnemy)
 {
  	bool founded = false;						//Para saber si se encuentra target

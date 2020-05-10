@@ -156,9 +156,15 @@ private:
 	vector<int> pointrTree_ = { 0, 0, 0 };
 	//Vector que contiene la cantidad de enemigos que se han muerto de la mision correspondiente
 	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<int> countEnemiesMission_ = { 0, 0, 0, 0};
+	vector<int> countEnemiesMission_ = { 0, 0, 0, 0 };
+	//Recompensas de las misiones
+	//Oro <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
+	vector <int> goldReward_ = { 200, 200, 200, 200 };
+	//Hazaña <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
+	vector <int> pointsReward_ = { 200, 200, 200, 200 };
 	//Vector que contiene el numero de enemigos que se tiene que matar en cada mision
-	vector<int> enemiesMission_ = { 3, 2, 2, 4 };
+	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
+	vector<int> enemiesMission_ = { 3, 3, 2, 3 };
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
@@ -369,7 +375,11 @@ public:
 	//Reinicia el contador de muertes de la mision
 	inline void resetMissionCounter(missions tagMission) { countEnemiesMission_.at((int)tagMission) = 0; }
 	//Completa una misi�n secundaria
-	inline void setCompleteMission(missions mission, bool complete) { missionsComplete_[(int)mission] = complete; };
+	inline void setCompleteMission(missions mission, bool complete) {
+		missionsComplete_[(int)mission] = complete;
+		inventoryGold_ += goldReward_.at((int)mission);
+		achievementPoints_ += pointsReward_.at((int)mission);
+	};
 	//Empieza una misi�n secundaria
 	inline void setStartedMission(missions mission, bool started) { missionsStarted_[(int)mission] = started; };
 	//Asigna a la ultima isla desbloqueada
