@@ -199,6 +199,7 @@ public:
 		PumpkinMoveLeftAnim,
 		PumpkinMoveUpAnim,
 		PumpkinMoveDownAnim,
+			//Clon
 		ClonIdleRightAnim,
 		ClonIdleLeftAnim,
 		ClonIdleUpAnim,
@@ -211,6 +212,7 @@ public:
 		ClonShootLeftAnim,
 		ClonShootUpAnim,
 		ClonShootDownAnim,
+			//Monkey
 		MonkeyIdleRightAnim,
 		MonkeyIdleLeftAnim,
 		MonkeyIdleUpAnim,
@@ -222,7 +224,11 @@ public:
 		//Magordito
 			//Kirin
 		Kirin,
-
+			//Skeleton
+		SkeletonIdleRightAnim,
+		SkeletonIdleLeftAnim,
+		SkeletonIdleUpAnim,
+		SkeletonIdleDownAnim,
 
 		//Interactuables
 		Wheel,

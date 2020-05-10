@@ -55,5 +55,29 @@ protected:
 	void updateAnim();
 	void initialStats();
 
+#pragma region Anims
+	int frameAction_ = 0;					//Frame en el que se realiza la acción
+	const int W_SKELETON_FRAME = 70;			//Ancho del frame, estándar para todas
+	const int H_SKELETON_FRAME = 45;			//Alto del frame, estándar para todas
+	const int FRAME_ACTION_SHOOT = 10;
+	bool shooted_ = false;
+	//Idle
+	const int LAUGH_FRAME = 1;
+	const int IDLE_FRAME = 6;
+	void initIdle();
+	vector<Anim> idleAnims_;
+	vector<Texture*> idleTx_;
+	//Idle derecha
+	const int IDLE_R_FRAMES = 16;			//Frames de la animación
+	const int IDLE_R_FRAME_RATE = 100;		//Frame rate
+	//Idle hacia arriba
+	const int IDLE_U_FRAMES = 16;			//Frames de la animación
+	const int IDLE_U_FRAME_RATE = 100;		//Frame rate
+	//Idle hacia izquierda
+	const int IDLE_L_FRAMES = 16;			//Frames de la animación
+	const int IDLE_L_FRAME_RATE = 100;		//Frame rate
+	//Idle hacia abajo
+	const int IDLE_D_FRAMES = 16;			//Frames de la animación
+	const int IDLE_D_FRAME_RATE = 100;		//Frame rate
 };
 

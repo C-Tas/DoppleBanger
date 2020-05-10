@@ -1,18 +1,9 @@
-#include "Skeleton.h"
+Ôªø#include "Skeleton.h"
 #include <iostream>
 #include "Resources.h"
 #include "BoneBullet.h"
 #include "CollisionCtrl.h"
 //#include "CaribbeanIslandState.h"
-
-
-//Inicializa todas las animaciones
-void Skeleton::initAnims()
-{
-	//Para la animaciÛn de movimiento
-	//moveAnim_ = Anim(NUM_FRAMES_MOV, NUM_FRAMES_ROW_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, NAME_MOV);
-	
-}
 
 void Skeleton::updateAnim()
 {
@@ -69,13 +60,13 @@ bool Skeleton::update() {
 	
 	//Si el esqueleto ha muerto
 	if (currState_ == STATE::DYING) {
-		// animaciÛn de muerte si la tiene
-		//Cuando acabe la animaciÛn, lo mata
+		// animaci√≥n de muerte si la tiene
+		//Cuando acabe la animaci√≥n, lo mata
 		applyRewards();
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
-	//Si el esqueleto no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m·s cercano
+	//Si el esqueleto no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m√°s cercano
 	if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
 		currState_ = STATE::ATTACKING;
 	}
@@ -114,4 +105,35 @@ void Skeleton::initRewards()
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
+}
+
+void Skeleton::initAnims() 
+{
+	//AnimaciÔøΩn de idle
+		//Arriba
+	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, IDLE_U_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonIdleUpAnim));
+	//Derecha																						
+	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, IDLE_R_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonIdleRightAnim));
+	//Abajo																							
+	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, IDLE_D_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonIdleDownAnim));
+	//Izquierda																						
+	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, IDLE_L_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonIdleLeftAnim));
+
+	//Inicializamos con la animaci√≥n del idle
+	currDir_ = DIR::DOWN;
+	initIdle();
+}
+
+void Skeleton::initIdle()
+{
+	currState_ = STATE::IDLE;
+	texture_ = idleTx_[(int)currDir_];
+	currAnim_ = idleAnims_[(int)currDir_];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
 }

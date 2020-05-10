@@ -214,6 +214,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Magordito
 		//Kirin
 	{ Kirin, "../Sources/assets/enemigos/magordito/Kirin.png" },
+		//Skeleton
+	{ SkeletonIdleRightAnim, "../Sources/assets/enemigos/skeleton/IdleLadoDer.png" },
+	{ SkeletonIdleLeftAnim, "../Sources/assets/enemigos/skeleton/IdleLadoIzq.png"},
+	{ SkeletonIdleUpAnim, "../Sources/assets/enemigos/skeleton/IdleEspaldas.png"},
+	{SkeletonIdleDownAnim, "../Sources/assets/enemigos/skeleton/IdleFrente.png"},
 
 		//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
