@@ -36,8 +36,8 @@ protected:
 	const string NAME_MOV = "move";
 
 	//Hueso que lanza el esqueleto
-	const uint BONE_HEIGHT = app_->getWindowHeight() / 40;		//Alto del hueso
-	const uint BONE_WIDTH = app_->getWindowWidth() / 36;		//Ancho del hueso
+	const uint BONE_HEIGHT = app_->getWindowHeight() / 30;		//Alto del hueso
+	const uint BONE_WIDTH = app_->getWindowWidth() / 30;		//Ancho del hueso
 	const double BONE_VEL = 400;							//Velocidad del hueso
 	const double BONE_LIFE = 3;							//Vida del proyectil en segundos
 	
@@ -49,10 +49,12 @@ protected:
 	const SDL_Rect FIRST_FRAME = { 0,0,0,0 };
 	//Ataque del esqueleto
 	void attack();
+	bool firstAttack = true;
 	//Inicializa todas las animaciones
 	void initAnims();
+	void shootAnim();
 	void initialStats();
-	bool firstAttack = true;
+
 
 #pragma region Anims
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
@@ -61,10 +63,9 @@ protected:
 	const int FRAME_ACTION_SHOOT = 10;
 
 	//Idle
-	const int LAUGH_FRAME = 1;
 	const int IDLE_FRAME = 6;
 	void initIdle();
-	vector<Anim> idleAnims_;
+	Anim idleAnims_ = { 0, 0, 0, 0, false };
 	vector<Texture*> idleTx_;
 	//Idle derecha
 	const int IDLE_FRAMES = 4;			//Frames de la animación
@@ -77,13 +78,13 @@ protected:
 	vector<Texture*> shootTx_;				//Vector de las texturas
 	//Disparo derecha abajo
 	const int SHOOT_D_FRAMES = 20;		//Frames de la animación
-	const int SHOOT_D_FRAME_RATE = 1250;	//Frame rate
+	const int SHOOT_D_FRAME_RATE = 50;	//Frame rate
 	//Disparo hacia derecha arriba
 	const int SHOOT_U_FRAMES = 14;		//Frames de la animación
-	const int SHOOT_U_FRAME_RATE = 875;	//Frame rate
+	const int SHOOT_U_FRAME_RATE = 75;	//Frame rate
 	//Disparo hacia izquierda y derecha
 	const int SHOOT_RL_FRAMES = 13;		//Frames de la animación
-	const int SHOOT_RL_FRAME_RATE = 813;	//Frame rate
+	const int SHOOT_RL_FRAME_RATE = 70;	//Frame rate
 	//Movimiento
 	void initMove();
 	vector<Anim> moveAnims_;

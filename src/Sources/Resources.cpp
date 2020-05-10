@@ -238,6 +238,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 		//Colisionable
 	{ Rock, "../Sources/assets/colisionables/roca.png" },
 	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
+	{ Bone, "../Sources/assets/enemigos/skeleton/ThrowingBone.png" },
 
 	//Equipables
 	{ Armor1,"../Sources/assets/Equipamiento/armadura1.png" },

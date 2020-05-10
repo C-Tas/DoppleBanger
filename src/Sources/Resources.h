@@ -261,6 +261,7 @@ public:
 
 		//proyectiles
 		Coco,
+		Bone,
 
 		//Equipables
 		Armor1,
