@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include "Draw.h"
 #include "Enemy.h"
 #include "Clon.h"	//Para agregar los mobs a la lista de enemigos del clon
 
@@ -11,8 +10,8 @@ class Altar : public Draw
 {
 public:
 	Altar(Application* app, Vector2D pos, Vector2D scale) :Draw(app, pos, scale) { initObject(); };
-	Altar(Application* app, Vector2D pos, Vector2D scale,int numMobs) :Draw(app, pos, scale),numMobs_(numMobs) { initObject(); };
-	~Altar() { mobs.clear(); };
+	Altar(Application* app, Vector2D pos, Vector2D scale, int numMobs) :Draw(app, pos, scale),numMobs_(numMobs) { initObject(); };
+	~Altar();
 	virtual bool update();
 	//Activa la resurreción de este altar
 	void activeResurrect() { resurrect_ = true; }
@@ -21,7 +20,7 @@ public:
 	//Crea los esqueletos 
 	void createMobs(PlayState* playState);
 	//Determina si un esqueleto está fuera de rango de resurreción
-	bool outRange(SDL_Rect skeletonRect);
+	bool outRange(AltarSkeleton* skeletonRect);
 	//Devuelve true si los mobs pueden resucitar
 	bool canResurrect() { return resurrect_; }
 	//Setea al clon los enemigos si son invocados después del taunt
@@ -43,6 +42,10 @@ private:
 	const double SKELETON_W = 45;
 	//constantes que representa la altura del esqueleto
 	const double SKELETON_H = 75;
+	//Animacion
+	const int NUM_FRAMES = 3;
+	const int W_H_FRAME = 150;
+	const int FRAME_RATE = 333;
 	//inicializa al altar
 	virtual void initObject();
 };

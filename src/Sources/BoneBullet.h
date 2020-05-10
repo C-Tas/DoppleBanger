@@ -7,13 +7,8 @@ public:
 		double lifeSpan = 2, double speed = 1000, Vector2D scale = { 20, 20 }, int collisions = 2) :
 		Bullet(app, texture, pos, dir, damage, lifeSpan, speed, scale, collisions){};
 
-	
-
 	bool update()override;
 	virtual ~BoneBullet() {};
-	
 private:
 	bool returnBone = false;
-	
 };
-

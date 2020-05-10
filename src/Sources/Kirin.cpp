@@ -1,0 +1,44 @@
+#include "Kirin.h"
+#include "GameState.h"
+#include "Player.h"
+#include "Collisions.h"
+
+Kirin::Kirin(Application* app, Vector2D pos, Vector2D scale) : 
+	Draw(app, pos, scale){
+	initObject();
+}
+
+bool Kirin::update()
+{
+	updateFrame();
+	if (currAnim_.currFrame_ == FRAME_ACTION) {
+		attacked_ = true;
+		Player* player = GameManager::instance()->getPlayer();
+		Vector2D playerCenter = player->getCenter();
+		Vector2D playerCollider = player->getColliderScale();
+		Vector2D center = getCenter();
+		//Si el rayo impacta hace daño al player
+		if (RectBall(playerCenter.getX(), playerCenter.getY(), playerCollider.getX(), playerCollider.getY(),
+			center.getX(), center.getY(), scale_.getX() / 2)) {
+			player->receiveDamage(KIRIN_DMG);
+
+			return true;
+		}
+	}
+	else if (currAnim_.currFrame_ >= NUM_FRAMES) {
+		app_->getCurrState()->removeRenderUpdateLists(this);
+	}
+	return false;
+}
+
+void Kirin::initObject()
+{
+	currAnim_ = Anim(NUM_FRAMES, W_H_FRAME, W_H_FRAME, FRAME_RATE, false);
+ 	texture_ = app_->getTextureManager()->getTexture(Resources::Kirin);
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	app_->getCurrState()->addRenderUpdateLists(this);
+}

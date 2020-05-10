@@ -42,8 +42,8 @@ void Skeleton::initialStats() {
 void Skeleton::attack() {
 	if (currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
 		lastHit = SDL_GetTicks();
-		Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
-		BoneBullet* bone = new BoneBullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
+		Vector2D dir = currEnemy_->getCenter();
+		BoneBullet* bone = new BoneBullet(app_, app_->getTextureManager()->getTexture(Resources::HealthPot),
 			getCenter(), dir, currStats_.distDmg_, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
 		app_->getCurrState()->addRenderUpdateLists(bone);
 		CollisionCtrl::instance()->addEnemyBullet(bone);

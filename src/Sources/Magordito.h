@@ -27,8 +27,7 @@ private:
 	double lastKirin_ = 0;
 	const double AREA_DMG_W = 100;
 	const double AREA_DMG_H = 100;
-	const double KIRIN_DMG = 50;
-	const double KIRIN_CD = 1000;
+	const double KIRIN_CD = 5;
 	const double KIRIN_RANGE_ATTACK = 500;
 #pragma endregion
 
@@ -36,10 +35,12 @@ private:
 	//Inicia la animación
 	void initIdle();
 	void initTeleport();
+	void initKirinAnim();
 
 	//Gestor de animacion
 	void teleportAnim();
-	int frameAction_ = 0;					//Frame en el que se realiza la acción
+	void kirinAnim();
+
 	bool firstAttack = true;
 	bool firstIdle = true;
 
@@ -57,12 +58,12 @@ private:
 	const int TP_FRAME_RATE = 90;
 
 	//Kirin
-	Draw* kirinA = nullptr;
-	Anim kirinAnim_ = { 0,0,0,0,false };
-	const int KIRIN_FRAMES = 7;				//Frames de la animaci�n
-	const int KIRIN_FRAME_RATE = 500;		//Frame rate
-	const int W_FRAME_KIRIN = 128;
-	const int H_FRAME_KIRIN = 512;
+	vector<Anim> kirinAnims_;
+	vector<Texture*> kirinTx_;
+	bool kirined_ = false;				//Para llamar al metodo kirin() una sola vez
+	const int KIRIN_ACTION = 4;
+	const int KIRIN_FRAMES = 8;
+	const int KIRIN_FRAME_RATE = 200;	//Frame rate
 
 	//Calcula hacia dónde mira en función del player
 	virtual void updateDirVisObjective(GameObject* objective);
@@ -83,8 +84,6 @@ private:
 	virtual void initAnims();
 	//inicializa el ataque kirin
 	void kirin();
-	//Inicializa la animaci�n del kirin
-	void initKirinAnim();
 #pragma region teleport
 	//Representa el rango que se usa para determinar si el enemigo est� muy cerca
 	const double RANGE_TO_TP = 100;
@@ -96,8 +95,6 @@ private:
 	double lastTeleport_ = 0;
 	//Vector con las posiciones a las que se puede teleportar
 #pragma endregion
-
-
 
 #pragma region Constantes
 	//Animacion idle de Magordito
@@ -115,6 +112,5 @@ private:
 	const uint H_FRAME_TELEPORT = 0;
 	const int FRAME_RATE_TELEPORT = 0;
 	const string NAME_TELEPORT = "teleport";
-
 #pragma endregion
 };

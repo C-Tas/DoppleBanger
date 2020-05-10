@@ -4,7 +4,6 @@
 
 bool AltarSkeleton::update()
 {
-
 	//muerte definitiva del esqueleto
 	if (mobState_ == MOBSTATE::DIE) {
 		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
@@ -17,7 +16,7 @@ bool AltarSkeleton::update()
 		mobState_ = MOBSTATE::ALIVE;
 		currState_ = STATE::IDLE;
 		CollisionCtrl::instance()->addEnemy(this);
-	}
+ 	}
 	//Si el mob no puede resucitar se mata definitivamente
 	else if (mobState_ == MOBSTATE::UNRISEABLE && currState_ == STATE::DYING) {
 		mobState_ = MOBSTATE::DIE;
@@ -67,7 +66,7 @@ void AltarSkeleton::die()
 	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	CollisionCtrl::instance()->removeEnemy(this);
 	currState_ = STATE::DYING;
-	if (altarOwner_->outRange(getDestiny())) {
+	if (altarOwner_->outRange(this)) {
 		mobState_ = MOBSTATE::UNRISEABLE;
 	}
 	else

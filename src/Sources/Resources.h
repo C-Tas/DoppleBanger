@@ -220,6 +220,7 @@ public:
 		MonkeyShootUpAnim,
 		MonkeyShootDownAnim,
 		//Magordito
+		Altar,
 			//Idle
 		MagorditoIdleRight,
 		MagorditoIdleLeft,

@@ -3,6 +3,8 @@
 #include "CollisionCtrl.h"
 #include "PlayState.h"
 #include "Collisions.h"
+#include "Skeleton.h"
+#include "Kirin.h"
 
 bool Magordito::update() {
 	updateFrame();
@@ -20,20 +22,35 @@ bool Magordito::update() {
 	}
 	if (currState_ == STATE::ATTACKING) {
 		//Si el player est� cerca y no tengo enfriamiento en el teleport
-		if (TP_CD <= SDL_GetTicks() - lastTeleport_) {
+		if ((SDL_GetTicks() - lastTeleport_) / 1000 > TP_CD) {
 			enemyIsTooClose();
 		}
-		if (onRange(KIRIN_RANGE_ATTACK)) {
-			if (KIRIN_CD <= SDL_GetTicks() - lastKirin_ ) {
- 				kirin();
-			}
+ 		double aux = SDL_GetTicks() - lastKirin_;
+		if ((SDL_GetTicks() - lastKirin_) / 1000 > KIRIN_CD && onRange(KIRIN_RANGE_ATTACK)) {
+			initKirinAnim();
 		}
 	}
 
 	if (currState_ == STATE::SWIMMING) {
 		teleportAnim();
 	}
+	else if (currState_ == STATE::FOLLOWING) {
+		kirinAnim();
+	}
 	return false;
+}
+
+
+void Magordito::initObject() {
+	texture_ = app_->getTextureManager()->getTexture(Resources::Magordito);
+	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
+	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
+	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
+	initialStats();
+	initAnims();
+	currState_ = STATE::IDLE;
+	player_ = GameManager::instance()->getPlayer();
+	tag_ = "Magordito";
 }
 
 void Magordito::updateDirVisObjective(GameObject* objective)
@@ -53,18 +70,6 @@ void Magordito::updateDirVisObjective(GameObject* objective)
 			else currDir_ = DIR::LEFT;	//Para la izquierda arriba
 		}
 	}
-}
-
-void Magordito::initObject() {
-	texture_ = app_->getTextureManager()->getTexture(Resources::Magordito);
-	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
-	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
-	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
-	initialStats();
-	initAnims();
-	currState_ = STATE::IDLE;
-	player_ = GameManager::instance()->getPlayer();
-	tag_ = "Magordito";
 }
 
 void Magordito::initAnims() {
@@ -96,6 +101,20 @@ void Magordito::initAnims() {
 	tpAnims_.push_back(Anim(TP_FRAMES, W_H_FRAME, W_H_FRAME, TP_FRAME_RATE, false));
 	tpTx_.push_back(app_->getTextureManager()->getTexture(Resources::MagorditoTpTopLeft));
 
+	//Kirin
+	//Derecha arriba																					
+	kirinAnims_.push_back(Anim(KIRIN_FRAMES, W_H_FRAME, W_H_FRAME, KIRIN_FRAME_RATE, false));
+	kirinTx_.push_back(app_->getTextureManager()->getTexture(Resources::MagorditoKirinTopRight));
+	//Derecha abajo
+	kirinAnims_.push_back(Anim(KIRIN_FRAMES, W_H_FRAME, W_H_FRAME, KIRIN_FRAME_RATE, false));
+	kirinTx_.push_back(app_->getTextureManager()->getTexture(Resources::MagorditoKirinRight));
+	//Izquierda abajo																							
+	kirinAnims_.push_back(Anim(KIRIN_FRAMES, W_H_FRAME, W_H_FRAME, KIRIN_FRAME_RATE, false));
+	kirinTx_.push_back(app_->getTextureManager()->getTexture(Resources::MagorditoKirinLeft));
+	//Izquierda arriba																				
+	kirinAnims_.push_back(Anim(KIRIN_FRAMES, W_H_FRAME, W_H_FRAME, KIRIN_FRAME_RATE, false));
+	kirinTx_.push_back(app_->getTextureManager()->getTexture(Resources::MagorditoKirinTopLeft));
+
 	//Inicializamos con la animación del idle
 	currDir_ = DIR::DOWN;
 	initIdle();
@@ -104,15 +123,10 @@ void Magordito::initAnims() {
 void Magordito::kirin()
 {
 	if (currEnemy_ != nullptr) {
-		lastKirin_ = SDL_GetTicks();
-		auto enem = dynamic_cast<Player*>(currEnemy_);
-		enem->receiveDamage(KIRIN_DMG);
+		double newX = currEnemy_->getCenter().getX() - scale_.getX() * 1.5 / 2;
+		double newY = currEnemy_->getPos().getY() + currEnemy_->getScaleY() - scale_.getY() * 1.5;
+		Kirin* kirin = new Kirin(app_, Vector2D(newX, newY), Vector2D(scale_.getX() * 1.5, scale_.getY() * 1.5));
 	}
-}
-
-void Magordito::initKirinAnim()
-{
-
 }
 
 inline bool Magordito::enemyIsTooClose()
@@ -124,7 +138,7 @@ inline bool Magordito::enemyIsTooClose()
 		if (RectRect(center.getX(), center.getY(), RANGE_TO_TP * 2, RANGE_TO_TP * 2,
 			enemCenter.getX(), enemCenter.getY(), enem->getColliderScale().getX(), enem->getColliderScale().getY())) {
 			initTeleport();
-			//teleport();
+
 			return true;
 		}
 	}
@@ -134,7 +148,7 @@ inline bool Magordito::enemyIsTooClose()
 void Magordito::initialStats()
 {
 	rangeVision_ = 200;
-	HEALTH = 100;
+	HEALTH = 4000;
 	MANA = 100;
 	MANA_REG = 1;
 	ARMOR = 10;
@@ -149,13 +163,13 @@ void Magordito::initialStats()
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
-//TODO
 void Magordito::teleport()
 {
 	lastTeleport_ = SDL_GetTicks();
-	cout << "TP \n";
 	auto choice = app_->getRandom()->nextInt(0, altars.size());
-	pos_.setVec(altars[choice]->getPos());
+	double newX = altars[choice]->getCenter().getX() - scale_.getX() / 2;
+	double newY = altars[choice]->getPos().getY();
+	pos_.setVec(Vector2D(newX, newY));
 	auto clon = dynamic_cast<Clon*>(currEnemy_);
 	if(clon != nullptr){ altars[choice]->setEnemyToMobs(clon); }
 	altars[choice]->activeResurrect();
@@ -188,12 +202,37 @@ void Magordito::initTeleport()
 	frame_.h = currAnim_.heightFrame_;
 }
 
+void Magordito::initKirinAnim()
+{
+	kirined_ = false;
+	updateDirVisObjective(currEnemy_);
+	currState_ = STATE::FOLLOWING;
+	currAnim_ = kirinAnims_[(int)currDir_];
+	texture_ = kirinTx_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
 void Magordito::teleportAnim()
 {
 	if (currAnim_.currFrame_ >= TP_FRAMES) {
 		teleport();
 		updateDirVisObjective(currEnemy_);
 		initIdle();
+	}
+}
+
+void Magordito::kirinAnim()
+{
+	if (!kirined_ && currAnim_.currFrame_ == KIRIN_ACTION) {
+		kirined_ = true;
+		kirin();
+	}
+	else if (currAnim_.currFrame_ >= KIRIN_FRAMES) {
+		initIdle();
+		lastKirin_ = SDL_GetTicks();
 	}
 }
 
