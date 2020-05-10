@@ -37,6 +37,7 @@ void ShipState::goMap(Application* app)
 void ShipState::goSaveState(Application* app)
 {
 	app->getGameStateMachine()->pushState(new SaveState(app));
+	app->getAudioManager()->playMusic(Resources::MainTheme, -1);
 }
 #pragma endregion
 

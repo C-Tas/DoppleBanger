@@ -21,9 +21,6 @@ void MainMenuState::initState()
 	bg_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground));
 	addRenderUpdateLists(bg_);
 
-	//Cargamos música de fondo
-	app_->getAudioManager()->playMusic(Resources::MainTheme, -1);
-
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
 }

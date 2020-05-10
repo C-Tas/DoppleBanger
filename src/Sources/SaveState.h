@@ -14,4 +14,3 @@ private:
 	//Inicializa el estado
 	virtual void initState();
 };
-
