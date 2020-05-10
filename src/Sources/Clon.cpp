@@ -32,7 +32,16 @@ bool Clon::update() {
 			initMelee();
 		}
 	}
-	else if (alive_) player_->killClon();
+	else if (alive_){
+		if (currState_ != STATE::VANISH){
+			initVanish();
+		}
+		if (currAnim_.currFrame_ == currAnim_.numberFrames_ -1 ) {
+			player_->killClon();
+		}
+		
+	}
+
 
 	return false;
 }
@@ -114,6 +123,20 @@ void Clon::initAnim() {
 	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonShootLeftAnim));
 	shootingFrame_.push_back(SHOOT_L_SHOOTINGFRAME);
 
+	//Animación de desaparecer
+	//Arriba
+	vanishAnims_.push_back(Anim(VANISH_U_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, VANISH_U_FRAME_RATE, false));
+	vanishTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonVanishUpAnim));
+	//Derecha																					
+	vanishAnims_.push_back(Anim(VANISH_R_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, VANISH_R_FRAME_RATE, false));
+	vanishTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonVanishRightAnim));
+	//Abajo
+	vanishAnims_.push_back(Anim(VANISH_D_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, VANISH_D_FRAME_RATE, false));
+	vanishTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonVanishDownAnim));
+	//Izquierda
+	vanishAnims_.push_back(Anim(VANISH_L_FRAMES, W_H_CLON_FRAME, W_H_CLON_FRAME, VANISH_L_FRAME_RATE, false));
+	vanishTx_.push_back(app_->getTextureManager()->getTexture(Resources::ClonVanishLeftAnim));
+
 	//currDir_ = DIR::LEFT;
 	initIdle();
 }
@@ -180,6 +203,16 @@ void Clon::initSelfDestruction() {
 	//Aquí no hace falta actualizar la dirección porque se autodestruirá en la dirección que estuviese previamente
 	texture_ = selfDestructTx_[(int)currDir_];
 	currAnim_ = selfDestructAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+void Clon::initVanish() {
+	currState_ = STATE::VANISH;
+	//Aquí no hace falta actualizar la dirección porque desaparecerá en la dirección que estuviese previamente
+	texture_ = vanishTx_[(int)currDir_];
+	currAnim_ = vanishAnims_[(int)currDir_];
 
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
