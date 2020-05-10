@@ -5,14 +5,6 @@
 #include "CollisionCtrl.h"
 //#include "CaribbeanIslandState.h"
 
-void Skeleton::updateAnim()
-{
-	if (currAnim_.frameRate_ <= SDL_GetTicks() - lasFrame_) {
-		lasFrame_ = SDL_GetTicks();
-		frame_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)currAnim_.widthFrame_,(int)currAnim_.heightFrame_ });
-	}
-}
-
 void Skeleton::initialStats() {
 	HEALTH = 100;
 	MANA = 100;
@@ -56,7 +48,7 @@ void Skeleton::lostAggro()
 
 bool Skeleton::update() {
 
-	
+	updateFrame();
 	//Si el esqueleto ha muerto
 	if (currState_ == STATE::DYING) {
 		// animación de muerte si la tiene
@@ -67,13 +59,18 @@ bool Skeleton::update() {
 	}
 	//Si el esqueleto no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
 	if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
-		currState_ = STATE::ATTACKING;
+		currState_ = STATE::SHOOTING;
+		if (firstAttack && onRange()) {
+			//sonido
+		}
+		firstAttack = false;
 	}
 	//Si el esqueleto tiene enemigo y puede atacar
-	if (currState_ == STATE::ATTACKING && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
+	if (currState_ == STATE::SHOOTING && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
 		//Si el esqueeto tiene un enemigo y lo tiene a rango
 		if (onRange()) {
 			//changeAnim(attackAnim_);//animacion de ataque del esqueleto
+			initShoot();
 			attack();
 		}
 		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
@@ -86,13 +83,13 @@ bool Skeleton::update() {
 		else
 		{
 			currState_ == STATE::IDLE;
-			//changeAnim(idleAnim_); animacion de idle del esqueleto
+			initIdle();
 			currEnemy_ = nullptr;
+			firstAttack = true;
 		}
 		lastHit = SDL_GetTicks();
 	}
-
-	updateAnim();
+	if (currEnemy_ != nullptr) initShoot();
 	return false;
 }
 
@@ -106,45 +103,46 @@ void Skeleton::initRewards()
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
 
-void Skeleton::updateDirVisEnemy() 
-{
-	if (currEnemy_ != nullptr) {
-		Vector2D center = getCenter();		//Punto de referencia
-		Vector2D enemyCenter = currEnemy_->getCenter();
-		Vector2D dir = enemyCenter - center;		//Vector direcci�n
-		dir.normalize();
-		double angle = atan2(dir.getY(), dir.getX()) * 180 / M_PI;
-		if (angle >= 0) {
-			if (angle <= 45.0) currDir_ = DIR::RIGHT;
-			else if (angle < 135.0) currDir_ = DIR::DOWN;
-			else currDir_ = DIR::LEFT;
-		}
-		else {
-			if (angle >= -45.0) currDir_ = DIR::RIGHT;
-			else if (angle >= -135.0) currDir_ = DIR::UP;
-			else currDir_ = DIR::LEFT;
-		}
-	}
-}
-
 void Skeleton::initAnims() 
 {
 	//Animaci�n de idle
-		//Arriba
-	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, IDLE_U_FRAME_RATE, true));
+	idleAnims_.push_back(Anim(IDLE_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, IDLE_FRAME_RATE, true));
+	//Arriba
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonIdleUpAnim));
-	//Derecha																						
-	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, IDLE_R_FRAME_RATE, true));
+	//Derecha
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonIdleRightAnim));
-	//Abajo																							
-	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, IDLE_D_FRAME_RATE, true));
+	//Abajo
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonIdleDownAnim));
-	//Izquierda																						
-	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, IDLE_L_FRAME_RATE, true));
+	//Izquierda
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonIdleLeftAnim));
 
+	//Animaciones movimiento
+	//Animacion movimiento arriba y abajo
+	moveAnims_.push_back(Anim(MOVE_UD_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, MOVE_UD_FRAME_RATE, true));
+	//Arriba
+	moveTx_.push_back(app_ ->getTextureManager()->getTexture(Resources::SkeletonMoveUpAnim));
+	//Abajo
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonMoveDownAnim));
+	//Animacion movimiento derecha e izquierda
+	moveAnims_.push_back(Anim(MOVE_RL_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, MOVE_RL_FRAMES_RATE, true));
+	//Derecha
+	moveTx_.push_back(app_ ->getTextureManager()->getTexture(Resources::SkeletonMoveRightAnim));
+	//Izquierda
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonMoveLeftAnim));
+
+	//Animacion de disparo
+	//Abajo
+	shootAnims_.push_back(Anim(SHOOT_D_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, SHOOT_D_FRAME_RATE, false)),
+	shootTx_.push_back(app_ ->getTextureManager()->getTexture(Resources::SkeletonAttackDownAnim));
+	//Arriba
+	shootAnims_.push_back(Anim(SHOOT_U_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, SHOOT_U_FRAME_RATE, false));
+	shootTx_.push_back(app_ ->getTextureManager()->getTexture(Resources::SkeletonAttackUpAnim));
+	//Animacion derecha e izquierda
+	shootAnims_.push_back(Anim(SHOOT_RL_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, SHOOT_RL_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonAttackRightAnim));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonAttackLeftAnim));
 	//Inicializamos con la animación del idle
-	currDir_ = DIR::DOWN;
+	currDir_ = DIR::UP;
 	initIdle();
 }
 

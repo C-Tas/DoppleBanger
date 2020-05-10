@@ -104,7 +104,8 @@ void MonkeyCoco::initObject() {
 	initRewards();
 }
 
-void MonkeyCoco::initialStats() {
+void MonkeyCoco::initialStats() 
+{
 	rangeVision_ = 300;
 	HEALTH = 100;
 	MANA = 100;
