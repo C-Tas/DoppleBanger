@@ -373,6 +373,7 @@ void Inventory::draw()const {
 	}
 	//stats del player
 	printInformation();
+	printCompareObject();
 }
 
 void Inventory::printInformation() const
@@ -411,6 +412,132 @@ void Inventory::printInformation() const
 	moneyText.render(posx, posy);
 	
 
+}
+
+void Inventory::printCompareObject() const
+{
+	double posx1,posx2, posy;
+	posx1 = /*(double)(app_->getWindowWidth() / 1.777);*/950;
+	posx2 = 1160;
+	posy = /*(double)(app_->getWindowHeight() / 1.343);*/760;
+	int aux1, aux2;
+	
+	if (select_ != nullptr && select_->getObject()->getObjectType() == ObjectType::Equipment ) {
+		//posicion del texto( siempre la misma)
+		
+		Equipment* auxEquip = static_cast<Equipment*>(select_->getObject());
+		equipType auxType = auxEquip->getEquipType();
+		SDL_Color  auxcolor1, auxcolor2; auxcolor1= auxcolor2 = SDL_Color ({ 0,0,0,1 });
+		string auxTex1, auxTex2;
+		if (auxType == equipType::ArmorI || auxType == equipType::ArmorII) {
+			if (select_->isEquipped()) {
+				auxTex1 = "Vida: " + to_string((int)static_cast<Equipment*>(equipment_.armor_->getObject())->getHealth());
+				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.armor_->getObject())->getArmor());
+			}
+			else {
+				aux1 = static_cast<Equipment*>(select_->getObject())->getHealth() + static_cast<Equipment*>(equipment_.armor_->getObject())->getHealth();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() + static_cast<Equipment*>(equipment_.armor_->getObject())->getArmor();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 0,255,0,0 });//verde
+				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 0,255,0,0 });//verde
+				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
+				auxTex1 = "Vida: " + to_string(aux1);
+				auxTex2 = "Defensa: " + to_string(aux2);
+			}
+		
+			
+		}
+		else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
+			if (select_->isEquipped()) {
+				auxTex1 = "Critico: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getCrit());
+				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getArmor());
+			}
+			else {
+				aux1 = static_cast<Equipment*>(select_->getObject())->getCrit() + static_cast<Equipment*>(equipment_.gloves_->getObject())->getCrit();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() + static_cast<Equipment*>(equipment_.gloves_->getObject())->getArmor();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 0,255,0,0 });//verde
+				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 0,255,0,0 });//verde
+				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
+				auxTex1 = "Critico: " + to_string(aux1);
+				auxTex2 = "Defensa: " + to_string(aux2);
+			}
+		
+
+		}
+		else if (auxType == equipType::BootsI || auxType == equipType::BootsII) {
+			if (select_->isEquipped()) {
+				auxTex1 = "Velocidad: " + to_string((int)static_cast<Equipment*>(equipment_.boots_->getObject())->getSpeed());
+				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.boots_->getObject())->getArmor());
+			}
+			else {
+				aux1 = static_cast<Equipment*>(select_->getObject())->getSpeed() + static_cast<Equipment*>(equipment_.boots_->getObject())->getSpeed();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() + static_cast<Equipment*>(equipment_.boots_->getObject())->getArmor();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 0,255,0,0 });//verde
+				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 0,255,0,0 });//verde
+				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
+				auxTex1 = "Velocidad: " + to_string(aux1);
+				auxTex2 = "Defensa: " + to_string(aux2);
+			}
+			
+		
+		}
+		else if (auxType == equipType::SwordI || auxType == equipType::SwordII
+			|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
+
+			if (select_->isEquipped()) {
+				auxTex1 = "daño: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg());
+				auxTex2 = "AtaqueVel.: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeRate());
+			}
+			else {
+				aux1 = static_cast<Equipment*>(select_->getObject())->getMeleeDmg() + static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getMeleeRate() + static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeRate();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 0,255,0,0 });//verde
+				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 0,255,0,0 });//verde
+				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
+				auxTex1 = "daño: " + to_string(aux1);
+				auxTex2 = "AtaqueVel.: " + to_string(aux2);
+			}
+
+			
+		}
+
+		else if (auxType == equipType::PistolI || auxType == equipType::PistolII
+			|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
+
+			if (select_->isEquipped()) {
+				auxTex1 = "daño: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getDistDmg());
+				auxTex2 = "DisparoVel.: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getDistRate());
+			}
+			else {
+				aux1 = static_cast<Equipment*>(select_->getObject())->getDistDmg() + static_cast<Equipment*>(equipment_.sword_->getObject())->getDistDmg();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getDistRate() + static_cast<Equipment*>(equipment_.sword_->getObject())->getDistRate();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 0,255,0,0 });//verde
+				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 0,255,0,0 });//verde
+				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
+				auxTex1 = "daño: " + to_string(aux1);
+				auxTex2 = "DisparoVel.: " + to_string(aux2);
+			}
+		
+
+	
+		}
+		Texture compareText1(app_->getRenderer(),auxTex1, app_->getFontManager()->getFont(Resources::FontId::RETRO), auxcolor1);
+		Texture compareText2(app_->getRenderer(), auxTex2, app_->getFontManager()->getFont(Resources::FontId::RETRO), auxcolor2);
+		compareText1.render(posx1, posy);
+		compareText2.render(posx2, posy);
+	}
+	else if (select_ != nullptr) {
+	Texture potionText(app_->getRenderer(), "valor: " + to_string((int)static_cast<usable*>(select_->getObject())->getValue()), app_->getFontManager()->getFont(Resources::FontId::RETRO), SDL_Color({ 0,0,0,1 }));
+	potionText.render(posx1, posy);
+
+}
+	
+	
+	
 }
 
 void Inventory::update() {

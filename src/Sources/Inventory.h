@@ -39,6 +39,7 @@ private:
 
 	//metodos privados
 	void printInformation() const;
+	void printCompareObject() const;
 	
 	//Selecciona el tipo de Equipamiento qu� es
 	void selectEquipment();
