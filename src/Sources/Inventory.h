@@ -48,7 +48,7 @@ private:
 	int slotPotion = 0;	//Para saber en que posicion colocar la nueva pocion
 	void equipPotion();
 	//donde se van a poner las descripciones
-	Point2D descriptionPoint{ 0,0 };//{ 890,350,450,40 };
+	Point2D descriptionPoint{ 0,0 };
 	TextBox* descriptionBox;
 public:
 	Inventory(Application* app) :GameState(app) { initState(); };
