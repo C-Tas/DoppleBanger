@@ -278,7 +278,7 @@ private:
 	const double MELEE_RANGE = 20;		//Rango del ataque a melee
 	const double DIST_RANGE = 2;		//Rango del ataque a distancia
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
-	const double MELEE_RATE = 1;		//Velocidad del ataque a melee en segundos
+	const double MELEE_RATE = 0.5;		//Velocidad del ataque a melee en segundos
 	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion

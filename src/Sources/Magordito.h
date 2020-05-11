@@ -27,7 +27,7 @@ private:
 	double lastKirin_ = 0;
 	const double AREA_DMG_W = 100;
 	const double AREA_DMG_H = 100;
-	const double KIRIN_CD = 5;
+	const double KIRIN_CD = 2;
 	const double KIRIN_RANGE_ATTACK = 500;
 #pragma endregion
 
@@ -90,7 +90,7 @@ private:
 	//Devuelve true si el player est� dentro del rango que se considera cerca del magordito
 	inline bool enemyIsTooClose();
 	//CD para realizar el teleport en ms
-	const double TP_CD = 2000; 
+	const double TP_CD = 2; 
 	//�ltimo TP hecho
 	double lastTeleport_ = 0;
 	//Vector con las posiciones a las que se puede teleportar

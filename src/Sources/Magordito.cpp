@@ -229,10 +229,10 @@ void Magordito::kirinAnim()
 	if (!kirined_ && currAnim_.currFrame_ == KIRIN_ACTION) {
 		kirined_ = true;
 		kirin();
+		lastKirin_ = SDL_GetTicks();
 	}
 	else if (currAnim_.currFrame_ >= KIRIN_FRAMES) {
 		initIdle();
-		lastKirin_ = SDL_GetTicks();
 	}
 }
 

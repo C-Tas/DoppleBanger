@@ -16,10 +16,11 @@ bool Kirin::update()
 		Player* player = GameManager::instance()->getPlayer();
 		Vector2D playerCenter = player->getCenter();
 		Vector2D playerCollider = player->getColliderScale();
-		Vector2D center = getCenter();
+		Vector2D centerCollision = Vector2D(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() * 7 / 8);
+
 		//Si el rayo impacta hace daño al player
-		if (RectBall(playerCenter.getX(), playerCenter.getY(), playerCollider.getX(), playerCollider.getY(),
-			center.getX(), center.getY(), scale_.getX() / 2)) {
+		if (RectRect(playerCenter.getX(), playerCenter.getY(), playerCollider.getX(), playerCollider.getY(),
+			centerCollision.getX(), centerCollision.getY(), scale_.getX() / 2, scale_.getY() / 4)) {
 			player->receiveDamage(KIRIN_DMG);
 
 			return true;

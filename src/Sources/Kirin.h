@@ -13,7 +13,7 @@ private:
 	const int W_H_FRAME = 100;		//Tamaño del frame en el spriteheet
 	const int FRAME_RATE = 100;		//Velocidad
 	const int FRAME_ACTION = 7;		//Frame en el que hara daño
-	const double KIRIN_DMG = 0;	//Daño que se va a infligir
+	const double KIRIN_DMG = 5;		//Daño que se va a infligir
 	bool attacked_ = false;			//Para infligir daño una sola vez
 	virtual void initObject();
 };
