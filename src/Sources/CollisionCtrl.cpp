@@ -102,7 +102,7 @@ void CollisionCtrl::islandCollisions() {
 				bullet->setDoDamage(false);// ya no puede atacar al player hasta el siguiente golpe
 			}
 			//si ya no le quedan colisiones a la bala la borramos
-			if (bullet->numCollisions() == 0 ){
+			if (bullet->numCollisions() == 0){
 				removeEnemyBullet(bullet);
 				bullet->onCollider();
 			}
@@ -288,6 +288,7 @@ void CollisionCtrl::tutorialCollision()
 				bottle_->onCollider();
 				bullet->onCollider();
 				bottle_ = nullptr;
+				
 			}
 		}
 	}

@@ -114,12 +114,12 @@ void MonkeyCoco::initObject() {
 
 void MonkeyCoco::initialStats() {
 	rangeVision_ = 300;
-	HEALTH = 100;
+	HEALTH = 1000;
 	MANA = 100;
 	MANA_REG = 1;
 	ARMOR = 10;
 	MELEE_DMG = 0;
-	DIST_DMG = 200;
+	DIST_DMG = 0;
 	CRIT = 0;
 	MELEE_RANGE = 0;
 	DIST_RANGE = 300;

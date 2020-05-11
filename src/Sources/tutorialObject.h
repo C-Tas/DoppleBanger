@@ -14,7 +14,7 @@ public:
 	};
 	~tutorialObject() {};
 	virtual bool update();
-	virtual void initialStats() {};
+	virtual void initialStats();
 	//inicializa los puntos de hazaña y el oro que da esta entidad
 	virtual void initRewards(){};
 	virtual void onCollider() {

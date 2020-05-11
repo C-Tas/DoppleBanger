@@ -221,7 +221,7 @@ private:
 
 	//Fases de los NPCS
 		bool tutorial = false;
-		int venancioFase = 0;
+		int venancioPhase = 2;
 
 public:
 	//Constructor vacio
@@ -434,7 +434,7 @@ public:
 	bool onTutorial() { return tutorial; }
 
 	//SettesNPC
-	void nextPhaseVenancio() { venancioFase++; }
+	void nextPhaseVenancio() { venancioPhase++; }
 	//GettersNPC
-	int getVenancioPhase() { return venancioFase; }
+	int getVenancioPhase() { return venancioPhase; }
 };
