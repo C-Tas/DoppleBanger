@@ -21,9 +21,6 @@ void MainMenuState::initState()
 	bg_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground));
 	addRenderUpdateLists(bg_);
 
-	//Cargamos música de fondo
-	app_->getAudioManager()->playMusic(Resources::MainTheme, -1);
-
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
 }
@@ -48,32 +45,30 @@ void MainMenuState::createButtons() {
 	double winWidth = app_->getWindowWidth();
 	double winHeight = app_->getWindowHeight();
 
-	//creamos el boton para ir a los controles
-	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ControlsButton),
+	//creamos el boton para jugar sin cargar el juego del archivo de guardado
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::PlayButton),
 		{ (winWidth / 2) - button_w * 1.5  , (winHeight / 2) },
-		{ button_w  ,button_h }, goControlState, this);
-	//creamos el boton para ir a los creditos
-	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CreditsButton),
-		{ (winWidth / 2) + button_w / 2   , (winHeight / 2) },
-		{ button_w  ,button_h }, goCreditsState, this);
+		{ button_w,button_h }, goStoryState, this);
 	//creamos el boton para jugar cargando el juego del archivo de guardado
 	Button* loadButton = nullptr;
 	if (!isExistingDataGame()) {
 		createButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButtonNull),
-			{ double(app_->getWindowWidth() / 2) - button_w * 1.5 ,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
+			{ (winWidth / 2) + button_w / 2, (winHeight / 2) },
 			{ button_w,button_h }, nullptr);
 	}
 	else {
 		createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButton),
-			{ double(app_->getWindowWidth() / 2) - button_w * 1.5 ,double(app_->getWindowHeight() / 2) + button_h * 1.2 },
+			{ (winWidth / 2) + button_w / 2, (winHeight / 2) },
 			{ button_w,button_h }, goLoadState, this);
 	}
-
-	//creamos el boton para jugar sin cargar el juego del archivo de guardado
-	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::PlayButton),
-		{ (winWidth / 2) + button_w / 2, (winHeight / 2) + button_h * 1.2 },
-		{ button_w,button_h }, goStoryState, this);
-
+	//creamos el boton para ir a los controles
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ControlsButton),
+		{ double(app_->getWindowWidth() / 2) - button_w * 1.5, double(app_->getWindowHeight() / 2) + button_h * 1.2 },
+		{ button_w  ,button_h }, goControlState, this);
+	//creamos el boton para ir a los creditos
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CreditsButton),
+		{ (winWidth / 2) + button_w / 2, double(app_->getWindowHeight() / 2) + button_h * 1.2 },
+		{ button_w  ,button_h }, goCreditsState, this);
 	//Boton para salir del juego
 	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ExitButton),
 		{ (winWidth / 2) - button_w / 2, (winHeight / 2) + button_h * 2.4 },
@@ -92,6 +87,7 @@ void MainMenuState::goLoadState(Application* app) {
 };
 void MainMenuState::goStoryState(Application* app) {
 	app->getAudioManager()->playChannel(Resources::Shout, 0, 1);
+	app->getAudioManager()->playMusic(Resources::Storyboard, -1);
 	app->getGameManager()->setCompleteMission(missions::gallegaEnProblemas, false);
 	app->getGameManager()->setStartedMission(missions::gallegaEnProblemas, false);
 	app->getGameStateMachine()->pushState(new StoryState(app));

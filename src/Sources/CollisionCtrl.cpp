@@ -18,7 +18,7 @@ void CollisionCtrl::islandCollisions() {
 	chestsToErase_.clear();
 	//Quitamos a las balas de las listas
 	for (auto it = playerBulletsToErase_.begin(); it != playerBulletsToErase_.end(); ++it) {
-		playerBullets_.remove(*it);
+ 		playerBullets_.remove(*it);
 	}
 	playerBulletsToErase_.clear();
 	for (auto it = enemyBulletsToErase_.begin(); it != enemyBulletsToErase_.end(); ++it) {
@@ -76,13 +76,15 @@ void CollisionCtrl::islandCollisions() {
 			for (auto bullet : playerBullets_) {
 				if (Collisions::collidesWithRotation(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(), bullet->getCollisionRot(),
 					enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot())) {
-					enem->receiveDamage(bullet->getDamage());
-					if (bullet->getRicochet()) {	//Cuando esté rebotando
-						bullet->searchEnemy(enemies_, enem);
-					}
-					else if (!bullet->getPerforate()) {	//Cuando no esté perforando
-						removePlayerBullet(bullet);
-						bullet->onCollider();
+					if (bullet != nullptr) {
+						enem->receiveDamage(bullet->getDamage());
+						if (bullet->getRicochet()) {	//Cuando esté rebotando
+							bullet->searchEnemy(enemies_, enem);
+						}
+						else if (!bullet->getPerforate()) {	//Cuando no esté perforando
+							removePlayerBullet(bullet);
+							bullet->onCollider();
+						}
 					}
 				}
 			}
@@ -111,8 +113,8 @@ void CollisionCtrl::islandCollisions() {
 	if (npcs_.size() > 0) {
 		if (Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX() * 1.1, npcs_[0].object->getScaleY() * 1.1,
 			player_->getPos(), player_->getScaleX() * 1.1, player_->getScaleY() * 1.1)) {
-			if (Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX(), npcs_[0].object->getScaleY(),
-				player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+			if (Collisions::collides(npcs_[0].object->getColliderPos(), npcs_[0].object->getColliderScale().getX(), npcs_[0].object->getColliderScale().getY(),
+				player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
 				player_->stop();
 				player_->setPos(player_->getPreviousPos());
 			}
@@ -120,20 +122,20 @@ void CollisionCtrl::islandCollisions() {
 			onShip = false;
 			npcCollision.object = npcs_[0].object;
 			switch (npcs_[0].id) {
-			case Chef:
-				npcCollision.id = Chef;
+			case NPCsNames::Chef:
+				npcCollision.id = NPCsNames::Chef;
 				break;
-			case Morty:
-				npcCollision.id = Morty;
+			case NPCsNames::Morty:
+				npcCollision.id = NPCsNames::Morty;
 				break;
-			case Parrot:
-				npcCollision.id = Parrot;
+			case NPCsNames::Parrot:
+				npcCollision.id = NPCsNames::Parrot;
 				break;
-			case Skeleton:
-				npcCollision.id = Skeleton;
+			case NPCsNames::Skeleton:
+				npcCollision.id = NPCsNames::Skeleton;
 				break;
-			case Cartographer:
-				npcCollision.id = Cartographer;
+			case NPCsNames::Cartographer:
+				npcCollision.id = NPCsNames::Cartographer;
 				break;
 			}
 		}
@@ -182,10 +184,10 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 		}
 
 		//Si se ha clickado alguna, se pone en true
-		if (SDL_PointInRect(&mouse, &shipObjects_[Stash].object->getDestiny())) shipObjects_[Stash].click = true;
-		else if (SDL_PointInRect(&mouse, &shipObjects_[Door].object->getDestiny())) shipObjects_[Door].click = true;
-		else if (SDL_PointInRect(&mouse, &shipObjects_[Wheel].object->getDestiny())) shipObjects_[Wheel].click = true;
-		else if (SDL_PointInRect(&mouse, &shipObjects_[Exit].object->getDestiny())) shipObjects_[Exit].click = true;
+		if (SDL_PointInRect(&mouse, &shipObjects_[(int)ShipObjectsNames::Stash].object->getDestiny())) shipObjects_[(int)ShipObjectsNames::Stash].click = true;
+		else if (SDL_PointInRect(&mouse, &shipObjects_[(int)ShipObjectsNames::Door].object->getDestiny())) shipObjects_[(int)ShipObjectsNames::Door].click = true;
+		else if (SDL_PointInRect(&mouse, &shipObjects_[(int)ShipObjectsNames::Wheel].object->getDestiny())) shipObjects_[(int)ShipObjectsNames::Wheel].click = true;
+		else if (SDL_PointInRect(&mouse, &shipObjects_[(int)ShipObjectsNames::Exit].object->getDestiny())) shipObjects_[(int)ShipObjectsNames::Exit].click = true;
 		else
 		{
 			for (int i = 0; i < shipObjects_.size(); i++) {
@@ -230,26 +232,26 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			npcCollision.object = npc.object;
 
 	        switch (npc.id) {
-			case ElderMan:
-				npcCollision.id = ElderMan;
+			case NPCsNames::ElderMan:
+				npcCollision.id = NPCsNames::ElderMan;
 				break;
-			case Merchant:
-				npcCollision.id = Merchant;
+			case NPCsNames::Merchant:
+				npcCollision.id = NPCsNames::Merchant;
 				break;
-	        case Chef:
-				npcCollision.id = Chef;
+	        case NPCsNames::Chef:
+				npcCollision.id = NPCsNames::Chef;
 	            break;
-	        case Morty:
-				npcCollision.id = Morty;
+	        case NPCsNames::Morty:
+				npcCollision.id = NPCsNames::Morty;
 	            break;
-			case Parrot:
-				npcCollision.id = Parrot;
+			case NPCsNames::Parrot:
+				npcCollision.id = NPCsNames::Parrot;
 				break;
-			case Skeleton:
-				npcCollision.id = Skeleton;
+			case NPCsNames::Skeleton:
+				npcCollision.id = NPCsNames::Skeleton;
 				break;
-			case Cartographer:
-				npcCollision.id = Cartographer;
+			case NPCsNames::Cartographer:
+				npcCollision.id = NPCsNames::Cartographer;
 				break;
 			}
 		}
@@ -322,28 +324,31 @@ list<Enemy*> CollisionCtrl::getEnemiesInArea(Point2D center, int radius)
 void CollisionCtrl::drawTextBox() {
 	//Generamos un textbox si se ha dado alguna colisión con un NPC
 	switch (npcCollision.id) {
-	case ElderMan:
+	case NPCsNames::ElderMan:
 		npcCollision.object->getTextBox()->dialogElderMan();
 		break;
-	case Merchant:
+	case NPCsNames::Merchant:
 		npcCollision.object->getTextBox()->dialogMerchant();
 		break;
-	case Chef:
+	case NPCsNames::Chef:
 		npcCollision.object->getTextBox()->dialogChef(onShip, numConversation_);
 		break;
-	case Morty:
-		npcCollision.object->getTextBox()->dialogMorty(onShip);
+	case NPCsNames::Morty:
+		npcCollision.object->getTextBox()->dialogMorty(onShip, numConversation_);
 		break;
-	case Parrot:
+	case NPCsNames::Parrot:
 		npcCollision.object->getTextBox()->dialogParrot();
 		break;
-	case Skeleton:
+	case NPCsNames::Skeleton:
 		npcCollision.object->getTextBox()->dialogSkeleton(onShip);
-	case Cartographer:
-		npcCollision.object->getTextBox()->dialogCartographer(onShip);
+		break;
+	case NPCsNames::Cartographer:
+		npcCollision.object->getTextBox()->dialogCartographer(onShip, numConversation_);
+		break;
 	default:
 		numConversation_ = 0;
+		break;
 	}
-	npcCollision.id = Nobody;
+	npcCollision.id = NPCsNames::Nobody;
 	npcCollision.object = nullptr;
 }

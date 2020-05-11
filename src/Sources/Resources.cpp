@@ -93,6 +93,12 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
 	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
 	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
+	{ Scene4, "../Sources/assets/interfaces/Scene4.png"},
+	{ Scene5, "../Sources/assets/interfaces/Scene5.png"},
+	{ Scene6, "../Sources/assets/interfaces/Scene6.png"},
+	{ Scene7, "../Sources/assets/interfaces/Scene7.png"},
+	{ Scene8, "../Sources/assets/interfaces/Scene8.png"},
+	{ Scene9, "../Sources/assets/interfaces/Scene9.png"},
 	{ TextBox, "../Sources/assets/interfaces/textBoxBg.png" },
 	{ Ship, "../Sources/assets/interfaces/barco.png" },
 	{ Table, "../Sources/assets/interfaces/mesa.png" },
@@ -143,9 +149,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
 	{ Merchant, "../Sources/assets/npc/mercaderIdle.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
-	{ Cartographer, "../Sources/assets/npc/Navigator.png" },
-	{Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png"},
-
+	{ Cartographer, "../Sources/assets/npc/idleCartografa.png" },
+	{ Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png" },
+	{ Morty, "../Sources/assets/npc/idleMorty.png" },
 	
 	//Animaciones
 	//Player
@@ -165,6 +171,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PlayerMeleeLeftAnim, "../Sources/assets/player/animaciones/melee/meleeIz.png" },
 	{ PlayerMeleeUpAnim, "../Sources/assets/player/animaciones/melee/meleeTop.png" },
 	{ PlayerMeleeDownAnim, "../Sources/assets/player/animaciones/melee/meleeDown.png" },
+	//clon
 	{ ClonSelfDestructionRightAnim, "../Sources/assets/clon/autodestruccion/ClonRightExplosion.png" },
 	{ ClonSelfDestructionLeftAnim, "../Sources/assets/clon/autodestruccion/ClonLeftExplosion.png" },
 	{ ClonSelfDestructionUpAnim, "../Sources/assets/clon/autodestruccion/ClonBackExplosion.png" },
@@ -181,6 +188,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ClonMeleeLeftAnim, "../Sources/assets/clon/melee/ClonLeftMelee.png" },
 	{ ClonMeleeUpAnim, "../Sources/assets/clon/melee/ClonBackMelee.png" },
 	{ ClonMeleeDownAnim, "../Sources/assets/clon/melee/ClonFrontMelee.png" },
+	{ ClonVanishRightAnim ,"../Sources/assets/clon/desaparecer/vanishDer.png"},
+	{ ClonVanishLeftAnim, "../Sources/assets/clon/desaparecer/vanishLeft.png"},
+	{ ClonVanishDownAnim, "../Sources/assets/clon/desaparecer/vanishDown.png" },
+	{ ClonVanishUpAnim, "../Sources/assets/clon/desaparecer/vanishTop.png" },
 	//Pumpkin
 		//Idle
 	{ PumpkinIdleRightAnim, "../Sources/assets/enemigos/pumpkin/Idle/calabazaIdleDer.png" },
@@ -296,9 +307,6 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 
 	//Clon
 	//{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
-
-	//Ship
-	{ Waves ,"../Sources/assets/efectos_sonido/ship/waves.wav" },
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 
 	//Calabaza
@@ -316,9 +324,12 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 };
 
 vector <Resources::MusicInfo> Resources::musicRoutes{
-	{ MainTheme ,"../Sources/assets/music/mainTheme.mp3" },
+	{ MainTheme ,"../Sources/assets/music/background/menuMusic.mp3" },
 	{ ShipSingers ,"../Sources/assets/music/ShipSingers.mp3" },
-	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" }
+	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" },
+	{ Waves ,"../Sources/assets/music/background/shipMusic.wav" },
+	{ Shop ,"../Sources/assets/music/background/shopMusic.mp3" },
+	{ Storyboard ,"../Sources/assets/music/background/storyboardMusic.mp3" }
 	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 };
 

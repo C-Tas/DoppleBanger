@@ -1,6 +1,6 @@
 #include "Bullet.h"
 #include "Enemy.h"
-//#include "PlayState.h"
+#include "CollisionCtrl.h"
 
 void Bullet::initObject(Vector2D pos, Vector2D dir)
 {
@@ -20,6 +20,7 @@ bool Bullet::update()
 
 	//Si se le ha acabado el tiempo de vida
 	if ((currTime_ - initTime_) / 1000 > lifeSpan_) { 
+		CollisionCtrl::instance()->removeEnemyBullet(this);
 		onCollider();
 	}
 	else {

@@ -174,9 +174,10 @@ bool Player::update()
 			empoweredAnim_ = true;
 			initMelee();
 		}
-		else if (found && ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_)
+		else if (found && (firstAttack_ || ((SDL_GetTicks() - meleeTime_) / 1000) > currStats_.meleeRate_))
 		{
 			cout << "\nAtaque a melee\n" << endl;
+			firstAttack_ = false;
 			initMelee();
 		}
 	}
@@ -200,7 +201,6 @@ bool Player::update()
 		dead_ = true;
 		return true;
 	}
-
 	return false;
 }
 
@@ -327,6 +327,11 @@ void Player::meleeAnim()
 		}
 
 		static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
+		if (currEnemy_ == nullptr) {
+			attacking_ = false;
+			firstAttack_ = true;
+			dir_ = Vector2D(0, 0);
+		}
 		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
 		attacked_ = true;
 	}

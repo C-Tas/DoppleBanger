@@ -4,6 +4,7 @@
 void SaveState::backToPreviousState(Application* app) {
 	app->getGameStateMachine()->popState();
 	SDL_ShowCursor(SDL_DISABLE);
+	app->getAudioManager()->playMusic(Resources::Waves, -1);
 }
 void SaveState::saveSlot1() {
 	GameManager::instance()->saveSlot1();
@@ -25,9 +26,9 @@ void SaveState::initState()
 	double winWidth = app_->getWindowWidth();
 	double winHeight = app_->getWindowHeight();
 
-	Vector2D scaleButton(winWidth / 20, winHeight/ 20);
-	Vector2D posButton(scaleButton.getX(), scaleButton.getY());
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), posButton, scaleButton, backToPreviousState); //Boton "Volver"
+	Vector2D scaleButton(winWidth / 6, winHeight/ 15);
+	Vector2D posButton(scaleButton.getX() / 2, scaleButton.getY() / 4);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::BackButton), posButton, scaleButton, backToPreviousState, this); //Boton "Volver"
 
 	//Botón partida 1
 	scaleButton = Vector2D(winWidth / 3, winHeight / 7.5);

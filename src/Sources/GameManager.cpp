@@ -114,8 +114,10 @@ void GameManager::saveMissions(jute::jValue& mainJson)
 		{
 		case true:
 			aux.set_string("true");
+			break;
 		case false:
 			aux.set_string("false");
+			break;
 		}
 		questStarted.add_element(aux);
 	}
@@ -127,8 +129,10 @@ void GameManager::saveMissions(jute::jValue& mainJson)
 		{
 		case true:
 			aux.set_string("true");
+			break;
 		case false:
 			aux.set_string("false");
+			break;
 		}
 		questFinished.add_element(aux);
 	}
@@ -326,6 +330,8 @@ void GameManager::load(string jsonName)
 	loadHUD(mainJson);
 	//Inventario
 	loadInventory_Stash(mainJson);
+	//Carga el estado del barco (NPCs)
+	app_->getCurrState()->loadState();
 }
 
 void GameManager::loadJNUMBER(jute::jValue& mainJson){
@@ -604,6 +610,7 @@ void GameManager::resetGameManager()
 	for (int i = 0; i < missionsStarted_.size(); i++) {
 		missionsStarted_[i] = false;
 		missionsComplete_[i] = false;
+		resetMissionCounter((missions)i);
 	}
 	//Reset habildades
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {

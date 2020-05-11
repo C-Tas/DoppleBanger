@@ -38,6 +38,10 @@ bool AudioManager::initObject() {
 	// set number of channels
 	channels_ = Mix_AllocateChannels(channels_);
 
+	//Inicializa el volumen de todos los canales y la música a 6
+	for (int i = 0; i < channels_; i++) setChannelVolume(7, i);
+	setMusicVolume(6);
+
 	initialized_ = true;
 
 	return true;

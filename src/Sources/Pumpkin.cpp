@@ -6,7 +6,6 @@
 #include "PlayState.h"
 
 bool Pumpkin::onDistRange() {
-
 	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = getCenter();
@@ -58,7 +57,6 @@ bool Pumpkin::update() {
 			if (posi >= 17) {
 				auto laughChoice = app_->getRandom()->nextInt(Resources::LaughPumpkin1, Resources::LaughPumpkin3 + 1);
 				app_->getAudioManager()->playChannel(laughChoice, 0, 6);
-				app_->getAudioManager()->setChannelVolume(5, 6);
 			}
 		}
 		else if (currAnim_.currFrame_ == IDLE_FRAME) {
@@ -266,7 +264,7 @@ void Pumpkin::initExplosion()
 bool Pumpkin::explosionAnim()
 {
 	if (currEnemy_ == nullptr) {
-				static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
+		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
@@ -274,10 +272,9 @@ bool Pumpkin::explosionAnim()
 		explosion_ = true;
 		app_->getAudioManager()->haltChannel(6);
 		app_->getAudioManager()->haltChannel(5);
-		app_->getAudioManager()->playChannel(Resources::ExplosionPumpkin , 0, 5);
+		app_->getAudioManager()->playChannel(Resources::ExplosionPumpkin, 0, 5);
 		auto s = app_->getRandom()->nextInt(0,101);
 		if (s >= 75) {
-		app_->getAudioManager()->setChannelVolume(10, 6);
 		app_->getAudioManager()->playChannel(Resources::TauntPumpkin1, 0, 6);
 		}
 		auto dmg = dynamic_cast<Player*>(currEnemy_);

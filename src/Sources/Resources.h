@@ -99,6 +99,12 @@ public:
 		Scene1,
 		Scene2,
 		Scene3,
+		Scene4,
+		Scene5,
+		Scene6,
+		Scene7,
+		Scene8,
+		Scene9,
 		TextBox,
 		Ship,
 		Table,
@@ -145,6 +151,7 @@ public:
 		Merchant,
 		SkeletonMusician,
 		Cartographer,
+		Morty,
 
 		//Bosses
 		Magordito,
@@ -174,10 +181,17 @@ public:
 		PlayerMeleeLeftAnim,
 		PlayerMeleeUpAnim,
 		PlayerMeleeDownAnim,
+		//clon
+			
 		ClonSelfDestructionRightAnim,
 		ClonSelfDestructionLeftAnim,
 		ClonSelfDestructionUpAnim,
 		ClonSelfDestructionDownAnim,
+			//desaparecer
+		ClonVanishRightAnim,
+		ClonVanishLeftAnim,
+		ClonVanishDownAnim,
+		ClonVanishUpAnim,
 		//Calabaza
 			//Idle
 		PumpkinIdleRightAnim,
@@ -279,6 +293,9 @@ public:
 		MainTheme,
 		ShipSingers,
 		Caribbean,
+		Waves,
+		Shop,
+		Storyboard,
 
 		//Efectos de sonido
 		Agro,
@@ -329,9 +346,6 @@ public:
 
 		//CLon
 		Explosion,
-
-		//Ship
-		Waves,
 
 		//Calabaza
 		AgroPumpkin,

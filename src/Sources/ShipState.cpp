@@ -37,6 +37,7 @@ void ShipState::goMap(Application* app)
 void ShipState::goSaveState(Application* app)
 {
 	app->getGameStateMachine()->pushState(new SaveState(app));
+	app->getAudioManager()->playMusic(Resources::MainTheme, -1);
 }
 #pragma endregion
 
@@ -110,13 +111,48 @@ void ShipState::update()
 {
 	PlayState::update();
 
-	if (!songActive && pirateSingers_ <= SDL_GetTicks() - startInstance_) {
-		app_->getAudioManager()->playChannel(Resources::Waves, -1, 5);
-		app_->getAudioManager()->setChannelVolume(5, 5);
+	if (!songActive) {
+		cout << "Waves" << endl;
+		app_->getAudioManager()->playMusic(Resources::Waves, -1);
+		//app_->getAudioManager()->setMusicVolume(5);
 
 		songActive = true;
 	}
 	collisionCtrl_->shipCollisions();
+}
+
+void ShipState::loadState(){
+	//Para cargar los npc
+	if (gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
+		NPC* chef;
+		chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), Vector2D(W_WIN / 10, H_WIN / 35), Vector2D(W_CHEF, H_CHEF), 2);
+		addRenderUpdateLists(chef);
+	}
+
+	if (gm_->isThatMissionPass(missions::papelesSiniestros)) {
+		NPC* morty;
+		morty = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Morty), Vector2D(W_WIN * 8 / 9, H_WIN / 2), Vector2D(W_MORTY, H_MORTY), 3);
+		addRenderUpdateLists(morty);
+	}
+
+	//Por si se añaden estos NPCs
+	//if (gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
+	//	NPC* parrot;
+	//	parrot = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Parrot), Vector2D(W_WIN / 2, (double)H_WIN * 3 / 4), Vector2D(W_PARROT, H_PARROT), 4);
+	//	addRenderUpdateLists(parrot);
+	//}
+
+	//if (gm_->isThatMissionPass(missions::misionDelEsqueleto)) {
+	//	NPC* skeleton;
+	//	skeleton = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), Vector2D(W_WIN / 2, H_WIN * 3 / 4), Vector2D(W_SKELETON, H_SKELETON), 5);
+	//	addRenderUpdateLists(skeleton);
+	//}
+
+	if (gm_->isThatMissionPass(missions::arlongPark)) {
+		NPC* cartographer;
+		cartographer = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cartographer), Vector2D((double)W_WIN * 11 / 14, H_WIN / 30), Vector2D(W_CARTOGRAPHER, H_CARTOGRAPHER), 6);
+		addRenderUpdateLists(cartographer);
+	}
 }
 
 void ShipState::createNPCs() {
@@ -125,20 +161,20 @@ void ShipState::createNPCs() {
 	addRenderUpdateLists(venancio_);
 
 	NPC* merchant;
-	merchant = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Merchant), Vector2D((double)W_WIN / 30, (double)H_WIN * 3 / 5), Vector2D(W_MERCHANT, H_MERCHANT), 1);
+	merchant = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Merchant), Vector2D(W_WIN / 30, H_WIN * 3 / 5), Vector2D(W_MERCHANT, H_MERCHANT), 1);
 	addRenderUpdateLists(merchant);
 
 	//Comprobamos si los NPCs restantes están desbloqueados
 	if (gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
 		NPC* chef;
-		chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), Vector2D((double)W_WIN * 3 / 14, H_WIN / 35), Vector2D(W_CHEF, H_CHEF), 2);
+		chef = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Cooker), Vector2D(W_WIN / 10, H_WIN / 35), Vector2D(W_CHEF, H_CHEF), 2);
 		addRenderUpdateLists(chef);
 	}
 
 	if (gm_->isThatMissionPass(missions::papelesSiniestros)) {
-		//NPC* morty;
-		//morty = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Morty), Vector2D(W_WIN / 2, (double)H_WIN * 3 / 4), Vector2D(W_MORTY, H_MORTY), 3);
-		//addRenderUpdateLists(morty);
+		NPC* morty;
+		morty = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Morty), Vector2D(W_WIN *10 / 12, H_WIN / 4), Vector2D(W_MORTY, H_MORTY), 3);
+		addRenderUpdateLists(morty);
 	}
 
 	//Por si se añaden estos NPCs

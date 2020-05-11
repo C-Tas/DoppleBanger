@@ -13,6 +13,9 @@ Application::Application(GameStateMachine* state) {
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
 	machine_->pushState(startState)/*new CaribbeanIslandState(this))*/;
+
+	//Cargamos música de fondo
+	audioManager_->playMusic(Resources::MainTheme, -1);
 }
 
 Application::~Application() {
@@ -64,7 +67,6 @@ void Application::runApp() {
 	}
 	endGame();
 }
-
 
 void Application::updateDelta()
 {

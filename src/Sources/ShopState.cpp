@@ -13,6 +13,7 @@
 void ShopState::backToPrevious(Application* app) {
 	app->getGameStateMachine()->popState();
 	SDL_ShowCursor(SDL_DISABLE);
+	app->getAudioManager()->playMusic(Resources::Waves, -1);
 }
 
 void ShopState::callbackAdvanceInventoryPage(Application* app) {

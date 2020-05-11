@@ -13,9 +13,8 @@ public:
 	virtual ~ShipState() { delete collisionMap_; }
 	void update();
 	bool onTutorial() { return tutorialComplete; }
+
 protected:
-	//Tiempo para que canten los piratas
-	Uint32 pirateSingers_ = 18000;
 	Uint32 startInstance_ = 0;
 	bool songActive = false;
 
@@ -45,46 +44,46 @@ protected:
 
 
 	//Dimensiones de las entidades
-	const uint W_WIN = app_->getWindowWidth();
-	const uint H_WIN = app_->getWindowHeight();
+	const double W_WIN = app_->getWindowWidth();
+	const double H_WIN = app_->getWindowHeight();
 
-	const uint W_STASH = W_WIN / 7;
-	const uint H_STASH = H_WIN / 6;
+	const double W_STASH = W_WIN / 7;
+	const double H_STASH = H_WIN / 6;
 
-	const uint W_DOOR = W_WIN / 8;
-	const uint H_DOOR = H_WIN / 8;
+	const double W_DOOR = W_WIN / 8;
+	const double H_DOOR = H_WIN / 8;
 
-	const uint W_WHEEL = W_WIN / 11;
-	const uint H_WHEEL = H_WIN / 5;
+	const double W_WHEEL = W_WIN / 11;
+	const double H_WHEEL = H_WIN / 5;
 
-	const uint W_EXIT = W_WIN / 15;
-	const uint H_EXIT = H_WIN / 3;
+	const double W_EXIT = W_WIN / 15;
+	const double H_EXIT = H_WIN / 3;
 
-	const uint W_PLAYER = W_WIN / 8;
-	const uint H_PLAYER = H_WIN / 4;
+	const double W_PLAYER = W_WIN / 8;
+	const double H_PLAYER = H_WIN / 4;
 	#pragma endregion
 
 	#pragma region NPCs
-	const uint W_ELDERMAN = W_WIN / 11;
-	const uint H_ELDERMAN = H_WIN / 6;
+	const double W_ELDERMAN = W_WIN / 11;
+	const double H_ELDERMAN = H_WIN / 6;
 
-	const uint W_MERCHANT = W_WIN * 2 / 19;
-	const uint H_MERCHANT = H_WIN * 2 / 9;
+	const double W_MERCHANT = W_WIN * 2 / 19;
+	const double H_MERCHANT = H_WIN * 2 / 9;
 
-	const uint W_CHEF = W_WIN / 20;
-	const uint H_CHEF = H_WIN / 8;
+	const double W_CHEF = W_WIN / 22;
+	const double H_CHEF = H_WIN / 6;
 
-	const uint W_MORTY = W_WIN / 20;
-	const uint H_MORTY = H_WIN / 10;
+	const double W_MORTY = W_WIN / 14;
+	const double H_MORTY = H_WIN / 5;
 
-	const uint W_PARROT = W_WIN / 20;
-	const uint H_PARROT = H_WIN / 10;
+	const double W_PARROT = W_WIN / 20;
+	const double H_PARROT = H_WIN / 10;
 
-	const uint W_SKELETON = W_WIN / 20;
-	const uint H_SKELETON = H_WIN / 10;
+	const double W_SKELETON = W_WIN / 20;
+	const double H_SKELETON = H_WIN / 10;
 
-	const uint W_CARTOGRAPHER = W_WIN / 12;
-	const uint H_CARTOGRAPHER = H_WIN / 6;
+	const double W_CARTOGRAPHER = W_WIN / 6;
+	const double H_CARTOGRAPHER = H_WIN / 3;
 	#pragma region
 
 	virtual void initState();
@@ -96,4 +95,6 @@ protected:
 	static void goMap(Application* app);
 	static void goSaveState(Application* app);
 	#pragma endregion
+	//Sirve para cargar el estado
+	virtual void loadState();
 };

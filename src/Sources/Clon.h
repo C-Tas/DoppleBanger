@@ -22,6 +22,7 @@ public:
 	void changeDuration(double dur) { duration_ = dur; }	//En caso de que se pueda modificar la duraci�n
 	
 	void initSelfDestruction();
+	void initVanish();
 	void addEnemy(GameObject* enemy) { 
 		enemies_.push_back(static_cast<Enemy*>(enemy)); 
 	}
@@ -120,7 +121,6 @@ private:
 	const int SELFDESTRUCT_D_FRAMES = 8;			//Frames de la animación
 	const int SELFDESTRUCT_D_FRAME_RATE = 100;		//Frame rate
 
-
 	//Disparo
 	vector<Anim> shootAnims_;				//Vector de las animaciones
 	vector<Texture*> shootTx_;				//Vector de las texturas
@@ -143,7 +143,32 @@ private:
 	const int SHOOT_D_SHOOTINGFRAME = 2;	//Frame en el que se realiza el disparo
 
 	//Vector que contiene los frames en los que se dispara en las distintas animaciones de disparo
-	vector<int>shootingFrame_; 
+	vector<int>shootingFrame_;
+
+	//Desaparicion
+	vector<Anim> vanishAnims_;				//Vector de las animaciones
+	vector<Texture*> vanishTx_;				//Vector de las texturas
+	//Desaparicion derecha
+	const int VANISH_R_FRAMES = 5;			//Frames de la animación
+	const int VANISH_R_FRAME_RATE = 100;		//Frame rate
+	
+	//Desaparicion  arriba
+	const int VANISH_U_FRAMES = 5;			//Frames de la animación
+	const int VANISH_U_FRAME_RATE = 100;		//Frame rate
+
+
+	//Desaparicion  izquierda
+	const int VANISH_L_FRAMES = 5;			//Frames de la animación
+	const int VANISH_L_FRAME_RATE = 100;		//Frame rate
+	
+	//Desaparicion abajo
+	const int VANISH_D_FRAMES = 5;			//Frames de la animación
+	const int VANISH_D_FRAME_RATE = 100;		//Frame rate
+
+
+
+
+	
 
 
 

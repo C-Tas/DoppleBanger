@@ -10,6 +10,7 @@ public:
 		speed_ = bulletSpeed;
 	};
 	~PlayerBullet() {};
+	virtual bool update();
 
 	//Para saber si está activada la perforación
 	const bool getPerforate() { return perforate_; };

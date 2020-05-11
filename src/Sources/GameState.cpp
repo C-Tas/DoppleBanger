@@ -31,6 +31,7 @@ void GameState::update() {
 		objectsToRender_.remove(*it);
 		if ((*it) != nullptr) {
 			delete (*it);
+			(*it) = nullptr;
 		}
 	}
 	objRendToRemove_.clear();

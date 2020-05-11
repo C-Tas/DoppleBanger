@@ -15,22 +15,22 @@
 class PlayerBullet;
 class CollisionCtrl {
 public:
-	enum NPCsNames : int {
+	enum class NPCsNames : int {
 		ElderMan = 0,
-		Merchant,
-		Chef,
-		Morty,
-		Parrot,
-		Skeleton,
-		Cartographer,
-		Nobody
+		Merchant = 1,
+		Chef = 2,
+		Morty = 3,
+		Parrot = 4,
+		Skeleton = 5,
+		Cartographer = 6,
+		Nobody = 7
 	};
 
-	enum ShipObjectsNames : int {
+	enum class ShipObjectsNames : int {
 		Stash = 0,
-		Door,
-		Wheel,
-		Exit
+		Door = 1,
+		Wheel = 2,
+		Exit = 3
 	};
 
 	///<summary>Constructora, todos los elementos de colisi�n deben pasarse con los setters</summary>
@@ -75,12 +75,12 @@ public:
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
 	void clearList() {
 		//Listas de las islas
-		obstacles_.clear(); enemies_.clear();
+		obstacles_.clear(); obstacleWithRotation_.clear(); enemies_.clear();
 		chests_.clear(); triggers_.clear(); enemiesToErase_.clear(); chestsToErase_.clear();
 		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
 		//Listas del barco
 		npcs_.clear(); shipObjects_.clear(); newNpc = true;
-		npcCollision.id = Nobody;
+		npcCollision.id = NPCsNames::Nobody;
 		npcCollision.object = nullptr;
 	};
 #pragma endregion
@@ -115,8 +115,9 @@ public:
 	void addNPC(NPCsNames name, NPC* npc) { npcs_.push_back(NPCsInfo(name, npc)); };
 	///<summary>Guarda los elementos del barco</summary>
 	void addShipObjects(ShipObject* stash, ShipObject* door, ShipObject* wheel, ShipObject* exit) { 
-			shipObjects_.push_back(ShipObjectsInfo(Stash, stash)); shipObjects_.push_back(ShipObjectsInfo(Door, door)); 
-			shipObjects_.push_back(ShipObjectsInfo(Wheel, wheel)); shipObjects_.push_back(ShipObjectsInfo(Exit, exit)); };
+			shipObjects_.push_back(ShipObjectsInfo(ShipObjectsNames::Stash, stash)); shipObjects_.push_back(ShipObjectsInfo(ShipObjectsNames::Door, door));
+			shipObjects_.push_back(ShipObjectsInfo(ShipObjectsNames::Wheel, wheel)); shipObjects_.push_back(ShipObjectsInfo(ShipObjectsNames::Exit, exit));
+	};
 
 	//Tutorial
 	void setBottle(Enemy* obj) { bottle_ = obj; }
@@ -127,7 +128,7 @@ public:
 
 private:	//Private est� abajo porque necesitan enum del p�blico
 	struct NPCsInfo {
-		NPCsNames id = Nobody;
+		NPCsNames id = NPCsNames::Nobody;
 		NPC* object = nullptr;
 
 		NPCsInfo() {};
@@ -135,7 +136,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	};
 
 	struct ShipObjectsInfo {
-		ShipObjectsNames id = Stash;
+		ShipObjectsNames id = ShipObjectsNames::Stash;
 		ShipObject* object = nullptr;
 		bool click = false;
 

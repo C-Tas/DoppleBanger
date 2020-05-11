@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="27" nextobjectid="73">
+<map version="1.2" tiledversion="1.2.5" orientation="isometric" renderorder="right-down" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="27" nextobjectid="75">
  <tileset firstgid="1" source="DoppleBanger.tsx"/>
  <layer id="7" name="Fondo" width="50" height="55">
   <data encoding="csv">
@@ -539,14 +539,16 @@
   <object id="7" gid="222" x="2263" y="1901" width="256" height="256"/>
   <object id="8" gid="222" x="2480" y="5488" width="256" height="256"/>
   <object id="9" gid="222" x="2852" y="5724" width="256" height="256"/>
+  <object id="73" gid="222" x="3401.52" y="2414.97" width="256" height="256"/>
+  <object id="74" gid="222" x="3786.36" y="3957.39" width="256" height="256"/>
  </objectgroup>
  <objectgroup id="25" name="Chest">
   <object id="68" gid="166" x="3465.21" y="1736.24" width="256" height="256"/>
-  <object id="69" gid="166" x="4568.24" y="3081.7" width="256" height="256"/>
+  <object id="69" gid="166" x="4736" y="3200" width="256" height="256"/>
   <object id="70" gid="166" x="1345.52" y="3486.24" width="256" height="256"/>
  </objectgroup>
- <objectgroup id="26" name="Chef">
-  <object id="72" gid="169" x="4269" y="3031" width="256" height="256"/>
+ <objectgroup id="26" name="Nami">
+  <object id="72" gid="169" x="4352" y="3200" width="128" height="128"/>
  </objectgroup>
  <objectgroup id="16" name="Crab"/>
  <objectgroup id="18" name="Player">
