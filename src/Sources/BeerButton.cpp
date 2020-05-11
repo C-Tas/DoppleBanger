@@ -24,8 +24,14 @@ bool BeerButton::update(){
 
 		if (clicked_ && currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 			resetButton();
-			if (cbClick_ != nullptr) cbClick_(app_);
-			else if (cb_ != nullptr) cb_();
+			if (cbClick_ != nullptr) {
+				app_->getAudioManager()->playChannel(Resources::Shout, 0, Resources::AuxMusicChannel1);
+				cbClick_(app_);
+			}
+			else if (cb_ != nullptr) {
+				app_->getAudioManager()->playChannel(Resources::Shout, 0, Resources::AuxMusicChannel1);
+				cb_();
+			}
 			return true;
 		}
 		//Si esta el raton encima del boton y no ha sido clickado

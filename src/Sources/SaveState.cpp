@@ -4,7 +4,7 @@
 void SaveState::backToPreviousState(Application* app) {
 	app->getGameStateMachine()->popState();
 	SDL_ShowCursor(SDL_DISABLE);
-	app->getAudioManager()->playMusic(Resources::Waves, -1);
+	app->getAudioManager()->playMusic(Resources::WavesSound, -1);
 }
 void SaveState::saveSlot1() {
 	GameManager::instance()->saveSlot1();

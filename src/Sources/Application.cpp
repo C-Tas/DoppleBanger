@@ -12,10 +12,10 @@ Application::Application(GameStateMachine* state) {
 	gameManager_->setApp(this);
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
-	machine_->pushState(startState)/*new CaribbeanIslandState(this))*/;
+	machine_->pushState(startState);
 
 	//Cargamos música de fondo
-	audioManager_->playMusic(Resources::MainTheme, -1);
+	audioManager_->playMusic(Resources::AudioId::MainTheme, -1);
 }
 
 Application::~Application() {
@@ -85,7 +85,7 @@ void Application::initResources() {
 	fontManager_->initObject();
 
 	//Crear e inicializar audioManager
-	audioManager_ = new AudioManager();
+	audioManager_ = new AudioManager(Resources::NumChannels);
 	audioManager_->initObject();
 
 	//Generador de randoms

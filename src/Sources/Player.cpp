@@ -111,7 +111,7 @@ bool Player::update()
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_R) && skills_[3] != nullptr) {
 		skills_[3]->action();
 	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE) && !app_->getMute()) shout();
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE)) shout();
 
 	if (slowed_ && (SDL_GetTicks() - slowTime_) / 1000 > slowDuration_)
 	{
@@ -169,7 +169,7 @@ bool Player::update()
 
 		if (found && empoweredAct_ && !empoweredAnim_)
 		{
-			app_->getAudioManager()->playChannel(Resources::EmpoweredSkill, 0, 3);
+			app_->getAudioManager()->playChannel(Resources::EmpoweredSkillAudio, 0, Resources::PlayerChannel4);
 			cout << "\nAtaque potenciado\n" << endl;
 			empoweredAnim_ = true;
 			initMelee();
@@ -195,7 +195,7 @@ bool Player::update()
 		meleeAnim();
 	}
 	else if (currState_ == STATE::DYING) {
-		app_->getAudioManager()->playChannel(Resources::Dying, 0, 0);
+		app_->getAudioManager()->playChannel(Resources::DyingAudio, 0, Resources::PlayerChannel4);
 		//Tendría que hacer la animación de muerte
 		//Cuando se acabe la animación es cuando muere y se puede resetear el juego
 		dead_ = true;
@@ -220,7 +220,7 @@ void Player::initMove()
 {
 	if (SDL_GetTicks() - WALK_TIME > lastWalkSound_) {
 		lastWalkSound_ = SDL_GetTicks();
-		app_->getAudioManager()->playChannel(Resources::Walk, -1, 0);
+		app_->getAudioManager()->playChannel(Resources::WalkAudio, -1, Resources::PlayerChannel1);
 	}
 	mousePos_ = eventHandler_->getRelativeMousePos();
 	texture_ = moveTx_[(int)currDir_];
@@ -237,7 +237,7 @@ void Player::initMove()
 void Player::initShoot()
 {
 	auto choice = app_->getRandom()->nextInt(Resources::Attack1, Resources::Attack6);
-	app_->getAudioManager()->playChannel(choice, 0, 1);
+	app_->getAudioManager()->playChannel(choice, 0, Resources::PlayerChannel1);
 	stop();
 	currState_ = STATE::SHOOTING;	//Cambio de estado
 	mousePos_ = eventHandler_->getRelativeMousePos();
@@ -272,9 +272,9 @@ void Player::initShoot()
 void Player::initMelee()
 {
 	auto choice = app_->getRandom()->nextInt(Resources::Attack1, Resources::Attack6);
-	app_->getAudioManager()->playChannel(choice, 0, 1);
+	app_->getAudioManager()->playChannel(choice, 0, Resources::PlayerChannel1);
 	auto melee = app_->getRandom()->nextInt(Resources::SwordSound1, Resources::SwordSound6);
-	app_->getAudioManager()->playChannel(melee, 0, 3);
+	app_->getAudioManager()->playChannel(melee, 0, Resources::PlayerChannel2);
 	currState_ = STATE::ATTACKING;	//Cambio de estado
 	attacked_ = false;	//Aún no se ha atacado
 	updateDirVisObjective(currEnemy_);	//Hacia dónde está el enemigo
@@ -495,7 +495,7 @@ void Player::decreaseMana(double mana) {
 }
 
 void Player::usePotion(usable* potion, int key) {
-	app_->getAudioManager()->playChannel(Resources::Drink, 0, 1);
+	app_->getAudioManager()->playChannel(Resources::Drink, 0, Resources::PlayerChannel2);
 	double auxValue = potion->getValue();
 	switch (potion->getType())
 	{
@@ -604,7 +604,7 @@ void Player::changeDistWeaponStats(Gun* gun)
 void Player::createClon()
 {
 	auto choice = app_->getRandom()->nextInt(Resources::Laugh1, Resources::Laugh7);
-	app_->getAudioManager()->playChannel(choice, 0, 1);
+	app_->getAudioManager()->playChannel(choice, 0, Resources::PlayerChannel2);
 	Vector2D pos;
 	pos.setX(eventHandler_->getRelativeMousePos().getX() - (scale_.getX() / 2));
 	pos.setY(eventHandler_->getRelativeMousePos().getY() - (scale_.getY() * 0.8));
@@ -625,7 +625,7 @@ Player::~Player()
 
 void Player::shout()
 {
-	app_->getAudioManager()->playChannel(Resources::Shout, 0, 1);
+	app_->getAudioManager()->playChannel(Resources::Shout, 0, Resources::PlayerChannel3);
 }
 
 Skill* Player::createSkill(SkillName name)

@@ -15,14 +15,6 @@ CaribbeanIslandState::~CaribbeanIslandState() {
 		gm_->setStartedMission(missions::gallegaEnProblemas, false);
 		gm_->resetMissionCounter(missions::gallegaEnProblemas);
 	}
-	if (!gm_->isThatMissionPass(missions::papelesSiniestros)) {
-		gm_->setStartedMission(missions::papelesSiniestros, false);
-		gm_->resetMissionCounter(missions::papelesSiniestros);
-	}
-	if (!gm_->isThatMissionPass(missions::arlongPark)) {
-		gm_->setStartedMission(missions::arlongPark, false);
-		gm_->resetMissionCounter(missions::arlongPark);
-	}
 };
 
 void CaribbeanIslandState::update()
@@ -54,21 +46,14 @@ void CaribbeanIslandState::initState()
 	//Añadimos el hud a objetos a renderizar
 	addRenderUpdateLists(hud_);
 	app_->getAudioManager()->playMusic(Resources::Caribbean, -1);
+	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AudioChannels::AuxMusicChannel1);
 }
 
 void CaribbeanIslandState::initZone1()
 {
 	//Se inicia la mision de la cocinera si no se ha completado ya
-	/*if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
+	if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
 		gm_->setStartedMission(missions::gallegaEnProblemas, true);
-	}*/
-
-	/*if (!gm_->isThatMissionPass(missions::papelesSiniestros)) {
-		gm_->setStartedMission(missions::papelesSiniestros, true);
-	}*/
-
-	if (!gm_->isThatMissionPass(missions::arlongPark)) {
-		gm_->setStartedMission(missions::arlongPark, true);
 	}
 
 	//Creamos el mapa

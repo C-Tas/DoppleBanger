@@ -211,9 +211,8 @@ void EnemyPirate::lostAggro()
 //Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_ DONE
 bool EnemyPirate::getEnemy() {
 	if (Enemy::getEnemy(rangeVision_)) {
-		if (!app_->getMute()) {
-			app_->getAudioManager()->playChannel(Resources::AudioId::Agro, 0, 0);
-		}
+		app_->getAudioManager()->playChannel(Resources::AudioId::Agro, 0, Resources::EnemyPirateChannel);
+		
 		return true;
 	}
 	else return false;

@@ -103,19 +103,17 @@ void ShipState::initState()
 	addRenderUpdateLists(player_);
 	startInstance_ = SDL_GetTicks();
 
+	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, 0);
 }
 
 void ShipState::update()
 {
 	PlayState::update();
 
-	if (!songActive) {
-		cout << "Waves" << endl;
-		app_->getAudioManager()->playMusic(Resources::Waves, -1);
-		//app_->getAudioManager()->setMusicVolume(5);
+	/*if (!songActive) {
 
 		songActive = true;
-	}
+	}*/
 	collisionCtrl_->shipCollisions();
 }
 

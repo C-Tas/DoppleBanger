@@ -53,8 +53,16 @@ public:
 	//<summary>Reanuda la música</summary>
 	void resumeMusic();
 
+	//Mute
+	bool getMuteMusic() { return muteMusic_; };
+	bool getMuteSounds() { return muteSounds_; };
+
+	void setMuteMusic() { muteMusic_ = !muteMusic_; };
+	void setMuteSounds() { muteSounds_ = !muteSounds_; };
 private:
 	bool initialized_;
+	bool muteMusic_ = false;	//Musica
+	bool muteSounds_ = false;	//Efectos de sonido
 	int channels_;
 	map<int, Mix_Chunk*> chunks_;
 	map<int, Mix_Music*> music_;

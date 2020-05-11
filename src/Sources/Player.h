@@ -79,11 +79,11 @@ public:
 #pragma region Setters
 	//Activa la perforación
 	void setPerforate(bool perforate) {
-		app_->getAudioManager()->playChannel(Resources::PerforateSkill, 0, 3);
+		app_->getAudioManager()->playChannel(Resources::PerforateSkill, 0, Resources::PlayerChannel2);
 		perforate_ = perforate; };
 	//Activa el rebote y el momento en el que se usa
 	void setRicochet(bool ricochet) { 
-		app_->getAudioManager()->playChannel(Resources::Ricochet, 0, 3);
+		app_->getAudioManager()->playChannel(Resources::Ricochet, 0, Resources::PlayerChannel2);
 		ricochet_ = ricochet; 
 		lastTimeRico_ = SDL_GetTicks(); };
 		//Para saber si hay que inicializar el equipamiento

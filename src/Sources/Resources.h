@@ -22,8 +22,10 @@ public:
 		ResumeButton,
 		BackButton,
 		SkipButton,
-		MuteOff,
-		MuteOn,
+		MuteSoundOff,
+		MuteSoundOn,
+		MuteMusicOff,
+		MuteMusicOn,
 		RestartGame,
 		RightArrow,
 		LeftArrow,
@@ -284,39 +286,48 @@ public:
 		CollisionTile
 	};
 
+	enum AudioChannels : int {
+		//Musica auxiliar
+		AuxMusicChannel1,
+		AuxMusicChannel2,
+		AuxMusicChannel3,
+		//Canal del jugador
+		PlayerChannel1,
+		PlayerChannel2,
+		PlayerChannel3,
+		PlayerChannel4,
+		//Canal del lobo
+		WolfChannel, 
+		//Canal del mono
+		MonkeyChannel,
+		//Canal de la calabaza
+		PumpkinChannel1,
+		PumpkinChannel2,
+		//Canal del pirata
+		EnemyPirateChannel,
+
+		//Numero de canales
+		NumChannels
+	};
+
 	///<summary>Enum para las distintos audios del juego</summary>
 	enum AudioId : int{
 		//Música
 		MainTheme,
-		ShipSingers,
 		Caribbean,
-		Waves,
 		Shop,
 		Storyboard,
+		WavesSound,
 
-		//Efectos de sonido
-		Agro,
-
-		//Efectos para el lobo
-		WolfHowl,
-		WolfAttack,
-		WolfDie,
-
-		//Efectos para el mono
-		MonkeyIdle,
-		MonkeyAttack,
-		MonkeyShoot,
-		MonkeyDie,
-		
 		//player
-		Walk,
+		WalkAudio,
 		Attack1,
 		Attack2,
 		Attack3,
 		Attack4,
 		Attack5,
 		Attack6,
-		Dying,
+		DyingAudio,
 		Laugh1,
 		Laugh2,
 		Laugh3,
@@ -326,7 +337,7 @@ public:
 		Laugh7,
 		Shout,
 		Drink,
-		EmpoweredSkill,
+		EmpoweredSkillAudio,
 		PerforateSkill,
 		Ricochet,
 		WhirlwindSkill,
@@ -343,6 +354,20 @@ public:
 
 		//CLon
 		Explosion,
+
+		//Efectos de sonido
+		Agro,
+
+		//Efectos para el lobo
+		WolfHowlAudio,
+		WolfAttackAudio,
+		WolfDieAudio,
+
+		//Efectos para el mono
+		MonkeyIdleSound,
+		MonkeyAttackSound,
+		MonkeyShootSound,
+		MonkeyDieSound,
 
 		//Calabaza
 		AgroPumpkin,

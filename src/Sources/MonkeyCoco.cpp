@@ -10,7 +10,7 @@ bool MonkeyCoco::update() {
 
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
-		app_->getAudioManager()->playChannel(Resources::MonkeyDie, 0, 3);
+ 		app_->getAudioManager()->playChannel(Resources::MonkeyDieSound, 0, Resources::AudioChannels::MonkeyChannel);
 
 		//Esta línea habría que moverla al cangrejo cuando esté hecho
 		GameManager* gm_ = GameManager::instance();
@@ -29,7 +29,7 @@ bool MonkeyCoco::update() {
 	else if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
 		currState_ = STATE::SHOOTING;
 		if (firstAttack && onRange()) {
-			app_->getAudioManager()->playChannel(Resources::MonkeyAttack, 0, 1);
+			app_->getAudioManager()->playChannel(Resources::MonkeyAttackSound, 0, Resources::MonkeyChannel);
 			firstIdle = true;
 		}
 		firstAttack = false;
@@ -45,7 +45,7 @@ bool MonkeyCoco::update() {
 			//Tengo enemigo pero no a rango
 			else {
 				if (firstIdle) {
-					app_->getAudioManager()->playChannel(Resources::MonkeyIdle, 0, 1);
+					app_->getAudioManager()->playChannel(Resources::MonkeyIdleSound, 0, Resources::MonkeyChannel);
 					firstIdle = false;
 				}
 				initIdle();
@@ -188,7 +188,7 @@ void MonkeyCoco::initShoot() {
 
 void MonkeyCoco::shootAnim() {
 	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
-		app_->getAudioManager()->playChannel(Resources::MonkeyShoot, 0, 3);
+		app_->getAudioManager()->playChannel(Resources::MonkeyShootSound, 0, Resources::MonkeyChannel);
 		attack();
 		shooted_ = true;
 		lastHit = SDL_GetTicks();

@@ -68,6 +68,8 @@ bool AudioManager::loadSound(int tag, const string& fileName) {
 int AudioManager::playChannel(int tag, int loops, int channel) {
 	Mix_Chunk* chunk = chunks_[tag];
 	if (chunk != nullptr) {
+		if (muteSounds_) setChannelVolume(0, channel);
+		else setChannelVolume(4, channel);
 		return Mix_PlayChannel(channel, chunk, loops);
 	}
 	else {
@@ -116,7 +118,7 @@ bool AudioManager::loadMusic(int tag, const string& fileName) {
 void AudioManager::playMusic(int tag, int loops = -1) {
 	Mix_Music* music = music_[tag];
 	if (music != nullptr) {
-		Mix_PlayMusic(music, loops);
+		if(!muteMusic_) Mix_PlayMusic(music, loops);
 	}
 }
 
