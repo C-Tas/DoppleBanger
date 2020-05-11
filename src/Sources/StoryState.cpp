@@ -8,7 +8,7 @@ void StoryState::goToGame(Application* app) {
 void StoryState::draw() const {
 
 	//Dibujamos en toda la pantalla, tomando como origen el (0,0)
-	scenes.top().sceneTexture->render({ 0,0,app_->getWindowWidth(), app_->getWindowHeight() });
+	scenes.top().sceneTexture->render({ 0,0, app_->getWindowWidth(), app_->getWindowHeight() });
 
 	GameState::draw(); //Despu�s, dibujamos encima los botones
 }
@@ -40,9 +40,15 @@ void StoryState::initState() {
 	//como hacerlo de una forma mejor se aceptan sugerencias
 
 	//Como es una pila, las escenas se meten en el orden inverso al que aparecen en pantalla
-	scenes.push({ 2000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene3) });
-	scenes.push({ 3000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene2) });
-	scenes.push({ 2000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene1) });
+	scenes.push({ 8000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene9) });
+	scenes.push({ 8000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene8) });
+	scenes.push({ 12000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene7) });
+	scenes.push({ 8000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene6) });
+	scenes.push({ 15000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene5) });
+	scenes.push({ 6000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene4) });
+	scenes.push({ 6000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene3) });
+	scenes.push({ 6000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene2) });
+	scenes.push({ 6000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene1) });
 
 	//Bot�n para saltarse la secuencia de escenas
 	createButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkipButton), { 10,10 }, { 50,50 }, goToGame);
