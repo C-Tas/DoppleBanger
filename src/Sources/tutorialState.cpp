@@ -32,7 +32,6 @@ void tutorialState::update()
 	default:
 		break;
 	}
-
 }
 
 void tutorialState::initState()
@@ -114,7 +113,6 @@ void tutorialState::createBottle()
 	tutorialObject* bottle = new tutorialObject(app_, bottlePos_, Vector2D(50, 50), app_->getTextureManager()->getTexture(Resources::Bottle));
 	collisionCtrl_->setBottle(bottle);
 	dynamic_cast<PlayState*>(app_->getCurrState())->addEnemy(bottle);
-	addRenderUpdateLists(bottle);
 	collisionCtrl_->addEnemy(bottle);
 }
 
@@ -126,7 +124,6 @@ void tutorialState::createDummy()
 	tutorialObject* dummy = new tutorialObject(app_, dummyPos_, Vector2D(100, 100), app_->getTextureManager()->getTexture(Resources::Dummy));
 	collisionCtrl_->setDummy(dummy);
 	addEnemy(dummy);
-	addRenderUpdateLists(dummy);
 	collisionCtrl_->addEnemy(dummy);
 }
 
