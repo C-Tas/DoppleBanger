@@ -71,6 +71,8 @@ public:
 	void removeTrigger(Trigger* trigger) { triggersToErase_.push_back(trigger); };
 	///<summary>Quita un nuevo colliders</summary>
 	void removeCollider(Collider* collider) { collidersToErase_.push_back(collider); };
+	///<summary>Quita el dummy</summary>
+	void removeDummy() { enemies_.clear(); dummy_ = nullptr; };
 
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
 	void clearList() {

@@ -221,7 +221,7 @@ private:
 
 	//Fases de los NPCS
 		bool tutorial = false;
-		int venancioPhase = 2;
+		int venancioPhase = 0;
 
 public:
 	//Constructor vacio

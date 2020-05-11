@@ -71,7 +71,8 @@ void TextBox::dialogElderMan() {
 		auto aux = dynamic_cast<tutorialState*>(app_->getCurrState());
 		if (aux && aux->isCurrTaskComplete()) {
 			GameManager::instance()->nextPhaseVenancio();
-			aux->currTaskincomplete();
+			aux->currTaskIncomplete();
+			aux->activeDummyCreation();
 		}
 		switch (GameManager::instance()->getVenancioPhase())
 		{
@@ -88,16 +89,21 @@ void TextBox::dialogElderMan() {
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 2:
-			text.loadFromText(app_->getRenderer(), "Habilidades y ataque a melee",
+			text.loadFromText(app_->getRenderer(), "Ataque a melee",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 3:
-			text.loadFromText(app_->getRenderer(), "Inventario...",
+			text.loadFromText(app_->getRenderer(), "Habilidades",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 4:
+			text.loadFromText(app_->getRenderer(), "Inventario...",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			break;
+		case 5:
 			text.loadFromText(app_->getRenderer(), "Fin del tutorial...",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);

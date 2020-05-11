@@ -13,18 +13,13 @@ public:
 		setTexture(tex);
 	};
 	~tutorialObject() {};
+
 	virtual bool update();
 	virtual void initialStats();
 	//inicializa los puntos de hazaña y el oro que da esta entidad
-	virtual void initRewards(){};
-	virtual void onCollider() {
-		dynamic_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		auto state = dynamic_cast<tutorialState*>(app_->getCurrState());
-		if(state){
-			state->currTaskSucess();
-		}
-	};
+	virtual void initRewards() {};
+	virtual void onCollider();
+	virtual void receiveDamage(int damage);
 private:
 	virtual void initObject();
 };

@@ -102,7 +102,7 @@ void CollisionCtrl::islandCollisions() {
 				bullet->setDoDamage(false);// ya no puede atacar al player hasta el siguiente golpe
 			}
 			//si ya no le quedan colisiones a la bala la borramos
-			if (bullet->numCollisions() == 0){
+			if (bullet->numCollisions() == 0) {
 				removeEnemyBullet(bullet);
 				bullet->onCollider();
 			}
@@ -275,8 +275,6 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 		//	}
 		//}
 	}
-
-
 }
 
 void CollisionCtrl::tutorialCollision()
@@ -290,13 +288,6 @@ void CollisionCtrl::tutorialCollision()
 				bottle_ = nullptr;
 				
 			}
-		}
-	}
-	if (dummy_ != nullptr && GameManager::instance()->getVenancioPhase() == 2) {
-		if (player_->isDummyAttack() && Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
-			dummy_->getPos(), dummy_->getScaleX(), dummy_->getScaleY())) {
-			dummy_->onCollider();
-			dummy_ = nullptr;
 		}
 	}
 	//Colisi�n cofres con jugador

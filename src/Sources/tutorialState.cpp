@@ -9,20 +9,30 @@ void tutorialState::update()
 	//Control de tutorial
 	switch (gm_->getVenancioPhase())
 	{
+	//Aprender a disparar
 	case 1:
 		//crear botella
 		if (!bottleCreated_) {
 			createBottle();
 		}
 		break;
+	//Aprender el ataque a melee
 	case 2:
+		//crear dummy
+		if (!dummyCreated_) {
+			createDummy();
+		}
+		break;
+	//Apreder a usar habilidades
+	case 3:
 		//crear dummy
 		if (!dummyCreated_) {
 			gm_->setSkillUnlocked(SkillName::GolpeFuerte);
 			createDummy();
 		}
 		break;
-	case 3:
+	//Aprender los cofres
+	case 4:
 		//crear cofre
 		if (!chestCreated_) {
 			

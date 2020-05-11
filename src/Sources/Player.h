@@ -135,8 +135,8 @@ public:
 			skills_[key] = skill; }
 		vector <Skill*>& getSkillsArray() { return skills_; }
 	#pragma endregion
-		//Determina si el player utiliza un ataque a melee y el golpe fuerte en un ataque unificado
-		bool isDummyAttack() { return empoweredAct_ && attacking_; }
+		//Determina si el player utiliza el golpe fuerte
+		bool isDummyAttack() { return empoweredAct_; }
 
 private:
 	bool dead_ = false;

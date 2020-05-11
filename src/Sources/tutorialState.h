@@ -9,11 +9,12 @@ public:
 		gm_->activeTutorial();
 		venancio_->setPos(TUTORIAL_POS);
 	};
-	~tutorialState() { }
+	~tutorialState() {}
 	virtual void update();
+	void activeDummyCreation() { dummyCreated_ = false; }
 	void currTaskSucess() { currTaskComplete_ = true; }
+	void currTaskIncomplete() { currTaskComplete_ = false; }
 	bool isCurrTaskComplete() { return currTaskComplete_; }
-	void currTaskincomplete() { currTaskComplete_ = false; }
 private:
 	//Botella
 	GameManager* gm_ = nullptr;
@@ -27,6 +28,4 @@ private:
 	void createBottle();
 	void createDummy();
 	void createChest();
-	
 };
-

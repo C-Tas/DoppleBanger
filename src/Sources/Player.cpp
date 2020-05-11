@@ -317,15 +317,15 @@ void Player::shootAnim()
 void Player::meleeAnim()
 {
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
-		double totalDmg = currStats_.meleeDmg_;	//Daño total por si hace el Golpe Fuerte
 		if (empoweredAct_) { //Golpe fuerte
+			static_cast<Actor*>(currEnemy_)->receiveDamage(currStats_.meleeDmg_ * empoweredBonus_);
 			empoweredAct_ = false;
-			totalDmg = currStats_.meleeDmg_ * empoweredBonus_;
 			empoweredTime_ = SDL_GetTicks();
 		}
+		else static_cast<Actor*>(currEnemy_)->receiveDamage(currStats_.meleeDmg_);
+		
 		meleeTime_ = SDL_GetTicks();
 
-		static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
 		if (currEnemy_ == nullptr) {
 			attacking_ = false;
 			dir_ = Vector2D(0, 0);
