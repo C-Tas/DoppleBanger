@@ -31,7 +31,8 @@ void TextBox::nextConversation(Application* app) {
 
 void TextBox::skipTutorial(Application* app)
 {
-	GameManager::instance()->deactiveTutorial();
+	app->getGameManager()->desactiveTutorial();
+	app->getGameManager()->resetGameManager();
 	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	app->getGameStateMachine()->pushState(new ShipState(app));
 }

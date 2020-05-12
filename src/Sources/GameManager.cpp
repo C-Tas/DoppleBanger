@@ -616,6 +616,9 @@ void GameManager::resetGameManager()
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
 		skillsEquipped_[i] = SkillName::Unequipped;
 	}
+	for (int i = 0; i < skillsUnlocked_.size(); i++) {
+		if (i != (int)SkillName::Clon) skillsUnlocked_[i] = false;
+	}
 	//Reset objetos
 	for (int i = 0; i < objectsEquipped_.size(); i++) {
 		objectsEquipped_[i] = ObjectName::Unequipped;
@@ -636,6 +639,10 @@ void GameManager::resetGameManager()
 		delete currEquip_.potions_[i];
 		currEquip_.potions_[i] = nullptr;
 	}
+
+	//Resetea el tutorial
+	tutorial = false;
+	venancioPhase = 0;
 }
 
 const int GameManager::getFontSize()

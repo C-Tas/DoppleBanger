@@ -1,11 +1,9 @@
 #pragma once
 #include "ShipState.h"
-class tutorialState :
-	public ShipState
-{
+class tutorialState : public ShipState {
 public:
-	tutorialState(Application* app) : ShipState(app) { 
-		gm_ = GameManager::instance(); 
+	tutorialState(Application* app) : ShipState(app) {
+		gm_ = GameManager::instance();
 		gm_->activeTutorial();
 		venancio_->setPos(TUTORIAL_POS);
 	};

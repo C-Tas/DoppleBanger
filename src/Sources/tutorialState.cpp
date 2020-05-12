@@ -27,7 +27,7 @@ void tutorialState::update()
 	case 3:
 		//crear dummy
 		if (!dummyCreated_) {
-			gm_->setSkillUnlocked(SkillName::GolpeFuerte);
+			gm_->setMeleePoints((gm_->getMaxPoints() / 3) - 10);
 			createDummy();
 		}
 		break;
@@ -35,7 +35,6 @@ void tutorialState::update()
 	case 4:
 		//crear cofre
 		if (!chestCreated_) {
-			
 			createChest();
 		}
 		break;
@@ -71,7 +70,7 @@ void tutorialState::createDummy()
 void tutorialState::createChest()
 {
 	chestCreated_ = true;
-	Chest* chest = new Chest(app_,dummyPos_,Vector2D(150,150));
+	Chest* chest = new Chest(app_,dummyPos_,Vector2D(150,150), 50);
 	collisionCtrl_->addChest(chest);
 	addRenderUpdateLists(chest);
 }

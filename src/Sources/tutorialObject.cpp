@@ -4,6 +4,7 @@ bool tutorialObject::update() {
 	//Solo entra con el dummy
 	if (currState_ == STATE::DYING) {
 		onCollider();	//Para dar la misión como terminada
+		applyRewards();
 		CollisionCtrl::instance()->removeDummy();
 		return true;
 	}
@@ -47,4 +48,5 @@ void tutorialObject::receiveDamage(int damage) {
 
 void tutorialObject::initObject() {
 	Enemy::initObject();
+	initRewards();
 }

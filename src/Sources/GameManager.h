@@ -220,8 +220,8 @@ private:
 	#pragma endregion
 
 	//Fases de los NPCS
-		bool tutorial = false;
-		int venancioPhase = 0;
+	bool tutorial = false;
+	int venancioPhase = 0;
 
 public:
 	//Constructor vacio
@@ -342,7 +342,6 @@ public:
 	GameObject* getClon() { return clon_; };
 	//Devuelve el HUD
 	HUD* getHUD() { return hud_; };
-	
 #pragma endregion
 
 #pragma region setters
@@ -381,8 +380,10 @@ public:
 	//Completa una misi�n secundaria
 	inline void setCompleteMission(missions mission, bool complete) {
 		missionsComplete_[(int)mission] = complete;
-		inventoryGold_ += goldReward_.at((int)mission);
-		achievementPoints_ += pointsReward_.at((int)mission);
+		if (complete) {
+			inventoryGold_ += goldReward_.at((int)mission);
+			achievementPoints_ += pointsReward_.at((int)mission);
+		}
 	};
 	//Empieza una misi�n secundaria
 	inline void setStartedMission(missions mission, bool started) { missionsStarted_[(int)mission] = started; };
@@ -430,7 +431,7 @@ public:
 
 	//tutorial
 	void activeTutorial() { tutorial = true; }
-	void deactiveTutorial() { tutorial = false; }
+	void desactiveTutorial() { tutorial = false; }
 	bool onTutorial() { return tutorial; }
 
 	//SettesNPC
