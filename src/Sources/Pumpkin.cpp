@@ -22,7 +22,7 @@ bool Pumpkin::onDistRange() {
 	}
 }
 bool Pumpkin::onMeleeRange() {
-	if (currEnemy_ != nullptr ) {
+	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = currEnemy_->getCenter();
 		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
@@ -31,7 +31,6 @@ bool Pumpkin::onMeleeRange() {
 		}
 		else return false;
 	}
-
 	else
 	{
 		return false;
@@ -45,7 +44,7 @@ bool Pumpkin::update() {
 	updateFrame();
 	//Si la calabaza ha muerto
 	if (currState_ == STATE::DYING) {
-		
+
 		if (currAnim_.currFrame_ == 0) {
 			initExplosion();
 		}
@@ -75,9 +74,9 @@ bool Pumpkin::update() {
 		initAttack();
 	}
 	//Si la calabaza tiene enemigo y puede atacar
-	if (currState_ == STATE::ATTACKING ) {
+	if (currState_ == STATE::ATTACKING) {
 		//Si la calabaza tiene un enemigo y lo tiene a rango
-		if ( onMeleeRange()) {
+		if (onMeleeRange()) {
 			initMove();
 		}
 		else {
@@ -103,9 +102,6 @@ bool Pumpkin::update() {
 	return false;
 }
 void Pumpkin::disAttack() {
-#ifdef _DEBUG
-	cout << "hey";
-#endif // _DEBUG
 	app_->getAudioManager()->haltChannel(6);
 	app_->getAudioManager()->haltChannel(5);
 	app_->getAudioManager()->playChannel(Resources::AttackPumpkin, 0, 6);
@@ -117,7 +113,7 @@ void Pumpkin::disAttack() {
 }
 void Pumpkin::follow() {
 	if (currEnemy_ != nullptr) {
-		move(currEnemy_->getPos());
+		move(currEnemy_->getCenter());
 		auto dirAux = currDir_;
 		updateDirVisEnemy();
 		if (currDir_ != dirAux) {
@@ -131,6 +127,7 @@ void Pumpkin::follow() {
 void Pumpkin::initObject() {
 	Enemy::initObject();
 	initRewards();
+	target_ = pos_;
 	explosionRange_ = getScaleX();
 }
 void Pumpkin::lostAgro()
@@ -144,8 +141,8 @@ void Pumpkin::initialStats()
 	MANA = 100;
 	MANA_REG = 1;
 	ARMOR = 10;
-	MELEE_DMG = 750;
-	DIST_DMG = 300;
+	MELEE_DMG = 0;
+	DIST_DMG = 0;
 	CRIT = 0;
 	MELEE_RANGE = 200;
 	DIST_RANGE = 350;
@@ -155,9 +152,14 @@ void Pumpkin::initialStats()
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 void Pumpkin::move(Point2D posToReach) {
-	target_.setVec(posToReach);
-	dir_.setX(posToReach.getX() - getCenter().getX());
-	dir_.setY(posToReach.getY() - getCenter().getY());
+	if ((getCenter() - target_).magnitude() <= 0.05)
+	{
+		pathPos_ = { (int)PosToTile(target_).getX(), (int)PosToTile(target_).getY() };
+		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
+		if (pathing_.size() > 1)
+			target_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+	}
+	dir_.setVec(target_ - getCenter());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
@@ -169,13 +171,13 @@ void Pumpkin::initAnims()
 		//Arriba
 	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, IDLE_U_FRAME_RATE, true));
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinIdleUpAnim));
-		//Derecha																						
+	//Derecha																						
 	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, IDLE_R_FRAME_RATE, true));
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinIdleRightAnim));
-		//Abajo																							
+	//Abajo																							
 	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, IDLE_D_FRAME_RATE, true));
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinIdleDownAnim));
-		//Izquierda																						
+	//Izquierda																						
 	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, IDLE_L_FRAME_RATE, true));
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinIdleLeftAnim));
 
@@ -183,44 +185,44 @@ void Pumpkin::initAnims()
 		//Arriba
 	attackAnims_.push_back(Anim(ATTACK_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, ATTACK_U_FRAME_RATE, false));
 	attackTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinAttackUpAnim));
-		//Derecha																						
+	//Derecha																						
 	attackAnims_.push_back(Anim(ATTACK_R_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, ATTACK_R_FRAME_RATE, false));
 	attackTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinAttackRightAnim));
-		//Abajo																							
+	//Abajo																							
 	attackAnims_.push_back(Anim(ATTACK_D_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, ATTACK_D_FRAME_RATE, false));
 	attackTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinAttackDownAnim));
-		//Izquierda																						
+	//Izquierda																						
 	attackAnims_.push_back(Anim(ATTACK_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, ATTACK_L_FRAME_RATE, false));
 	attackTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinAttackLeftAnim));
-	
+
 	//Animaci�n de explosi�n
 		//Arriba
 	explosionAnims_.push_back(Anim(EXPLOSION_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, EXPLOSION_U_FRAME_RATE, false));
 	explosionTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinExpUpAnim));
-		//Derecha																						
+	//Derecha																						
 	explosionAnims_.push_back(Anim(EXPLOSION_R_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, EXPLOSION_R_FRAME_RATE, false));
 	explosionTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinExpRightAnim));
-		//Abajo																							
+	//Abajo																							
 	explosionAnims_.push_back(Anim(EXPLOSION_D_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, EXPLOSION_D_FRAME_RATE, false));
 	explosionTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinExpDownAnim));
-		//Izquierda																						
+	//Izquierda																						
 	explosionAnims_.push_back(Anim(EXPLOSION_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, EXPLOSION_L_FRAME_RATE, false));
 	explosionTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinExpLeftAnim));
-	
+
 	//Animaci�n de movimiento
 		//Arriba
 	moveAnims_.push_back(Anim(MOVE_U_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, MOVE_U_FRAME_RATE, true));
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveUpAnim));
-		//Derecha																						
+	//Derecha																						
 	moveAnims_.push_back(Anim(MOVE_R_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, MOVE_R_FRAME_RATE, true));
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveRightAnim));
-		//Abajo																							
+	//Abajo																							
 	moveAnims_.push_back(Anim(MOVE_D_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, MOVE_D_FRAME_RATE, true));
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveDownAnim));
-		//Izquierda																						
+	//Izquierda																						
 	moveAnims_.push_back(Anim(MOVE_L_FRAMES, W_PUMPKIN_FRAME, H_PUMPKIN_FRAME, MOVE_L_FRAME_RATE, true));
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PumpkinMoveLeftAnim));
-	
+
 	initIdle();
 }
 void Pumpkin::initRewards()
@@ -266,7 +268,7 @@ void Pumpkin::initExplosion()
 bool Pumpkin::explosionAnim()
 {
 	if (currEnemy_ == nullptr) {
-				static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
+		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
@@ -274,11 +276,11 @@ bool Pumpkin::explosionAnim()
 		explosion_ = true;
 		app_->getAudioManager()->haltChannel(6);
 		app_->getAudioManager()->haltChannel(5);
-		app_->getAudioManager()->playChannel(Resources::ExplosionPumpkin , 0, 5);
-		auto s = app_->getRandom()->nextInt(0,101);
+		app_->getAudioManager()->playChannel(Resources::ExplosionPumpkin, 0, 5);
+		auto s = app_->getRandom()->nextInt(0, 101);
 		if (s >= 75) {
-		app_->getAudioManager()->setChannelVolume(10, 6);
-		app_->getAudioManager()->playChannel(Resources::TauntPumpkin1, 0, 6);
+			app_->getAudioManager()->setChannelVolume(10, 6);
+			app_->getAudioManager()->playChannel(Resources::TauntPumpkin1, 0, 6);
 		}
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		Point2D center = getCenter();
@@ -290,7 +292,7 @@ bool Pumpkin::explosionAnim()
 		}
 		return false;
 	}
-	else if(currAnim_.currFrame_ >= currAnim_.numberFrames_)
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_)
 	{
 		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);

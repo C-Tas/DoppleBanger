@@ -19,7 +19,7 @@ Vector2D Enemy::isPlayerInRange(double rangeAttack)
 	Point2D playerPos = gm->getPlayerPos();
 	if (currEnemy_ == nullptr &&
 		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeAttack && playerPos.getX() >= pos_.getX() - rangeAttack
-		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeAttack && playerPos.getY() >= pos_.getY() -rangeAttack) {
+		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeAttack && playerPos.getY() >= pos_.getY() - rangeAttack) {
 		return playerPos;
 	}
 	else
@@ -31,7 +31,7 @@ Vector2D Enemy::isPlayerInRange(double rangeAttack)
 Vector2D Enemy::isClonInRange(double n)
 {
 	GameManager* gm = GameManager::instance();
-	if (gm->getClon() == nullptr) { return NOPE ; }
+	if (gm->getClon() == nullptr) { return NOPE; }
 
 	Point2D clonPos = gm->getClon()->getPos();
 	if (currEnemy_ == nullptr &&
@@ -51,7 +51,7 @@ bool Enemy::getEnemy(double n)
 	auto gm = GameManager::instance();
 	Vector2D playerPos = isPlayerInRange(n);
 	Vector2D clonPos = isClonInRange(n);
-	if (playerPos == Vector2D(NOPE)&& clonPos == Vector2D(NOPE)) {
+	if (playerPos == Vector2D(NOPE) && clonPos == Vector2D(NOPE)) {
 		currEnemy_ = nullptr;
 		return false;
 	}
@@ -78,13 +78,25 @@ void Enemy::applyRewards()
 	GameManager::instance()->addArchievementPoints(achievementPoints_);
 }
 
+Vector2D Enemy::PosToTile(Vector2D pos)
+{
+	return Vector2D(round((pos.getX() - iniPosMap_.getX() + 2 * (pos.getY() - iniPosMap_.getY())) / GameManager::instance()->getTileSize()),
+					round(((pos.getX() - iniPosMap_.getX()) - 2 * (pos.getY() - iniPosMap_.getY())) / (-1 * GameManager::instance()->getTileSize())));
+}
+
+Vector2D Enemy::TileToPos(Vector2D tile)
+{
+	return Vector2D((iniPosMap_.getX() - ((double)(GameManager::instance()->getTileSize() / 2) * tile.getY()) + ((double)(GameManager::instance()->getTileSize() / 2) * (double)tile.getX())),
+					(iniPosMap_.getY() + ((double)(GameManager::instance()->getTileSize() / 4) * tile.getY()) + ((double)(GameManager::instance()->getTileSize() / 4) * (double)tile.getX())));
+}
+
 //Devuelve true si el enemigo que tengo está a rango
 bool Enemy::onRange() {
 	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = currEnemy_->getCenter();
 		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
-			center.getX(), center.getY(), currStats_.distRange_))
+			center.getX(), center.getY(), rangeVision_))
 		{
 			return true;
 		}

@@ -52,6 +52,10 @@ void Actor::receiveDamage(int damage) {
 	/*double finalDamage = (currStats_.armor_ * damage) / 100;
 	currStats_.health_ -= finalDamage;*/
 	currStats_.health_ -= damage;
+#ifdef _DEBUG
+	cout << currStats_.health_ << endl;
+#endif // _DEBUG
+
 	if (currStats_.health_ <= 0) {
 		this->die();
 	}

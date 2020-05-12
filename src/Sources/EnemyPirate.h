@@ -18,7 +18,6 @@ public:
 	virtual void move(Vector2D pos);
 	//Cuando pierde agro del enemigo
 	virtual void lostAggro();
-
 	virtual  ~EnemyPirate() {};
 
 private:

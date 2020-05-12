@@ -137,7 +137,7 @@ public:
 
 		//Sprites
 		Dragon,
-        PlayerFront,
+		PlayerFront,
 		MonkeyFront,
 		WolfFront,
 		Kraken,
@@ -145,7 +145,7 @@ public:
 		Merchant,
 		SkeletonMusician,
 		Cartographer,
-
+		Crab,
 		//Bosses
 		Magordito,
 		Cleon,
@@ -156,6 +156,7 @@ public:
 		Azul,
 
 		//Animaciones
+		CrabWalk,
 		CrabAttack,
 		//Player
 		PlayerIdleRightAnim,
@@ -180,98 +181,98 @@ public:
 		ClonSelfDestructionDownAnim,
 		//Calabaza
 			//Idle
-		PumpkinIdleRightAnim,
-		PumpkinIdleLeftAnim,
-		PumpkinIdleUpAnim,
-		PumpkinIdleDownAnim,
+			PumpkinIdleRightAnim,
+			PumpkinIdleLeftAnim,
+			PumpkinIdleUpAnim,
+			PumpkinIdleDownAnim,
 			//Explosion
-		PumpkinExpRightAnim,
-		PumpkinExpLeftAnim,
-		PumpkinExpUpAnim,
-		PumpkinExpDownAnim,
+			PumpkinExpRightAnim,
+			PumpkinExpLeftAnim,
+			PumpkinExpUpAnim,
+			PumpkinExpDownAnim,
 			//Attack
-		PumpkinAttackRightAnim,
-		PumpkinAttackLeftAnim,
-		PumpkinAttackUpAnim,
-		PumpkinAttackDownAnim,
+			PumpkinAttackRightAnim,
+			PumpkinAttackLeftAnim,
+			PumpkinAttackUpAnim,
+			PumpkinAttackDownAnim,
 			//Move
-		PumpkinMoveRightAnim,
-		PumpkinMoveLeftAnim,
-		PumpkinMoveUpAnim,
-		PumpkinMoveDownAnim,
-		ClonIdleRightAnim,
-		ClonIdleLeftAnim,
-		ClonIdleUpAnim,
-		ClonIdleDownAnim,
-		ClonMeleeRightAnim,
-		ClonMeleeLeftAnim,
-		ClonMeleeUpAnim,
-		ClonMeleeDownAnim,
-		ClonShootRightAnim,
-		ClonShootLeftAnim,
-		ClonShootUpAnim,
-		ClonShootDownAnim,
-		MonkeyIdleRightAnim,
-		MonkeyIdleLeftAnim,
-		MonkeyIdleUpAnim,
-		MonkeyIdleDownAnim,
-		MonkeyShootRightAnim,
-		MonkeyShootLeftAnim,
-		MonkeyShootUpAnim,
-		MonkeyShootDownAnim,
-		//Magordito
-			//Kirin
-		Kirin,
+			PumpkinMoveRightAnim,
+			PumpkinMoveLeftAnim,
+			PumpkinMoveUpAnim,
+			PumpkinMoveDownAnim,
+			ClonIdleRightAnim,
+			ClonIdleLeftAnim,
+			ClonIdleUpAnim,
+			ClonIdleDownAnim,
+			ClonMeleeRightAnim,
+			ClonMeleeLeftAnim,
+			ClonMeleeUpAnim,
+			ClonMeleeDownAnim,
+			ClonShootRightAnim,
+			ClonShootLeftAnim,
+			ClonShootUpAnim,
+			ClonShootDownAnim,
+			MonkeyIdleRightAnim,
+			MonkeyIdleLeftAnim,
+			MonkeyIdleUpAnim,
+			MonkeyIdleDownAnim,
+			MonkeyShootRightAnim,
+			MonkeyShootLeftAnim,
+			MonkeyShootUpAnim,
+			MonkeyShootDownAnim,
+			//Magordito
+				//Kirin
+				Kirin,
 
 
-		//Interactuables
-		Wheel,
-		Stash,
-		ShipDoor,
-		ExitShip,
-		Chest,
-		Bullet,
+				//Interactuables
+				Wheel,
+				Stash,
+				ShipDoor,
+				ExitShip,
+				Chest,
+				Bullet,
 
-		//Colsionable
-		Rock,
+				//Colsionable
+				Rock,
 
-		//Textos
-		PlayText,
-		ExitText,
-		ControlsText,
-		LoadText,
-		CreditsText, 
-		ResumeText,
-		MainMenuText,
-		StashMoneyText,
-		InventoryMoneyText,
+				//Textos
+				PlayText,
+				ExitText,
+				ControlsText,
+				LoadText,
+				CreditsText,
+				ResumeText,
+				MainMenuText,
+				StashMoneyText,
+				InventoryMoneyText,
 
-		//proyectiles
-		Coco,
+				//proyectiles
+				Coco,
 
-		//Equipables
-		Armor1,
-		Armor2,
-		Gloves1,
-		Gloves2,
-		Boots1,
-		Boots2,
-		Sword1,
-		Sword2,
-		Saber1,
-		Saber2,
-		Gun1,
-		Gun2,
-		ShotGun1,
-		ShotGun2,
+				//Equipables
+				Armor1,
+				Armor2,
+				Gloves1,
+				Gloves2,
+				Boots1,
+				Boots2,
+				Sword1,
+				Sword2,
+				Saber1,
+				Saber2,
+				Gun1,
+				Gun2,
+				ShotGun1,
+				ShotGun2,
 
-		//Tilesets de los mapas
-		Tileset1,
-		CollisionTile
+				//Tilesets de los mapas
+				Tileset1,
+				CollisionTile
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
-	enum AudioId : int{
+	enum AudioId : int {
 		//Música
 		MainTheme,
 		ShipSingers,
@@ -290,7 +291,7 @@ public:
 		MonkeyAttack,
 		MonkeyShoot,
 		MonkeyDie,
-		
+
 		//player
 		Walk,
 		Attack1,
@@ -349,7 +350,7 @@ public:
 		RETRO,
 		RETROSM
 	};
-	
+
 	///<summary>Struct para la informacion de las imagenes</summary>
 	struct ImageInfo {
 		TextureId textureId;
@@ -367,7 +368,7 @@ public:
 		AudioId id;
 		string fileName;
 	};
-	
+
 	///<summary>Struct para la informacion de las fuentes</summary>
 	struct FontInfo {
 		FontId id;
@@ -391,7 +392,7 @@ public:
 
 	///<summary>Vector con las rutas de la música a cargar</summary>
 	static vector<MusicInfo> musicRoutes;
-	
+
 	///<summary>Vector con las rutas de las fuentes a cargar</summary>
 	static vector<FontInfo> fontsRoutes;
 

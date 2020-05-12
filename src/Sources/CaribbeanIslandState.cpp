@@ -27,16 +27,18 @@ void CaribbeanIslandState::initState()
 	collisionCtrl_->clearList();
 	gm_->setOnShip(false);
 
-	//Inicializamos el mapa de la zona 1
-	initZone1();
 
 	//Inicializamos el hud
 	hud_ = new HUD(app_);
-	player_->initSkills();
 
 	//Añadimos el hud a objetos a renderizar
 	addRenderUpdateLists(hud_);
+
 	app_->getAudioManager()->playMusic(Resources::Caribbean, -1);
+	//Inicializamos el mapa de la zona 1
+	initZone1();
+
+	player_->initSkills();
 }
 
 void CaribbeanIslandState::initZone1()

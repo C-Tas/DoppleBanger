@@ -3,6 +3,7 @@
 #include "CollisionCtrl.h"
 #include <list>
 #include "TiledMap.h"
+#include "AStar.hpp"
 
 class CollisionCtrl;
 class HUD;
@@ -16,7 +17,7 @@ public:
 	///<summary>Constructora PlayState</summary>
 	PlayState(Application* app = nullptr) : GameState(app) { initState(); };
 	///<summary>Destructora</summary>
-	virtual ~PlayState() { delete mousePointer; };
+	virtual ~PlayState() { delete mousePointer; delete generator_; };
 
 	//Método necesario para dibujar los textbox por encima del juego
 	virtual void draw()const;
@@ -48,6 +49,9 @@ public:
 	Enemy* getEnemyByTag(string tag);
 	//intercambia posiciones de dos objetos en el orden de renderizado
 	void swapRenders(GameObject* obj, GameObject* other);
+
+	AStar::Generator* getGenerator() { return generator_; };
+
 protected:
 	Point2D playerEntry_ = Vector2D(0, 0);
 	//Singleton de colisiones
@@ -63,6 +67,8 @@ protected:
 	Draw* mousePointer;
 	const int W_MOUSE_POINTER = 32;
 	const int H_MOUSE_POINTER = 32;
+
+	AStar::Generator* generator_;
 
 	virtual void initState();
 	//Resetea la partida de acuerdo al GDD

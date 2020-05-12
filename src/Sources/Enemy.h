@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Actor.h"
-
+#include "AStar.hpp"
 using namespace std;
 
 class Enemy : public Actor
@@ -15,9 +15,21 @@ public:
 	virtual void lostAggro() {};
 	//Cuando se crea un clon se fija como nuevo objetivo
 	virtual void newEnemy(GameObject* obj) { currEnemy_ = obj; };
+
+	void setIniPosMap_(Vector2D pos) { iniPosMap_ = pos; };
+	void setPathPos(AStar::Vec2i pos) { pathPos_ = pos; };
+
+	Vector2D getIniPosMap_() { return iniPosMap_; };
+	AStar::Vec2i getPathPos() { return pathPos_; };
 	//Devuelve el tag 
 	string getTag() { return tag_; }
 protected:
+	//Ultimo actualizacion del AStar
+	AStar::CoordinateList pathing_;
+	//Posicion en el mapa de tiled
+	AStar::Vec2i pathPos_;
+	//Posicion inicial del mapa
+	Vector2D iniPosMap_;
 	//Rango de puntos de hazaña de la calabaza
 	int maxArchievementPoints = 0;
 	int minArchievementPoints = 0;
@@ -59,23 +71,26 @@ protected:
 	virtual void initAnims() {};
 	//en cada enemigo establece las stats de los enemigos
 	virtual void initialStats() = 0;
+
+	Vector2D PosToTile(Vector2D pos);
+	Vector2D TileToPos(Vector2D tile);
 	//inicializa los puntos de hazaña y el oro que da esta entidad
 	virtual void initRewards() = 0;
 	//Aplica los rewards al player
 	virtual void applyRewards();
 #pragma region stats
-	  double HEALTH = 0;
-	  double MANA = 0;
-	  double MANA_REG = 0;
-	  double ARMOR = 0;
-	  double MELEE_DMG = 0;
-	  double DIST_DMG = 0;
-	  double CRIT = 0;
-	  double MELEE_RANGE = 0;
-	  double DIST_RANGE = 0;
-	  double MOVE_SPEED = 0;
-	  double MELEE_RATE = 0;
-	  double DIST_RATE = 0;
+	double HEALTH = 0;
+	double MANA = 0;
+	double MANA_REG = 0;
+	double ARMOR = 0;
+	double MELEE_DMG = 0;
+	double DIST_DMG = 0;
+	double CRIT = 0;
+	double MELEE_RANGE = 0;
+	double DIST_RANGE = 0;
+	double MOVE_SPEED = 0;
+	double MELEE_RATE = 0;
+	double DIST_RATE = 0;
 #pragma endregion
 
 };
