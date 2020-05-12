@@ -4,8 +4,11 @@
 void SaveState::backToPreviousState(Application* app) {
 	app->getGameStateMachine()->popState();
 	SDL_ShowCursor(SDL_DISABLE);
-	app->getAudioManager()->playMusic(Resources::WavesSound, -1);
+	//Se resetea el sonido del barco
+	app->resetMusicChannels();
+	app->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
 }
+
 void SaveState::saveSlot1() {
 	GameManager::instance()->saveSlot1();
 }

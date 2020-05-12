@@ -13,7 +13,9 @@
 void ShopState::backToPrevious(Application* app) {
 	app->getGameStateMachine()->popState();
 	SDL_ShowCursor(SDL_DISABLE);
-	app->getAudioManager()->playMusic(Resources::WavesSound, -1);
+	//Se resetea la musica del barco
+	app->resetMusicChannels();
+	app->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
 }
 
 void ShopState::callbackAdvanceInventoryPage(Application* app) {

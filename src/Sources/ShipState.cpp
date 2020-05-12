@@ -16,10 +16,7 @@ void ShipState::goIsland(Application* app)
 	//Viajamos a la isla correspondiente
 	GameManager* gm = GameManager::instance();
 	Island currIsland = gm->getCurrIsland();
-	if (currIsland == Island::Caribbean) {
-		app->getAudioManager()->haltMusic();  
-		app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
-	}
+	if (currIsland == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
 	else if (currIsland == Island::Spooky) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
 	else if (currIsland == Island::Volcanic) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
 }
@@ -37,7 +34,8 @@ void ShipState::goMap(Application* app)
 void ShipState::goSaveState(Application* app)
 {
 	app->getGameStateMachine()->pushState(new SaveState(app));
-	app->getAudioManager()->playMusic(Resources::MainTheme, -1);
+	app->resetMusicChannels();
+	app->getAudioManager()->playChannel(Resources::MainTheme, -1, Resources::MainMusicChannel);
 }
 #pragma endregion
 
@@ -103,6 +101,8 @@ void ShipState::initState()
 	addRenderUpdateLists(player_);
 	startInstance_ = SDL_GetTicks();
 
+	app_->resetMusicChannels();
+	app_->resetSoundsChannels();
 	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, 0);
 }
 

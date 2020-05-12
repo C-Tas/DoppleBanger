@@ -39,26 +39,14 @@ public:
 	//<summary>Devuelve el total de canales</summary>
 	int channels();
 
-	//Música
-	//<summary>Carga música</summary>
-	bool loadMusic(int tag, const string& fileName);
-	//<summary>Pone música</summary>
-	void playMusic(int tag, int loops);
-	//<summary>Cambia el volumen de la música</summary>
-	int setMusicVolume(int volume);
-	//<summary>Para la música</summary>
-	void haltMusic();
-	//<summary>Pausa la música</summary>
-	void pauseMusic();
-	//<summary>Reanuda la música</summary>
-	void resumeMusic();
-
 	//Mute
-	bool getMuteMusic() { return muteMusic_; };
 	bool getMuteSounds() { return muteSounds_; };
+	inline void setMuteSounds() { muteSounds_ = !muteSounds_; };
+	void setAllSoundVolumen();
 
-	void setMuteMusic() { muteMusic_ = !muteMusic_; };
-	void setMuteSounds() { muteSounds_ = !muteSounds_; };
+	bool getMuteMusic() { return muteMusic_; };
+	inline void setMuteMusic() { muteMusic_ = !muteMusic_; };
+	void setAllMusicVolumen();
 private:
 	bool initialized_;
 	bool muteMusic_ = false;	//Musica

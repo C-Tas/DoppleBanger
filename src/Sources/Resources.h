@@ -285,14 +285,20 @@ public:
 		Tileset1,
 		CollisionTile
 	};
-
-	enum AudioChannels : int {
+	
+	enum MusicChannels : int {
 		//Musica auxiliar
+		MainMusicChannel,
 		AuxMusicChannel1,
 		AuxMusicChannel2,
 		AuxMusicChannel3,
+		//Cantidad de canales
+		NumMusicChannels
+	};
+
+	enum AudioChannels : int {
 		//Canal del jugador
-		PlayerChannel1,
+		PlayerChannel1 = NumMusicChannels,
 		PlayerChannel2,
 		PlayerChannel3,
 		PlayerChannel4,
@@ -307,7 +313,7 @@ public:
 		EnemyPirateChannel,
 
 		//Numero de canales
-		NumChannels
+		NumSoundChannels
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
@@ -355,9 +361,6 @@ public:
 		//CLon
 		Explosion,
 
-		//Efectos de sonido
-		Agro,
-
 		//Efectos para el lobo
 		WolfHowlAudio,
 		WolfAttackAudio,
@@ -380,7 +383,10 @@ public:
 		LaughPumpkin3,
 		MovePumpkin,
 		TauntPumpkin1,
-		TauntPumpkin2
+		TauntPumpkin2,
+
+		//Otros
+		Agro
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
@@ -427,9 +433,6 @@ public:
 
 	///<summary>Vector con las rutas de los audios a cargar</summary>
 	static vector<SoundInfo> soundRoutes;
-
-	///<summary>Vector con las rutas de la música a cargar</summary>
-	static vector<MusicInfo> musicRoutes;
 	
 	///<summary>Vector con las rutas de las fuentes a cargar</summary>
 	static vector<FontInfo> fontsRoutes;

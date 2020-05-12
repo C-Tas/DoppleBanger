@@ -42,6 +42,9 @@ bool MainMenuState::isExistingDataGame()
 }
 
 void MainMenuState::createButtons() {
+	//Cargamos música de fondo
+	app_->getAudioManager()->playChannel(Resources::AudioId::MainTheme, -1, Resources::MainMusicChannel);
+
 	double winWidth = app_->getWindowWidth();
 	double winHeight = app_->getWindowHeight();
 
@@ -86,9 +89,8 @@ void MainMenuState::goLoadState(Application* app) {
 	app->getGameStateMachine()->pushState(new LoadState(app));
 };
 void MainMenuState::goStoryState(Application* app) {
-	app->getAudioManager()->playMusic(Resources::Storyboard, -1);
-	app->getGameManager()->setCompleteMission(missions::gallegaEnProblemas, false);
-	app->getGameManager()->setStartedMission(missions::gallegaEnProblemas, false);
+	app->resetMusicChannels();
+	app->getAudioManager()->playChannel(Resources::Storyboard, -1, Resources::MainMusicChannel);
 	app->getGameStateMachine()->pushState(new StoryState(app));
 };
 

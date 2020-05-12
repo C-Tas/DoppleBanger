@@ -13,9 +13,6 @@ Application::Application(GameStateMachine* state) {
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
 	machine_->pushState(startState);
-
-	//Cargamos música de fondo
-	audioManager_->playMusic(Resources::AudioId::MainTheme, -1);
 }
 
 Application::~Application() {
@@ -68,6 +65,20 @@ void Application::runApp() {
 	endGame();
 }
 
+void Application::resetMusicChannels()
+{
+	for (int i = 0; i < Resources::NumMusicChannels; i++) {
+		audioManager_->haltChannel(i);
+	}
+}
+
+void Application::resetSoundsChannels()
+{
+	for (int i = Resources::NumMusicChannels; i < Resources::NumSoundChannels; i++) {
+		audioManager_->haltChannel(i);
+	}
+}
+
 void Application::updateDelta()
 {
 	lastTicks_ = currTicks_;
@@ -85,7 +96,7 @@ void Application::initResources() {
 	fontManager_->initObject();
 
 	//Crear e inicializar audioManager
-	audioManager_ = new AudioManager(Resources::NumChannels);
+	audioManager_ = new AudioManager(Resources::NumSoundChannels);
 	audioManager_->initObject();
 
 	//Generador de randoms
@@ -112,14 +123,9 @@ void Application::initResources() {
 			fontManager_->getFont(txtmsg.fontId), txtmsg.color);
 	}
 
-	//Creación de los efectos de sonido
+	//Creación del sonido
 	for (auto& sound : Resources::soundRoutes) {
 		audioManager_->loadSound(sound.audioId, sound.filename);
-	}
-
-	//Creación de la música
-	for (auto& music : Resources::musicRoutes) {
-		audioManager_->loadMusic(music.id, music.fileName);
 	}
 }
 

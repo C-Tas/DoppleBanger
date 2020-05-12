@@ -64,8 +64,8 @@ public:
 	virtual ~Application(); 
 
 	///<summary>Constantes con las dimensiones de la ventana </summary>
-	static const int winWidth_ = 1920;
-	static const int winHeight_ = 1080;
+	static const int winWidth_ = 1600;
+	static const int winHeight_ = 900;
 
 	///<summary>Bucle principal de la aplicacion</summary>
 	void runApp();
@@ -105,5 +105,10 @@ public:
 	SRandBasedGenerator* getRandom() { return random_; }
 	///<summary>Devuelve el GameManager</summary>
 	GameManager* getGameManager() { return gameManager_; }
+
+	//Resetea los canales de musica
+	void resetMusicChannels();
+	//Resetea los canales de efectos de sonido
+	void resetSoundsChannels();
 #pragma endregion
 };

@@ -206,7 +206,7 @@ bool Player::update()
 
 void Player::initIdle()
 {
-	app_->getAudioManager()->haltChannel(0);
+	app_->getAudioManager()->haltChannel(Resources::PlayerChannel1);
 	currState_ = STATE::IDLE;
 	texture_ = idleTx_[(int)currDir_];
 	currAnim_ = idleAnims_[(int)currDir_];

@@ -88,7 +88,6 @@ void PlayState::checkPlayerActions() {
 		else player_->setOnCollision(false);
 	}
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
-		app_->getAudioManager()->pauseMusic();
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
 		player_->stop();
 	}

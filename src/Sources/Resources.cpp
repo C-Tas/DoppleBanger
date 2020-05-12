@@ -261,29 +261,18 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png"}
 };
 
+//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
 vector<Resources::SoundInfo> Resources::soundRoutes{
-	//Musica Auxiliar
-	//No borrar. Alguna se incluyen dos veces (una en soundRoutes y otras en musicRoutes)
-	//El objetivo de esto es generar una ruta en sonidos y otra en musica, ya que
-	//en algunas ocasiones la musica hay que reproducirla con playChannel y otras con playMusic
-	//por lo que debe cargarse en ambos sitios.
+	//Musica principal
+#pragma region MainMusic
 	{ WavesSound ,"../Sources/assets/music/background/shipMusic.wav" },
 	{ MainTheme ,"../Sources/assets/music/background/menuMusic.mp3" },
 	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" },
 	{ Shop ,"../Sources/assets/music/background/shopMusic.mp3" },
 	{ Storyboard ,"../Sources/assets/music/background/storyboardMusic.mp3" },
-
-	//Lobo
-	{ Agro ,"../Sources/assets/efectos_sonido/agro.mp3" },
-	{ WolfHowlAudio ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
-	{ WolfAttackAudio ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
-	{ WolfDieAudio ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" },
-	{ MonkeyIdleSound ,"../Sources/assets/efectos_sonido/monkey/monoIdle.wav" },
-	{ MonkeyAttackSound ,"../Sources/assets/efectos_sonido/monkey/monoAttack.wav" },
-	{ MonkeyShootSound ,"../Sources/assets/efectos_sonido/monkey/monoShoot.wav" },
-	{ MonkeyDieSound ,"../Sources/assets/efectos_sonido/monkey/monoDie.ogg" },
-
+#pragma region
 	//Player
+#pragma region PlayerSounds
 	{ WalkAudio	  ,"../Sources/assets/efectos_sonido/player/walk.wav" },
 	{ Attack1 ,"../Sources/assets/efectos_sonido/player/attack1.wav" },
 	{ Attack2 ,"../Sources/assets/efectos_sonido/player/attack2.wav" },
@@ -315,12 +304,27 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	{ SwordSound6  ,"../Sources/assets/efectos_sonido/player/sword6.wav"},
 	{ MeleeCrit  ,"../Sources/assets/efectos_sonido/player/meleeCrit.wav"},
 	{ DistCrit  ,"../Sources/assets/efectos_sonido/player/distCrit.wav"},
-
+#pragma endregion
+#pragma region ClonSounds
 	//Clon
 	//{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
-	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
+#pragma endregion
 
+	//Lobo
+#pragma region Wolf
+	{ WolfHowlAudio ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
+	{ WolfAttackAudio ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
+	{ WolfDieAudio ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" },
+#pragma endregion
+	//Mono
+#pragma region Monkey
+	{ MonkeyIdleSound ,"../Sources/assets/efectos_sonido/monkey/monoIdle.wav" },
+	{ MonkeyAttackSound ,"../Sources/assets/efectos_sonido/monkey/monoAttack.wav" },
+	{ MonkeyShootSound ,"../Sources/assets/efectos_sonido/monkey/monoShoot.wav" },
+	{ MonkeyDieSound ,"../Sources/assets/efectos_sonido/monkey/monoDie.ogg" },
+#pragma endregion
 	//Calabaza
+#pragma region Pumpkin
 	{ AgroPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/agro.mp3" },
 	{ AttackPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/attack.wav" },
 	{ ExplosionPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/explosion.wav" },
@@ -331,15 +335,11 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	{ LaughPumpkin3 ,"../Sources/assets/efectos_sonido/pumpkin/laugh3.ogg" },
 	{ MovePumpkin ,"../Sources/assets/efectos_sonido/pumpkin/move.mp3" },
 	{ TauntPumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/taunt.mp3" },
-	{ TauntPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/taunt1.mp3" }
-};
+	{ TauntPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/taunt1.mp3" },
+#pragma endregion
 
-vector <Resources::MusicInfo> Resources::musicRoutes{
-	{ MainTheme ,"../Sources/assets/music/background/menuMusic.mp3" },
-	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" },
-	{ Shop ,"../Sources/assets/music/background/shopMusic.mp3" },
-	{ Storyboard ,"../Sources/assets/music/background/storyboardMusic.mp3" }
-	//Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
+	//Otros
+	{ Agro ,"../Sources/assets/efectos_sonido/agro.mp3" }
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{

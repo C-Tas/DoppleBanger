@@ -9,8 +9,8 @@
 void PauseState::resume(Application* app)
 {
 	SDL_ShowCursor(SDL_DISABLE);
-	app->getAudioManager()->resumeMusic();
-	app->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AudioChannels::AuxMusicChannel1);
+	app->getAudioManager()->resumeChannel(Resources::MainMusicChannel);
+	app->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
 	app->getGameStateMachine()->popState();
 }
 
@@ -28,15 +28,14 @@ void PauseState::goMainMenuState(Application* app) {
 /// Silencia/Habilita musica y efectos de sonido
 ///</summary>
 void PauseState::muteMusic(Application* app) {
-	if (app->getAudioManager()->getMuteMusic()) app->getAudioManager()->setMusicVolume(6); //Reanuda la musica
-	else app->getAudioManager()->setMusicVolume(0); //Pausa la musica
-
-	app->getAudioManager()->setMuteMusic(); //Cambia el booleano que controla el mute
+	app->getAudioManager()->setMuteMusic();			//Cambia el booleano que controla el mute
+	app->getAudioManager()->setAllMusicVolumen();	//Cambia el volumen en funcion del mute
 	static_cast<PauseState*>(app->getGameStateMachine()->getState())->changeMuteMusic(); //Cambia la textura del bot�n mute del PauseState
 }
 
 void PauseState::muteSounds(Application* app) {
-	app->getAudioManager()->setMuteSounds(); //Cambia el booleano que controla el mute
+	app->getAudioManager()->setMuteSounds();		//Cambia el booleano que controla el mute
+	app->getAudioManager()->setAllSoundVolumen();	//Cambia el volumen en funcion del mute
 	static_cast<PauseState*>(app->getGameStateMachine()->getState())->changeMuteSound(); //Cambia la textura del bot�n mute del PauseState
 }
 #pragma endregion
@@ -61,7 +60,9 @@ void PauseState::initState()
 {
 	SDL_ShowCursor(SDL_ENABLE);
 
-	app_->getAudioManager()->playChannel(Resources::MainTheme, -1, Resources::AudioChannels::AuxMusicChannel1);
+	app_->resetSoundsChannels();
+	app_->getAudioManager()->pauseChannel(Resources::MainMusicChannel);
+	app_->getAudioManager()->playChannel(Resources::MainTheme, -1, Resources::AuxMusicChannel1);
 
 	background_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::PauseBackground));
 	addRenderUpdateLists(background_);
