@@ -14,6 +14,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ResumeButton, "../Sources/assets/botones/resumeButton.png" },
 	{ BackButton, "../Sources/assets/botones/volver.png" },
 	{ SkipButton, "../Sources/assets/botones/skipButton.png" },
+	{ SkipStoryButton, "../Sources/assets/botones/skipStoryButton.png" },
 	{ RestartGame, "../Sources/assets/botones/restartGame.png" },
 	{ MuteOn, "../Sources/assets/botones/muteOn.png" },
 	{ MuteOff, "../Sources/assets/botones/muteOff.png" },

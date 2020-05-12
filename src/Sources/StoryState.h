@@ -8,12 +8,11 @@ struct Scene {
 	Texture* sceneTexture;
 };
 
-class StoryState :
-	public GameState
+class StoryState : public GameState
 {
 public:
 	///<summary>Constructora de la clase StoryState</summary>
-	StoryState(Application* app = nullptr) :GameState(app) { initState(); timeSinceUpdate = SDL_GetTicks(); };
+	StoryState(Application* app = nullptr) :GameState(app) { initState(); };
 	///<summary>Destructora</summary>
 	virtual ~StoryState() {};
 

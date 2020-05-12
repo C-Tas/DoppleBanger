@@ -51,6 +51,11 @@ void StoryState::initState() {
 	scenes.push({ 6000, app_->getTextureManager()->getTexture(Resources::TextureId::Scene1) });
 
 	//Bot�n para saltarse la secuencia de escenas
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkipButton), { 10,10 }, { 50,50 }, goToGame);
+	double winWidth = app_->getWindowWidth();
+	double winHeight = app_->getWindowHeight();
+	Vector2D scaleButton(winWidth / 8, winHeight / 15);
+	Vector2D posButton((winWidth / 2) - (scaleButton.getX() / 2), scaleButton.getY() / 4);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkipStoryButton), posButton, scaleButton, goToGame, this);
+	timeSinceUpdate = SDL_GetTicks();
 }
 

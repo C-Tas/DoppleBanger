@@ -22,6 +22,7 @@ public:
 		ResumeButton,
 		BackButton,
 		SkipButton,
+		SkipStoryButton,
 		MuteOff,
 		MuteOn,
 		RestartGame,
