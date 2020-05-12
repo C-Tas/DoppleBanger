@@ -114,7 +114,7 @@ void MonkeyCoco::initObject() {
 
 void MonkeyCoco::initialStats() {
 	rangeVision_ = 300;
-	HEALTH = 100;
+	HEALTH = 500;
 	MANA = 100;
 	MANA_REG = 1;
 	ARMOR = 10;
