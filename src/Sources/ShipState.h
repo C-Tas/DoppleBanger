@@ -64,8 +64,8 @@ protected:
 	#pragma endregion
 
 	#pragma region NPCs
-	const double W_ELDERMAN = W_WIN / 11;
-	const double H_ELDERMAN = H_WIN / 6;
+	const double W_ELDERMAN = W_WIN * 2 / 14;
+	const double H_ELDERMAN = H_WIN * 2 / 7;
 
 	const double W_MERCHANT = W_WIN * 2 / 19;
 	const double H_MERCHANT = H_WIN * 2 / 9;

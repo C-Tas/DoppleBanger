@@ -1,7 +1,6 @@
 #include "NPC.h"
 #include "CollisionCtrl.h"
 
-
 void NPC::initObject() {
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scale_.getX(),(int)scale_.getY() });
@@ -12,7 +11,17 @@ void NPC::initObject() {
 void NPC::initAnims() {
 	switch (npcType_) {
 	case (int)CollisionCtrl::NPCsNames::ElderMan:
-		npcIdle = { NUM_FRAMES_ELDERMAN, W_FRAME_ELDERMAN, H_FRAME_ELDERMAN, FRAME_RATE_ELDERMAN, true };
+		npcIdle = { NUM_FRAMES_ELDERMAN_DRINK, 100, 100, FRAME_RATE_ELDERMAN, true };
+		venancioPushStart = { NUM_FRAMES_ELDERMAN_PUSH0, 100, 200, FRAME_RATE_ELDERMAN, false };
+		venancioPushBucle = { NUM_FRAMES_ELDERMAN_PUSH1, 500, 500, FRAME_RATE_ELDERMAN, true };
+		venancioPushFinish = { NUM_FRAMES_ELDERMAN_PUSH2, W_FRAME_ELDERMAN, H_FRAME_ELDERMAN, FRAME_RATE_ELDERMAN, false };
+
+		drinkTexture = texture_;
+		pushStartTexture = app_->getTextureManager()->getTexture(Resources::VenancioPushStart);
+		pushBucleTexture = app_->getTextureManager()->getTexture(Resources::VenancioPushBucle);
+		pushFinishTexture = app_->getTextureManager()->getTexture(Resources::VenancioPushFinish);
+
+		lastDrink_ = SDL_GetTicks();
 		break;
 	case (int)CollisionCtrl::NPCsNames::Merchant:
 		npcIdle = { NUM_FRAMES_MERCHANT, W_FRAME_MERCHANT, H_FRAME_MERCHANT, FRAME_RATE_MERCHANT, true };
@@ -40,4 +49,82 @@ void NPC::initAnims() {
 	frame_.x = frame_.y = 0;
 	frame_.w = npcIdle.widthFrame_;
 	frame_.h = npcIdle.heightFrame_;
+}
+
+void NPC::initDrink() {
+	texture_ = drinkTexture;
+	currAnim_ = npcIdle;
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	lastDrink_ = SDL_GetTicks();
+}
+
+void NPC::initPushStart() {
+	texture_ = pushStartTexture;
+	currAnim_ = venancioPushStart;
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void NPC::initPushBucle() {
+	texture_ = pushBucleTexture;
+	currAnim_ = venancioPushBucle;
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	lastPush_ = SDL_GetTicks();
+}
+
+void NPC::initPushFinish() {
+	texture_ = pushFinishTexture;
+	currAnim_ = venancioPushFinish;
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void NPC::drinkAnim() {
+	if (SDL_GetTicks() - lastDrink_ >= timeDrink_ && currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
+		initPushStart();
+		lastDrink_ = SDL_GetTicks();
+	}
+}
+
+void NPC::pushStartAnim() {
+	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
+		initPushBucle();
+	}
+}
+
+void NPC::pushBucleAnim() {
+	if (SDL_GetTicks() - lastPush_ >= timePush_ && currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
+		initPushFinish();
+	}
+}
+
+void NPC::pushFinishAnim() {
+	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
+		initDrink();
+		lastPush_ = SDL_GetTicks();
+	}
+}
+
+bool NPC::update() {
+	updateFrame();
+	if (npcType_ == (int)CollisionCtrl::NPCsNames::ElderMan) {
+		if (texture_ == drinkTexture) drinkAnim();
+		else if (texture_ == pushStartTexture) pushStartAnim();
+		else if (texture_ == pushBucleTexture) pushBucleAnim();
+		else if (texture_ == pushFinishTexture) pushFinishAnim();
+	}
+
+	return false;
 }
