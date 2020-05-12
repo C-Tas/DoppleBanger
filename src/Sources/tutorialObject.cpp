@@ -3,6 +3,18 @@
 bool tutorialObject::update() {
 	//Solo entra con el dummy
 	if (currState_ == STATE::DYING) {
+		
+		switch (id_)
+		{
+		case 1:
+
+			break;
+		case 2:
+			app_->getAudioManager()->playChannel(Resources::AudioId::DummyDie, 0, (int)EFFECT::TUTORIAL);
+			break;
+		default:
+			break;
+		}
 		onCollider();	//Para dar la misión como terminada
 		applyRewards();
 		CollisionCtrl::instance()->removeDummy();

@@ -274,7 +274,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 
 	//Tilesets de los mapas
 	{ Tileset1, "../Sources/assets/mapas/Isla1-1/tileset_v2.png" },
-	{ CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png" },
+	{ CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png" }
+
 #pragma endregion
 };
 
@@ -336,7 +337,14 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 	{ LaughPumpkin3 ,"../Sources/assets/efectos_sonido/pumpkin/laugh3.ogg" },
 	{ MovePumpkin ,"../Sources/assets/efectos_sonido/pumpkin/move.mp3" },
 	{ TauntPumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/taunt.mp3" },
-	{ TauntPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/taunt1.mp3" }
+	{ TauntPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/taunt1.mp3" },
+
+	//Tutorial
+	{ Glass, "../Sources/assets/efectos_sonido/tutorial/glass.wav" },
+	{ DummyDie, "../Sources/assets/efectos_sonido/tutorial/dummy.wav" },
+
+	//NPC
+	{ VenancioTalk, "../Sources/assets/efectos_sonido/tutorial/VenancioTalk.wav" }
 };
 
 vector <Resources::MusicInfo> Resources::musicRoutes{

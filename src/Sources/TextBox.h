@@ -22,6 +22,8 @@ protected:
 	static void skipTutorial(Application* app);
 	static void nextTutorialVenancio(Application* app);
 
+	bool collisionActive_ = false;
+
 public:
 	///<summary>Constructora del textBox de diálogo</summary>
 	TextBox(Application* app) : app_(app) { 
@@ -48,6 +50,9 @@ public:
 
 	///<summary>Carga el textBox de diálogo inicial</summary>
 	void initDialog();
+
+	//Descativa la colisión
+	void deactiveOverlap() { collisionActive_ = false; }
 
 	///<summary>Carga el textBox de descripción inicial, se llama desde la constructora</summary>
 	void initDescription(Point2D pos);

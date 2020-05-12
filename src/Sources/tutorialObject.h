@@ -8,7 +8,7 @@ class tutorialObject :
 	public Enemy
 {
 public:
-	tutorialObject(Application* app, Vector2D pos, Vector2D scale, Texture* tex) :Enemy(app, pos, scale) { 
+	tutorialObject(Application* app, Vector2D pos, Vector2D scale, Texture* tex, int id) :Enemy(app, pos, scale), id_(id) {
 		initObject(); 
 		setTexture(tex);
 	};
@@ -21,6 +21,7 @@ public:
 	virtual void onCollider();
 	virtual void receiveDamage(int damage);
 private:
+	int id_ = -1;
 	virtual void initObject();
 };
 

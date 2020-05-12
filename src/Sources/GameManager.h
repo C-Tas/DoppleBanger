@@ -393,14 +393,16 @@ public:
 	inline void setCurrIsland(Island newIsland) { currIsland_ = newIsland; };
 	//Marca como desbloqueda la skill que pases como parámetro
 	inline void setSkillUnlocked(SkillName skill) { skillsUnlocked_[(int)skill] = true; };
-
+	//Marca como bloqueada la skill que pases como parámetro
+	inline void setSkillLocked(SkillName skill) { skillsUnlocked_[(int)skill] = false; };
 	//Actualiza el estado del cooldown, no es inline por el HUD
 	void setSkillCooldown(bool cooldown, Key key);
 	//Actualiza la habilidad equipada en el HUD y en el vector, no es inline por el HUD
 	void setSkillEquiped(SkillName newSkill, Key key);
 	//Actualiza el objeto equipado en el HUD y en el vector, no es inline por el HUD
 	void setObjectEquipped(ObjectName newObject, Key key);
-
+	//
+	Application* getApp() { return app_; }
 	//Asigna al puntero de player
 	inline void setPlayer(Player* player) { player_ = player; };
 	//Equipamiento

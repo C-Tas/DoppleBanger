@@ -1,5 +1,6 @@
 #pragma once
 #include "Collider.h"
+#include "GameManager.h"
 
 class RandEquipGen;
 class Inventory;
@@ -30,6 +31,12 @@ public:
 	Chest(Application* app, Point2D pos, Vector2D scale, int gold) : //constructora
 		Collider(app, pos, scale), rN() {
 		gold_ = gold;
+		initObject();
+	};
+	//Constructora con oro
+	Chest(Application* app, Point2D pos, Vector2D scale,int oro) :
+		Collider(app, pos, scale),rN(nullptr){
+		GameManager::instance()->addInventoryGold(oro);
 		initObject();
 	};
 

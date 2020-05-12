@@ -5,6 +5,21 @@
 #include <map>
 using namespace std;
 
+enum class MUSIC
+{
+
+};
+
+enum class EFFECT : int{
+	WALK_DIE = 0,
+	PLAYER_ATTACK,
+	CLON_IN,
+	POTION_MELEE_SKILLS,
+	CLON,
+	PIMPKIN,
+	NPC,
+	TUTORIAL,
+};
 
 /*canales y sus usos
 	canal 0 player walk y morir

@@ -283,6 +283,7 @@ void CollisionCtrl::tutorialCollision()
 		for (auto bullet : playerBullets_) {
 			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 				bottle_->getPos(), bottle_->getScaleX(), bottle_->getScaleY())) {
+				GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::Glass, 0, (int)EFFECT::TUTORIAL);
 				bottle_->onCollider();
 				bullet->onCollider();
 				bottle_ = nullptr;

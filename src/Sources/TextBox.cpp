@@ -63,10 +63,14 @@ void TextBox::initDescription(Point2D pos) {
 
 #pragma region Dialogos
 void TextBox::dialogElderMan() {
+	if (!collisionActive_) {
+		collisionActive_ = true;
+		app_->getAudioManager()->setChannelVolume(80, (int)EFFECT::NPC);
+		app_->getAudioManager()->playChannel(Resources::AudioId::VenancioTalk, 0, (int)EFFECT::NPC);
+	}
 	initDialog();
 	skipTutorial_->draw();
 	skipTutorial_->update();
-	
 	Texture text;
 	if (GameManager::instance()->onTutorial()) {
 		auto aux = dynamic_cast<tutorialState*>(app_->getCurrState());
@@ -85,27 +89,27 @@ void TextBox::dialogElderMan() {
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 1:
-			text.loadFromText(app_->getRenderer(), "Aprende a disparar...",
+			text.loadFromText(app_->getRenderer(), "Destruye la botella ",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 2:
-			text.loadFromText(app_->getRenderer(), "Ataque a melee",
+			text.loadFromText(app_->getRenderer(), "Ataca al dummy con ataques a melee",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 3:
-			text.loadFromText(app_->getRenderer(), "Habilidades",
+			text.loadFromText(app_->getRenderer(), "Usa la habilidad de golpe fuerte",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 4:
-			text.loadFromText(app_->getRenderer(), "Inventario...",
+			text.loadFromText(app_->getRenderer(), "Abre el inventario y vende algo",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 5:
-			text.loadFromText(app_->getRenderer(), "Fin del tutorial...",
+			text.loadFromText(app_->getRenderer(), "Saca al clon",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;

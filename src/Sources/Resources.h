@@ -284,7 +284,7 @@ public:
 
 		//Tilesets de los mapas
 		Tileset1,
-		CollisionTile
+		CollisionTile,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
@@ -358,7 +358,14 @@ public:
 		LaughPumpkin3,
 		MovePumpkin,
 		TauntPumpkin1,
-		TauntPumpkin2
+		TauntPumpkin2,
+
+		//Tutorial
+		Glass,
+		DummyDie,
+
+		//NPC
+		VenancioTalk
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
