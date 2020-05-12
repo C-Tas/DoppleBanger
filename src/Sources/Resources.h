@@ -297,8 +297,10 @@ public:
 	};
 
 	enum AudioChannels : int {
+		//Canal de los botones
+		BeerButtonChanel = NumMusicChannels,
 		//Canal del jugador
-		PlayerChannel1 = NumMusicChannels,
+		PlayerChannel1,
 		PlayerChannel2,
 		PlayerChannel3,
 		PlayerChannel4,

@@ -17,6 +17,7 @@
 //Callback del mercader para abrir la tienda
 void TextBox::goShopState(Application* app)
 {
+	app->resetSoundsChannels();
 	app->resetMusicChannels();
 	app->getAudioManager()->playChannel(Resources::Shop, -1, Resources::MainMusicChannel);
 	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
