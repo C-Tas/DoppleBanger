@@ -62,17 +62,12 @@ void TextBox::initDescription(Point2D pos) {
 }
 
 #pragma region Dialogos
-void TextBox::dialogElderMan() {
-	if (!collisionActive_) {
-		collisionActive_ = true;
-		app_->getAudioManager()->setChannelVolume(80, (int)EFFECT::NPC);
-		app_->getAudioManager()->playChannel(Resources::AudioId::VenancioTalk, 0, (int)EFFECT::NPC);
-	}
+void TextBox::dialogElderMan(int num) {
 	initDialog();
-	skipTutorial_->draw();
-	skipTutorial_->update();
 	Texture text;
 	if (GameManager::instance()->onTutorial()) {
+		skipTutorial_->draw();
+		skipTutorial_->update();
 		auto aux = dynamic_cast<tutorialState*>(app_->getCurrState());
 		if (aux && aux->isCurrTaskComplete()) {
 			GameManager::instance()->nextPhaseVenancio();
@@ -84,34 +79,80 @@ void TextBox::dialogElderMan() {
 		case 0:
 			tutorialButton_->draw();
 			tutorialButton_->update();
-			text.loadFromText(app_->getRenderer(), "No todo el mundo necesita un taca-taca para morverse...", 
+			text.loadFromText(app_->getRenderer(), "Veo que no todo el mundo necesita un taca-taca para morverse...", 
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "Te veo verde, has visto lo mamadisimo que estoy?, te puedo dar unos consejos.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
 			break;
 		case 1:
-			text.loadFromText(app_->getRenderer(), "Destruye la botella ",
+			text.loadFromText(app_->getRenderer(), "Usa tu pistola con click derecho para romper esa botella que me recuerda al amor de ella. ",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 2:
-			text.loadFromText(app_->getRenderer(), "Ataca al dummy con ataques a melee",
+			text.loadFromText(app_->getRenderer(), "Presionando una vez el click izquierdo sobre un enemigo, puedes mochar a tus enemigos.",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "Te recomiendo limpiar tu espada despues de mochar al susodicho.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
 			break;
 		case 3:
-			text.loadFromText(app_->getRenderer(), "Usa la habilidad de golpe fuerte",
-				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + lineSpacing);
-			break;
-		case 4:
-			text.loadFromText(app_->getRenderer(), "Abre el inventario y vende algo",
-				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + lineSpacing);
+			switch (num) {
+			case 0:
+				text.loadFromText(app_->getRenderer(), "Has visto que el susodicho te ha dado puntos de hazana?",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+				text.loadFromText(app_->getRenderer(), "Se consiguen al ganar experiencia.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 2);
+				text.loadFromText(app_->getRenderer(), "Abre el menu de habilidades con la 'V' y sumalos a la segunda rama.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 3);
+
+				button_->draw();
+				button_->update();
+				break;
+			case 1:
+				text.loadFromText(app_->getRenderer(), "Al desbloquear la habilidad haz click sobre esta y luego haz click sobre el acceso (Q, W, E) que te guste.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+
+				text.loadFromText(app_->getRenderer(), "Ahora usa ese acesso para activar la habilidad y mocha al susodicho.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + (lineSpacing * 2));
+				break;
+			}
 			break;
 		case 5:
-			text.loadFromText(app_->getRenderer(), "Saca al clon",
+			switch (num) {
+			case 0:
+				text.loadFromText(app_->getRenderer(), "Algunas veces encontraras tesoros, no lo dudes mochalos a todos!!",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+				text.loadFromText(app_->getRenderer(), "Usa el oro para comprar una pocion a ese tio mas verde que tu, si te sobra algo podrias comprarme un ron no?.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 2);
+				button_->draw();
+				button_->update();
+				break;
+			case 1:
+				text.loadFromText(app_->getRenderer(), "Abre el inventario con la tecla C y equipala con el boton verde.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+
+				text.loadFromText(app_->getRenderer(), "Ahora usa ese acesso para usar la susodicha pocion.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + (lineSpacing * 2));
+				break;
+			}
+			break;
+
+		case 6:
+			text.loadFromText(app_->getRenderer(), "Y recuerda, siempre puedes confiar en tu anillo con la tecla R podras invocarla y podras mejorarla con los puntos de hazana",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "Siempre podras mejorar tu anillo con los puntos de hazana, bueno si me disculpas hoy tocha pecho y biceps.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
 			break;
 		default:
 			break;

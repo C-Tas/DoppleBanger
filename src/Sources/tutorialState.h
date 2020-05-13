@@ -7,6 +7,7 @@ public:
 		gm_ = GameManager::instance();
 		gm_->activeTutorial();
 		venancio_->setPos(TUTORIAL_POS);
+		//gm_->setOnShip(false);
 	};
 	~tutorialState() {}
 	virtual void update();
@@ -23,6 +24,7 @@ private:
 	bool dummyCreated_ = false;
 	bool bottleCreated_ = false;
 	bool chestCreated_ = false;
+	bool goldWasted_ = false;
 	bool currTaskComplete_ = false;
 	void createBottle();
 	void createDummy();

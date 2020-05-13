@@ -3,6 +3,8 @@
 #include "Chest.h"
 #include "InventoryButton.h"
 #include "ShopState.h" 
+#include "usable.h"
+#include "HUD.h"
 
 void tutorialState::update()
 {
@@ -23,6 +25,8 @@ void tutorialState::update()
 		//crear dummy
 		if (!dummyCreated_) {
 			createDummy();
+			HUD* hud = new HUD(app_);
+			addRenderUpdateLists(hud);
 		}
 		break;
 	//Apreder a usar habilidades
@@ -35,20 +39,28 @@ void tutorialState::update()
 		break;
 	//Aprender los cofres
 	case 4:
-		//crear cofre
+		//crear cofre con oro
 		if (!chestCreated_) {
 			createChest();
 		}
-		if (static_cast<Chest*>(chest) == nullptr) {
-			//crear objeto en la tienda
+		else {
+			//crear potion en la tienda
+			usable* potion = new usable(app_, potionType::Mana);
+			//Gloves* gloves = new Gloves(app_, 50, 50, 12, equipType::GlovesI);
+			InventoryButton* item = new InventoryButton(app_, { 0,0 }, { 100,100 }, potion, ShopState::callbackSelectObject, false, 1);
+			auto aux = gm_->getShop();
+			item->setIterator(aux->insert(aux->end(), item));
 			GameManager::instance()->nextPhaseVenancio();
 		}
 		break;
 	//Aprender sobre pociones
 	case 5:
-		//Vende objetos en la tienda 
-		if (GameManager::instance()->getInventoryGold() > 200) {
-
+		if (gm_->getInventoryGold() > 0 && !goldWasted_) {
+			goldWasted_ = true;
+		}
+		else if (goldWasted_ && gm_->getInventory()->empty() && gm_->getStash()->empty() && gm_->getObjectEquipped(Key::One) == ObjectName::Unequipped &&
+			gm_->getObjectEquipped(Key::Two) == ObjectName::Unequipped && gm_->getInventoryGold() < 50)
+		{
 			GameManager::instance()->nextPhaseVenancio();
 		}
 		break;

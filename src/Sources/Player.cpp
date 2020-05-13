@@ -129,11 +129,11 @@ bool Player::update()
 		cout << getCenter().getX() << " " << getCenter().getY() << endl;
 	}
 	
-	if (!gm_->getOnShip() && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr && !potions_[0]->isUsed()) {
+	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr && !potions_[0]->isUsed()) {
 		usePotion(potions_[0], 0);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 	}
-	if (!gm_->getOnShip() && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr && !potions_[1]->isUsed()) {
+	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr && !potions_[1]->isUsed()) {
 		usePotion(potions_[1], 1);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 	}
@@ -158,7 +158,7 @@ bool Player::update()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
-		if (!gm_->getOnShip()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
+		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
 	}
 	else if (attacking_ && objective != nullptr && objective->getState() != STATE::DYING && !enemiesInRange.empty())
 	{

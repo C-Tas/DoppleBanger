@@ -33,12 +33,6 @@ public:
 		gold_ = gold;
 		initObject();
 	};
-	//Constructora con oro
-	Chest(Application* app, Point2D pos, Vector2D scale,int oro) :
-		Collider(app, pos, scale),rN(nullptr){
-		GameManager::instance()->addInventoryGold(oro);
-		initObject();
-	};
 
 	virtual ~Chest() {};
 

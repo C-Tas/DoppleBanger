@@ -684,19 +684,19 @@ void GameManager::resetInventory()
 void GameManager::setSkillCooldown(bool cooldown, Key key)
 {
 	skillsCooldown_[(int)key] = cooldown;
-	if (!onShip_) hud_->setSkillCooldown(cooldown, (int)key);
+	if (!onShip_ || tutorial) hud_->setSkillCooldown(cooldown, (int)key);
 }
 
 void GameManager::setSkillEquiped(SkillName newSkill, Key key)
 {
 	skillsEquipped_[(int)key] = newSkill;
-	if (!onShip_) hud_->updateKey((int)key);
+	if (!onShip_ || tutorial) hud_->updateKey((int)key);
 }
 
 void GameManager::setObjectEquipped(ObjectName newObject, Key key)
 {
 	objectsEquipped_[(int)key - (int)Key::One] = newObject;
-	if (!onShip_) hud_->updateKey((int)key);
+	if (!onShip_ || tutorial) hud_->updateKey((int)key);
 }
 
 playerEquipment& GameManager::initEquipment(){

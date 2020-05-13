@@ -146,6 +146,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 		ShipObjectsInfo(ShipObjectsNames i, ShipObject* ob) { id = i; object = ob; };
 	};
 
+	bool canTalk = true;
 	HandleEvents* input_ = nullptr;	//Para controlar si los objetos han sido clickados
 
 	Player* player_ = nullptr;

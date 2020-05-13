@@ -318,7 +318,12 @@ void CollisionCtrl::drawTextBox() {
 	//Generamos un textbox si se ha dado alguna colisión con un NPC
 	switch (npcCollision.id) {
 	case NPCsNames::ElderMan:
-		npcCollision.object->getTextBox()->dialogElderMan();
+		if(canTalk){
+			GameManager::instance()->getApp()->getAudioManager()->setChannelVolume(80, (int)EFFECT::NPC);
+			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::VenancioTalk, 0, (int)EFFECT::NPC);
+			canTalk = false;
+		}
+		npcCollision.object->getTextBox()->dialogElderMan(numConversation_);
 		break;
 	case NPCsNames::Merchant:
 		npcCollision.object->getTextBox()->dialogMerchant();
@@ -340,6 +345,7 @@ void CollisionCtrl::drawTextBox() {
 		break;
 	default:
 		numConversation_ = 0;
+		canTalk = true;
 		break;
 	}
 	npcCollision.id = NPCsNames::Nobody;

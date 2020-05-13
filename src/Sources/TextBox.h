@@ -22,7 +22,6 @@ protected:
 	static void skipTutorial(Application* app);
 	static void nextTutorialVenancio(Application* app);
 
-	bool collisionActive_ = false;
 
 public:
 	///<summary>Constructora del textBox de diálogo</summary>
@@ -51,15 +50,12 @@ public:
 	///<summary>Carga el textBox de diálogo inicial</summary>
 	void initDialog();
 
-	//Descativa la colisión
-	void deactiveOverlap() { collisionActive_ = false; }
-
 	///<summary>Carga el textBox de descripción inicial, se llama desde la constructora</summary>
 	void initDescription(Point2D pos);
 
 #pragma region Diálogos
 	///<summary>Frases del viejo cuando se viaja a una isla nueva o se está en el barco</summary>
-	void dialogElderMan();
+	void dialogElderMan(int num);
 
 	///<summary>Frase del comerciante</summary>
 	void dialogMerchant();

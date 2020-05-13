@@ -145,8 +145,6 @@ void ShopState::initState() {
 
 void ShopState::endState()
 {
-	gm_->setInventoryGold(inventory_.money_);
-
 	delete inventoryMoneyTex_;
 	delete selectedObjectDescription_;
 }
@@ -311,7 +309,7 @@ void ShopState::selectedIsLastElement(ContainerSHOP& list_, int nVisibleElements
 	auto aux = list_.objects_->begin();
 	advance(aux, list_.page_ * nVisibleElements);
 
-	if (selected_->getIterator() == list_.firstDrawn && list_.firstDrawn == aux && aux != --list_.objects_->end())++list_.firstDrawn;
+	if (selected_->getIterator() == list_.firstDrawn && list_.firstDrawn == aux && aux != --list_.objects_->end())++list_.firstDrawn;//peta
 	else if (selected_->getIterator() == list_.firstDrawn && list_.firstDrawn != list_.objects_->begin() && list_.firstDrawn == --list_.objects_->end()) {
 		advance(list_.firstDrawn, -nVisibleElements);
 		list_.page_--;
