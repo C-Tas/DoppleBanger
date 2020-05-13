@@ -8,6 +8,7 @@
 #include "CaribbeanIslandState.h"
 #include "SpookyIslandState.h"
 #include "VolcanicIslandState.h"
+#include "TestState.h"
 
 #pragma region CallBacks
 //Callback para cambiar de GameState e ir a la isla actual
@@ -116,7 +117,13 @@ void ShipState::update()
 
 		songActive = true;
 	}
+
+
 	collisionCtrl_->shipCollisions();
+#ifdef _DEBUG
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_BACKSPACE))
+		app_->getGameStateMachine()->changeState(new TestState(app_));
+#endif
 }
 
 void ShipState::loadState(){

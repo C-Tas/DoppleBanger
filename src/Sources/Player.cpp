@@ -118,7 +118,6 @@ bool Player::update()
 		currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
 		slowed_ = false;
 	}
-
 	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_) {
 		initShoot(); 
