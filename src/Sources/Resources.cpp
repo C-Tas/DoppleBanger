@@ -46,6 +46,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},
 	{ ButtonUpgradeBlue, "../Sources/assets/botones/UpgradeButtonBlue.png"},
 	{ ButtonUpgradeYellow, "../Sources/assets/botones/UpgradeButtonYellow.png"},
+	{ ButtonInitTutorial, "../Sources/assets/botones/botonEscucharVenancio.png"},
+	{ ButtonSkipTutorial, "../Sources/assets/botones/botonPasarVenancio.png"},
 
 	//Animaciones de botones
 	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},

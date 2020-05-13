@@ -37,11 +37,11 @@ public:
 		button_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::RightArrow), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
 			Vector2D{ (double)(app_->getWindowWidth() / 17),  (double)(app_->getWindowHeight() / 20) }, nextConversation);
 
-		tutorialButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToShopButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
-			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, nextTutorialVenancio);
+		tutorialButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::ButtonInitTutorial), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 4),  (double)(app_->getWindowHeight() / 20) }, nextTutorialVenancio);
 
-		skipTutorial_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::SkipButton), Vector2D{ (double)lineSpacing + app->getWindowWidth() / 5, dest.y + (double)lineSpacing * 5 },
-			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, skipTutorial);
+		skipTutorial_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::ButtonSkipTutorial), Vector2D{ (double)lineSpacing + app->getWindowWidth() / 3, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 5),  (double)(app_->getWindowHeight() / 20) }, skipTutorial);
 	};
 	///<summary>Constructora del textBox de descripción</summary>
 	TextBox(Application* app, Point2D pos) : app_(app) { initDescription(pos); };

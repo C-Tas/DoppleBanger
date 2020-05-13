@@ -53,6 +53,8 @@ public:
 		LoadGame3,
 		LoadGameNull,
 		LoadButtonNull,
+		ButtonInitTutorial,
+		ButtonSkipTutorial,
 		//Animaciones de botones
 		BeerAnim,
 

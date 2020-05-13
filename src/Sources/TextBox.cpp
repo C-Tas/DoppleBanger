@@ -87,6 +87,8 @@ void TextBox::dialogElderMan(int num) {
 			text.render(lineSpacing, dest.y + lineSpacing * 2);
 			break;
 		case 1:
+			skipTutorial_->setPos(Vector2D{ app_->getWindowWidth() - skipTutorial_->getScaleX() - lineSpacing, dest.y + (double)lineSpacing * 3 });
+
 			text.loadFromText(app_->getRenderer(), "Usa tu pistola con click derecho para romper esa botella que me recuerda al amor de ella. ",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
@@ -130,9 +132,12 @@ void TextBox::dialogElderMan(int num) {
 				text.loadFromText(app_->getRenderer(), "Algunas veces encontraras tesoros, no lo dudes mochalos a todos!!",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
-				text.loadFromText(app_->getRenderer(), "Usa el oro para comprar una pocion a ese tio mas verde que tu, si te sobra algo podrias comprarme un ron no?.",
+				text.loadFromText(app_->getRenderer(), "Usa el oro para comprar una pocion a ese tio mas verde que tu.",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing * 2);
+				text.loadFromText(app_->getRenderer(), "Si te sobra algo podrias comprarme un ron, no?",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 3);
 				button_->draw();
 				button_->update();
 				break;
@@ -147,10 +152,10 @@ void TextBox::dialogElderMan(int num) {
 			break;
 
 		case 6:
-			text.loadFromText(app_->getRenderer(), "Y recuerda, siempre puedes confiar en tu anillo con la tecla R podras invocarla y podras mejorarla con los puntos de hazana",
+			text.loadFromText(app_->getRenderer(), "Y recuerda, siempre puedes confiar en tu anillo, con la tecla R podras invocarla y podras mejorarla con los puntos",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
-			text.loadFromText(app_->getRenderer(), "Siempre podras mejorar tu anillo con los puntos de hazana, bueno si me disculpas hoy tocha pecho y biceps.",
+			text.loadFromText(app_->getRenderer(), "de hazana. Bueno si me disculpas hoy tocha pecho y biceps.",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing * 2);
 			break;
