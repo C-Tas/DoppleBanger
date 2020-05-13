@@ -23,5 +23,7 @@ public:
 	virtual void remove(Player* player);
 
 	virtual void getDescription(TextBox* tex);
+
+
 };
 

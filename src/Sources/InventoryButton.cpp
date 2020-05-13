@@ -48,16 +48,16 @@ void InventoryButton::initTextureEquipment()
 		texture_ = auxTx->getTexture(Resources::Boots2);
 		break;
 	case equipType::SwordI:
-		texture_ = auxTx->getTexture(Resources::Sword1);
+		texture_ = auxTx->getTexture(Resources::Sword1H);
 		break;
 	case equipType::SwordII:
-		texture_ = auxTx->getTexture(Resources::Sword2);
+		texture_ = auxTx->getTexture(Resources::Sword2H);
 		break;
 	case equipType::SaberI:
-		texture_ = auxTx->getTexture(Resources::Saber1);
+		texture_ = auxTx->getTexture(Resources::Saber1H);
 		break;
 	case equipType::SaberII:
-		texture_ = auxTx->getTexture(Resources::Saber2);
+		texture_ = auxTx->getTexture(Resources::Saber2H);
 		break;
 	case equipType::PistolI:
 		texture_ = auxTx->getTexture(Resources::Gun1);

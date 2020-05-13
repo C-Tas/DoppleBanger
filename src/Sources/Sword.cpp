@@ -21,3 +21,5 @@ void Sword::getDescription(TextBox* tex)
 	else if (type_ == equipType::SaberI) tex->saberCaribbean();
 	else if (type_ == equipType::SaberI) tex->saberSpooky();
 }
+
+

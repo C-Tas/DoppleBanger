@@ -51,6 +51,11 @@ private:
 	//donde se van a poner las descripciones
 	Point2D descriptionPoint{ 0,0 };
 	TextBox* descriptionBox;
+	//arreglar las espadas
+	void getHorizontal(InventoryButton* but);
+
+	void getVertical(InventoryButton* but);
+	
 public:
 	Inventory(Application* app) :GameState(app) { initState(); };
 	virtual ~Inventory() ;

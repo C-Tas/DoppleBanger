@@ -85,6 +85,7 @@ void Inventory::initState(){
 	if (aux.gloves_ != nullptr) equipment_.gloves_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.gloves_, callSelectObject, true);
 	if (aux.boots_ != nullptr) equipment_.boots_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.boots_, callSelectObject, true);
 	if (aux.sword_ != nullptr)	equipment_.sword_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.sword_, callSelectObject, true);
+	getVertical(equipment_.sword_);
 	if (aux.gun_ != nullptr) equipment_.gun_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, aux.gun_, callSelectObject, true);
 	if (aux.potions_[0] != nullptr)	equipment_.potion1_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[0], callSelectObject, true);
 	if (aux.potions_[1] != nullptr)	equipment_.potion2_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[1], callSelectObject, true);
@@ -153,7 +154,14 @@ void Inventory::changeEquipment(InventoryButton* &but) {
 		//El objeto desequipado lo devolvemos al final de la lista
 		list <InventoryButton*>::iterator it = inventoryList_->insert(inventoryList_->end(), aux);
 		aux->setIterator(it);
-	}
+		//comprobamos si se trata de una espada
+		Equipment* auxEquip = static_cast<Equipment*>(but->getObject());
+		equipType auxType = auxEquip->getEquipType();
+		if ((auxType == equipType::SwordI || auxType == equipType::SwordII
+			|| auxType == equipType::SaberI || auxType == equipType::SaberII)) {
+			getHorizontal(but);
+		}
+	} 
 	//equipamos el nuevo objeto
 	but= select_; 
 }
@@ -179,6 +187,7 @@ void Inventory::selectEquipment(){
 		|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
 		changeEquipment(equipment_.sword_);
 		player_->equip(static_cast<Sword*>(auxEquip));
+		getVertical(select_);
 	}
 	else if (auxType == equipType::PistolI || auxType == equipType::PistolII
 		|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
@@ -274,6 +283,7 @@ void Inventory::draw()const {
 		
 		double sizeX = (double)(app_->getWindowWidth() / 16);
 		double SizeY = (double)(app_->getWindowWidth() / 16);
+		double SizeXSWord = (double)(app_->getWindowWidth() / 7.5);
 		int i = 0;
 		//dibujamos los objetos de la primera columna
 		while (i < VIEW_LIST / 2 && aux != inventoryList_->end()) {
@@ -282,7 +292,12 @@ void Inventory::draw()const {
 			//#endif
 			auxOb = *aux;
 			auxOb->setPos(Vector2D{ double(posx),double(posy + double(i * (double(app_->getWindowHeight()) / 9)) )});
-			auxOb->setScale(Vector2D{ sizeX,SizeY });
+			equipType auxType = static_cast<Equipment*>(auxOb->getObject())->getEquipType();
+			if ((auxType == equipType::SwordI || auxType == equipType::SwordII
+				|| auxType == equipType::SaberI || auxType == equipType::SaberII)) {
+				auxOb->setScale(Vector2D{ SizeXSWord,SizeY });
+			}
+			else auxOb->setScale(Vector2D{ sizeX,SizeY });
 			auxOb->draw();//desreferenciamos el puntero
 			aux++;
 			i++;
@@ -292,7 +307,12 @@ void Inventory::draw()const {
 		while (j < VIEW_LIST / 2 && aux != inventoryList_->end()) {
 			auxOb = *aux;
 			auxOb->setPos(Vector2D{ double(posx + (double)(app_->getWindowWidth() / 5)),double(posy + (j * (double(app_->getWindowHeight()) / 9))) });
-			auxOb->setScale(Vector2D{ sizeX,SizeY });
+			equipType auxType = static_cast<Equipment*>(auxOb->getObject())->getEquipType();
+			if ((auxType == equipType::SwordI || auxType == equipType::SwordII
+				|| auxType == equipType::SaberI || auxType == equipType::SaberII)) {
+				auxOb->setScale(Vector2D{ SizeXSWord,SizeY });
+			}
+			else auxOb->setScale(Vector2D{ sizeX,SizeY });
 			auxOb->draw();//desreferenciamos el puntero
 			aux++;
 			j++;
@@ -595,6 +615,26 @@ void Inventory::update() {
 
 		GameState::update();
 	}
+}
+
+void Inventory::getHorizontal(InventoryButton* but)
+{
+	
+	equipType type_ = static_cast<Sword*>(but->getObject())->getEquipType();
+	if (type_ == equipType::SwordI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword1H));
+		else if (type_ == equipType::SwordII) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword2H));
+		else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber1H));
+		else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber2H));
+}
+
+void Inventory::getVertical(InventoryButton* but)
+{
+
+	equipType type_ = static_cast<Sword*>(but->getObject())->getEquipType();
+	if (type_ == equipType::SwordI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword1));
+	else if (type_ == equipType::SwordII) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword2));
+	else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber1));
+	else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber2));
 }
 
 Inventory::~Inventory() {
