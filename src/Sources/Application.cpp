@@ -124,7 +124,7 @@ void Application::initResources() {
 	}
 
 	//Creación del sonido
-	for (auto& sound : Resources::soundRoutes) {
+	for (auto& sound : Resources::audioRoutes) {
 		audioManager_->loadSound(sound.audioId, sound.filename);
 	}
 }

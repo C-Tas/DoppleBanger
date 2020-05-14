@@ -263,7 +263,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 };
 
 //Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
-vector<Resources::SoundInfo> Resources::soundRoutes{
+vector<Resources::AudioInfo> Resources::audioRoutes{
 	//Musica principal
 #pragma region MainMusic
 	{ WavesSound ,"../Sources/assets/music/background/shipMusic.wav" },
@@ -341,6 +341,34 @@ vector<Resources::SoundInfo> Resources::soundRoutes{
 
 	//Otros
 	{ Agro ,"../Sources/assets/efectos_sonido/agro.mp3" }
+};
+
+vector<Resources::AudioVolume> Resources::audioVolume{
+	//Canal de musica
+	{ MainMusicChannel, 7 },
+	{ AuxMusicChannel1, 7 },
+	{ AuxMusicChannel2, 7 },
+	{ AuxMusicChannel3, 7 },
+
+	//Canal de los botones
+	{ BeerButtonChanel, 6 },
+
+	//Canal del jugador
+	{ PlayerChannel1, 10 },
+	{ PlayerChannel2, 10 },
+	{ PlayerChannel3, 10 },
+	{ PlayerChannel4, 10 },
+
+	//Canal del lobo
+	{ WolfChannel, 6 },
+	//Canal del mono
+	{ MonkeyChannel, 6 },
+
+	//Canal de la calabaza
+	{ PumpkinChannel1, 6 },
+	{ PumpkinChannel2, 6 },
+	//Canal del pirata
+	{ EnemyPirateChannel, 6 }
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{

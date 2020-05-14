@@ -38,8 +38,10 @@ bool AudioManager::initObject() {
 	// set number of channels
 	channels_ = Mix_AllocateChannels(channels_);
 
-	//Inicializa el volumen de todos los canales y la música a 6
-	for (int i = 0; i < channels_; i++) setChannelVolume(7, i);
+	//Inicializa el volumen de todos los canales y la musica
+	for (int i = 0; i < Resources::NumSoundChannels; i++) {
+		setChannelVolume(Resources::audioVolume.at(i).volume, i);
+	}
 
 	initialized_ = true;
 
@@ -67,6 +69,7 @@ bool AudioManager::loadSound(int tag, const string& fileName) {
 int AudioManager::playChannel(int tag, int loops, int channel) {
 	Mix_Chunk* chunk = chunks_[tag];
 	if (chunk != nullptr) {
+		cout << "Entra " << channel << endl;
 		return Mix_PlayChannel(channel, chunk, loops);
 	}
 	else {
@@ -103,7 +106,7 @@ void AudioManager::setAllSoundVolumen()
 	}
 	else {
 		for (int i = Resources::NumMusicChannels; i < Resources::NumSoundChannels; i++) {
-			setChannelVolume(7, i);
+			setChannelVolume(Resources::audioVolume.at(i).volume, i);
 		}
 	}
 }
@@ -117,7 +120,7 @@ void AudioManager::setAllMusicVolumen()
 	}
 	else {
 		for (int i = 0; i < Resources::NumMusicChannels; i++) {
-			setChannelVolume(6, i);
+			setChannelVolume(Resources::audioVolume.at(i).volume, i);
 		}
 	}
 }

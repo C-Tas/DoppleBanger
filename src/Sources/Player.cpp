@@ -205,7 +205,9 @@ bool Player::update()
 
 void Player::initIdle()
 {
-	app_->getAudioManager()->haltChannel(Resources::PlayerChannel1);
+	//Apaño para que deje de sonar al caminar
+	if(currState_ == STATE::FOLLOWING)
+		app_->getAudioManager()->playChannel(Resources::WalkAudio, 0, Resources::PlayerChannel1);
 	currState_ = STATE::IDLE;
 	texture_ = idleTx_[(int)currDir_];
 	currAnim_ = idleAnims_[(int)currDir_];
@@ -220,6 +222,7 @@ void Player::initMove()
 	if (SDL_GetTicks() - WALK_TIME > lastWalkSound_) {
 		lastWalkSound_ = SDL_GetTicks();
 		app_->getAudioManager()->playChannel(Resources::WalkAudio, -1, Resources::PlayerChannel1);
+		app_->getAudioManager()->setChannelVolume(Resources::PlayerChannel1, 50);
 	}
 	mousePos_ = eventHandler_->getRelativeMousePos();
 	texture_ = moveTx_[(int)currDir_];

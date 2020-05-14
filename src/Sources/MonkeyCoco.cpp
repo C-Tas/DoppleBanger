@@ -10,7 +10,7 @@ bool MonkeyCoco::update() {
 
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
- 		app_->getAudioManager()->playChannel(Resources::MonkeyDieSound, 0, Resources::AudioChannels::MonkeyChannel);
+ 		app_->getAudioManager()->playChannel(Resources::MonkeyDieSound, 0, Resources::SoundChannels::MonkeyChannel);
 
 		//Esta línea habría que moverla al cangrejo cuando esté hecho
 		GameManager* gm_ = GameManager::instance();

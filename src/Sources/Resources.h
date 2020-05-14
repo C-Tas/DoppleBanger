@@ -297,7 +297,7 @@ public:
 		NumMusicChannels
 	};
 
-	enum AudioChannels : int {
+	enum SoundChannels : int {
 		//Canal de los botones
 		BeerButtonChanel = NumMusicChannels,
 		//Canal del jugador
@@ -405,7 +405,7 @@ public:
 	};
 
 	///<summary>Struct para la información del sonido</summary>
-	struct SoundInfo {
+	struct AudioInfo {
 		AudioId audioId;
 		string filename;
 	};
@@ -431,12 +431,21 @@ public:
 		FontId fontId;
 	};
 
+	struct AudioVolume
+	{
+		int channel;
+		int volume;
+	};
+
 	///<summary>Vector con las rutas de las imagenes a cargar</summary>
 	static vector<ImageInfo> imageRoutes;
 
 	///<summary>Vector con las rutas de los audios a cargar</summary>
-	static vector<SoundInfo> soundRoutes;
+	static vector<AudioInfo> audioRoutes;
 	
+	//<summary>Vector para el volumen de cada canal</summary>
+	static vector<AudioVolume> audioVolume;
+
 	///<summary>Vector con las rutas de las fuentes a cargar</summary>
 	static vector<FontInfo> fontsRoutes;
 

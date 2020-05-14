@@ -58,9 +58,10 @@ void CollisionCtrl::islandCollisions() {
 	for (auto ob : obstacleWithRotation_) {
 		if (Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
 			player_->getCollisionRot(), (ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY(), ob->getCollisionRot())) {
-			player_->stop();
-			(ob)->onCollider();
 			player_->setPos(player_->getPreviousPos());
+			player_->stop();
+			player_->setEnemy(nullptr);
+			(ob)->onCollider();
 		}
 	}
 

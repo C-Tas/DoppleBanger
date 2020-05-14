@@ -6,14 +6,6 @@
 using namespace std;
 
 
-/*canales y sus usos
-	canal 0 player walk y morir
-	canal 1 para los ataques del player y al invocar clon
-	canal 3 para el uso de posiones, melee hit y skills
-	canal 4 para el clon
-	canal 6 para la calabaza
-	canal 7 para la calabaza
-*/
 class AudioManager {
 public:
 	AudioManager();
