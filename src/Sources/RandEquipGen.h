@@ -4,6 +4,7 @@ class Equipment;
 class GameManager;
 class Application;
 class SRandBasedGenerator;
+class Item;
 
 class RandEquipGen
 {
@@ -14,6 +15,6 @@ private:
 
 public:
 	RandEquipGen(Application* app);
-	Equipment* genEquip();
-	Equipment* genEquip(int type);
+	Item* genEquip();
+	Item* genEquip(int type);
 };

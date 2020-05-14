@@ -14,7 +14,7 @@ enum class equipType {
 	//Tamaño del enum
 	Size
 };
-enum class potionType { Health, Mana, Speed, Armor, Damage, Crit };
+enum class potionType { Health, Mana, Speed, Armor, Damage, Crit /*Size*/,Size };
 enum class ObjectType { Equipment, Usable };
 class Item : public GameObject
 {
