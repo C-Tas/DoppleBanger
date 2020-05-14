@@ -15,21 +15,12 @@ CaribbeanIslandState::~CaribbeanIslandState() {
 		gm_->setStartedMission(missions::gallegaEnProblemas, false);
 		gm_->resetMissionCounter(missions::gallegaEnProblemas);
 	}
-	if (!gm_->isThatMissionPass(missions::papelesSiniestros)) {
-		gm_->setStartedMission(missions::papelesSiniestros, false);
-		gm_->resetMissionCounter(missions::papelesSiniestros);
-	}
-	if (!gm_->isThatMissionPass(missions::arlongPark)) {
-		gm_->setStartedMission(missions::arlongPark, false);
-		gm_->resetMissionCounter(missions::arlongPark);
-	}
 };
 
 void CaribbeanIslandState::update()
 {
 	if (enemies_.empty()) {
 		collisionCtrl_->clearList();
-		app_->getAudioManager()->haltMusic();
 		app_->getGameStateMachine()->changeState(new WinState(app_));
 	}
 	else {
@@ -40,6 +31,12 @@ void CaribbeanIslandState::update()
 
 void CaribbeanIslandState::initState()
 {
+	//Inicializamos la musica
+	app_->resetMusicChannels();
+	app_->resetSoundsChannels();
+	app_->getAudioManager()->playChannel(Resources::Caribbean, -1, Resources::MainMusicChannel);
+	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
+
 	//Borramos la lista de objetos del CollisionCtrl
 	collisionCtrl_->clearList();
 	gm_->setOnShip(false);
@@ -53,22 +50,13 @@ void CaribbeanIslandState::initState()
 
 	//Añadimos el hud a objetos a renderizar
 	addRenderUpdateLists(hud_);
-	app_->getAudioManager()->playMusic(Resources::Caribbean, -1);
 }
 
 void CaribbeanIslandState::initZone1()
 {
 	//Se inicia la mision de la cocinera si no se ha completado ya
-	/*if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
+	if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
 		gm_->setStartedMission(missions::gallegaEnProblemas, true);
-	}*/
-
-	/*if (!gm_->isThatMissionPass(missions::papelesSiniestros)) {
-		gm_->setStartedMission(missions::papelesSiniestros, true);
-	}*/
-
-	if (!gm_->isThatMissionPass(missions::arlongPark)) {
-		gm_->setStartedMission(missions::arlongPark, true);
 	}
 
 	//Creamos el mapa

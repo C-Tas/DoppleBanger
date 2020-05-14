@@ -9,9 +9,11 @@
 void PauseState::resume(Application* app)
 {
 	SDL_ShowCursor(SDL_DISABLE);
-	app->getAudioManager()->playMusic(Resources::Waves, -1);
+	app->getAudioManager()->resumeChannel(Resources::MainMusicChannel);
+	app->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
 	app->getGameStateMachine()->popState();
 }
+
 ///<summary>Muestra los controles</summary>
 void PauseState::showControls(Application* app) {
 	app->getGameStateMachine()->pushState(new ControlsState(app));
@@ -23,17 +25,18 @@ void PauseState::goMainMenuState(Application* app) {
 }
 
 ///<summary>
-/// Silencia/Habilita el sonido
-/// Nota: Los efectos de sonido viajan a trav�s de diversos canales y no se pueden silenciar. Los canales funcionan
-/// de tal manera que al darle playChannel(...) con loop = 0 estos se activan. Por ello, la forma de que los efectos de sonido no suenen
-/// es que se controlen en los sitios en los que se efect�an. En caso de que la m�sica vaya a sonar por canales habr� que hacer los respectivos cambios.
+/// Silencia/Habilita musica y efectos de sonido
 ///</summary>
-void PauseState::muteGame(Application* app) {
-	if (app->getMute()) app->getAudioManager()->setMusicVolume(6); //Reanuda la música
-	else app->getAudioManager()->setMusicVolume(0); //Pausa la m�sica
+void PauseState::muteMusic(Application* app) {
+	app->getAudioManager()->setMuteMusic();			//Cambia el booleano que controla el mute
+	app->getAudioManager()->setAllMusicVolumen();	//Cambia el volumen en funcion del mute
+	static_cast<PauseState*>(app->getGameStateMachine()->getState())->changeMuteMusic(); //Cambia la textura del bot�n mute del PauseState
+}
 
-	app->setMute(); //Cambia el booleano que controla el mute
-	static_cast<PauseState*>(app->getGameStateMachine()->getState())->changeMute(); //Cambia la textura del bot�n mute del PauseState
+void PauseState::muteSounds(Application* app) {
+	app->getAudioManager()->setMuteSounds();		//Cambia el booleano que controla el mute
+	app->getAudioManager()->setAllSoundVolumen();	//Cambia el volumen en funcion del mute
+	static_cast<PauseState*>(app->getGameStateMachine()->getState())->changeMuteSound(); //Cambia la textura del bot�n mute del PauseState
 }
 #pragma endregion
 
@@ -41,15 +44,25 @@ PauseState::PauseState(Application* app) : GameState(app) {
 	initState();
 }
 
-void PauseState::changeMute()
+void PauseState::changeMuteMusic()
 {
-	if (app_->getMute())  muteButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteOn));
-	else muteButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteOff));
+	if (app_->getAudioManager()->getMuteMusic())  muteMusicButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteMusicOn));
+	else muteMusicButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteMusicOff));
+}
+
+void PauseState::changeMuteSound()
+{
+	if (app_->getAudioManager()->getMuteSounds())  muteSoundButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteSoundOn));
+	else muteSoundButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteSoundOff));
 }
 
 void PauseState::initState()
 {
 	SDL_ShowCursor(SDL_ENABLE);
+
+	app_->resetSoundsChannels();
+	app_->getAudioManager()->pauseChannel(Resources::MainMusicChannel);
+	app_->getAudioManager()->playChannel(Resources::MainTheme, -1, Resources::AuxMusicChannel1);
 
 	background_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::PauseBackground));
 	addRenderUpdateLists(background_);
@@ -76,14 +89,20 @@ void PauseState::initState()
 	textButon.y = posButton.getY();
 	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState, this);
 	
-	//Bot�n de mute
+	//Botones de mute
 	//Se multiplica por la proporci�n winWidth/winHeight para hacer un cuadrado
 	//No se crea con el metodo createButton porque se necesita un puntero a él directo
 	//para cambiar la textura al hacer el mute
 	sizeButton = Vector2D(winWidth / 20, (winHeight / 20) * (winWidth / winHeight));
 	posButton = Vector2D(winWidth - (sizeButton.getX() * 1.5), sizeButton.getY() / 2);
 	
-	if (!app_->getMute()) muteButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteOff), posButton, sizeButton, muteGame);
-	else muteButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteOn), posButton, sizeButton, muteGame);
-	addRenderUpdateLists(muteButton);
+	if (!app_->getAudioManager()->getMuteSounds()) muteSoundButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteSoundOff), posButton, sizeButton, muteSounds);
+	else muteSoundButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteSoundOn), posButton, sizeButton, muteSounds);
+	addRenderUpdateLists(muteSoundButton);
+
+	posButton = Vector2D(winWidth - (sizeButton.getX() * 3), sizeButton.getY() / 2);
+
+	if (!app_->getAudioManager()->getMuteMusic()) muteMusicButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteMusicOff), posButton, sizeButton, muteMusic);
+	else muteMusicButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteMusicOn), posButton, sizeButton, muteMusic);
+	addRenderUpdateLists(muteMusicButton);
 }

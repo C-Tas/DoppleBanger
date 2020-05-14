@@ -377,8 +377,10 @@ public:
 	//Completa una misi�n secundaria
 	inline void setCompleteMission(missions mission, bool complete) {
 		missionsComplete_[(int)mission] = complete;
-		inventoryGold_ += goldReward_.at((int)mission);
-		achievementPoints_ += pointsReward_.at((int)mission);
+		if (complete) {
+			inventoryGold_ += goldReward_.at((int)mission);
+			achievementPoints_ += pointsReward_.at((int)mission);
+		}
 	};
 	//Empieza una misi�n secundaria
 	inline void setStartedMission(missions mission, bool started) { missionsStarted_[(int)mission] = started; };

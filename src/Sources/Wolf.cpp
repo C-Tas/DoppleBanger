@@ -43,9 +43,7 @@ bool Wolf::update() {
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendr�a que hacer la animaci�n de muerte?
-		if (!app_->getMute()) {
-			app_->getAudioManager()->playChannel(Resources::AudioId::WolfDie, 0, 3);
-		}
+		app_->getAudioManager()->playChannel(Resources::AudioId::WolfDieAudio, 0, Resources::WolfChannel);
 
 		//Esta línea habría que moverla al cangrejo cuando esté hecho
 		GameManager* gm_ = GameManager::instance();
@@ -164,9 +162,8 @@ void Wolf::attack() {
 	if (currStats_.meleeRate_ <= SDL_GetTicks() - lastMeleeHit_)
 	{
 		lastMeleeHit_ = SDL_GetTicks();
-		if (!app_->getMute()) {
-			app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttack, 0, 1);
-		}
+		app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttackAudio, 0, Resources::WolfChannel);
+
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
 			dmg->receiveDamage(currStats_.meleeDmg_);
@@ -210,9 +207,8 @@ void Wolf::selectTarget() {
 
 bool Wolf::getEnemy() {
 	if (Enemy::getEnemy(rangeVision_)) {
-		if (!app_->getMute()) {
-			app_->getAudioManager()->playChannel(Resources::AudioId::WolfHowl, 0, 0);
-		}
+		app_->getAudioManager()->playChannel(Resources::AudioId::WolfHowlAudio, 0, Resources::WolfChannel);
+
 		return true;
 	}
 	else return false;

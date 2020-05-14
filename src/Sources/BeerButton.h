@@ -21,7 +21,7 @@ private:
 	const int NUM_FRAMES = 6;			//Frames totales
 	const int W_FRAME = 675;			//Ancho del frame
 	const int H_FRAME = 375;			//Alto del frame
-	const int FRAME_RATE = 100;			//Velocidad por frame (milisegundos)
+	const int FRAME_RATE = 110;			//Velocidad por frame (milisegundos)
 	SDL_Rect beerRect{ 0, 0, 0, 0 };	//Rectangulo de las cervezas
 
 	//Inicializa la animacion

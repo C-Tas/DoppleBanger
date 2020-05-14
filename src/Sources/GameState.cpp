@@ -42,6 +42,12 @@ void GameState::update() {
 }
 
 void GameState::resetState() {
+	//Reseteo de todos los canales de audio
+	AudioManager* aux = app_->getAudioManager();
+	for (int i = 0; i < aux->channels(); i++)
+		aux->haltChannel(i);
+	aux->playChannel(Resources::AudioId::MainTheme, -1, Resources::MainMusicChannel);
+
 	//Borra todos los objetos de la lista de gameObjects
 	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
 		delete (*it);

@@ -39,22 +39,18 @@ public:
 	//<summary>Devuelve el total de canales</summary>
 	int channels();
 
-	//Música
-	//<summary>Carga música</summary>
-	bool loadMusic(int tag, const string& fileName);
-	//<summary>Pone música</summary>
-	void playMusic(int tag, int loops);
-	//<summary>Cambia el volumen de la música</summary>
-	int setMusicVolume(int volume);
-	//<summary>Para la música</summary>
-	void haltMusic();
-	//<summary>Pausa la música</summary>
-	void pauseMusic();
-	//<summary>Reanuda la música</summary>
-	void resumeMusic();
+	//Mute
+	bool getMuteSounds() { return muteSounds_; };
+	inline void setMuteSounds() { muteSounds_ = !muteSounds_; };
+	void setAllSoundVolumen();
 
+	bool getMuteMusic() { return muteMusic_; };
+	inline void setMuteMusic() { muteMusic_ = !muteMusic_; };
+	void setAllMusicVolumen();
 private:
 	bool initialized_;
+	bool muteMusic_ = false;	//Musica
+	bool muteSounds_ = false;	//Efectos de sonido
 	int channels_;
 	map<int, Mix_Chunk*> chunks_;
 	map<int, Mix_Music*> music_;

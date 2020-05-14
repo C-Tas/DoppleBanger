@@ -57,7 +57,6 @@ private:
 	///<summary>Tiempo que ha pasado entre el frame actual y el anterior </summary>
 	double deltaTime_;
 	void updateDelta();
-	bool mute_ = false;
 
 public:
 	///<summary>Construtora de la app</summary>
@@ -65,17 +64,14 @@ public:
 	virtual ~Application(); 
 
 	///<summary>Constantes con las dimensiones de la ventana </summary>
-	static const int winWidth_ = 1920;
-	static const int winHeight_ = 1080;
+	static const int winWidth_ = 1600;
+	static const int winHeight_ = 900;
 
 	///<summary>Bucle principal de la aplicacion</summary>
 	void runApp();
 #pragma region Setters
 	///<summary>Metodo que termina el bucle principal de la app</summary>
 	void endGame() { appClosed_ = true; };
-
-	///<summary>Cambia el valor de mute</summary>
-	void setMute() { mute_ = !mute_; }
 #pragma endregion
 
 #pragma region Getters
@@ -103,18 +99,16 @@ public:
 	FontManager* getFontManager() { return fontManager_; };
 	//Devuelve el audioManager
 	AudioManager* getAudioManager() { return audioManager_; };
-	///<summary>Devuelve el generador de equipamiento aleatorio </summary>
-	/*Equipment* genEquip() { return equipGen_->genEquip(); };
-	///<summary>Devuelve un objeto del tipo type generado aleatoriamente</summary>
-	Equipment* genEquip(equipType type) { return equipGen_->genEquip(type); };*/
 	//Devuelve equipGen_
 	RandEquipGen* getEquipGen() { return equipGen_; }
-
 	///<summary>Devuelve el random_</summary>
 	SRandBasedGenerator* getRandom() { return random_; }
-	///<summary>Devuelve el mute</summary>
-	bool getMute() { return mute_; }
 	///<summary>Devuelve el GameManager</summary>
 	GameManager* getGameManager() { return gameManager_; }
+
+	//Resetea los canales de musica
+	void resetMusicChannels();
+	//Resetea los canales de efectos de sonido
+	void resetSoundsChannels();
 #pragma endregion
 };

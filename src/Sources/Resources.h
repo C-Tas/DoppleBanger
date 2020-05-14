@@ -23,8 +23,10 @@ public:
 		BackButton,
 		SkipButton,
 		SkipStoryButton,
-		MuteOff,
-		MuteOn,
+		MuteSoundOff,
+		MuteSoundOn,
+		MuteMusicOff,
+		MuteMusicOn,
 		RestartGame,
 		RightArrow,
 		LeftArrow,
@@ -284,40 +286,57 @@ public:
 		Tileset1,
 		CollisionTile
 	};
+	
+	enum MusicChannels : int {
+		//Musica auxiliar
+		MainMusicChannel,
+		AuxMusicChannel1,
+		AuxMusicChannel2,
+		AuxMusicChannel3,
+		//Cantidad de canales
+		NumMusicChannels
+	};
+
+	enum AudioChannels : int {
+		//Canal de los botones
+		BeerButtonChanel = NumMusicChannels,
+		//Canal del jugador
+		PlayerChannel1,
+		PlayerChannel2,
+		PlayerChannel3,
+		PlayerChannel4,
+		//Canal del lobo
+		WolfChannel, 
+		//Canal del mono
+		MonkeyChannel,
+		//Canal de la calabaza
+		PumpkinChannel1,
+		PumpkinChannel2,
+		//Canal del pirata
+		EnemyPirateChannel,
+
+		//Numero de canales
+		NumSoundChannels
+	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
 	enum AudioId : int{
 		//Música
 		MainTheme,
-		ShipSingers,
 		Caribbean,
-		Waves,
 		Shop,
 		Storyboard,
+		WavesSound,
 
-		//Efectos de sonido
-		Agro,
-
-		//Efectos para el lobo
-		WolfHowl,
-		WolfAttack,
-		WolfDie,
-
-		//Efectos para el mono
-		MonkeyIdle,
-		MonkeyAttack,
-		MonkeyShoot,
-		MonkeyDie,
-		
 		//player
-		Walk,
+		WalkAudio,
 		Attack1,
 		Attack2,
 		Attack3,
 		Attack4,
 		Attack5,
 		Attack6,
-		Dying,
+		DyingAudio,
 		Laugh1,
 		Laugh2,
 		Laugh3,
@@ -327,7 +346,7 @@ public:
 		Laugh7,
 		Shout,
 		Drink,
-		EmpoweredSkill,
+		EmpoweredSkillAudio,
 		PerforateSkill,
 		Ricochet,
 		WhirlwindSkill,
@@ -345,6 +364,17 @@ public:
 		//CLon
 		Explosion,
 
+		//Efectos para el lobo
+		WolfHowlAudio,
+		WolfAttackAudio,
+		WolfDieAudio,
+
+		//Efectos para el mono
+		MonkeyIdleSound,
+		MonkeyAttackSound,
+		MonkeyShootSound,
+		MonkeyDieSound,
+
 		//Calabaza
 		AgroPumpkin,
 		AttackPumpkin,
@@ -356,7 +386,10 @@ public:
 		LaughPumpkin3,
 		MovePumpkin,
 		TauntPumpkin1,
-		TauntPumpkin2
+		TauntPumpkin2,
+
+		//Otros
+		Agro
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
@@ -403,9 +436,6 @@ public:
 
 	///<summary>Vector con las rutas de los audios a cargar</summary>
 	static vector<SoundInfo> soundRoutes;
-
-	///<summary>Vector con las rutas de la música a cargar</summary>
-	static vector<MusicInfo> musicRoutes;
 	
 	///<summary>Vector con las rutas de las fuentes a cargar</summary>
 	static vector<FontInfo> fontsRoutes;

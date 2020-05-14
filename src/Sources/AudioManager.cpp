@@ -40,7 +40,6 @@ bool AudioManager::initObject() {
 
 	//Inicializa el volumen de todos los canales y la música a 6
 	for (int i = 0; i < channels_; i++) setChannelVolume(7, i);
-	setMusicVolume(6);
 
 	initialized_ = true;
 
@@ -95,43 +94,30 @@ int AudioManager::channels() {
 	return channels_;
 }
 
-bool AudioManager::loadMusic(int tag, const string& fileName) {
-	if (!initialized_)
-		return false;
-
-	Mix_Music* music = Mix_LoadMUS(fileName.c_str());
-	if (music != nullptr) {
-		Mix_Music* curr = music_[tag];
-		if (curr != nullptr)
-			Mix_FreeMusic(curr);
-		music_[tag] = music;
-		return true;
+void AudioManager::setAllSoundVolumen()
+{
+	if (muteSounds_) {
+		for (int i = Resources::NumMusicChannels; i < Resources::NumSoundChannels; i++) {
+			setChannelVolume(0, i);
+		}
 	}
 	else {
-		throw "Couldn't load music file: " + fileName;
-		return false;
+		for (int i = Resources::NumMusicChannels; i < Resources::NumSoundChannels; i++) {
+			setChannelVolume(7, i);
+		}
 	}
 }
 
-void AudioManager::playMusic(int tag, int loops = -1) {
-	Mix_Music* music = music_[tag];
-	if (music != nullptr) {
-		Mix_PlayMusic(music, loops);
+void AudioManager::setAllMusicVolumen()
+{
+	if (muteMusic_) {
+		for (int i = 0; i < Resources::NumMusicChannels; i++) {
+			setChannelVolume(0, i);
+		}
 	}
-}
-
-int AudioManager::setMusicVolume(int volume) {
-	return Mix_VolumeMusic(volume);
-}
-
-void AudioManager::haltMusic() {
-	Mix_HaltMusic();
-}
-
-void AudioManager::pauseMusic() {
-	Mix_PauseMusic();
-}
-
-void AudioManager::resumeMusic() {
-	Mix_ResumeMusic();
+	else {
+		for (int i = 0; i < Resources::NumMusicChannels; i++) {
+			setChannelVolume(6, i);
+		}
+	}
 }

@@ -10,14 +10,61 @@
 
 using namespace std;
 
+#pragma region Callbacks
+void MainMenuState::goControlState(Application* app) {
+	app->getGameStateMachine()->pushState(new ControlsState(app));
+};
+void MainMenuState::goCreditsState(Application* app) {
+	app->getGameStateMachine()->pushState(new CreditsState(app));
+};
+void MainMenuState::goLoadState(Application* app) {
+	app->getGameStateMachine()->pushState(new LoadState(app));
+};
+void MainMenuState::goStoryState(Application* app) {
+	app->resetMusicChannels();
+	app->getAudioManager()->playChannel(Resources::Storyboard, -1, Resources::MainMusicChannel);
+	app->getGameStateMachine()->pushState(new StoryState(app));
+};
+
+void MainMenuState::exitGame(Application* app) {
+	app->endGame();
+}
+
+///<summary>
+/// Silencia/Habilita musica y efectos de sonido
+///</summary>
+void MainMenuState::muteMusic(Application* app) {
+	app->getAudioManager()->setMuteMusic();			//Cambia el booleano que controla el mute
+	app->getAudioManager()->setAllMusicVolumen();	//Cambia el volumen en funcion del mute
+	static_cast<MainMenuState*>(app->getGameStateMachine()->getState())->changeMuteMusic(); //Cambia la textura del boton mute del PauseState
+}
+
+void MainMenuState::muteSounds(Application* app) {
+	app->getAudioManager()->setMuteSounds();		//Cambia el booleano que controla el mute
+	app->getAudioManager()->setAllSoundVolumen();	//Cambia el volumen en funcion del mute
+	static_cast<MainMenuState*>(app->getGameStateMachine()->getState())->changeMuteSound(); //Cambia la textura del boton mute del PauseState
+}
+#pragma endregion
+
+void MainMenuState::changeMuteMusic()
+{
+	if (app_->getAudioManager()->getMuteMusic())  muteMusicButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteMusicOn));
+	else muteMusicButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteMusicOff));
+}
+
+void MainMenuState::changeMuteSound()
+{
+	if (app_->getAudioManager()->getMuteSounds())  muteSoundButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteSoundOn));
+	else muteSoundButton->setTexture(app_->getTextureManager()->getTexture(Resources::MuteSoundOff));
+}
+
 #pragma region Inicializacion
 void MainMenuState::initState()
 {
+	cout << "InitState" << endl;
 	SDL_ShowCursor(SDL_ENABLE);
 
 	//Fondo de la escena
-	button_h = app_->getWindowHeight() / 10;
-	button_w = app_->getWindowWidth() / 6;
 	bg_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::MenuBackground));
 	addRenderUpdateLists(bg_);
 
@@ -42,57 +89,54 @@ bool MainMenuState::isExistingDataGame()
 }
 
 void MainMenuState::createButtons() {
+	//Cargamos música de fondo
+	app_->getAudioManager()->playChannel(Resources::AudioId::MainTheme, -1, Resources::MainMusicChannel);
+
 	double winWidth = app_->getWindowWidth();
 	double winHeight = app_->getWindowHeight();
 
+	button_w = winWidth / 6;
+	button_h =winHeight / 10;
+	Vector2D sizeButton = Vector2D(button_w, button_h);
+	Vector2D posButton = Vector2D((winWidth / 2) - button_w * 1.5, (winHeight / 2));
 	//creamos el boton para jugar sin cargar el juego del archivo de guardado
-	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::PlayButton),
-		{ (winWidth / 2) - button_w * 1.5  , (winHeight / 2) },
-		{ button_w,button_h }, goStoryState, this);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::PlayButton), posButton, sizeButton, goStoryState, this);
+
 	//creamos el boton para jugar cargando el juego del archivo de guardado
+	posButton = Vector2D((winWidth / 2) + button_w / 2, (winHeight / 2));
 	Button* loadButton = nullptr;
 	if (!isExistingDataGame()) {
-		createButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButtonNull),
-			{ (winWidth / 2) + button_w / 2, (winHeight / 2) },
-			{ button_w,button_h }, nullptr);
+		createButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButtonNull), posButton, sizeButton, nullptr);
 	}
 	else {
-		createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButton),
-			{ (winWidth / 2) + button_w / 2, (winHeight / 2) },
-			{ button_w,button_h }, goLoadState, this);
+		createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::LoadButton), posButton, sizeButton, goLoadState, this);
 	}
+
 	//creamos el boton para ir a los controles
-	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ControlsButton),
-		{ double(app_->getWindowWidth() / 2) - button_w * 1.5, double(app_->getWindowHeight() / 2) + button_h * 1.2 },
-		{ button_w  ,button_h }, goControlState, this);
+	posButton = Vector2D((winWidth / 2) - button_w * 1.5, (winHeight / 2) + button_h * 1.2);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ControlsButton), posButton, sizeButton, goControlState, this);
 	//creamos el boton para ir a los creditos
-	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CreditsButton),
-		{ (winWidth / 2) + button_w / 2, double(app_->getWindowHeight() / 2) + button_h * 1.2 },
-		{ button_w  ,button_h }, goCreditsState, this);
+	posButton = Vector2D((winWidth / 2) + button_w / 2, (winHeight / 2) + button_h * 1.2);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::CreditsButton), posButton, sizeButton, goCreditsState, this);
 	//Boton para salir del juego
-	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ExitButton),
-		{ (winWidth / 2) - button_w / 2, (winHeight / 2) + button_h * 2.4 },
-		{ button_w,button_h }, exitGame, this);
-}
-#pragma endregion
-#pragma region Cambios de estados
-void MainMenuState::goControlState(Application* app) {
-	app->getGameStateMachine()->pushState(new ControlsState(app));
-};
-void MainMenuState::goCreditsState(Application* app) {
-	app->getGameStateMachine()->pushState(new CreditsState(app));
-};
-void MainMenuState::goLoadState(Application* app) {
-	app->getGameStateMachine()->pushState(new LoadState(app));
-};
-void MainMenuState::goStoryState(Application* app) {
-	app->getAudioManager()->playChannel(Resources::Shout, 0, 1);
-	app->getAudioManager()->playMusic(Resources::Storyboard, -1);
-	app->getGameManager()->setCompleteMission(missions::gallegaEnProblemas, false);
-	app->getGameManager()->setStartedMission(missions::gallegaEnProblemas, false);
-	app->getGameStateMachine()->pushState(new StoryState(app));
-};
-void MainMenuState::exitGame(Application* app) {
-	app->endGame();
+	posButton = Vector2D((winWidth / 2) - button_w / 2, (winHeight / 2) + button_h * 2.4);
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::TextureId::ExitButton), posButton, sizeButton, exitGame, this);
+
+	//Botones de mute
+	//Se multiplica por la proporcion winWidth/winHeight para hacer un cuadrado
+	//No se crea con el metodo createButton porque se necesita un puntero a él directo
+	//para cambiar la textura al hacer el mute
+	sizeButton = Vector2D(winWidth / 20, (winHeight / 20) * (winWidth / winHeight));
+	posButton = Vector2D(winWidth - (sizeButton.getX() * 1.5), sizeButton.getY() / 2);
+
+	if (!app_->getAudioManager()->getMuteSounds()) muteSoundButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteSoundOff), posButton, sizeButton, muteSounds);
+	else muteSoundButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteSoundOn), posButton, sizeButton, muteSounds);
+	addRenderUpdateLists(muteSoundButton);
+
+	posButton = Vector2D(winWidth - (sizeButton.getX() * 3), sizeButton.getY() / 2);
+
+	if (!app_->getAudioManager()->getMuteMusic()) muteMusicButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteMusicOff), posButton, sizeButton, muteMusic);
+	else muteMusicButton = new Button(app_, app_->getTextureManager()->getTexture(Resources::MuteMusicOn), posButton, sizeButton, muteMusic);
+	addRenderUpdateLists(muteMusicButton);
 }
 #pragma endregion
