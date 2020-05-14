@@ -116,8 +116,8 @@ public:
 	#pragma region Pociones
 		//Metodo para usar las pociones
 		void usePotion(usable* potion, int key);
-		//Metodo para desactivar el bufo de las pociones
-		void desactiveBuffPotion(usable* potion, int timerPos);
+		//Metodo para actualizar el tiempo de las pociones y desactivarlas
+		void updateBuffPotion();
 		//Equipa pociones
 		void equipPotion1(usable* pot) { potions_[0] = pot; gm_->setPotion(0, potions_[0]); };
 		void equipPotion2(usable* pot) { potions_[1] = pot; gm_->setPotion(1, potions_[1]); };
@@ -161,6 +161,8 @@ private:
 	//<Speed, Damage, Armor, Crit>			
 	vector<bool> potionUsing_{ 0, 0, 0, 0 };	//Para saber si se está usando la poción y resetear el tiempo
 	vector<double> timerPotion_{ 0, 0, 0, 0 };	//Para guardar y restablecer el tiempo de las pociones
+	vector<double> valuePotion_{ 0, 0, 0, 0 };	//Para guardar y restablecer el tiempo de las pociones
+	vector<double> lastTicksPotion_{ 0, 0, 0, 0 };	//Para guardar y restablecer el tiempo de las pociones
 #pragma region Animaciones
 	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
@@ -301,8 +303,7 @@ private:
 #pragma endregion
 	virtual void initObject();
 	void updateDir(Vector2D dir);
-	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
-	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
+	//Equipamiento
 	Armor* armor_ = nullptr;	//Pechera
 	Gloves* gloves_ = nullptr;	//Guantes
 	Boots* boots_ = nullptr;	//Botas

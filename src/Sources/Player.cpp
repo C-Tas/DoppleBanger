@@ -129,14 +129,17 @@ bool Player::update()
 		cout << getCenter().getX() << " " << getCenter().getY() << endl;
 	}
 	
-	if (!gm_->getOnShip() && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr && !potions_[0]->isUsed()) {
+	if (!gm_->getOnShip() && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr) {
 		usePotion(potions_[0], 0);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 	}
-	if (!gm_->getOnShip() && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr && !potions_[1]->isUsed()) {
+	if (!gm_->getOnShip() && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr) {
 		usePotion(potions_[1], 1);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 	}
+
+	//Pociones
+	updateBuffPotion();
 
 	Enemy* objective = static_cast<Enemy*>(currEnemy_);
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
@@ -509,18 +512,21 @@ void Player::usePotion(usable* potion, int key) {
 		if (!potionUsing_[0]) {
 			currStats_.moveSpeed_ += auxValue;
 			potionUsing_[0] = true;
+			valuePotion_[0] = auxValue;
 		}
-		timerPotion_[0] = SDL_GetTicks();	//Se resetea el tiempo de duración
+		lastTicksPotion_[0] = SDL_GetTicks();
+		timerPotion_[0] = potion->getTime();	//Se resetea el tiempo de duración
 		//Muestra la cuenta atras del tiempo de la pocion en el HUD, tambien le reestablece el tiempo si la poción vuelve a activarse
 		gm_->getHUD()->showPotionHUD(0, potion->getTime(), timerPotion_[0]);
 		break;
 	case potionType::Armor:
 		if (!potionUsing_[1]) {
-			cout << "ALO" << endl;
 			currStats_.armor_ += auxValue;
 			potionUsing_[1] = true;
+			valuePotion_[1] = auxValue;
 		}
-		timerPotion_[1] = SDL_GetTicks();	//Se resetea el tiempo de duración
+		lastTicksPotion_[1] = SDL_GetTicks();
+		timerPotion_[1] = potion->getTime();	//Se resetea el tiempo de duración
 		//Muestra la cuenta atras del tiempo de la pocion en el HUD, tambien le reestablece el tiempo si la poción vuelve a activarse
 		gm_->getHUD()->showPotionHUD(1, potion->getTime(), timerPotion_[1]);
 		break;
@@ -529,8 +535,10 @@ void Player::usePotion(usable* potion, int key) {
 			currStats_.meleeDmg_ = currStats_.meleeDmg_ * (1 + auxValue / 100);
 			currStats_.distDmg_ = currStats_.distDmg_ * (1 + auxValue / 100);
 			potionUsing_[2] = true;
+			valuePotion_[2] = auxValue;
 		}
-		timerPotion_[2] = SDL_GetTicks();	//Se resetea el tiempo de duración
+		lastTicksPotion_[2] = SDL_GetTicks();
+		timerPotion_[2] = potion->getTime();	//Se resetea el tiempo de duración
 		//Muestra la cuenta atras del tiempo de la pocion en el HUD, tambien le reestablece el tiempo si la poción vuelve a activarse
 		gm_->getHUD()->showPotionHUD(2, potion->getTime(), timerPotion_[2]);
 		break;
@@ -538,46 +546,66 @@ void Player::usePotion(usable* potion, int key) {
 		if (!potionUsing_[3]) {
 			currStats_.crit_ += auxValue;
 			potionUsing_[3] = true;
+			valuePotion_[3] = auxValue;
 		}
-		timerPotion_[3] = SDL_GetTicks();	//Se resetea el tiempo de duración
+		lastTicksPotion_[3] = SDL_GetTicks();
+		timerPotion_[3] = potion->getTime();	//Se resetea el tiempo de duración
 		//Muestra la cuenta atras del tiempo de la pocion en el HUD, tambien le reestablece el tiempo si la poción vuelve a activarse
 		gm_->getHUD()->showPotionHUD(3, potion->getTime(), timerPotion_[3]);
 		break;
 	}
-
-	app_->getCurrState()->addUpdateList(potion);
+	delete potion;
+	//app_->getCurrState()->addUpdateList(potion);
 	potions_[key] = nullptr;
 	gm_->setPotion(key, nullptr);
-	potion->use();
 }
 
-void Player::desactiveBuffPotion(usable* potion, int timerPos){
+void Player::updateBuffPotion(){
 	//Como se ha hecho previamente, se ha guardado el momento en el que se usó la poción
 	//de esa manera, si se vuelve a usar una poción del mismo tipo, se resetea timerPotion_[timerPos]
 	//por lo que unicamente quitara el debufo cuando se cumpla ese tiempo
-	if ((SDL_GetTicks() - timerPotion_[timerPos]) / 1000 > potion->getTime()) {
-		double auxValue = potion->getValue();
-		switch (potion->getType())
-		{
-		case potionType::Speed:
-			currStats_.moveSpeed_ -= auxValue;
-			potionUsing_[0] = false;
-			break;
-		case potionType::Armor:
-			currStats_.armor_ -= auxValue;
-			potionUsing_[1] = false;
-			break;
-		case potionType::Damage:
-			currStats_.meleeDmg_ = currStats_.meleeDmg_ / (1 + auxValue / 100);
-			currStats_.distDmg_ = currStats_.distDmg_ / (1 + auxValue / 100);
-			potionUsing_[2] = false;
-			break;
-		case potionType::Crit:
-			currStats_.crit_ -= auxValue;
-			potionUsing_[3] = false;
-			break;
-		default:
-			break;
+	for (int i = 0; i < potionUsing_.size(); i++) {
+		if (potionUsing_.at(i)) {
+
+			//cout << "TIEMPO RESTANTE " << timerPotion_.at(i) << endl;
+
+			double currTick_ = SDL_GetTicks();
+
+			//Si se abre el inventario, los skills o la pausa no reducimos la duración (el valor suele estar entre 0 y 10, así que 200 que son 0,2 segundos es más que suficiente para determinar pausa)
+			if (currTick_ - lastTicksPotion_.at(i) <= gm_->getDelayTime()) {
+				timerPotion_.at(i) -= currTick_ - lastTicksPotion_.at(i);
+			}
+			else {
+				cout << "Ticks no contaos" << endl;
+			}
+
+			lastTicksPotion_.at(i) = currTick_;
+			//Condicion para que se desactive la pocion
+			if (timerPotion_.at(i) <= 0) {
+				cout << "DESACTIVADO BUFF" << endl;
+				switch (i + 2)
+				{
+				case (int)potionType::Speed:
+					currStats_.moveSpeed_ -= valuePotion_.at(i);
+					potionUsing_[0] = false;
+					break;
+				case (int)potionType::Armor:
+					currStats_.armor_ -= valuePotion_.at(i);
+					potionUsing_[1] = false;
+					break;
+				case (int)potionType::Damage:
+					currStats_.meleeDmg_ = currStats_.meleeDmg_ / (1 + valuePotion_.at(i) / 100);
+					currStats_.distDmg_ = currStats_.distDmg_ / (1 + valuePotion_.at(i) / 100);
+					potionUsing_[2] = false;
+					break;
+				case (int)potionType::Crit:
+					currStats_.crit_ -= valuePotion_.at(i);
+					potionUsing_[3] = false;
+					break;
+				default:
+					break;
+				}
+			}
 		}
 	}
 }

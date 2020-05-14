@@ -87,6 +87,8 @@ void Inventory::initState(){
 	if (aux.potions_[0] != nullptr)	equipment_.potion1_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[0], callSelectObject, true);
 	if (aux.potions_[1] != nullptr)	equipment_.potion2_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[1], callSelectObject, true);
 
+
+
 	//Cogemos la lista de objetos del gameManager
 	inventoryList_ = gm_->getInventory();
 	ListPos = inventoryList_->begin();
@@ -96,6 +98,27 @@ void Inventory::initState(){
 	//pasa lo mismo con el estado al que apunta el bot�n
 	for (auto ob = inventoryList_->begin(); ob != inventoryList_->end(); ++ob) {
 		(*ob)->setNewCallBack(callSelectObject);
+	}
+	//Pociones auxiliares para testeo
+	usable* potion1 = new usable(app_, potionType::Armor);
+	usable* potion2 = new usable(app_, potionType::Speed);
+	usable* potion3 = new usable(app_, potionType::Damage);
+	usable* potion4 = new usable(app_, potionType::Health);
+	usable* potion5 = new usable(app_, potionType::Mana);
+	usable* potion6 = new usable(app_, potionType::Crit);
+
+	InventoryButton* g = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, potion3, callSelectObject);
+	list <InventoryButton*>::iterator it1 = inventoryList_->insert(inventoryList_->end(), g);
+	g->setIterator(it1);
+	if (it1 == inventoryList_->begin()) {
+		ListPos = inventoryList_->begin();
+	}
+
+	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, potion2, callSelectObject);
+	list <InventoryButton*>::iterator it = inventoryList_->insert(inventoryList_->end(), b);
+	b->setIterator(it);
+	if (it == inventoryList_->begin()) {
+		ListPos = inventoryList_->begin();
 	}
 }
 

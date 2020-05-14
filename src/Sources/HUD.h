@@ -8,7 +8,8 @@ struct potionHUD
 {
 	bool active_ = false;
 	double duration_;
-	double time_;
+	double lastTick_;
+	double currentTick_;
 	VisualElement* potionBackground_;
 	VisualElement* potionHUD_;
 	Texture* potionTimeHUD_;
