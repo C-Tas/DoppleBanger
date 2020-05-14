@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <SDL.h>
+#include <map>
 
 using namespace std;
 
@@ -443,7 +444,7 @@ public:
 	///<summary>Vector con las rutas de los audios a cargar</summary>
 	static vector<AudioInfo> audioRoutes;
 	
-	//<summary>Vector para el volumen de cada canal</summary>
+	//<summary>Vector para el volumen de cada canal</summary>	
 	static vector<AudioVolume> audioVolume;
 
 	///<summary>Vector con las rutas de las fuentes a cargar</summary>
@@ -451,4 +452,7 @@ public:
 
 	//Vector con los textos
 	static vector<TextMsgInfo> messages; // initialized in .cpp
+
+	//Array de tildes e interrogante
+	static map<char, string>tildes_;
 };

@@ -391,3 +391,33 @@ vector <Resources::TextMsgInfo> Resources::messages{
 	{ CreditsText,"Créditos",SDL_Color{(0,0,0,1)},RETRO },
 	{ SkillText,"SkillMenu",SDL_Color{(0,0,0,1)},RETRO },
 };
+
+map<char, string> Resources::tildes_{
+	//o con tilde
+	{
+		'o', "\u00f3"
+	},
+	//a con tilde
+	{
+		'a', "\u00e1"
+	},
+	//i con tilde
+	{
+		'i', "\u00ed"
+	},
+	//u con tilde
+	{
+		'u', "\u00fa"
+	},
+	//e con tilde
+	{
+		'e', "\u00e9"
+	},
+	{
+		'ñ', "\u00F1"
+	},
+	//interrogante español
+	{ 
+		'¿', "\u00BF" 
+	}
+};

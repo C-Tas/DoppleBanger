@@ -35,7 +35,7 @@ void TextBox::initDialog() {
 	whiteRect->render(dest);
 
 	//Comentario al final de la caja de texto
-	Texture pressAnyKey(app_->getRenderer(), "Alejate para dejar de hablar >>", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x99999999) });
+	Texture pressAnyKey(app_->getRenderer(), "Al" + Resources::tildes_['e'] +"jate para dejar de hablar >>", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x99999999) });
 	pressAnyKey.render(app_->getWindowWidth() - pressAnyKey.getWidth() - lineSpacing, app_->getWindowHeight() - pressAnyKey.getHeight() - lineSpacing);
 }
 
@@ -110,7 +110,8 @@ void TextBox::dialogChef(bool unlock, int num) {
 	else {
 		//Mientras no se hayan matado todos los enemigos
 		if (gm_->getCounterEnemiesMission(missions::gallegaEnProblemas) < gm_->getEnemiesMission(missions::gallegaEnProblemas)) {
-			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la mision secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la misi" + 
+				Resources::tildes_['o'] + "n secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
 			text.loadFromText(app_->getRenderer(), "'Gallego en problemas'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -120,10 +121,12 @@ void TextBox::dialogChef(bool unlock, int num) {
 		else {
 			if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) gm_->setCompleteMission(missions::gallegaEnProblemas, true);
 
-			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la mision secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la misi" +
+				Resources::tildes_['o'] + "n secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), "'Gallego en problemas', despues de esto el chef se a�ade a la lista de NPCs desbloquedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "'Gallego en problemas', despu" + Resources::tildes_['e'] + "s de esto el chef se a"
+				+ Resources::tildes_['ñ'] + "ade a la lista de NPCs desbloquedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
 		}
 	}
@@ -136,14 +139,16 @@ void TextBox::dialogMorty(bool unlock, int num) {
 		Texture text;
 		switch (num) {
 		case 0:
-			text.loadFromText(app_->getRenderer(), "Gracias por rescatarme de esa isla tan siniestra. Los lobos leprosos me dan escalofrios.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "Gracias por rescatarme de esa isla tan siniestra. Los lobos leprosos me dan escalofr" + 
+				Resources::tildes_['i'] + "os.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
 			button_->draw();
 			button_->update();
 			break;
 		case 1:
-			text.loadFromText(app_->getRenderer(), "Ahora podre fumar tranquilo...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "Ahora podr" + Resources::tildes_['e'] + "fumar tranquilo...",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing));
 			break;
 		}
@@ -155,7 +160,8 @@ void TextBox::dialogMorty(bool unlock, int num) {
 			Texture text(app_->getRenderer(), "Por ahora, como no estoy en mi isla, mata 3 monos para hacer la prueba de desbloquearme. Vuelve cuando lo", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), "hayas hecho y te dare recompensas.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "hayas hecho y te dar" +
+				Resources::tildes_['e'] + "recompensas.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
 			text.loadFromText(app_->getRenderer(), "Tengo mucho mono. Por favor, date prisa!", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -165,7 +171,9 @@ void TextBox::dialogMorty(bool unlock, int num) {
 		else {
 			if (!gm_->isThatMissionPass(missions::papelesSiniestros)) gm_->setCompleteMission(missions::papelesSiniestros, true);
 
-			Texture text(app_->getRenderer(), "Muchas gracias. Ahora me unire a tu tripulacion, asi que hazme hueco.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Muchas gracias. Ahora me unir" + Resources::tildes_['e'] + "a tu tripulacion, as" + Resources::tildes_['i'] + 
+				"que hazme hueco.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
 			text.loadFromText(app_->getRenderer(), "'Ah si! Toma esto como muestra de agradecimiento.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
