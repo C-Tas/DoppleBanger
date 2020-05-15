@@ -16,11 +16,12 @@ protected:
 	Button* shopButton_ = nullptr;
 	Button* button_ = nullptr;
 	Button* goToShipButton_ = nullptr;
-	Button* goToNextZoneButton = nullptr;
+	Button* goToNextZoneButton_ = nullptr;
 
 	static void goShopState(Application* app);
 	static void nextConversation(Application* app);
 	static void goToShipState(Application* app);
+	static void changeZone(Application* app);
 
 public:
 	///<summary>Constructora del textBox de diálogo</summary>
@@ -36,18 +37,19 @@ public:
 		button_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::RightArrow), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
 			Vector2D{ (double)(app_->getWindowWidth() / 17),  (double)(app_->getWindowHeight() / 20) }, nextConversation);
 
-		goToShipButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToShopButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
+		goToShipButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToShipButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
 			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, goToShipState);
 
-		//app_->getCurrState()->addUpdateList(goToShipButton_);
+		goToNextZoneButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToNextZoneButton), Vector2D{ (double)6*(app_->getWindowWidth() / 7)-lineSpacing, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, changeZone);
 	};
 	///<summary>Constructora del textBox de descripción</summary>
 	TextBox(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
-	~TextBox() { delete shopButton_; delete button_; delete goToShipButton_; };
+	~TextBox() { delete shopButton_; delete button_; delete goToShipButton_; delete goToNextZoneButton_; };
 
 	///<summary>Carga el textBox de diálogo inicial</summary>
 	void initDialog();
-	bool updateButtons() { return goToShipButton_->update(); }
+	bool updateButtons() { return goToShipButton_->update() || goToNextZoneButton_->update(); }
 
 	///<summary>Carga el textBox de descripción inicial, se llama desde la constructora</summary>
 	void initDescription(Point2D pos);

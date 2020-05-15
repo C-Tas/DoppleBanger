@@ -78,7 +78,7 @@ private:
 	list<Obstacle*> map_Walls;
 	///<summary>Lista que nos ayuda a la hora de debuggear las colisiones, descomentarla en todos los m�todos para visualizar
 	//los colliders (no hay distinci�n entre los colliders que destruyen balas y los que no puede atravesar el jugador)</summary>
-	list<Obstacle*> collidersToRender_;
+	//list<Obstacle*> collidersToRender_;
 	///<summary>Puntero al estado en el que est� el mapa</summary>
 	PlayState* state_ = nullptr;
 

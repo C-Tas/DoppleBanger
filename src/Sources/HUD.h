@@ -30,8 +30,8 @@ public:
 	void setSkillCooldown(bool cooldown, int key);
 	//Crea el HUD de los objetos consumidos
 	void showPotionHUD(int index, double duration, double time);
-	//Estructura del HUD de las pociones
-
+	//Método para settear al player
+	void setPlayerInHUD(Player* player) { player_ = player; };
 private:
 	list<VisualElement*> elementsHUD_;	//Lista de los elementos del HUD
 	vector<potionHUD> potionsHUD_;		//Lista de las pociones del HUD | 0 vel, 1 def, 2 da�, 3 crit

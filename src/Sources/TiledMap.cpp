@@ -71,10 +71,10 @@ const void TiledMap::draw()
 
 	//TEMPORAL, PARA COMPROBAR COLISIONES
 	//Descomentar para visualizar
-	for (Obstacle* ob : collidersToRender_) {
+	/*for (Obstacle* ob : collidersToRender_) {
 		app_->getTextureManager()->getTexture(Resources::CollisionTile)->render({ (int)ob->getColliderPos().getX()-(int)Camera::instance()->getCamera().getX(), (int)ob->getColliderPos().getY() - (int)Camera::instance()->getCamera().getY(),
 			(int)ob->getColliderScale().getX(), (int)ob->getColliderScale().getY()}, ob->getCollisionRot());
-	}
+	}*/
 
 }
 
@@ -120,7 +120,7 @@ void TiledMap::setObstacleType(int gid, Obstacle* obstacle)
 
 	///TEMPORAL PARA VER LOS COLLIDERS
 	//Descomentar para visualizar
-	collidersToRender_.push_back(obstacle);
+	//collidersToRender_.push_back(obstacle);
 	
 	//Una vez que se tiene el tipo del tile, le ajustamos su collider
 	obstacle->adjustTileCollider();

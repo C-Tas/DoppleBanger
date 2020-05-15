@@ -30,7 +30,22 @@ void TextBox::nextConversation(Application* app) {
 
 void TextBox::goToShipState(Application* app)
 {
+	if (GameManager::instance()->getCurrIsland() == Island::Caribbean) {
+		GameManager::instance()->setCurrentZone(Zone::CaribeanA);
+	}
+	else if (GameManager::instance()->getCurrIsland() == Island::Spooky) {
+		GameManager::instance()->setCurrentZone(Zone::SpookyA);
+	}
+	else if (GameManager::instance()->getCurrIsland() == Island::Volcanic) {
+		GameManager::instance()->setCurrentZone(Zone::Volcanic);
+	}
 	app->getGameStateMachine()->changeState(new ShipState(app));
+}
+
+void TextBox::changeZone(Application* app)
+{
+	GameManager::instance()->resetIsland();
+	static_cast<PlayState*>(app->getCurrState())->changeZone();
 }
 
 void TextBox::initDialog() {
@@ -55,7 +70,7 @@ void TextBox::passZoneDialog()
 {
 	//Generamos la caja donde ir� el texto
 	Texture* whiteRect = app_->getTextureManager()->getTexture(Resources::TextureId::TextBox);
-	whiteRect->render(dest);
+	whiteRect->render({ 0,dest.y, dest.w, dest.h });
 
 	dest.x = lineSpacing;
 	dest.y = app_->getWindowHeight() - dest.h;
@@ -64,8 +79,7 @@ void TextBox::passZoneDialog()
 	text.render(lineSpacing, dest.y + lineSpacing);
 
 	goToShipButton_->draw();
-	//goToShipButton_->update();
-
+	goToNextZoneButton_->draw();
 }
 
 #pragma region Dialogos

@@ -157,6 +157,16 @@ void PlayState::swapRenders(GameObject* obj, GameObject* other)
 	}
 }
 
+void PlayState::deleteExceptHUD(Zone newZone)
+{
+	gm_->setCurrentZone(newZone);
+	for (auto i = objectsToRender_.begin(); i != --objectsToRender_.end(); ++i) {
+		removeRenderUpdateLists(*(i));
+	}
+	gameObjects_.clear();
+	objectsToRender_.clear();
+}
+
 void PlayState::initState()
 {
 	//Desactivamos el puntero para poder renderizar los punteros del juego
@@ -176,6 +186,8 @@ void PlayState::resetGame()
 	gm_->resetInventory();
 	//Se limpia la lista de colisiones
 	collisionCtrl_->clearList();
+	//Se vuelve a tener que empezar desde la zona inicial de la isla en la que nos encontremos
+	gm_->resetIsland();
 	//Se reinicia la partida en el barco
 	app_->getGameStateMachine()->changeState(new ShipState(app_));
 }

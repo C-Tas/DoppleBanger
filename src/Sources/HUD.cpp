@@ -93,7 +93,7 @@ bool HUD::update() {
 
  	currentLife_ = player_->getHealth();
 	maxLife_ = player_->getMaxHealth();
-	currentLife_ = gm_->getPlayer()->getHealth();
+	//currentLife_ = gm_->getPlayer()->getHealth();
 	propLife_ = currentLife_ / maxLife_;
 	clipLife_.h = life_->getHeight() * propLife_;	//vidaAct * AltTotal / VidaMax
 	clipLife_.y = life_->getHeight() - clipLife_.h;

@@ -54,6 +54,8 @@ public:
 		LoadGame3,
 		LoadGameNull,
 		LoadButtonNull,
+		GoToShipButton,
+		GoToNextZoneButton,
 		//Animaciones de botones
 		BeerAnim,
 

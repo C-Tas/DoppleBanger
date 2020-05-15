@@ -38,6 +38,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ LoadGame3, "../Sources/assets/botones/loadGame3.png"},
 	{ LoadGameNull, "../Sources/assets/botones/loadGameNull.png"},
 	{ LoadButtonNull, "../Sources/assets/botones/loadButtonNull.png"},
+	{ GoToShipButton, "../Sources/assets/botones/goToShipButton.png"},
+	{ GoToNextZoneButton, "../Sources/assets/botones/ContinueButton.png"},
 	//Animaciones de botones
 	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},
 

@@ -27,10 +27,10 @@ CaribbeanIslandState::~CaribbeanIslandState() {
 
 void CaribbeanIslandState::update()
 {
-	if (enemies_.empty()) {
+	if (enemies_.empty() && gm_->getCurrentZone() == Zone::CaribeanBoss) {
 		collisionCtrl_->clearList();
 		app_->getAudioManager()->haltMusic();
-		app_->getGameStateMachine()->changeState(new WinState(app_));
+		app_->getGameStateMachine()->changeState(new ShipState(app_));
 	}
 	else {
 		collisionCtrl_->islandCollisions();
@@ -50,7 +50,6 @@ void CaribbeanIslandState::initState()
 	//Inicializamos el hud
 	hud_ = new HUD(app_);
 	player_->initSkills();
-
 	//Añadimos el hud a objetos a renderizar
 	addRenderUpdateLists(hud_);
 	app_->getAudioManager()->playMusic(Resources::Caribbean, -1);
@@ -86,5 +85,37 @@ void CaribbeanIslandState::initZone3()
 {
 	currentMap_ = new TiledMap(app_, this, ZONE3_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
 		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone1);
+}
+
+void CaribbeanIslandState::initBossZone()
+{
+	currentMap_ = new TiledMap(app_, this, BOSSZONE_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
+		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone1);
+}
+
+void CaribbeanIslandState::changeZone()
+{ 
+	delete currentMap_;
+	collisionCtrl_->clearList();
+
+	if (gm_->getCurrentZone() == Zone::CaribeanA) {
+		deleteExceptHUD(Zone::CaribeanB);
+		initZone2();
+		addRenderUpdateLists(hud_);
+	}
+	else if (gm_->getCurrentZone() == Zone::CaribeanB) {
+		deleteExceptHUD(Zone::CaribeanC);
+		initZone3();
+		addRenderUpdateLists(hud_);
+
+	}
+	else if (gm_->getCurrentZone() == Zone::CaribeanC) {
+		deleteExceptHUD(Zone::CaribeanBoss);
+		initBossZone();
+		addRenderUpdateLists(hud_);
+
+	}
+	hud_->setPlayerInHUD(player_);
+	player_->initSkills();
 }
 
