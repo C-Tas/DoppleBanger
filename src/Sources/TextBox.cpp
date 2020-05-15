@@ -152,16 +152,22 @@ void TextBox::dialogElderMan(int num) {
 			break;
 
 		case 6:
-			text.loadFromText(app_->getRenderer(), "Y recuerda, siempre puedes confiar en tu anillo, con la tecla R podras invocarla y podras mejorarla con los puntos",
+			text.loadFromText(app_->getRenderer(), "Ten cuidado ahí fuera porque si eres derrotada podre ir a salvarte pero no podre recuperar ni el oro ni los objetos",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
-			text.loadFromText(app_->getRenderer(), "de hazana. Bueno si me disculpas hoy tocha pecho y biceps.",
+			text.loadFromText(app_->getRenderer(), "que no lleves equipados. Y recuerda, siempre puedes confiar en tu anillo, con la tecla R podras invocarla, actuara",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing * 2);
+			text.loadFromText(app_->getRenderer(), "como diana para los enemigos y disparara donde tu lo hagas. Ademas podras mejorarla con los puntos de hazana para que",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 3);
+			text.loadFromText(app_->getRenderer(), "también pueda mochar. Bueno, si me disculpas, hoy tocha pecho y biceps.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 4);
 			break;
 		default:
 			break;
-		}
+		}//cuidado ahí fuera porque si es derrotada por los enemigos irán a salvarla pero no podrá recuperar ni su oro ni sus objetos
 	}
 	else
 	{
