@@ -21,6 +21,8 @@ void NPC::initAnims() {
 		pushBucleTexture = app_->getTextureManager()->getTexture(Resources::VenancioPushBucle);
 		pushFinishTexture = app_->getTextureManager()->getTexture(Resources::VenancioPushFinish);
 
+		timeDrink_ = rand() % 15000 + 5000;
+		timePush_ = rand() % 15000 + 5000;
 		lastDrink_ = SDL_GetTicks();
 		break;
 	case (int)CollisionCtrl::NPCsNames::Merchant:
@@ -94,7 +96,7 @@ void NPC::initPushFinish() {
 void NPC::drinkAnim() {
 	if (SDL_GetTicks() - lastDrink_ >= timeDrink_ && currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
 		initPushStart();
-		lastDrink_ = SDL_GetTicks();
+		timeDrink_ = rand() % 15000 + 5000;
 	}
 }
 
@@ -113,7 +115,7 @@ void NPC::pushBucleAnim() {
 void NPC::pushFinishAnim() {
 	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
 		initDrink();
-		lastPush_ = SDL_GetTicks();
+		timePush_ = rand() % 15000 + 5000;
 	}
 }
 

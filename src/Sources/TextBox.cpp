@@ -145,7 +145,7 @@ void TextBox::dialogElderMan(int num) {
 				text.loadFromText(app_->getRenderer(), "Abre el inventario con la tecla C y equipala con el boton verde.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
 
-				text.loadFromText(app_->getRenderer(), "Ahora usa ese acesso para usar la susodicha pocion.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "Ahora usa ese acceso para usar la susodicha pocion.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
 				break;
 			}

@@ -19,9 +19,9 @@ private:
 	Texture* pushBucleTexture = nullptr;
 	Texture* pushFinishTexture = nullptr;
 	Uint32 lastDrink_ = 0;
-	Uint32 timeDrink_ = 5000;
+	Uint32 timeDrink_ = 0;
 	Uint32 lastPush_ = 0;
-	Uint32 timePush_ = 5000;
+	Uint32 timePush_ = 0;
 
 	const int NUM_FRAMES_ELDERMAN_DRINK = 19;
 	const int NUM_FRAMES_ELDERMAN_PUSH0 = 14;
