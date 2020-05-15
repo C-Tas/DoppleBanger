@@ -74,7 +74,7 @@ void PlayState::removeObject(Collider* obj) {
 	objects_.remove(obj);
 }
 
-void PlayState::checkPlayerActions() {	
+void PlayState::checkPlayerActions() {
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 	{
 		Enemy* obj; obj = checkAttack();
@@ -86,6 +86,8 @@ void PlayState::checkPlayerActions() {
 			player_->move(eventHandler_->getRelativeMousePos());
 		}
 		else player_->setOnCollision(false);
+
+		if (collisionCtrl_->isNextZoneTextBoxActive())player_->getEndZoneTextBox()->updateButtons();
 	}
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getAudioManager()->playMusic(Resources::MainTheme, -1);
@@ -100,6 +102,8 @@ void PlayState::checkPlayerActions() {
 		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
 		player_->stop();
 	}
+
+
 }
 
 Enemy* PlayState::checkAttack() {

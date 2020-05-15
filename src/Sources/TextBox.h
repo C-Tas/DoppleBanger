@@ -4,6 +4,7 @@
 #include "Button.h"
 #include "Vector2D.h"
 #include "GameManager.h"
+#include "GameState.h"
 
 class TextBox {
 protected:
@@ -14,9 +15,12 @@ protected:
 
 	Button* shopButton_ = nullptr;
 	Button* button_ = nullptr;
+	Button* goToShipButton_ = nullptr;
+	Button* goToNextZoneButton = nullptr;
 
 	static void goShopState(Application* app);
 	static void nextConversation(Application* app);
+	static void goToShipState(Application* app);
 
 public:
 	///<summary>Constructora del textBox de diálogo</summary>
@@ -31,16 +35,24 @@ public:
 
 		button_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::RightArrow), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
 			Vector2D{ (double)(app_->getWindowWidth() / 17),  (double)(app_->getWindowHeight() / 20) }, nextConversation);
+
+		goToShipButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToShopButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, goToShipState);
+
+		//app_->getCurrState()->addUpdateList(goToShipButton_);
 	};
 	///<summary>Constructora del textBox de descripción</summary>
 	TextBox(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
-	~TextBox() { delete shopButton_; delete button_; };
+	~TextBox() { delete shopButton_; delete button_; delete goToShipButton_; };
 
 	///<summary>Carga el textBox de diálogo inicial</summary>
 	void initDialog();
+	bool updateButtons() { return goToShipButton_->update(); }
 
 	///<summary>Carga el textBox de descripción inicial, se llama desde la constructora</summary>
 	void initDescription(Point2D pos);
+	///<summary>Crea el textBox para pasar de zona</summary>
+	void passZoneDialog();
 
 #pragma region Diálogos
 	///<summary>Frases del viejo cuando se viaja a una isla nueva o se está en el barco</summary>

@@ -71,11 +71,10 @@ const void TiledMap::draw()
 
 	//TEMPORAL, PARA COMPROBAR COLISIONES
 	//Descomentar para visualizar
-	/*for (Obstacle* ob : collidersToRender_) {
+	for (Obstacle* ob : collidersToRender_) {
 		app_->getTextureManager()->getTexture(Resources::CollisionTile)->render({ (int)ob->getColliderPos().getX()-(int)Camera::instance()->getCamera().getX(), (int)ob->getColliderPos().getY() - (int)Camera::instance()->getCamera().getY(),
 			(int)ob->getColliderScale().getX(), (int)ob->getColliderScale().getY()}, ob->getCollisionRot());
-	}*/
-
+	}
 
 }
 
@@ -121,7 +120,7 @@ void TiledMap::setObstacleType(int gid, Obstacle* obstacle)
 
 	///TEMPORAL PARA VER LOS COLLIDERS
 	//Descomentar para visualizar
-	//collidersToRender_.push_back(obstacle);
+	collidersToRender_.push_back(obstacle);
 	
 	//Una vez que se tiene el tipo del tile, le ajustamos su collider
 	obstacle->adjustTileCollider();
@@ -148,6 +147,9 @@ void TiledMap::addIsometricObstacle(Tile tile, int gid, tileType tileType_)
 	//Si es un obst�culo, lo a�adimos como obst�culo
 	else if(tileType_ == tileType::Obstacle)
 		collisionCtrl_->addObstacleWithRotation(newObstacle);
+	else if (tileType_ == tileType::EndObstacle) {
+		collisionCtrl_->addEndObstacle(newObstacle);
+	}
 
 }
 
@@ -162,7 +164,7 @@ void TiledMap::addOrthogonalObstacle(Tile tile)
 
 }
 
-void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions)
+void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, string layerName)
 {
 	///Recorremos toda la matriz que contiene la informacion de la capa que acabamos de coger
 	for (unsigned int y = 0; y < map_dimensions.y; y++) {
@@ -189,10 +191,14 @@ void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles
 				//Lo a�adimos en la lista de tiles
 				tilesToRender.push_back(tile);
 
-				if (idCollisionTiles_.end() != find(idCollisionTiles_.begin(), idCollisionTiles_.end(), gid))
-					addIsometricObstacle(tile, gid - 1 ,tileType::Obstacle);
-				if (idWallTiles_.end() != find(idWallTiles_.begin(), idWallTiles_.end(), gid))
-					addIsometricObstacle(tile, gid - 1, tileType::Wall);
+				if (layerName != "EndLevel") {
+
+					if (idCollisionTiles_.end() != find(idCollisionTiles_.begin(), idCollisionTiles_.end(), gid))
+						addIsometricObstacle(tile, gid - 1, tileType::Obstacle);
+					if (idWallTiles_.end() != find(idWallTiles_.begin(), idWallTiles_.end(), gid))
+						addIsometricObstacle(tile, gid - 1, tileType::Wall);
+				}
+				else addIsometricObstacle(tile, gid - 1, tileType::EndObstacle);
 				
 			}
 			//Actualizamos la posici�n del mundo para el siguiente tile
@@ -335,7 +341,7 @@ void TiledMap::createIsometricMap(const tmx::Map& map_)
 			auto* tile_layer = dynamic_cast<tmx::TileLayer*>(layer.get());
 			//Cogemos los tiles de la Layer
 			auto layer_tiles = tile_layer->getTiles();
-			createIsometricTileLayer(layer_tiles, map_dimensions);
+			createIsometricTileLayer(layer_tiles, map_dimensions, tile_layer->getName());
 		}
 		//Capas con objetos
 		else if (layer->getType() == tmx::Layer::Type::Object) {

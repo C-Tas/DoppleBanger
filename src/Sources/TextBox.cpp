@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "SDL_macros.h"
 #include "CollisionCtrl.h"
+#include "ShipState.h"
 
 //Cada l�nea de los di�logos/descripciones se tiene que renderizar por separado para poder generar los saltos de l�nea.
 //Lo relacionado con textos aparece aqu� y no en Resources para no sobrecargar dicha clase.
@@ -27,6 +28,11 @@ void TextBox::nextConversation(Application* app) {
 	CollisionCtrl::instance()->nextConversation();
 }
 
+void TextBox::goToShipState(Application* app)
+{
+	app->getGameStateMachine()->changeState(new ShipState(app));
+}
+
 void TextBox::initDialog() {
 	//Generamos la caja donde ir� el texto
 	Texture* whiteRect = app_->getTextureManager()->getTexture(Resources::TextureId::TextBox);
@@ -43,6 +49,23 @@ void TextBox::initDescription(Point2D pos) {
 	dest.h = app_->getWindowHeight() / 7;
 	dest.x = pos.getX();
 	dest.y = pos.getY();
+}
+
+void TextBox::passZoneDialog()
+{
+	//Generamos la caja donde ir� el texto
+	Texture* whiteRect = app_->getTextureManager()->getTexture(Resources::TextureId::TextBox);
+	whiteRect->render(dest);
+
+	dest.x = lineSpacing;
+	dest.y = app_->getWindowHeight() - dest.h;
+
+	Texture text(app_->getRenderer(), "Has llegado al final de la zona, ¿Deseas continuar?", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(lineSpacing, dest.y + lineSpacing);
+
+	goToShipButton_->draw();
+	//goToShipButton_->update();
+
 }
 
 #pragma region Dialogos

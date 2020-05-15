@@ -8,7 +8,7 @@
 #include "../tmxLite/Map.hpp"
 #include "Application.h"
 
-enum class tileType{Wall, Obstacle, Undefined};
+enum class tileType{Wall, Obstacle, EndObstacle, Undefined};
 
 class Obstacle;
 class PlayState;
@@ -78,7 +78,7 @@ private:
 	list<Obstacle*> map_Walls;
 	///<summary>Lista que nos ayuda a la hora de debuggear las colisiones, descomentarla en todos los m�todos para visualizar
 	//los colliders (no hay distinci�n entre los colliders que destruyen balas y los que no puede atravesar el jugador)</summary>
-	//list<Obstacle*> collidersToRender_;
+	list<Obstacle*> collidersToRender_;
 	///<summary>Puntero al estado en el que est� el mapa</summary>
 	PlayState* state_ = nullptr;
 
@@ -160,7 +160,7 @@ private:
 	void addOrthogonalObstacle(Tile tile);
 	
 	///<summary>M�todo auxiliar que crea una layer de tiles isom�tricas (y las almacena para dibujarlas)</summary>
-	void createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
+	void createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, string layerName);
 	///<summary>M�todo auxiliar que crea una layer de tiles �rtogonales</summary>
 	void createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, tmx::Vector2u tilesize);
 	

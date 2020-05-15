@@ -31,6 +31,8 @@ void CollisionCtrl::islandCollisions() {
 	}
 	triggersToErase_.clear();
 
+	collisionWithEndOfZone_ = false;
+
 	//Colisiones con obst�culos
 	for (auto ob : obstacles_) {
 		
@@ -163,6 +165,15 @@ void CollisionCtrl::islandCollisions() {
 		if (Collisions::collides(collider->getPos(), collider->getScaleX(), collider->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			collider->onCollider();
+		}
+	}
+
+	for (auto ob : endObstacles_) {
+		if (Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+			player_->getCollisionRot(), (ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY(), ob->getCollisionRot())) {
+			player_->stop();
+			collisionWithEndOfZone_ = true;
+			//cout << "Debería salir un textbox con los botones para pasar de zona y estas cosas" << endl;
 		}
 	}
 }
@@ -302,6 +313,10 @@ void CollisionCtrl::drawTextBox() {
 		numConversation_ = 0;
 		break;
 	}
+
+	if (collisionWithEndOfZone_)
+		player_->getEndZoneTextBox()->passZoneDialog();
+
 	npcCollision.id = NPCsNames::Nobody;
 	npcCollision.object = nullptr;
 }
