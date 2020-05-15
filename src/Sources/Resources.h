@@ -453,6 +453,6 @@ public:
 	//Vector con los textos
 	static vector<TextMsgInfo> messages; // initialized in .cpp
 
-	//Array de tildes e interrogante
+	//Diccionario de signos de puntuacion
 	static map<char, string>tildes_;
 };
