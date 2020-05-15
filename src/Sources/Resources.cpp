@@ -40,6 +40,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ LoadGame3, "../Sources/assets/botones/loadGame3.png"},
 	{ LoadGameNull, "../Sources/assets/botones/loadGameNull.png"},
 	{ LoadButtonNull, "../Sources/assets/botones/loadButtonNull.png"},
+	{ BackToShipButton, "../Sources/assets/botones/backToShipButton.png"},
 	//Animaciones de botones
 	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},
 
@@ -108,10 +109,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Map1, "../Sources/assets/interfaces/mapa1.png" },
 	{ Map2, "../Sources/assets/interfaces/mapa2.png" },
 	{ Map3, "../Sources/assets/interfaces/mapa3.png" },
-	{ CaribbeanMap, "../Sources/assets/interfaces/caribe.png" },
-	{ Spooky, "../Sources/assets/interfaces/fantasmal.png" },
-	{ Volcanic, "../Sources/assets/interfaces/volcan.png" },
-	{ GameOver, "../Sources/assets/interfaces/gameOver.png" },
+	{ GameOver, "../Sources/assets/interfaces/endGame.png" },
 	{ Win, "../Sources/assets/interfaces/win.png" },
 
 		//HUD
@@ -155,7 +153,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Cartographer, "../Sources/assets/npc/idleCartografa.png" },
 	{ Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png" },
 	{ Morty, "../Sources/assets/npc/idleMorty.png" },
-	
+	{ Funeral, "../Sources/assets/npc/funeralFrames.png" },
+
 	//Animaciones
 	//Player
 	{ PlayerIdleRightAnim, "../Sources/assets/player/animaciones/idle/idleDcha.png" },
@@ -271,6 +270,8 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" },
 	{ Shop ,"../Sources/assets/music/background/shopMusic.mp3" },
 	{ Storyboard ,"../Sources/assets/music/background/storyboardMusic.mp3" },
+	{ FuneralTheme ,"../Sources/assets/music/funeralTheme.mp3" },
+
 #pragma region
 	//Player
 #pragma region PlayerSounds

@@ -36,8 +36,7 @@ bool Wolf::update() {
 		break;
 	default:
 		break;
-	}
-	cout << state << endl;*/
+	}*/
 #endif // _DEBUG
 
 	//Si el lobo ha muerto

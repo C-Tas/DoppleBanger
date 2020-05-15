@@ -34,7 +34,11 @@ void NPC::initAnims() {
 	case (int)CollisionCtrl::NPCsNames::Cartographer:
  		npcIdle = { NUM_FRAMES_CARTOGRAPHER, W_FRAME_CARTOGRAPHER, H_FRAME_CARTOGRAPHER, FRAME_RATE_CARTOGRAPHER, true };
 		break;
+	case 7:
+		npcIdle = { NUM_FRAMES_FUNERAL, W_FRAME_FUNERAL, H_FRAME_FUNERAL, FRAME_RATE_FUNERAL, true };
+		break;
 	}
+
 	currAnim_ = npcIdle;
 	frame_.x = frame_.y = 0;
 	frame_.w = npcIdle.widthFrame_;

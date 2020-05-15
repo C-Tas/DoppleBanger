@@ -57,6 +57,7 @@ public:
 		LoadGame3,
 		LoadGameNull,
 		LoadButtonNull,
+		BackToShipButton,
 		//Animaciones de botones
 		BeerAnim,
 
@@ -115,9 +116,6 @@ public:
 		Map1,
 		Map2,
 		Map3,
-		CaribbeanMap,
-		Spooky,
-		Volcanic,
 		GameOver,
 		Win,
 
@@ -156,6 +154,7 @@ public:
 		SkeletonMusician,
 		Cartographer,
 		Morty,
+		Funeral,
 
 		//Bosses
 		Magordito,
@@ -240,7 +239,6 @@ public:
 		//Magordito
 			//Kirin
 		Kirin,
-
 
 		//Interactuables
 		Wheel,
@@ -328,6 +326,7 @@ public:
 		Shop,
 		Storyboard,
 		WavesSound,
+		FuneralTheme,
 
 		//player
 		WalkAudio,

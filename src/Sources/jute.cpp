@@ -274,9 +274,6 @@ vector<parser::token> parser::tokenize(string source) {
     
     index = skip_whitespaces(source, next);
   }
-  // for (int i=0;i<tokens.size();i++) {
-    // cout << i << " " << tokens[i].value << endl;
-  // }
   return tokens;
 }
   

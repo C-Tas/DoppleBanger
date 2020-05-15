@@ -27,8 +27,6 @@ bool Clon::update() {
 
 		else if (meleeDmg_ > 0 && ((SDL_GetTicks() - meleeTime_) / 1000) > meleeRate_)
 		{
-			cout << "\nClon ataque\n";
-			
 			initMelee();
 		}
 	}

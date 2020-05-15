@@ -13,9 +13,8 @@ public:
 	virtual void action() {
 		double mana = player_->getMana();
 		//Si no está en cooldown la habilidad
- 		if ((SDL_GetTicks() - lastTimeUsed_) / 1000 > cooldown_ || lastTimeUsed_ == 0)
+ 		if ( mana >= costMana_ && ((SDL_GetTicks() - lastTimeUsed_) / 1000 > cooldown_ || lastTimeUsed_ == 0))
 		{
-			cout << "Rebote" << endl;
 			player_->removeMana(costMana_);
 			player_->setRicochet(true);
 			lastTimeUsed_ = SDL_GetTicks();

@@ -61,7 +61,6 @@ void MainMenuState::changeMuteSound()
 #pragma region Inicializacion
 void MainMenuState::initState()
 {
-	cout << "InitState" << endl;
 	SDL_ShowCursor(SDL_ENABLE);
 
 	//Fondo de la escena

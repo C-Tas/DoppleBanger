@@ -101,9 +101,6 @@ bool Pumpkin::update() {
 	return false;
 }
 void Pumpkin::disAttack() {
-#ifdef _DEBUG
-	cout << "hey";
-#endif // _DEBUG
 	app_->getAudioManager()->haltChannel(6);
 	app_->getAudioManager()->haltChannel(5);
 	app_->getAudioManager()->playChannel(Resources::AttackPumpkin, 0, Resources::PumpkinChannel1);

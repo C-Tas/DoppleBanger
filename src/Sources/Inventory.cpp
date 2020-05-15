@@ -270,9 +270,6 @@ void Inventory::draw()const {
 		int i = 0;
 		//dibujamos los objetos de la primera columna
 		while (i < VIEW_LIST / 2 && aux != inventoryList_->end()) {
-			//#ifdef _DEBUG
-			//		cout << "entramos en el bucle" << endl;
-			//#endif
 			auxOb = *aux;
 			auxOb->setPos(Vector2D{ double(posx),double(posy + double(i * (double(app_->getWindowHeight()) / 9)) )});
 			auxOb->setScale(Vector2D{ sizeX,SizeY });

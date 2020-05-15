@@ -6,6 +6,7 @@
 #include "PauseState.h"
 #include "SkillState.h"
 #include "ShopState.h"
+#include "EndState.h"
 #include "Inventory.h"
 #include "HUD.h"
 #include "conio.h"
@@ -23,7 +24,11 @@ void PlayState::draw() const {
 
 void PlayState::update() {
 	if (player_->getDead()) { //Comprobamos que el player haya muerto para cambiar de estado
-		resetGame();
+		//Cargamos música de fondo
+		app_->resetMusicChannels();
+		app_->resetSoundsChannels();
+		app_->getAudioManager()->playChannel(Resources::AudioId::FuneralTheme, -1, Resources::MainMusicChannel);
+		app_->getGameStateMachine()->changeState(new EndState(app_));
 	}
 	else {
 		updateMousePointer();
@@ -161,16 +166,4 @@ void PlayState::initState()
 	mousePointer->setScale(Vector2D(W_MOUSE_POINTER, H_MOUSE_POINTER));
 
 	collisionCtrl_ = CollisionCtrl::instance();
-}
-
-void PlayState::resetGame()
-{
-	//Se pierde el oro
-	gm_->setInventoryGold(0);
-	//Se resetea el inventario
-	gm_->resetInventory();
-	//Se limpia la lista de colisiones
-	collisionCtrl_->clearList();
-	//Se reinicia la partida en el barco
-	app_->getGameStateMachine()->changeState(new ShipState(app_));
 }

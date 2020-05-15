@@ -51,6 +51,12 @@ private:
 	const int W_FRAME_CARTOGRAPHER = 100;
 	const int H_FRAME_CARTOGRAPHER = 100;
 	const int FRAME_RATE_CARTOGRAPHER = 150;
+
+	//Funeral
+	const int NUM_FRAMES_FUNERAL= 14;
+	const int W_FRAME_FUNERAL= 200;
+	const int H_FRAME_FUNERAL = 150;
+	const int FRAME_RATE_FUNERAL = 70;
 #pragma endregion
 
 protected:

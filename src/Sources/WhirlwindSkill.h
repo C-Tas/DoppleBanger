@@ -19,9 +19,8 @@ public:
 	virtual void action() {
 		double mana = player_->getMana();
 		//Si no está en cooldown la habilidad
-		if ((SDL_GetTicks() - lastTimeUsed_) / 1000 > cooldown_ || lastTimeUsed_ == 0)
+		if (mana >= costMana_ && ((SDL_GetTicks() - lastTimeUsed_) / 1000 > cooldown_ || lastTimeUsed_ == 0))
 		{
-			cout << "\nGolpe\n";
 			player_->removeMana(costMana_);
 			//Consigue la lista de los enemigos golpeados y les hace daño
 			Vector2D playerCenter = Vector2D(player_->getPosX() + player_->getScaleX(), player_->getPosY() + player_->getScaleY());

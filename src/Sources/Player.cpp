@@ -124,7 +124,7 @@ bool Player::update()
 		initShoot(); 
 	}
 
-	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
+	//Si se pulsa el boton de en medio
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::MIDDLE)) {
 		cout << getCenter().getX() << " " << getCenter().getY() << endl;
 	}
@@ -170,13 +170,11 @@ bool Player::update()
 		if (found && empoweredAct_ && !empoweredAnim_)
 		{
 			app_->getAudioManager()->playChannel(Resources::EmpoweredSkillAudio, 0, Resources::PlayerChannel4);
-			cout << "\nAtaque potenciado\n" << endl;
 			empoweredAnim_ = true;
 			initMelee();
 		}
 		else if (found && (SDL_GetTicks() - meleeTime_) > currStats_.meleeRate_)
 		{
-			cout << "\nAtaque a melee\n" << endl;
 			initMelee();
 		}
 	}
@@ -519,7 +517,6 @@ void Player::usePotion(usable* potion, int key) {
 		break;
 	case potionType::Armor:
 		if (!potionUsing_[1]) {
-			cout << "ALO" << endl;
 			currStats_.armor_ += auxValue;
 			potionUsing_[1] = true;
 		}

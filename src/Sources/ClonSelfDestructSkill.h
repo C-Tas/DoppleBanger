@@ -21,8 +21,6 @@ public:
 		//Si no está en cooldown la habilidad
 		if (player_->getClon() != nullptr && ((SDL_GetTicks() - lastTimeUsed_) / 1000 > cooldown_ || lastTimeUsed_ == 0))
 		{
-			
-			cout << "\nExplosión\n";
 			player_->removeMana(costMana_);
 			player_->getClon()->initSelfDestruction();
 			//Consigue la lista de los enemigos golpeados y les hace daño

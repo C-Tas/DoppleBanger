@@ -57,7 +57,6 @@ void Magordito::kirin()
 			auto enem = dynamic_cast<Player*>(currEnemy_);
 			if (enem) {
 				player_->receiveDamage(KIRIN_DMG);
-				cout << "KIRIN!" << endl;
 			}
 
 		}
@@ -106,7 +105,6 @@ void Magordito::initialStats()
 void Magordito::teleport()
 {
 	lastTeleport_ = SDL_GetTicks();
-	cout << "TP \n";
 	auto choice = app_->getRandom()->nextInt(0, altars.size());
 	pos_.setVec(altars[choice]->getPos());
 	auto clon = dynamic_cast<Clon*>(currEnemy_);

@@ -8,5 +8,11 @@ public:
 
 protected:
 	virtual void initState();
+
+	//Callbacks
+	//Para volver al barco
+	static void backToShip(Application* app);
+	//Para volver al menu principal
+	static void backToMainMenu(Application* app);
 };
 
