@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <SDL.h>
+#include <map>
 
 using namespace std;
 
@@ -401,4 +402,7 @@ public:
 
 	//Vector con los textos
 	static vector<TextMsgInfo> messages; // initialized in .cpp
+
+	//Diccionario de signos de puntuación
+	static map<char, string>tildes_;
 };
