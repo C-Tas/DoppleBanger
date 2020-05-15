@@ -69,7 +69,6 @@ bool AudioManager::loadSound(int tag, const string& fileName) {
 int AudioManager::playChannel(int tag, int loops, int channel) {
 	Mix_Chunk* chunk = chunks_[tag];
 	if (chunk != nullptr) {
-		cout << "Entra " << channel << endl;
 		return Mix_PlayChannel(channel, chunk, loops);
 	}
 	else {
