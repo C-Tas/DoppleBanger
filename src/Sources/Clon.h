@@ -19,7 +19,6 @@ public:
 	void onCollider() {};
 
 	void shoot();
-	void changeDuration(double dur) { duration_ = dur; }	//En caso de que se pueda modificar la duraci�n
 	
 	void initSelfDestruction();
 	void initVanish();
@@ -41,13 +40,11 @@ private:
 	int meleeRate_ = 0;
 	double distRange_ = 0;
 	double buletSpeed_ = 1000;
-	double spawnTime_ = 0; //Ticks cuando se le hizo spawn
-	double meleeTime_ = 0; //Ticks cuando se atac� por �ltima vez
-	double duration_ = 0; //Duraci�n del clon
-	bool alive_ = true;
+	Cooldown lifeTimeCD_;
+	Cooldown meleeCD_;	//Cooldown ataque melee
 
 
-	const double DURATION_ = 10; //En segundos
+	const double DURATION_ = 8000; //En milisegundos
 	const int CLON_TAUNT_RANGE = 500;
 
 	Actor* objective_ = nullptr;

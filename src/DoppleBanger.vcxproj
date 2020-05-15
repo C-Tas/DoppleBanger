@@ -43,6 +43,7 @@
     <ClCompile Include="Sources\CollisionCtrl.cpp" />
     <ClCompile Include="Sources\Collisions.cpp" />
     <ClCompile Include="Sources\ControlsState.cpp" />
+    <ClCompile Include="Sources\Cooldown.cpp" />
     <ClCompile Include="Sources\Crab.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
     <ClCompile Include="Sources\Draw.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Sources\CollisionCtrl.h" />
     <ClInclude Include="Sources\Collisions.h" />
     <ClInclude Include="Sources\ControlsState.h" />
+    <ClInclude Include="Sources\Cooldown.h" />
     <ClInclude Include="Sources\Crab.h" />
     <ClInclude Include="Sources\CreditsState.h" />
     <ClInclude Include="Sources\Draw.h" />

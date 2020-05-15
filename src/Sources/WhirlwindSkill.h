@@ -9,17 +9,17 @@ class WhirlwindSkill : public Skill
 private:
 	const int RADIUS = 150;
 	const int BONUS = 1.3;
-	const int COOLDOWN = 5;
+	const double COOLDOWN = 5000;	//En milisegundos
 	const double MANA_COST = 10;
 
 public:
-	WhirlwindSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { cooldown_ = COOLDOWN;  costMana_ = MANA_COST; };
+	WhirlwindSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { costMana_ = MANA_COST; };
 	virtual ~WhirlwindSkill() {};
 
 	virtual void action() {
 		double mana = player_->getMana();
 		//Si no está en cooldown la habilidad
-		if ((SDL_GetTicks() - lastTimeUsed_) / 1000 > cooldown_ || lastTimeUsed_ == 0)
+		if (!skillCD_.isCooldownActive())
 		{
 			cout << "\nGolpe\n";
 			player_->removeMana(costMana_);
@@ -29,7 +29,7 @@ public:
 			for (auto it = enemies.begin(); it != enemies.end(); ++it)
 				(*it)->receiveDamage(player_->getMeleeDmg() * BONUS);
 
-			lastTimeUsed_ = SDL_GetTicks();
+			skillCD_.initCooldown(COOLDOWN);
 		}
 	};
 };

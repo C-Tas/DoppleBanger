@@ -3,22 +3,22 @@
 class RicochetSkill : public Skill
 {
 private:
-	const double COOLDOWN = 5;	//Cooldown de la habilidad
+	const double COOLDOWN = 5000;	//En milisegundos
 	const double MANA_COST = 10;
 
 public:
-	RicochetSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Distance) { cooldown_ = COOLDOWN; costMana_ = MANA_COST; };
+	RicochetSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Distance) { costMana_ = MANA_COST; };
 	~RicochetSkill() {}
 
 	virtual void action() {
 		double mana = player_->getMana();
 		//Si no está en cooldown la habilidad
- 		if ((SDL_GetTicks() - lastTimeUsed_) / 1000 > cooldown_ || lastTimeUsed_ == 0)
+ 		if (!skillCD_.isCooldownActive())
 		{
 			cout << "Rebote" << endl;
 			player_->removeMana(costMana_);
 			player_->setRicochet(true);
-			lastTimeUsed_ = SDL_GetTicks();
+			skillCD_.initCooldown(COOLDOWN);
 		}
 	};
 };

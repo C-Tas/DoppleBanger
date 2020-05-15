@@ -35,7 +35,7 @@ void Ink::initObject()
 
 void Ink::onCollider()
 {
-	Player* player = static_cast<Player*>(GameManager::instance()->getPlayer());
+	Player* player = GameManager::instance()->getPlayer();
 	if (state_ == STATE::ATTACKING)
 	{
 		player->receiveDamage(kraken_->getDistDmg());

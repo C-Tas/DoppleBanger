@@ -83,44 +83,45 @@ bool Player::update()
 {
 	updateFrame();
 	//Resetea el coolDown en el HUD
-	for (int i = 0; i < 4; i++) {
-		if (skills_[i] != nullptr && cdSkills[i] && !skills_[i]->isCD()) {
-			cdSkills[i] = false;
-			GameManager::instance()->setSkillCooldown(false, (Key)i);
+	for (int i = 0; i < skills_.size(); i++) {
+
+		if (skills_.at (i) != nullptr) {
+			skills_.at(i)->update();
+			GameManager::instance()->setSkillCooldown(skills_.at(i)->isCD(), (Key)i);
 		}
 	}
-	//Cuando se acabe el tiempo de ricochet, se pone a false
-	if (ricochet_ && (SDL_GetTicks() - lastTimeRico_) / 1000 > TIME_RICO) {
-		ricochet_ = false;
-	}
+
+	//SKILLS
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0] != nullptr) {
 		skills_[0]->action();
-		GameManager::instance()->setSkillCooldown(true, Key::Q);
-		cdSkills[0] = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_W) && skills_[1] != nullptr) {
 		skills_[1]->action();
-		GameManager::instance()->setSkillCooldown(true, Key::W);
-		cdSkills[1] = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_E) && skills_[2] != nullptr) {
 		skills_[2]->action();
-		GameManager::instance()->setSkillCooldown(true, Key::E);
-		cdSkills[2] = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_R) && skills_[3] != nullptr) {
 		skills_[3]->action();
 	}
+
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE) && !app_->getMute()) shout();
 
-	if (slowed_ && (SDL_GetTicks() - slowTime_) / 1000 > slowDuration_)
+	if (slowTimeCD_.isCooldownActive()) slowTimeCD_.updateCooldown();
+	else if (slowed_)
 	{
 		currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
 		slowed_ = false;
 	}
 
-	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && ((SDL_GetTicks() - shotTime_) / 1000) > currStats_.distRate_) {
+	//DISPARO
+	if (shootCD_.isCooldownActive()) { shootCD_.updateCooldown(); }
+	if (meleeCD_.isCooldownActive()) { meleeCD_.updateCooldown(); }
+	if (empoweredCD_.isCooldownActive()) { empoweredCD_.updateCooldown(); }
+
+	//Si se pulsa el boton derecho del raton y se ha acabado el cooldown
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && !shootCD_.isCooldownActive()) {
+		shootCD_.initCooldown(currStats_.distRate_);
 		initShoot(); 
 	}
 
@@ -173,13 +174,11 @@ bool Player::update()
 		if (found && empoweredAct_ && !empoweredAnim_)
 		{
 			app_->getAudioManager()->playChannel(Resources::EmpoweredSkill, 0, 3);
-			cout << "\nAtaque potenciado\n" << endl;
 			empoweredAnim_ = true;
 			initMelee();
 		}
-		else if (found && (SDL_GetTicks() - meleeTime_) > currStats_.meleeRate_)
+		else if (found && !meleeCD_.isCooldownActive())
 		{
-			cout << "\nAtaque a melee\n" << endl;
 			initMelee();
 		}
 	}
@@ -303,7 +302,8 @@ void Player::initMelee()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
-	meleeTime_ = SDL_GetTicks();
+	//Inicia 
+	meleeCD_.initCooldown(currStats_.meleeRate_);
 }
 
 void Player::shootAnim()
@@ -324,9 +324,8 @@ void Player::meleeAnim()
 		if (empoweredAct_) { //Golpe fuerte
 			empoweredAct_ = false;
 			totalDmg = currStats_.meleeDmg_ * empoweredBonus_;
-			empoweredTime_ = SDL_GetTicks();
+			empoweredCD_.initCooldown(EMPOWERED_DELAY);
 		}
-		meleeTime_ = SDL_GetTicks();
 
 		static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
 		if (currEnemy_ == nullptr) {
@@ -407,8 +406,6 @@ void Player::initAnims()
 
 void Player::shoot(Vector2D dir)
 {
-	//Se actualiza el momento del �ltimo disparo
-	shotTime_ = SDL_GetTicks();
 
 	//Se calcula la posici�n desde la cual se dispara la bala
 	Vector2D shootPos;
@@ -721,8 +718,7 @@ void Player::applySlow(double effect, double duration)
 	}
 
 	slowed_ = true;
-	slowDuration_ = duration;
-	slowTime_ = SDL_GetTicks();
+	slowTimeCD_.initCooldown(duration);
 }
 
 void Player::isEnemyDead(Actor* obj)

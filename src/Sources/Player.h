@@ -104,7 +104,6 @@ public:
 			gm_->setGun(gun);
 		}
 		void addMaxHealth(double addition) { maxHealth_ += addition; };
-		void setClonCoolDown() { cdSkills[3] = true; }
 		//Aumenta la cadencia de tiro del player
 		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 		//Activa el ataque potenciado
@@ -142,9 +141,7 @@ private:
 	bool onCollision_ = false;
 	bool initEquip_ = true;	//Para saber si hiay que inicializar el equipamiento
 	bool slowed_ = false;
-	double slowDuration_ = 0;
 	double slowEffect_ = 0;
-	double slowTime_ = 0;
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
 	Clon* clon_ = nullptr;
@@ -152,17 +149,16 @@ private:
 	Vector2D previousPos_;
 	//Habilidades
 	vector<Skill*> skills_ = { nullptr, nullptr, nullptr, nullptr};
-	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
 
 	//cambia los stats de un arma
 	void changeDistWeaponStats(Gun* newWeapon);
 
 	//Objetos
-	//<Speed, Damage, Armor, Crit>			
-	vector<bool> potionUsing_{ 0, 0, 0, 0 };	//Para saber si se está usando la poción y resetear el tiempo
-	vector<double> timerPotion_{ 0, 0, 0, 0 };	//Para guardar y restablecer el tiempo de las pociones
-	vector<double> valuePotion_{ 0, 0, 0, 0 };	//Para guardar y restablecer el tiempo de las pociones
-	vector<double> lastTicksPotion_{ 0, 0, 0, 0 };	//Para guardar y restablecer el tiempo de las pociones
+	//<Speed, Damage, Armor, Crit>
+	vector<bool> potionUsing_{ 0, 0, 0, 0 };		//Para saber si se está usando la poción y resetear el tiempo
+	vector<double> timerPotion_{ 0, 0, 0, 0 };		//Para guardar y restablecer el tiempo de las pociones
+	vector<double> valuePotion_{ 0, 0, 0, 0 };		//Para guardar los valores de incremento de Stats
+	vector<double> lastTicksPotion_{ 0, 0, 0, 0 };	//Para guardar el último tick 
 #pragma region Animaciones
 	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
 	int frameAction_ = 0;					//Frame en el que se realiza la acción
@@ -261,12 +257,11 @@ private:
 #pragma endregion
 //<summary>Variables de los cooldowns del jugador</summary>
 #pragma region Cooldowns
-	double clonCooldown_ = 2;		//Cooldown del clon
-	double clonTime_ = 0;			//Momento del último clon
-	double empoweredCooldown_ = 4;	//Cooldown GolpeFuerte
-	double empoweredTime_ = 0;		//Momento del último ataque potenciado
-	double meleeTime_ = 0;			//Momento del último ataque
-	double shotTime_ = 0;			//Momento del �ltimo disparo
+	Cooldown slowTimeCD_;	//Tiempo que nos queda "slow"
+	Cooldown shootCD_;	//Cooldown del disparo
+	Cooldown meleeCD_;	//Cooldown ataque melee
+	const double EMPOWERED_DELAY = 10000;
+	Cooldown empoweredCD_;	//Cooldown skill golpe fuerte
 #pragma endregion
 //<summary>Estadisticas iniciales del jugador</summary>
 #pragma region Stats
@@ -280,8 +275,8 @@ private:
 	const double MELEE_RANGE = 20;		//Rango del ataque a melee
 	const double DIST_RANGE = 2;		//Rango del ataque a distancia
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
-	const double MELEE_RATE = 1000;		//Velocidad del ataque a melee en segundos
-	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos
+	const double MELEE_RATE = 3000;		//Velocidad del ataque a melee en segundos
+	const double DIST_RATE = 5000;		//Velocidad del ataque a distancia en segundos
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
 	//Constantes para el delay de los efectos de sonido
