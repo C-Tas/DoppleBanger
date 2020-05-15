@@ -344,7 +344,7 @@ void TextBox::blunderbussSpooky() {
 }
 
 void TextBox::lifePotion() {
-	Texture text(app_->getRenderer(), "Poci�n de vida:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Poci" + Resources::tildes_['o'] + "n de vida:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
 	text.loadFromText(app_->getRenderer(), "Medicina de hierbas divinas que curan las", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
@@ -358,24 +358,24 @@ void TextBox::lifePotion() {
 }
 
 void TextBox::manaPotion() {
-	Texture text(app_->getRenderer(), "Poci�n de man�:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Poci" + Resources::tildes_['o'] +  "n de man" + Resources::tildes_['a'] + ":", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
 	text.loadFromText(app_->getRenderer(), "Agua de mar tratada con magia que regenera", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
-	text.loadFromText(app_->getRenderer(), "una cantidad de man�.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "una cantidad de man" + Resources::tildes_['a'] + ".", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::velocityPotion() {
-	Texture text(app_->getRenderer(), "Poci�n de velocidad:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Poci" + Resources::tildes_['o'] + "n de velocidad:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
 	text.loadFromText(app_->getRenderer(), "Ron mezclado con aceite de trucha que", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
-	text.loadFromText(app_->getRenderer(), "producen hiperactividad, aumentando la", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "produce hiperactividad, aumentando la", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 
 	text.loadFromText(app_->getRenderer(), "velocidad de movimiento.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
@@ -383,7 +383,7 @@ void TextBox::velocityPotion() {
 }
 
 void TextBox::damagePotion() {
-	Texture text(app_->getRenderer(), "Poci�n de da�o:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Poci" + Resources::tildes_['o'] + "n de da" + Resources::tildes_['ñ'] + "o:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
 	text.loadFromText(app_->getRenderer(), "Fluidos de demonio que fortalecen la", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
@@ -392,12 +392,12 @@ void TextBox::damagePotion() {
 	text.loadFromText(app_->getRenderer(), "musculatura haciendo que el que la bebe", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 
-	text.loadFromText(app_->getRenderer(), "inflija m�s da�o con sus golpes.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "inflija m" + Resources::tildes_['a'] + "s da" + Resources::tildes_['ñ'] + "o con sus golpes.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
 }
 
 void TextBox::defensePotion() {
-	Texture text(app_->getRenderer(), "Poci�n de defensa:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Poci" + Resources::tildes_['o'] + "n de defensa:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
 	text.loadFromText(app_->getRenderer(), "Sangre de gorila tratada con alquimia", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
@@ -408,16 +408,16 @@ void TextBox::defensePotion() {
 }
 
 void TextBox::criticPotion() {
-	Texture text(app_->getRenderer(), "Poci�n de cr�tico:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Poci" + Resources::tildes_['o'] + "n de cr" + Resources::tildes_['i'] + "tico:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), "Sangre de �guila virgen que aumenta la", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "Sangre de " + Resources::tildes_['a'] + "guila virgen que aumenta la", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
-	text.loadFromText(app_->getRenderer(), "precisi�n otorgando mayor probabilidad", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "precisi" + Resources::tildes_['o'] + "n otorgando mayor probabilidad", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 
-	text.loadFromText(app_->getRenderer(), "de cr�tico.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "de cr" + Resources::tildes_['i'] + "tico.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
 }
 
@@ -432,33 +432,33 @@ void TextBox::Clon()
 	text.loadFromText(app_->getRenderer(), "Parece replicar todo lo que haces ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 
-	text.loadFromText(app_->getRenderer(), "desde su posicion", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "desde su posici" + Resources::tildes_['o'] + "n", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
 
 }
 
 void TextBox::LiberationI()
 {
-	Texture text(app_->getRenderer(), "Liberacion I: El clon ataca con los stats", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Liberaci" + Resources::tildes_['o'] + "n I: El clon ataca a distancia y a melee", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), "al 50 % del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "con los stats al 50 % del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
 }
 
 void TextBox::LiberationII()
 {
-	Texture text(app_->getRenderer(), "Liberacion II: El clon ataca con los ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Liberaci" + Resources::tildes_['o'] + "n II: El clon ataca a distancia y a melee", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), "stats al 100 % del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), " con los stats al 100 % del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 }
 
 void TextBox::Explosion()
 {
-	Texture text(app_->getRenderer(), "Explosion: causa dano en area a los ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Explosi" + Resources::tildes_['o'] + "n: causa da" + Resources::tildes_['ñ'] + "o en " + Resources::tildes_['a'] + "rea a los ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
 	text.loadFromText(app_->getRenderer(), "enemigos cercanos al clon. El clon ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -480,16 +480,16 @@ void TextBox::Raudo()
 }
 void TextBox::GolpeFuerte()
 {
-	Texture text(app_->getRenderer(), "Golpe Fuerte: carga dano al ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Golpe Fuerte: carga da" + Resources::tildes_['ñ'] + "o al ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), "siguiente ataque basico.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "siguiente ataque b" + Resources::tildes_['a'] + "sico.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
 }
 void TextBox::Invencible()
 {
-	Texture text(app_->getRenderer(), "Invencible: aumenta el dano y el critico", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Invencible: aumenta el da" + Resources::tildes_['ñ'] + "o y el cr" + Resources::tildes_['i'] + "tico", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
 	text.loadFromText(app_->getRenderer(), "del jugador de manera permanente.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -501,7 +501,7 @@ void TextBox::Rebote()
 	Texture text(app_->getRenderer(), "Rebote: durante un tiempo los disparos ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), " rebotan un numero  limitado de veces ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), " rebotan un n" + Resources::tildes_['u'] + "mero  limitado de veces ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
 	text.loadFromText(app_->getRenderer(), " entre los enemigos cercanos. ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -514,7 +514,7 @@ void TextBox::Perforador()
 	Texture text(app_->getRenderer(), "Perforador: el siguiente disparo  ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), "atraviesa unidades infligiendo dano a ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "atraviesa unidades infligiendo da" + Resources::tildes_['ñ'] + "o a ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
 	text.loadFromText(app_->getRenderer(), "los enemigos que haya en el recorrido ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -530,7 +530,7 @@ void TextBox::Torbellino()
 	Texture text(app_->getRenderer(), "Torbellino: realiza un ataque circular ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), "infligiendo da�o a los enemigos ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "infligiendo da" + Resources::tildes_['ñ'] + "o a los enemigos ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
 	text.loadFromText(app_->getRenderer(), "que se encuentren cerca.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
