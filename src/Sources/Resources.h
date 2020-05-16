@@ -120,6 +120,10 @@ public:
 		Map3,
 		GameOver1,
 		GameOver2,
+		Rain1,
+		Rain2,
+		Rain3,
+		Rain4,
 		Win,
 
 		//HUD
@@ -157,7 +161,11 @@ public:
 		SkeletonMusician,
 		Cartographer,
 		Morty,
-		Funeral,
+		VenancioFuneral,
+		MerchantFuneral,
+		CookerFuneral,
+		MortyFuneral,
+		CartographerFuneral,
 
 		//Bosses
 		Magordito,

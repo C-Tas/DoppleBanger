@@ -113,6 +113,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Map3, "../Sources/assets/interfaces/mapa3.png" },
 	{ GameOver1, "../Sources/assets/interfaces/endGame1.png" },
 	{ GameOver2, "../Sources/assets/interfaces/endGame2.png" },
+	{ Rain1, "../Sources/assets/interfaces/fondoLluvia0.png" },
+	{ Rain2, "../Sources/assets/interfaces/fondoLluvia1.png" },
+	{ Rain3, "../Sources/assets/interfaces/fondoLluvia2.png" },
+	{ Rain4, "../Sources/assets/interfaces/fondoLluvia3.png" },
 	{ Win, "../Sources/assets/interfaces/win.png" },
 
 		//HUD
@@ -156,7 +160,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Cartographer, "../Sources/assets/npc/idleCartografa.png" },
 	{ Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png" },
 	{ Morty, "../Sources/assets/npc/idleMorty.png" },
-	{ Funeral, "../Sources/assets/npc/funeralFrames.png" },
+	{ VenancioFuneral, "../Sources/assets/npc/venancioFuneral.png" },
+	{ MerchantFuneral, "../Sources/assets/npc/mercaderFuneral.png" },
+	{ CookerFuneral, "../Sources/assets/npc/cookerFuneral.png" },
+	{ MortyFuneral, "../Sources/assets/npc/mortyFuneral.png" },
+	{ CartographerFuneral, "../Sources/assets/npc/cartografaFuneral.png" },
 
 	//Animaciones
 	//Player
