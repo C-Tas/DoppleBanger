@@ -49,11 +49,23 @@ void Actor::updateDirVisMouse()
 
 //A falta de definir la gesti�n del da�o en funci�n de la armadura
 void Actor::receiveDamage(int damage) {
+	lastTint_ = SDL_GetTicks();
+	feedBackHurtSounds();
 	/*double finalDamage = (currStats_.armor_ * damage) / 100;
 	currStats_.health_ -= finalDamage;*/
 	currStats_.health_ -= damage;
 	if (currStats_.health_ <= 0) {
 		this->die();
+	}
+}
+
+void Actor::manageTint() {
+	if (SDL_GetTicks() - lastTint_ <= TINT_TIME) {
+		SDL_SetTextureColorMod(texture_->getSDLTex(), 255, 0, 0);
+	}
+	else
+	{
+		SDL_SetTextureColorMod(texture_->getSDLTex(), 255, 255, 255);
 	}
 }
 

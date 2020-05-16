@@ -242,6 +242,7 @@ private:
 	//Controla la animación
 	void shootAnim();
 	void meleeAnim();
+	virtual void feedBackHurtSounds();
 #pragma endregion
 //<summary>Variables relativas a las habilidades</summary>
 #pragma region Abilities

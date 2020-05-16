@@ -75,6 +75,7 @@ public:
 	//Cambia al siguiente frame
 	virtual void updateFrame();
 
+
 #pragma region getters
 //Devuelve el rectangulo destino
 	const virtual SDL_Rect& getDestiny() {
