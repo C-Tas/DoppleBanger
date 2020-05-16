@@ -41,6 +41,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ LoadGameNull, "../Sources/assets/botones/loadGameNull.png"},
 	{ LoadButtonNull, "../Sources/assets/botones/loadButtonNull.png"},
 	{ BackToShipButton, "../Sources/assets/botones/backToShipButton.png"},
+	{ YesButton, "../Sources/assets/botones/yesButton.png"},
+	{ NoButton, "../Sources/assets/botones/noButton.png"},
 	//Animaciones de botones
 	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},
 
@@ -109,7 +111,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Map1, "../Sources/assets/interfaces/mapa1.png" },
 	{ Map2, "../Sources/assets/interfaces/mapa2.png" },
 	{ Map3, "../Sources/assets/interfaces/mapa3.png" },
-	{ GameOver, "../Sources/assets/interfaces/endGame.png" },
+	{ GameOver1, "../Sources/assets/interfaces/endGame1.png" },
+	{ GameOver2, "../Sources/assets/interfaces/endGame2.png" },
 	{ Win, "../Sources/assets/interfaces/win.png" },
 
 		//HUD

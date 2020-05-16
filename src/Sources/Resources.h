@@ -58,6 +58,8 @@ public:
 		LoadGameNull,
 		LoadButtonNull,
 		BackToShipButton,
+		YesButton,
+		NoButton,
 		//Animaciones de botones
 		BeerAnim,
 
@@ -116,7 +118,8 @@ public:
 		Map1,
 		Map2,
 		Map3,
-		GameOver,
+		GameOver1,
+		GameOver2,
 		Win,
 
 		//HUD
