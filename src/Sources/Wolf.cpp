@@ -40,6 +40,9 @@ bool Wolf::update() {
 	cout << state << endl;*/
 #endif // _DEBUG
 
+	updateFrame();
+	updateCooldowns();
+
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendr�a que hacer la animaci�n de muerte?
@@ -86,8 +89,8 @@ bool Wolf::update() {
 			selectTarget();
 		}
 	}
-	if (currState_ == STATE::IDLE && idleTime_ <= (SDL_GetTicks() - lastIdleTime)) {
-		currState_ = STATE::PATROLLING;;
+	if (currState_ == STATE::IDLE && !idleCD_.isCooldownActive()) {
+		currState_ = STATE::PATROLLING;
 		target_ = patrol_[currTarget_];
 	}
 	//Si el lobo est� en patrulla
@@ -99,7 +102,7 @@ bool Wolf::update() {
 			{ (int)pos_.getX() / 2,(int)pos_.getY() / 2,(int)scale_.getX() / 2,(int)scale_.getY() / 2 });
 		if (SDL_HasIntersection(&pos, &targetPos)) {
 			currState_ = STATE::IDLE;
-			lastIdleTime = SDL_GetTicks();
+			idleCD_.initCooldown(IDLE_PAUSE);
 			if (currTarget_ == patrol_.size() - 1) {
 				currTarget_ = 0;
 			}
@@ -161,9 +164,9 @@ void Wolf::initAnims()
 
 //Se encarga de gestionar el ataque a melee DONE
 void Wolf::attack() {
-	if (currStats_.meleeRate_ <= SDL_GetTicks() - lastMeleeHit_)
+	if (!meleeCD_.isCooldownActive())
 	{
-		lastMeleeHit_ = SDL_GetTicks();
+		meleeCD_.initCooldown(currStats_.meleeRate_);
 		if (!app_->getMute()) {
 			app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttack, 0, 1);
 		}
@@ -234,8 +237,8 @@ void Wolf::initialStats()
 	MANA = 100;
 	MANA_REG = 100;
 	ARMOR = 10;
-	MELEE_DMG = 1;
-	DIST_DMG = 1;
+	MELEE_DMG = 100;
+	DIST_DMG = 0;
 	CRIT = 2000;
 	MELEE_RANGE = 50;
 	DIST_RANGE = 75;
@@ -257,4 +260,6 @@ void Wolf::initRewards()
 
 void Wolf::updateCooldowns()
 {
+	if (meleeCD_.isCooldownActive()) meleeCD_.updateCooldown();
+	if (idleCD_.isCooldownActive()) idleCD_.updateCooldown();
 }

@@ -4,7 +4,10 @@
 
 bool Ink::update()
 {
-	if (state_ == STATE::FOLLOWING && (SDL_GetTicks() - spawnTime_) / 1000 > FALL_DURATION)
+	//Este if en principio estaba planteado para hacerse en funcion del tiempo
+	//Sin embargo, cuando se metan las animaciones habra que cambiarlo para que
+	//se haga en funcion de las animaciones.
+	if (state_ == STATE::FOLLOWING && lifeCD_.getDuration() <= INK_DURATION - FALL_DURATION)
 	{
 		state_ = STATE::ATTACKING;
 		setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
@@ -13,7 +16,7 @@ bool Ink::update()
 	else if (state_ == STATE::ATTACKING)
 		state_ = STATE::IDLE;
 	
-	if ((SDL_GetTicks() - spawnTime_) / 1000 > INK_DURATION)
+	if (!lifeCD_.isCooldownActive())
 	{
 		app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
 		CollisionCtrl::instance()->removeCollider(this);
@@ -29,7 +32,7 @@ void Ink::initObject()
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	CollisionCtrl::instance()->addCollider(this);
-	spawnTime_ = SDL_GetTicks();
+	lifeCD_.initCooldown(INK_DURATION);
 	state_ = STATE::FOLLOWING;
 }
 

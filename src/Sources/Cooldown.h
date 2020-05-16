@@ -19,7 +19,6 @@ public:
 
 		//Comprueba que no se haya estado en pausa
 		if (currTick - lastTick_ < PAUSE_COOLDOWN) {
-			//cout << "Esperando " << duration_ << endl;
 			duration_ -= (currTick - lastTick_);
 		}
 

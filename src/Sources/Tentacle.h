@@ -20,7 +20,7 @@ public:
 
 
 private:
-	int spawnTime_ = 0;
+	Cooldown lifeCD_;
 	int attackFrames_ = 0;
 	//Puntero al kraken padre
 	Kraken* kraken_ = nullptr;
@@ -52,9 +52,7 @@ private:
 
 #pragma region Constantes
 	//Duraci�n del tent�culo
-	const int TENTACLE_DURATION = 5;
-	//Duraci�n del tent�culo cayendo
-	const int ATTACK_DURATION = 1;
+	const int TENTACLE_DURATION = 5000;
 
 	//Tent�culo aparece
 	const int NUM_FRAMES_SPAWN = 0;

@@ -99,27 +99,6 @@ void Inventory::initState(){
 	for (auto ob = inventoryList_->begin(); ob != inventoryList_->end(); ++ob) {
 		(*ob)->setNewCallBack(callSelectObject);
 	}
-	//Pociones auxiliares para testeo
-	usable* potion1 = new usable(app_, potionType::Armor);
-	usable* potion2 = new usable(app_, potionType::Speed);
-	usable* potion3 = new usable(app_, potionType::Damage);
-	usable* potion4 = new usable(app_, potionType::Health);
-	usable* potion5 = new usable(app_, potionType::Mana);
-	usable* potion6 = new usable(app_, potionType::Crit);
-
-	InventoryButton* g = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, potion3, callSelectObject);
-	list <InventoryButton*>::iterator it1 = inventoryList_->insert(inventoryList_->end(), g);
-	g->setIterator(it1);
-	if (it1 == inventoryList_->begin()) {
-		ListPos = inventoryList_->begin();
-	}
-
-	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, potion2, callSelectObject);
-	list <InventoryButton*>::iterator it = inventoryList_->insert(inventoryList_->end(), b);
-	b->setIterator(it);
-	if (it == inventoryList_->begin()) {
-		ListPos = inventoryList_->begin();
-	}
 }
 
 void Inventory::selectObject(InventoryButton* ob) {
@@ -293,9 +272,6 @@ void Inventory::draw()const {
 		int i = 0;
 		//dibujamos los objetos de la primera columna
 		while (i < VIEW_LIST / 2 && aux != inventoryList_->end()) {
-			//#ifdef _DEBUG
-			//		cout << "entramos en el bucle" << endl;
-			//#endif
 			auxOb = *aux;
 			auxOb->setPos(Vector2D{ double(posx),double(posy + double(i * (double(app_->getWindowHeight()) / 9)) )});
 			auxOb->setScale(Vector2D{ sizeX,SizeY });

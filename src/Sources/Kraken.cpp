@@ -9,12 +9,13 @@ Kraken::~Kraken()
 
 bool Kraken::update() {
 
+	updateFrame();
+	updateCooldowns();
+
 	if (currEnemy_ == nullptr)
 		currEnemy_ = static_cast<Draw*>(GameManager::instance()->getPlayer());
 
-
-
-	if ((SDL_GetTicks() - lastAttack_) / 1000 > MELEE_RATE)
+	if (!attackCD_.isCooldownActive())
 	{
 		int probSwim, probInk, probSweep, probSlam;
 		if ((currEnemy_->getPos() - getCenter()).magnitude() < 1.5 * scale_.getX())
@@ -42,10 +43,10 @@ bool Kraken::update() {
 		else
 			slam();
 
-		lastAttack_ = SDL_GetTicks();
+		attackCD_.initCooldown(currStats_.meleeRate_);
 	}
 
-	if (currState_ == STATE::SWIMMING && (SDL_GetTicks() - swimTime_) / 1000 > SWIM_DURATION)
+	if (currState_ == STATE::SWIMMING && !swimCD_.isCooldownActive())
 		swimEnd();
 
 	//Si ha muerto
@@ -88,7 +89,6 @@ void Kraken::initObject()
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	CollisionCtrl::instance()->addEnemy(this);
-	lastAttack_ = SDL_GetTicks();
 	initAnims();
 	swimInit();
 	initRewards();
@@ -154,13 +154,13 @@ void Kraken::swimInit()
 	currState_ = STATE::SWIMMING;
 	//Empieza animación (cambiar el valor de swimTime)
 
-	swimTime_ = SDL_GetTicks(); //Esto se tendría que hacer al acabar la animación
+	swimCD_.initCooldown(SWIM_DURATION); //Esto se tendría que hacer al acabar la animación
 }
 
 void Kraken::swimEnd()
 {
-	currState_ = STATE::IDLE;
 	//Empieza animación
+	currState_ = STATE::IDLE;
 
 	//Se encuentra y guarda el índice de la posición más cercana al jugador y su distancia
 	Vector2D closest = Vector2D(-1, -1);
@@ -198,6 +198,8 @@ void Kraken::ink()
 
 void Kraken::updateCooldowns()
 {
+	if (attackCD_.isCooldownActive()) attackCD_.updateCooldown();
+	if (swimCD_.isCooldownActive()) swimCD_.updateCooldown();
 }
 
 void Kraken::tentDeath(Tentacle* obj)

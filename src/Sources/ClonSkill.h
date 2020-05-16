@@ -18,12 +18,10 @@ public:
 		//Si no est� en cooldown la habilidad y hay mana suficiente
 		if (costMana_ <= mana && !skillCD_.isCooldownActive())
 		{
-			cout << "\nClon\n";
 			Vector2D dist = Vector2D(HandleEvents::instance()->getRelativeMousePos().getX() - player_->getPos().getX(), HandleEvents::instance()->getRelativeMousePos().getY() - player_->getPos().getY());
 			if (dist.magnitude() <= CLON_SPAWN_RANGE)
 			{
 				player_->removeMana(costMana_);
-				cout << "Baja man�" << endl;
 				player_->createClon();
 				skillCD_.initCooldown(COOLDOWN);
 				GameManager::instance()->setSkillCooldown(true, Key::R);

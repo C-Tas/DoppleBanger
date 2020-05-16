@@ -22,8 +22,8 @@ public:
 	virtual void lostAggro();
 	virtual void initRewards();
 private:
-	int lastAttack_ = 0;
-	int swimTime_ = 0;
+	Cooldown attackCD_;
+	Cooldown swimCD_;
 
 	//Lista con los tent�culos invocados
 	list<Tentacle*> tentacles_;
@@ -46,7 +46,6 @@ private:
 	Anim diveAnim_ = { 0,0,0,0,false };
 	Anim exitAnim_ = { 0,0,0,0,false };
 
-
 	//Inicializa las animaciones
 	void initAnims();
 	void slam();
@@ -61,7 +60,7 @@ private:
 #pragma region Constantes
 	const int ATTACK_RATE = 5;
 	//Tiempo desde que se sumerge hasta que emerge
-	const double SWIM_DURATION = 1;
+	const double SWIM_DURATION = 1000;
 	const int AVERAGE_INK_SHOTS = 7;
 	const int NORMAL_DESVIATION = 2;
 	//Idle
@@ -86,7 +85,6 @@ private:
 	const int FRAME_RATE_EXIT = 0;
 #pragma endregion
 
-
 #pragma region Stats
 	const double HEALTH = 200;
 	const double MANA = 0;
@@ -98,7 +96,7 @@ private:
 	const double MELEE_RANGE = 0;
 	const double DIST_RANGE = 0;
 	const double MOVE_SPEED = 0;
-	const double MELEE_RATE = 5;
-	const double DIST_RATE = 5;
+	const double MELEE_RATE = 5000;	//En milisegundos
+	const double DIST_RATE = 5000;	//En milisegundos
 #pragma endregion
 };

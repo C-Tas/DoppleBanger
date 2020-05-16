@@ -14,14 +14,6 @@ void Skeleton::initAnims()
 	
 }
 
-void Skeleton::updateAnim()
-{
-	if (currAnim_.frameRate_ <= SDL_GetTicks() - lasFrame_) {
-		lasFrame_ = SDL_GetTicks();
-		frame_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)currAnim_.widthFrame_,(int)currAnim_.heightFrame_ });
-	}
-}
-
 void Skeleton::initialStats() {
 	HEALTH = 100;
 	MANA = 100;
@@ -33,19 +25,20 @@ void Skeleton::initialStats() {
 	MELEE_RANGE = 20;
 	DIST_RANGE = 250;
 	MOVE_SPEED = 100;
-	MELEE_RATE = 1;
+	MELEE_RATE = 0;
 	DIST_RATE = 2500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
 void Skeleton::updateCooldowns()
 {
+	if (shootCD_.isCooldownActive()) shootCD_.updateCooldown();
 }
 
 
 void Skeleton::attack() {
-	if (currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
-		lastHit = SDL_GetTicks();
+	if (!shootCD_.isCooldownActive()) {
+		shootCD_.initCooldown(currStats_.distRate_);
 		Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
 		BoneBullet* bone = new BoneBullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
 			getCenter(), dir, currStats_.distDmg_, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
@@ -56,7 +49,7 @@ void Skeleton::attack() {
 
 void Skeleton::initObject() {
 	setTexture(app_->getTextureManager()->getTexture(Resources::Skeleton));
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initialStats();
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
@@ -69,8 +62,9 @@ void Skeleton::lostAggro()
 }
 
 bool Skeleton::update() {
+	updateFrame();
+	updateCooldowns();
 
-	
 	//Si el esqueleto ha muerto
 	if (currState_ == STATE::DYING) {
 		// animación de muerte si la tiene
@@ -84,7 +78,7 @@ bool Skeleton::update() {
 		currState_ = STATE::ATTACKING;
 	}
 	//Si el esqueleto tiene enemigo y puede atacar
-	if (currState_ == STATE::ATTACKING && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
+	if (currState_ == STATE::ATTACKING && !shootCD_.isCooldownActive()) {
 		//Si el esqueeto tiene un enemigo y lo tiene a rango
 		if (onRange()) {
 			//changeAnim(attackAnim_);//animacion de ataque del esqueleto
@@ -103,10 +97,8 @@ bool Skeleton::update() {
 			//changeAnim(idleAnim_); animacion de idle del esqueleto
 			currEnemy_ = nullptr;
 		}
-		lastHit = SDL_GetTicks();
 	}
 
-	updateAnim();
 	return false;
 }
 

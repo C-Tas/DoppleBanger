@@ -8,7 +8,7 @@ bool Clon::update() {
 	updateFrame();
 
 	if (lifeTimeCD_.isCooldownActive()) {
-		lifeTimeCD_.updateCooldown();
+		updateCooldowns();
 
 		if (currState_ == STATE::SELFDESTRUCT && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
 			player_->killClon();
@@ -20,26 +20,21 @@ bool Clon::update() {
 			currState_ = STATE::IDLE;
 			initIdle();
 		}
-		
 
 		Vector2D clonPos = getVisPos();
 		if (meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING ||
 			Vector2D(abs(objective_->getVisPos().getX() - clonPos.getX()), abs(objective_->getVisPos().getY() - clonPos.getY())).magnitude() > range_))
 			objective_ = static_cast<PlayState*>(app_->getGameStateMachine()->getState())->findClosestEnemy(pos_);
-
 		else if (meleeDmg_ > 0 && !meleeCD_.isCooldownActive())
 		{
 			initMelee();
 		}
 	}
-
 	else {
-		cout << "MORISION" << endl;
 		if (currState_ != STATE::VANISH){
 			initVanish();
 		}
 		if (currAnim_.currFrame_ == currAnim_.numberFrames_ -1 ) {
-			cout << "KILL" << endl;
 			player_->killClon();
 		}
 	}
@@ -62,6 +57,8 @@ void Clon::initObject() {
 
 void Clon::updateCooldowns()
 {
+	lifeTimeCD_.updateCooldown();
+	if (meleeCD_.isCooldownActive()) meleeCD_.updateCooldown();
 }
 
 void Clon::initAnim() {
@@ -187,9 +184,11 @@ void Clon::initMelee()
 void Clon::meleeAnim() {
 
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
-		objective_->receiveDamage(meleeDmg_);
-		if (objective_->getState() == STATE::DYING)
-			enemies_.remove(static_cast<Enemy*>(objective_));
+		if (objective_ != nullptr) {
+			objective_->receiveDamage(meleeDmg_);
+			if (objective_->getState() == STATE::DYING)
+				enemies_.remove(static_cast<Enemy*>(objective_));
+		}
 		meleeCD_.initCooldown(currStats_.meleeRate_);
 		attacked_ = true;
 	}

@@ -4,6 +4,8 @@
 
 bool AltarSkeleton::update()
 {
+	updateFrame();
+	updateCooldowns();
 
 	//muerte definitiva del esqueleto
 	if (mobState_ == MOBSTATE::DIE) {
@@ -56,7 +58,6 @@ bool AltarSkeleton::update()
 				selectTarget();
 			}
 		}
-		updateAnim();
 	}
 	return false;
 }
