@@ -60,6 +60,10 @@ void Clon::initObject() {
 	initAnim();
 }
 
+void Clon::updateCooldowns()
+{
+}
+
 void Clon::initAnim() {
 
 	//Animación de idle  --> Cambiar los Resource mas tarde

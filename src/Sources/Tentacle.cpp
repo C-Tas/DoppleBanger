@@ -104,6 +104,10 @@ bool Tentacle::sweepUpdate()
 
 }
 
+void Tentacle::updateCooldowns()
+{
+}
+
 bool Tentacle::slamUpdate()
 {
 	//Mientras dure el tent�culo

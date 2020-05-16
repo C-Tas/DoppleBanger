@@ -54,6 +54,7 @@ private:
 	void swimInit(); //Empieza la animación de sumergirse y calcula a donde nadar
 	void swimEnd(); //Se mueve a la posición calculada y empieza la animacion de emerger
 	void ink();
+	virtual void updateCooldowns();
 
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animaci�n del kraken)

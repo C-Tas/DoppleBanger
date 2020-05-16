@@ -254,3 +254,7 @@ void Wolf::initRewards()
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
+
+void Wolf::updateCooldowns()
+{
+}

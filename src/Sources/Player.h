@@ -82,10 +82,10 @@ public:
 		app_->getAudioManager()->playChannel(Resources::PerforateSkill, 0, 3);
 		perforate_ = perforate; };
 	//Activa el rebote y el momento en el que se usa
-	void setRicochet(bool ricochet) { 
+	void activeRicochet() { 
 		app_->getAudioManager()->playChannel(Resources::Ricochet, 0, 3);
-		ricochet_ = ricochet; 
-		lastTimeRico_ = SDL_GetTicks(); };
+		ricochetCD_.initCooldown(RICOCHET_DELAY);
+	};
 		//Para saber si hay que inicializar el equipamiento
 		void setinitEquip(bool init) { initEquip_ = init; };
 	//Setea si el player ha colisionado
@@ -251,17 +251,17 @@ private:
 	bool empoweredAnim_ = false; //Si ha empezado la animación del ataque potenciado
 	double empoweredBonus_ = 1.5;	//Bonus porcentual del daño
 	bool perforate_ = false;	//Para saber si el siguiente disparo perfora
-	bool ricochet_ = false;		//Para saber si los disparos van a rebotar
-	const int TIME_RICO = 4;	//En segundos
-	int lastTimeRico_ = 0;		//Momento en el que se usa rebote
 #pragma endregion
 //<summary>Variables de los cooldowns del jugador</summary>
 #pragma region Cooldowns
+	virtual void updateCooldowns();
 	Cooldown slowTimeCD_;	//Tiempo que nos queda "slow"
 	Cooldown shootCD_;	//Cooldown del disparo
 	Cooldown meleeCD_;	//Cooldown ataque melee
 	const double EMPOWERED_DELAY = 10000;
 	Cooldown empoweredCD_;	//Cooldown skill golpe fuerte
+	const double RICOCHET_DELAY = 5000;
+	Cooldown ricochetCD_;	//Cooldown skill golpe fuerte
 #pragma endregion
 //<summary>Estadisticas iniciales del jugador</summary>
 #pragma region Stats
@@ -273,7 +273,7 @@ private:
 	const double DIST_DAMAGE = 1000;	//Daño a distancia y de las habilidades
 	const double CRIT = 0;				//Crítico
 	const double MELEE_RANGE = 20;		//Rango del ataque a melee
-	const double DIST_RANGE = 2;		//Rango del ataque a distancia
+	const double DIST_RANGE = 2000;		//Rango del ataque a distancia
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
 	const double MELEE_RATE = 3000;		//Velocidad del ataque a melee en segundos
 	const double DIST_RATE = 5000;		//Velocidad del ataque a distancia en segundos

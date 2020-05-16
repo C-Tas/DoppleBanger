@@ -82,14 +82,7 @@ void Player::initSkills()
 bool Player::update()
 {
 	updateFrame();
-	//Resetea el coolDown en el HUD
-	for (int i = 0; i < skills_.size(); i++) {
-
-		if (skills_.at (i) != nullptr) {
-			skills_.at(i)->update();
-			GameManager::instance()->setSkillCooldown(skills_.at(i)->isCD(), (Key)i);
-		}
-	}
+	updateCooldowns();
 
 	//SKILLS
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0] != nullptr) {
@@ -107,17 +100,11 @@ bool Player::update()
 
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE) && !app_->getMute()) shout();
 
-	if (slowTimeCD_.isCooldownActive()) slowTimeCD_.updateCooldown();
 	else if (slowed_)
 	{
 		currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
 		slowed_ = false;
 	}
-
-	//DISPARO
-	if (shootCD_.isCooldownActive()) { shootCD_.updateCooldown(); }
-	if (meleeCD_.isCooldownActive()) { meleeCD_.updateCooldown(); }
-	if (empoweredCD_.isCooldownActive()) { empoweredCD_.updateCooldown(); }
 
 	//Si se pulsa el boton derecho del raton y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && !shootCD_.isCooldownActive()) {
@@ -341,6 +328,25 @@ void Player::meleeAnim()
 	}
 }
 
+void Player::updateCooldowns()
+{
+	//Resetea el coolDown en el HUD
+	for (int i = 0; i < skills_.size(); i++) {
+
+		if (skills_.at(i) != nullptr) {
+			skills_.at(i)->update();
+			GameManager::instance()->setSkillCooldown(skills_.at(i)->isCD(), (Key)i);
+		}
+	}
+	//COOLDOWN
+	if (shootCD_.isCooldownActive()) { shootCD_.updateCooldown(); }
+	if (meleeCD_.isCooldownActive()) { meleeCD_.updateCooldown(); }
+	if (empoweredCD_.isCooldownActive()) { empoweredCD_.updateCooldown(); }
+	if (ricochetCD_.isCooldownActive()) { ricochetCD_.updateCooldown(); }
+	if (slowTimeCD_.isCooldownActive()) slowTimeCD_.updateCooldown();
+
+}
+
 void Player::initAnims()
 {
 	//Animación de idle
@@ -416,14 +422,14 @@ void Player::shoot(Vector2D dir)
 	if (auxGunType == equipType::PistolI || auxGunType == equipType::PistolII) {
 		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,
 			currStats_.distDmg_, currStats_.distRange_, gun_->getBulletSpeed());
+
 		//Activa perforación en la bala
 		if (perforate_) {
 			bullet->setPerforate(perforate_);
 			perforate_ = false;
 		}
 		//Activa el rebote en la bala
-		if (ricochet_)
-			bullet->setRicochet(ricochet_);
+		bullet->setRicochet(ricochetCD_.isCooldownActive());
 
 		//Se añade a los bucles del juegos
 		app_->getCurrState()->addRenderUpdateLists(bullet);
@@ -436,7 +442,7 @@ void Player::shoot(Vector2D dir)
 			blunderbuss->activatePerforate();
 			perforate_ = false;
 		}
-		if (ricochet_) {
+		if (ricochetCD_.isCooldownActive()) {
 			blunderbuss->activateRicochet();
 		}
 		app_->getCurrState()->addUpdateList(blunderbuss);

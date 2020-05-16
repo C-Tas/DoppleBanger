@@ -14,7 +14,6 @@ public:
 	void update();
 
 private:
-	Uint32 startInstance_ = 0;
 	bool songActive = false;
 
 	//Para guardar la posici�n del clik del rat�n  

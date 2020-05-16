@@ -55,6 +55,7 @@ private:
 	Vector2D shootingDir_ = {0,0};
 
 	virtual void initObject();
+	virtual void updateCooldowns();
 	void taunt();
 
 #pragma region Animaciones

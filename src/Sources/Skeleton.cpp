@@ -38,6 +38,10 @@ void Skeleton::initialStats() {
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
+void Skeleton::updateCooldowns()
+{
+}
+
 
 void Skeleton::attack() {
 	if (currStats_.distRate_ <= SDL_GetTicks() - lastHit) {

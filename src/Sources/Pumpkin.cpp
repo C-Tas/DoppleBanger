@@ -79,11 +79,11 @@ bool Pumpkin::update() {
 			initMove();
 		}
 		else {
-			if (onDistRange() && currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
+			if (onDistRange() && !shootCD_.isCooldownActive()) {
 				shootAnim();
 			}
 			//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
-			else if (getEnemy(rangeVision_) && currStats_.distRate_ <= SDL_GetTicks() - lastHit)
+			else if (getEnemy(rangeVision_) && !shootCD_.isCooldownActive())
 			{
 				shootAnim();
 			}
@@ -230,6 +230,12 @@ void Pumpkin::initRewards()
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
+
+void Pumpkin::updateCooldowns()
+{
+	if (shootCD_.isCooldownActive()) shootCD_.updateCooldown();
+}
+
 void Pumpkin::initIdle()
 {
 	currState_ = STATE::IDLE;
@@ -333,7 +339,7 @@ void Pumpkin::shootAnim()
 {
 	if (!shooted_ && currAnim_.currFrame_ == FRAME_ACTION_SHOOT) {
 		disAttack();
-		lastHit = SDL_GetTicks();
+		shootCD_.initCooldown(currStats_.distRange_);
 		shooted_ = true;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {

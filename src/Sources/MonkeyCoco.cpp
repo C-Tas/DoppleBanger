@@ -7,7 +7,7 @@
 
 bool MonkeyCoco::update() {
 	updateFrame();
-
+	updateCooldowns();
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
 		app_->getAudioManager()->playChannel(Resources::MonkeyDie, 0, 3);
@@ -37,7 +37,7 @@ bool MonkeyCoco::update() {
 
 	//Si el mono tiene enemigo y puede atacar
 	if (currState_ == STATE::SHOOTING) {
-		if (currStats_.distRate_ <= SDL_GetTicks() - lastHit) {
+		if (!shootCD_.isCooldownActive()) {
 			//Si el mono tiene un enemigo y lo tiene a rango
 			if (onRange()) {
 				initShoot();
@@ -52,7 +52,7 @@ bool MonkeyCoco::update() {
 				currEnemy_ = nullptr;
 				firstAttack = true;
 			}
-			lastHit = SDL_GetTicks();
+			shootCD_.initCooldown(currStats_.distRate_);
 		}
 		if (currEnemy_ != nullptr) shootAnim();
 	}
@@ -147,6 +147,11 @@ void MonkeyCoco::updateDirVisObjective(GameObject* objective) {
 	}
 }
 
+void MonkeyCoco::updateCooldowns()
+{
+	if (shootCD_.isCooldownActive()) shootCD_.updateCooldown();
+}
+
 void MonkeyCoco::initIdle() {
 	currState_ = STATE::IDLE;
 	texture_ = idleTx_[(int)currDir_];
@@ -191,7 +196,7 @@ void MonkeyCoco::shootAnim() {
 		app_->getAudioManager()->playChannel(Resources::MonkeyShoot, 0, 3);
 		attack();
 		shooted_ = true;
-		lastHit = SDL_GetTicks();
+		shootCD_.initCooldown(currStats_.distRate_);
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();	//Activa el idle

@@ -19,7 +19,7 @@ public:
 
 		//Comprueba que no se haya estado en pausa
 		if (currTick - lastTick_ < PAUSE_COOLDOWN) {
-			cout << "Esperando " << duration_ << endl;
+			//cout << "Esperando " << duration_ << endl;
 			duration_ -= (currTick - lastTick_);
 		}
 
@@ -42,6 +42,8 @@ public:
 	void setDuration(double duration) { duration_ = duration; };
 	//Establece la duracion del cooldown
 	void setLastTick() { lastTick_ = SDL_GetTicks(); };
+	//Te devuelve la duracion que le queda
+	double getDuration() { return duration_; };
 private:
 	//Si la diferencia de ticks es mayor que PAUSE_COOLDOWN, no se resta duracion
 	const double PAUSE_COOLDOWN = 200;

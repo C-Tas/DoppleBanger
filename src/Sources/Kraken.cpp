@@ -196,6 +196,10 @@ void Kraken::ink()
 	app_->getGameStateMachine()->getState()->addRenderUpdateLists(ink);
 }
 
+void Kraken::updateCooldowns()
+{
+}
+
 void Kraken::tentDeath(Tentacle* obj)
 {
 	tentacles_.remove(obj);

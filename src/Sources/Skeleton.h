@@ -39,7 +39,7 @@ protected:
 	const uint BONE_HEIGHT = app_->getWindowHeight() / 40;		//Alto del hueso
 	const uint BONE_WIDTH = app_->getWindowWidth() / 36;		//Ancho del hueso
 	const double BONE_VEL = 400;							//Velocidad del hueso
-	const double BONE_LIFE = 3;							//Vida del proyectil en segundos
+	const double BONE_LIFE = 3000;							//Vida del proyectil en milisegundos
 	
 	int Distance;											//distancia que recorre el hueso a la ida y a la vuelta
 
@@ -54,6 +54,7 @@ protected:
 	//Actualiza la actual animación
 	void updateAnim();
 	void initialStats();
+	virtual void updateCooldowns();
 
 };
 

@@ -60,6 +60,7 @@ private:
 	virtual void initObject();
 	//Inicializa animaciones
 	virtual void initAnims();
+	virtual void updateCooldowns();
 	//inicializa el ataque kirin
 	void kirin();
 	//Inicializa la animaci�n del kirin

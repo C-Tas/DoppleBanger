@@ -48,6 +48,7 @@ private:
 	bool sweepUpdate();
 	virtual void initialStats() {};	
 	virtual void initRewards() {};
+	virtual void updateCooldowns();
 
 #pragma region Constantes
 	//Duraci�n del tent�culo

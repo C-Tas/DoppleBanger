@@ -48,6 +48,10 @@ void Magordito::initAnims() {
 	kirinTx_.push_back(app_->getTextureManager()->getTexture(Resources::Kirin));
 }
 
+void Magordito::updateCooldowns()
+{
+}
+
 void Magordito::kirin()
 {
 	if (currEnemy_ != nullptr) {

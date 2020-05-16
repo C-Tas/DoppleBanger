@@ -71,4 +71,5 @@ private:
 
 	virtual void initialStats();
 	virtual void initRewards();
+	virtual void updateCooldowns();
 };
