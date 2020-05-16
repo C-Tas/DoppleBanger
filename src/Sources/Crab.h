@@ -44,7 +44,7 @@ private:
 	//Dimensiones del clip del spritesheet
 	const int W_CLIP_WALK = 100;
 	const int H_CLIP_WALK = 100;
-	const int WALK_FRAME_RATE = 4;
+	const int WALK_FRAME_RATE = 100;
 	//Animaciones
 	Anim walkAnim_{ 0,0,0,0, false };
 	Texture* walkTex_;

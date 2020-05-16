@@ -198,7 +198,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PumpkinAttackDownAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispDelante.png" },
 //crab
      {CrabAttack,"../Sources/assets/enemigos/crab/crabAttack.png" },
-     {CrabWalk,"../Sources/assets/enemigos/crab/crabAttack.png"},
+     {CrabWalk,"../Sources/assets/enemigos/crab/crabWalk.png"},
 		//Move
 	{ PumpkinMoveRightAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDer.png" },
 	{ PumpkinMoveLeftAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovIzq.png" },

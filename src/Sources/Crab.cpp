@@ -19,6 +19,11 @@ bool Crab::update() {
 			//Si entramos en este caso indica que el enemigo esta al alcance ya que es el factor que rechazo el anterior if y así tiene coste O(1) y no coste O(getenemy)
 			if (currState_ == STATE::PATROLLING) {
 				currState_ = STATE::ATTACKING;
+				currAnim_ = attackAnim_;
+				texture_ = attackTex_;
+				frame_.x = 0; frame_.y = 0;
+				frame_.w = currAnim_.widthFrame_;
+				frame_.h = currAnim_.heightFrame_;
 			}
 			//Se vuelve a comprobar la posicion del enemigo ya que sino podria no parar de atacar
 			//cambairr a on range
@@ -28,8 +33,17 @@ bool Crab::update() {
 			else
 			{
 				currState_ = STATE::PATROLLING;
+				texture_ = walkTex_;
+				currAnim_ = walkAnim_;
+				frame_.x = 0; frame_.y = 0;
+				frame_.w = currAnim_.widthFrame_;
+				frame_.h = currAnim_.heightFrame_;
 			}
 		}
+#ifdef _DEBUG
+		cout << currAnim_.numberFrames_ << endl;
+#endif // _DEBUG
+
 	}
 
 	return false;
@@ -38,11 +52,6 @@ void Crab::move(Point2D target)
 {
 	Vector2D visPos = getVisPos();
 	target_ = target;
-	texture_ = walkTex_;
-	currAnim_ = walkAnim_;
-	frame_.x = 0; frame_.y = 0;
-	frame_.w = currAnim_.widthFrame_;
-	frame_.h = currAnim_.heightFrame_;
 	//Margen de 2 pixeles
 	if (visPos.getX() < target_.getX() - 2 ||
 		visPos.getX() > target_.getX() + 2 ||
@@ -80,11 +89,6 @@ void Crab::attack() {
 		if (dmg != nullptr) {
 			dmg->receiveDamage(currStats_.meleeDmg_);
 		}
-		texture_ = attackTex_;
-		currAnim_ = attackAnim_;
-		frame_.x = 0; frame_.y = 0;
-		frame_.w = currAnim_.widthFrame_;
-		frame_.h = currAnim_.heightFrame_;
 	}
 	else {
 		if (SDL_GetTicks() - entra_ >= 1000) {
@@ -101,18 +105,13 @@ void Crab::initObject()
 	texture_ = app_->getTextureManager()->getTexture(Resources::CrabWalk);
 	Enemy::initObject();
 	initAnims();
-	texture_ = attackTex_;
-	currAnim_ = attackAnim_;
-	frame_.x = 0; frame_.y = 0;
-	frame_.w = currAnim_.widthFrame_;
-	frame_.h = currAnim_.heightFrame_;
 	rangeVision_ = 40;
 }
 
 void Crab::initAnims()
 {
 	walkAnim_ = Anim(NUM_FRAMES_WALK, W_CLIP_WALK, H_CLIP_WALK, WALK_FRAME_RATE,true);
-	walkTex_= app_->getTextureManager()->getTexture(Resources::CrabAttack);
+	walkTex_= app_->getTextureManager()->getTexture(Resources::CrabWalk);
 	//Cambiar los n�meros magicos
 	attackAnim_ = Anim(NUM_FRAMES_ATK, W_CLIP_ATK, H_CLIP_ATK, ATK_FRAME_RATE,true);
 	attackTex_ = app_->getTextureManager()->getTexture(Resources::CrabAttack);
