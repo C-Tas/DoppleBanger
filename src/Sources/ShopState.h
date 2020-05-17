@@ -3,7 +3,7 @@
 #include <list>
 
 struct ContainerSHOP {
-	///<summary>Lista con los objetos del inventario o del tienda</summary>
+	///<summary>Lista con los objetos del inventario o de la tienda</summary>
 	list<InventoryButton*>* objects_ = nullptr;
 	///<summary>"Pagina" del inventario en la que nos encontramos(es decir, en la que est�n los objetos del inventario que vemos en la interfaz)</summary>
 	int page_ = 0;
@@ -99,7 +99,7 @@ private:
 	void selectedIsLastElement(ContainerSHOP& list_, int nVisibleElements);
 	///<summary>M�todo auxiliar para actualizar los valores en los textos del dinero al cambiarlos</summary>
 	void moneyChange();
-
+	void createItems(int n);
 
 public:
 	///<summary>Constructora del ShopState</summary>

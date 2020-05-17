@@ -363,6 +363,8 @@ public:
 	//Indica si estamos o no en el barco
 	inline void setOnShip(bool onShip) { onShip_ = onShip; };
 
+	inline void setShop(list<InventoryButton*>* shop) { shop_ = shop; };
+
 	//Reseteo del inventario
 	void resetInventory();
 	//Asigna el puntero al inventario

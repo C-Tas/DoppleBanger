@@ -128,8 +128,10 @@ void ShopState::initState() {
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
 
 	//Cogemos la referencia de las listas que hay en GameManager
-	shop_.objects_ = gm_->getShop();
+	createItems(8);
+	gm_->setShop(shop_.objects_);
 	inventory_.objects_ = gm_->getInventory();
+
 	///Reasignamos el callback y el estado puesto que si se borra el antiguo Shop, no se podrá seleccionar 
 	//ninguno de los objetos al no estar la función en la misma direccion de memoria
 	for (auto ob = inventory_.objects_->begin(); ob != inventory_.objects_->end(); ++ob) {
@@ -324,4 +326,17 @@ void ShopState::moneyChange()
 {
 	delete inventoryMoneyTex_;
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(gm_->getInventoryGold()), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
+}
+
+void ShopState::createItems(int n)
+{
+	RandEquipGen* rand = new RandEquipGen(app_);
+	for (size_t i = 0; i < n; i++)
+	{
+		Equipment* ob = rand->genEquip();
+		InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);
+		list <InventoryButton*>::iterator it = shop_.objects_->insert(shop_.objects_->end(), b);
+		b->setIterator(it);
+	}
+	delete rand;
 }

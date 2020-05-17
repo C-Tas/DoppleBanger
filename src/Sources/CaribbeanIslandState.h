@@ -19,6 +19,7 @@ public:
 		currentMap_->draw(); 
 		PlayState::draw(); 
 	};
+	TiledMap* currentMap_;
 
 protected:
 #pragma region Tilemap_Const
@@ -51,7 +52,4 @@ protected:
 	void initZone2();
 	///<summary>Inicializa el mapa de la zona 3 de la isla, pero no borra el anterior</summary>
 	void initZone3();
-
-private:
-	TiledMap* currentMap_;
 };
