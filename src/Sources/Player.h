@@ -268,6 +268,7 @@ private:
 	const double MANA_REG_DELAY = 3000; //Tiempo regeneracion de mana = 1 seg
 	bool initManaReg_ = true;
 #pragma endregion
+
 	//<summary>Estadisticas iniciales del jugador</summary>
 	#pragma region Stats
 	double maxHealth_ = 1000;			//Representa la cantidad maxima de vida

@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "CollisionCtrl.h"
 #include <string>
+#include "PlayState.h"
 
 bool Wolf::update() {
 #ifdef _DEBUG
@@ -117,9 +118,15 @@ bool Wolf::update() {
 //Mueve al lobo DONE
 void Wolf::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
-	target_.setVec(posToReach);
-	dir_.setX(posToReach.getX() - getCenter().getX());
-	dir_.setY(posToReach.getY() - getCenter().getY());
+
+	if ((getCenter() - target_).magnitude() <= 0.05)
+	{
+		pathPos_ = { (int)PosToTile(target_).getX(), (int)PosToTile(target_).getY() };
+		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
+		if (pathing_.size() > 1)
+			target_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+	}
+	dir_.setVec(target_ - getCenter());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));

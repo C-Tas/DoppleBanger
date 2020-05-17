@@ -27,7 +27,7 @@ protected:
 	const int TILESET_TILE_HEIGHT = 256;
 	const int TILESET_COLS = 22;
 	const int TILESET_FILS = 14;
-	const int TILE_DRAWING_SIZE = 128;
+	const int TILE_DRAWING_SIZE = gm_->getTileSize();
 
 	///<summary>Direccion en la que se encuentra el archivo de Tiled del mapa de la zona 1</summary>
 	const std::string ZONE1_TILEMAP = "../Sources/assets/mapas/Isla1-1/Isla 1.tmx";

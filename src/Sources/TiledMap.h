@@ -52,6 +52,10 @@ public:
 
 	///<summary>M�todo para pintar el mapa</summary>
 	const void draw();
+
+	Vector2D TileToPos(Vector2D tile);
+	Vector2D PosToTile(Vector2D pos);
+
 private:
 	CollisionCtrl* collisionCtrl_ = nullptr;
 	GameManager* gm_ = nullptr;
@@ -161,6 +165,7 @@ private:
 	
 	///<summary>M�todo auxiliar que crea una layer de tiles isom�tricas (y las almacena para dibujarlas)</summary>
 	void createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
+	void createIsometricPathLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
 	///<summary>M�todo auxiliar que crea una layer de tiles �rtogonales</summary>
 	void createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, tmx::Vector2u tilesize);
 	

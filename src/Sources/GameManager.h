@@ -170,6 +170,10 @@ private:
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
+	vector<ObjectName> objectsEquipped = { ObjectName::Unequipped, ObjectName::Unequipped };
+	//Constante del tamaño de pintado de los tiles
+	const int tileSize = 128;
+ 
 	vector<ObjectName> objectsEquipped_ = { ObjectName::Unequipped, ObjectName::Unequipped };
 
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
@@ -286,6 +290,10 @@ public:
 	//Devuelve si estamos o no en la isla
 	const bool getOnShip() { return onShip_; };
 
+	const int getTileSize() { return tileSize; };
+
+	//Devuelve el oro conseguido
+	const int getGold() { return inventoryGold_; };
 	//Devuelve el tiempo que hemos puesto a ojo para saber si ha habido pausa :)
 	const int getDelayTime() { return DELAYTIME; };
 	//Devuelve los puntos de haza�a
