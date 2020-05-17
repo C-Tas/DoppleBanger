@@ -286,8 +286,6 @@ private:
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
 	const double MELEE_RATE = 1000;		//Velocidad del ataque a melee en segundos
 	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos
-	double maxMana_ = 100;
-	double maxHealth_ = 100;
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
 	//Constantes para el delay de los efectos de sonido

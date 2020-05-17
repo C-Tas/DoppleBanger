@@ -142,9 +142,6 @@ bool Player::update()
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 	}
 
-	//comprobamos si hay que desactivar las pociones
-	desactivePotion();
-	
 	Enemy* objective = static_cast<Enemy*>(currEnemy_);
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
 	Vector2D target = target_;
