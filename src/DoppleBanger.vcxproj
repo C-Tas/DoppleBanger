@@ -103,6 +103,7 @@
     <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\Tentacle.cpp" />
     <ClCompile Include="Sources\Sword.cpp" />
+    <ClCompile Include="Sources\TestState.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Sources\StoryState.h" />
     <ClInclude Include="Sources\Tentacle.h" />
     <ClInclude Include="Sources\Sword.h" />
+    <ClInclude Include="Sources\TestState.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
