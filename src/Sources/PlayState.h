@@ -75,6 +75,8 @@ protected:
 	AStar::Generator* generator_;
 
 	virtual void initState();
+	//Resetea la partida de acuerdo al GDD
+	void resetGame();
 	//Sirve para cargar el estado
 	virtual void loadState() {};
 };

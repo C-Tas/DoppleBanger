@@ -164,7 +164,7 @@ private:
 	void addOrthogonalObstacle(Tile tile);
 	
 	///<summary>M�todo auxiliar que crea una layer de tiles isom�tricas (y las almacena para dibujarlas)</summary>
-	void createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
+	void createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, string layerName);
 	void createIsometricPathLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
 	///<summary>M�todo auxiliar que crea una layer de tiles �rtogonales</summary>
 	void createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, tmx::Vector2u tilesize);
