@@ -7,6 +7,7 @@
 #include "Sword.h"
 #include "Gun.h"
 #include "usable.h"
+#include "TextBox.h"
 
 #pragma region Callbacks
 
@@ -74,6 +75,19 @@ void ShopState::draw() const
 
 	//Escribimos la informaci�n del boton seleccionado
 	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render(DESCRIPTION_RECT);
+
+	//pintar textos
+	//descripcion objetos
+	if (selected_ != nullptr) {
+		selected_->getObject()->getDescription(descriptionBox);
+	}
+	double posx1 = (double)(app_->getWindowWidth() / 1.684);//950;
+	double posy = (double)(app_->getWindowHeight() / 1.184);//770;
+
+	if (selected_ != nullptr) {
+		Texture potionText(app_->getRenderer(), "Precio: " + to_string((int)selected_->getObject()->getPrice()), app_->getFontManager()->getFont(Resources::FontId::RETRO), SDL_Color({ 0,0,0,1 }));
+		potionText.render(posx1, posy);
+	}
 }
 
 void ShopState::update()
@@ -143,12 +157,16 @@ void ShopState::initState() {
 
 	inventory_.firstDrawn = inventory_.objects_->begin();
 	shop_.firstDrawn = shop_.objects_->begin();
+	//descripcion de objetos
+	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.88), (double)(app_->getWindowHeight() / 1.45));//850,620
+	descriptionBox = new TextBox(app_, descriptionPoint);
 }
 
 void ShopState::endState()
 {
 	delete inventoryMoneyTex_;
 	delete selectedObjectDescription_;
+	delete descriptionBox;
 }
 
 #pragma region privateCallbacks
@@ -189,7 +207,7 @@ void ShopState::selectObject(InventoryButton* button)
 {
 	selected_ = button;
 	if (selectedObjectDescription_ != nullptr)delete selectedObjectDescription_;
-	selectedObjectDescription_ = new Texture(app_->getRenderer(), "Descripcion Temporal", app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
+	//selectedObjectDescription_ = new Texture(app_->getRenderer(), "Descripcion Temporal", app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
 }
 
 void ShopState::changeBetweenLists()

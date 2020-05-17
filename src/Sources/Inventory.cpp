@@ -7,6 +7,8 @@
 #include "usable.h"
 #include "Player.h"
 #include "SkillState.h"
+#include "TextBox.h"
+#include "SDL_macros.h"
 
 using namespace std;
 
@@ -83,6 +85,7 @@ void Inventory::initState(){
 	if (aux.gloves_ != nullptr) equipment_.gloves_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.gloves_, callSelectObject, true);
 	if (aux.boots_ != nullptr) equipment_.boots_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.boots_, callSelectObject, true);
 	if (aux.sword_ != nullptr)	equipment_.sword_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.sword_, callSelectObject, true);
+	getVertical(equipment_.sword_);
 	if (aux.gun_ != nullptr) equipment_.gun_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, aux.gun_, callSelectObject, true);
 	if (aux.potions_[0] != nullptr)	equipment_.potion1_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[0], callSelectObject, true);
 	if (aux.potions_[1] != nullptr)	equipment_.potion2_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[1], callSelectObject, true);
@@ -99,11 +102,16 @@ void Inventory::initState(){
 	for (auto ob = inventoryList_->begin(); ob != inventoryList_->end(); ++ob) {
 		(*ob)->setNewCallBack(callSelectObject);
 	}
+	//descripcion de objetos
+	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.777), (double)(app_->getWindowHeight()/1.38));
+	 descriptionBox = new TextBox(app_, descriptionPoint);
 }
+
+
 
 void Inventory::selectObject(InventoryButton* ob) {
 	select_ = ob;
-	printInformation();//este metodo todabia no hace nada
+	
 }
 
 void Inventory::equipObject() {
@@ -148,7 +156,14 @@ void Inventory::changeEquipment(InventoryButton* &but) {
 		//El objeto desequipado lo devolvemos al final de la lista
 		list <InventoryButton*>::iterator it = inventoryList_->insert(inventoryList_->end(), aux);
 		aux->setIterator(it);
-	}
+		//comprobamos si se trata de una espada
+		Equipment* auxEquip = static_cast<Equipment*>(but->getObject());
+		equipType auxType = auxEquip->getEquipType();
+		if ((auxType == equipType::SwordI || auxType == equipType::SwordII
+			|| auxType == equipType::SaberI || auxType == equipType::SaberII)) {
+			getHorizontal(but);
+		}
+	} 
 	//equipamos el nuevo objeto
 	but= select_; 
 }
@@ -174,6 +189,7 @@ void Inventory::selectEquipment(){
 		|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
 		changeEquipment(equipment_.sword_);
 		player_->equip(static_cast<Sword*>(auxEquip));
+		getVertical(select_);
 	}
 	else if (auxType == equipType::PistolI || auxType == equipType::PistolII
 		|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
@@ -269,12 +285,18 @@ void Inventory::draw()const {
 		
 		double sizeX = (double)(app_->getWindowWidth() / 16);
 		double SizeY = (double)(app_->getWindowWidth() / 16);
+		double SizeXSWord = (double)(app_->getWindowWidth() / 7.5);
 		int i = 0;
 		//dibujamos los objetos de la primera columna
 		while (i < VIEW_LIST / 2 && aux != inventoryList_->end()) {
 			auxOb = *aux;
 			auxOb->setPos(Vector2D{ double(posx),double(posy + double(i * (double(app_->getWindowHeight()) / 9)) )});
-			auxOb->setScale(Vector2D{ sizeX,SizeY });
+			equipType auxType = static_cast<Equipment*>(auxOb->getObject())->getEquipType();
+			if ((auxType == equipType::SwordI || auxType == equipType::SwordII
+				|| auxType == equipType::SaberI || auxType == equipType::SaberII)) {
+				auxOb->setScale(Vector2D{ SizeXSWord,SizeY });
+			}
+			else auxOb->setScale(Vector2D{ sizeX,SizeY });
 			auxOb->draw();//desreferenciamos el puntero
 			aux++;
 			i++;
@@ -284,7 +306,12 @@ void Inventory::draw()const {
 		while (j < VIEW_LIST / 2 && aux != inventoryList_->end()) {
 			auxOb = *aux;
 			auxOb->setPos(Vector2D{ double(posx + (double)(app_->getWindowWidth() / 5)),double(posy + (j * (double(app_->getWindowHeight()) / 9))) });
-			auxOb->setScale(Vector2D{ sizeX,SizeY });
+			equipType auxType = static_cast<Equipment*>(auxOb->getObject())->getEquipType();
+			if ((auxType == equipType::SwordI || auxType == equipType::SwordII
+				|| auxType == equipType::SaberI || auxType == equipType::SaberII)) {
+				auxOb->setScale(Vector2D{ SizeXSWord,SizeY });
+			}
+			else auxOb->setScale(Vector2D{ sizeX,SizeY });
 			auxOb->draw();//desreferenciamos el puntero
 			aux++;
 			j++;
@@ -357,6 +384,179 @@ void Inventory::draw()const {
 		equipment_.potion2_->setScale(Vector2D{ sizeX,sizeY });
 		equipment_.potion2_->draw();
 	}
+
+	//pintar textos
+	//descripcion objetos
+	if (select_ != nullptr) {
+		select_->getObject()->getDescription(descriptionBox);
+	}
+	//stats del player
+	printInformation();
+	printCompareObject();
+}
+
+void Inventory::printInformation() const
+{
+	double posx, posy;
+	posx = (double)(app_->getWindowWidth() / 6.4); posy = (double)(app_->getWindowHeight() / 1.343);
+	Texture liveText(app_->getRenderer(), to_string((int)player_->getHealth()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	liveText.render(posx , posy);
+
+	posx = (double)(app_->getWindowWidth() / 6.4); posy = (double)(app_->getWindowHeight() / 1.25);
+	Texture manaText(app_->getRenderer(), to_string((int)player_->getMana()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	manaText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 5.517); posy = (double)(app_->getWindowHeight() / 1.168);
+	Texture armorText(app_->getRenderer(), to_string((int)player_->getArmor()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	armorText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 2.6);  posy = (double)(app_->getWindowHeight() / 1.451);
+	Texture damageText(app_->getRenderer(), to_string((int)player_->getMeleeDmg()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	damageText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 2.424); posy = (double)(app_->getWindowHeight() / 1.343);
+	Texture criticText(app_->getRenderer(), to_string((int)player_->getCrit()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	criticText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 2.285); posy =  (double)(app_->getWindowHeight() / 1.25);
+	Texture speedText(app_->getRenderer(), to_string((int)player_->getMoveSpeed()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	speedText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 2.318); posy =  (double)(app_->getWindowHeight() / 1.168);
+	Texture rateText(app_->getRenderer(), to_string((int)player_->getMeleeRate()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	rateText.render(posx, posy);
+
+	posx = (double)(app_->getWindowWidth() / 1.454); posy = (double)(app_->getWindowHeight() / 3.83);
+	Texture moneyText(app_->getRenderer(), to_string((int)gm_->getInventoryGold()), app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	moneyText.render(posx, posy);
+	
+
+}
+
+void Inventory::printCompareObject() const
+{
+	double posx1,posx2, posy;
+	posx1 = (double)(app_->getWindowWidth() / 1.684);//950;
+	posx2 = (double)(app_->getWindowWidth() / 1.379);//1160
+	posy = (double)(app_->getWindowHeight() / 1.169);//770;
+	int aux1, aux2;
+	
+	if (select_ != nullptr && select_->getObject()->getObjectType() == ObjectType::Equipment ) {
+		//posicion del texto( siempre la misma)
+		
+		Equipment* auxEquip = static_cast<Equipment*>(select_->getObject());
+		equipType auxType = auxEquip->getEquipType();
+		SDL_Color  auxcolor1, auxcolor2; auxcolor1= auxcolor2 = SDL_Color ({ 0,0,0,1 });
+		string auxTex1, auxTex2;
+		if (auxType == equipType::ArmorI || auxType == equipType::ArmorII) {
+			if (select_->isEquipped()) {
+				auxTex1 = "Vida: " + to_string((int)static_cast<Equipment*>(equipment_.armor_->getObject())->getHealth());
+				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.armor_->getObject())->getArmor());
+			}
+			else {
+				aux1 = static_cast<Equipment*>(select_->getObject())->getHealth() - static_cast<Equipment*>(equipment_.armor_->getObject())->getHealth();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() - static_cast<Equipment*>(equipment_.armor_->getObject())->getArmor();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
+				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
+				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
+				auxTex1 = "Vida: " + to_string(aux1);
+				auxTex2 = "Defensa: " + to_string(aux2);
+			}
+		
+			
+		}
+		else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
+			if (select_->isEquipped()) {
+				auxTex1 = "Cr"+ Resources::tildes_['i'] +"tico: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getCrit());
+				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getArmor());
+			}
+			else {
+				aux1 = static_cast<Equipment*>(select_->getObject())->getCrit() - static_cast<Equipment*>(equipment_.gloves_->getObject())->getCrit();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() - static_cast<Equipment*>(equipment_.gloves_->getObject())->getArmor();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
+				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
+				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
+				auxTex1 = "Cr" + Resources::tildes_['i'] + "tico: " + to_string(aux1);
+				auxTex2 = "Defensa: " + to_string(aux2);
+			}
+		
+
+		}
+		else if (auxType == equipType::BootsI || auxType == equipType::BootsII) {
+			if (select_->isEquipped()) {
+				auxTex1 = "Velocidad: " + to_string((int)static_cast<Equipment*>(equipment_.boots_->getObject())->getSpeed());
+				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.boots_->getObject())->getArmor());
+			}
+			else {
+				aux1 = static_cast<Equipment*>(select_->getObject())->getSpeed() - static_cast<Equipment*>(equipment_.boots_->getObject())->getSpeed();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getArmor() - static_cast<Equipment*>(equipment_.boots_->getObject())->getArmor();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
+				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
+				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
+				auxTex1 = "Velocidad: " + to_string(aux1);
+				auxTex2 = "Defensa: " + to_string(aux2);
+			}
+			
+		
+		}
+		else if (auxType == equipType::SwordI || auxType == equipType::SwordII
+			|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
+
+			if (select_->isEquipped()) {
+				auxTex1 = "da"+ Resources::tildes_['ñ'] +"o: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg());
+				auxTex2 = "AtaqueVel.: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeRate());
+			}
+			else {
+				aux1 = static_cast<Equipment*>(select_->getObject())->getMeleeDmg() - static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getMeleeRate() - static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeRate();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
+				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
+				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
+				auxTex1 = "da" + Resources::tildes_['ñ'] + "o: " + to_string(aux1);
+				auxTex2 = "AtaqueVel.: " + to_string(aux2);
+			}
+
+			
+		}
+
+		else if (auxType == equipType::PistolI || auxType == equipType::PistolII
+			|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
+
+			if (select_->isEquipped()) {
+				auxTex1 = "da" + Resources::tildes_['ñ'] + "o: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getDistDmg());
+				auxTex2 = "DisparoVel.: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getDistRate());
+			}
+			else {
+				aux1 = static_cast<Equipment*>(select_->getObject())->getDistDmg() - static_cast<Equipment*>(equipment_.sword_->getObject())->getDistDmg();
+				aux2 = static_cast<Equipment*>(select_->getObject())->getDistRate() - static_cast<Equipment*>(equipment_.sword_->getObject())->getDistRate();
+				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
+				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
+				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
+				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
+				auxTex1 = "da" + Resources::tildes_['ñ'] + "o: " + to_string(aux1);
+				auxTex2 = "DisparoVel.: " + to_string(aux2);
+			}
+		
+
+	
+		}
+		Texture compareText1(app_->getRenderer(),auxTex1, app_->getFontManager()->getFont(Resources::FontId::RETRO), auxcolor1);
+		Texture compareText2(app_->getRenderer(), auxTex2, app_->getFontManager()->getFont(Resources::FontId::RETRO), auxcolor2);
+		compareText1.render(posx1, posy);
+		compareText2.render(posx2, posy);
+	}
+	else if (select_ != nullptr) {
+	Texture potionText(app_->getRenderer(), "valor: " + to_string((int)static_cast<usable*>(select_->getObject())->getValue()), app_->getFontManager()->getFont(Resources::FontId::RETRO), SDL_Color({ 0,0,0,1 }));
+	potionText.render(posx1, posy);
+
+}
+	
+	
+	
 }
 
 void Inventory::update() {
@@ -416,6 +616,26 @@ void Inventory::update() {
 	}
 }
 
+void Inventory::getHorizontal(InventoryButton* but)
+{
+	
+	equipType type_ = static_cast<Sword*>(but->getObject())->getEquipType();
+	if (type_ == equipType::SwordI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword1H));
+		else if (type_ == equipType::SwordII) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword2H));
+		else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber1H));
+		else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber2H));
+}
+
+void Inventory::getVertical(InventoryButton* but)
+{
+
+	equipType type_ = static_cast<Sword*>(but->getObject())->getEquipType();
+	if (type_ == equipType::SwordI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword1));
+	else if (type_ == equipType::SwordII) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword2));
+	else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber1));
+	else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber2));
+}
+
 Inventory::~Inventory() {
 	delete equipment_.armor_;
 	delete equipment_.gloves_;
@@ -424,4 +644,5 @@ Inventory::~Inventory() {
 	delete equipment_.boots_;
 	delete equipment_.potion1_;
 	delete equipment_.potion2_;
+	delete descriptionBox;
 }

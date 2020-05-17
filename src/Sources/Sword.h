@@ -5,12 +5,14 @@ class Sword : public Equipment
 {
 private:
 	virtual void initObject() {};
+	double meleeDmg_;
+	double meleeRate_;
 
 public:
 	Sword(Application* app, double price, double meleeDamage, double meleeRate, equipType type) : Equipment(app, type) {
 		price_ = price;
-		modifiers_.meleeDmg_ = meleeDamage;
-		modifiers_.meleeRate_ = meleeRate;
+		meleeDmg_ = meleeDamage;
+		meleeRate_ = meleeRate;
 	};
 	virtual ~Sword() {};
 
@@ -19,5 +21,9 @@ public:
 
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
+
+	virtual void getDescription(TextBox* tex);
+
+
 };
 

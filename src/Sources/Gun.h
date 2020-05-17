@@ -13,11 +13,17 @@ private:
 	//Vida de la bala en segundos
 	const double PISTOL_BULLET_RANGE = 2;
 	const double SHOTGUN_BULLET_RANGE = 1;
+
+	double distDmg_;
+	double distRate_;
+	double distRange_;
+
+
 public:
 	Gun(Application* app, double price, double distDamage, double distRate, equipType type) : Equipment(app, type) {
 		price_ = price;
-		modifiers_.distDmg_ = distDamage;
-		modifiers_.distRate_ = distRate;
+		distDmg_ = distDamage;
+		distRate_ = distRate;
 		initObject();
 	};
 	virtual ~Gun() {};
@@ -30,5 +36,7 @@ public:
 
 	//Devuelve la velocidad de la bala
 	double getBulletSpeed() { return bulletSpeed_; };
+
+	virtual void getDescription(TextBox* tex);
 };
 

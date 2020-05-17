@@ -6,16 +6,16 @@ class usable: public Item
 private:
 #pragma region Constantes
 	const double HEALTH_VALUE = 5;	//Porcentaje de la vida que se va a restaurar
-	const double MANA_VALUE = 10;	//Porcentaje del maná que se va a restaurar
+	const double MANA_VALUE = 10;	//Porcentaje del manï¿½ que se va a restaurar
 	const double SPEED_VALUE = 100;	//Cantidad de velocidad que se sumara
-	const double DAMAGE_VALUE = 20;	//Porcentaje de daño que se sumara
-	const double ARMOR_VALUE = 10;	//Cantidad de daño que se sumara
+	const double DAMAGE_VALUE = 20;	//Porcentaje de daï¿½o que se sumara
+	const double ARMOR_VALUE = 10;	//Cantidad de daï¿½o que se sumara
 	const double CRIT_VALUE = 10;	//Cantidad de critico que se sumara
 
-	const double SPEED_TIME = 15000;	//Tiempo en segundos que durá la poción
-	const double DAMAGE_TIME = 3500;	//Tiempo en segundos que durá la poción
-	const double ARMOR_TIME = 4000;		//Tiempo en segundos que durá la poción
-	const double CRIT_TIME = 4000;		//Tiempo en segundos que durá la poción
+	const double SPEED_TIME = 15000;	//Tiempo en segundos que durï¿½ la pociï¿½n
+	const double DAMAGE_TIME = 3500;	//Tiempo en segundos que durï¿½ la pociï¿½n
+	const double ARMOR_TIME = 4000;		//Tiempo en segundos que durï¿½ la pociï¿½n
+	const double CRIT_TIME = 4000;		//Tiempo en segundos que durï¿½ la pociï¿½n
 
 	const double HEALTH_PRICE = 10;		//Precio de la pocion
 	const double MANA_PRICE = 10;		//Precio de la pocion
@@ -42,5 +42,8 @@ public:
 	const double getValue() { return value_; };
 	void setTime(double time) { time_ = time; };
 	const potionType getType() { return type_; };
+	//const bool isUsed() { return used_; };
+	virtual void getDescription(TextBox* tex);
+
 };
 

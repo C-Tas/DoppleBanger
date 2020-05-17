@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "Application.h"
 #include "GameState.h"
+#include "TextBox.h"
+
 
 void usable::initObject()
 {
@@ -36,6 +38,32 @@ void usable::initObject()
 		price_ = CRIT_PRICE;
 		value_ = CRIT_VALUE;
 		time_ = CRIT_TIME;
+		break;
+	}
+}
+
+
+
+void usable::getDescription(TextBox* tex)
+{
+	switch (type_) {
+	case potionType::Armor:
+		tex->defensePotion();
+		break;
+	case potionType::Crit:
+		tex->criticPotion();
+		break;
+	case potionType::Damage :
+		tex->damagePotion();
+		break;
+	case potionType::Health :
+		tex->lifePotion();
+		break;
+	case potionType::Mana:
+		tex->manaPotion();
+		break;
+	case potionType::Speed:
+		tex->velocityPotion();
 		break;
 	}
 }

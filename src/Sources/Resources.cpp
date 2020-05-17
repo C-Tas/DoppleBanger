@@ -314,6 +314,26 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ Rock, "../Sources/assets/colisionables/roca.png" },
 	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
 
+	//Equipables
+	{ Armor1,"../Sources/assets/Equipamiento/armadura1.png" },
+	{ Armor2,"../Sources/assets/Equipamiento/armadura2.png" },
+	{ Gloves1, "../Sources/assets/Equipamiento/guantes1.png"},
+	{ Gloves2, "../Sources/assets/Equipamiento/guantes2.png"},
+	{ Boots1, "../Sources/assets/Equipamiento/botas.png"},
+	{ Boots2, "../Sources/assets/Equipamiento/zapatos.png" },
+	{ Sword1, "../Sources/assets/Equipamiento/espada1.png" },
+	{ Sword2, "../Sources/assets/Equipamiento/espada2.png" },
+	{ Sword1H, "../Sources/assets/Equipamiento/espada1H.png" },
+	{ Sword2H, "../Sources/assets/Equipamiento/espada2H.png" },
+	{ Saber1, "../Sources/assets/Equipamiento/sable1.png" },
+	{ Saber2, "../Sources/assets/Equipamiento/sable2.png" },
+	{ Saber1H, "../Sources/assets/Equipamiento/sable1H.png" },
+	{ Saber2H, "../Sources/assets/Equipamiento/sable2H.png" },
+	{ Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
+	{ Gun2, "../Sources/assets/Equipamiento/pistola2.png" },
+	{ ShotGun1, "../Sources/assets/Equipamiento/trabuco1.png" },
+	{ ShotGun2, "../Sources/assets/Equipamiento/trabuco2.png" },
+
 	//Tilesets de los mapas
 	{ Tileset1, "../Sources/assets/mapas/Isla1-1/tileset_v2.png" },
 	{ CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png" }
@@ -443,7 +463,7 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 
 vector <Resources::FontInfo> Resources::fontsRoutes{
 	{ RETRO, "../Sources/fonts/RetroGaming.ttf", GameManager::instance()->getFontSize() },
-	{ RETROSM, "../Sources/fonts/RetroGaming.ttf", GameManager::instance()->getFontSize() / 2 }
+	{ RETROSM, "../Sources/fonts/RetroGaming.ttf", GameManager::instance()->getFontSize()*3 / 4 }
 	//Para añadir nueva ruta: {FontId, "./Sources/fonts/name.ttf", size}
 };
 

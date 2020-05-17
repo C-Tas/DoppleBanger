@@ -6,11 +6,13 @@ class Gloves : public Equipment
 {
 private:
 	virtual void initObject() {};
+	double crit_;
+	double armor_;
 public:
 	Gloves(Application* app, double price, double crit, double armor, equipType type) : Equipment(app, type) {
 		price_ = price;
-		modifiers_.crit_ = crit;
-		modifiers_.armor_ = armor;
+		crit_ = crit;
+		armor_ = armor;
 	};
 	virtual ~Gloves() {};
 
@@ -19,4 +21,6 @@ public:
 
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
+
+	virtual void getDescription(TextBox* tex);
 };

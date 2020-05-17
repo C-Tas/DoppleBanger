@@ -1,7 +1,9 @@
 #pragma once
 #include "GameObject.h"
 
+
 class Player;
+class TextBox;
 
 enum class equipType {
 	ArmorI, ArmorII,
@@ -39,5 +41,6 @@ public:
 		void setQuantity(double quantity) { quantity_ = quantity; };
 		void setPrice(double price) { price_ = price; };
 	#pragma endregion
+		virtual void getDescription(TextBox* tex) = 0;
 
 };
