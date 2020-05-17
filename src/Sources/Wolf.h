@@ -19,19 +19,18 @@ public:
 	//Cuando pierde agro del enemigo
 	virtual void lostAggro();
 
-	virtual  ~Wolf() {};
+	virtual ~Wolf() {};
 
 private:
 	//Puntos del mapa donde va a patrullar
 	vector<Point2D> patrol_;
 	//Punto que representa dentro del vector de patrulla
 	int currTarget_ = 0;
-	//Último ataque a melee
-	Uint32 lastMeleeHit_ = 0;
+	//Cooldown melee
+	Cooldown meleeCD_;
 	//Tiempo que el lobo pasa parado cuando llega a un target
-	Uint32 idleTime_ = 1000;
-	//Tiempo 
-	uint lastIdleTime = 0;
+	Cooldown idleCD_;
+	const double IDLE_PAUSE = 1000;
 	//Diferentes animaciones del lobo
 	Anim attackAnim_ = { 0,0,0,0, false };
 	Anim walkAnim_ = { 0,0,0,0, false};
@@ -71,4 +70,5 @@ private:
 
 	virtual void initialStats();
 	virtual void initRewards();
+	virtual void updateCooldowns();
 };

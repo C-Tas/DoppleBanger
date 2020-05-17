@@ -87,6 +87,8 @@ void Inventory::initState(){
 	if (aux.potions_[0] != nullptr)	equipment_.potion1_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[0], callSelectObject, true);
 	if (aux.potions_[1] != nullptr)	equipment_.potion2_ = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 50,50 }, aux.potions_[1], callSelectObject, true);
 
+
+
 	//Cogemos la lista de objetos del gameManager
 	inventoryList_ = gm_->getInventory();
 	ListPos = inventoryList_->begin();
@@ -270,9 +272,6 @@ void Inventory::draw()const {
 		int i = 0;
 		//dibujamos los objetos de la primera columna
 		while (i < VIEW_LIST / 2 && aux != inventoryList_->end()) {
-			//#ifdef _DEBUG
-			//		cout << "entramos en el bucle" << endl;
-			//#endif
 			auxOb = *aux;
 			auxOb->setPos(Vector2D{ double(posx),double(posy + double(i * (double(app_->getWindowHeight()) / 9)) )});
 			auxOb->setScale(Vector2D{ sizeX,SizeY });

@@ -3,22 +3,22 @@
 class PerforateSkill : public Skill
 {
 private:
-	const int COOLDOWN = 2; //En segundos
+	const double COOLDOWN = 2000;	//En milisegundos
 	const double MANA_COST = 10;
 
 public:
-	PerforateSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Distance) { cooldown_ = COOLDOWN; costMana_ = MANA_COST; };
+	PerforateSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Distance) { costMana_ = MANA_COST; };
 	~PerforateSkill() {};
 
 	virtual void action() {
 		double mana = player_->getMana();
 		//Si no está en cooldown la habilidad
-		if ((SDL_GetTicks() - lastTimeUsed_) / 1000 > cooldown_ || lastTimeUsed_ == 0)
+		if (!skillCD_.isCooldownActive())
 		{
 			player_->removeMana(costMana_);
 			cout << "Perforante" << endl;
 			player_->setPerforate(true);
-			lastTimeUsed_ = SDL_GetTicks();
+			skillCD_.initCooldown(COOLDOWN);
 		}
 	};
 };

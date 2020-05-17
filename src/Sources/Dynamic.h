@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Collider.h"
+#include "Cooldown.h"
 
 class Dynamic : public Collider
 {

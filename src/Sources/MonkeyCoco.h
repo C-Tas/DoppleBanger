@@ -34,6 +34,11 @@ private:
 	//Calcula hacia dónde mira el mono en función del player (se redefine porque las vistas del mono son distintas que las del resto de enemigos)
 	virtual void updateDirVisObjective(GameObject* objective);
 
+	//Actualiza los cooldown
+	virtual void updateCooldowns();
+
+	Cooldown shootCD_;
+
 #pragma region Animaciones
 	//Inicia la animación
 	void initIdle();
@@ -81,8 +86,8 @@ private:
 	const int SHOOT_L_U_FRAME_RATE = 77;	//Frame rate
 
 	//Proyectil
-	const uint W_H_COCO = app_->getWindowHeight() / 40;		//Tama�o del coco
+	const double W_H_COCO = app_->getWindowHeight() / 40;		//Tamano del coco
 	const double COCO_VEL = 700;							//Velocidad del coco
-	const double COCO_LIFE = 3;								//Vida del proyectil en segundos
+	const double COCO_LIFE = 3000;								//Vida del proyectil en milisegundos
 #pragma endregion
 };

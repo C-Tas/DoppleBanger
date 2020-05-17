@@ -28,8 +28,6 @@ protected:
 	int achievementPoints_ = 0;
 	//Oro que esta entidad da
 	int goldPoints_ = 0;
-	//Último ataque
-	Uint32 lastHit = 0;
 	//Rango de visión de la entidad
 	double rangeVision_ = 0;
 	//Tag del enemy
@@ -63,6 +61,8 @@ protected:
 	virtual void initRewards() = 0;
 	//Aplica los rewards al player
 	virtual void applyRewards();
+	//Actualiza los Cooldowns
+	virtual void updateCooldowns() = 0;
 #pragma region stats
 	  double HEALTH = 0;
 	  double MANA = 0;

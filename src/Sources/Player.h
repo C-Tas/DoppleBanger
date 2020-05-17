@@ -65,7 +65,6 @@ public:
 		const bool getDead() { return dead_; };
 	const bool getOnCollision() { return onCollision_; };
 		const bool isEquipInit() { return initEquip_; };
-	const int getMoney() { return money_; };
 		const int getLiberation() { return liberation_; };
 		const double getMaxHealth() { return maxHealth_; }; //Devuelve la vida maxima del player
 		const double getMaxMana() { return maxMana_; };		//Devuelve el mana maximo del player
@@ -79,16 +78,16 @@ public:
 		void activeInvincible();
 	
 #pragma endregion
-#pragma region Setters
+	#pragma region Setters
 	//Activa la perforación
 	void setPerforate(bool perforate) {
 		app_->getAudioManager()->playChannel(Resources::PerforateSkill, 0, Resources::PlayerChannel2);
 		perforate_ = perforate; };
 	//Activa el rebote y el momento en el que se usa
-	void setRicochet(bool ricochet) { 
-		app_->getAudioManager()->playChannel(Resources::Ricochet, 0, Resources::PlayerChannel2);
-		ricochet_ = ricochet; 
-		lastTimeRico_ = SDL_GetTicks(); };
+	void activeRicochet() { 
+		app_->getAudioManager()->playChannel(Resources::Ricochet, 0, 3);
+		ricochetCD_.initCooldown(RICOCHET_DELAY);
+	};
 		//Para saber si hay que inicializar el equipamiento
 		void setinitEquip(bool init) { initEquip_ = init; };
 	//Setea si el player ha colisionado
@@ -107,7 +106,6 @@ public:
 			gm_->setGun(gun);
 		}
 		void addMaxHealth(double addition) { maxHealth_ += addition; };
-		void setClonCoolDown() { cdSkills[3] = true; }
 		//Aumenta la cadencia de tiro del player
 		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 		//Activa el ataque potenciado
@@ -119,8 +117,8 @@ public:
 	#pragma region Pociones
 		//Metodo para usar las pociones
 		void usePotion(usable* potion, int key);
-		//Metodo para desactivar el bufo de las pociones
-		void desactiveBuffPotion(usable* potion, int timerPos);
+		//Metodo para actualizar el tiempo de las pociones y desactivarlas
+		void updateBuffPotion();
 		//Equipa pociones
 		void equipPotion1(usable* pot) { potions_[0] = pot; gm_->setPotion(0, potions_[0]); };
 		void equipPotion2(usable* pot) { potions_[1] = pot; gm_->setPotion(1, potions_[1]); };
@@ -145,12 +143,7 @@ private:
 	bool onCollision_ = false;
 	bool initEquip_ = true;	//Para saber si hiay que inicializar el equipamiento
 	bool slowed_ = false;
-	double slowDuration_ = 0;
 	double slowEffect_ = 0;
-	double slowTime_ = 0;
-	int money_ = 0;
-	int timeRegMana_ = 1000; //tiempo regeneracion de mana = 1 seg
-	int lastReg_ = 0;
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
 	Clon* clon_ = nullptr;
@@ -158,99 +151,100 @@ private:
 	Vector2D previousPos_;
 	//Habilidades
 	vector<Skill*> skills_ = { nullptr, nullptr, nullptr, nullptr};
-	vector<bool> cdSkills = { false, false, false, false }; //Para saber si están en coolDown
 
 	//cambia los stats de un arma
 	void changeDistWeaponStats(Gun* newWeapon);
 
 	//Objetos
-	//<Speed, Damage, Armor, Crit>			
-	vector<bool> potionUsing_{ 0, 0, 0, 0 };	//Para saber si se está usando la poción y resetear el tiempo
-	vector<double> timerPotion_{ 0, 0, 0, 0 };	//Para guardar y restablecer el tiempo de las pociones
-#pragma region Animaciones
-	Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
-	int frameAction_ = 0;					//Frame en el que se realiza la acción
-	const int W_H_PLAYER_FRAME = 100;		//Ancho del frame, estándar para todas
+	//<Speed, Damage, Armor, Crit>
+	vector<bool> potionUsing_{ 0, 0, 0, 0 };		//Para saber si se está usando la poción y resetear el tiempo
+	vector<double> timerPotion_{ 0, 0, 0, 0 };		//Para guardar y restablecer el tiempo de las pociones
+	vector<double> valuePotion_{ 0, 0, 0, 0 };		//Para guardar los valores de incremento de Stats
+	vector<double> lastTicksPotion_{ 0, 0, 0, 0 };	//Para guardar el último tick 
+	#pragma region Animaciones
+		Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
+		int frameAction_ = 0;					//Frame en el que se realiza la acción
+		const int W_H_PLAYER_FRAME = 100;		//Ancho del frame, estándar para todas
 	
-	//Idle
-	vector<Anim> idleAnims_;
-	vector<Texture*> idleTx_;
-	//Idle derecha
-	const int IDLE_R_FRAMES = 4;			//Frames de la animación
-	const int IDLE_R_FRAME_RATE = 500;		//Frame rate
-	//Idle hacia arriba
-	const int IDLE_U_FRAMES = 2;			//Frames de la animación
-	const int IDLE_U_FRAME_RATE = 500;		//Frame rate
-	//Idle hacia izquierda
-	const int IDLE_L_FRAMES = 4;			//Frames de la animación
-	const int IDLE_L_FRAME_RATE = 500;		//Frame rate
-	//Idle hacia abajo
-	const int IDLE_D_FRAMES = 2;			//Frames de la animación
-	const int IDLE_D_FRAME_RATE = 500;		//Frame rate
+		//Idle
+		vector<Anim> idleAnims_;
+		vector<Texture*> idleTx_;
+		//Idle derecha
+		const int IDLE_R_FRAMES = 4;			//Frames de la animación
+		const int IDLE_R_FRAME_RATE = 500;		//Frame rate
+		//Idle hacia arriba
+		const int IDLE_U_FRAMES = 2;			//Frames de la animación
+		const int IDLE_U_FRAME_RATE = 500;		//Frame rate
+		//Idle hacia izquierda
+		const int IDLE_L_FRAMES = 4;			//Frames de la animación
+		const int IDLE_L_FRAME_RATE = 500;		//Frame rate
+		//Idle hacia abajo
+		const int IDLE_D_FRAMES = 2;			//Frames de la animación
+		const int IDLE_D_FRAME_RATE = 500;		//Frame rate
 
-	//Movimiento
-	vector<Anim> moveAnims_;
-	vector<Texture*> moveTx_;
-	//Movimieno derecha
-	const int MOVE_R_FRAMES = 8;			//Frames de la animación
-	const int MOVE_R_FRAME_RATE = 100;		//Frame rate
-	//Movimieno hacia arriba
-	const int MOVE_U_FRAMES = 8;			//Frames de la animación
-	const int MOVE_U_FRAME_RATE = 100;		//Frame rate
-	//Movimieno hacia izquierda
-	const int MOVE_L_FRAMES = 8;			//Frames de la animación
-	const int MOVE_L_FRAME_RATE = 100;		//Frame rate
-	//Movimieno hacia abajo
-	const int MOVE_D_FRAMES = 8;			//Frames de la animación
-	const int MOVE_D_FRAME_RATE = 100;		//Frame rate
+		//Movimiento
+		vector<Anim> moveAnims_;
+		vector<Texture*> moveTx_;
+		//Movimieno derecha
+		const int MOVE_R_FRAMES = 8;			//Frames de la animación
+		const int MOVE_R_FRAME_RATE = 100;		//Frame rate
+		//Movimieno hacia arriba
+		const int MOVE_U_FRAMES = 8;			//Frames de la animación
+		const int MOVE_U_FRAME_RATE = 100;		//Frame rate
+		//Movimieno hacia izquierda
+		const int MOVE_L_FRAMES = 8;			//Frames de la animación
+		const int MOVE_L_FRAME_RATE = 100;		//Frame rate
+		//Movimieno hacia abajo
+		const int MOVE_D_FRAMES = 8;			//Frames de la animación
+		const int MOVE_D_FRAME_RATE = 100;		//Frame rate
 
-	//Disparo
-	bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
-	vector<Anim> shootAnims_;				//Vector de las animaciones
-	vector<Texture*> shootTx_;				//Vector de las texturas
-	//Disparo derecha
-	const int SHOOT_R_FRAMES = 3;			//Frames de la animación
-	const int SHOOT_R_FRAME_RATE = 150;		//Frame rate
-	//Disparo hacia arriba
-	const int SHOOT_U_FRAMES = 7;			//Frames de la animación
-	const int SHOOT_U_FRAME_RATE = 40;		//Frame rate
-	//Disparo hacia izquierda
-	const int SHOOT_L_FRAMES = 3;			//Frames de la animación
-	const int SHOOT_L_FRAME_RATE = 150;		//Frame rate
-	//Disparo hacia abajo
-	const int SHOOT_D_FRAMES = 7;			//Frames de la animación
-	const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
+		//Disparo
+		bool shooted_ = false;					//Para disparar una sola vez en el frame adecuado
+		vector<Anim> shootAnims_;				//Vector de las animaciones
+		vector<Texture*> shootTx_;				//Vector de las texturas
+		//Disparo derecha
+		const int SHOOT_R_FRAMES = 3;			//Frames de la animación
+		const int SHOOT_R_FRAME_RATE = 150;		//Frame rate
+		//Disparo hacia arriba
+		const int SHOOT_U_FRAMES = 7;			//Frames de la animación
+		const int SHOOT_U_FRAME_RATE = 40;		//Frame rate
+		//Disparo hacia izquierda
+		const int SHOOT_L_FRAMES = 3;			//Frames de la animación
+		const int SHOOT_L_FRAME_RATE = 150;		//Frame rate
+		//Disparo hacia abajo
+		const int SHOOT_D_FRAMES = 7;			//Frames de la animación
+		const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
 
-	//Melee
-	bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
-	vector<Anim> meleeAnims_;				//Vector de las animaciones
-	vector<Texture*> meleeTx_;				//Vector de las texturas
-	//Melee derecha
-	const int MELEE_R_FRAMES = 5;			//Frames de la animación
-	const int MELEE_R_FRAME_RATE = 200;		//Frame rate
-	//Melee hacia arriba
-	const int MELEE_U_FRAMES = 3;			//Frames de la animación
-	const int MELEE_U_FRAME_RATE = 150;		//Frame rate
-	//Melee hacia izquierda
-	const int MELEE_L_FRAMES = 5;			//Frames de la animación
-	const int MELEE_L_FRAME_RATE = 200;		//Frame rate
-	//Melee hacia abajo
-	const int MELEE_D_FRAMES = 5;			//Frames de la animación
-	const int MELEE_D_FRAME_RATE = 200;		//Frame rate
+		//Melee
+		bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
+		vector<Anim> meleeAnims_;				//Vector de las animaciones
+		vector<Texture*> meleeTx_;				//Vector de las texturas
+		//Melee derecha
+		const int MELEE_R_FRAMES = 5;			//Frames de la animación
+		const int MELEE_R_FRAME_RATE = 200;		//Frame rate
+		//Melee hacia arriba
+		const int MELEE_U_FRAMES = 3;			//Frames de la animación
+		const int MELEE_U_FRAME_RATE = 150;		//Frame rate
+		//Melee hacia izquierda
+		const int MELEE_L_FRAMES = 5;			//Frames de la animación
+		const int MELEE_L_FRAME_RATE = 200;		//Frame rate
+		//Melee hacia abajo
+		const int MELEE_D_FRAMES = 5;			//Frames de la animación
+		const int MELEE_D_FRAME_RATE = 200;		//Frame rate
 
-	//Inicialización de las animaciones
-	virtual void initAnims();
-	//Inicia la animación
-	void initIdle();
-	void initMove();
-	void initShoot();
-	void initMelee();
-	//Controla la animación
-	void shootAnim();
-	void meleeAnim();
-#pragma endregion
-//<summary>Variables relativas a las habilidades</summary>
-#pragma region Abilities
+		//Inicialización de las animaciones
+		virtual void initAnims();
+		//Inicia la animación
+		void initIdle();
+		void initMove();
+		void initShoot();
+		void initMelee();
+		//Controla la animación
+		void shootAnim();
+		void meleeAnim();
+	#pragma endregion
+	//<summary>Variables relativas a las habilidades</summary>
+	#pragma region Abilities
 	const int CRIT_INV = 20;	//Crítico agregado al player después de activar invencible( a falta de equilibrado)
 	const int DMG_INV = 20;		//Daño agregado al player después de activar invencible( a falta de equilibrado)
 	int liberation_ = 2;	//Nivel de la habilidad del clon, debería llevarse a GameManager
@@ -259,21 +253,23 @@ private:
 	bool empoweredAnim_ = false; //Si ha empezado la animación del ataque potenciado
 	double empoweredBonus_ = 1.5;	//Bonus porcentual del daño
 	bool perforate_ = false;	//Para saber si el siguiente disparo perfora
-	bool ricochet_ = false;		//Para saber si los disparos van a rebotar
-	const int TIME_RICO = 4;	//En segundos
-	int lastTimeRico_ = 0;		//Momento en el que se usa rebote
 #pragma endregion
-//<summary>Variables de los cooldowns del jugador</summary>
-#pragma region Cooldowns
-	double clonCooldown_ = 2;		//Cooldown del clon
-	double clonTime_ = 0;			//Momento del último clon
-	double empoweredCooldown_ = 4;	//Cooldown GolpeFuerte
-	double empoweredTime_ = 0;		//Momento del último ataque potenciado
-	double meleeTime_ = 0;			//Momento del último ataque
-	double shotTime_ = 0;			//Momento del �ltimo disparo
+	//<summary>Variables de los cooldowns del jugador</summary>
+	#pragma region Cooldowns
+	virtual void updateCooldowns();
+	Cooldown slowTimeCD_;	//Tiempo que nos queda "slow"
+	Cooldown shootCD_;	//Cooldown del disparo
+	Cooldown meleeCD_;	//Cooldown ataque melee
+	const double EMPOWERED_DELAY = 10000;
+	Cooldown empoweredCD_;	//Cooldown skill golpe fuerte
+	const double RICOCHET_DELAY = 5000;
+	Cooldown ricochetCD_;	//Cooldown skill golpe fuerte
+	Cooldown manaCD_;		//Cooldown manaReg
+	const double MANA_REG_DELAY = 3000; //Tiempo regeneracion de mana = 1 seg
+	bool initManaReg_ = true;
 #pragma endregion
-//<summary>Estadisticas iniciales del jugador</summary>
-#pragma region Stats
+	//<summary>Estadisticas iniciales del jugador</summary>
+	#pragma region Stats
 	double maxHealth_ = 1000;			//Representa la cantidad maxima de vida
 	double maxMana_ = 100;				//Representa la cantidad maxima de mana
 	const double MANA_REG = 1;			//Regeneración de maná por segundo
@@ -282,33 +278,30 @@ private:
 	const double DIST_DAMAGE = 1000;	//Daño a distancia y de las habilidades
 	const double CRIT = 0;				//Crítico
 	const double MELEE_RANGE = 20;		//Rango del ataque a melee
-	const double DIST_RANGE = 2;		//Rango del ataque a distancia
+	const double DIST_RANGE = 2000;		//Rango del ataque a distancia
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
-	const double MELEE_RATE = 1000;		//Velocidad del ataque a melee en segundos
-	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos
+	const double MELEE_RATE = 3000;		//Velocidad del ataque a melee en segundos
+	const double DIST_RATE = 5000;		//Velocidad del ataque a distancia en segundos
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
 	//Constantes para el delay de los efectos de sonido
-#pragma region constSounds
-	const double WALK_TIME = 600;
-#pragma endregion
+	#pragma region constSounds
+		const double WALK_TIME = 600;
+	#pragma endregion
 	//variables para controlar ultimos sonidos
-#pragma region LastSounds
-	double lastWalkSound_ = 0;
-#pragma endregion
-
-
-//<summary>Constantes iniciales del jugador</summary>
-#pragma region Constantes
-	//Balas
-	const uint W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
-	const double BULLET_VEL = 1000;							//Velocidad de la bala
-	const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
-#pragma endregion
+	#pragma region LastSounds
+		double lastWalkSound_ = 0;
+	#pragma endregion
+	//<summary>Constantes iniciales del jugador</summary>
+	#pragma region Constantes
+		//Balas
+		const uint W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
+		const double BULLET_VEL = 1000;							//Velocidad de la bala
+		const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
+	#pragma endregion
 	virtual void initObject();
 	void updateDir(Vector2D dir);
-	int PotionTime1 = 0;//Variable auxiliar para comprobar la duracion de la pocion1
-	int PotionTime2 = 0; //Variable auxiliar para comprobar la duracion de la pocion 2
+	//Equipamiento
 	Armor* armor_ = nullptr;	//Pechera
 	Gloves* gloves_ = nullptr;	//Guantes
 	Boots* boots_ = nullptr;	//Botas

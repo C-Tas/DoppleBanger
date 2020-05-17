@@ -86,7 +86,7 @@ void Blunderbuss::activatePerforate()
 void Blunderbuss::activateRicochet()
 {
 	for (auto i : bullets_) {
-		i->setPerforate(true);
+		i->setRicochet(true);
 	}
 }
 

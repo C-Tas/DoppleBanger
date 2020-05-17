@@ -4,10 +4,11 @@
 
 bool PlayerBullet::update()
 {
-	currTime_ = SDL_GetTicks();
+	bulletlifeCD_.updateCooldown();
 
 	//Si se le ha acabado el tiempo de vida
-	if ((currTime_ - initTime_) / 1000 > lifeSpan_) {
+	if (!bulletlifeCD_.isCooldownActive()) {
+		cout << "Eliminada" << endl;
  		CollisionCtrl::instance()->removePlayerBullet(this);
 		onCollider();
 	}
@@ -50,6 +51,6 @@ void PlayerBullet::searchEnemy(list<Enemy*> enemies, Enemy* currEnemy)
 	else {
 		move(newTarget);		//La bala se mueve en la nueva dirección
 		currRico++;				//Se actualiza el número de rebotes que lleva
-		initTime_ = currTime_;	//Se resetea el tiempo de vida
+		bulletlifeCD_.initCooldown(lifeSpan_);	//Se resetea el tiempo de vida
 	}
 }

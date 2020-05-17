@@ -12,13 +12,13 @@ public:
 	~Ink() {};
 
 private:
-	const double INK_DURATION = 4;
-	const double FALL_DURATION = 1;
+	const double INK_DURATION = 4000;	//En milisegundos
+	const double FALL_DURATION = 1000;
 	const double SLOW_DURATION = 2;
 	const double SLOW_EFFECT = 0.5;
 
 	bool fallen_ = false;
-	double spawnTime_ = 0;
+	Cooldown lifeCD_;
 	STATE state_;
 	Kraken* kraken_ = nullptr;
 

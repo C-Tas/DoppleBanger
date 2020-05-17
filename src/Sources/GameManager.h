@@ -118,6 +118,8 @@ class GameManager {
 private:
 	//Puntero unico para evitar copias
 	static unique_ptr<GameManager> instance_;
+	//Milisegundo para considerar una pausa
+	const int DELAYTIME = 200;
 	//Puntos de haza�a
 	int achievementPoints_ = 0;
 	//Cantidad de dinero almacenada en el inventario
@@ -284,6 +286,8 @@ public:
 	//Devuelve si estamos o no en la isla
 	const bool getOnShip() { return onShip_; };
 
+	//Devuelve el tiempo que hemos puesto a ojo para saber si ha habido pausa :)
+	const int getDelayTime() { return DELAYTIME; };
 	//Devuelve los puntos de haza�a
 	const int getAchievementPoints() { return achievementPoints_; };
 	//Devuelve el dinero del inventario

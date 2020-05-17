@@ -99,7 +99,6 @@ void ShipState::initState()
 
 	Camera::instance()->updateCamera(W_WIN / 2, H_WIN / 2);
 	addRenderUpdateLists(player_);
-	startInstance_ = SDL_GetTicks();
 
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
