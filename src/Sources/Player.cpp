@@ -113,7 +113,7 @@ bool Player::update()
 		initShoot(); 
 	}
 
-	//Si se pulsa el bot�n derecho del rat�n y se ha acabado el cooldown
+	//Si se pulsa el boton de en medio
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::MIDDLE)) {
 		cout << getCenter().getX() << " " << getCenter().getY() << endl;
 	}

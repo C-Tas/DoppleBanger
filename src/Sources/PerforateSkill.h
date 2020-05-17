@@ -12,11 +12,10 @@ public:
 
 	virtual void action() {
 		double mana = player_->getMana();
-		//Si no está en cooldown la habilidad
-		if (!skillCD_.isCooldownActive())
+		//Si no estï¿½ en cooldown la habilidad
+		if (mana >= costMana_ && !skillCD_.isCooldownActive())
 		{
 			player_->removeMana(costMana_);
-			cout << "Perforante" << endl;
 			player_->setPerforate(true);
 			skillCD_.initCooldown(COOLDOWN);
 		}

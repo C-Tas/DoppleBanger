@@ -37,8 +37,7 @@ bool EnemyPirate::update() {
 		break;
 	default:
 		break;
-	}
-	cout << state << endl;*/
+	}*/
 #endif // _DEBUG
 
 	updateFrame();

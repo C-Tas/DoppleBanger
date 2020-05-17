@@ -12,10 +12,9 @@ public:
 
 	virtual void action() {
 		double mana = player_->getMana();
-		//Si no está en cooldown la habilidad
+		//Si no estï¿½ en cooldown la habilidad
  		if (mana >= costMana_ && !skillCD_.isCooldownActive())
 		{
-			cout << "Rebote" << endl;
 			player_->removeMana(costMana_);
 			player_->activeRicochet();
 			skillCD_.initCooldown(COOLDOWN);

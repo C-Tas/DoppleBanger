@@ -18,12 +18,11 @@ public:
 
 	virtual void action() {
 		double mana = player_->getMana();
-		//Si no está en cooldown la habilidad
-		if (!skillCD_.isCooldownActive())
+		//Si no estï¿½ en cooldown la habilidad
+		if (mana >= costMana_ && !skillCD_.isCooldownActive())
 		{
-			cout << "\nGolpe\n";
 			player_->removeMana(costMana_);
-			//Consigue la lista de los enemigos golpeados y les hace daño
+			//Consigue la lista de los enemigos golpeados y les hace daï¿½o
 			Vector2D playerCenter = Vector2D(player_->getPosX() + player_->getScaleX(), player_->getPosY() + player_->getScaleY());
 			list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(playerCenter, RADIUS);
 			for (auto it = enemies.begin(); it != enemies.end(); ++it)

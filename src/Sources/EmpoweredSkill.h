@@ -15,7 +15,7 @@ public:
 	virtual void action() {
 		double mana = player_->getMana();
 		//Si no está en cooldown la habilidad
-		if (costMana_ <= mana && !skillCD_.isCooldownActive())
+		if (mana >= costMana_ && !skillCD_.isCooldownActive())
 		{
 			player_->removeMana(costMana_);
 			player_->activateEmpowered();

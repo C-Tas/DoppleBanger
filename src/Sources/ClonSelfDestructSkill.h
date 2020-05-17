@@ -20,10 +20,8 @@ public:
 	virtual void action() {
 		double mana = player_->getMana();
 		//Si no está en cooldown la habilidad
-		if (player_->getClon() != nullptr && !destructCD_.isCooldownActive())
+		if (mana >= costMana_ && player_->getClon() != nullptr && !destructCD_.isCooldownActive())
 		{
-			
-			cout << "\nExplosión\n";
 			player_->removeMana(costMana_);
 			player_->getClon()->initSelfDestruction();
 			//Consigue la lista de los enemigos golpeados y les hace daño

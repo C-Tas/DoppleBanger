@@ -37,8 +37,7 @@ bool Wolf::update() {
 		break;
 	default:
 		break;
-	}
-	cout << state << endl;*/
+	}*/
 #endif // _DEBUG
 
 	updateFrame();

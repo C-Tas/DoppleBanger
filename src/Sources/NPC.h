@@ -17,7 +17,7 @@ private:
 	const int FRAME_RATE_ELDERMAN = 200;
 
 	//Mercader
-	const int NUM_FRAMES_MERCHANT =2;
+	const int NUM_FRAMES_MERCHANT = 2;
 	const int W_FRAME_MERCHANT = 300;
 	const int H_FRAME_MERCHANT = 267;
 	const int FRAME_RATE_MERCHANT= 500;
@@ -51,6 +51,18 @@ private:
 	const int W_FRAME_CARTOGRAPHER = 100;
 	const int H_FRAME_CARTOGRAPHER = 100;
 	const int FRAME_RATE_CARTOGRAPHER = 150;
+
+	//Venancio funeral
+	const int NUM_FRAMES_ELDERMAN_FUNERAL= 3;
+	const int W_FRAME_ELDERMAN_FUNERAL= 100;
+	const int H_FRAME_ELDERMAN_FUNERAL = 100;
+	const int FRAME_RATE_ELDERMAN_FUNERAL = 500;
+
+	//Mercader funeral
+	const int NUM_FRAMES_MERCHANT_FUNERAL = 4;
+	const int W_FRAME_MERCHANT_FUNERAL = 100;
+	const int H_FRAME_MERCHANT_FUNERAL = 100;
+	const int FRAME_RATE_MERCHANT_FUNERAL = 400;
 #pragma endregion
 
 protected:
