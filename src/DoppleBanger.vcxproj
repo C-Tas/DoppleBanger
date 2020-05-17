@@ -71,7 +71,6 @@
     <ClCompile Include="Sources\LoadState.cpp" />
     <ClCompile Include="Sources\Magordito.cpp" />
     <ClCompile Include="Sources\MagorditoIA.cpp" />
-    <ClCompile Include="Sources\MagorditoState.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\MainMenuState.cpp" />
     <ClCompile Include="Sources\MonkeyCoco.cpp" />
@@ -176,7 +175,6 @@
     <ClInclude Include="Sources\Magordito.h" />
     <ClInclude Include="Sources\HUD.h" />
     <ClInclude Include="Sources\MagorditoIA.h" />
-    <ClInclude Include="Sources\MagorditoState.h" />
     <ClInclude Include="Sources\Obstacle.h" />
     <ClInclude Include="Sources\MonkeyCoco.h" />
     <ClInclude Include="Sources\PerforateSkill.h" />

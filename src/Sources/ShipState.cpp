@@ -9,8 +9,6 @@
 #include "SpookyIslandState.h"
 #include "VolcanicIslandState.h"
 
-//Para borrar
-#include "MagorditoState.h"	
 
 #pragma region CallBacks
 //Callback para cambiar de GameState e ir a la isla actual
@@ -19,10 +17,7 @@ void ShipState::goIsland(Application* app)
 	//Viajamos a la isla correspondiente
 	GameManager* gm = GameManager::instance();
 	Island currIsland = gm->getCurrIsland();
-	if (currIsland == Island::Caribbean) {
-		app->getAudioManager()->haltMusic();  
-		app->getGameStateMachine()->changeState(new MagorditoState(app));
-	}
+	if (currIsland == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
 	else if (currIsland == Island::Spooky) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
 	else if (currIsland == Island::Volcanic) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
 }
