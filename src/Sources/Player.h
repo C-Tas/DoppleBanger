@@ -46,6 +46,8 @@ public:
 	void applySlow(double slow, double duration);
 	//Si se ha muerto el enemigo al que está atacando el jugador se setea a nullptr
 	void isEnemyDead(Actor* obj);
+	//Regeneración de mana
+	void manaReg();
 	//Cambia de estado a muriendo
 	virtual void die() { currState_ = STATE::DYING; }
 	//Mata al clon
@@ -63,6 +65,7 @@ public:
 		const bool getDead() { return dead_; };
 	const bool getOnCollision() { return onCollision_; };
 		const bool isEquipInit() { return initEquip_; };
+	const int getMoney() { return money_; };
 		const int getLiberation() { return liberation_; };
 		const double getMaxHealth() { return maxHealth_; }; //Devuelve la vida maxima del player
 		const double getMaxMana() { return maxMana_; };		//Devuelve el mana maximo del player
@@ -145,6 +148,9 @@ private:
 	double slowDuration_ = 0;
 	double slowEffect_ = 0;
 	double slowTime_ = 0;
+	int money_ = 0;
+	int timeRegMana_ = 1000; //tiempo regeneracion de mana = 1 seg
+	int lastReg_ = 0;
 	HandleEvents* eventHandler_ = nullptr;
 	GameManager* gm_ = nullptr;
 	Clon* clon_ = nullptr;
@@ -280,6 +286,8 @@ private:
 	const double MOVE_SPEED = 300;		//Velocidad de movimiento
 	const double MELEE_RATE = 1000;		//Velocidad del ataque a melee en segundos
 	const double DIST_RATE = 1;			//Velocidad del ataque a distancia en segundos
+	double maxMana_ = 100;
+	double maxHealth_ = 100;
 	const double CLON_SPAWN_RANGE = 200;
 #pragma endregion
 	//Constantes para el delay de los efectos de sonido

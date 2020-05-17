@@ -89,6 +89,10 @@ bool Player::update()
 			GameManager::instance()->setSkillCooldown(false, (Key)i);
 		}
 	}
+
+	//Regeneramos mana
+	if (SDL_GetTicks() - lastReg_ > timeRegMana_) { manaReg(); }
+
 	//Cuando se acabe el tiempo de ricochet, se pone a false
 	if (ricochet_ && (SDL_GetTicks() - lastTimeRico_) / 1000 > TIME_RICO) {
 		ricochet_ = false;
@@ -138,6 +142,9 @@ bool Player::update()
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 	}
 
+	//comprobamos si hay que desactivar las pociones
+	desactivePotion();
+	
 	Enemy* objective = static_cast<Enemy*>(currEnemy_);
 	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
 	Vector2D target = target_;
@@ -202,6 +209,17 @@ bool Player::update()
 	}
 	return false;
 }
+
+void Player::manaReg() {
+	
+	cout << "patatas";
+	currStats_.mana_ += maxMana_ * (currStats_.manaReg_ / 100);
+	if (currStats_.mana_ > maxMana_)
+		currStats_.mana_ = maxMana_;
+
+	lastReg_ = SDL_GetTicks();
+}
+
 
 void Player::initIdle()
 {
