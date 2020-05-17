@@ -228,7 +228,19 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	//Magordito
 		//Kirin
 	{ Kirin, "../Sources/assets/enemigos/magordito/Kirin.png" },
-
+		//Skeleton
+	{ SkeletonIdleRightAnim, "../Sources/assets/enemigos/skeleton/IdleLadoDer.png" },
+	{ SkeletonIdleLeftAnim, "../Sources/assets/enemigos/skeleton/IdleLadoIzq.png" },
+	{ SkeletonIdleUpAnim, "../Sources/assets/enemigos/skeleton/IdleEspaldas.png" },
+	{ SkeletonIdleDownAnim, "../Sources/assets/enemigos/skeleton/IdleFrente.png" },
+	{ SkeletonAttackRightAnim, "../Sources/assets/enemigos/skeleton/ThrowingLadoDer.png" },
+	{ SkeletonAttackLeftAnim, "../Sources/assets/enemigos/skeleton/ThrowingLadoIzq.png" },
+	{ SkeletonAttackUpAnim, "../Sources/assets/enemigos/skeleton/ThrowingEspaldas.png" },
+	{ SkeletonAttackDownAnim, "../Sources/assets/enemigos/skeleton/ThrowingFrente.png" },
+	{ SkeletonMoveRightAnim, "../Sources/assets/enemigos/skeleton/MovementLadoDer.png" },
+	{ SkeletonMoveLeftAnim, "../Sources/assets/enemigos/skeleton/MovementLadoIzq.png" },
+	{ SkeletonMoveDownAnim, "../Sources/assets/enemigos/skeleton/MovementFrente.png" },
+	{ SkeletonMoveUpAnim, "../Sources/assets/enemigos/skeleton/MovementEspaldas.png" },
 		//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
 	{ Stash, "../Sources/assets/colisionables/alijo.png" },
@@ -240,6 +252,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 		//Colisionable
 	{ Rock, "../Sources/assets/colisionables/roca.png" },
 	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
+	{ Bone, "../Sources/assets/enemigos/skeleton/ThrowingBone.png" },
 
 	//Equipables
 	{ Armor1,"../Sources/assets/Equipamiento/armadura1.png" },

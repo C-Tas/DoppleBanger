@@ -217,6 +217,7 @@ public:
 		PumpkinMoveLeftAnim,
 		PumpkinMoveUpAnim,
 		PumpkinMoveDownAnim,
+			//Clon
 		ClonIdleRightAnim,
 		ClonIdleLeftAnim,
 		ClonIdleUpAnim,
@@ -229,6 +230,7 @@ public:
 		ClonShootLeftAnim,
 		ClonShootUpAnim,
 		ClonShootDownAnim,
+			//Monkey
 		MonkeyIdleRightAnim,
 		MonkeyIdleLeftAnim,
 		MonkeyIdleUpAnim,
@@ -240,8 +242,19 @@ public:
 		//Magordito
 			//Kirin
 		Kirin,
-
-
+			//Skeleton
+		SkeletonIdleRightAnim,
+		SkeletonIdleLeftAnim,
+		SkeletonIdleUpAnim,
+		SkeletonIdleDownAnim,
+		SkeletonAttackRightAnim,
+		SkeletonAttackLeftAnim,
+		SkeletonAttackUpAnim,
+		SkeletonAttackDownAnim,
+		SkeletonMoveRightAnim,
+		SkeletonMoveLeftAnim,
+		SkeletonMoveDownAnim,
+		SkeletonMoveUpAnim,
 		//Interactuables
 		Wheel,
 		Stash,
@@ -266,6 +279,7 @@ public:
 
 		//proyectiles
 		Coco,
+		Bone,
 
 		//Equipables
 		Armor1,

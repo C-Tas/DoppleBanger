@@ -246,7 +246,7 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		collisionCtrl_->addEnemy(wolf);
 	}
 	else if (objectType == "Skeleton") {
-		Skeleton* skeleton = new Skeleton(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
+		Skeleton* skeleton = new Skeleton(app_, pos, Vector2D(W_SKELETON, H_SKELETON));
 		state_->addEnemy(skeleton);
 		collisionCtrl_->addEnemy(skeleton);
 	}

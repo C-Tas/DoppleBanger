@@ -532,7 +532,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="15" name="Monkey" offsetx="0" offsety="-56">
+ <objectgroup id="15" name="Skeleton" offsetx="0" offsety="-56">
   <object id="4" gid="222" x="2369" y="3747" width="256" height="256"/>
   <object id="5" gid="222" x="2370" y="3978" width="256" height="256"/>
   <object id="6" gid="222" x="2023" y="2361" width="256" height="256"/>

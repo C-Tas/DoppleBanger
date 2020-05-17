@@ -4,7 +4,7 @@
 
 bool AltarSkeleton::update()
 {
-
+	updateFrame();
 	//muerte definitiva del esqueleto
 	if (mobState_ == MOBSTATE::DIE) {
 		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
@@ -40,7 +40,6 @@ bool AltarSkeleton::update()
 				currState_ = STATE::FOLLOWING;
 				selectTarget();
 			}
-
 		}
 		//Tengo enemigo pero no a rango -> lo sigo
 		if (currState_ == STATE::FOLLOWING) {
@@ -56,7 +55,6 @@ bool AltarSkeleton::update()
 				selectTarget();
 			}
 		}
-		updateAnim();
 	}
 	return false;
 }
