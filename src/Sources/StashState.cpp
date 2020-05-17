@@ -164,7 +164,7 @@ void StashState::initState() {
 	inventory_.firstDrawn = inventory_.objects_->begin();
 	stash_.firstDrawn = stash_.objects_->begin();
 	//para las descripciones
-	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.777), (double)(app_->getWindowHeight() / 1.38));
+	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.92), (double)(app_->getWindowHeight() / 1.38));//830,650
 	descriptionBox = new TextBox(app_, descriptionPoint);
 }
 

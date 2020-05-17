@@ -155,7 +155,7 @@ void ShopState::initState() {
 	inventory_.firstDrawn = inventory_.objects_->begin();
 	shop_.firstDrawn = shop_.objects_->begin();
 	//descripcion de objetos
-	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.777), (double)(app_->getWindowHeight() / 1.45));//,620
+	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.88), (double)(app_->getWindowHeight() / 1.45));//850,620
 	descriptionBox = new TextBox(app_, descriptionPoint);
 }
 
