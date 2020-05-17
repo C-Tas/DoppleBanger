@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="28" nextobjectid="75">
+<map version="1.2" tiledversion="1.3.4" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="28" nextobjectid="75">
  <tileset firstgid="1" source="DoppleBanger.tsx"/>
  <layer id="22" name="Pathfinding" width="50" height="55" visible="0">
   <data encoding="csv">
@@ -665,7 +665,7 @@
   <object id="69" gid="166" x="4736" y="3200" width="256" height="256"/>
   <object id="70" gid="166" x="1345.52" y="3486.24" width="256" height="256"/>
  </objectgroup>
- <objectgroup id="26" name="Nami">
+ <objectgroup id="26" name="Chef">
   <object id="72" gid="169" x="4352" y="3200" width="128" height="128"/>
  </objectgroup>
  <objectgroup id="16" name="Crab"/>

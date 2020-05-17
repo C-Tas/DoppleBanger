@@ -269,24 +269,24 @@ void TextBox::dialogChef(bool unlock, int num) {
 	else {
 		//Mientras no se hayan matado todos los enemigos
 		if (gm_->getCounterEnemiesMission(missions::gallegaEnProblemas) < gm_->getEnemiesMission(missions::gallegaEnProblemas)) {
-			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la misi" + 
-				Resources::tildes_['o'] + "n secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Necesito que mates 4 monos para cocinarte un cocidito gallego. Adem" +
+				Resources::tildes_['a'] + "s te podr" + Resources::tildes_['i'] +  "a obsequiar con m" + Resources::tildes_['a'] + "s regalos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), "'Gallego en problemas'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+			/*text.loadFromText(app_->getRenderer(), "'Gallego en problemas'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));*/
 		}
 		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
 		else {
 			if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) gm_->setCompleteMission(missions::gallegaEnProblemas, true);
 
-			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la misi" +
-				Resources::tildes_['o'] + "n secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Muchas gracias por ayudarme. Aqu" + Resources::tildes_['i'] + " est" + Resources::tildes_['a'] +
+				" t" + Resources::tildes_['u'] + " recompensa", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), "'Gallego en problemas', despu" + Resources::tildes_['e'] + "s de esto el chef se a"
+			/*text.loadFromText(app_->getRenderer(), "'Gallego en problemas', despu" + Resources::tildes_['e'] + "s de esto el chef se a"
 				+ Resources::tildes_['ñ'] + "ade a la lista de NPCs desbloquedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));*/
 		}
 	}
 }

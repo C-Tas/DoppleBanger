@@ -14,8 +14,8 @@ bool MonkeyCoco::update() {
 
 		//Esta línea habría que moverla al cangrejo cuando esté hecho
 		GameManager* gm_ = GameManager::instance();
-		if (gm_->isThatMissionStarted(missions::arlongPark))
- 			gm_->addMissionCounter(missions::arlongPark);
+		if (gm_->isThatMissionStarted(missions::gallegaEnProblemas))
+ 			gm_->addMissionCounter(missions::gallegaEnProblemas);
 
 		//Tendr�a que hacer la animaci�n de muerte?
 		//Cuando acabe la animaci�n, lo mata
