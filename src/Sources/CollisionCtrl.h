@@ -80,10 +80,12 @@ public:
 		obstacles_.clear(); obstacleWithRotation_.clear(); enemies_.clear();
 		chests_.clear(); triggers_.clear(); enemiesToErase_.clear(); chestsToErase_.clear();
 		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
+		endObstacles_.clear();
 		//Listas del barco
 		npcs_.clear(); shipObjects_.clear(); newNpc = true;
 		npcCollision.id = NPCsNames::Nobody;
 		npcCollision.object = nullptr;
+		collisionWithEndOfZone_ = false;
 	};
 #pragma endregion
 
@@ -98,6 +100,8 @@ public:
 	void addObstacle(Obstacle* obstacle) { obstacles_.push_back(obstacle); };
 	///<summary>Añade un obstáculo que tiene rotación</summary>
 	void addObstacleWithRotation(Obstacle* obstacle) { obstacleWithRotation_.push_back(obstacle); }
+	///<summary>Añade un objeto a los que marcan el final del nivel</summary>
+	void addEndObstacle(Obstacle* obstacle) { endObstacles_.push_back(obstacle); };
 	///<summary>A�ade un nuevo enemigo</summary>
 	void addEnemy(Enemy* enem) { enemies_.push_back(enem); };
 	///<summary>Vac�a la lista de cofres y setea los nuevos</summary>
@@ -110,8 +114,8 @@ public:
 	void addTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
 	///<summary>A�ade un nuevo colliders</summary>
 	void addCollider(Collider* collider) { colliders_.push_back(collider); };
-
-
+	//<summary>Método para saber si está activado el textbox de cambio de zona</summary>
+	bool isNextZoneTextBoxActive() { return collisionWithEndOfZone_; }
 	//Barco
 	///<summary>Guarda un nuevo NPC a la lista</summary>
 	void addNPC(NPCsNames name, NPC* npc) { npcs_.push_back(NPCsInfo(name, npc)); };
@@ -157,6 +161,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	//Islas
 	list<Obstacle*> obstacles_;
 	list<Obstacle*> obstacleWithRotation_;
+	list<Obstacle*> endObstacles_;
 	list<Enemy*> enemies_;
 	list<Chest*> chests_;
 	list<PlayerBullet*> playerBullets_;
@@ -170,6 +175,8 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Bullet*> enemyBulletsToErase_;
 	list<Trigger*> triggersToErase_;
 	list<Collider*> collidersToErase_;
+
+	bool collisionWithEndOfZone_ = false;
 
 	//Barco
 	bool onShip = true;		//Para mandar si estamos en el barco o en una isla

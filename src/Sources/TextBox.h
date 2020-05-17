@@ -4,27 +4,32 @@
 #include "Button.h"
 #include "Vector2D.h"
 #include "GameManager.h"
+#include "GameState.h"
 
 class TextBox {
 protected:
 	Application* app_ = nullptr;
 	GameManager* gm_ = GameManager::instance();
-	SDL_Rect dest; //Posición de la caja de texto, inicializada en init()
-	const int lineSpacing = GameManager::instance()->getFontSize() * 1.5;	//Interlineado y márgenes del texto
+	SDL_Rect dest; //Posiciï¿½n de la caja de texto, inicializada en init()
+	const int lineSpacing = GameManager::instance()->getFontSize() * 1.5;	//Interlineado y mï¿½rgenes del texto
 
 	Button* shopButton_ = nullptr;
 	Button* button_ = nullptr;
 	Button* tutorialButton_ = nullptr;
-	Button* skipTutorial_ = nullptr;
+	Button* skipTutorial_ = nullptr;	
+	Button* goToShipButton_ = nullptr;
+	Button* goToNextZoneButton_ = nullptr;
 
 	static void goShopState(Application* app);
 	static void nextConversation(Application* app);
 	static void skipTutorial(Application* app);
 	static void nextTutorialVenancio(Application* app);
+	static void goToShipState(Application* app);
+	static void changeZone(Application* app);
 
 
 public:
-	///<summary>Constructora del textBox de diálogo</summary>
+	///<summary>Constructora del textBox de diï¿½logo</summary>
 	TextBox(Application* app) : app_(app) { 
 		dest.w = app_->getWindowWidth();
 		dest.h = app_->getWindowHeight() / 4;
@@ -42,19 +47,28 @@ public:
 
 		skipTutorial_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::ButtonSkipTutorial), Vector2D{ (double)lineSpacing + app->getWindowWidth() / 3, dest.y + (double)lineSpacing * 5 },
 			Vector2D{ (double)(app_->getWindowWidth() / 5),  (double)(app_->getWindowHeight() / 20) }, skipTutorial);
+		
+		goToShipButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToShipButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, goToShipState);
+
+		goToNextZoneButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToNextZoneButton), Vector2D{ (double)6*(app_->getWindowWidth() / 7)-lineSpacing, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, changeZone);
 	};
-	///<summary>Constructora del textBox de descripción</summary>
+	///<summary>Constructora del textBox de descripciï¿½n</summary>
 	TextBox(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
-	~TextBox() { delete shopButton_; delete button_; delete tutorialButton_; delete skipTutorial_; };
+	~TextBox() { delete shopButton_; delete button_; delete tutorialButton_; delete skipTutorial_; delete goToShipButton_; delete goToNextZoneButton_; };
 
-	///<summary>Carga el textBox de diálogo inicial</summary>
+	///<summary>Carga el textBox de diï¿½logo inicial</summary>
 	void initDialog();
+	bool updateButtons() { return goToShipButton_->update() || goToNextZoneButton_->update(); }
 
-	///<summary>Carga el textBox de descripción inicial, se llama desde la constructora</summary>
+	///<summary>Carga el textBox de descripciï¿½n inicial, se llama desde la constructora</summary>
 	void initDescription(Point2D pos);
+	///<summary>Crea el textBox para pasar de zona</summary>
+	void passZoneDialog();
 
-#pragma region Diálogos
-	///<summary>Frases del viejo cuando se viaja a una isla nueva o se está en el barco</summary>
+#pragma region Dialogos
+	///<summary>Frases del viejo cuando se viaja a una isla nueva o se estï¿½ en el barco</summary>
 	void dialogElderMan(int num);
 
 	///<summary>Frase del comerciante</summary>
@@ -72,7 +86,7 @@ public:
 	///<summary>Frases del esqueleto</summary>
 	void dialogSkeleton(bool unlock);
 
-	///<summary>Frases de la cartógrafa</summary>
+	///<summary>Frases de la cartï¿½grafa</summary>
 	void dialogCartographer(bool unlock, int num = 0);
 
 	///<summary>Frase del Kraken al empezar/acabar la batalla</summary>
@@ -86,75 +100,75 @@ public:
 #pragma endregion
 
 #pragma region Descripciones
-	///<summary>Descripción de las armaduras caribeñas</summary>
+	///<summary>Descripciï¿½n de las armaduras caribeï¿½as</summary>
 	void armorCaribbean();
-	///<summary>Descripción de las armaduras fantasmales</summary>
+	///<summary>Descripciï¿½n de las armaduras fantasmales</summary>
 	void armorSpooky();
 
-	///<summary>Descripción de los guantes caribeños</summary>
+	///<summary>Descripciï¿½n de los guantes caribeï¿½os</summary>
 	void glovesCaribbean();
-	///<summary>Descripción de los guantes fantasmales</summary>
+	///<summary>Descripciï¿½n de los guantes fantasmales</summary>
 	void glovesSpooky();
 
-	///<summary>Descripción de los calzados caribeños</summary>
+	///<summary>Descripciï¿½n de los calzados caribeï¿½os</summary>
 	void bootsCaribbean();
-	///<summary>Descripción de los calzados fantasmales</summary>
+	///<summary>Descripciï¿½n de los calzados fantasmales</summary>
 	void bootsSpooky();
 
-	///<summary>Descripción de las espadas caribeñas</summary>
+	///<summary>Descripciï¿½n de las espadas caribeï¿½as</summary>
 	void swordCaribbean();
-	///<summary>Descripción de las espadas fantasmales</summary>
+	///<summary>Descripciï¿½n de las espadas fantasmales</summary>
 	void swordSpooky();
 
-	///<summary>Descripción de los sables caribeños</summary>
+	///<summary>Descripciï¿½n de los sables caribeï¿½os</summary>
 	void saberCaribbean();
-	///<summary>Descripción de los sables fantasmales</summary>
+	///<summary>Descripciï¿½n de los sables fantasmales</summary>
 	void saberSpooky();
 
-	///<summary>Descripción de las pistolas caribeñas</summary>
+	///<summary>Descripciï¿½n de las pistolas caribeï¿½as</summary>
 	void pistolCaribbean();
-	///<summary>Descripción de las pistolas fantasmales</summary>
+	///<summary>Descripciï¿½n de las pistolas fantasmales</summary>
 	void pistolSpooky();
 
-	///<summary>Descripción de los trabucos caribeños</summary>
+	///<summary>Descripciï¿½n de los trabucos caribeï¿½os</summary>
 	void blunderbussCaribbean();
-	///<summary>Descripción de los trabucos fantasmales</summary>
+	///<summary>Descripciï¿½n de los trabucos fantasmales</summary>
 	void blunderbussSpooky();
 
-	///<summary>Descripción de la poción de vida</summary>
+	///<summary>Descripciï¿½n de la pociï¿½n de vida</summary>
 	void lifePotion();
-	///<summary>Descripción de la poción de maná</summary>
+	///<summary>Descripciï¿½n de la pociï¿½n de manï¿½</summary>
 	void manaPotion();
-	///<summary>Descripción de la poción de velocidad</summary>
+	///<summary>Descripciï¿½n de la pociï¿½n de velocidad</summary>
 	void velocityPotion();
-	///<summary>Descripción de la poción de daño</summary>
+	///<summary>Descripciï¿½n de la pociï¿½n de daï¿½o</summary>
 	void damagePotion();
-	///<summary>Descripción de la poción de defensa</summary>
+	///<summary>Descripciï¿½n de la pociï¿½n de defensa</summary>
 	void defensePotion();
-	///<summary>Descripción de la poción de crítico</summary>
+	///<summary>Descripciï¿½n de la pociï¿½n de crï¿½tico</summary>
 	void criticPotion();
 #pragma endregion
 
 #pragma region SkillsDescription
-	///<summary>Descripción de la habilidad de invocar al clon</summary>
+	///<summary>Descripciï¿½n de la habilidad de invocar al clon</summary>
 	void Clon();
-	///<summary>Descripción de la habilidad LiberacionI del clon</summary>
+	///<summary>Descripciï¿½n de la habilidad LiberacionI del clon</summary>
 	void LiberationI();
-	///<summary>Descripción de la habilidad LiberacionII del clon</summary>
+	///<summary>Descripciï¿½n de la habilidad LiberacionII del clon</summary>
 	void LiberationII();
-	///<summary>Descripción de la habilidad Explosion del clon</summary>
+	///<summary>Descripciï¿½n de la habilidad Explosion del clon</summary>
 	void Explosion();
-	///<summary>Descripción de la habilidad Golpe Fuerte de la rama a melee</summary>
+	///<summary>Descripciï¿½n de la habilidad Golpe Fuerte de la rama a melee</summary>
 	void GolpeFuerte();
-	///<summary>Descripción de la habilidad Invencible de la rama a melee</summary>
+	///<summary>Descripciï¿½n de la habilidad Invencible de la rama a melee</summary>
 	void Invencible();
-	///<summary>Descripción de la habilidad Torbellino de la rama a melee</summary>
+	///<summary>Descripciï¿½n de la habilidad Torbellino de la rama a melee</summary>
 	void Torbellino();
-	///<summary>Descripción de la habilidad Raudo del disparo a distancia</summary>
+	///<summary>Descripciï¿½n de la habilidad Raudo del disparo a distancia</summary>
 	void Raudo();
-	///<summary>Descripción de la habilidad Rebote del disparo a distancia</summary>
+	///<summary>Descripciï¿½n de la habilidad Rebote del disparo a distancia</summary>
 	void Rebote();
-	///<summary>Descripción de la habilidad Perforador del disparo a distancia</summary>
+	///<summary>Descripciï¿½n de la habilidad Perforador del disparo a distancia</summary>
 	void Perforador();
 #pragma endregion
 };

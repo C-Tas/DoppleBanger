@@ -44,6 +44,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ BackToShipButton, "../Sources/assets/botones/backToShipButton.png"},
 	{ YesButton, "../Sources/assets/botones/yesButton.png"},
 	{ NoButton, "../Sources/assets/botones/noButton.png"},
+	{ GoToShipButton, "../Sources/assets/botones/goToShipButton.png"},
+	{ GoToNextZoneButton, "../Sources/assets/botones/ContinueButton.png"},
 	//Animaciones de botones
 	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},
 

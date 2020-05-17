@@ -731,3 +731,21 @@ void GameManager::addToStash(Item* ob)
 	list <InventoryButton*>::iterator it = stash_->insert(stash_->end(), b);
 	b->setIterator(it);
 }
+
+void GameManager::resetIsland()
+{
+	switch (currIsland_)
+	{
+	case Island::Caribbean:
+		currentZone_ = Zone::CaribeanA;
+		break;
+	case Island::Spooky:
+		currentZone_ = Zone::SpookyA;
+		break;
+	case Island::Volcanic:
+		currentZone_ = Zone::Volcanic;
+		break;
+	default:
+		break;
+	}
+}

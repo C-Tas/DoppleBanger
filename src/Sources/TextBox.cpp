@@ -45,6 +45,26 @@ void TextBox::nextTutorialVenancio(Application* app)
 	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	GameManager::instance()->nextPhaseVenancio();
 }
+void TextBox::goToShipState(Application* app)
+{
+	if (GameManager::instance()->getCurrIsland() == Island::Caribbean) {
+		GameManager::instance()->setCurrentZone(Zone::CaribeanA);
+	}
+	else if (GameManager::instance()->getCurrIsland() == Island::Spooky) {
+		GameManager::instance()->setCurrentZone(Zone::SpookyA);
+	}
+	else if (GameManager::instance()->getCurrIsland() == Island::Volcanic) {
+		GameManager::instance()->setCurrentZone(Zone::Volcanic);
+	}
+	//GameManager::instance()->setHudActive(false);
+	app->getGameStateMachine()->changeState(new ShipState(app));
+}
+
+void TextBox::changeZone(Application* app)
+{
+	GameManager::instance()->resetIsland();
+	static_cast<PlayState*>(app->getCurrState())->changeZone();
+}
 
 void TextBox::initDialog() {
 	//Generamos la caja donde ir� el texto
@@ -62,6 +82,22 @@ void TextBox::initDescription(Point2D pos) {
 	dest.h = app_->getWindowHeight() / 7;
 	dest.x = pos.getX();
 	dest.y = pos.getY();
+}
+
+void TextBox::passZoneDialog()
+{
+	//Generamos la caja donde ir� el texto
+	Texture* whiteRect = app_->getTextureManager()->getTexture(Resources::TextureId::TextBox);
+	whiteRect->render({ 0,dest.y, dest.w, dest.h });
+
+	dest.x = lineSpacing;
+	dest.y = app_->getWindowHeight() - dest.h;
+
+	Texture text(app_->getRenderer(), "Has llegado al final de la zona, ¿Deseas continuar?", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(lineSpacing, dest.y + lineSpacing);
+
+	goToShipButton_->draw();
+	goToNextZoneButton_->draw();
 }
 
 #pragma region Dialogos

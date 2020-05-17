@@ -77,7 +77,6 @@ const void TiledMap::draw()
 			(int)ob->getColliderScale().getX(), (int)ob->getColliderScale().getY()}, ob->getCollisionRot());
 	}*/
 
-
 }
 
 Vector2D TiledMap::PosToTile(Vector2D pos)
@@ -161,6 +160,9 @@ void TiledMap::addIsometricObstacle(Tile tile, int gid, tileType tileType_)
 	//Si es un obst�culo, lo a�adimos como obst�culo
 	else if(tileType_ == tileType::Obstacle)
 		collisionCtrl_->addObstacleWithRotation(newObstacle);
+	else if (tileType_ == tileType::EndObstacle) {
+		collisionCtrl_->addEndObstacle(newObstacle);
+	}
 
 }
 
@@ -175,7 +177,7 @@ void TiledMap::addOrthogonalObstacle(Tile tile)
 
 }
 
-void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions)
+void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, string layerName)
 {
 	///Recorremos toda la matriz que contiene la informacion de la capa que acabamos de coger
 	for (unsigned int y = 0; y < map_dimensions.y; y++) {
@@ -202,10 +204,14 @@ void TiledMap::createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles
 				//Lo a�adimos en la lista de tiles
 				tilesToRender.push_back(tile);
 
-				if (idCollisionTiles_.end() != find(idCollisionTiles_.begin(), idCollisionTiles_.end(), gid))
-					addIsometricObstacle(tile, gid - 1 ,tileType::Obstacle);
-				if (idWallTiles_.end() != find(idWallTiles_.begin(), idWallTiles_.end(), gid))
-					addIsometricObstacle(tile, gid - 1, tileType::Wall);
+				if (layerName != "EndLevel") {
+
+					if (idCollisionTiles_.end() != find(idCollisionTiles_.begin(), idCollisionTiles_.end(), gid))
+						addIsometricObstacle(tile, gid - 1, tileType::Obstacle);
+					if (idWallTiles_.end() != find(idWallTiles_.begin(), idWallTiles_.end(), gid))
+						addIsometricObstacle(tile, gid - 1, tileType::Wall);
+				}
+				else addIsometricObstacle(tile, gid - 1, tileType::EndObstacle);
 				
 			}
 			//Actualizamos la posici�n del mundo para el siguiente tile
@@ -383,7 +389,7 @@ void TiledMap::createIsometricMap(const tmx::Map& map_)
 			if (layer->getName() == "pathfinding")
 				createIsometricPathLayer(layer_tiles, map_dimensions);
 			else
-				createIsometricTileLayer(layer_tiles, map_dimensions);
+			createIsometricTileLayer(layer_tiles, map_dimensions, tile_layer->getName());
 		}
 		//Capas con objetos
 		else if (layer->getType() == tmx::Layer::Type::Object) {

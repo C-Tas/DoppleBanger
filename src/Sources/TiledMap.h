@@ -8,7 +8,7 @@
 #include "../tmxLite/Map.hpp"
 #include "Application.h"
 
-enum class tileType{Wall, Obstacle, Undefined};
+enum class tileType{Wall, Obstacle, EndObstacle, Undefined};
 
 class Obstacle;
 class PlayState;

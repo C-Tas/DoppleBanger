@@ -5,6 +5,7 @@
 #include <array>
 #include "GameManager.h"
 #include "jute.h"
+#include "TextBox.h"
 
 class Skill;
 class Armor;
@@ -76,6 +77,9 @@ public:
 		//habilidades
 		//activa la pasiva invencible y aplica los efectos de esta
 		void activeInvincible();
+
+		//<summary>Método para obtener el textbox que sale cuando el player llega al final del nivel</summary>
+		TextBox* getEndZoneTextBox() { return endZoneTextBox_; };
 	
 #pragma endregion
 	#pragma region Setters
@@ -312,4 +316,6 @@ private:
 	Sword* sword_ = nullptr;	//Espada
 	Gun* gun_ = nullptr;		//Pistola
 	vector<usable*> potions_{ nullptr, nullptr };	//Pociones
+
+	TextBox* endZoneTextBox_ = nullptr;
 };

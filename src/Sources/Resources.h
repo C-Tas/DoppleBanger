@@ -62,6 +62,8 @@ public:
 		BackToShipButton,
 		YesButton,
 		NoButton,
+		GoToShipButton,
+		GoToNextZoneButton,
 		//Animaciones de botones
 		BeerAnim,
 

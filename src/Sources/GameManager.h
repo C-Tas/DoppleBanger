@@ -33,7 +33,7 @@ enum class Zone : int {
 	SpookyB = 6,
 	SpookyC = 7,
 	SpookyD = 8,
-	SpookyBoos = 9,
+	SpookyBoss = 9,
 	Volcanic = 10
 };
 enum class Island : int {
@@ -186,7 +186,8 @@ private:
 	HUD* hud_ = nullptr;
 	//puntero a la aplicacion
 	Application* app_ = nullptr;
-
+	//actual zona en la que nos encontramos
+	Zone currentZone_ = Zone::CaribeanA;
 	//Metodos para guardar y cargar partida
 	#pragma region Guardar/Cargar
 		#pragma region Guardar
@@ -225,7 +226,7 @@ private:
 		#pragma endregion
 	#pragma endregion
 
-		bool hudActive_ = false;
+	bool hudActive_ = false;
 	//Fases de los NPCS
 	bool tutorial = false;
 	int venancioPhase = 0;
@@ -355,6 +356,9 @@ public:
 	GameObject* getClon() { return clon_; };
 	//Devuelve el HUD
 	HUD* getHUD() { return hud_; };
+	//Devuelve la zona en la que nos encontramos actualmente
+	Zone getCurrentZone() { return currentZone_; }
+	
 #pragma endregion
 
 #pragma region setters
@@ -438,6 +442,9 @@ public:
 	inline void deleteClon() { clon_ = nullptr; };
 	//aplicacion
 	inline void setApp(Application* app) { app_ = app; };
+	//Asigna la nueva zona en la que nos encontramos
+	inline void setCurrentZone(Zone newZone) { currentZone_ = newZone; }
+	inline void setHudActive(bool active) { hudActive_ = active; }
 #pragma endregion
 	//Para añadir objetos al inventario
 	void addToInventory(Item* ob);
@@ -453,4 +460,6 @@ public:
 	void nextPhaseVenancio() { venancioPhase++; }
 	//GettersNPC
 	int getVenancioPhase() { return venancioPhase; }
+	//<summary>Método que resetea la zona segun en la isla que estés</summary>
+	void resetIsland();
 };

@@ -79,7 +79,7 @@ void PlayState::removeObject(Collider* obj) {
 	objects_.remove(obj);
 }
 
-void PlayState::checkPlayerActions() {	
+void PlayState::checkPlayerActions() {
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 	{
 		Enemy* obj; obj = checkAttack();
@@ -91,6 +91,8 @@ void PlayState::checkPlayerActions() {
 			player_->move(eventHandler_->getRelativeMousePos());
 		}
 		else player_->setOnCollision(false);
+
+		if (collisionCtrl_->isNextZoneTextBoxActive())player_->getEndZoneTextBox()->updateButtons();
 	}
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
@@ -104,6 +106,8 @@ void PlayState::checkPlayerActions() {
 		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
 		player_->stop();
 	}
+
+
 }
 
 Enemy* PlayState::checkAttack() {
@@ -157,6 +161,16 @@ void PlayState::swapRenders(GameObject* obj, GameObject* other)
 	}
 }
 
+void PlayState::deleteExceptHUD(Zone newZone)
+{
+	gm_->setCurrentZone(newZone);
+	for (auto i = objectsToRender_.begin(); i != --objectsToRender_.end(); ++i) {
+		removeRenderUpdateLists(*(i));
+	}
+	gameObjects_.clear();
+	objectsToRender_.clear();
+}
+
 void PlayState::initState()
 {
 	generator_ = new AStar::Generator();
@@ -169,4 +183,18 @@ void PlayState::initState()
 	collisionCtrl_ = CollisionCtrl::instance();
 	generator_->setHeuristic(AStar::Heuristic::euclidean);
 	generator_->setDiagonalMovement(false);
+}
+
+void PlayState::resetGame()
+{
+	//Se pierde el oro
+	gm_->setInventoryGold(0);
+	//Se resetea el inventario
+	gm_->resetInventory();
+	//Se limpia la lista de colisiones
+	collisionCtrl_->clearList();
+	//Se vuelve a tener que empezar desde la zona inicial de la isla en la que nos encontremos
+	gm_->resetIsland();
+	//Se reinicia la partida en el barco
+	app_->getGameStateMachine()->changeState(new ShipState(app_));
 }

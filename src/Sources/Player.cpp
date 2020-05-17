@@ -31,7 +31,7 @@ void Player::initObject()
 	initAnims();
 	GameManager::instance()->setPlayer(this);
 	CollisionCtrl::instance()->setPlayer(this);
-
+	endZoneTextBox_ = new TextBox(app_);
 	posCollision_ = Vector2D((scale_.getX() / 3), (scale_.getY() / 4));
 	scaleCollision_ = { scale_.getX() / 3, scale_.getY() / 2 };
 
@@ -677,10 +677,8 @@ Player::~Player()
 	for (Skill* ob : skills_) {
 		delete ob; ob = nullptr;
 	}
-	//Temporal para no dejar basura
-	/*for (int i = 0; i < skills_.size(); i++) {
-		delete skills_[i];
-	}*/
+
+	delete endZoneTextBox_;
 }
 
 void Player::shout()

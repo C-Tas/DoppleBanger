@@ -52,6 +52,10 @@ public:
 	Enemy* getEnemyByTag(string tag);
 	//intercambia posiciones de dos objetos en el orden de renderizado
 	void swapRenders(GameObject* obj, GameObject* other);
+	///<summary>Método a redefinir en las clases de los niveles para gestionar el cambio de zona</summary>
+	virtual void changeZone() {};
+	///<summary>Método para cambiar de zona y borrar todos los objetos menos el HUD (último objeto en la lista objectsToRender)</summary>
+	void deleteExceptHUD(Zone newZone);
 protected:
 	Point2D playerEntry_ = Vector2D(0, 0);
 	//Singleton de colisiones
