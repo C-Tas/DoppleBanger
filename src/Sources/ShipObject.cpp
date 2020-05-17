@@ -2,5 +2,7 @@
 
 void ShipObject::onCollider()
 {
-	cb_(app_); //Llama al callback
+	if (cb_ != nullptr) {
+		cb_(app_); //Llama al callback
+	}
 }

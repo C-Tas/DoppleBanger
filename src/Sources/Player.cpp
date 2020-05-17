@@ -118,11 +118,11 @@ bool Player::update()
 		cout << getCenter().getX() << " " << getCenter().getY() << endl;
 	}
 	
-	if (!gm_->getOnShip() && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr) {
+	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr ) {
 		usePotion(potions_[0], 0);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
 	}
-	if (!gm_->getOnShip() && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr) {
+	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr ) {
 		usePotion(potions_[1], 1);
 		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
 	}
@@ -150,7 +150,7 @@ bool Player::update()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
-		if (!gm_->getOnShip()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
+		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
 	}
 	else if (attacking_ && objective != nullptr && objective->getState() != STATE::DYING && !enemiesInRange.empty())
 	{
@@ -329,14 +329,15 @@ void Player::shootAnim()
 void Player::meleeAnim()
 {
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
-		double totalDmg = currStats_.meleeDmg_;	//Daño total por si hace el Golpe Fuerte
+		double totalDmg = currStats_.meleeDmg_;
 		if (empoweredAct_) { //Golpe fuerte
+			static_cast<Actor*>(currEnemy_)->receiveDamage(currStats_.meleeDmg_ * empoweredBonus_);
 			empoweredAct_ = false;
 			totalDmg = currStats_.meleeDmg_ * empoweredBonus_;
 			empoweredCD_.initCooldown(EMPOWERED_DELAY);
 		}
-
-		static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
+		else static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
+		
 		if (currEnemy_ == nullptr) {
 			attacking_ = false;
 			dir_ = Vector2D(0, 0);

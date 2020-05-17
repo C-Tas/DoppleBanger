@@ -88,6 +88,9 @@ void ShipState::initState()
 	addObject(exit_);
 
 	collisionCtrl_->addShipObjects(stash_, door_, wheel_, exit_);
+	//Posición de Venancio
+	POST_TUTORIAL_POS = Vector2D((double)(W_WIN * 2 / 7), (double)(H_WIN / 10));
+	TUTORIAL_POS = Vector2D((double)(destRect.x - W_WIN / 7), (double)(destRect.y - H_WIN / 8));
 
 	createNPCs();	//Método de testeo de los NPCs del barco, faltaría hacer uno definitivo para todos los NPCs desbloqueados
 
@@ -154,9 +157,8 @@ void ShipState::loadState(){
 
 void ShipState::createNPCs() {
 	//El viejo y el mercader están desde el principio
-	NPC* elderman;
-	elderman = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), Vector2D(W_WIN / 3, H_WIN / 7), Vector2D(W_ELDERMAN, H_ELDERMAN), 0);
-	addRenderUpdateLists(elderman);
+	venancio_ = new NPC(app_, app_->getTextureManager()->getTexture(Resources::VenancioDrink), POST_TUTORIAL_POS, Vector2D(W_ELDERMAN, H_ELDERMAN), 0);
+	addRenderUpdateLists(venancio_);
 
 	NPC* merchant;
 	merchant = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Merchant), Vector2D(W_WIN / 30, H_WIN * 3 / 5), Vector2D(W_MERCHANT, H_MERCHANT), 1);

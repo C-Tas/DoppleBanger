@@ -14,9 +14,14 @@ protected:
 
 	Button* shopButton_ = nullptr;
 	Button* button_ = nullptr;
+	Button* tutorialButton_ = nullptr;
+	Button* skipTutorial_ = nullptr;
 
 	static void goShopState(Application* app);
 	static void nextConversation(Application* app);
+	static void skipTutorial(Application* app);
+	static void nextTutorialVenancio(Application* app);
+
 
 public:
 	///<summary>Constructora del textBox de diálogo</summary>
@@ -31,10 +36,16 @@ public:
 
 		button_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::RightArrow), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
 			Vector2D{ (double)(app_->getWindowWidth() / 17),  (double)(app_->getWindowHeight() / 20) }, nextConversation);
+
+		tutorialButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::ButtonInitTutorial), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 4),  (double)(app_->getWindowHeight() / 20) }, nextTutorialVenancio);
+
+		skipTutorial_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::ButtonSkipTutorial), Vector2D{ (double)lineSpacing + app->getWindowWidth() / 3, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 5),  (double)(app_->getWindowHeight() / 20) }, skipTutorial);
 	};
 	///<summary>Constructora del textBox de descripción</summary>
 	TextBox(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
-	~TextBox() { delete shopButton_; delete button_; };
+	~TextBox() { delete shopButton_; delete button_; delete tutorialButton_; delete skipTutorial_; };
 
 	///<summary>Carga el textBox de diálogo inicial</summary>
 	void initDialog();
@@ -44,7 +55,7 @@ public:
 
 #pragma region Diálogos
 	///<summary>Frases del viejo cuando se viaja a una isla nueva o se está en el barco</summary>
-	void dialogElderMan(int isle = -1);
+	void dialogElderMan(int num);
 
 	///<summary>Frase del comerciante</summary>
 	void dialogMerchant();

@@ -1,8 +1,9 @@
 #include "StoryState.h"
 #include "ShipState.h"
+#include "tutorialState.h"
 
 void StoryState::goToGame(Application* app) {
-	app->getGameStateMachine()->changeState(new ShipState(app));
+	app->getGameStateMachine()->changeState(new tutorialState(app));
 }
 
 void StoryState::draw() const {

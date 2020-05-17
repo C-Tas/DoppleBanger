@@ -49,6 +49,8 @@ public:
 	void islandCollisions();
 	///<summary>Comprueba las colisiones necesarias en el barco</summary>
 	void shipCollisions();
+	//Gestiona las colisiones con los objetos del tutorial
+	void tutorialCollision();
 	///<summary>Para renderizar los textBox en caso de ser necesario</summary>
 	void drawTextBox();
 	///<summary>Devuelve los objetos en un area</summary>
@@ -69,6 +71,8 @@ public:
 	void removeTrigger(Trigger* trigger) { triggersToErase_.push_back(trigger); };
 	///<summary>Quita un nuevo colliders</summary>
 	void removeCollider(Collider* collider) { collidersToErase_.push_back(collider); };
+	///<summary>Quita el dummy</summary>
+	void removeDummy() { enemies_.clear(); dummy_ = nullptr; };
 
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
 	void clearList() {
@@ -117,6 +121,11 @@ public:
 			shipObjects_.push_back(ShipObjectsInfo(ShipObjectsNames::Wheel, wheel)); shipObjects_.push_back(ShipObjectsInfo(ShipObjectsNames::Exit, exit));
 	};
 
+	//Tutorial
+	void setBottle(Enemy* obj) { bottle_ = obj; }
+	void setDummy(Enemy* obj) { dummy_ = obj; }
+
+
 #pragma endregion
 
 private:	//Private est� abajo porque necesitan enum del p�blico
@@ -137,6 +146,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 		ShipObjectsInfo(ShipObjectsNames i, ShipObject* ob) { id = i; object = ob; };
 	};
 
+	bool canTalk = true;
 	HandleEvents* input_ = nullptr;	//Para controlar si los objetos han sido clickados
 
 	Player* player_ = nullptr;
@@ -164,6 +174,11 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	//Barco
 	bool onShip = true;		//Para mandar si estamos en el barco o en una isla
 	bool newNpc = true;	//Para que los NPCs solo se agreguen una vez a la lista de desbloqueados
+
+	//tutorial 
+	Enemy* bottle_ = nullptr;
+	Enemy* dummy_ = nullptr;
+
 	NPCsInfo npcCollision;
 	vector<ShipObjectsInfo> shipObjects_;
 

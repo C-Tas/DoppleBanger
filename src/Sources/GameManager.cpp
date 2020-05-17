@@ -616,6 +616,9 @@ void GameManager::resetGameManager()
 	for (int i = 0; i < skillsEquipped_.size() - 1; i++) {
 		skillsEquipped_[i] = SkillName::Unequipped;
 	}
+	for (int i = 0; i < skillsUnlocked_.size(); i++) {
+		if (i != (int)SkillName::Clon) skillsUnlocked_[i] = false;
+	}
 	//Reset objetos
 	for (int i = 0; i < objectsEquipped_.size(); i++) {
 		objectsEquipped_[i] = ObjectName::Unequipped;
@@ -636,6 +639,10 @@ void GameManager::resetGameManager()
 		delete currEquip_.potions_[i];
 		currEquip_.potions_[i] = nullptr;
 	}
+
+	//Resetea el tutorial
+	tutorial = false;
+	venancioPhase = 0;
 }
 
 const int GameManager::getFontSize()
@@ -677,19 +684,19 @@ void GameManager::resetInventory()
 void GameManager::setSkillCooldown(bool cooldown, Key key)
 {
 	skillsCooldown_[(int)key] = cooldown;
-	if (!onShip_) hud_->setSkillCooldown(cooldown, (int)key);
+	if (hudActive_) hud_->setSkillCooldown(cooldown, (int)key);
 }
 
 void GameManager::setSkillEquiped(SkillName newSkill, Key key)
 {
 	skillsEquipped_[(int)key] = newSkill;
-	if (!onShip_) hud_->updateKey((int)key);
+	if (hudActive_) hud_->updateKey((int)key);
 }
 
 void GameManager::setObjectEquipped(ObjectName newObject, Key key)
 {
 	objectsEquipped_[(int)key - (int)Key::One] = newObject;
-	if (!onShip_) hud_->updateKey((int)key);
+	if (hudActive_) hud_->updateKey((int)key);
 }
 
 playerEquipment& GameManager::initEquipment(){

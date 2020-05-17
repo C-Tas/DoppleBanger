@@ -7,6 +7,7 @@
 #include "SDL_macros.h"
 
 HUD::~HUD() {
+	gm_->setHUD(nullptr);
 	for (auto it = elementsHUD_.begin(); it != elementsHUD_.end(); ++it) {
 		delete(*it);
 	}
@@ -169,6 +170,7 @@ void HUD::initObject() {
 	//Inicializaci�n del GameManager
 	gm_ = GameManager::instance();
 	gm_->setHUD(this);
+
 	SDL_Rect destRect;
 
 	//Creacion del fondo del HUD

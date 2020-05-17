@@ -57,6 +57,8 @@ public:
 		LoadGame3,
 		LoadGameNull,
 		LoadButtonNull,
+		ButtonInitTutorial,
+		ButtonSkipTutorial,
 		BackToShipButton,
 		YesButton,
 		NoButton,
@@ -156,8 +158,12 @@ public:
 		MonkeyFront,
 		WolfFront,
 		Kraken,
-		Cooker,
+		VenancioDrink,
+		VenancioPushStart,
+		VenancioPushBucle,
+		VenancioPushFinish,
 		Merchant,
+		Cooker,
 		SkeletonMusician,
 		Cartographer,
 		Morty,
@@ -282,6 +288,9 @@ public:
 
 		//Colsionable
 		Rock,
+			//Tutorial
+		Bottle,
+		Dummy,
 
 		//Textos
 		PlayText,
@@ -315,7 +324,7 @@ public:
 
 		//Tilesets de los mapas
 		Tileset1,
-		CollisionTile
+		CollisionTile,
 	};
 	
 	enum MusicChannels : int {
@@ -420,8 +429,15 @@ public:
 		TauntPumpkin1,
 		TauntPumpkin2,
 
+		//Tutorial
+		Glass,
+		DummyDie,
+
+		//NPC
+		VenancioTalk,
+
 		//Otros
-		Agro
+		Agro,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

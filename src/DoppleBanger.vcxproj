@@ -110,6 +110,8 @@
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\TiledMap.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
+    <ClCompile Include="Sources\tutorialObject.cpp" />
+    <ClCompile Include="Sources\tutorialState.cpp" />
     <ClCompile Include="Sources\usable.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
@@ -220,6 +222,8 @@
     <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\TiledMap.h" />
     <ClInclude Include="Sources\Trigger.h" />
+    <ClInclude Include="Sources\tutorialObject.h" />
+    <ClInclude Include="Sources\tutorialState.h" />
     <ClInclude Include="Sources\usable.h" />
     <ClInclude Include="Sources\Vector2D.h" />
     <ClInclude Include="Sources\VisualElement.h" />

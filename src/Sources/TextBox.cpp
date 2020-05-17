@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "SDL_macros.h"
 #include "CollisionCtrl.h"
+#include "ShipState.h"
+#include "tutorialState.h"
 #include "Armor.h"
 
 //Cada l�nea de los di�logos/descripciones se tiene que renderizar por separado para poder generar los saltos de l�nea.
@@ -30,6 +32,20 @@ void TextBox::nextConversation(Application* app) {
 	CollisionCtrl::instance()->nextConversation();
 }
 
+void TextBox::skipTutorial(Application* app)
+{
+	app->getGameManager()->desactiveTutorial();
+	app->getGameManager()->resetGameManager();
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
+	app->getGameStateMachine()->pushState(new ShipState(app));
+}
+
+void TextBox::nextTutorialVenancio(Application* app)
+{
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
+	GameManager::instance()->nextPhaseVenancio();
+}
+
 void TextBox::initDialog() {
 	//Generamos la caja donde ir� el texto
 	Texture* whiteRect = app_->getTextureManager()->getTexture(Resources::TextureId::TextBox);
@@ -49,31 +65,137 @@ void TextBox::initDescription(Point2D pos) {
 }
 
 #pragma region Dialogos
-void TextBox::dialogElderMan(int isle) {
+void TextBox::dialogElderMan(int num) {
 	initDialog();
-	dest.x = lineSpacing;
-	dest.y = app_->getWindowHeight() - dest.h;
+	Texture text;
+	if (GameManager::instance()->onTutorial()) {
+		skipTutorial_->draw();
+		skipTutorial_->update();
+		auto aux = dynamic_cast<tutorialState*>(app_->getCurrState());
+		if (aux && aux->isCurrTaskComplete()) {
+			GameManager::instance()->nextPhaseVenancio();
+			aux->currTaskIncomplete();
+			aux->activeDummyCreation();
+		}
+		switch (GameManager::instance()->getVenancioPhase())
+		{
+		case 0:
+			tutorialButton_->draw();
+			tutorialButton_->update();
+			text.loadFromText(app_->getRenderer(), "Veo que no todo el mundo necesita un taca-taca para morverse...", 
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "Te veo verde, has visto lo mamadisimo que estoy?, te puedo dar unos consejos.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
+			break;
+		case 1:
+			skipTutorial_->setPos(Vector2D{ app_->getWindowWidth() - skipTutorial_->getScaleX() - lineSpacing, dest.y + (double)lineSpacing * 3 });
 
-	//Viaje a la isla caribe�a
-	if (isle == 0) {
-		Texture text(app_->getRenderer(), "Frase 1...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "Usa tu pistola con click derecho para romper esa botella que me recuerda al amor de ella. ",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			break;
+		case 2:
+			text.loadFromText(app_->getRenderer(), "Presionando una vez el click izquierdo sobre un enemigo, puedes mochar a tus enemigos.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "Te recomiendo limpiar tu espada despues de mochar al susodicho.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
+			break;
+		case 3:
+			switch (num) {
+			case 0:
+				text.loadFromText(app_->getRenderer(), "Has visto que el susodicho te ha dado puntos de hazana?",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+				text.loadFromText(app_->getRenderer(), "Se consiguen al ganar experiencia.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 2);
+				text.loadFromText(app_->getRenderer(), "Abre el menu de habilidades con la 'V' y sumalos a la segunda rama.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 3);
 
-		text.loadFromText(app_->getRenderer(), "Frase 2...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 2));
+				button_->draw();
+				button_->update();
+				break;
+			case 1:
+				text.loadFromText(app_->getRenderer(), "Al desbloquear la habilidad haz click sobre esta y luego haz click sobre el acceso (Q, W, E) que te guste.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+
+				text.loadFromText(app_->getRenderer(), "Ahora usa ese acesso para activar la habilidad y mocha al susodicho.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + (lineSpacing * 2));
+				break;
+			}
+			break;
+		case 5:
+			switch (num) {
+			case 0:
+				text.loadFromText(app_->getRenderer(), "Algunas veces encontraras tesoros, no lo dudes mochalos a todos!!",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+				text.loadFromText(app_->getRenderer(), "Usa el oro para comprar una pocion a ese tio mas verde que tu.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 2);
+				text.loadFromText(app_->getRenderer(), "Si te sobra algo podrias comprarme un ron, no?",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 3);
+				button_->draw();
+				button_->update();
+				break;
+			case 1:
+				text.loadFromText(app_->getRenderer(), "Abre el inventario con la tecla C y equipala con el boton verde.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+
+				text.loadFromText(app_->getRenderer(), "Ahora usa ese acceso para usar la susodicha pocion.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + (lineSpacing * 2));
+				break;
+			}
+			break;
+
+		case 6:
+			text.loadFromText(app_->getRenderer(), "Ten cuidado ahí fuera porque si eres derrotada podre ir a salvarte pero no podre recuperar ni el oro ni los objetos",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "que no lleves equipados. Y recuerda, siempre puedes confiar en tu anillo, con la tecla R podras invocarla, actuara",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
+			text.loadFromText(app_->getRenderer(), "como diana para los enemigos y disparara donde tu lo hagas. Ademas podras mejorarla con los puntos de hazana para que",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 3);
+			text.loadFromText(app_->getRenderer(), "también pueda mochar. Bueno, si me disculpas, hoy tocha pecho y biceps.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 4);
+			break;
+		default:
+			break;
+		}//cuidado ahí fuera porque si es derrotada por los enemigos irán a salvarla pero no podrá recuperar ni su oro ni sus objetos
 	}
-	//Viaje a la isla fantasmal
-	else if (isle == 1) {
+	else
+	{
+		/*//Viaje a la isla caribe�a
+		if (isle == 0) {
+			Texture text(app_->getRenderer(), "Frase 1...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
 
-	}
-	//Viaje a la isla volc�nica
-	else if (isle == 2) {
+			text.loadFromText(app_->getRenderer(), "Frase 2...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+		}
+		//Viaje a la isla fantasmal
+		else if (isle == 1) {
 
-	}
-	//Di�logo en el barco
-	else {
+		}
+		//Viaje a la isla volc�nica
+		else if (isle == 2) {
 
+		}
+		//Di�logo en el barco
+		else {
+
+		}*/
 	}
+
 }
 
 void TextBox::dialogMerchant() {

@@ -1,5 +1,6 @@
 #pragma once
 #include "Bullet.h"
+
 class PlayerBullet : public Bullet
 {
 public:
@@ -10,13 +11,13 @@ public:
 	~PlayerBullet() {};
 	virtual bool update();
 
-	//Para saber si está activada la perforación
+	//Para saber si estï¿½ activada la perforaciï¿½n
 	const bool getPerforate() { return perforate_; };
-	//Para saber si está activado el rebote
+	//Para saber si estï¿½ activado el rebote
 	const bool getRicochet() { return ricochet_; };
-	//Devuelve el número de rebotes
+	//Devuelve el nï¿½mero de rebotes
 	const int getNumRico() { return NUM_RICO; };
-	//Activa perforación
+	//Activa perforaciï¿½n
 	void setPerforate(bool perforate) { perforate_ = perforate; };
 	//Activa el rebote
 	void setRicochet(bool ricochet) { ricochet_ = ricochet; };
@@ -26,10 +27,10 @@ public:
 private:
 	bool perforate_ = false;								//Para saber si perfora
 	bool ricochet_ = false;									//Para saber si rebota
-	const int NUM_RICO = 100;								//Número de rebotes máxmo
-	int currRico = 0;										//Número de rebotes
-	const float RADIUS = 1000;								// Radio de la circunferencia de búsqueda de la bala
-	const double W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
+	const int NUM_RICO = 100;								//Nï¿½mero de rebotes mï¿½xmo
+	int currRico = 0;										//Nï¿½mero de rebotes
+	const float RADIUS = 1000;								// Radio de la circunferencia de bï¿½squeda de la bala
+	const double W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaï¿½o de la bala
 	virtual void initObject() {};
 };
 

@@ -30,13 +30,14 @@ bool Chest::update() {
 		updateFrame();
 
 		if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+			if (gold_ == 0) GameManager::instance()->addToInventory(rN.genEquip());
+			else GameManager::instance()->addInventoryGold(gold_);
+
 			app_->getCurrState()->removeRenderUpdateLists(this);
+			CollisionCtrl::instance()->removeChest(this);
 		}
 	}
 	return false;
 }
 
-void Chest::onCollider() {
-	open = true;
-	GameManager::instance()->addToInventory(rN.genEquip());
-}
+void Chest::onCollider() { open = true; }

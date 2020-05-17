@@ -88,7 +88,7 @@ bool MainMenuState::isExistingDataGame()
 }
 
 void MainMenuState::createButtons() {
-	//Cargamos música de fondo
+	//Cargamos mï¿½sica de fondo
 	app_->getAudioManager()->playChannel(Resources::AudioId::MainTheme, -1, Resources::MainMusicChannel);
 
 	double winWidth = app_->getWindowWidth();
@@ -123,7 +123,7 @@ void MainMenuState::createButtons() {
 
 	//Botones de mute
 	//Se multiplica por la proporcion winWidth/winHeight para hacer un cuadrado
-	//No se crea con el metodo createButton porque se necesita un puntero a él directo
+	//No se crea con el metodo createButton porque se necesita un puntero a ï¿½l directo
 	//para cambiar la textura al hacer el mute
 	sizeButton = Vector2D(winWidth / 20, (winHeight / 20) * (winWidth / winHeight));
 	posButton = Vector2D(winWidth - (sizeButton.getX() * 1.5), sizeButton.getY() / 2);

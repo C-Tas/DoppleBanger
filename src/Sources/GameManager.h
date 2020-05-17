@@ -225,6 +225,11 @@ private:
 		#pragma endregion
 	#pragma endregion
 
+		bool hudActive_ = false;
+	//Fases de los NPCS
+	bool tutorial = false;
+	int venancioPhase = 0;
+
 public:
 	//Constructor vacio
 	GameManager();
@@ -350,7 +355,6 @@ public:
 	GameObject* getClon() { return clon_; };
 	//Devuelve el HUD
 	HUD* getHUD() { return hud_; };
-	
 #pragma endregion
 
 #pragma region setters
@@ -402,14 +406,16 @@ public:
 	inline void setCurrIsland(Island newIsland) { currIsland_ = newIsland; };
 	//Marca como desbloqueda la skill que pases como parámetro
 	inline void setSkillUnlocked(SkillName skill) { skillsUnlocked_[(int)skill] = true; };
-
+	//Marca como bloqueada la skill que pases como parámetro
+	inline void setSkillLocked(SkillName skill) { skillsUnlocked_[(int)skill] = false; };
 	//Actualiza el estado del cooldown, no es inline por el HUD
 	void setSkillCooldown(bool cooldown, Key key);
 	//Actualiza la habilidad equipada en el HUD y en el vector, no es inline por el HUD
 	void setSkillEquiped(SkillName newSkill, Key key);
 	//Actualiza el objeto equipado en el HUD y en el vector, no es inline por el HUD
 	void setObjectEquipped(ObjectName newObject, Key key);
-
+	//
+	Application* getApp() { return app_; }
 	//Asigna al puntero de player
 	inline void setPlayer(Player* player) { player_ = player; };
 	//Equipamiento
@@ -426,7 +432,7 @@ public:
 	//Asigna al puntero de clon
 	inline void setClon(GameObject* clon) { clon_ = clon; };
 	//Asigna el puntero de hud
-	inline void setHUD(HUD* hud) { hud_ = hud; };
+	inline void setHUD(HUD* hud) { hud_ = hud; hudActive_ = !hudActive_; };
 
 	//borra al clon
 	inline void deleteClon() { clon_ = nullptr; };
@@ -437,4 +443,14 @@ public:
 	void addToInventory(Item* ob);
 	//Para añadir objetos al alijo
 	void addToStash(Item* ob);
+
+	//tutorial
+	void activeTutorial() { tutorial = true; }
+	void desactiveTutorial() { tutorial = false; }
+	bool onTutorial() { return tutorial; }
+
+	//SettesNPC
+	void nextPhaseVenancio() { venancioPhase++; }
+	//GettersNPC
+	int getVenancioPhase() { return venancioPhase; }
 };

@@ -10,10 +10,11 @@ class RandEquipGen
 private:
 	Application* app_ = nullptr;
 	GameManager* gameManager_ = nullptr;
-	SRandBasedGenerator* rn_;
+	SRandBasedGenerator* rn_ = nullptr;
 
 public:
 	RandEquipGen(Application* app);
+	RandEquipGen() {};
 	Equipment* genEquip();
 	Equipment* genEquip(int type);
 };
