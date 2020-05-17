@@ -401,6 +401,10 @@ public:
 		SwordSound6,
 		MeleeCrit,
 		DistCrit,
+		Hurt1,
+		Hurt2,
+		Hurt3,
+		Hurt4,
 
 		//CLon
 		Explosion,

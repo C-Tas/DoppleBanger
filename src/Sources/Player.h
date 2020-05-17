@@ -234,6 +234,7 @@ private:
 		const int MELEE_D_FRAMES = 5;			//Frames de la animación
 		const int MELEE_D_FRAME_RATE = 200;		//Frame rate
 
+	virtual void feedBackHurtSounds();
 		//Inicialización de las animaciones
 		virtual void initAnims();
 		//Inicia la animación

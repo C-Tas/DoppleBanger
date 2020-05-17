@@ -50,6 +50,8 @@ public:
 	// Renderiza un frame de la textura en el destRect con una rotación, si no hay frame se renderiza toda la textura con un ángulo
 	void render(const SDL_Rect& dest, double angle, const SDL_Rect& frame) const;
 	void render(const SDL_Rect& dest, double angle) const;
+	//Devuelve el SDL_Texture
+	SDL_Texture* getSDLTex() { return texture_; }
 
 	void close();
 };

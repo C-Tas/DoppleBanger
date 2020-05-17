@@ -82,6 +82,7 @@ void Player::initSkills()
 bool Player::update()
 {
 	updateFrame();
+	manageTint();
 	updateCooldowns();
 
 	//Regeneramos mana
@@ -351,6 +352,12 @@ void Player::meleeAnim()
 	}
 }
 
+void Player::feedBackHurtSounds()
+{
+	auto choice = app_->getRandom()->nextInt(Resources::Hurt1, Resources::Hurt4 + 1);
+	app_->getAudioManager()->playChannel(choice, 0, Resources::SoundChannels::PlayerChannel3);
+}
+
 void Player::updateCooldowns()
 {
 	//Resetea el coolDown en el HUD
@@ -443,6 +450,7 @@ void Player::shoot(Vector2D dir)
 
 	equipType auxGunType = gun_->getEquipType();
 	if (auxGunType == equipType::PistolI || auxGunType == equipType::PistolII) {
+		app_->getAudioManager()->playChannel(Resources::Pistol, 0, Resources::SoundChannels::PlayerChannel2);
 		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,
 			currStats_.distDmg_, currStats_.distRange_, gun_->getBulletSpeed());
 
@@ -459,6 +467,7 @@ void Player::shoot(Vector2D dir)
 		CollisionCtrl::instance()->addPlayerBullet(bullet);
 	}
 	else if (auxGunType == equipType::ShotgunI || auxGunType == equipType::ShotgunII) {
+		app_->getAudioManager()->playChannel(Resources::Trabuco, 0, Resources::SoundChannels::PlayerChannel2);
 		Blunderbuss* blunderbuss = new Blunderbuss(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,
 			currStats_.distDmg_, currStats_.distRange_, gun_->getBulletSpeed());
 		if (perforate_) {

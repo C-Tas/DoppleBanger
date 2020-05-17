@@ -98,6 +98,7 @@ public:
 	virtual void move(Point2D target) {};
 	//Método para gestionar el daño recibido 
 	virtual void receiveDamage(int damage);
+
 	//Método para matar
 	virtual void die() { currState_ = STATE::DYING; };
 	//Devuelve el estado actual del actor
@@ -119,6 +120,15 @@ protected:
 	DIR currDir_ = DIR::DOWN;
 	//Puntero al audio manager
 	AudioManager* am_ = nullptr;
+
+	//Tiempo que va a estar tintado
+	const double TINT_TIME = 1000;
+	//Tiempo en que se tintó
+	double lastTint_ = 0;
+	//Gestiona el tintado
+	void manageTint();
+	//Gestiona los sonidos de herido
+	virtual void feedBackHurtSounds() {};
 
 	//Constructor vacío
 	Actor() {};

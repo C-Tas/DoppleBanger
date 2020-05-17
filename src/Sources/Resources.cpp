@@ -366,6 +366,11 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ SwordSound6  ,"../Sources/assets/efectos_sonido/player/sword6.wav"},
 	{ MeleeCrit  ,"../Sources/assets/efectos_sonido/player/meleeCrit.wav"},
 	{ DistCrit  ,"../Sources/assets/efectos_sonido/player/distCrit.wav"},
+	{ Hurt1  ,"../Sources/assets/efectos_sonido/player/hurt1.wav"},
+	{ Hurt2  ,"../Sources/assets/efectos_sonido/player/hurt2.wav"},
+	{ Hurt3  ,"../Sources/assets/efectos_sonido/player/hurt3.wav"},
+	{ Hurt4  ,"../Sources/assets/efectos_sonido/player/hurt4.ogg"},
+
 #pragma endregion
 #pragma region ClonSounds
 	//Clon
