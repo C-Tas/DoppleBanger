@@ -109,18 +109,13 @@ void ShipState::initState()
 
 void ShipState::update()
 {
-	PlayState::update();
-
-	/*if (!songActive) {
-
-		songActive = true;
-	}*/
-
-	collisionCtrl_->shipCollisions();
 #ifdef _DEBUG
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_BACKSPACE))
 		app_->getGameStateMachine()->changeState(new TestState(app_));
 #endif
+	PlayState::update();
+
+	collisionCtrl_->shipCollisions();
 }
 
 void ShipState::loadState(){

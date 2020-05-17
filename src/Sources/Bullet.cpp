@@ -5,7 +5,6 @@
 void Bullet::initObject(Vector2D pos, Vector2D dir)
 {
 	bulletlifeCD_.initCooldown(lifeSpan_);
-	cout << "INICIADO con lifespan " << lifeSpan_ << endl;
 
 	//Se corrige la posición de la bala sustrayendo el offset de la escala
 	pos_.setX(pos_.getX() - (scale_.getX() / 2));
