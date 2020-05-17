@@ -154,7 +154,7 @@ bool Player::update()
 	}
 	else if (attacking_ && objective != nullptr && objective->getState() != STATE::DYING && !enemiesInRange.empty())
 	{
-		bool found = false;
+ 		bool found = false;
 		for (auto it = enemiesInRange.begin(); !found && it != enemiesInRange.end(); ++it)
 			if ((*it) == objective)
 				found = true;

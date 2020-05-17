@@ -51,7 +51,7 @@ void Actor::updateDirVisMouse()
 void Actor::receiveDamage(int damage) {
 	/*double finalDamage = (currStats_.armor_ * damage) / 100;
 	currStats_.health_ -= finalDamage;*/
-	currStats_.health_ -= damage;
+ 	currStats_.health_ -= damage;
 	if (currStats_.health_ <= 0) {
 		this->die();
 	}

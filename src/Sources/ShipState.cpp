@@ -10,6 +10,7 @@
 #include "VolcanicIslandState.h"
 #include "TestState.h"
 
+
 #pragma region CallBacks
 //Callback para cambiar de GameState e ir a la isla actual
 void ShipState::goIsland(Application* app)

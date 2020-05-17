@@ -345,7 +345,7 @@ public:
 	//Devuelve al jugador
 	Player* getPlayer() { return player_; };
 	//Devuelve el equipamiento del player
-	playerEquipment getEquip() { return currEquip_; };
+	playerEquipment& getEquip() { return currEquip_; };
 	//Devuelve al clon
 	GameObject* getClon() { return clon_; };
 	//Devuelve el HUD

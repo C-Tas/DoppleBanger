@@ -68,6 +68,7 @@
     <ClCompile Include="Sources\InventoryButton.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\jute.cpp" />
+    <ClCompile Include="Sources\Kirin.cpp" />
     <ClCompile Include="Sources\Kraken.cpp" />
     <ClCompile Include="Sources\LoadState.cpp" />
     <ClCompile Include="Sources\Magordito.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Sources\HandleEvents.h" />
     <ClInclude Include="Sources\Ink.h" />
     <ClInclude Include="Sources\jute.h" />
+    <ClInclude Include="Sources\Kirin.h" />
     <ClInclude Include="Sources\Kraken.h" />
     <ClInclude Include="Sources\LoadState.h" />
     <ClInclude Include="Sources\Magordito.h" />

@@ -9,7 +9,7 @@
 //Inicializa todas las animaciones
 void Skeleton::initAnims()
 {
-	//Para la animación de movimiento
+	//Para la animaciï¿½n de movimiento
 	//moveAnim_ = Anim(NUM_FRAMES_MOV, NUM_FRAMES_ROW_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, NAME_MOV);
 	
 }
@@ -67,13 +67,13 @@ bool Skeleton::update() {
 
 	//Si el esqueleto ha muerto
 	if (currState_ == STATE::DYING) {
-		// animación de muerte si la tiene
-		//Cuando acabe la animación, lo mata
+		// animaciï¿½n de muerte si la tiene
+		//Cuando acabe la animaciï¿½n, lo mata
 		applyRewards();
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
-	//Si el esqueleto no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
+	//Si el esqueleto no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo mï¿½s cercano
 	if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
 		currState_ = STATE::ATTACKING;
 	}

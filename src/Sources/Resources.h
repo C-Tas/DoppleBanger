@@ -248,7 +248,28 @@ public:
 		MonkeyShootUpAnim,
 		MonkeyShootDownAnim,
 		//Magordito
+		Altar,
+			//Idle
+		MagorditoIdleRight,
+		MagorditoIdleLeft,
+		MagorditoIdleTopRight,
+		MagorditoIdleTopLeft,
+			//Disparo
+		MagorditoShootRight,
+		MagorditoShootLeft,
+		MagorditoShootDown,
+		MagorditoShootTopRight,
+		MagorditoShootTopLeft,
+			//Viaje
+		MagorditoTpRight,
+		MagorditoTpLeft,
+		MagorditoTpTopRight,
+		MagorditoTpTopLeft,
 			//Kirin
+		MagorditoKirinRight,
+		MagorditoKirinLeft,
+		MagorditoKirinTopRight,
+		MagorditoKirinTopLeft,
 		Kirin,
 
 		//Interactuables

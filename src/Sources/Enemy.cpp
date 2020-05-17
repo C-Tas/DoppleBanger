@@ -108,9 +108,12 @@ bool Enemy::onRange(double range) {
 	if (currEnemy_ == nullptr) {
 		return false;
 	}
-	SDL_Rect rangeAttack = { getPosX() - range - (getScaleX() / 2)  ,
-	getPosY() - range - (getScaleY() / 2),range * 2, range * 2 };;
-	if (currEnemy_ != nullptr && SDL_HasIntersection(&static_cast<Draw*>(currEnemy_)->getDestiny(), &rangeAttack)) {
+	auto enem = static_cast<Collider*>(currEnemy_);
+	Vector2D center = getCenter();
+	Vector2D enemCenter = enem->getCenter();
+	Vector2D enemScale = enem->getColliderScale();
+	if (RectBall(enemCenter.getX(), enemCenter.getY(), enemScale.getX(), enemScale.getY(),
+		center.getX(), center.getY(), range)){
 		return true;
 	}
 	else

@@ -150,7 +150,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	{ Kraken, "../Sources/assets/enemigos/kraken/kraken.png" },
-	{ Magordito, "../Sources/assets/enemigos/magordito/Magordito.png" },
 	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
 	{ Azul, "../Sources/assets/enemigos/azul.png" },
 	{ Cleon, "../Sources/assets/enemigos/cleon/cleon.png" },
@@ -236,8 +235,29 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ MonkeyShootDownAnim, "../Sources/assets/enemigos/monkey/shootIzDown.png" },
 
 	//Magordito
-		//Kirin
-	{ Kirin, "../Sources/assets/enemigos/magordito/Kirin.png" },
+	{ Altar, "../Sources/assets/enemigos/magordito/altar.png" },
+		//Idle
+	{ MagorditoIdleRight, "../Sources/assets/enemigos/magordito/idle/idleDcha.png" },
+	{ MagorditoIdleLeft, "../Sources/assets/enemigos/magordito/idle/idleIz.png" },
+	{ MagorditoIdleTopRight, "../Sources/assets/enemigos/magordito/idle/idleTopDcha.png" },
+	{ MagorditoIdleTopLeft, "../Sources/assets/enemigos/magordito/idle/idleTopIz.png" },
+	//Disparo
+	//{ MagorditoShootRight, "../Sources/assets/enemigos/magordito/disparo/disparoDcha.png" },
+	//{ MagorditoShootLeft, "../Sources/assets/enemigos/magordito/disparo/disparoIz.png" },
+	//{ MagorditoShootDown, "../Sources/assets/enemigos/magordito/disparo/disparoDown.png" },
+	//{ MagorditoShootTopRight, "../Sources/assets/enemigos/magordito/disparo/disparoTopDcha.png" },
+	//{ MagorditoShootTopLeft, "../Sources/assets/enemigos/magordito/disparo/disparoTopIz.png" },
+	//Viaje
+	{ MagorditoTpRight, "../Sources/assets/enemigos/magordito/viaje/viajeDcha.png" },
+	{ MagorditoTpLeft, "../Sources/assets/enemigos/magordito/viaje/viajeIz.png" },
+	{ MagorditoTpTopRight, "../Sources/assets/enemigos/magordito/viaje/viajeTopDer.png" },
+	{ MagorditoTpTopLeft, "../Sources/assets/enemigos/magordito/viaje/viajeTopIz.png" },
+	//Kirin
+	{ MagorditoKirinRight, "../Sources/assets/enemigos/magordito/kirin/kirinDcha.png" },
+	{ MagorditoKirinLeft, "../Sources/assets/enemigos/magordito/kirin/kirinIz.png" },
+	{ MagorditoKirinTopRight, "../Sources/assets/enemigos/magordito/kirin/kirinTopDcha.png" },
+	{ MagorditoKirinTopLeft, "../Sources/assets/enemigos/magordito/kirin/kirinTopIz.png" },
+	{ Kirin, "../Sources/assets/enemigos/magordito/kirin/rayo.png" },
 
 		//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
