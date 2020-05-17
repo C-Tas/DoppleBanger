@@ -267,14 +267,14 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			(ob)->onCollider();
 			player_->setPos(player_->getPreviousPos());
 		}
-		//for (auto bullet : playerBullets_) {
-		//	if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
-		//		(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
-		//		//M�todo para destruir bala
-		//		removePlayerBullet(bullet);
-		//		bullet->onCollider();
-		//	}
-		//}
+		for (auto bullet : playerBullets_) {
+			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
+				//M�todo para destruir bala
+				removePlayerBullet(bullet);
+				bullet->onCollider();
+			}
+		}
 	}
 }
 
