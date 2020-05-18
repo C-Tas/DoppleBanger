@@ -29,6 +29,7 @@
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Armor.cpp" />
     <ClCompile Include="Sources\BeerButton.cpp" />
+    <ClCompile Include="Sources\AStar.cpp" />
     <ClCompile Include="Sources\Blunderbuss.cpp" />
     <ClCompile Include="Sources\Boots.cpp" />
     <ClCompile Include="Sources\AudioManager.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="Sources\CollisionCtrl.cpp" />
     <ClCompile Include="Sources\Collisions.cpp" />
     <ClCompile Include="Sources\ControlsState.cpp" />
+    <ClCompile Include="Sources\Cooldown.cpp" />
     <ClCompile Include="Sources\Crab.cpp" />
     <ClCompile Include="Sources\CreditsState.cpp" />
     <ClCompile Include="Sources\Draw.cpp" />
@@ -66,6 +68,7 @@
     <ClCompile Include="Sources\InventoryButton.cpp" />
     <ClCompile Include="Sources\Item.cpp" />
     <ClCompile Include="Sources\jute.cpp" />
+    <ClCompile Include="Sources\Kirin.cpp" />
     <ClCompile Include="Sources\Kraken.cpp" />
     <ClCompile Include="Sources\LoadState.cpp" />
     <ClCompile Include="Sources\Magordito.cpp" />
@@ -101,11 +104,14 @@
     <ClCompile Include="Sources\StoryState.cpp" />
     <ClCompile Include="Sources\Tentacle.cpp" />
     <ClCompile Include="Sources\Sword.cpp" />
+    <ClCompile Include="Sources\TestState.cpp" />
     <ClCompile Include="Sources\TextBox.cpp" />
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\TiledMap.cpp" />
     <ClCompile Include="Sources\Trigger.cpp" />
+    <ClCompile Include="Sources\tutorialObject.cpp" />
+    <ClCompile Include="Sources\tutorialState.cpp" />
     <ClCompile Include="Sources\usable.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
@@ -130,6 +136,7 @@
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Armor.h" />
     <ClInclude Include="Sources\BeerButton.h" />
+    <ClInclude Include="Sources\AStar.hpp" />
     <ClInclude Include="Sources\Blunderbuss.h" />
     <ClInclude Include="Sources\Boots.h" />
     <ClInclude Include="Sources\BoneBullet.h" />
@@ -148,6 +155,7 @@
     <ClInclude Include="Sources\CollisionCtrl.h" />
     <ClInclude Include="Sources\Collisions.h" />
     <ClInclude Include="Sources\ControlsState.h" />
+    <ClInclude Include="Sources\Cooldown.h" />
     <ClInclude Include="Sources\Crab.h" />
     <ClInclude Include="Sources\CreditsState.h" />
     <ClInclude Include="Sources\Draw.h" />
@@ -168,6 +176,7 @@
     <ClInclude Include="Sources\HandleEvents.h" />
     <ClInclude Include="Sources\Ink.h" />
     <ClInclude Include="Sources\jute.h" />
+    <ClInclude Include="Sources\Kirin.h" />
     <ClInclude Include="Sources\Kraken.h" />
     <ClInclude Include="Sources\LoadState.h" />
     <ClInclude Include="Sources\Magordito.h" />
@@ -207,11 +216,14 @@
     <ClInclude Include="Sources\StoryState.h" />
     <ClInclude Include="Sources\Tentacle.h" />
     <ClInclude Include="Sources\Sword.h" />
+    <ClInclude Include="Sources\TestState.h" />
     <ClInclude Include="Sources\TextBox.h" />
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\TiledMap.h" />
     <ClInclude Include="Sources\Trigger.h" />
+    <ClInclude Include="Sources\tutorialObject.h" />
+    <ClInclude Include="Sources\tutorialState.h" />
     <ClInclude Include="Sources\usable.h" />
     <ClInclude Include="Sources\Vector2D.h" />
     <ClInclude Include="Sources\VisualElement.h" />

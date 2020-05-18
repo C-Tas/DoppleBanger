@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "Application.h"
 #include "GameState.h"
+#include "TextBox.h"
+
 
 void usable::initObject()
 {
@@ -40,65 +42,28 @@ void usable::initObject()
 	}
 }
 
-bool usable::update()
+
+
+void usable::getDescription(TextBox* tex)
 {
-	if (used_) {
-		if (time_ <= 0) {
-			app_->getCurrState()->removeUpdateList(this);
-			return true;
-		}
-		else if ((SDL_GetTicks() - useTime_) / 1000 > time_) {
-
-			desactivePotion();
-			return true;
-		}
-	}
-
-	return false;
-}
-
-void usable::use()
-{
-	used_ = true;
-	GameManager* gm_ = GameManager::instance();
-	switch (type_)
-	{
-	case potionType::Speed:
-		useTime_ = gm_->getPlayer()->getTimerPotion(0);
-		break;
+	switch (type_) {
 	case potionType::Armor:
-		useTime_ = gm_->getPlayer()->getTimerPotion(1);
-		break;
-	case potionType::Damage:
-		useTime_ = gm_->getPlayer()->getTimerPotion(2);
+		tex->defensePotion();
 		break;
 	case potionType::Crit:
-		useTime_ = gm_->getPlayer()->getTimerPotion(3);
+		tex->criticPotion();
 		break;
-	default:
-		useTime_ = 0;
+	case potionType::Damage :
+		tex->damagePotion();
 		break;
-	}
-	
-}
-
-void usable::desactivePotion()
-{
-	GameManager* gm_ = GameManager::instance();
-	switch (type_)
-	{
+	case potionType::Health :
+		tex->lifePotion();
+		break;
+	case potionType::Mana:
+		tex->manaPotion();
+		break;
 	case potionType::Speed:
-		gm_->getPlayer()->desactiveBuffPotion(this, 0);
-		break;
-	case potionType::Damage:
-		gm_->getPlayer()->desactiveBuffPotion(this, 1);
-		break;
-	case potionType::Armor:
-		gm_->getPlayer()->desactiveBuffPotion(this, 2);
-		break;
-	case potionType::Crit:
-		gm_->getPlayer()->desactiveBuffPotion(this, 3);
+		tex->velocityPotion();
 		break;
 	}
-	app_->getCurrState()->removeUpdateList(this);
 }

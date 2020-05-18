@@ -34,9 +34,8 @@ public:
 
 
 protected:
-	double lifeSpan_ = 0; //Tiempo m�ximo que dura la bala
-	double initTime_ = 0; //Ticks cuando se creo la bala
-	double currTime_ = 0; //Ticks en cada update
+	double lifeSpan_ = 0;	//Tiempo maximo que dura la bala
+	Cooldown bulletlifeCD_;	//Tiempo que lleva la bala "viviendo"
 	double speed_ = 0;
 	double damage_ = 0;
 	bool enemyBullet_ = false;

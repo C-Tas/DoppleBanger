@@ -12,8 +12,7 @@ protected:
 	Player* player_ = nullptr;
 	SkillType type_;
 	SkillBranch branch_;
-	double lastTimeUsed_ = 0;
-	double cooldown_ = 0;
+	Cooldown skillCD_;			//Cooldown
 	double costMana_ = 0;
 public:
 	///<summary>Constructora</summary>
@@ -25,13 +24,20 @@ public:
 	///o los atributos que aumenta (si es pasiva) </summary>
 	virtual void action() = 0;
 
+	///<summary>Método para actualizar el cooldown de las skills</summary>
+	virtual void update() {
+		if (skillCD_.isCooldownActive()) {
+			skillCD_.updateCooldown();
+		}
+	}
+
+	bool isCD() { return skillCD_.isCooldownActive(); };
+
 #pragma region getters
 	//<summary>Devuelve si la skill es una pasiva o una activa</summary>
 	SkillType getSkillType() { return type_; };
 	///<summary>Devuelve a que rama de habilidad pertenece esta skill</summary>
 	SkillBranch getSkillBranch() { return branch_; };
-	//Devuelve si la habilidad está en cooldown
-	bool isCD();
 #pragma endregion
 
 };

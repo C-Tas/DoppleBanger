@@ -57,6 +57,13 @@ public:
 		LoadGame3,
 		LoadGameNull,
 		LoadButtonNull,
+		ButtonInitTutorial,
+		ButtonSkipTutorial,
+		BackToShipButton,
+		YesButton,
+		NoButton,
+		GoToShipButton,
+		GoToNextZoneButton,
 		//Animaciones de botones
 		BeerAnim,
 
@@ -115,10 +122,12 @@ public:
 		Map1,
 		Map2,
 		Map3,
-		CaribbeanMap,
-		Spooky,
-		Volcanic,
-		GameOver,
+		GameOver1,
+		GameOver2,
+		Rain1,
+		Rain2,
+		Rain3,
+		Rain4,
 		Win,
 
 		//HUD
@@ -151,11 +160,20 @@ public:
 		MonkeyFront,
 		WolfFront,
 		Kraken,
-		Cooker,
+		VenancioDrink,
+		VenancioPushStart,
+		VenancioPushBucle,
+		VenancioPushFinish,
 		Merchant,
+		Cooker,
 		SkeletonMusician,
 		Cartographer,
 		Morty,
+		VenancioFuneral,
+		MerchantFuneral,
+		CookerFuneral,
+		MortyFuneral,
+		CartographerFuneral,
 
 		//Bosses
 		Magordito,
@@ -240,7 +258,28 @@ public:
 		MonkeyShootUpAnim,
 		MonkeyShootDownAnim,
 		//Magordito
+		Altar,
+			//Idle
+		MagorditoIdleRight,
+		MagorditoIdleLeft,
+		MagorditoIdleTopRight,
+		MagorditoIdleTopLeft,
+			//Disparo
+		MagorditoShootRight,
+		MagorditoShootLeft,
+		MagorditoShootDown,
+		MagorditoShootTopRight,
+		MagorditoShootTopLeft,
+			//Viaje
+		MagorditoTpRight,
+		MagorditoTpLeft,
+		MagorditoTpTopRight,
+		MagorditoTpTopLeft,
 			//Kirin
+		MagorditoKirinRight,
+		MagorditoKirinLeft,
+		MagorditoKirinTopRight,
+		MagorditoKirinTopLeft,
 		Kirin,
 			//Skeleton
 		SkeletonIdleRightAnim,
@@ -265,6 +304,9 @@ public:
 
 		//Colsionable
 		Rock,
+			//Tutorial
+		Bottle,
+		Dummy,
 
 		//Textos
 		PlayText,
@@ -289,9 +331,13 @@ public:
 		Boots1,
 		Boots2,
 		Sword1,
+		Sword1H,
 		Sword2,
+		Sword2H,
 		Saber1,
+		Saber1H,
 		Saber2,
+		Saber2H,
 		Gun1,
 		Gun2,
 		ShotGun1,
@@ -299,7 +345,7 @@ public:
 
 		//Tilesets de los mapas
 		Tileset1,
-		CollisionTile
+		CollisionTile,
 	};
 	
 	enum MusicChannels : int {
@@ -342,6 +388,7 @@ public:
 		Shop,
 		Storyboard,
 		WavesSound,
+		FuneralTheme,
 
 		//player
 		WalkAudio,
@@ -375,6 +422,10 @@ public:
 		SwordSound6,
 		MeleeCrit,
 		DistCrit,
+		Hurt1,
+		Hurt2,
+		Hurt3,
+		Hurt4,
 
 		//CLon
 		Explosion,
@@ -403,8 +454,15 @@ public:
 		TauntPumpkin1,
 		TauntPumpkin2,
 
+		//Tutorial
+		Glass,
+		DummyDie,
+
+		//NPC
+		VenancioTalk,
+
 		//Otros
-		Agro
+		Agro,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

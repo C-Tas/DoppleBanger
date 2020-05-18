@@ -4,7 +4,7 @@
 
 void Bullet::initObject(Vector2D pos, Vector2D dir)
 {
-	initTime_ = SDL_GetTicks();
+	bulletlifeCD_.initCooldown(lifeSpan_);
 
 	//Se corrige la posición de la bala sustrayendo el offset de la escala
 	pos_.setX(pos_.getX() - (scale_.getX() / 2));
@@ -16,10 +16,10 @@ void Bullet::initObject(Vector2D pos, Vector2D dir)
 
 bool Bullet::update()
 {
-	currTime_ = SDL_GetTicks();
+	bulletlifeCD_.updateCooldown();
 
 	//Si se le ha acabado el tiempo de vida
-	if ((currTime_ - initTime_) / 1000 > lifeSpan_) { 
+	if (!bulletlifeCD_.isCooldownActive()) { 
 		CollisionCtrl::instance()->removeEnemyBullet(this);
 		onCollider();
 	}

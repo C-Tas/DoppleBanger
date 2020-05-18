@@ -5,6 +5,7 @@
 #include "Boots.h"
 #include "Sword.h"
 #include "Gun.h"
+#include "TextBox.h"
 
 #pragma region Callbacks
 
@@ -74,6 +75,12 @@ void StashState::draw() const
 
 	//Escribimos la informaci�n del boton seleccionado
 	if (selectedObjectDescription_ != nullptr)selectedObjectDescription_->render(DESCRIPTION_RECT);
+
+	//pintar textos
+//descripcion objetos
+	if (selected_ != nullptr) {
+		selected_->getObject()->getDescription(descriptionBox);
+	}
 }
 
 void StashState::update()
@@ -156,6 +163,9 @@ void StashState::initState() {
 
 	inventory_.firstDrawn = inventory_.objects_->begin();
 	stash_.firstDrawn = stash_.objects_->begin();
+	//para las descripciones
+	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.92), (double)(app_->getWindowHeight() / 1.38));//830,650
+	descriptionBox = new TextBox(app_, descriptionPoint);
 }
 
 void StashState::endState()
@@ -166,6 +176,7 @@ void StashState::endState()
 	delete inventoryMoneyTex_;
 	delete stashMoneyTex_;
 	delete selectedObjectDescription_;
+	delete descriptionBox;
 }
 
 #pragma region privateCallbacks
@@ -206,7 +217,7 @@ void StashState::selectObject(InventoryButton* button)
 {
 	selected_ = button;
 	if (selectedObjectDescription_ != nullptr)delete selectedObjectDescription_;
-	selectedObjectDescription_ = new Texture(app_->getRenderer(), "Descripcion Temporal", app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
+	//selectedObjectDescription_ = new Texture(app_->getRenderer(), "Descripcion Temporal", app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,1 }));
 }
 
 void StashState::changeBetweenLists()

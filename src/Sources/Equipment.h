@@ -6,7 +6,7 @@ class Equipment : public Item
 {
 protected:
 	equipType type_;
-	Stats modifiers_ = Stats();
+	//Stats modifiers_ = Stats();
 	virtual void initObject() = 0;
 public:
 	//Crea un item equipable del tipo dado
@@ -14,28 +14,19 @@ public:
 	virtual ~Equipment() {}; //Destructora generica
 
 	virtual bool update() { return false; };
-#pragma region Setters
-	void setHealth(double health) { modifiers_.health_ = health; };// Asigna el valor de Health
-	void setArmor(double armor) { modifiers_.armor_ = armor; };// Asigna el valor de Armor
-	void setMeleeDmg(double ad) { modifiers_.meleeDmg_ = ad; }; // Asigna el valor de AD
-	void setDistDmg(double distDmg) { modifiers_.distDmg_ = distDmg; }; // Asigna el valor de distDmg
-	void setCrit(double crit) { modifiers_.crit_ = crit; }; // Asigna el valor de Crit
-	void setSpeed(double speed) { modifiers_.moveSpeed_ = speed; }; // Asigna el valor de Speed
-	void setDistRate(double distRate) { modifiers_.distRate_ = distRate; }; // Asigna el valor de DistRate
-	void setMeleeRate(double meleeRate) { modifiers_.meleeRate_ = meleeRate; }; // Asigna el valor de MeleeRate
-#pragma endregion
+
 	
 #pragma region Getters
-	double getHealth() { return modifiers_.health_; }; // Devuelve el valor de Health
-	double getArmor() { return modifiers_.armor_; }; // Devuelve el valor de Armor
-	double getMeleeDmg() { return modifiers_.meleeDmg_; }; // Devuelve el valor de AD
-	double getDistDmg() { return modifiers_.distDmg_; }; // Devuelve el valor de DistDamage
-	double getCrit() { return modifiers_.crit_; }; // Devuelve el valor de Crit
-	double getSpeed() { return modifiers_.moveSpeed_; }; // Devuelve el valor de Speed
-	double getDistRate() { return modifiers_.distRate_; }; // Devuelve el valor de DistRate
-	double getMeleeRate() { return modifiers_.meleeRate_; }; // Devuelve el valor de MeleeRate
-	double getDistRange() { return modifiers_.distRange_; }//devuelve el rango del arma a distancia
-	inline equipType getEquipType()const { return type_; };
+	virtual double getHealth() { return 0; }; // Devuelve el valor de Health
+	virtual double getArmor() { return 0; }; // Devuelve el valor de Armor
+	virtual double getMeleeDmg() { return 0; }; // Devuelve el valor de AD
+	virtual double getDistDmg() { return 0; }; // Devuelve el valor de DistDamage
+	virtual double getCrit() { return 0; }; // Devuelve el valor de Crit
+	virtual double getSpeed() { return 0; }; // Devuelve el valor de Speed
+	virtual double getDistRate() { return 0; }; // Devuelve el valor de DistRate
+	virtual double getMeleeRate() { return 0; }; // Devuelve el valor de MeleeRate
+	virtual double getDistRange() { return 0; }//devuelve el rango del arma a distancia
+	virtual inline equipType getEquipType()const { return type_; };
 #pragma endregion
 	virtual void equip(Player* player) = 0;
 	virtual void remove(Player* player) = 0;

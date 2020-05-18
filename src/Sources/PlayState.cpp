@@ -6,6 +6,7 @@
 #include "PauseState.h"
 #include "SkillState.h"
 #include "ShopState.h"
+#include "EndState.h"
 #include "Inventory.h"
 #include "HUD.h"
 #include "conio.h"
@@ -23,7 +24,11 @@ void PlayState::draw() const {
 
 void PlayState::update() {
 	if (player_->getDead()) { //Comprobamos que el player haya muerto para cambiar de estado
-		resetGame();
+		//Cargamos música de fondo
+		app_->resetMusicChannels();
+		app_->resetSoundsChannels();
+		app_->getAudioManager()->playChannel(Resources::AudioId::FuneralTheme, -1, Resources::MainMusicChannel);
+		app_->getGameStateMachine()->changeState(new EndState(app_));
 	}
 	else {
 		updateMousePointer();
@@ -74,7 +79,7 @@ void PlayState::removeObject(Collider* obj) {
 	objects_.remove(obj);
 }
 
-void PlayState::checkPlayerActions() {	
+void PlayState::checkPlayerActions() {
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 	{
 		Enemy* obj; obj = checkAttack();
@@ -86,6 +91,8 @@ void PlayState::checkPlayerActions() {
 			player_->move(eventHandler_->getRelativeMousePos());
 		}
 		else player_->setOnCollision(false);
+
+		if (collisionCtrl_->isNextZoneTextBoxActive())player_->getEndZoneTextBox()->updateButtons();
 	}
 	else if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
@@ -99,6 +106,8 @@ void PlayState::checkPlayerActions() {
 		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
 		player_->stop();
 	}
+
+
 }
 
 Enemy* PlayState::checkAttack() {
@@ -152,8 +161,21 @@ void PlayState::swapRenders(GameObject* obj, GameObject* other)
 	}
 }
 
+void PlayState::deleteExceptHUD(Zone newZone)
+{
+	gm_->setCurrentPlayerLife(player_->getHealth());
+	gm_->setCurrentPlayerMana(player_->getMana());
+	gm_->setCurrentZone(newZone);
+	for (auto i = gameObjects_.begin(); i != --gameObjects_.end(); ++i) {
+		removeUpdateList(*(i));
+	}
+	gameObjects_.clear();
+	objectsToRender_.clear();
+}
+
 void PlayState::initState()
 {
+	generator_ = new AStar::Generator();
 	//Desactivamos el puntero para poder renderizar los punteros del juego
 	SDL_ShowCursor(SDL_DISABLE);
 	//Creamos nuestro nuevo puntero
@@ -161,6 +183,8 @@ void PlayState::initState()
 	mousePointer->setScale(Vector2D(W_MOUSE_POINTER, H_MOUSE_POINTER));
 
 	collisionCtrl_ = CollisionCtrl::instance();
+	generator_->setHeuristic(AStar::Heuristic::euclidean);
+	generator_->setDiagonalMovement(false);
 }
 
 void PlayState::resetGame()
@@ -171,6 +195,8 @@ void PlayState::resetGame()
 	gm_->resetInventory();
 	//Se limpia la lista de colisiones
 	collisionCtrl_->clearList();
+	//Se vuelve a tener que empezar desde la zona inicial de la isla en la que nos encontremos
+	gm_->resetIsland();
 	//Se reinicia la partida en el barco
 	app_->getGameStateMachine()->changeState(new ShipState(app_));
 }

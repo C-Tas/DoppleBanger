@@ -37,11 +37,11 @@ bool EnemyPirate::update() {
 		break;
 	default:
 		break;
-	}
-	cout << state << endl;*/
+	}*/
 #endif // _DEBUG
 
 	updateFrame();
+	updateCooldowns();
 	//Si el pirata ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte?
@@ -80,7 +80,8 @@ bool EnemyPirate::update() {
 			selectTarget();
 		}
 	}
-	if (currState_ == STATE::IDLE && idleTime_ <= (SDL_GetTicks() - lastIdleTime)) {
+
+	if (currState_ == STATE::IDLE && !idleCD_.isCooldownActive()) {
 		currState_ = STATE::PATROLLING;
 		target_ = patrol_[currPatrol_];
 	}
@@ -93,7 +94,7 @@ bool EnemyPirate::update() {
 			{ (int)pos_.getX() / 2,(int)pos_.getY() / 2,(int)scale_.getX() / 2,(int)scale_.getY() / 2 });
 		if (SDL_HasIntersection(&pos, &targetPos)) {
 			currState_ = STATE::IDLE;
-			lastIdleTime = SDL_GetTicks();
+			idleCD_.initCooldown(IDLE_PAUSE);
 			if (currPatrol_ == patrol_.size() - 1) {
 				currPatrol_ = 0;
 			}
@@ -109,9 +110,14 @@ bool EnemyPirate::update() {
 
 void EnemyPirate::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
-	target_.setVec(posToReach);
-	dir_.setX(posToReach.getX() - getCenter().getX());
-	dir_.setY(posToReach.getY() - getCenter().getY());
+	if ((getCenter() - target_).magnitude() <= 0.05)
+	{
+		pathPos_ = { (int)PosToTile(target_).getX(), (int)PosToTile(target_).getY() };
+		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
+		if (pathing_.size() > 1)
+			target_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+	}
+	dir_.setVec(target_ - getCenter());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
@@ -169,16 +175,16 @@ void EnemyPirate::initAnims()
 
 //Se encarga de gestionar el ataque a melee o distancia DONE
 void EnemyPirate::attack() {
-	if (currAtackStatus_ == ATK_STATUS::RANGE && currStats_.distRate_ <= SDL_GetTicks() - lastRangeHit_) {
-		lastRangeHit_ = SDL_GetTicks();
+	if (currAtackStatus_ == ATK_STATUS::RANGE && !shootCD_.isCooldownActive()) {
+		shootCD_.initCooldown(currStats_.distRate_);
 		Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet),
 			getCenter(), currEnemy_->getCenter(), currStats_.distDmg_);
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addEnemyBullet(bullet);
 	}
-	else if (currStats_.meleeRate_ <= SDL_GetTicks() - lastMeleeHit_)
+	else if (!meleeCD_.isCooldownActive())
 	{
-		lastMeleeHit_ = SDL_GetTicks();
+		meleeCD_.initCooldown(currStats_.meleeRate_);
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
 			dmg->receiveDamage(currStats_.meleeDmg_);
@@ -259,7 +265,7 @@ void EnemyPirate::initialStats()
 	MOVE_SPEED = 250;
 	MELEE_RATE = 1500;
 	DIST_RATE = 1500;
-	initStats(HEALTH,MANA, MANA_REG,ARMOR,MELEE_DMG,DIST_DMG,CRIT,MELEE_RANGE,DIST_RANGE,MOVE_SPEED,MELEE_RATE,DIST_RATE);
+	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
 void EnemyPirate::initRewards()
@@ -270,4 +276,11 @@ void EnemyPirate::initRewards()
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
+}
+
+void EnemyPirate::updateCooldowns()
+{
+	if (idleCD_.isCooldownActive()) idleCD_.updateCooldown();
+	if (meleeCD_.isCooldownActive()) meleeCD_.updateCooldown();
+	if (shootCD_.isCooldownActive()) shootCD_.updateCooldown();
 }

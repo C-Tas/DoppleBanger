@@ -6,12 +6,14 @@ class Boots : public Equipment
 {
 private:
 	virtual void initObject() {};
+	double moveSpeed_;
+	double armor_;
 
 public:
 	Boots(Application* app, double price, double speed, double armor, equipType type) : Equipment(app, type) {
 		price_ = price;
-		modifiers_.moveSpeed_ = speed;
-		modifiers_.armor_ = armor;
+		moveSpeed_ = speed;
+		armor_ = armor;
 	};
 	virtual ~Boots() {};
 
@@ -20,5 +22,7 @@ public:
 
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
+
+	virtual void getDescription(TextBox* tex);
 };
 

@@ -6,6 +6,9 @@
 #include "Player.h"
 #include "SDL_macros.h"
 #include "CollisionCtrl.h"
+#include "ShipState.h"
+#include "tutorialState.h"
+#include "Armor.h"
 
 //Cada l�nea de los di�logos/descripciones se tiene que renderizar por separado para poder generar los saltos de l�nea.
 //Lo relacionado con textos aparece aqu� y no en Resources para no sobrecargar dicha clase.
@@ -29,6 +32,40 @@ void TextBox::nextConversation(Application* app) {
 	CollisionCtrl::instance()->nextConversation();
 }
 
+void TextBox::skipTutorial(Application* app)
+{
+	app->getGameManager()->desactiveTutorial();
+	app->getGameManager()->resetGameManager();
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
+	app->getGameStateMachine()->pushState(new ShipState(app));
+}
+
+void TextBox::nextTutorialVenancio(Application* app)
+{
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
+	GameManager::instance()->nextPhaseVenancio();
+}
+void TextBox::goToShipState(Application* app)
+{
+	if (GameManager::instance()->getCurrIsland() == Island::Caribbean) {
+		GameManager::instance()->setCurrentZone(Zone::CaribeanA);
+	}
+	else if (GameManager::instance()->getCurrIsland() == Island::Spooky) {
+		GameManager::instance()->setCurrentZone(Zone::SpookyA);
+	}
+	else if (GameManager::instance()->getCurrIsland() == Island::Volcanic) {
+		GameManager::instance()->setCurrentZone(Zone::Volcanic);
+	}
+	//GameManager::instance()->setHudActive(false);
+	app->getGameStateMachine()->changeState(new ShipState(app));
+}
+
+void TextBox::changeZone(Application* app)
+{
+	GameManager::instance()->resetIsland();
+	static_cast<PlayState*>(app->getCurrState())->changeZone();
+}
+
 void TextBox::initDialog() {
 	//Generamos la caja donde ir� el texto
 	Texture* whiteRect = app_->getTextureManager()->getTexture(Resources::TextureId::TextBox);
@@ -47,32 +84,154 @@ void TextBox::initDescription(Point2D pos) {
 	dest.y = pos.getY();
 }
 
-#pragma region Dialogos
-void TextBox::dialogElderMan(int isle) {
-	initDialog();
+void TextBox::passZoneDialog()
+{
+	//Generamos la caja donde ir� el texto
+	Texture* whiteRect = app_->getTextureManager()->getTexture(Resources::TextureId::TextBox);
+	whiteRect->render({ 0,dest.y, dest.w, dest.h });
+
 	dest.x = lineSpacing;
 	dest.y = app_->getWindowHeight() - dest.h;
 
-	//Viaje a la isla caribe�a
-	if (isle == 0) {
-		Texture text(app_->getRenderer(), "Frase 1...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + lineSpacing);
+	Texture text(app_->getRenderer(), "Has llegado al final de la zona, ¿Deseas continuar?", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(lineSpacing, dest.y + lineSpacing);
 
-		text.loadFromText(app_->getRenderer(), "Frase 2...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 2));
-	}
-	//Viaje a la isla fantasmal
-	else if (isle == 1) {
+	goToShipButton_->draw();
+	goToNextZoneButton_->draw();
+}
 
-	}
-	//Viaje a la isla volc�nica
-	else if (isle == 2) {
+#pragma region Dialogos
+void TextBox::dialogElderMan(int num) {
+	initDialog();
+	Texture text;
+	if (GameManager::instance()->onTutorial()) {
+		skipTutorial_->draw();
+		skipTutorial_->update();
+		auto aux = dynamic_cast<tutorialState*>(app_->getCurrState());
+		if (aux && aux->isCurrTaskComplete()) {
+			GameManager::instance()->nextPhaseVenancio();
+			aux->currTaskIncomplete();
+			aux->activeDummyCreation();
+		}
+		switch (GameManager::instance()->getVenancioPhase())
+		{
+		case 0:
+			tutorialButton_->draw();
+			tutorialButton_->update();
+			text.loadFromText(app_->getRenderer(), "Veo que no todo el mundo necesita un taca-taca para morverse...", 
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "Te veo verde, has visto lo mamadisimo que estoy?, te puedo dar unos consejos.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
+			break;
+		case 1:
+			skipTutorial_->setPos(Vector2D{ app_->getWindowWidth() - skipTutorial_->getScaleX() - lineSpacing, dest.y + (double)lineSpacing * 3 });
 
-	}
-	//Di�logo en el barco
-	else {
+			text.loadFromText(app_->getRenderer(), "Usa tu pistola con click derecho para romper esa botella que me recuerda al amor de ella. ",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			break;
+		case 2:
+			text.loadFromText(app_->getRenderer(), "Presionando una vez el click izquierdo sobre un enemigo, puedes mochar a tus enemigos.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "Te recomiendo limpiar tu espada despues de mochar al susodicho.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
+			break;
+		case 3:
+			switch (num) {
+			case 0:
+				text.loadFromText(app_->getRenderer(), "Has visto que el susodicho te ha dado puntos de hazana?",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+				text.loadFromText(app_->getRenderer(), "Se consiguen al ganar experiencia.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 2);
+				text.loadFromText(app_->getRenderer(), "Abre el menu de habilidades con la 'V' y sumalos a la segunda rama.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 3);
 
+				button_->draw();
+				button_->update();
+				break;
+			case 1:
+				text.loadFromText(app_->getRenderer(), "Al desbloquear la habilidad haz click sobre esta y luego haz click sobre el acceso (Q, W, E) que te guste.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+
+				text.loadFromText(app_->getRenderer(), "Ahora usa ese acesso para activar la habilidad y mocha al susodicho.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + (lineSpacing * 2));
+				break;
+			}
+			break;
+		case 5:
+			switch (num) {
+			case 0:
+				text.loadFromText(app_->getRenderer(), "Algunas veces encontraras tesoros, no lo dudes mochalos a todos!!",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+				text.loadFromText(app_->getRenderer(), "Usa el oro para comprar una pocion a ese tio mas verde que tu.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 2);
+				text.loadFromText(app_->getRenderer(), "Si te sobra algo podrias comprarme un ron, no?",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 3);
+				button_->draw();
+				button_->update();
+				break;
+			case 1:
+				text.loadFromText(app_->getRenderer(), "Abre el inventario con la tecla C y equipala con el boton verde.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+
+				text.loadFromText(app_->getRenderer(), "Ahora usa ese acceso para usar la susodicha pocion.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + (lineSpacing * 2));
+				break;
+			}
+			break;
+
+		case 6:
+			text.loadFromText(app_->getRenderer(), "Ten cuidado ahí fuera porque si eres derrotada podre ir a salvarte pero no podre recuperar ni el oro ni los objetos",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "que no lleves equipados. Y recuerda, siempre puedes confiar en tu anillo, con la tecla R podras invocarla, actuara",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
+			text.loadFromText(app_->getRenderer(), "como diana para los enemigos y disparara donde tu lo hagas. Ademas podras mejorarla con los puntos de hazana para que",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 3);
+			text.loadFromText(app_->getRenderer(), "también pueda mochar. Bueno, si me disculpas, hoy tocha pecho y biceps.",
+				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 4);
+			break;
+		default:
+			break;
+		}//cuidado ahí fuera porque si es derrotada por los enemigos irán a salvarla pero no podrá recuperar ni su oro ni sus objetos
 	}
+	else
+	{
+		/*//Viaje a la isla caribe�a
+		if (isle == 0) {
+			Texture text(app_->getRenderer(), "Frase 1...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+
+			text.loadFromText(app_->getRenderer(), "Frase 2...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+		}
+		//Viaje a la isla fantasmal
+		else if (isle == 1) {
+
+		}
+		//Viaje a la isla volc�nica
+		else if (isle == 2) {
+
+		}
+		//Di�logo en el barco
+		else {
+
+		}*/
+	}
+
 }
 
 void TextBox::dialogMerchant() {
@@ -110,24 +269,24 @@ void TextBox::dialogChef(bool unlock, int num) {
 	else {
 		//Mientras no se hayan matado todos los enemigos
 		if (gm_->getCounterEnemiesMission(missions::gallegaEnProblemas) < gm_->getEnemiesMission(missions::gallegaEnProblemas)) {
-			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef mientras no consigamos superar la misi" + 
-				Resources::tildes_['o'] + "n secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Necesito que mates 4 monos para cocinarte un cocidito gallego. Adem" +
+				Resources::tildes_['a'] + "s te podr" + Resources::tildes_['i'] +  "a obsequiar con m" + Resources::tildes_['a'] + "s regalos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), "'Gallego en problemas'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+			/*text.loadFromText(app_->getRenderer(), "'Gallego en problemas'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));*/
 		}
 		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
 		else {
 			if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) gm_->setCompleteMission(missions::gallegaEnProblemas, true);
 
-			Texture text(app_->getRenderer(), "Este es el mensaje que aparece cuando hablamos con el chef cuando hemos conseguido la misi" +
-				Resources::tildes_['o'] + "n secundaria", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Muchas gracias por ayudarme. Aqu" + Resources::tildes_['i'] + " est" + Resources::tildes_['a'] +
+				" t" + Resources::tildes_['u'] + " recompensa", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), "'Gallego en problemas', despu" + Resources::tildes_['e'] + "s de esto el chef se a"
+			/*text.loadFromText(app_->getRenderer(), "'Gallego en problemas', despu" + Resources::tildes_['e'] + "s de esto el chef se a"
 				+ Resources::tildes_['ñ'] + "ade a la lista de NPCs desbloquedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));*/
 		}
 	}
 }
@@ -302,46 +461,135 @@ void TextBox::dialogCleon(bool defeated) {
 
 #pragma region Descripciones
 void TextBox::armorCaribbean() {
+	Texture text(app_->getRenderer(), "Armadura Caribbean ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Esta armadura te permiti" + Resources::tildes_['a'], app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "defanderte mejor de los ataques", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
+
 }
 
 void TextBox::armorSpooky() {
+	Texture text(app_->getRenderer(), "Armadura Spooky", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Aumenta tu vitalidad y tu defensa", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "con esta espeluznante armadura", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
+
 }
 
 void TextBox::glovesCaribbean() {
+	Texture text(app_->getRenderer(), "Guantes Caribbean ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Haz tus golpes m" + Resources::tildes_['a'] +"s fuertes", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "y certeros", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::glovesSpooky() {
+	Texture text(app_->getRenderer(), "Botas Spooky ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Golpea a tus enemigos", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "con m" + Resources::tildes_['a'] + "s fuerza y precisi"+ Resources::tildes_['o'] + "n", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::bootsCaribbean() {
+	Texture text(app_->getRenderer(), "Botas Caribbean", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Corre todo lo que puedas", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "estas botas no te fallar" + Resources::tildes_['a'] +"n", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::bootsSpooky() {
+	Texture text(app_->getRenderer(), "Botas Spooky", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Ahora podr"+ Resources::tildes_['a'] +"s ir mas r" + Resources::tildes_['a'] +"pido", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "perfectas para una huida r"+ Resources::tildes_['a'] +"pida", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::swordCaribbean() {
+	Texture text(app_->getRenderer(), "Espada Caribbean ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Con esta espada tus", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "golpes ser" + Resources::tildes_['a'] +"n m" + Resources::tildes_['a'] +"s fuertes", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
+	
 }
-
 void TextBox::swordSpooky() {
+	Texture text(app_->getRenderer(), "Espada Spooky ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Una espada ligera con", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "la que gorpear m"+ Resources::tildes_['a'] +"s r"+ Resources::tildes_['a'] +"pido", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::saberCaribbean() {
+	Texture text(app_->getRenderer(), "Sable Caribbean ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Una sable pesado ", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "rebanacabezas", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::saberSpooky() {
+	Texture text(app_->getRenderer(), "Sable Spooky ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Una sable resistente ", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "y bien afilado", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::pistolCaribbean() {
+	Texture text(app_->getRenderer(), "Pistola Caribbean", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), " Realiza disparos m"+ Resources::tildes_['a'] +"s r"+ Resources::tildes_['a'] +"pidos", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), " y certeros", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::pistolSpooky() {
+	Texture text(app_->getRenderer(), "Pistola Spooky ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Dispara m"+ Resources::tildes_['a'] +"s lejos, ning"+ Resources::tildes_['u'] +"n", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "enemigo fuera de alcance", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::blunderbussCaribbean() {
+	Texture text(app_->getRenderer(), "Trabuco Caribbean", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Lanza varias balas a la vez", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "¡No hay forma de fallar!", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
+
 void TextBox::blunderbussSpooky() {
+	Texture text(app_->getRenderer(), "Trabuco Spooky", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
+	text.loadFromText(app_->getRenderer(), "Mata a varios enemigos a la vez", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+	text.loadFromText(app_->getRenderer(), "Adi"+ Resources::tildes_['o'] +"s a los problemas de masas", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
+
+//POCIONES
 
 void TextBox::lifePotion() {
 	Texture text(app_->getRenderer(), "Poci" + Resources::tildes_['o'] + "n de vida:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -353,8 +601,7 @@ void TextBox::lifePotion() {
 	text.loadFromText(app_->getRenderer(), "heridas regenerando una cantidad de vida.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 
-	text.loadFromText(app_->getRenderer(), "Puede contener trazas de frutos secos.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
-	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
+	
 }
 
 void TextBox::manaPotion() {
@@ -375,50 +622,46 @@ void TextBox::velocityPotion() {
 	text.loadFromText(app_->getRenderer(), "Ron mezclado con aceite de trucha que", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
-	text.loadFromText(app_->getRenderer(), "produce hiperactividad, aumentando la", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), " aumenta la velocidad de movimiento.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 
-	text.loadFromText(app_->getRenderer(), "velocidad de movimiento.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
-	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
-}
+};
 
 void TextBox::damagePotion() {
 	Texture text(app_->getRenderer(), "Poci" + Resources::tildes_['o'] + "n de da" + Resources::tildes_['ñ'] + "o:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), "Fluidos de demonio que fortalecen la", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "Fluidos de demonio que aumentan", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
-	text.loadFromText(app_->getRenderer(), "musculatura haciendo que el que la bebe", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "el da"+ Resources::tildes_['ñ'] +"o de tus golpes. ", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 
-	text.loadFromText(app_->getRenderer(), "inflija m" + Resources::tildes_['a'] + "s da" + Resources::tildes_['ñ'] + "o con sus golpes.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
-	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
+	
 }
 
 void TextBox::defensePotion() {
-	Texture text(app_->getRenderer(), "Poci" + Resources::tildes_['o'] + "n de defensa:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Poci"+ Resources::tildes_['o'] +"n de defensa:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
 	text.loadFromText(app_->getRenderer(), "Sangre de gorila tratada con alquimia", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
-	text.loadFromText(app_->getRenderer(), "avanzada que aumenta la resistencia.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), " que aumenta la resistencia.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::criticPotion() {
-	Texture text(app_->getRenderer(), "Poci" + Resources::tildes_['o'] + "n de cr" + Resources::tildes_['i'] + "tico:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Poci"+ Resources::tildes_['o'] +"n de cr"+ Resources::tildes_['i'] +"tico:", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), "Sangre de " + Resources::tildes_['a'] + "guila virgen que aumenta la", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "Sangre de "+ Resources::tildes_['a'] +"guila virgen que aumenta la", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
 
-	text.loadFromText(app_->getRenderer(), "precisi" + Resources::tildes_['o'] + "n otorgando mayor probabilidad", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), " probabilidad de cr"+ Resources::tildes_['i'] +"tico", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 
-	text.loadFromText(app_->getRenderer(), "de cr" + Resources::tildes_['i'] + "tico.", app_->getFontManager()->getFont(Resources::FontId::RETROSM), { COLOR(0x00000000) });
-	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 4));
+	
 }
 
 void TextBox::Clon()

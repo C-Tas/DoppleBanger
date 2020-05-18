@@ -17,19 +17,26 @@ void Skeleton::initialStats() {
 	MELEE_RANGE = 20;
 	DIST_RANGE = 250;
 	MOVE_SPEED = 100;
-	MELEE_RATE = 1;
+	MELEE_RATE = 0;
 	DIST_RATE = 2500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
+void Skeleton::updateCooldowns()
+{
+	if (shootCD_.isCooldownActive()) shootCD_.updateCooldown();
+}
+
+
 void Skeleton::attack() {
-	
+	if (!shootCD_.isCooldownActive()) {
+		shootCD_.initCooldown(currStats_.distRate_);
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
 	BoneBullet* bone = new BoneBullet(app_,
 		getCenter(), dir, currStats_.distDmg_, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
 	app_->getCurrState()->addRenderUpdateLists(bone);
 	CollisionCtrl::instance()->addEnemyBullet(bone);
-	
+	}
 }
 
 void Skeleton::initObject() {
@@ -49,6 +56,9 @@ void Skeleton::lostAggro()
 
 bool Skeleton::update() {
 	updateFrame();
+	updateCooldowns();
+
+	//Si el esqueleto ha muerto
 	if (currState_ == STATE::DYING) {
 		//sonidomuerte
 		// animación de muerte si la tiene
@@ -64,8 +74,25 @@ bool Skeleton::update() {
 		currState_ = STATE::ATTACKING;
 	}
 	//Si el esqueleto tiene enemigo y puede atacar
-	if (currState_ == STATE::ATTACKING && onRange() && SDL_GetTicks() - lastHit >= currStats_.distRate_) {
-		initShoot();
+	if (currState_ == STATE::ATTACKING && !shootCD_.isCooldownActive()) {
+		//Si el esqueeto tiene un enemigo y lo tiene a rango
+		if (onRange()) {
+			//changeAnim(attackAnim_);//animacion de ataque del esqueleto
+			attack();
+		}
+		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
+		else if (getEnemy(currStats_.distRange_))
+		{
+			//changeAnim(attackAnim_);//animacion de ataque del esqueleto
+			attack();
+		}
+		//Tengo enemigo pero no a rango
+		else
+		{
+			currState_ == STATE::IDLE;
+			//changeAnim(idleAnim_); animacion de idle del esqueleto
+			currEnemy_ = nullptr;
+		}
 	}
 	if(currState_ == STATE::SHOOTING)
 		shootAnim();

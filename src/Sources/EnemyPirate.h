@@ -18,7 +18,6 @@ public:
 	virtual void move(Vector2D pos);
 	//Cuando pierde agro del enemigo
 	virtual void lostAggro();
-
 	virtual  ~EnemyPirate() {};
 
 private:
@@ -33,16 +32,13 @@ private:
 	};
 	//Estado de ataque actual del pirata
 	ATK_STATUS currAtackStatus_ = ATK_STATUS::RANGE;
-	//Último ataque a distancia
-	Uint32 lastRangeHit_ = 0;
-	//Último ataque a melee
-	Uint32 lastMeleeHit_ = 0;
-	//�ltimo frame de animaci�n
-	//Uint32 lastFrame_ = 0;
-	//Tiempo que el pirata pasa parado cuando llega a un target
-	Uint32 idleTime_ = 1000;
-	//Tiempo 
-	uint lastIdleTime = 0;
+	//Tiempo que espera entre disparos
+	Cooldown shootCD_;
+	//Tiempo que espera entre golpes
+	Cooldown meleeCD_;
+	//Tiempo que espera parado
+	const double IDLE_PAUSE = 1000;
+	Cooldown idleCD_;
 	//Diferentes animaciones del pirata
 	Anim attackAnim_ = { 0,0,0,0 ,"" };
 	Anim walkAnim_ = { 0,0,0,0,"" };
@@ -95,4 +91,5 @@ private:
 	void selectTarget();
 	virtual void initialStats();
 	virtual void initRewards();
+	virtual void updateCooldowns();
 };

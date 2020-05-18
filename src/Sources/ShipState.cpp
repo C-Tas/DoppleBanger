@@ -8,6 +8,8 @@
 #include "CaribbeanIslandState.h"
 #include "SpookyIslandState.h"
 #include "VolcanicIslandState.h"
+#include "TestState.h"
+
 
 #pragma region CallBacks
 //Callback para cambiar de GameState e ir a la isla actual
@@ -86,6 +88,9 @@ void ShipState::initState()
 	addObject(exit_);
 
 	collisionCtrl_->addShipObjects(stash_, door_, wheel_, exit_);
+	//Posición de Venancio
+	POST_TUTORIAL_POS = Vector2D((double)(W_WIN * 2 / 7), (double)(H_WIN / 10));
+	TUTORIAL_POS = Vector2D((double)(destRect.x - W_WIN / 7), (double)(destRect.y - H_WIN / 8));
 
 	createNPCs();	//Método de testeo de los NPCs del barco, faltaría hacer uno definitivo para todos los NPCs desbloqueados
 
@@ -96,10 +101,12 @@ void ShipState::initState()
 	player_->setScale(Vector2D(W_PLAYER, H_PLAYER));
 	player_->setColliderPos(Vector2D((player_->getScale().getX() / 3), 2 * (player_->getScale().getY() / 4)));
 	player_->setColliderScale(Vector2D((player_->getScale().getX() / 3), (player_->getScale().getY() / 4)));
+	gm_->setCurrentPlayerLife(player_->getHealth());
+	gm_->setCurrentPlayerMana(player_->getMana());
+
 
 	Camera::instance()->updateCamera(W_WIN / 2, H_WIN / 2);
 	addRenderUpdateLists(player_);
-	startInstance_ = SDL_GetTicks();
 
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
@@ -108,12 +115,12 @@ void ShipState::initState()
 
 void ShipState::update()
 {
+#ifdef _DEBUG
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_BACKSPACE))
+		app_->getGameStateMachine()->changeState(new TestState(app_));
+#endif
 	PlayState::update();
 
-	/*if (!songActive) {
-
-		songActive = true;
-	}*/
 	collisionCtrl_->shipCollisions();
 }
 
@@ -153,9 +160,8 @@ void ShipState::loadState(){
 
 void ShipState::createNPCs() {
 	//El viejo y el mercader están desde el principio
-	NPC* elderman;
-	elderman = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), Vector2D(W_WIN / 3, H_WIN / 7), Vector2D(W_ELDERMAN, H_ELDERMAN), 0);
-	addRenderUpdateLists(elderman);
+	venancio_ = new NPC(app_, app_->getTextureManager()->getTexture(Resources::VenancioDrink), POST_TUTORIAL_POS, Vector2D(W_ELDERMAN, H_ELDERMAN), 0);
+	addRenderUpdateLists(venancio_);
 
 	NPC* merchant;
 	merchant = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Merchant), Vector2D(W_WIN / 30, H_WIN * 3 / 5), Vector2D(W_MERCHANT, H_MERCHANT), 1);

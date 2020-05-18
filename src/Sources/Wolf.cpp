@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "CollisionCtrl.h"
 #include <string>
+#include "PlayState.h"
 
 bool Wolf::update() {
 #ifdef _DEBUG
@@ -36,9 +37,11 @@ bool Wolf::update() {
 		break;
 	default:
 		break;
-	}
-	cout << state << endl;*/
+	}*/
 #endif // _DEBUG
+
+	updateFrame();
+	updateCooldowns();
 
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {
@@ -84,8 +87,8 @@ bool Wolf::update() {
 			selectTarget();
 		}
 	}
-	if (currState_ == STATE::IDLE && idleTime_ <= (SDL_GetTicks() - lastIdleTime)) {
-		currState_ = STATE::PATROLLING;;
+	if (currState_ == STATE::IDLE && !idleCD_.isCooldownActive()) {
+		currState_ = STATE::PATROLLING;
 		target_ = patrol_[currTarget_];
 	}
 	//Si el lobo est� en patrulla
@@ -97,7 +100,7 @@ bool Wolf::update() {
 			{ (int)pos_.getX() / 2,(int)pos_.getY() / 2,(int)scale_.getX() / 2,(int)scale_.getY() / 2 });
 		if (SDL_HasIntersection(&pos, &targetPos)) {
 			currState_ = STATE::IDLE;
-			lastIdleTime = SDL_GetTicks();
+			idleCD_.initCooldown(IDLE_PAUSE);
 			if (currTarget_ == patrol_.size() - 1) {
 				currTarget_ = 0;
 			}
@@ -114,9 +117,15 @@ bool Wolf::update() {
 //Mueve al lobo DONE
 void Wolf::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
-	target_.setVec(posToReach);
-	dir_.setX(posToReach.getX() - getCenter().getX());
-	dir_.setY(posToReach.getY() - getCenter().getY());
+
+	if ((getCenter() - target_).magnitude() <= 0.05)
+	{
+		pathPos_ = { (int)PosToTile(target_).getX(), (int)PosToTile(target_).getY() };
+		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
+		if (pathing_.size() > 1)
+			target_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+	}
+	dir_.setVec(target_ - getCenter());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
@@ -159,11 +168,10 @@ void Wolf::initAnims()
 
 //Se encarga de gestionar el ataque a melee DONE
 void Wolf::attack() {
-	if (currStats_.meleeRate_ <= SDL_GetTicks() - lastMeleeHit_)
+	if (!meleeCD_.isCooldownActive())
 	{
-		lastMeleeHit_ = SDL_GetTicks();
+		meleeCD_.initCooldown(currStats_.meleeRate_);
 		app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttackAudio, 0, Resources::WolfChannel);
-
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
 			dmg->receiveDamage(currStats_.meleeDmg_);
@@ -230,8 +238,8 @@ void Wolf::initialStats()
 	MANA = 100;
 	MANA_REG = 100;
 	ARMOR = 10;
-	MELEE_DMG = 1;
-	DIST_DMG = 1;
+	MELEE_DMG = 100;
+	DIST_DMG = 0;
 	CRIT = 2000;
 	MELEE_RANGE = 50;
 	DIST_RANGE = 75;
@@ -249,4 +257,10 @@ void Wolf::initRewards()
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
+}
+
+void Wolf::updateCooldowns()
+{
+	if (meleeCD_.isCooldownActive()) meleeCD_.updateCooldown();
+	if (idleCD_.isCooldownActive()) idleCD_.updateCooldown();
 }

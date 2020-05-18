@@ -7,7 +7,9 @@
 bool Clon::update() {
 	updateFrame();
 
-	if ((SDL_GetTicks() - spawnTime_) / 1000 < duration_) {
+	if (lifeTimeCD_.isCooldownActive()) {
+		updateCooldowns();
+
 		if (currState_ == STATE::SELFDESTRUCT && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
 			player_->killClon();
 		}
@@ -18,39 +20,31 @@ bool Clon::update() {
 			currState_ = STATE::IDLE;
 			initIdle();
 		}
-		
 
 		Vector2D clonPos = getVisPos();
 		if (meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING ||
 			Vector2D(abs(objective_->getVisPos().getX() - clonPos.getX()), abs(objective_->getVisPos().getY() - clonPos.getY())).magnitude() > range_))
 			objective_ = static_cast<PlayState*>(app_->getGameStateMachine()->getState())->findClosestEnemy(pos_);
-
-		else if (meleeDmg_ > 0 && ((SDL_GetTicks() - meleeTime_) / 1000) > meleeRate_)
+		else if (meleeDmg_ > 0 && !meleeCD_.isCooldownActive())
 		{
-			cout << "\nClon ataque\n";
-			
 			initMelee();
 		}
 	}
-	else if (alive_){
+	else {
 		if (currState_ != STATE::VANISH){
 			initVanish();
 		}
 		if (currAnim_.currFrame_ == currAnim_.numberFrames_ -1 ) {
 			player_->killClon();
 		}
-		
 	}
-
-
 	return false;
 }
 
 void Clon::initObject() {
 	GameManager::instance()->setClon(this);
 	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
-	spawnTime_ = SDL_GetTicks();
-	duration_ = DURATION_;
+	lifeTimeCD_.initCooldown(DURATION_);
 	range_ = player_->getStats().meleeRange_ * 2;
 	meleeRate_ = (player_->getStats().meleeRate_ / 2) * player_->getLiberation();
 	meleeDmg_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
@@ -59,6 +53,12 @@ void Clon::initObject() {
 	//buletSpeed_ = player_->getInfoEquip().fireGun_->getSpeed(); //Si no la bala del clon no se mueve
 	taunt();
 	initAnim();
+}
+
+void Clon::updateCooldowns()
+{
+	lifeTimeCD_.updateCooldown();
+	if (meleeCD_.isCooldownActive()) meleeCD_.updateCooldown();
 }
 
 void Clon::initAnim() {
@@ -179,22 +179,22 @@ void Clon::initMelee()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
-	meleeTime_ = SDL_GetTicks();
 }
 
 void Clon::meleeAnim() {
 
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
-		objective_->receiveDamage(meleeDmg_);
-		if (objective_->getState() == STATE::DYING)
-			enemies_.remove(static_cast<Enemy*>(objective_));
-		meleeTime_ = SDL_GetTicks();
+		if (objective_ != nullptr) {
+			objective_->receiveDamage(meleeDmg_);
+			if (objective_->getState() == STATE::DYING)
+				enemies_.remove(static_cast<Enemy*>(objective_));
+		}
+		meleeCD_.initCooldown(currStats_.meleeRate_);
 		attacked_ = true;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();
 	}
-
 }
 
 void Clon::initSelfDestruction() {
@@ -262,7 +262,6 @@ void Clon::die() {
 		if ((*it) != nullptr) {
 			(*it)->lostAggro();
 		}
-	alive_ = false;
 }
 
 void Clon::taunt() {

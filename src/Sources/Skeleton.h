@@ -18,9 +18,8 @@ public:
 	virtual ~Skeleton() {};
 protected:
 	//�ltimo ataque
-	Uint32 lastHit = 0;
-	//Último frame de animación
-	Uint32 lasFrame_ = 0;
+	Cooldown shootCD_;
+
 	//Diferentes animaciones del esqueleto
 	//Anim moveAnim_ = { 0,0,0,0,false };
 
@@ -30,16 +29,16 @@ protected:
 //Para el ataque
 	const int NUM_FRAMES_MOV = 0;
 	const int NUM_FRAMES_ROW_MOV = 0;
-	const uint W_FRAME_MOV = 0;
-	const uint H_FRAME_MOV = 0;
+	const double W_FRAME_MOV = 0;
+	const double H_FRAME_MOV = 0;
 	const int FRAME_RATE_MOV = 0;
 	const string NAME_MOV = "move";
 
 	//Hueso que lanza el esqueleto
 	const uint BONE_HEIGHT = app_->getWindowHeight() / 30;		//Alto del hueso
 	const uint BONE_WIDTH = app_->getWindowWidth() / 30;		//Ancho del hueso
-	const double BONE_VEL = 400;							//Velocidad del hueso
-	const double BONE_LIFE = 3;							//Vida del proyectil en segundos
+	const double BONE_VEL = 400;								//Velocidad del hueso
+	const double BONE_LIFE = 3000;								//Vida del proyectil en milisegundos
 	
 	int Distance;											//distancia que recorre el hueso a la ida y a la vuelta
 
@@ -53,7 +52,10 @@ protected:
 	//Inicializa todas las animaciones
 	void initAnims();
 	void shootAnim();
+	//Inicializa los stats
 	void initialStats();
+	//Actualiza los cooldowns
+	virtual void updateCooldowns();
 
 
 #pragma region Anims

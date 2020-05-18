@@ -9,20 +9,19 @@ class ClonSelfDestructSkill : public Skill
 private:
 	const int RADIUS = 150;
 	const int BONUS = 1.5;
-	const int COOLDOWN = 2;
+	const double COOLDOWN = 5000;	//En milisegundos
+	Cooldown destructCD_;			//Cooldown
 	const int MANA_COST = 10;
 
 public:
-	ClonSelfDestructSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { cooldown_ = COOLDOWN; costMana_ = MANA_COST; };
+	ClonSelfDestructSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { costMana_ = MANA_COST; };
 	virtual ~ClonSelfDestructSkill() {};
 
 	virtual void action() {
 		double mana = player_->getMana();
 		//Si no está en cooldown la habilidad
-		if (player_->getClon() != nullptr && ((SDL_GetTicks() - lastTimeUsed_) / 1000 > cooldown_ || lastTimeUsed_ == 0))
+		if (mana >= costMana_ && player_->getClon() != nullptr && !destructCD_.isCooldownActive())
 		{
-			
-			cout << "\nExplosión\n";
 			player_->removeMana(costMana_);
 			player_->getClon()->initSelfDestruction();
 			//Consigue la lista de los enemigos golpeados y les hace daño
@@ -31,7 +30,12 @@ public:
 			for (auto it = enemies.begin(); it != enemies.end(); ++it)
 				(*it)->receiveDamage(player_->getMeleeDmg() * BONUS);
 
-			if (player_->getClon() != nullptr) lastTimeUsed_ = SDL_GetTicks();
+			if (player_->getClon() != nullptr) destructCD_.initCooldown(COOLDOWN);
 		}
 	};
+	virtual void update() {
+		if (destructCD_.isCooldownActive()) {
+			destructCD_.updateCooldown();
+		}
+	}
 };

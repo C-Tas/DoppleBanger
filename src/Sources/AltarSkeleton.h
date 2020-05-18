@@ -8,8 +8,7 @@ enum class MOBSTATE
 	ALIVE, DIE, RISEABLE, UNRISEABLE
 };
 
-class AltarSkeleton :
-	public Skeleton
+class AltarSkeleton : public Skeleton
 {
 public:
 	AltarSkeleton(Application* app, Vector2D pos, Vector2D scale, Altar* altar) :Skeleton(app, pos, scale), altarOwner_(altar) { initObject(); };

@@ -2,7 +2,8 @@
 #include "GameManager.h"
 
 //Para añadir nueva ruta: {TextureId, "./Sources/images/name.png/jpg..."}
-vector<Resources::ImageInfo> Resources::imageRoutes{
+vector<Resources::ImageInfo> Resources::imageRoutes {
+#pragma region Botones
 	//Botones
 	{ MenuButton, "../Sources/assets/botones/botonMenu.png" },
 	{ PlayButton, "../Sources/assets/botones/playButton.png" },
@@ -40,6 +41,11 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ LoadGame3, "../Sources/assets/botones/loadGame3.png"},
 	{ LoadGameNull, "../Sources/assets/botones/loadGameNull.png"},
 	{ LoadButtonNull, "../Sources/assets/botones/loadButtonNull.png"},
+	{ BackToShipButton, "../Sources/assets/botones/backToShipButton.png"},
+	{ YesButton, "../Sources/assets/botones/yesButton.png"},
+	{ NoButton, "../Sources/assets/botones/noButton.png"},
+	{ GoToShipButton, "../Sources/assets/botones/goToShipButton.png"},
+	{ GoToNextZoneButton, "../Sources/assets/botones/ContinueButton.png"},
 	//Animaciones de botones
 	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},
 
@@ -52,12 +58,97 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ButtonUpgradeRed, "../Sources/assets/botones/UpgradeButtonRed.png"},
 	{ ButtonUpgradeBlue, "../Sources/assets/botones/UpgradeButtonBlue.png"},
 	{ ButtonUpgradeYellow, "../Sources/assets/botones/UpgradeButtonYellow.png"},
+	{ ButtonInitTutorial, "../Sources/assets/botones/botonEscucharVenancio.png"},
+	{ ButtonSkipTutorial, "../Sources/assets/botones/botonPasarVenancio.png"},
+
+	//Animaciones de botones
+	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},
+#pragma endregion
+
+#pragma region Interfaces y punteros
+	//Interfaces
+	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
+	{ PauseBackground, "../Sources/assets/interfaces/pauseFondo.png" },
+	{ SaveLoadBackground, "../Sources/assets/interfaces/saveLoadBg.png" },
+	{ Controls, "../Sources/assets/interfaces/controles.png"},
+	{ InventoryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
+	{ SkillMenu, "../Sources/assets/interfaces/HabilidadesFondo.png" },
+	{ StashMenu, "../Sources/assets/interfaces/AlijoFondo.png"},
+	{ ShopMenu, "../Sources/assets/interfaces/TiendaFondo.png"},
+	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
+	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
+	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
+	{ Scene4, "../Sources/assets/interfaces/Scene4.png"},
+	{ Scene5, "../Sources/assets/interfaces/Scene5.png"},
+	{ Scene6, "../Sources/assets/interfaces/Scene6.png"},
+	{ Scene7, "../Sources/assets/interfaces/Scene7.png"},
+	{ Scene8, "../Sources/assets/interfaces/Scene8.png"},
+	{ Scene9, "../Sources/assets/interfaces/Scene9.png"},
+	{ TextBox, "../Sources/assets/interfaces/textBoxBg.png" },
+	{ Ship, "../Sources/assets/interfaces/barco.png" },
+	{ Table, "../Sources/assets/interfaces/mesa.png" },
+	{ Map1, "../Sources/assets/interfaces/mapa1.png" },
+	{ Map2, "../Sources/assets/interfaces/mapa2.png" },
+	{ Map3, "../Sources/assets/interfaces/mapa3.png" },
+	{ GameOver1, "../Sources/assets/interfaces/endGame1.png" },
+	{ GameOver2, "../Sources/assets/interfaces/endGame2.png" },
+	{ Rain1, "../Sources/assets/interfaces/fondoLluvia0.png" },
+	{ Rain2, "../Sources/assets/interfaces/fondoLluvia1.png" },
+	{ Rain3, "../Sources/assets/interfaces/fondoLluvia2.png" },
+	{ Rain4, "../Sources/assets/interfaces/fondoLluvia3.png" },
+	{ Win, "../Sources/assets/interfaces/win.png" },
 
 	//Punteros
 	{ MovementPointer, "../Sources/assets/punteros/punteroMov.png"},
 	{ AttackPointer, "../Sources/assets/punteros/punteroAtaque.png"},
 	{ GrabPointer, "../Sources/assets/punteros/punteroMano.png"},
-	
+#pragma endregion
+
+#pragma region HUD
+	//HUD
+	{ WheelHUD, "../Sources/assets/hud/timonHUD.png" },
+	{ RopeHUD,	"../Sources/assets/hud/lazoHUD.png" },
+	{ SkillsHUD, "../Sources/assets/hud/skillsHUD.png" },
+	{ CooldownHUD, "../Sources/assets/hud/cooldownHUD.png" },
+	{ LifeHUD, "../Sources/assets/hud/vida.png" },
+	{ ExplosionIcon, "../Sources/assets/hud/iconos/explosion.png" },
+	{ GolpeFuerteIcon, "../Sources/assets/hud/iconos/golpeFuerte.png" },
+	{ InvencibleIcon, "../Sources/assets/hud/iconos/invencible.png" },
+	{ LiberacionIcon, "../Sources/assets/hud/iconos/liberacion.png" },
+	{ PerforanteIcon, "../Sources/assets/hud/iconos/perforante.png" },
+	{ RaudoIcon, "../Sources/assets/hud/iconos/raudo.png" },
+	{ ReboteIcon, "../Sources/assets/hud/iconos/rebote.png" },
+	{ TorbellinoIcon, "../Sources/assets/hud/iconos/torbellino.png" },
+
+	//Objects
+	{ HealthPot, "../Sources/assets/hud/iconos/vidaPot.png" },
+	{ ManaPot, "../Sources/assets/hud/iconos/manaPot.png" },
+	{ SpeedPot, "../Sources/assets/hud/iconos/speedPot.png" },
+	{ ArmorPot, "../Sources/assets/hud/iconos/armorPot.png" },
+	{ DmgPot, "../Sources/assets/hud/iconos/dmgPot.png" },
+	{ CritPot, "../Sources/assets/hud/iconos/critPot.png" },
+	{ PotionBG, "../Sources/assets/hud/potionBGF.png" },
+#pragma endregion
+
+#pragma region Inventario
+	//Equipables
+	{ Armor1,"../Sources/assets/Equipamiento/armadura1.png" },
+	{ Armor2,"../Sources/assets/Equipamiento/armadura2.png" },
+	{ Gloves1, "../Sources/assets/Equipamiento/guantes1.png" },
+	{ Gloves2, "../Sources/assets/Equipamiento/guantes2.png" },
+	{ Boots1, "../Sources/assets/Equipamiento/botas.png" },
+	{ Boots2, "../Sources/assets/Equipamiento/zapatos.png" },
+	{ Sword1, "../Sources/assets/Equipamiento/espada1.png" },
+	{ Sword2, "../Sources/assets/Equipamiento/espada2.png" },
+	{ Saber1, "../Sources/assets/Equipamiento/sable1.png" },
+	{ Saber2, "../Sources/assets/Equipamiento/sable2.png" },
+	{ Gun1, "../Sources/assets/Equipamiento/pistola1.png" },
+	{ Gun2, "../Sources/assets/Equipamiento/pistola2.png" },
+	{ ShotGun1, "../Sources/assets/Equipamiento/trabuco1.png" },
+	{ ShotGun2, "../Sources/assets/Equipamiento/trabuco2.png" },
+#pragma endregion
+
+#pragma region Habilidades
 	//Barras Puntos de Hazaña
 	{ GreenBar, "../Sources/assets/botones/greenBar.png"},
 	{ BlueBar, "../Sources/assets/botones/blueBar.png"},
@@ -83,79 +174,35 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ SkillReboteBN, "../Sources/assets/skills/reboteHabBN.png" },
 	{ SkillTorbellinoC, "../Sources/assets/skills/torbellinoHab.png" },
 	{ SkillTorbellinoBN, "../Sources/assets/skills/torbellinoHabBN.png" },
+#pragma endregion
 
-	//Interfaces
-	{ MenuBackground, "../Sources/assets/interfaces/menuFondo.png" },
-	{ PauseBackground, "../Sources/assets/interfaces/pauseFondo.png" },
-	{ SaveLoadBackground, "../Sources/assets/interfaces/saveLoadBg.png" },
-	{ Controls, "../Sources/assets/interfaces/controles.png"},
-	{ InventoryMenu, "../Sources/assets/interfaces/InventarioFondo.png" },
-	{ SkillMenu, "../Sources/assets/interfaces/HabilidadesFondo.png" },
-	{ StashMenu, "../Sources/assets/interfaces/AlijoFondo.png"},
-	{ ShopMenu, "../Sources/assets/interfaces/TiendaFondo.png"},
-	{ Scene1, "../Sources/assets/interfaces/Scene1.png"},
-	{ Scene2, "../Sources/assets/interfaces/Scene2.png"},
-	{ Scene3, "../Sources/assets/interfaces/Scene3.png"},
-	{ Scene4, "../Sources/assets/interfaces/Scene4.png"},
-	{ Scene5, "../Sources/assets/interfaces/Scene5.png"},
-	{ Scene6, "../Sources/assets/interfaces/Scene6.png"},
-	{ Scene7, "../Sources/assets/interfaces/Scene7.png"},
-	{ Scene8, "../Sources/assets/interfaces/Scene8.png"},
-	{ Scene9, "../Sources/assets/interfaces/Scene9.png"},
-	{ TextBox, "../Sources/assets/interfaces/textBoxBg.png" },
-	{ Ship, "../Sources/assets/interfaces/barco.png" },
-	{ Table, "../Sources/assets/interfaces/mesa.png" },
-	{ Map1, "../Sources/assets/interfaces/mapa1.png" },
-	{ Map2, "../Sources/assets/interfaces/mapa2.png" },
-	{ Map3, "../Sources/assets/interfaces/mapa3.png" },
-	{ CaribbeanMap, "../Sources/assets/interfaces/caribe.png" },
-	{ Spooky, "../Sources/assets/interfaces/fantasmal.png" },
-	{ Volcanic, "../Sources/assets/interfaces/volcan.png" },
-	{ GameOver, "../Sources/assets/interfaces/gameOver.png" },
-	{ Win, "../Sources/assets/interfaces/win.png" },
-
-		//HUD
-	{ WheelHUD, "../Sources/assets/hud/timonHUD.png" },
-	{ RopeHUD,	"../Sources/assets/hud/lazoHUD.png" },
-	{ SkillsHUD, "../Sources/assets/hud/skillsHUD.png" },
-	{ CooldownHUD, "../Sources/assets/hud/cooldownHUD.png" },
-	{ LifeHUD, "../Sources/assets/hud/vida.png" },
-	{ ExplosionIcon, "../Sources/assets/hud/iconos/explosion.png" },
-	{ GolpeFuerteIcon, "../Sources/assets/hud/iconos/golpeFuerte.png" },
-	{ InvencibleIcon, "../Sources/assets/hud/iconos/invencible.png" },
-	{ LiberacionIcon, "../Sources/assets/hud/iconos/liberacion.png" },
-	{ PerforanteIcon, "../Sources/assets/hud/iconos/perforante.png" },
-	{ RaudoIcon, "../Sources/assets/hud/iconos/raudo.png" },
-	{ ReboteIcon, "../Sources/assets/hud/iconos/rebote.png" },
-	{ TorbellinoIcon, "../Sources/assets/hud/iconos/torbellino.png" },
-
-		//Objects
-	{ HealthPot, "../Sources/assets/hud/iconos/vidaPot.png" },
-	{ ManaPot, "../Sources/assets/hud/iconos/manaPot.png" },
-	{ SpeedPot, "../Sources/assets/hud/iconos/speedPot.png" },
-	{ ArmorPot, "../Sources/assets/hud/iconos/armorPot.png" },
-	{ DmgPot, "../Sources/assets/hud/iconos/dmgPot.png" },
-	{ CritPot, "../Sources/assets/hud/iconos/critPot.png" },
-	{ PotionBG, "../Sources/assets/hud/potionBGF.png" },
-
-		//Sprites
+#pragma region Sprites y animaciones
+	//Sprites
 	{ Dragon,"../Sources/assets/enemigos/dragon.png" },
 	{ PlayerFront, "../Sources/assets/player/frontal.png" },
 	{ CrabAttack, "../Sources/assets/enemigos/crab/crab_attack.png" },
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	{ Kraken, "../Sources/assets/enemigos/kraken/kraken.png" },
-	{ Magordito, "../Sources/assets/enemigos/magordito/Magordito.png" },
 	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
 	{ Azul, "../Sources/assets/enemigos/azul.png" },
 	{ Cleon, "../Sources/assets/enemigos/cleon/cleon.png" },
-	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
+	{ VenancioDrink, "../Sources/assets/npc/venancioDrink.png" },
+	{ VenancioPushStart, "../Sources/assets/npc/venancioPushStart.png" },
+	{ VenancioPushBucle, "../Sources/assets/npc/venancioPushBucle.png" },
+	{ VenancioPushFinish, "../Sources/assets/npc/venancioPushFinish.png" },
 	{ Merchant, "../Sources/assets/npc/mercaderIdle.png" },
+	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
 	{ Cartographer, "../Sources/assets/npc/idleCartografa.png" },
 	{ Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png" },
 	{ Morty, "../Sources/assets/npc/idleMorty.png" },
-	
+	{ VenancioFuneral, "../Sources/assets/npc/venancioFuneral.png" },
+	{ MerchantFuneral, "../Sources/assets/npc/mercaderFuneral.png" },
+	{ CookerFuneral, "../Sources/assets/npc/cookerFuneral.png" },
+	{ MortyFuneral, "../Sources/assets/npc/mortyFuneral.png" },
+	{ CartographerFuneral, "../Sources/assets/npc/cartografaFuneral.png" },
+
 	//Animaciones
 	//Player
 	{ PlayerIdleRightAnim, "../Sources/assets/player/animaciones/idle/idleDcha.png" },
@@ -174,7 +221,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ PlayerMeleeLeftAnim, "../Sources/assets/player/animaciones/melee/meleeIz.png" },
 	{ PlayerMeleeUpAnim, "../Sources/assets/player/animaciones/melee/meleeTop.png" },
 	{ PlayerMeleeDownAnim, "../Sources/assets/player/animaciones/melee/meleeDown.png" },
-	//clon
+	//Clon
 	{ ClonSelfDestructionRightAnim, "../Sources/assets/clon/autodestruccion/ClonRightExplosion.png" },
 	{ ClonSelfDestructionLeftAnim, "../Sources/assets/clon/autodestruccion/ClonLeftExplosion.png" },
 	{ ClonSelfDestructionUpAnim, "../Sources/assets/clon/autodestruccion/ClonBackExplosion.png" },
@@ -184,15 +231,15 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ ClonShootUpAnim, "../Sources/assets/clon/disparo/ClonBackShooting.png" },
 	{ ClonShootDownAnim, "../Sources/assets/clon/disparo/ClonFrontShooting.png" },
 	{ ClonIdleRightAnim, "../Sources/assets/clon/idle/ClonRightIdle.png" },
-    { ClonIdleLeftAnim, "../Sources/assets/clon/idle/ClonLeftIdle.png" },
-    { ClonIdleUpAnim, "../Sources/assets/clon/idle/ClonBackIdle.png" },
-    { ClonIdleDownAnim, "../Sources/assets/clon/idle/ClonFrontIdle.png" },
+	{ ClonIdleLeftAnim, "../Sources/assets/clon/idle/ClonLeftIdle.png" },
+	{ ClonIdleUpAnim, "../Sources/assets/clon/idle/ClonBackIdle.png" },
+	{ ClonIdleDownAnim, "../Sources/assets/clon/idle/ClonFrontIdle.png" },
 	{ ClonMeleeRightAnim, "../Sources/assets/clon/melee/ClonRightMelee.png" },
 	{ ClonMeleeLeftAnim, "../Sources/assets/clon/melee/ClonLeftMelee.png" },
 	{ ClonMeleeUpAnim, "../Sources/assets/clon/melee/ClonBackMelee.png" },
 	{ ClonMeleeDownAnim, "../Sources/assets/clon/melee/ClonFrontMelee.png" },
-	{ ClonVanishRightAnim ,"../Sources/assets/clon/desaparecer/vanishDer.png"},
-	{ ClonVanishLeftAnim, "../Sources/assets/clon/desaparecer/vanishLeft.png"},
+	{ ClonVanishRightAnim ,"../Sources/assets/clon/desaparecer/vanishDer.png" },
+	{ ClonVanishLeftAnim, "../Sources/assets/clon/desaparecer/vanishLeft.png" },
 	{ ClonVanishDownAnim, "../Sources/assets/clon/desaparecer/vanishDown.png" },
 	{ ClonVanishUpAnim, "../Sources/assets/clon/desaparecer/vanishTop.png" },
 	//Pumpkin
@@ -226,8 +273,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ MonkeyShootDownAnim, "../Sources/assets/enemigos/monkey/shootIzDown.png" },
 
 	//Magordito
-		//Kirin
-	{ Kirin, "../Sources/assets/enemigos/magordito/Kirin.png" },
 		//Skeleton
 	{ SkeletonIdleRightAnim, "../Sources/assets/enemigos/skeleton/IdleLadoDer.png" },
 	{ SkeletonIdleLeftAnim, "../Sources/assets/enemigos/skeleton/IdleLadoIzq.png" },
@@ -242,6 +287,32 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ SkeletonMoveDownAnim, "../Sources/assets/enemigos/skeleton/MovementFrente.png" },
 	{ SkeletonMoveUpAnim, "../Sources/assets/enemigos/skeleton/MovementEspaldas.png" },
 		//Interactuables
+	{ Altar, "../Sources/assets/enemigos/magordito/altar.png" },
+		//Idle
+	{ MagorditoIdleRight, "../Sources/assets/enemigos/magordito/idle/idleDcha.png" },
+	{ MagorditoIdleLeft, "../Sources/assets/enemigos/magordito/idle/idleIz.png" },
+	{ MagorditoIdleTopRight, "../Sources/assets/enemigos/magordito/idle/idleTopDcha.png" },
+	{ MagorditoIdleTopLeft, "../Sources/assets/enemigos/magordito/idle/idleTopIz.png" },
+	//Disparo
+	//{ MagorditoShootRight, "../Sources/assets/enemigos/magordito/disparo/disparoDcha.png" },
+	//{ MagorditoShootLeft, "../Sources/assets/enemigos/magordito/disparo/disparoIz.png" },
+	//{ MagorditoShootDown, "../Sources/assets/enemigos/magordito/disparo/disparoDown.png" },
+	//{ MagorditoShootTopRight, "../Sources/assets/enemigos/magordito/disparo/disparoTopDcha.png" },
+	//{ MagorditoShootTopLeft, "../Sources/assets/enemigos/magordito/disparo/disparoTopIz.png" },
+	//Viaje
+	{ MagorditoTpRight, "../Sources/assets/enemigos/magordito/viaje/viajeDcha.png" },
+	{ MagorditoTpLeft, "../Sources/assets/enemigos/magordito/viaje/viajeIz.png" },
+	{ MagorditoTpTopRight, "../Sources/assets/enemigos/magordito/viaje/viajeTopDer.png" },
+	{ MagorditoTpTopLeft, "../Sources/assets/enemigos/magordito/viaje/viajeTopIz.png" },
+	//Kirin
+	{ MagorditoKirinRight, "../Sources/assets/enemigos/magordito/kirin/kirinDcha.png" },
+	{ MagorditoKirinLeft, "../Sources/assets/enemigos/magordito/kirin/kirinIz.png" },
+	{ MagorditoKirinTopRight, "../Sources/assets/enemigos/magordito/kirin/kirinTopDcha.png" },
+	{ MagorditoKirinTopLeft, "../Sources/assets/enemigos/magordito/kirin/kirinTopIz.png" },
+	{ Kirin, "../Sources/assets/enemigos/magordito/kirin/rayo.png" },
+
+#pragma region Barco
+	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },
 	{ Stash, "../Sources/assets/colisionables/alijo.png" },
 	{ ShipDoor, "../Sources/assets/colisionables/trampilla.png" },
@@ -249,7 +320,13 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Chest, "../Sources/assets/colisionables/cofreAnim.png" },
 	{ Bullet, "../Sources/assets/colisionables/bullet.png" },
 
-		//Colisionable
+	//Tutorial
+	{ Bottle ,"../Sources/assets/Colisionables/botella.png" },
+	{ Dummy ,"../Sources/assets/Colisionables/dummyTutorial.png" },
+#pragma endregion
+
+#pragma region Colisionables y mapas
+	//Colisionable
 	{ Rock, "../Sources/assets/colisionables/roca.png" },
 	{ Coco ,"../Sources/assets/Colisionables/coco.png" },
 	{ Bone, "../Sources/assets/enemigos/skeleton/ThrowingBone.png" },
@@ -263,16 +340,22 @@ vector<Resources::ImageInfo> Resources::imageRoutes{
 	{ Boots2, "../Sources/assets/Equipamiento/zapatos.png" },
 	{ Sword1, "../Sources/assets/Equipamiento/espada1.png" },
 	{ Sword2, "../Sources/assets/Equipamiento/espada2.png" },
+	{ Sword1H, "../Sources/assets/Equipamiento/espada1H.png" },
+	{ Sword2H, "../Sources/assets/Equipamiento/espada2H.png" },
 	{ Saber1, "../Sources/assets/Equipamiento/sable1.png" },
 	{ Saber2, "../Sources/assets/Equipamiento/sable2.png" },
+	{ Saber1H, "../Sources/assets/Equipamiento/sable1H.png" },
+	{ Saber2H, "../Sources/assets/Equipamiento/sable2H.png" },
 	{ Gun1, "../Sources/assets/Equipamiento/pistola1.png"},
 	{ Gun2, "../Sources/assets/Equipamiento/pistola2.png" },
 	{ ShotGun1, "../Sources/assets/Equipamiento/trabuco1.png" },
 	{ ShotGun2, "../Sources/assets/Equipamiento/trabuco2.png" },
 
 	//Tilesets de los mapas
-	{Tileset1, "../Sources/assets/mapas/Isla1-1/tileset_v2.png"},
-	{CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png"}
+	{ Tileset1, "../Sources/assets/mapas/Isla1-1/tileset_v2.png" },
+	{ CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png" }
+
+#pragma endregion
 };
 
 //Para añadir nueva ruta: {AudioId, "./Sources/audio/name.mp3/wav..."}
@@ -284,6 +367,8 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" },
 	{ Shop ,"../Sources/assets/music/background/shopMusic.mp3" },
 	{ Storyboard ,"../Sources/assets/music/background/storyboardMusic.mp3" },
+	{ FuneralTheme ,"../Sources/assets/music/funeralTheme.mp3" },
+
 #pragma region
 	//Player
 #pragma region PlayerSounds
@@ -318,6 +403,11 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ SwordSound6  ,"../Sources/assets/efectos_sonido/player/sword6.wav"},
 	{ MeleeCrit  ,"../Sources/assets/efectos_sonido/player/meleeCrit.wav"},
 	{ DistCrit  ,"../Sources/assets/efectos_sonido/player/distCrit.wav"},
+	{ Hurt1  ,"../Sources/assets/efectos_sonido/player/hurt1.wav"},
+	{ Hurt2  ,"../Sources/assets/efectos_sonido/player/hurt2.wav"},
+	{ Hurt3  ,"../Sources/assets/efectos_sonido/player/hurt3.wav"},
+	{ Hurt4  ,"../Sources/assets/efectos_sonido/player/hurt4.ogg"},
+
 #pragma endregion
 #pragma region ClonSounds
 	//Clon
@@ -351,9 +441,13 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ TauntPumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/taunt.mp3" },
 	{ TauntPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/taunt1.mp3" },
 #pragma endregion
-
+	//Tutorial
+	{ Glass, "../Sources/assets/efectos_sonido/tutorial/glass.wav" },
+	{ DummyDie, "../Sources/assets/efectos_sonido/tutorial/dummy.wav" },
+	//NPC
+	{ VenancioTalk, "../Sources/assets/efectos_sonido/tutorial/VenancioTalk.wav" },
 	//Otros
-	{ Agro ,"../Sources/assets/efectos_sonido/agro.mp3" }
+	{ Agro ,"../Sources/assets/efectos_sonido/agro.mp3" },
 };
 
 vector<Resources::AudioVolume> Resources::audioVolume{
@@ -386,7 +480,7 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 
 vector <Resources::FontInfo> Resources::fontsRoutes{
 	{ RETRO, "../Sources/fonts/RetroGaming.ttf", GameManager::instance()->getFontSize() },
-	{ RETROSM, "../Sources/fonts/RetroGaming.ttf", GameManager::instance()->getFontSize() / 2 }
+	{ RETROSM, "../Sources/fonts/RetroGaming.ttf", GameManager::instance()->getFontSize()*3 / 4 }
 	//Para añadir nueva ruta: {FontId, "./Sources/fonts/name.ttf", size}
 };
 

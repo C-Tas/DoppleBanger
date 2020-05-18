@@ -5,7 +5,9 @@
 class VisualElement : public Draw
 {
 public:
+	//Background
 	VisualElement(Application* app, Texture* texture) : Draw(app, texture) {};
+	//Otros elementos estaticos
 	VisualElement(Application* app, Texture* texture, SDL_Rect dest) : Draw(app, texture, dest) {};
 	~VisualElement() {};
 	const virtual void draw() {

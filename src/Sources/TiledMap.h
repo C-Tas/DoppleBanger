@@ -8,7 +8,7 @@
 #include "../tmxLite/Map.hpp"
 #include "Application.h"
 
-enum class tileType{Wall, Obstacle, Undefined};
+enum class tileType{Wall, Obstacle, EndObstacle, Undefined};
 
 class Obstacle;
 class PlayState;
@@ -52,6 +52,10 @@ public:
 
 	///<summary>M�todo para pintar el mapa</summary>
 	const void draw();
+
+	Vector2D TileToPos(Vector2D tile);
+	Vector2D PosToTile(Vector2D pos);
+
 private:
 	CollisionCtrl* collisionCtrl_ = nullptr;
 	GameManager* gm_ = nullptr;
@@ -163,7 +167,8 @@ private:
 	void addOrthogonalObstacle(Tile tile);
 	
 	///<summary>M�todo auxiliar que crea una layer de tiles isom�tricas (y las almacena para dibujarlas)</summary>
-	void createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
+	void createIsometricTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, string layerName);
+	void createIsometricPathLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions);
 	///<summary>M�todo auxiliar que crea una layer de tiles �rtogonales</summary>
 	void createOrthogonalTileLayer(vector<tmx::TileLayer::Tile> layer_tiles, tmx::Vector2u map_dimensions, tmx::Vector2u tilesize);
 	

@@ -9,19 +9,17 @@ public:
 
 	bool update()override;
 	virtual ~BoneBullet() {};
-	
 private:
 	bool returnBone = false;
 	//ANIM
-	int frameAction_ = 0;					//Frame en el que se realiza la acción
-	const int W_BONE_FRAME = 15;			//Ancho del frame, estándar para todas
-	const int H_BONE_FRAME = 15;			//Alto del frame, estándar para todas
+	int frameAction_ = 0;					//Frame en el que se realiza la acciï¿½n
+	const int W_BONE_FRAME = 15;			//Ancho del frame, estï¿½ndar para todas
+	const int H_BONE_FRAME = 15;			//Alto del frame, estï¿½ndar para todas
 
 	//Idle
 	const int BONE_FRAME = 6;
 	//Idle derecha
-	const int BONE_FRAMES = 8;			//Frames de la animación
+	const int BONE_FRAMES = 8;			//Frames de la animaciï¿½n
 	const int BONE_FRAME_RATE = 75;		//Frame rate
 	virtual void initObject();
 };
-

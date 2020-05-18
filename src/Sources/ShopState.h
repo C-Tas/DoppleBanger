@@ -99,14 +99,17 @@ private:
 	void selectedIsLastElement(ContainerSHOP& list_, int nVisibleElements);
 	///<summary>M�todo auxiliar para actualizar los valores en los textos del dinero al cambiarlos</summary>
 	void moneyChange();
+	//donde se van a poner las descripciones
+	Point2D descriptionPoint{ 0,0 };
+	TextBox* descriptionBox;
 
 
 public:
 	///<summary>Constructora del ShopState</summary>
 	ShopState(Application* app = nullptr) : GameState(app) { initState(); };
 	///<summary>Detsructora</summary>
-	virtual ~ShopState() { endState(); background_ = nullptr; };
-
+	virtual ~ShopState() { endState(); background_ = nullptr; cout << gm_->getInventoryGold() << endl; };
+	
 #pragma region Callbacks
 
 	//<summary>Callbacks para cambiar elementos de este estado</summary>

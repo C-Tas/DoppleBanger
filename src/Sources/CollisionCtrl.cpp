@@ -31,6 +31,8 @@ void CollisionCtrl::islandCollisions() {
 	}
 	triggersToErase_.clear();
 
+	collisionWithEndOfZone_ = false;
+
 	//Colisiones con obst�culos
 	for (auto ob : obstacles_) {
 		
@@ -103,7 +105,7 @@ void CollisionCtrl::islandCollisions() {
 				bullet->setDoDamage(false);// ya no puede atacar al player hasta el siguiente golpe
 			}
 			//si ya no le quedan colisiones a la bala la borramos
-			if (bullet->numCollisions() == 0 ){
+			if (bullet->numCollisions() == 0) {
 				removeEnemyBullet(bullet);
 				bullet->onCollider();
 			}
@@ -166,9 +168,24 @@ void CollisionCtrl::islandCollisions() {
 			collider->onCollider();
 		}
 	}
+
+	for (auto ob : endObstacles_) {
+		if (Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+			player_->getCollisionRot(), (ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY(), ob->getCollisionRot())) {
+			player_->stop();
+			collisionWithEndOfZone_ = true;
+			//cout << "Debería salir un textbox con los botones para pasar de zona y estas cosas" << endl;
+		}
+	}
 }
 
 void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir la clase ShipObject
+		//Quitamos a las balas de las listas
+	for (auto it = playerBulletsToErase_.begin(); it != playerBulletsToErase_.end(); ++it) {
+		playerBullets_.remove(*it);
+	}
+	playerBulletsToErase_.clear();
+
 	Vector2D mousePos = input_->getRelativeMousePos();	//Guardamos la posici�n del rat�n
 	//Comprobamos si se ha hecho click
 	if (input_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
@@ -201,8 +218,10 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 			//Si el objeto en concreto hab�a sido pulsado
 			if (shipObjects_[i].click) {
-				shipObjects_[i].click = false;
-				shipObjects_[i].object->onCollider();
+				if (i != 3 || !GameManager::instance()->onTutorial()) {
+					shipObjects_[i].click = false;
+					shipObjects_[i].object->onCollider();
+				}
 			}
 		}
 	}
@@ -259,6 +278,38 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			(ob)->onCollider();
 			player_->setPos(player_->getPreviousPos());
 		}
+		for (auto bullet : playerBullets_) {
+			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+				(ob)->getPos(), (ob)->getScaleX(), (ob)->getScaleY())) {
+				//M�todo para destruir bala
+				removePlayerBullet(bullet);
+				bullet->onCollider();
+			}
+		}
+	}
+}
+
+void CollisionCtrl::tutorialCollision()
+{
+	if (bottle_ != nullptr && GameManager::instance()->getVenancioPhase() == 1) {
+		for (auto bullet : playerBullets_) {
+			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+				bottle_->getPos(), bottle_->getScaleX(), bottle_->getScaleY())) {
+				GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::Glass, 0, (int)EFFECT::TUTORIAL);
+				bottle_->onCollider();
+				bullet->onCollider();
+				bottle_ = nullptr;
+				
+			}
+		}
+	}
+	//Colisi�n cofres con jugador
+	for (auto chest : chests_) {
+		if (Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
+			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+			chest->onCollider();
+			removeChest(chest);	//Para que no pueda volver a abrirse el mismo cofre
+		}
 	}
 }
 
@@ -279,7 +330,12 @@ void CollisionCtrl::drawTextBox() {
 	//Generamos un textbox si se ha dado alguna colisión con un NPC
 	switch (npcCollision.id) {
 	case NPCsNames::ElderMan:
-		npcCollision.object->getTextBox()->dialogElderMan(-1);
+		if(canTalk){
+			GameManager::instance()->getApp()->getAudioManager()->setChannelVolume(80, (int)EFFECT::NPC);
+			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::VenancioTalk, 0, (int)EFFECT::NPC);
+			canTalk = false;
+		}
+		npcCollision.object->getTextBox()->dialogElderMan(numConversation_);
 		break;
 	case NPCsNames::Merchant:
 		npcCollision.object->getTextBox()->dialogMerchant();
@@ -301,8 +357,13 @@ void CollisionCtrl::drawTextBox() {
 		break;
 	default:
 		numConversation_ = 0;
+		canTalk = true;
 		break;
 	}
+
+	if (collisionWithEndOfZone_)
+		player_->getEndZoneTextBox()->passZoneDialog();
+
 	npcCollision.id = NPCsNames::Nobody;
 	npcCollision.object = nullptr;
 }

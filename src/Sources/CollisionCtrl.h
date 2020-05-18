@@ -49,6 +49,8 @@ public:
 	void islandCollisions();
 	///<summary>Comprueba las colisiones necesarias en el barco</summary>
 	void shipCollisions();
+	//Gestiona las colisiones con los objetos del tutorial
+	void tutorialCollision();
 	///<summary>Para renderizar los textBox en caso de ser necesario</summary>
 	void drawTextBox();
 	///<summary>Devuelve los objetos en un area</summary>
@@ -69,6 +71,8 @@ public:
 	void removeTrigger(Trigger* trigger) { triggersToErase_.push_back(trigger); };
 	///<summary>Quita un nuevo colliders</summary>
 	void removeCollider(Collider* collider) { collidersToErase_.push_back(collider); };
+	///<summary>Quita el dummy</summary>
+	void removeDummy() { enemies_.clear(); dummy_ = nullptr; };
 
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
 	void clearList() {
@@ -76,10 +80,12 @@ public:
 		obstacles_.clear(); obstacleWithRotation_.clear(); enemies_.clear();
 		chests_.clear(); triggers_.clear(); enemiesToErase_.clear(); chestsToErase_.clear();
 		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
+		endObstacles_.clear();
 		//Listas del barco
 		npcs_.clear(); shipObjects_.clear(); newNpc = true;
 		npcCollision.id = NPCsNames::Nobody;
 		npcCollision.object = nullptr;
+		collisionWithEndOfZone_ = false;
 	};
 #pragma endregion
 
@@ -94,6 +100,8 @@ public:
 	void addObstacle(Obstacle* obstacle) { obstacles_.push_back(obstacle); };
 	///<summary>Añade un obstáculo que tiene rotación</summary>
 	void addObstacleWithRotation(Obstacle* obstacle) { obstacleWithRotation_.push_back(obstacle); }
+	///<summary>Añade un objeto a los que marcan el final del nivel</summary>
+	void addEndObstacle(Obstacle* obstacle) { endObstacles_.push_back(obstacle); };
 	///<summary>A�ade un nuevo enemigo</summary>
 	void addEnemy(Enemy* enem) { enemies_.push_back(enem); };
 	///<summary>Vac�a la lista de cofres y setea los nuevos</summary>
@@ -106,8 +114,8 @@ public:
 	void addTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
 	///<summary>A�ade un nuevo colliders</summary>
 	void addCollider(Collider* collider) { colliders_.push_back(collider); };
-
-
+	//<summary>Método para saber si está activado el textbox de cambio de zona</summary>
+	bool isNextZoneTextBoxActive() { return collisionWithEndOfZone_; }
 	//Barco
 	///<summary>Guarda un nuevo NPC a la lista</summary>
 	void addNPC(NPCsNames name, NPC* npc) { npcs_.push_back(NPCsInfo(name, npc)); };
@@ -116,6 +124,11 @@ public:
 			shipObjects_.push_back(ShipObjectsInfo(ShipObjectsNames::Stash, stash)); shipObjects_.push_back(ShipObjectsInfo(ShipObjectsNames::Door, door));
 			shipObjects_.push_back(ShipObjectsInfo(ShipObjectsNames::Wheel, wheel)); shipObjects_.push_back(ShipObjectsInfo(ShipObjectsNames::Exit, exit));
 	};
+
+	//Tutorial
+	void setBottle(Enemy* obj) { bottle_ = obj; }
+	void setDummy(Enemy* obj) { dummy_ = obj; }
+
 
 #pragma endregion
 
@@ -137,6 +150,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 		ShipObjectsInfo(ShipObjectsNames i, ShipObject* ob) { id = i; object = ob; };
 	};
 
+	bool canTalk = true;
 	HandleEvents* input_ = nullptr;	//Para controlar si los objetos han sido clickados
 
 	Player* player_ = nullptr;
@@ -147,6 +161,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	//Islas
 	list<Obstacle*> obstacles_;
 	list<Obstacle*> obstacleWithRotation_;
+	list<Obstacle*> endObstacles_;
 	list<Enemy*> enemies_;
 	list<Chest*> chests_;
 	list<PlayerBullet*> playerBullets_;
@@ -161,9 +176,16 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Trigger*> triggersToErase_;
 	list<Collider*> collidersToErase_;
 
+	bool collisionWithEndOfZone_ = false;
+
 	//Barco
 	bool onShip = true;		//Para mandar si estamos en el barco o en una isla
 	bool newNpc = true;	//Para que los NPCs solo se agreguen una vez a la lista de desbloqueados
+
+	//tutorial 
+	Enemy* bottle_ = nullptr;
+	Enemy* dummy_ = nullptr;
+
 	NPCsInfo npcCollision;
 	vector<ShipObjectsInfo> shipObjects_;
 

@@ -7,6 +7,7 @@
 #include "SDL_macros.h"
 
 HUD::~HUD() {
+	gm_->setHUD(nullptr);
 	for (auto it = elementsHUD_.begin(); it != elementsHUD_.end(); ++it) {
 		delete(*it);
 	}
@@ -82,10 +83,23 @@ bool HUD::update() {
 	//Actualiza el tiempo de las pociones y las desactiva al llegar a 0
 	for (int i = 0; i < POTIONS_AMOUNT; i++) {
 		if (potionsHUD_[i].active_) {
+
+			potionsHUD_[i].currentTick_ = SDL_GetTicks();
+
+			//Si se abre el inventario, los skills o la pausa no reducimos la duración (el valor suele estar entre 0 y 10, así que 200 que son 0,2 segundos es más que suficiente para determinar pausa)
+			if ((potionsHUD_[i].currentTick_ - potionsHUD_[i].lastTick_) <= gm_->getDelayTime()) {
+				potionsHUD_[i].duration_ -= (potionsHUD_[i].currentTick_ - potionsHUD_[i].lastTick_);
+			}
+
+			potionsHUD_[i].lastTick_ = potionsHUD_[i].currentTick_;
+
+			//Sustituimos el número por el actual
 			if (potionsHUD_[i].potionTimeHUD_ != nullptr) delete potionsHUD_[i].potionTimeHUD_;
-			potionsHUD_[i].potionTimeHUD_ = new Texture(app_->getRenderer(), to_string((int)(potionsHUD_[i].duration_ - ((SDL_GetTicks() - potionsHUD_[i].time_)) / 1000.0) + 1),
+			potionsHUD_[i].potionTimeHUD_ = new Texture(app_->getRenderer(), to_string((int)(potionsHUD_[i].duration_ / 1000.0) + 1),
 				app_->getFontManager()->getFont(Resources::RETRO), SDL_Color{ (0,0,0,1) });
-			if ((potionsHUD_[i].active_) && (potionsHUD_[i].duration_ <= ((SDL_GetTicks() - potionsHUD_[i].time_) / 1000.0))) {
+
+			//Si se agota la duración, se desactiva
+			if ((potionsHUD_[i].active_) && (potionsHUD_[i].duration_ <= 0)) {
 				potionsHUD_[i].active_ = false;
 			}
 		}
@@ -93,7 +107,7 @@ bool HUD::update() {
 
  	currentLife_ = player_->getHealth();
 	maxLife_ = player_->getMaxHealth();
-	currentLife_ = gm_->getPlayer()->getHealth();
+	//currentLife_ = gm_->getPlayer()->getHealth();
 	propLife_ = currentLife_ / maxLife_;
 	clipLife_.h = life_->getHeight() * propLife_;	//vidaAct * AltTotal / VidaMax
 	clipLife_.y = life_->getHeight() - clipLife_.h;
@@ -149,13 +163,14 @@ void HUD::showPotionHUD(int index, double duration, double time)
 {
 	potionsHUD_[index].active_ = true;
 	potionsHUD_[index].duration_ = duration;
-	potionsHUD_[index].time_ = time;
+	potionsHUD_[index].lastTick_ = time;
 }
 
 void HUD::initObject() {
 	//Inicializaci�n del GameManager
 	gm_ = GameManager::instance();
 	gm_->setHUD(this);
+
 	SDL_Rect destRect;
 
 	//Creacion del fondo del HUD
@@ -252,7 +267,6 @@ potionHUD HUD::createPotionHUD(int key)
 {
 	potionHUD newPotion;
 	newPotion.active_ = false;
-	newPotion.time_ = 0;
 	newPotion.duration_ = 0;
 	newPotion.potionBackground_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::PotionBG));
 	newPotion.potionTimeHUD_ = new Texture(app_->getRenderer(), to_string(newPotion.duration_),

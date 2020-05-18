@@ -33,7 +33,7 @@ enum class Zone : int {
 	SpookyB = 6,
 	SpookyC = 7,
 	SpookyD = 8,
-	SpookyBoos = 9,
+	SpookyBoss = 9,
 	Volcanic = 10
 };
 enum class Island : int {
@@ -118,6 +118,8 @@ class GameManager {
 private:
 	//Puntero unico para evitar copias
 	static unique_ptr<GameManager> instance_;
+	//Milisegundo para considerar una pausa
+	const int DELAYTIME = 200;
 	//Puntos de haza�a
 	int achievementPoints_ = 0;
 	//Cantidad de dinero almacenada en el inventario
@@ -164,10 +166,14 @@ private:
 	vector <int> pointsReward_ = { 200, 200, 200, 200 };
 	//Vector que contiene el numero de enemigos que se tiene que matar en cada mision
 	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<int> enemiesMission_ = { 3, 3, 2, 3 };
+	vector<int> enemiesMission_ = { 4, 3, 2, 3 };
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
+	vector<ObjectName> objectsEquipped = { ObjectName::Unequipped, ObjectName::Unequipped };
+	//Constante del tamaño de pintado de los tiles
+	const int tileSize = 128;
+ 
 	vector<ObjectName> objectsEquipped_ = { ObjectName::Unequipped, ObjectName::Unequipped };
 
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
@@ -180,7 +186,12 @@ private:
 	HUD* hud_ = nullptr;
 	//puntero a la aplicacion
 	Application* app_ = nullptr;
-
+	//actual zona en la que nos encontramos
+	Zone currentZone_ = Zone::CaribeanA;
+	//vida actual del player(para guardarla al pasar de zona)
+	double currPlayerLife_ = 0;
+	//mana actual del player(para guardarlo al pasar de zona)
+	double currPlayerMana_ = 0;
 	//Metodos para guardar y cargar partida
 	#pragma region Guardar/Cargar
 		#pragma region Guardar
@@ -218,6 +229,11 @@ private:
 		void loadUsableType(jute::jValue& mainJson, string tag, int i);
 		#pragma endregion
 	#pragma endregion
+
+	bool hudActive_ = false;
+	//Fases de los NPCS
+	bool tutorial = false;
+	int venancioPhase = 0;
 
 public:
 	//Constructor vacio
@@ -284,6 +300,12 @@ public:
 	//Devuelve si estamos o no en la isla
 	const bool getOnShip() { return onShip_; };
 
+	const int getTileSize() { return tileSize; };
+
+	//Devuelve el oro conseguido
+	const int getGold() { return inventoryGold_; };
+	//Devuelve el tiempo que hemos puesto a ojo para saber si ha habido pausa :)
+	const int getDelayTime() { return DELAYTIME; };
 	//Devuelve los puntos de haza�a
 	const int getAchievementPoints() { return achievementPoints_; };
 	//Devuelve el dinero del inventario
@@ -333,11 +355,17 @@ public:
 	//Devuelve al jugador
 	Player* getPlayer() { return player_; };
 	//Devuelve el equipamiento del player
-	playerEquipment getEquip() { return currEquip_; };
+	playerEquipment& getEquip() { return currEquip_; };
 	//Devuelve al clon
 	GameObject* getClon() { return clon_; };
 	//Devuelve el HUD
 	HUD* getHUD() { return hud_; };
+	//Devuelve la zona en la que nos encontramos actualmente
+	Zone getCurrentZone() { return currentZone_; }
+	//Devuelve el currentLife del player
+	const double getCurrentPlayerLife() { return currPlayerLife_; }
+	//Devuelve el currentMana del player
+	const double getCurrentPlayerMana() { return currPlayerMana_; }
 	
 #pragma endregion
 
@@ -390,14 +418,16 @@ public:
 	inline void setCurrIsland(Island newIsland) { currIsland_ = newIsland; };
 	//Marca como desbloqueda la skill que pases como parámetro
 	inline void setSkillUnlocked(SkillName skill) { skillsUnlocked_[(int)skill] = true; };
-
+	//Marca como bloqueada la skill que pases como parámetro
+	inline void setSkillLocked(SkillName skill) { skillsUnlocked_[(int)skill] = false; };
 	//Actualiza el estado del cooldown, no es inline por el HUD
 	void setSkillCooldown(bool cooldown, Key key);
 	//Actualiza la habilidad equipada en el HUD y en el vector, no es inline por el HUD
 	void setSkillEquiped(SkillName newSkill, Key key);
 	//Actualiza el objeto equipado en el HUD y en el vector, no es inline por el HUD
 	void setObjectEquipped(ObjectName newObject, Key key);
-
+	//
+	Application* getApp() { return app_; }
 	//Asigna al puntero de player
 	inline void setPlayer(Player* player) { player_ = player; };
 	//Equipamiento
@@ -414,15 +444,35 @@ public:
 	//Asigna al puntero de clon
 	inline void setClon(GameObject* clon) { clon_ = clon; };
 	//Asigna el puntero de hud
-	inline void setHUD(HUD* hud) { hud_ = hud; };
+	inline void setHUD(HUD* hud) { hud_ = hud; hudActive_ = !hudActive_; };
 
 	//borra al clon
 	inline void deleteClon() { clon_ = nullptr; };
 	//aplicacion
 	inline void setApp(Application* app) { app_ = app; };
+	//Asigna la nueva zona en la que nos encontramos
+	inline void setCurrentZone(Zone newZone) { currentZone_ = newZone; }
+	inline void setHudActive(bool active) { hudActive_ = active; }
+
+	//Devuelve el currentLife del player
+	inline void setCurrentPlayerLife(double newPlayerLife) { currPlayerLife_ = newPlayerLife; }
+	//Devuelve el currentMana del player
+	inline void setCurrentPlayerMana(double newPlayerMana) { currPlayerMana_ = newPlayerMana; }
 #pragma endregion
 	//Para añadir objetos al inventario
 	void addToInventory(Item* ob);
 	//Para añadir objetos al alijo
 	void addToStash(Item* ob);
+
+	//tutorial
+	void activeTutorial() { tutorial = true; }
+	void desactiveTutorial() { tutorial = false; }
+	bool onTutorial() { return tutorial; }
+
+	//SettesNPC
+	void nextPhaseVenancio() { venancioPhase++; }
+	//GettersNPC
+	int getVenancioPhase() { return venancioPhase; }
+	//<summary>Método que resetea la zona segun en la isla que estés</summary>
+	void resetIsland();
 };

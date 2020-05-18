@@ -12,10 +12,18 @@ public:
 	ShipState(Application* app) : PlayState(app) { initState(); }
 	virtual ~ShipState() { delete collisionMap_; }
 	void update();
+	bool onTutorial() { return tutorialComplete; }
+protected:
+	//Para Venancio
+	NPC* venancio_ = nullptr;
+	Vector2D TUTORIAL_POS;
+	Vector2D POST_TUTORIAL_POS;
+	bool tutorialComplete = true;
 
 private:
-	Uint32 startInstance_ = 0;
 	bool songActive = false;
+
+
 
 	//Para guardar la posici�n del clik del rat�n  
 	SDL_Point mouse; 
@@ -34,6 +42,7 @@ private:
 	ShipObject* door_ = nullptr; //Trampilla
 	ShipObject* wheel_ = nullptr;//Tim�n
 	ShipObject* exit_ = nullptr; //Salida
+
 
 	//Dimensiones de las entidades
 	const double W_WIN = app_->getWindowWidth();
@@ -56,8 +65,8 @@ private:
 	#pragma endregion
 
 	#pragma region NPCs
-	const double W_ELDERMAN = W_WIN / 11;
-	const double H_ELDERMAN = H_WIN / 6;
+	const double W_ELDERMAN = W_WIN * 2 / 14;
+	const double H_ELDERMAN = H_WIN * 2 / 7;
 
 	const double W_MERCHANT = W_WIN * 2 / 19;
 	const double H_MERCHANT = H_WIN * 2 / 9;
@@ -78,7 +87,7 @@ private:
 	const double H_CARTOGRAPHER = H_WIN / 3;
 	#pragma region
 
-	void initState();
+	virtual void initState();
 	void createNPCs();
 
 	#pragma region Callbacks
