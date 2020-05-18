@@ -355,6 +355,9 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		Player* player = new Player(app_, pos, Vector2D(W_PLAYER, H_PLAYER));
 		state_->addRenderUpdateLists(player);
 		state_->setPlayer(player);
+		player->setHealth(gm_->getCurrentPlayerLife());
+		player->setMana(gm_->getCurrentPlayerMana());
+
 		gm_->setPlayer(player);
 		collisionCtrl_->setPlayer(player);
 		player->setColliderPos(Vector2D((player->getScale().getX() / 3), 2* (player->getScale().getY() / 4)));

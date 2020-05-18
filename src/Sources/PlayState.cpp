@@ -163,9 +163,11 @@ void PlayState::swapRenders(GameObject* obj, GameObject* other)
 
 void PlayState::deleteExceptHUD(Zone newZone)
 {
+	gm_->setCurrentPlayerLife(player_->getHealth());
+	gm_->setCurrentPlayerMana(player_->getMana());
 	gm_->setCurrentZone(newZone);
-	for (auto i = objectsToRender_.begin(); i != --objectsToRender_.end(); ++i) {
-		removeRenderUpdateLists(*(i));
+	for (auto i = gameObjects_.begin(); i != --gameObjects_.end(); ++i) {
+		removeUpdateList(*(i));
 	}
 	gameObjects_.clear();
 	objectsToRender_.clear();

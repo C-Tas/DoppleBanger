@@ -95,6 +95,11 @@ void GameState::addUpdateList(GameObject* obj) {
 	gameObjects_.push_back(obj);
 }
 
+void GameState::addUpdateListAsFirst(GameObject* obj)
+{
+	gameObjects_.push_front(obj);
+}
+
 void GameState::addRenderList(Draw* obj) {
 	objectsToRender_.push_back(obj);
 }

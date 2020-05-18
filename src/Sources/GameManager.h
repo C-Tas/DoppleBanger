@@ -188,6 +188,10 @@ private:
 	Application* app_ = nullptr;
 	//actual zona en la que nos encontramos
 	Zone currentZone_ = Zone::CaribeanA;
+	//vida actual del player(para guardarla al pasar de zona)
+	double currPlayerLife_ = 0;
+	//mana actual del player(para guardarlo al pasar de zona)
+	double currPlayerMana_ = 0;
 	//Metodos para guardar y cargar partida
 	#pragma region Guardar/Cargar
 		#pragma region Guardar
@@ -358,6 +362,10 @@ public:
 	HUD* getHUD() { return hud_; };
 	//Devuelve la zona en la que nos encontramos actualmente
 	Zone getCurrentZone() { return currentZone_; }
+	//Devuelve el currentLife del player
+	const double getCurrentPlayerLife() { return currPlayerLife_; }
+	//Devuelve el currentMana del player
+	const double getCurrentPlayerMana() { return currPlayerMana_; }
 	
 #pragma endregion
 
@@ -445,6 +453,11 @@ public:
 	//Asigna la nueva zona en la que nos encontramos
 	inline void setCurrentZone(Zone newZone) { currentZone_ = newZone; }
 	inline void setHudActive(bool active) { hudActive_ = active; }
+
+	//Devuelve el currentLife del player
+	inline void setCurrentPlayerLife(double newPlayerLife) { currPlayerLife_ = newPlayerLife; }
+	//Devuelve el currentMana del player
+	inline void setCurrentPlayerMana(double newPlayerMana) { currPlayerMana_ = newPlayerMana; }
 #pragma endregion
 	//Para añadir objetos al inventario
 	void addToInventory(Item* ob);

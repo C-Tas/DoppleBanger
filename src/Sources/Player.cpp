@@ -477,7 +477,7 @@ void Player::shoot(Vector2D dir)
 		if (ricochetCD_.isCooldownActive()) {
 			blunderbuss->activateRicochet();
 		}
-		app_->getCurrState()->addUpdateList(blunderbuss);
+		app_->getCurrState()->addUpdateListAsFirst(blunderbuss);
 	}
 
 	if (clon_ != nullptr)
