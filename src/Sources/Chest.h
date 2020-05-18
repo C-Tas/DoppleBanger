@@ -29,7 +29,7 @@ public:
 	};
 	//Constructora para cofre que solo otorga oro
 	Chest(Application* app, Point2D pos, Vector2D scale, int gold) : //constructora
-		Collider(app, pos, scale), rN() {
+		Collider(app, pos, scale), rN(RandEquipGen(app)) {
 		gold_ = gold;
 		initObject();
 	};
@@ -41,5 +41,6 @@ public:
 	virtual void onCollider();
 
 	virtual void initObject();
+
 	virtual void initAnim();
 };
