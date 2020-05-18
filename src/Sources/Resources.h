@@ -156,7 +156,7 @@ public:
 
 		//Sprites
 		Dragon,
-        PlayerFront,
+		PlayerFront,
 		MonkeyFront,
 		WolfFront,
 		Kraken,
@@ -175,6 +175,7 @@ public:
 		MortyFuneral,
 		CartographerFuneral,
 
+		Crab,
 		//Bosses
 		Magordito,
 		Cleon,
@@ -185,6 +186,7 @@ public:
 		Azul,
 
 		//Animaciones
+		CrabWalk,
 		CrabAttack,
 		//Player
 		PlayerIdleRightAnim,
@@ -216,20 +218,20 @@ public:
 		ClonVanishUpAnim,
 		//Calabaza
 			//Idle
-		PumpkinIdleRightAnim,
-		PumpkinIdleLeftAnim,
-		PumpkinIdleUpAnim,
-		PumpkinIdleDownAnim,
+			PumpkinIdleRightAnim,
+			PumpkinIdleLeftAnim,
+			PumpkinIdleUpAnim,
+			PumpkinIdleDownAnim,
 			//Explosion
-		PumpkinExpRightAnim,
-		PumpkinExpLeftAnim,
-		PumpkinExpUpAnim,
-		PumpkinExpDownAnim,
+			PumpkinExpRightAnim,
+			PumpkinExpLeftAnim,
+			PumpkinExpUpAnim,
+			PumpkinExpDownAnim,
 			//Attack
-		PumpkinAttackRightAnim,
-		PumpkinAttackLeftAnim,
-		PumpkinAttackUpAnim,
-		PumpkinAttackDownAnim,
+			PumpkinAttackRightAnim,
+			PumpkinAttackLeftAnim,
+			PumpkinAttackUpAnim,
+			PumpkinAttackDownAnim,
 			//Move
 		PumpkinMoveRightAnim,
 		PumpkinMoveLeftAnim,
@@ -308,16 +310,16 @@ public:
 		Bottle,
 		Dummy,
 
-		//Textos
-		PlayText,
-		ExitText,
-		ControlsText,
-		LoadText,
-		CreditsText, 
-		ResumeText,
-		MainMenuText,
-		StashMoneyText,
-		InventoryMoneyText,
+				//Textos
+				PlayText,
+				ExitText,
+				ControlsText,
+				LoadText,
+				CreditsText,
+				ResumeText,
+				MainMenuText,
+				StashMoneyText,
+				InventoryMoneyText,
 
 		//proyectiles
 		Coco,
@@ -381,7 +383,7 @@ public:
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
-	enum AudioId : int{
+	enum AudioId : int {
 		//Música
 		MainTheme,
 		Caribbean,
@@ -389,6 +391,20 @@ public:
 		Storyboard,
 		WavesSound,
 		FuneralTheme,
+
+		//Efectos de sonido
+		Agro,
+
+		//Efectos para el lobo
+		WolfHowl,
+		WolfAttack,
+		WolfDie,
+
+		//Efectos para el mono
+		MonkeyIdle,
+		MonkeyAttack,
+		MonkeyShoot,
+		MonkeyDie,
 
 		//player
 		WalkAudio,
@@ -460,9 +476,6 @@ public:
 
 		//NPC
 		VenancioTalk,
-
-		//Otros
-		Agro,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
@@ -470,7 +483,7 @@ public:
 		RETRO,
 		RETROSM
 	};
-	
+
 	///<summary>Struct para la informacion de las imagenes</summary>
 	struct ImageInfo {
 		TextureId textureId;
@@ -488,7 +501,7 @@ public:
 		AudioId id;
 		string fileName;
 	};
-	
+
 	///<summary>Struct para la informacion de las fuentes</summary>
 	struct FontInfo {
 		FontId id;
@@ -518,6 +531,9 @@ public:
 	
 	//<summary>Vector para el volumen de cada canal</summary>	
 	static vector<AudioVolume> audioVolume;
+
+	///<summary>Vector con las rutas de la música a cargar</summary>
+	static vector<MusicInfo> musicRoutes;
 
 	///<summary>Vector con las rutas de las fuentes a cargar</summary>
 	static vector<FontInfo> fontsRoutes;

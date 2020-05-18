@@ -21,7 +21,7 @@ public:
 	virtual ~Vector2D() {}
 #pragma region Getters
 	inline Vector2D getVec() const { return { x_,y_ }; };
-	inline double getX() const { return x_; };
+ 	inline double getX() const { return x_; };
 	inline double getY() const { return y_; };
 #pragma endregion
 

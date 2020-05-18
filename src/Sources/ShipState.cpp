@@ -115,13 +115,18 @@ void ShipState::initState()
 
 void ShipState::update()
 {
+
 #ifdef _DEBUG
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_BACKSPACE))
 		app_->getGameStateMachine()->changeState(new TestState(app_));
+	else {
 #endif
-	PlayState::update();
+		PlayState::update();
+		collisionCtrl_->shipCollisions();
+#ifdef _DEBUG
+	}
+#endif // _DEBUG
 
-	collisionCtrl_->shipCollisions();
 }
 
 void ShipState::loadState(){

@@ -141,9 +141,9 @@ void TiledMap::setObstacleType(int gid, Obstacle* obstacle)
 
 void TiledMap::addIsometricObstacle(Tile tile, int gid, tileType tileType_)
 {
-	SDL_Rect collisionArea = { (int)tile.worldPos_.getX() + (tileSize_ / 3), (int)tile.worldPos_.getY() + (tileSize_ / 4), (tileSize_ ), (tileSize_ ) };
-	Obstacle* newObstacle = new Obstacle(app_, collisionArea, app_->getTextureManager()->getTexture(Resources::CollisionTile), Vector2D(tile.worldPos_.getX() , tile.worldPos_.getY() + (tileSize_ / 8))
-		, Vector2D(tileSize_, (double)(tileSize_/2) + (double)(tileSize_/8)));
+	SDL_Rect collisionArea = { (int)tile.worldPos_.getX() + (tileSize_ / 3), (int)tile.worldPos_.getY() + (tileSize_ / 4), (tileSize_), (tileSize_) };
+	Obstacle* newObstacle = new Obstacle(app_, collisionArea, app_->getTextureManager()->getTexture(Resources::CollisionTile), Vector2D(tile.worldPos_.getX(), tile.worldPos_.getY() + (tileSize_ / 8))
+		, Vector2D(tileSize_, (double)(tileSize_ / 2) + (double)(tileSize_ / 8)));
 	//Los a�adimos a esta lista para luego poder borrarlos desde el propio mapa
 	mapObstacles_.push_back(newObstacle);
 	
@@ -272,9 +272,11 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 	else if (objectType == "Crab") {
 		//A�adir cangrejo
 		////Por ahora parece que no se pueden crear pero creo que es por las texturas
-		//Crab* crab = new Crab(app_, pos, Vector2D(W_CRAB, H_CRAB));
-		//state_->addEnemy(crab);
-		//collisionCtrl_->addEnemy(crab);
+		Crab* crab = new Crab(app_, pos, Vector2D(W_CRAB, H_CRAB));
+		state_->addEnemy(crab);
+		crab->setIniPosMap_(iniPos_);
+		crab->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
+		CollisionCtrl::instance()->addEnemy(crab);
 	}
 	else if (objectType == "Wolf") {
 		//A�adir lobo
@@ -304,6 +306,7 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 	else if (objectType == "Kraken") {
 		Kraken* kraken = new Kraken(app_, pos, Vector2D(W_KRAKEN,H_KRAKEN));
 		kraken->setIniPosMap_(iniPos_);
+		//state_->addRenderUpdateLists(monkey);
 		state_->addEnemy(kraken);
 		collisionCtrl_->addEnemy(kraken);
 	}
@@ -323,6 +326,7 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		pirate->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addEnemy(pirate);
 		collisionCtrl_->addEnemy(pirate);
+		state_->addRenderUpdateLists(pirate);
 	}
 	else if (objectType == "Cleon") {
 		//A�adir Cleon

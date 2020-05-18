@@ -10,11 +10,10 @@
 #include "Inventory.h"
 #include "HUD.h"
 #include "conio.h"
-
+#include "TestState.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Obstacle.h"
-
 
 void PlayState::draw() const {
 	GameState::draw();

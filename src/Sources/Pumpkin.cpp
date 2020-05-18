@@ -141,8 +141,8 @@ void Pumpkin::initialStats()
 	MANA = 100;
 	MANA_REG = 1;
 	ARMOR = 10;
-	MELEE_DMG = 750;
-	DIST_DMG = 300;
+	MELEE_DMG = 0;
+	DIST_DMG = 0;
 	CRIT = 0;
 	MELEE_RANGE = 200;
 	DIST_RANGE = 350;

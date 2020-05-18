@@ -180,7 +180,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	//Sprites
 	{ Dragon,"../Sources/assets/enemigos/dragon.png" },
 	{ PlayerFront, "../Sources/assets/player/frontal.png" },
-	{ CrabAttack, "../Sources/assets/enemigos/crab/crab_attack.png" },
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	{ Kraken, "../Sources/assets/enemigos/kraken/kraken.png" },
@@ -258,6 +257,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PumpkinAttackLeftAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispIzq.png" },
 	{ PumpkinAttackUpAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispAtras.png" },
 	{ PumpkinAttackDownAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispDelante.png" },
+//crab
+     {CrabAttack,"../Sources/assets/enemigos/crab/crabAttack.png" },
+     {CrabWalk,"../Sources/assets/enemigos/crab/crabWalk.png"},
 		//Move
 	{ PumpkinMoveRightAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDer.png" },
 	{ PumpkinMoveLeftAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovIzq.png" },

@@ -96,7 +96,7 @@ bool Enemy::onRange() {
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = currEnemy_->getCenter();
 		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
-			center.getX(), center.getY(), currStats_.distRange_))
+			center.getX(), center.getY(), rangeVision_))
 		{
 			return true;
 		}
