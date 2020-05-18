@@ -287,12 +287,12 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 	}
 	else if (objectType == "Skeleton") {
 		//A�adir esqueleto
-		Skeleton* monkey = new Skeleton(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
+		Skeleton* skeleton = new Skeleton(app_, pos, Vector2D(W_SKELETON, H_SKELETON));
 		//state_->addRenderUpdateLists(monkey);
-		monkey->setIniPosMap_(iniPos_);
-		monkey->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
-		state_->addEnemy(monkey);
-		CollisionCtrl::instance()->addEnemy(monkey);
+		skeleton->setIniPosMap_(iniPos_);
+		skeleton->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
+		state_->addEnemy(skeleton);
+		CollisionCtrl::instance()->addEnemy(skeleton);
 	}
 	else if (objectType == "Pumpkin") {
 		Pumpkin* pumpkin = new Pumpkin(app_, pos, Vector2D(W_PUMPKIN, H_PUMPKIN));

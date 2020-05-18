@@ -78,18 +78,18 @@ bool Skeleton::update() {
 		//Si el esqueeto tiene un enemigo y lo tiene a rango
 		if (onRange()) {
 			//changeAnim(attackAnim_);//animacion de ataque del esqueleto
-			attack();
+			initShoot();
 		}
 		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
 		else if (getEnemy(currStats_.distRange_))
 		{
 			//changeAnim(attackAnim_);//animacion de ataque del esqueleto
-			attack();
+			initShoot();
 		}
 		//Tengo enemigo pero no a rango
 		else
 		{
-			currState_ == STATE::IDLE;
+			initIdle();
 			//changeAnim(idleAnim_); animacion de idle del esqueleto
 			currEnemy_ = nullptr;
 		}

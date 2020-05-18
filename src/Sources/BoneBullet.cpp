@@ -1,7 +1,7 @@
 ﻿#include "BoneBullet.h"
 bool BoneBullet::update() {
-	currTime_ = SDL_GetTicks();
 	updateFrame();
+	bulletlifeCD_.updateCooldown();
 	//Si ha pasado la mitad del tiempo de vida vuelve en direccion contraria
 	if ((bulletlifeCD_.getDuration() <= lifeSpan_/2) && !returnBone) {
 		dir_ = dir_ * -1;
