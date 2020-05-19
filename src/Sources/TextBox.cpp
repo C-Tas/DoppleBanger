@@ -93,7 +93,7 @@ void TextBox::passZoneDialog()
 	dest.x = lineSpacing;
 	dest.y = app_->getWindowHeight() - dest.h;
 
-	Texture text(app_->getRenderer(), "Has llegado al final de la zona, ¿Deseas continuar?", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Has llegado al final de la zona, " + Resources::tildes_['¿'] +"Deseas continuar?", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(lineSpacing, dest.y + lineSpacing);
 
 	goToShipButton_->draw();
