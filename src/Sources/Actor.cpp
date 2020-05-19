@@ -68,4 +68,3 @@ void Actor::manageTint() {
 		SDL_SetTextureColorMod(texture_->getSDLTex(), 255, 255, 255);
 	}
 }
-

@@ -528,5 +528,9 @@ map<char, string> Resources::tildes_{
 	//interrogante español
 	{ 
 		'¿', "\u00BF" 
+	},
+	//exclamación española
+	{
+		'¡', "\u00A1"
 	}
 };

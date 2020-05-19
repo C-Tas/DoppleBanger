@@ -121,35 +121,35 @@ void TextBox::dialogElderMan(int num) {
 			text.loadFromText(app_->getRenderer(), "Veo que no todo el mundo necesita un taca-taca para morverse...", 
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
-			text.loadFromText(app_->getRenderer(), "Te veo verde, has visto lo mamadisimo que estoy?, te puedo dar unos consejos.",
+			text.loadFromText(app_->getRenderer(), "Te veo verde, " + Resources::tildes_['¿'] + "has visto lo mamad" + Resources::tildes_['i'] + "simo que estoy?, te puedo dar unos consejos.",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing * 2);
 			break;
 		case 1:
 			skipTutorial_->setPos(Vector2D{ app_->getWindowWidth() - skipTutorial_->getScaleX() - lineSpacing, dest.y + (double)lineSpacing * 3 });
 
-			text.loadFromText(app_->getRenderer(), "Usa tu pistola con click derecho para romper esa botella que me recuerda al amor de ella. ",
+			text.loadFromText(app_->getRenderer(), "Usa tu pistola con click derecho para romper esa botella que me recuerda al amor de ella.",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 2:
-			text.loadFromText(app_->getRenderer(), "Presionando una vez el click izquierdo sobre un enemigo, puedes mochar a tus enemigos.",
+			text.loadFromText(app_->getRenderer(), "Presionando una " + Resources::tildes_['u'] + "nica vez el click izquierdo sobre un enemigo, puedes mocharlo.",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
-			text.loadFromText(app_->getRenderer(), "Te recomiendo limpiar tu espada despues de mochar al susodicho.",
+			text.loadFromText(app_->getRenderer(), "Te recomiendo limpiar tu espada despu" + Resources::tildes_['e'] + "s de mochar al susodicho.",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing * 2);
 			break;
 		case 3:
 			switch (num) {
 			case 0:
-				text.loadFromText(app_->getRenderer(), "Has visto que el susodicho te ha dado puntos de hazana?",
+				text.loadFromText(app_->getRenderer(), Resources::tildes_['¿'] + "Has visto que el susodicho te ha dado puntos de haza" + Resources::tildes_['ñ'] + "a?",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
-				text.loadFromText(app_->getRenderer(), "Se consiguen al ganar experiencia.",
+				text.loadFromText(app_->getRenderer(), "Puedes verlos en la esquina derecha de abajo. Se consiguen al ganar experiencia.",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing * 2);
-				text.loadFromText(app_->getRenderer(), "Abre el menu de habilidades con la 'V' y sumalos a la segunda rama.",
+				text.loadFromText(app_->getRenderer(), "Abre el menu de habilidades con la 'V' y s" + Resources::tildes_['u'] + "malos a la segunda rama.",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing * 3);
 
@@ -162,51 +162,70 @@ void TextBox::dialogElderMan(int num) {
 
 				text.loadFromText(app_->getRenderer(), "Ahora usa ese acesso para activar la habilidad y mocha al susodicho.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+				text.loadFromText(app_->getRenderer(), "Utilizar una habilidad te consumir" + Resources::tildes_['a'] + " man" + Resources::tildes_['a'] + ", puedes ver la cantidad que tienes en la barra azul del tim" + Resources::tildes_['o'] + "n.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + (lineSpacing * 3));
 				break;
 			}
 			break;
 		case 5:
 			switch (num) {
 			case 0:
-				text.loadFromText(app_->getRenderer(), "Algunas veces encontraras tesoros, no lo dudes mochalos a todos!!",
+				text.loadFromText(app_->getRenderer(), "Algunas veces encontrar" + Resources::tildes_['a'] + "s tesoros, no lo dudes " + Resources::tildes_['¡'] + Resources::tildes_['¡'] + "m" + Resources::tildes_['o'] + "chalos a todos!!",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
-				text.loadFromText(app_->getRenderer(), "Usa el oro para comprar una pocion a ese tio mas verde que tu.",
+				text.loadFromText(app_->getRenderer(), "Usa el oro del cofre para comprar una poci" + Resources::tildes_['o'] + "n a ese t" + Resources::tildes_['i'] + "o mas verde que t" + Resources::tildes_['u'] + ".",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing * 2);
-				text.loadFromText(app_->getRenderer(), "Si te sobra algo podrias comprarme un ron, no?",
+				text.loadFromText(app_->getRenderer(), "Si te sobra algo podr" + Resources::tildes_['i'] + "as comprarme un ron, " + Resources::tildes_['¿'] + "no?",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing * 3);
 				button_->draw();
 				button_->update();
 				break;
 			case 1:
-				text.loadFromText(app_->getRenderer(), "Abre el inventario con la tecla C y equipala con el boton verde.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "Abre el inventario con la tecla 'C' y equ" + Resources::tildes_['i'] + "pala con el bot" + Resources::tildes_['o'] + "n verde.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
 
-				text.loadFromText(app_->getRenderer(), "Ahora usa ese acceso para usar la susodicha pocion.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "Los objetos equipados se usan con los accesos '1' y '2' respectivamente.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+				text.loadFromText(app_->getRenderer(), "Prueba a beberte la poci" + Resources::tildes_['o'] + "n, ver" + Resources::tildes_['a'] + "s como te sube la cantidad de man" + Resources::tildes_['a'] + ".", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + (lineSpacing * 3));
 				break;
 			}
 			break;
-
 		case 6:
-			text.loadFromText(app_->getRenderer(), "Ten cuidado ahí fuera porque si eres derrotada podre ir a salvarte pero no podre recuperar ni el oro ni los objetos",
-				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + lineSpacing);
-			text.loadFromText(app_->getRenderer(), "que no lleves equipados. Y recuerda, siempre puedes confiar en tu anillo, con la tecla R podras invocarla, actuara",
-				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + lineSpacing * 2);
-			text.loadFromText(app_->getRenderer(), "como diana para los enemigos y disparara donde tu lo hagas. Ademas podras mejorarla con los puntos de hazana para que",
-				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + lineSpacing * 3);
-			text.loadFromText(app_->getRenderer(), "también pueda mochar. Bueno, si me disculpas, hoy tocha pecho y biceps.",
-				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + lineSpacing * 4);
+			switch (num) {
+			case 0:
+				text.loadFromText(app_->getRenderer(), "Ten cuidado ah" + Resources::tildes_['i'] + " fuera porque si eres derrotada podr" + Resources::tildes_['e'] + " ir a salvarte",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+				text.loadFromText(app_->getRenderer(), "pero no podr" + Resources::tildes_['e'] + " recuperar ni el oro ni los objetos que no lleves equipados.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 2);
+				text.loadFromText(app_->getRenderer(), "Y recuerda, siempre puedes confiar en tu anillo, con la tecla 'R' podr" + Resources::tildes_['a'] + "s invocarla.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 3);
+				button_->draw();
+				button_->update();
+				break;
+			case 1:
+				text.loadFromText(app_->getRenderer(), "Actuar" + Resources::tildes_['a'] + " como diana para los enemigos y disparar" + Resources::tildes_['a'] + " donde t" + Resources::tildes_['u'] + " lo hagas.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+				text.loadFromText(app_->getRenderer(), "Adem" + Resources::tildes_['a'] + "s podr" + Resources::tildes_['a'] + "s mejorarla con los puntos de haza" + Resources::tildes_['ñ'] + "a para que tambi" + Resources::tildes_['e'] + "n pueda mochar.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 2);
+				text.loadFromText(app_->getRenderer(), "Bueno, si me disculpas, hoy tocha pecho y biceps.",
+					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 3);
+				break;
+			}
 			break;
 		default:
 			break;
-		}//cuidado ahí fuera porque si es derrotada por los enemigos irán a salvarla pero no podrá recuperar ni su oro ni sus objetos
+		}
 	}
 	else
 	{
