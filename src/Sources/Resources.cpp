@@ -429,6 +429,16 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ MonkeyShootSound ,"../Sources/assets/efectos_sonido/monkey/monoShoot.wav" },
 	{ MonkeyDieSound ,"../Sources/assets/efectos_sonido/monkey/monoDie.ogg" },
 #pragma endregion
+	//Esqueleto
+#pragma region Skeleton
+	{ SkeletonAttack ,"../Sources/assets/efectos_sonido/skeleton/attack.mp3" },
+	{ SkeletonBoomerang ,"../Sources/assets/efectos_sonido/skeleton/boomerang.mp3" },
+	{ SkeletonDeath ,"../Sources/assets/efectos_sonido/skeleton/death.mp3" },
+	{ SkeletonHit1 ,"../Sources/assets/efectos_sonido/skeleton/hit1.mp3" },
+	{ SkeletonHit2 ,"../Sources/assets/efectos_sonido/skeleton/hit2.mp3" },
+	{ SkeletonHit3 ,"../Sources/assets/efectos_sonido/skeleton/hit3.mp3" },
+	{ SkeletonIdle ,"../Sources/assets/efectos_sonido/skeleton/idle.mp3" },
+#pragma endregion
 	//Calabaza
 #pragma region Pumpkin
 	{ AgroPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/agro.mp3" },
@@ -472,10 +482,14 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ WolfChannel, 6 },
 	//Canal del mono
 	{ MonkeyChannel, 6 },
-
 	//Canal de la calabaza
 	{ PumpkinChannel1, 6 },
 	{ PumpkinChannel2, 6 },
+	//Canal del esqueleto
+	{ SkeletonChannel1, 40 },
+	{ SkeletonChannel2, 40 },
+	{ SkeletonChannel3, 40 },
+	{ SkeletonChannel4, 6 },
 	//Canal del pirata
 	{ EnemyPirateChannel, 6 }
 };

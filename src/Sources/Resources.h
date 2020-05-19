@@ -375,6 +375,11 @@ public:
 		//Canal de la calabaza
 		PumpkinChannel1,
 		PumpkinChannel2,
+		//Canal del esqueleto
+		SkeletonChannel1,
+		SkeletonChannel2,
+		SkeletonChannel3,
+		SkeletonChannel4,
 		//Canal del pirata
 		EnemyPirateChannel,
 
@@ -456,6 +461,15 @@ public:
 		MonkeyAttackSound,
 		MonkeyShootSound,
 		MonkeyDieSound,
+
+		//Esqueleto
+		SkeletonAttack,
+		SkeletonBoomerang,
+		SkeletonDeath,
+		SkeletonHit1,
+		SkeletonHit2,
+		SkeletonHit3,
+		SkeletonIdle,
 
 		//Calabaza
 		AgroPumpkin,
