@@ -129,7 +129,7 @@ void ShopState::initState() {
 
 	//Cogemos la referencia de las listas que hay en GameManager
 	createItems(8);
-	gm_->setShop(shop_.objects_);
+	shop_.objects_ = gm_->getShop();
 	inventory_.objects_ = gm_->getInventory();
 
 	///Reasignamos el callback y el estado puesto que si se borra el antiguo Shop, no se podrá seleccionar 
@@ -330,13 +330,10 @@ void ShopState::moneyChange()
 
 void ShopState::createItems(int n)
 {
-	RandEquipGen* rand = new RandEquipGen(app_);
+	RandEquipGen* rand = app_->getEquipGen();
 	for (size_t i = 0; i < n; i++)
 	{
 		Equipment* ob = rand->genEquip();
-		InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);
-		list <InventoryButton*>::iterator it = shop_.objects_->insert(shop_.objects_->end(), b);
-		b->setIterator(it);
+		gm_->addToShop(ob);
 	}
-	delete rand;
 }

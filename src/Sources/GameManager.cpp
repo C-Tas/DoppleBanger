@@ -724,3 +724,12 @@ void GameManager::addToStash(Item* ob)
 	list <InventoryButton*>::iterator it = stash_->insert(stash_->end(), b);
 	b->setIterator(it);
 }
+
+void GameManager::addToShop(Item* ob) 
+{
+	//creamos un boton
+	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);
+	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
+	list <InventoryButton*>::iterator it = shop_->insert(shop_->end(), b);
+	b->setIterator(it);
+}

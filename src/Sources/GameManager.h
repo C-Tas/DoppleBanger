@@ -427,4 +427,5 @@ public:
 	void addToInventory(Item* ob);
 	//Para añadir objetos al alijo
 	void addToStash(Item* ob);
+	void addToShop(Item* ob);
 };
