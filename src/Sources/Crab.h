@@ -7,7 +7,8 @@ class Crab : public Enemy
 public:
 	virtual bool update();
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores ser?n los puestos, si se le pasan valores los editara</summary>
-	Crab(Application* app, Point2D pos, Vector2D scale, vector<Vector2D> positions = { {0,0},{1200,1200},{3600,1800} }) : Enemy(app, pos, scale), targetsVector_(positions), actualTarget_(0) { currState_ = STATE::PATROLLING; initObject(); }
+	Crab(Application* app, Point2D pos, Vector2D scale, vector<Vector2D> positions = { {0,0},{1200,1200},{3600,1800} }) :
+		Enemy(app, pos, scale), targetsVector_(positions), actualTarget_(0) { initObject(); }
 	//<summary>Constructor por copia</summary>
 	Crab(Crab& other) :Enemy(other.app_, other.pos_, other.scale_) { initAnims(); };
 	//<summary>Constructor por movimiento<summary>
@@ -20,25 +21,29 @@ public:
 	inline void setPositions(vector<Vector2D> targets) { targetsVector_ = targets; };
 	virtual void initRewards() {};
 private:
-	bool cd = false;
-	const int cdDamage_ = 1000;
-	int entra_ = 0;
+	Cooldown shootCD_;
+
 	//Dimensiones de collisionArea
 	const int W_COLLISION = scale_.getX() * 0.5;
 	const int H_COLLISION = scale_.getY() * (2 / 3);
-#pragma region AttackAnimation
-	//N�mero de frames
-	const int NUM_FRAMES_ATK = 15;
-	//const int NUM_FRAMES_ATK_ROW = 3;
-	//Dimensiones del clip del spritesheet
-	const int W_CLIP_ATK = 100;
-	const int H_CLIP_ATK = 100;
-	const int ATK_FRAME_RATE = 100;
+#pragma region Animaciones
+	//Inicializa la animacion
+	void initMeleeAnim();
+	void initWalk();
+
+	//Gestiona la animacion
+	void meleeAnim();
+
+	//Ataque
+	const int FRAME_ACTION = 9;
+	const int NUM_FRAMES_ATK = 15;	//Numero de frames
+	const int W_CLIP_ATK = 100;		//Ancho del clip
+	const int H_CLIP_ATK = 100;		//Alto del clip
+	const int ATK_FRAME_RATE = 70;	//Velocidad de animacion
 	//Animaciones
 	Anim attackAnim_{ 0,0,0,0, false };
 	Texture* attackTex_;
-#pragma endregion
-#pragma region WalkAnimation
+
 	//N�mero de frames
 	const int NUM_FRAMES_WALK = 4;
 	//Dimensiones del clip del spritesheet
@@ -63,6 +68,8 @@ private:
 	virtual void initObject();
 	//Crea las animaciones
 	virtual void initAnims();
+	//Inicializa los stats
 	virtual void initialStats();
-	virtual void updateCooldowns() {};
+	//Acutaliza Cooldowns
+	virtual void updateCooldowns();
 };

@@ -30,8 +30,6 @@ protected:
 	AStar::Vec2i pathPos_;
 	//Posicion inicial del mapa
 	Vector2D iniPosMap_;
-	//Último ataque
-	Uint32 lastHit = 0;
 	//Rango de puntos de hazaña de la calabaza
 	int maxArchievementPoints = 0;
 	int minArchievementPoints = 0;

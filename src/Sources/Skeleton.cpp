@@ -171,7 +171,7 @@ void Skeleton::shootAnim() {
 	if (!shooted_ &&currAnim_.currFrame_ == frameAction_ ) {
 		shooted_ = true;
 		attack();
-		lastHit = SDL_GetTicks();
+		shootCD_.initCooldown(currStats_.distRate_);
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();
