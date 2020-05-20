@@ -326,7 +326,6 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		pirate->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addEnemy(pirate);
 		collisionCtrl_->addEnemy(pirate);
-		state_->addRenderUpdateLists(pirate);
 	}
 	else if (objectType == "Cleon") {
 		//A�adir Cleon
