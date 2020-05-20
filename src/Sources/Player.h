@@ -270,6 +270,7 @@ private:
 	int liberation_ = 2;	//Nivel de la habilidad del clon, debería llevarse a GameManager
 	const int RANGE_SPEED = 1000;	//Velocidad extra para el pistolero raudo (a falta de equilibrado)
 	bool empoweredAct_ = false;		//Si tiene la habilidad activada
+	bool meleeActive_ = false;		//Para saber si la animación se ha inicializado
 	double empoweredBonus_ = 1.5;	//Bonus porcentual del daño
 	bool perforate_ = false;	//Para saber si el siguiente disparo perfora
 #pragma endregion

@@ -160,8 +160,9 @@ bool Player::update()
 			if ((*it) == objective)
 				found = true;
 
-		if (found && empoweredAct_)
+		if (found && empoweredAct_ && !meleeActive_)
 		{
+			meleeActive_ = true;
 			app_->getAudioManager()->playChannel(Resources::EmpoweredSkillAudio, 0, Resources::PlayerChannel4);
 			initMelee();
 		}
@@ -363,10 +364,12 @@ void Player::meleeAnim()
 		}
 		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
 		attacked_ = true;
+		meleeActive_ = false;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();	//Activa el idle
 	}
+	
 }
 
 void Player::empoweredAnim()
