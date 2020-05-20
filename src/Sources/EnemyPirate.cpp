@@ -51,18 +51,19 @@ bool EnemyPirate::update() {
 	}
 	//Si el pirata no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
 	if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && getEnemy()) {
-		//currState_ = STATE::ATTACKING;
 		if (onRange()) {
-			if (currAtackStatus_ == ATK_STATUS::MELEE) {
+			if (currAtackStatus_ == ATK_STATUS::MELEE && !meleeCD_.isCooldownActive()) {
 				initMelee();
 			}
-			else if (currAtackStatus_ == ATK_STATUS::RANGE) {
+			else if (currAtackStatus_ == ATK_STATUS::RANGE && !shootCD_.isCooldownActive()) {
 				initShoot();
-				cout << "Shoot" << endl;
-
 			}
 		}
-
+		else
+		{
+			currState_ = STATE::FOLLOWING;
+			selectTarget();
+		}
 	}
 	//Si el pirata tiene enemigo y puede atacar
 	if (currState_ == STATE::ATTACKING) {
@@ -276,17 +277,17 @@ void EnemyPirate::initShoot() {
 	//Asigna el frame donde ocurrirá la acción
 	switch (currDir_)
 	{
-	case DIR::UP:		//Derecha arriba
-		frameAction_ = 10;
+	case DIR::UP:
+		frameAction_ = 8;
 		break;
-	case DIR::RIGHT:	//Derecha abajo
-		frameAction_ = 9;
+	case DIR::RIGHT:
+		frameAction_ = 7;
 		break;
-	case DIR::DOWN:		//Izquierda abajo
-		frameAction_ = 10;
+	case DIR::DOWN:
+		frameAction_ = 6;
 		break;
-	case DIR::LEFT:		//Izquierda arriba
-		frameAction_ = 10;
+	case DIR::LEFT:
+		frameAction_ = 8;
 	}
 
 	//Inicio de los frames
@@ -294,7 +295,7 @@ void EnemyPirate::initShoot() {
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 
-	//shootCD_.initCooldown(currStats_.distRate_);
+	shootCD_.initCooldown(currStats_.distRate_);
 }
 
 void EnemyPirate::initMelee() {
@@ -307,16 +308,16 @@ void EnemyPirate::initMelee() {
 	switch (currDir_)
 	{
 	case DIR::UP:
-		frameAction_ = 1;
+		frameAction_ = 4;
 		break;
 	case DIR::RIGHT:
-		frameAction_ = 2;
+		frameAction_ = 5;
 		break;
 	case DIR::DOWN:
-		frameAction_ = 2;
+		frameAction_ = 6;
 		break;
 	case DIR::LEFT:
-		frameAction_ = 2;
+		frameAction_ = 5;
 		break;
 	}
 
@@ -325,7 +326,7 @@ void EnemyPirate::initMelee() {
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 	//Inicia 
-	//meleeCD_.initCooldown(currStats_.meleeRate_);
+	meleeCD_.initCooldown(currStats_.meleeRate_);
 }
 
 void EnemyPirate::shootAnim() {
@@ -352,16 +353,16 @@ void EnemyPirate::meleeAnim() {
 
 //Se encarga de gestionar el ataque a melee o distancia DONE
 void EnemyPirate::attack() {
-	if (currAtackStatus_ == ATK_STATUS::RANGE && !shootCD_.isCooldownActive()) {
+	if (currAtackStatus_ == ATK_STATUS::RANGE) {
 		shootCD_.initCooldown(currStats_.distRate_);
 		Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet),
 			getCenter(), currEnemy_->getCenter(), currStats_.distDmg_);
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addEnemyBullet(bullet);
 	}
-	else if (currAtackStatus_ == ATK_STATUS::MELEE && !meleeCD_.isCooldownActive())
+	else if (currAtackStatus_ == ATK_STATUS::MELEE)
 	{
-		meleeCD_.initCooldown(currStats_.meleeRate_);
+		//meleeCD_.initCooldown(currStats_.meleeRate_);
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
 			dmg->receiveDamage(currStats_.meleeDmg_);
@@ -439,7 +440,7 @@ void EnemyPirate::initialStats()
 	MELEE_RANGE = 50;
 	DIST_RANGE = 75;
 	MOVE_SPEED = 250;
-	MELEE_RATE = 1500;
+	MELEE_RATE = 600;
 	DIST_RATE = 1500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
