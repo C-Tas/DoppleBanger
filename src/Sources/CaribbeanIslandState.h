@@ -62,6 +62,4 @@ protected:
 	///<summary>Método para cambiar de zona(Redefinido)</summary>
 	virtual void changeZone();
 
-private:
-	TiledMap* currentMap_;
 };

@@ -349,7 +349,7 @@ void ShopState::createItems(int n)
 	RandEquipGen* rand = app_->getEquipGen();
 	for (size_t i = 0; i < n; i++)
 	{
-		Equipment* ob = rand->genEquip();
+		Item* ob = rand->genEquip();
 		gm_->addToShop(ob);
 	}
 }
