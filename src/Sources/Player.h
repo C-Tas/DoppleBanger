@@ -113,7 +113,7 @@ public:
 		//Aumenta la cadencia de tiro del player
 		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 		//Activa el ataque potenciado
-		void activateEmpowered() { empoweredAct_ = true; };
+		void activateEmpowered() { initEmpowered(); };
 
 		//Carga el equipamiento del player
 		void load();
@@ -139,6 +139,8 @@ public:
 			if(skills_[key]!= nullptr)delete skills_[key]; 
 			skills_[key] = skill; }
 		vector <Skill*>& getSkillsArray() { return skills_; }
+		//Inicia la animacion empowered
+		void initEmpowered();
 	#pragma endregion
 		//Determina si el player utiliza el golpe fuerte
 		bool isDummyAttack() { return empoweredAct_; }
@@ -238,7 +240,17 @@ private:
 		const int MELEE_D_FRAMES = 5;			//Frames de la animación
 		const int MELEE_D_FRAME_RATE = 200;		//Frame rate
 
-	virtual void feedBackHurtSounds();
+		//Golpe Fuerte
+		vector<Texture*>empoweredTx_;
+		vector<Anim> empoweredAnims_;
+		//Derecha e izquierda
+		const int EMPOWERED_R_L_FRAMES = 11;
+		const int EMPOWERED_R_L_RATE = 70;
+		//Arriba y abajo
+		const int EMPOWERED_U_D_FRAMES = 12;
+		const int EMPOWERED_U_D_RATE = 75;
+
+		virtual void feedBackHurtSounds();
 		//Inicialización de las animaciones
 		virtual void initAnims();
 		//Inicia la animación
@@ -249,6 +261,7 @@ private:
 		//Controla la animación
 		void shootAnim();
 		void meleeAnim();
+		void empoweredAnim();
 	#pragma endregion
 	//<summary>Variables relativas a las habilidades</summary>
 	#pragma region Abilities
@@ -257,7 +270,6 @@ private:
 	int liberation_ = 2;	//Nivel de la habilidad del clon, debería llevarse a GameManager
 	const int RANGE_SPEED = 1000;	//Velocidad extra para el pistolero raudo (a falta de equilibrado)
 	bool empoweredAct_ = false;		//Si tiene la habilidad activada
-	bool empoweredAnim_ = false; //Si ha empezado la animación del ataque potenciado
 	double empoweredBonus_ = 1.5;	//Bonus porcentual del daño
 	bool perforate_ = false;	//Para saber si el siguiente disparo perfora
 #pragma endregion

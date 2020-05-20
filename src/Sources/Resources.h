@@ -205,8 +205,12 @@ public:
 		PlayerMeleeLeftAnim,
 		PlayerMeleeUpAnim,
 		PlayerMeleeDownAnim,
+		PlayerEmpoweredRight,
+		PlayerEmpoweredLeft,
+		PlayerEmpoweredUp,
+		PlayerEmpoweredDown,
+
 		//clon
-			
 		ClonSelfDestructionRightAnim,
 		ClonSelfDestructionLeftAnim,
 		ClonSelfDestructionUpAnim,
