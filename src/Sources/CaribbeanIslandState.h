@@ -19,6 +19,7 @@ public:
 		currentMap_->draw(); 
 		PlayState::draw(); 
 	};
+	TiledMap* currentMap_;
 
 protected:
 #pragma region Tilemap_Const
