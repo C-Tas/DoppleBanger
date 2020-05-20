@@ -205,39 +205,8 @@ public:
 		PlayerMeleeLeftAnim,
 		PlayerMeleeUpAnim,
 		PlayerMeleeDownAnim,
-		//clon
-			
-		ClonSelfDestructionRightAnim,
-		ClonSelfDestructionLeftAnim,
-		ClonSelfDestructionUpAnim,
-		ClonSelfDestructionDownAnim,
-			//desaparecer
-		ClonVanishRightAnim,
-		ClonVanishLeftAnim,
-		ClonVanishDownAnim,
-		ClonVanishUpAnim,
-		//Calabaza
-			//Idle
-			PumpkinIdleRightAnim,
-			PumpkinIdleLeftAnim,
-			PumpkinIdleUpAnim,
-			PumpkinIdleDownAnim,
-			//Explosion
-			PumpkinExpRightAnim,
-			PumpkinExpLeftAnim,
-			PumpkinExpUpAnim,
-			PumpkinExpDownAnim,
-			//Attack
-			PumpkinAttackRightAnim,
-			PumpkinAttackLeftAnim,
-			PumpkinAttackUpAnim,
-			PumpkinAttackDownAnim,
-			//Move
-		PumpkinMoveRightAnim,
-		PumpkinMoveLeftAnim,
-		PumpkinMoveUpAnim,
-		PumpkinMoveDownAnim,
-			//Clon
+
+		//Clon
 		ClonIdleRightAnim,
 		ClonIdleLeftAnim,
 		ClonIdleUpAnim,
@@ -250,7 +219,40 @@ public:
 		ClonShootLeftAnim,
 		ClonShootUpAnim,
 		ClonShootDownAnim,
-			//Monkey
+			//Autodestrucción
+		ClonSelfDestructionRightAnim,
+		ClonSelfDestructionLeftAnim,
+		ClonSelfDestructionUpAnim,
+		ClonSelfDestructionDownAnim,
+			//Desaparecer
+		ClonVanishRightAnim,
+		ClonVanishLeftAnim,
+		ClonVanishDownAnim,
+		ClonVanishUpAnim,
+
+		//Calabaza
+			//Idle
+		PumpkinIdleRightAnim,
+		PumpkinIdleLeftAnim,
+		PumpkinIdleUpAnim,
+		PumpkinIdleDownAnim,
+			//Explosion
+		PumpkinExpRightAnim,
+		PumpkinExpLeftAnim,
+		PumpkinExpUpAnim,
+		PumpkinExpDownAnim,
+			//Attack
+		PumpkinAttackRightAnim,
+		PumpkinAttackLeftAnim,
+		PumpkinAttackUpAnim,
+		PumpkinAttackDownAnim,
+			//Move
+		PumpkinMoveRightAnim,
+		PumpkinMoveLeftAnim,
+		PumpkinMoveUpAnim,
+		PumpkinMoveDownAnim,
+		
+		//Monkey
 		MonkeyIdleRightAnim,
 		MonkeyIdleLeftAnim,
 		MonkeyIdleUpAnim,
@@ -259,6 +261,25 @@ public:
 		MonkeyShootLeftAnim,
 		MonkeyShootUpAnim,
 		MonkeyShootDownAnim,
+
+		//Pirata náufrago
+		PirateIdleRightAnim,
+		PirateIdleLeftAnim,
+		PirateIdleUpAnim,
+		PirateIdleDownAnim,
+		PirateMoveRightAnim,
+		PirateMoveLeftAnim,
+		PirateMoveUpAnim,
+		PirateMoveDownAnim,
+		PirateMeleeRightAnim,
+		PirateMeleeLeftAnim,
+		PirateMeleeUpAnim,
+		PirateMeleeDownAnim,
+		PirateShootRightAnim,
+		PirateShootLeftAnim,
+		PirateShootUpAnim,
+		PirateShootDownAnim,
+
 		//Magordito
 		Altar,
 			//Idle
@@ -310,16 +331,16 @@ public:
 		Bottle,
 		Dummy,
 
-				//Textos
-				PlayText,
-				ExitText,
-				ControlsText,
-				LoadText,
-				CreditsText,
-				ResumeText,
-				MainMenuText,
-				StashMoneyText,
-				InventoryMoneyText,
+		//Textos
+		PlayText,
+		ExitText,
+		ControlsText,
+		LoadText,
+		CreditsText,
+		ResumeText,
+		MainMenuText,
+		StashMoneyText,
+		InventoryMoneyText,
 
 		//proyectiles
 		Coco,

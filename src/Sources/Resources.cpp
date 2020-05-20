@@ -241,6 +241,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ ClonVanishLeftAnim, "../Sources/assets/clon/desaparecer/vanishLeft.png" },
 	{ ClonVanishDownAnim, "../Sources/assets/clon/desaparecer/vanishDown.png" },
 	{ ClonVanishUpAnim, "../Sources/assets/clon/desaparecer/vanishTop.png" },
+
 	//Pumpkin
 		//Idle
 	{ PumpkinIdleRightAnim, "../Sources/assets/enemigos/pumpkin/Idle/calabazaIdleDer.png" },
@@ -257,14 +258,17 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PumpkinAttackLeftAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispIzq.png" },
 	{ PumpkinAttackUpAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispAtras.png" },
 	{ PumpkinAttackDownAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispDelante.png" },
-//crab
-     {CrabAttack,"../Sources/assets/enemigos/crab/crabAttack.png" },
-     {CrabWalk,"../Sources/assets/enemigos/crab/crabWalk.png"},
 		//Move
 	{ PumpkinMoveRightAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDer.png" },
 	{ PumpkinMoveLeftAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovIzq.png" },
 	{ PumpkinMoveUpAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovAtras.png" },
 	{ PumpkinMoveDownAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDelante.png" },
+
+	//Crab
+    { CrabAttack,"../Sources/assets/enemigos/crab/crabAttack.png" },
+    { CrabWalk,"../Sources/assets/enemigos/crab/crabWalk.png"},
+
+	//Mono
 	{ MonkeyIdleRightAnim, "../Sources/assets/enemigos/monkey/idleDchaDown.png" },
 	{ MonkeyIdleLeftAnim, "../Sources/assets/enemigos/monkey/idleIzTop.png" },
 	{ MonkeyIdleUpAnim, "../Sources/assets/enemigos/monkey/idleDchaTop.png" },
@@ -274,8 +278,25 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ MonkeyShootUpAnim, "../Sources/assets/enemigos/monkey/shootDchaTop.png" },
 	{ MonkeyShootDownAnim, "../Sources/assets/enemigos/monkey/shootIzDown.png" },
 
-	//Magordito
-		//Skeleton
+	//Pirata náufrago
+	{ PirateIdleRightAnim, "../Sources/assets/enemigos/pirata/PirateIdleSideR.png" },
+	{ PirateIdleLeftAnim, "../Sources/assets/enemigos/pirata/PirateIdleSideL.png" },
+	{ PirateIdleUpAnim, "../Sources/assets/enemigos/pirata/PirateIdleBack.png" },
+	{ PirateIdleDownAnim, "../Sources/assets/enemigos/pirata/PirateIdleFront.png" },
+	{ PirateMoveRightAnim, "../Sources/assets/enemigos/pirata/PirateMoveRight.png" },
+	{ PirateMoveLeftAnim, "../Sources/assets/enemigos/pirata/PirateMoveLeft.png" },
+	{ PirateMoveUpAnim, "../Sources/assets/enemigos/pirata/PirateMoveBack.png" },
+	{ PirateMoveDownAnim, "../Sources/assets/enemigos/pirata/PirateMoveFront.png" },
+	{ PirateMeleeRightAnim, "../Sources/assets/enemigos/pirata/PirateSwordSideR.png" },
+	{ PirateMeleeLeftAnim, "../Sources/assets/enemigos/pirata/PirateSwordSideL.png" },
+	{ PirateMeleeUpAnim, "../Sources/assets/enemigos/pirata/PirateSwordBack.png" },
+	{ PirateMeleeDownAnim, "../Sources/assets/enemigos/pirata/PirateSwordFront.png" },
+	{ PirateShootRightAnim, "../Sources/assets/enemigos/pirata/PirateShootSideR.png" },
+	{ PirateShootLeftAnim, "../Sources/assets/enemigos/pirata/PirateShootSideL.png" },
+	{ PirateShootUpAnim, "../Sources/assets/enemigos/pirata/PirateShootBack.png" },
+	{ PirateShootDownAnim, "../Sources/assets/enemigos/pirata/PirateShootFront.png" },
+
+	//Skeleton
 	{ SkeletonIdleRightAnim, "../Sources/assets/enemigos/skeleton/IdleLadoDer.png" },
 	{ SkeletonIdleLeftAnim, "../Sources/assets/enemigos/skeleton/IdleLadoIzq.png" },
 	{ SkeletonIdleUpAnim, "../Sources/assets/enemigos/skeleton/IdleEspaldas.png" },
@@ -288,7 +309,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ SkeletonMoveLeftAnim, "../Sources/assets/enemigos/skeleton/MovementLadoIzq.png" },
 	{ SkeletonMoveDownAnim, "../Sources/assets/enemigos/skeleton/MovementFrente.png" },
 	{ SkeletonMoveUpAnim, "../Sources/assets/enemigos/skeleton/MovementEspaldas.png" },
-		//Interactuables
+	
+	//Magordito
 	{ Altar, "../Sources/assets/enemigos/magordito/altar.png" },
 		//Idle
 	{ MagorditoIdleRight, "../Sources/assets/enemigos/magordito/idle/idleDcha.png" },
@@ -312,6 +334,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ MagorditoKirinTopRight, "../Sources/assets/enemigos/magordito/kirin/kirinTopDcha.png" },
 	{ MagorditoKirinTopLeft, "../Sources/assets/enemigos/magordito/kirin/kirinTopIz.png" },
 	{ Kirin, "../Sources/assets/enemigos/magordito/kirin/rayo.png" },
+#pragma endregion
 
 #pragma region Barco
 	//Interactuables
@@ -370,8 +393,8 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ Shop ,"../Sources/assets/music/background/shopMusic.mp3" },
 	{ Storyboard ,"../Sources/assets/music/background/storyboardMusic.mp3" },
 	{ FuneralTheme ,"../Sources/assets/music/funeralTheme.mp3" },
-
 #pragma region
+
 	//Player
 #pragma region PlayerSounds
 	{ WalkAudio	  ,"../Sources/assets/efectos_sonido/player/walk.wav" },

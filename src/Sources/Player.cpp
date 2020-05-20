@@ -110,7 +110,6 @@ bool Player::update()
 
 	//Si se pulsa el boton derecho del raton y se ha acabado el cooldown
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && !shootCD_.isCooldownActive()) {
-		shootCD_.initCooldown(currStats_.distRate_);
 		initShoot(); 
 	}
 
@@ -276,6 +275,8 @@ void Player::initShoot()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+
+	shootCD_.initCooldown(currStats_.distRate_);
 
 	if (clon_ != nullptr)clon_->initShoot(mousePos_);
 }

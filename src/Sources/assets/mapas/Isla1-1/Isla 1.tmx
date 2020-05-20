@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="28" nextobjectid="75">
+<map version="1.2" tiledversion="1.2.5" orientation="isometric" renderorder="right-down" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="30" nextobjectid="77">
  <tileset firstgid="1" source="DoppleBanger.tsx"/>
+ <tileset firstgid="309" source="Dopplebanger.tsx"/>
  <layer id="22" name="Pathfinding" width="50" height="55" visible="0">
   <data encoding="csv">
 161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,161,
@@ -671,5 +672,8 @@
  <objectgroup id="16" name="Crab"/>
  <objectgroup id="18" name="Player">
   <object id="11" gid="245" x="4736" y="3712" width="256" height="256"/>
+ </objectgroup>
+ <objectgroup id="29" name="EnemyPirate">
+  <object id="76" gid="507" x="1600" y="5448" width="256" height="256"/>
  </objectgroup>
 </map>

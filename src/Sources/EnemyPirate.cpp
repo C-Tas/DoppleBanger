@@ -51,32 +51,49 @@ bool EnemyPirate::update() {
 	}
 	//Si el pirata no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo más cercano
 	if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && getEnemy()) {
-		currState_ = STATE::ATTACKING;
+		//currState_ = STATE::ATTACKING;
+		if (onRange()) {
+			if (currAtackStatus_ == ATK_STATUS::MELEE) {
+				initMelee();
+			}
+			else if (currAtackStatus_ == ATK_STATUS::RANGE) {
+				initShoot();
+				cout << "Shoot" << endl;
+
+			}
+		}
+
 	}
 	//Si el pirata tiene enemigo y puede atacar
 	if (currState_ == STATE::ATTACKING) {
 		//Si el pirata tiene un enemigo y lo tiene a rango
 		if (onRange()) {
-			//changeAnim(attackAnim_);
-			attack();
+			if (currAtackStatus_ == ATK_STATUS::MELEE) {
+				meleeAnim();
+			}
+			else if (currAtackStatus_ == ATK_STATUS::RANGE) {
+				shootAnim();
+			}
 		}
 		else
 		{
 			currState_ = STATE::FOLLOWING;
-			//changeAnim(walkAnim_);
 			selectTarget();
 		}
 	}
 	//Si el pirata se está moviendo hacia un enemigo
 	if (currState_ == STATE::FOLLOWING) {
 		if (onRange()) {
-			currState_ = STATE::ATTACKING;
+			if (currAtackStatus_ == ATK_STATUS::MELEE) {
+				meleeAnim();
+			}
+			else if (currAtackStatus_ == ATK_STATUS::RANGE) {
+				shootAnim();
+			}
 			stop();
-			attack();
 		}
 		else
 		{
-			//changeAnim(walkAnim_);
 			selectTarget();
 		}
 	}
@@ -93,7 +110,7 @@ bool EnemyPirate::update() {
 		SDL_Rect pos = SDL_Rect(
 			{ (int)pos_.getX() / 2,(int)pos_.getY() / 2,(int)scale_.getX() / 2,(int)scale_.getY() / 2 });
 		if (SDL_HasIntersection(&pos, &targetPos)) {
-			currState_ = STATE::IDLE;
+			initIdle();
 			idleCD_.initCooldown(IDLE_PAUSE);
 			if (currPatrol_ == patrol_.size() - 1) {
 				currPatrol_ = 0;
@@ -122,6 +139,7 @@ void EnemyPirate::move(Vector2D posToReach) {
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 	pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
+	initMove();
 }
 
 //Devuelve true si el enemigo que tengo está a rango y en función de ello cambia entre melee y range
@@ -140,7 +158,6 @@ bool EnemyPirate::onRange() {
 	SDL_Rect meleeAttack = { meleePosX   ,meleePosY,meleeRangeX * 2, meleeRangeY * 2 };
 	if (currEnemy_ != nullptr && SDL_HasIntersection(&enemyRect, &meleeAttack)) {
 		currAtackStatus_ = ATK_STATUS::MELEE;
-		setTexture(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
 		return true;
 	}
 	else if (currEnemy_ != nullptr) {
@@ -152,7 +169,6 @@ bool EnemyPirate::onRange() {
 		SDL_Rect rangeAttack = { rangePosX   ,rangePosY,rangeAttackX * 2, rangeAttackY * 2 };
 		if (SDL_HasIntersection(&enemyRect, &rangeAttack)) {
 			currAtackStatus_ = ATK_STATUS::RANGE;
-			setTexture(app_->getTextureManager()->getTexture(Resources::PlayerFront));
 			return true;
 		}
 	}
@@ -165,12 +181,173 @@ bool EnemyPirate::onRange() {
 //Inicializa todas las animaciones
 void EnemyPirate::initAnims()
 {
-	//Para la animación de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, false);
-	//Para la animación de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, true);
-	//Para la animación de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
+	//Animación de idle
+	//Arriba
+	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, IDLE_U_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateIdleUpAnim));
+	//Derecha																						
+	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, IDLE_R_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateIdleRightAnim));
+	//Abajo																							
+	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, IDLE_D_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateIdleDownAnim));
+	//Izquierda																						
+	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, IDLE_L_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateIdleLeftAnim));
+
+	//Animación de movimiento
+	//Arriba
+	moveAnims_.push_back(Anim(MOVE_U_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, MOVE_U_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateMoveUpAnim));
+	//Derecha														
+	moveAnims_.push_back(Anim(MOVE_R_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, MOVE_R_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateMoveRightAnim));
+	//Abajo
+	moveAnims_.push_back(Anim(MOVE_D_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, MOVE_D_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateMoveDownAnim));
+	//Izquierda
+	moveAnims_.push_back(Anim(MOVE_L_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, MOVE_L_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateMoveLeftAnim));
+
+	//Animación de disparo
+	//Arriba
+	shootAnims_.push_back(Anim(SHOOT_U_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, SHOOT_U_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateShootUpAnim));
+	//Derecha
+	shootAnims_.push_back(Anim(SHOOT_R_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, SHOOT_R_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateShootRightAnim));
+	//Abajo
+	shootAnims_.push_back(Anim(SHOOT_D_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, SHOOT_D_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateShootDownAnim));
+	//Izquierda
+	shootAnims_.push_back(Anim(SHOOT_L_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, SHOOT_L_FRAME_RATE, false));
+	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateShootLeftAnim));
+
+	//Animación de melee
+	//Arriba
+	meleeAnims_.push_back(Anim(MELEE_U_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, MELEE_U_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateMeleeUpAnim));
+	//Derecha
+	meleeAnims_.push_back(Anim(MELEE_R_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, MELEE_R_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateMeleeRightAnim));
+	//Abajo
+	meleeAnims_.push_back(Anim(MELEE_D_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, MELEE_D_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateMeleeDownAnim));
+	//Izquierda
+	meleeAnims_.push_back(Anim(MELEE_L_FRAMES, W_H_PIRATE_FRAME, W_H_PIRATE_FRAME, MELEE_L_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PirateMeleeLeftAnim));
+
+	//Inicializamos con la animación del idle
+	currDir_ = DIR::DOWN;
+	initIdle();
+}
+
+void EnemyPirate::initIdle() {
+	cout << "Idle" << endl;
+	currState_ = STATE::IDLE;
+	texture_ = idleTx_[(int)currDir_];
+	currAnim_ = idleAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void EnemyPirate::initMove() {
+	updateDirVisObjective(target_);
+	texture_ = moveTx_[(int)currDir_];
+	currAnim_ = moveAnims_[(int)currDir_];
+	if (currState_ != STATE::PATROLLING) {
+		currState_ = STATE::PATROLLING;
+		frame_.x = 0; frame_.y = 0;
+	}
+
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void EnemyPirate::initShoot() {
+	currState_ = STATE::ATTACKING;	//Cambio de estado
+	shooted_ = false;	//Aún no se ha creado la bala
+	updateDirVisObjective(currEnemy_);	//Hacia dónde mira
+	texture_ = shootTx_[(int)currDir_];
+	currAnim_ = shootAnims_[(int)currDir_];
+
+	//Asigna el frame donde ocurrirá la acción
+	switch (currDir_)
+	{
+	case DIR::UP:		//Derecha arriba
+		frameAction_ = 10;
+		break;
+	case DIR::RIGHT:	//Derecha abajo
+		frameAction_ = 9;
+		break;
+	case DIR::DOWN:		//Izquierda abajo
+		frameAction_ = 10;
+		break;
+	case DIR::LEFT:		//Izquierda arriba
+		frameAction_ = 10;
+	}
+
+	//Inicio de los frames
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	//shootCD_.initCooldown(currStats_.distRate_);
+}
+
+void EnemyPirate::initMelee() {
+	currState_ = STATE::ATTACKING;	//Cambio de estado
+	attacked_ = false;	//Aún no se ha atacado
+	updateDirVisObjective(currEnemy_);	//Hacia dónde está el enemigo
+	texture_ = meleeTx_[(int)currDir_];
+	currAnim_ = meleeAnims_[(int)currDir_];
+	//Frame exacto del ataque
+	switch (currDir_)
+	{
+	case DIR::UP:
+		frameAction_ = 1;
+		break;
+	case DIR::RIGHT:
+		frameAction_ = 2;
+		break;
+	case DIR::DOWN:
+		frameAction_ = 2;
+		break;
+	case DIR::LEFT:
+		frameAction_ = 2;
+		break;
+	}
+
+	//Se inicia el frame
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+	//Inicia 
+	//meleeCD_.initCooldown(currStats_.meleeRate_);
+}
+
+void EnemyPirate::shootAnim() {
+	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
+		attack();
+		shooted_ = true;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();	//Activa el idle
+	}
+}
+
+void EnemyPirate::meleeAnim() {
+	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
+		attack();
+
+		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
+		attacked_ = true;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();	//Activa el idle
+	}
 }
 
 //Se encarga de gestionar el ataque a melee o distancia DONE
@@ -182,7 +359,7 @@ void EnemyPirate::attack() {
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addEnemyBullet(bullet);
 	}
-	else if (!meleeCD_.isCooldownActive())
+	else if (currAtackStatus_ == ATK_STATUS::MELEE && !meleeCD_.isCooldownActive())
 	{
 		meleeCD_.initCooldown(currStats_.meleeRate_);
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
@@ -190,15 +367,14 @@ void EnemyPirate::attack() {
 			dmg->receiveDamage(currStats_.meleeDmg_);
 		}
 	}
-
 }
 
-//Inicializa al al pirata
+//Inicializa al pirata
 void EnemyPirate::initObject() {
 	Enemy::initObject();
 	initRewards();
-	setTexture(app_->getTextureManager()->getTexture(Resources::PlayerFront));
 	rangeVision_ = VIS_RANGE;
+	initAnims();
 }
 
 //Esto es un apaño, se eliminara cuando este completa la gestión de muertes
