@@ -439,6 +439,12 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ SkeletonHit3 ,"../Sources/assets/efectos_sonido/skeleton/hit3.mp3" },
 	{ SkeletonIdle ,"../Sources/assets/efectos_sonido/skeleton/idle.mp3" },
 #pragma endregion
+	//Cangrejo
+#pragma region Crab
+	{ CrabAttackSound ,"../Sources/assets/efectos_sonido/crab/attack.mp3" },
+	{ CrabDetection ,"../Sources/assets/efectos_sonido/crab/detection.mp3" },
+	{ CrabIdle ,"../Sources/assets/efectos_sonido/crab/idle.mp3" },
+#pragma endregion
 	//Calabaza
 #pragma region Pumpkin
 	{ AgroPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/agro.mp3" },
@@ -490,6 +496,9 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ SkeletonChannel2, 40 },
 	{ SkeletonChannel3, 40 },
 	{ SkeletonChannel4, 6 },
+	//Canal de la cangrejo
+	{ CrabChannel1, 10 },
+	{ CrabChannel2, 10 },
 	//Canal del pirata
 	{ EnemyPirateChannel, 6 }
 };

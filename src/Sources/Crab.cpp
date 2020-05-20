@@ -18,6 +18,7 @@ bool Crab::update() {
 		{
 			//Si entramos en este caso indica que el enemigo esta al alcance ya que es el factor que rechazo el anterior if y así tiene coste O(1) y no coste O(getenemy)
 			if (currState_ == STATE::PATROLLING) {
+				app_->getAudioManager()->playChannel(Resources::CrabDetection, 0, Resources::CrabChannel2);
 				currState_ = STATE::ATTACKING;
 				currAnim_ = attackAnim_;
 				texture_ = attackTex_;
@@ -70,11 +71,6 @@ void Crab::move(Point2D target)
 		double delta = app_->getDeltaTime();
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
-#ifdef _DEBUG
-
-		//cout << target_.getX() << " " << target_.getY() << endl;
-#endif // _DEBUG
-
 	}
 	else
 	{
@@ -82,7 +78,8 @@ void Crab::move(Point2D target)
 	}
 }
 void Crab::attack() {
-	if (!cd) { 
+	if (!cd) {
+		app_->getAudioManager()->playChannel(Resources::CrabAttackSound, 0, Resources::CrabChannel2);
 		cd = true;
 		entra_ = SDL_GetTicks(); 
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
@@ -106,6 +103,7 @@ void Crab::initObject()
 	Enemy::initObject();
 	initAnims();
 	rangeVision_ = 40;
+	app_->getAudioManager()->playChannel(Resources::CrabIdle, 0, Resources::CrabChannel1);
 }
 
 void Crab::initAnims()

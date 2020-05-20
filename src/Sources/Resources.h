@@ -380,6 +380,9 @@ public:
 		SkeletonChannel2,
 		SkeletonChannel3,
 		SkeletonChannel4,
+		//Canal del congrejo
+		CrabChannel1,
+		CrabChannel2,
 		//Canal del pirata
 		EnemyPirateChannel,
 
@@ -470,6 +473,11 @@ public:
 		SkeletonHit2,
 		SkeletonHit3,
 		SkeletonIdle,
+
+		//Cangrejo
+		CrabAttackSound,
+		CrabDetection,
+		CrabIdle,
 
 		//Calabaza
 		AgroPumpkin,
