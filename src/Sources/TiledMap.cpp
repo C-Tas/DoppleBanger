@@ -14,6 +14,7 @@
 #include "Pumpkin.h"
 #include "PlayState.h"
 #include "GameManager.h"
+#include "Cleon.h"
 
 TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, int tileTilesetHeight, int tileTilesetWidth, int tileSize, 
 	Texture* tileset, int filsTileset, int colsTileset,  Vector2D iniPos,  const list<int>& idCollisionTiles, const list<int>& idWallTiles)
@@ -329,7 +330,9 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		state_->addRenderUpdateLists(pirate);
 	}
 	else if (objectType == "Cleon") {
-		//A�adir Cleon
+		Cleon* cleon = new Cleon(app_, pos, Vector2D(W_PLAYER, H_PLAYER));
+		state_->addEnemy(cleon);
+		collisionCtrl_->addEnemy(cleon);
 	}
 	else if (objectType == "Chef") {
 		if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
