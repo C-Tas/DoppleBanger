@@ -51,6 +51,8 @@ bool Kraken::update() {
 
 	//Si ha muerto
 	if (currState_ == STATE::DYING) {
+		//Se restaura el volumen default del canal de música
+		app_->getAudioManager()->setChannelVolume(7, Resources::MainMusicChannel);
 		app_->getAudioManager()->playChannel(Resources::KrakenDeath, 0, Resources::KrakenChannel1);
 		app_->getAudioManager()->haltChannel(Resources::KrakenChannel2);
 		//Tendr�a que hacer la animaci�n de muerte?
