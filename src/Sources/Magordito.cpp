@@ -8,7 +8,9 @@
 
 bool Magordito::update() {
 	updateFrame();
+	updateCooldowns();
 	manageTint();
+
 	//Si Magordito muere
 	if (currState_ == STATE::DYING) {
 		//Desbloqueamos la �ltima isla
@@ -26,11 +28,10 @@ bool Magordito::update() {
 	}
 	if (currState_ == STATE::ATTACKING) {
 		//Si el player est� cerca y no tengo enfriamiento en el teleport
-		if ((SDL_GetTicks() - lastTeleport_) / 1000 > TP_CD) {
+		if (!tpCD_.isCooldownActive()) {
 			enemyIsTooClose();
 		}
- 		double aux = SDL_GetTicks() - lastKirin_;
-		if ((SDL_GetTicks() - lastKirin_) / 1000 > KIRIN_CD && onRange(KIRIN_RANGE_ATTACK)) {
+		if (!kirinCD_.isCooldownActive() && onRange(KIRIN_RANGE_ATTACK)) {
 			initKirinAnim();
 		}
 	}
@@ -41,6 +42,7 @@ bool Magordito::update() {
 	else if (currState_ == STATE::FOLLOWING) {
 		kirinAnim();
 	}
+
 	return false;
 }
 
@@ -126,6 +128,8 @@ void Magordito::initAnims() {
 
 void Magordito::updateCooldowns()
 {
+	if (kirinCD_.isCooldownActive()) kirinCD_.updateCooldown();
+	if (tpCD_.isCooldownActive()) tpCD_.updateCooldown();
 }
 
 void Magordito::kirin()
@@ -173,8 +177,12 @@ void Magordito::initialStats()
 
 void Magordito::teleport()
 {
-	lastTeleport_ = SDL_GetTicks();
-	auto choice = app_->getRandom()->nextInt(0, altars.size());
+	tpCD_.initCooldown(TP_CD);
+	int choice = app_->getRandom()->nextInt(0, altars.size());
+	while (currChoice_ == choice) {
+		choice = app_->getRandom()->nextInt(0, altars.size());
+	}
+	currChoice_ = choice;
 	double newX = altars[choice]->getCenter().getX() - scale_.getX() / 2;
 	double newY = altars[choice]->getPos().getY();
 	pos_.setVec(Vector2D(newX, newY));
@@ -214,7 +222,6 @@ void Magordito::initTeleport()
 
 void Magordito::initKirinAnim()
 {
-	app_->getAudioManager()->playChannel(Resources::Kirin, 0, Resources::MagorditoChannel2);
 	kirined_ = false;
 	updateDirVisObjective(currEnemy_);
 	currState_ = STATE::FOLLOWING;
@@ -238,9 +245,10 @@ void Magordito::teleportAnim()
 void Magordito::kirinAnim()
 {
 	if (!kirined_ && currAnim_.currFrame_ == KIRIN_ACTION) {
+		app_->getAudioManager()->playChannel(Resources::AudioId::MagorditoKirin, 0, Resources::MagorditoChannel2);
 		kirined_ = true;
 		kirin();
-		lastKirin_ = SDL_GetTicks();
+		kirinCD_.initCooldown(KIRIN_CD);
 	}
 	else if (currAnim_.currFrame_ >= KIRIN_FRAMES) {
 		initIdle();

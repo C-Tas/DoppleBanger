@@ -503,6 +503,7 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ PumpkinChannel2, 6 },
 	//Canal del pirata
 	{ EnemyPirateChannel, 6 },
+
 	{ MagorditoChannel1, 6 },
 	{ MagorditoChannel2, 6 },
 	{ MagorditoChannel3, 6 }
