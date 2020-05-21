@@ -206,7 +206,6 @@ void Player::manaReg() {
 	//Actualiza el cooldown
 	if (manaCD_.isCooldownActive()) manaCD_.updateCooldown();
 	else if(!initManaReg_){
-		cout << "Mana recuperado" << endl;
 		currStats_.mana_ += maxMana_ * (currStats_.manaReg_ / 100);
 		if (currStats_.mana_ >= maxMana_) {
 			currStats_.mana_ = maxMana_;
@@ -641,23 +640,16 @@ void Player::updateBuffPotion(){
 	//por lo que unicamente quitara el debufo cuando se cumpla ese tiempo
 	for (int i = 0; i < potionUsing_.size(); i++) {
 		if (potionUsing_.at(i)) {
-
-			//cout << "TIEMPO RESTANTE " << timerPotion_.at(i) << endl;
-
 			double currTick_ = SDL_GetTicks();
 
 			//Si se abre el inventario, los skills o la pausa no reducimos la duración (el valor suele estar entre 0 y 10, así que 200 que son 0,2 segundos es más que suficiente para determinar pausa)
 			if (currTick_ - lastTicksPotion_.at(i) <= gm_->getDelayTime()) {
 				timerPotion_.at(i) -= currTick_ - lastTicksPotion_.at(i);
 			}
-			else {
-				cout << "Ticks no contaos" << endl;
-			}
 
 			lastTicksPotion_.at(i) = currTick_;
 			//Condicion para que se desactive la pocion
 			if (timerPotion_.at(i) <= 0) {
-				cout << "DESACTIVADO BUFF" << endl;
 				switch (i + 2)
 				{
 				case (int)potionType::Speed:

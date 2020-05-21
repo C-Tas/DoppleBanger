@@ -40,10 +40,6 @@ bool Crab::update() {
 				frame_.h = currAnim_.heightFrame_;
 			}
 		}
-#ifdef _DEBUG
-		cout << currAnim_.numberFrames_ << endl;
-#endif // _DEBUG
-
 	}
 
 	return false;
@@ -70,11 +66,6 @@ void Crab::move(Point2D target)
 		double delta = app_->getDeltaTime();
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
-#ifdef _DEBUG
-
-		//cout << target_.getX() << " " << target_.getY() << endl;
-#endif // _DEBUG
-
 	}
 	else
 	{
@@ -92,9 +83,6 @@ void Crab::attack() {
 	}
 	else {
 		if (SDL_GetTicks() - entra_ >= 1000) {
-#ifdef _DEBUG
-			cout << "resetea" << endl;
-#endif // _DEBUG
 			cd = false;
 		}
 	}

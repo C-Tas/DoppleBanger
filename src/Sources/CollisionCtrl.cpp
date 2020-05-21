@@ -174,7 +174,6 @@ void CollisionCtrl::islandCollisions() {
 			player_->getCollisionRot(), (ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY(), ob->getCollisionRot())) {
 			player_->stop();
 			collisionWithEndOfZone_ = true;
-			//cout << "Debería salir un textbox con los botones para pasar de zona y estas cosas" << endl;
 		}
 	}
 }
