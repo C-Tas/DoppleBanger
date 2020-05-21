@@ -235,7 +235,6 @@ void Player::initMove()
 		app_->getAudioManager()->playChannel(Resources::WalkAudio, -1, Resources::PlayerChannel1);
 		app_->getAudioManager()->setChannelVolume(Resources::PlayerChannel1, 50);
 	}
-	mousePos_ = eventHandler_->getRelativeMousePos();
 	texture_ = moveTx_[(int)currDir_];
 	currAnim_ = moveAnims_[(int)currDir_];
 	if (currState_ != STATE::FOLLOWING) {
@@ -253,7 +252,6 @@ void Player::initShoot()
 	app_->getAudioManager()->playChannel(choice, 0, Resources::PlayerChannel1);
 	stop();
 	currState_ = STATE::SHOOTING;	//Cambio de estado
-	mousePos_ = eventHandler_->getRelativeMousePos();
 	shooted_ = false;	//Aún no se ha creado la bala
 	updateDirVisMouse();	//Hacia dónde mira
 	texture_ = shootTx_[(int)currDir_];

@@ -93,7 +93,6 @@ void Cleon::onCollider()
 	
 }
 
-
 void Cleon::receiveDamage(int damage)
 {
 	if (!activeBlock()) {

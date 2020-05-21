@@ -170,7 +170,6 @@ private:
 	vector<double> valuePotion_{ 0, 0, 0, 0 };		//Para guardar los valores de incremento de Stats
 	vector<double> lastTicksPotion_{ 0, 0, 0, 0 };	//Para guardar el último tick 
 	#pragma region Animaciones
-		Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
 		int frameAction_ = 0;					//Frame en el que se realiza la acción
 		const int W_H_PLAYER_FRAME = 100;		//Ancho del frame, estándar para todas
 	
@@ -291,7 +290,7 @@ private:
 
 	//<summary>Estadisticas iniciales del jugador</summary>
 	#pragma region Stats
-	double maxHealth_ = 1000;			//Representa la cantidad maxima de vida
+	double maxHealth_ = 100000000;			//Representa la cantidad maxima de vida
 	double maxMana_ = 100;				//Representa la cantidad maxima de mana
 	const double MANA_REG = 1;			//Regeneración de maná por segundo
 	const double ARMOR = 10;			//Armadura

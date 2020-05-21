@@ -30,7 +30,7 @@ void Actor::updateDirVisObjective(GameObject* objective) {
 
 void Actor::updateDirVisMouse()
 {
-	Vector2D mousePos_ = HandleEvents::instance()->getRelativeMousePos();
+	mousePos_ = HandleEvents::instance()->getRelativeMousePos();
 	Vector2D center = getCenter();		//Punto de referencia
 	Vector2D dir = mousePos_ - center;	//Vector dirección
 	dir.normalize();

@@ -17,7 +17,7 @@ public:
 	virtual void update();
 	virtual void draw()const { 
 		currentMap_->draw(); 
-		PlayState::draw(); 
+		PlayState::draw();
 	};
 
 protected:

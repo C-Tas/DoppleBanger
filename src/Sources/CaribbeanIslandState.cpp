@@ -87,6 +87,7 @@ void CaribbeanIslandState::changeZone()
 	delete currentMap_;
 	collisionCtrl_->clearList();
 
+	enemies_.clear();
 	if (gm_->getCurrentZone() == Zone::CaribeanA) {
 		deleteExceptHUD(Zone::CaribeanB);
 		initZone2();
@@ -96,13 +97,11 @@ void CaribbeanIslandState::changeZone()
 		deleteExceptHUD(Zone::CaribeanC);
 		initZone3();
 		addRenderUpdateLists(hud_);
-
 	}
 	else if (gm_->getCurrentZone() == Zone::CaribeanC) {
 		deleteExceptHUD(Zone::CaribeanBoss);
 		initBossZone();
 		addRenderUpdateLists(hud_);
-
 	}
 	hud_->setPlayerInHUD(player_);
 	player_->initSkills();

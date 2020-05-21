@@ -110,6 +110,8 @@ public:
 	inline void changeAgro(GameObject* newEnemy) { currEnemy_ = newEnemy; };
 
 protected:
+	//Posicion del raton
+	Vector2D mousePos_{ 0, 0 };
 	//Clase que representa las estadisticas dea actor
 	Stats currStats_;
 	//Emun que representa el actual estado del personaje
