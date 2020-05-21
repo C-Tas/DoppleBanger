@@ -13,6 +13,7 @@ public:
 	virtual void onCollider() {};
 	virtual void initialStats();
 	virtual void initRewards();
+	virtual void feedBackHurtSounds() override;
 	void teleport();
 	inline bool isAlive() { return currState_ == STATE::DYING ? false : true; }
 	//Agrega un altar al magordio

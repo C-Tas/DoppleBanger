@@ -8,9 +8,11 @@
 
 bool Magordito::update() {
 	updateFrame();
+	manageTint();
 	//Si Magordito muere
 	if (currState_ == STATE::DYING) {
 		//Desbloqueamos la �ltima isla
+		app_->getAudioManager()->playChannel(Resources::MagorditoDeath, 0, Resources::MagorditoChannel3);
 		GameManager::instance()->setUnlockedIslands(Island::Volcanic);
 		CollisionCtrl::instance()->removeEnemy(this);
 		dynamic_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
@@ -18,6 +20,8 @@ bool Magordito::update() {
 		return false;
 	}
 	if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
+		auto chance = app_->getRandom()->nextInt(Resources::Magorditolaugh1, Resources::Magorditolaugh4 + 1);
+		app_->getAudioManager()->playChannel(chance, 0, Resources::MagorditoChannel3);
 		currState_ = STATE::ATTACKING;
 	}
 	if (currState_ == STATE::ATTACKING) {
@@ -151,7 +155,7 @@ inline bool Magordito::enemyIsTooClose()
 
 void Magordito::initialStats()
 {
-	rangeVision_ = 200;
+	rangeVision_ = 500;
 	HEALTH = 4000;
 	MANA = 100;
 	MANA_REG = 1;
@@ -181,6 +185,7 @@ void Magordito::teleport()
 
 void Magordito::lostAggro()
 {
+	app_->getAudioManager()->playChannel(Resources::MagorditoAggro, 0, Resources::MagorditoChannel1);
 	currEnemy_ = GameManager::instance()->getPlayer(); 
 }
 
@@ -197,6 +202,7 @@ void Magordito::initIdle()
 
 void Magordito::initTeleport()
 {
+	app_->getAudioManager()->playChannel(Resources::MagorditoTeleport, 0, Resources::MagorditoChannel1);
 	currState_ = STATE::SWIMMING;
 	texture_ = tpTx_[(int)currDir_];
 	currAnim_ = tpAnims_[(int)currDir_];
@@ -208,6 +214,7 @@ void Magordito::initTeleport()
 
 void Magordito::initKirinAnim()
 {
+	app_->getAudioManager()->playChannel(Resources::Kirin, 0, Resources::MagorditoChannel2);
 	kirined_ = false;
 	updateDirVisObjective(currEnemy_);
 	currState_ = STATE::FOLLOWING;
@@ -248,4 +255,10 @@ void Magordito::initRewards()
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
+}
+
+void Magordito::feedBackHurtSounds()
+{
+	auto choice = app_->getRandom()->nextInt(Resources::MagorditoAttack1, Resources::MagorditoAttack5 + 1);
+	app_->getAudioManager()->playChannel(choice, 0, Resources::MagorditoChannel1);
 }

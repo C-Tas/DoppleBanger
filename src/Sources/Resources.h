@@ -377,6 +377,10 @@ public:
 		PumpkinChannel2,
 		//Canal del pirata
 		EnemyPirateChannel,
+		//canal de magordito
+		MagorditoChannel1,
+		MagorditoChannel2,
+		MagorditoChannel3,
 
 		//Numero de canales
 		NumSoundChannels
@@ -470,12 +474,37 @@ public:
 		TauntPumpkin1,
 		TauntPumpkin2,
 
+		//Magordito
+		//IdleMagordito,
+		//MovementMagordito,
+		MagorditoDeath,
+		MagorditoKirin,
+		MagorditoTeleport,
+		MagorditoResurrection,
+		//ThemeMagordito,
+		Magorditolaugh1,
+		Magorditolaugh2,
+		Magorditolaugh3,
+		Magorditolaugh4,
+		MagorditoAttack1,
+		MagorditoAttack2,
+		MagorditoAttack3,
+		MagorditoAttack4,
+		MagorditoAttack5,
+		MagorditoAggro,
+
 		//Tutorial
 		Glass,
 		DummyDie,
 
 		//NPC
 		VenancioTalk,
+
+		//Tienda/inventario/alijo
+		Pag,
+		Equip,
+		Time,
+		Gold,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

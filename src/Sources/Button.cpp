@@ -24,7 +24,10 @@ bool Button::update() {
 	SDL_Point mouse = { aux.getX(), aux.getY() };
 
 	if (SDL_PointInRect(&mouse, &getDestiny()) && input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
-		if (cbClick_ != nullptr) cbClick_(app_);
+		if (cbClick_ != nullptr) {
+			cbClick_(app_);
+			//app_->getAudioManager()->playChannel(Resources::Time, 0, Resources::AuxMusicChannel2);
+		}
 		else if (cb_ != nullptr) cb_();
 		return true;
 	}

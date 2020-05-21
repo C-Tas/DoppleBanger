@@ -1,5 +1,7 @@
 #pragma once
 #include "PlayState.h"
+#include "ShipState.h"
+
 class TestState :
 	public PlayState
 {
@@ -9,6 +11,18 @@ public:
 	TestState(Application* app) : PlayState(app) { initState(); }
 	//<summary>Destructor de la isla caribeña</summary>
 	virtual ~TestState() { if (currentMap_ != nullptr)delete currentMap_; };
+
+	virtual void update() {
+		if (enemies_.empty() && gm_->getCurrentZone() == Zone::CaribeanBoss) {
+			collisionCtrl_->clearList();
+			//app_->getAudioManager()->haltMusic();
+			app_->getGameStateMachine()->changeState(new ShipState(app_));
+		}
+		else {
+			collisionCtrl_->islandCollisions();
+			PlayState::update();
+		}
+	}
 
 	virtual void draw()const {
 		currentMap_->draw();

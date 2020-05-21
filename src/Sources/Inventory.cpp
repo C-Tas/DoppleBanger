@@ -29,10 +29,12 @@ void callBackList(Application* app) {
 	dynamic_cast<Inventory*>(app->getCurrState())->backList();
 }
 void callExit(Application* app){
+	app->getAudioManager()->playChannel(Resources::Time, 0, Resources::AuxMusicChannel2);
 	SDL_ShowCursor(SDL_DISABLE);
 	app->getGameStateMachine()->popState();
 }
 void callSkillsState(Application* app) {
+	app->getAudioManager()->playChannel(Resources::SwordSound1, 0, Resources::AuxMusicChannel2);
 	app->getGameStateMachine()->changeState(new SkillState(app));
 }
 
@@ -118,6 +120,8 @@ void Inventory::equipObject() {
 	//comprobamos si hay un objeto seleccionado y que no se trate de un objeto ya equipado
 	if (select_ != nullptr && !select_->isEquipped()) {
 		//comprobamos si se trata de un equipment o un usable
+		app_->getAudioManager()->playChannel(Resources::Equip, 0, Resources::AuxMusicChannel1);
+
 		switch (select_->getObject()->getObjectType())
 		{
 		case ObjectType::Equipment:
@@ -136,6 +140,7 @@ void Inventory::deleteObj() {
 		// comprobamos que no se trate de un elemento equipado
 		if (!select_->isEquipped()) {
 			if (select_->getIterator() == ListPos)++ListPos;
+			app_->getAudioManager()->playChannel(Resources::Equip, 0, Resources::AuxMusicChannel1);
 			inventoryList_->erase(select_->getIterator());
 			//Eliminamos el objeto
 			delete select_;
@@ -255,6 +260,7 @@ void Inventory::forwardList() {
 	int aux = advanced;
 	aux += 1;
 	if (((aux * VIEW_LIST))<= inventoryList_->size()){
+		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel2);
 		advanced = aux;
 		advance(ListPos, VIEW_LIST);//avanzamos el iterador
 	}
@@ -265,6 +271,7 @@ void Inventory::backList() {
 	int aux = advanced;
 	aux -= 1;
 	if ((aux * VIEW_LIST) >= 0) {
+		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel2);
 		advanced = aux;
 		advance(ListPos, -VIEW_LIST);//retrocedemos el iterador
 	}
