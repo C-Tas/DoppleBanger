@@ -160,10 +160,10 @@ bool Player::update()
 			if ((*it) == objective)
 				found = true;
 
-		if (found && empoweredAct_ && !empoweredAnim_)
+		if (found && empoweredAct_ && !meleeActive_)
 		{
+			meleeActive_ = true;
 			app_->getAudioManager()->playChannel(Resources::EmpoweredSkillAudio, 0, Resources::PlayerChannel4);
-			empoweredAnim_ = true;
 			initMelee();
 		}
 		else if (found && !meleeCD_.isCooldownActive())
@@ -183,6 +183,9 @@ bool Player::update()
 	}
 	else if (currState_ == STATE::ATTACKING) {
 		meleeAnim();
+	}
+	else if (currState_ == STATE::SWIMMING) {
+		empoweredAnim();
 	}
 	else if (currState_ == STATE::DYING) {
 		app_->getAudioManager()->playChannel(Resources::DyingAudio, 0, Resources::PlayerChannel4);
@@ -316,6 +319,22 @@ void Player::initMelee()
 	meleeCD_.initCooldown(currStats_.meleeRate_);
 }
 
+void Player::initEmpowered()
+{
+	stop();
+	//Apaño para que deje de sonar al caminar
+	if (currState_ == STATE::FOLLOWING)
+		app_->getAudioManager()->playChannel(Resources::WalkAudio, 0, Resources::PlayerChannel1);
+	empoweredAct_ = true;
+	currState_ = STATE::SWIMMING;
+	texture_ = empoweredTx_[(int)currDir_];
+	currAnim_ = empoweredAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
 void Player::shootAnim()
 {
 	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
@@ -345,10 +364,18 @@ void Player::meleeAnim()
 		}
 		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
 		attacked_ = true;
+		meleeActive_ = false;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
-		empoweredAnim_ = false;
 		initIdle();	//Activa el idle
+	}
+	
+}
+
+void Player::empoweredAnim()
+{
+	if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();
 	}
 }
 
@@ -434,6 +461,20 @@ void Player::initAnims()
 	//Izquierda
 	meleeAnims_.push_back(Anim(MELEE_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_L_FRAME_RATE, false));
 	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeLeftAnim));
+
+	//Animacion GolpeFuerte
+	//Arriba
+	empoweredAnims_.push_back(Anim(EMPOWERED_U_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, EMPOWERED_U_D_RATE, false));
+	empoweredTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerEmpoweredUp));
+	//Derecha
+	empoweredAnims_.push_back(Anim(EMPOWERED_R_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, EMPOWERED_R_L_RATE, false));
+	empoweredTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerEmpoweredRight));
+	//Abajo
+	empoweredAnims_.push_back(Anim(EMPOWERED_U_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, EMPOWERED_U_D_RATE, false));
+	empoweredTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerEmpoweredDown));
+	//Izquierda
+	empoweredAnims_.push_back(Anim(EMPOWERED_R_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, EMPOWERED_R_L_RATE, false));
+	empoweredTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerEmpoweredLeft));
 
 	//Inicializamos con la animación del idle
 	currDir_ = DIR::DOWN;

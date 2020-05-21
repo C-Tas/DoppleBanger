@@ -25,7 +25,6 @@ protected:
 	//<summary>Lugar al que tiene que llegar</summary>	
 	Point2D target_{ 0,0 };
 
-
 	//<summary>Constructor vacio de la clase Dynamic</summary>	
 	Dynamic() {};
 	//<summary>Constructor  de la clase Dynamic</summary>	

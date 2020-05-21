@@ -220,6 +220,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PlayerMeleeLeftAnim, "../Sources/assets/player/animaciones/melee/meleeIz.png" },
 	{ PlayerMeleeUpAnim, "../Sources/assets/player/animaciones/melee/meleeTop.png" },
 	{ PlayerMeleeDownAnim, "../Sources/assets/player/animaciones/melee/meleeDown.png" },
+	{ PlayerEmpoweredRight, "../Sources/assets/player/animaciones/golpeFuerte/golpeRight.png" },
+	{ PlayerEmpoweredLeft, "../Sources/assets/player/animaciones/golpeFuerte/golpeLeft.png" },
+	{ PlayerEmpoweredUp, "../Sources/assets/player/animaciones/golpeFuerte/golpeUp.png" },
+	{ PlayerEmpoweredDown, "../Sources/assets/player/animaciones/golpeFuerte/golpeDown.png" },
 	//Clon
 	{ ClonSelfDestructionRightAnim, "../Sources/assets/clon/autodestruccion/ClonRightExplosion.png" },
 	{ ClonSelfDestructionLeftAnim, "../Sources/assets/clon/autodestruccion/ClonLeftExplosion.png" },
