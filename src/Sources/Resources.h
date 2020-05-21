@@ -516,6 +516,7 @@ public:
 		KrakenSweep1,
 		KrakenSweep2,
 		KrakenSweep3,
+		KrakenDeath,
 
 		//Tutorial
 		Glass,

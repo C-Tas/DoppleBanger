@@ -51,6 +51,8 @@ bool Kraken::update() {
 
 	//Si ha muerto
 	if (currState_ == STATE::DYING) {
+		app_->getAudioManager()->playChannel(Resources::KrakenDeath, 0, Resources::KrakenChannel1);
+		app_->getAudioManager()->haltChannel(Resources::KrakenChannel2);
 		//Tendr�a que hacer la animaci�n de muerte?
 		//Cuando acabe la animaci�n, lo mata
 		if (!tentacles_.empty()) {

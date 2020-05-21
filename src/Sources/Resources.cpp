@@ -480,6 +480,7 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ KrakenSweep1 ,"../Sources/assets/efectos_sonido/kraken/sweep1.wav" },
 	{ KrakenSweep2 ,"../Sources/assets/efectos_sonido/kraken/sweep2.wav" },
 	{ KrakenSweep3 ,"../Sources/assets/efectos_sonido/kraken/sweep3.wav" },
+	{ KrakenDeath ,"../Sources/assets/efectos_sonido/kraken/death.wav" },
 #pragma endregion
 	//Tutorial
 	{ Glass, "../Sources/assets/efectos_sonido/tutorial/glass.wav" },
