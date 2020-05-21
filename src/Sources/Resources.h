@@ -381,7 +381,8 @@ public:
 		PumpkinChannel2,
 		//Canal del pirata
 		EnemyPirateChannel,
-
+		//Canal de jarl
+		JarlChannel,
 		//Numero de canales
 		NumSoundChannels
 	};
@@ -480,6 +481,19 @@ public:
 
 		//NPC
 		VenancioTalk,
+
+		//Jarls
+		jarl1,
+		jarl2,
+		jarl3,
+		jarl4,
+		jarl5,
+		jarl6,
+		jarl7,
+		jarl8,
+		jarl9,
+		jarl10,
+		jarl11,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

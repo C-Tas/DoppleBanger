@@ -714,7 +714,8 @@ Player::~Player()
 
 void Player::shout()
 {
-	app_->getAudioManager()->playChannel(Resources::Shout, 0, Resources::PlayerChannel3);
+	auto choice = app_->getRandom()->nextInt(Resources::jarl1, Resources::jarl11 + 1);
+	app_->getAudioManager()->playChannel(choice, 0, Resources::JarlChannel);
 }
 
 Skill* Player::createSkill(SkillName name)

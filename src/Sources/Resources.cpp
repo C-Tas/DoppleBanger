@@ -454,6 +454,18 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ VenancioTalk, "../Sources/assets/efectos_sonido/tutorial/VenancioTalk.wav" },
 	//Otros
 	{ Agro ,"../Sources/assets/efectos_sonido/agro.mp3" },
+	//jarls
+	{ jarl1 ,"../Sources/assets/efectos_sonido/jarl/jar1.wav" },
+	{ jarl2 ,"../Sources/assets/efectos_sonido/jarl/jar2.wav" },
+	{ jarl3 ,"../Sources/assets/efectos_sonido/jarl/jar3.wav" },
+	{ jarl4 ,"../Sources/assets/efectos_sonido/jarl/jar4.wav" },
+	{ jarl5 ,"../Sources/assets/efectos_sonido/jarl/jar5.wav" },
+	{ jarl6 ,"../Sources/assets/efectos_sonido/jarl/jar6.wav" },
+	{ jarl7 ,"../Sources/assets/efectos_sonido/jarl/jar7.wav" },
+	{ jarl8 ,"../Sources/assets/efectos_sonido/jarl/jar8.wav" },
+	{ jarl9 ,"../Sources/assets/efectos_sonido/jarl/jar9.wav" },
+	{ jarl10 ,"../Sources/assets/efectos_sonido/jarl/jar10.wav" },
+	{ jarl11 ,"../Sources/assets/efectos_sonido/jarl/jar11.wav" },
 };
 
 vector<Resources::AudioVolume> Resources::audioVolume{
@@ -481,7 +493,9 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ PumpkinChannel1, 6 },
 	{ PumpkinChannel2, 6 },
 	//Canal del pirata
-	{ EnemyPirateChannel, 6 }
+	{ EnemyPirateChannel, 6 },
+	//canal de jarl
+	{ JarlChannel, 6 },
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{
