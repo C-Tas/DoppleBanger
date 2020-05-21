@@ -18,6 +18,7 @@ private:
 	const double SLOW_EFFECT = 0.5;
 
 	bool fallen_ = false;
+	Cooldown fallingCD_;
 	Cooldown lifeCD_;
 	STATE state_;
 	Kraken* kraken_ = nullptr;
@@ -25,5 +26,9 @@ private:
 	bool update();
 	void initObject();
 	void onCollider();
+	void updateCooldowns() {
+		if (fallingCD_.isCooldownActive()) fallingCD_.updateCooldown();
+		if (lifeCD_.isCooldownActive()) lifeCD_.updateCooldown();
+	};
 };
 

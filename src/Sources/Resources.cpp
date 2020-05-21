@@ -445,6 +445,15 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ CrabDetection ,"../Sources/assets/efectos_sonido/crab/detection.mp3" },
 	{ CrabIdle ,"../Sources/assets/efectos_sonido/crab/idle.mp3" },
 #pragma endregion
+	//Pirata
+#pragma region Pirate
+	{ PirateAttack ,"../Sources/assets/efectos_sonido/pirate/attack.mp3" },
+	{ PirateShot ,"../Sources/assets/efectos_sonido/pirate/shot.mp3" },
+	{ PirateDetection1 ,"../Sources/assets/efectos_sonido/pirate/detect1.mp3" },
+	{ PirateDetection2 ,"../Sources/assets/efectos_sonido/pirate/detect2.mp3" },
+	{ PirateIdle ,"../Sources/assets/efectos_sonido/pirate/idle.mp3" },
+	{ PirateChase ,"../Sources/assets/efectos_sonido/pirate/chase.mp3" },
+#pragma endregion
 	//Calabaza
 #pragma region Pumpkin
 	{ AgroPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/agro.mp3" },
@@ -458,6 +467,19 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ MovePumpkin ,"../Sources/assets/efectos_sonido/pumpkin/move.mp3" },
 	{ TauntPumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/taunt.mp3" },
 	{ TauntPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/taunt1.mp3" },
+#pragma endregion
+	//Kraken
+#pragma region Kraken
+	{ KrakenIdle ,"../Sources/assets/efectos_sonido/kraken/idle.mp3" },
+	{ KrakenInk ,"../Sources/assets/efectos_sonido/kraken/ink.wav" },
+	{ KrakenSplash ,"../Sources/assets/efectos_sonido/kraken/splash.mp3" },
+	{ KrakenDive ,"../Sources/assets/efectos_sonido/kraken/dive.mp3" },
+	{ KrakenSurface ,"../Sources/assets/efectos_sonido/kraken/surface.mp3" },
+	{ KrakenSlam1 ,"../Sources/assets/efectos_sonido/kraken/slam1.wav" },
+	{ KrakenSlam2 ,"../Sources/assets/efectos_sonido/kraken/slam2.wav" },
+	{ KrakenSweep1 ,"../Sources/assets/efectos_sonido/kraken/sweep1.wav" },
+	{ KrakenSweep2 ,"../Sources/assets/efectos_sonido/kraken/sweep2.wav" },
+	{ KrakenSweep3 ,"../Sources/assets/efectos_sonido/kraken/sweep3.wav" },
 #pragma endregion
 	//Tutorial
 	{ Glass, "../Sources/assets/efectos_sonido/tutorial/glass.wav" },
@@ -500,7 +522,12 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ CrabChannel1, 10 },
 	{ CrabChannel2, 10 },
 	//Canal del pirata
-	{ EnemyPirateChannel, 6 }
+	{ PirateChannel1, 10 },
+	{ PirateChannel2, 10 },
+	{ PirateChannel3, 10 },
+	//Canal de la kraken
+	{ KrakenChannel1, 15 },
+	{ KrakenChannel2, 20 },
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{

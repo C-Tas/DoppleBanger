@@ -384,7 +384,12 @@ public:
 		CrabChannel1,
 		CrabChannel2,
 		//Canal del pirata
-		EnemyPirateChannel,
+		PirateChannel1,
+		PirateChannel2,
+		PirateChannel3,
+		//Canal del kraken
+		KrakenChannel1,
+		KrakenChannel2,
 
 		//Numero de canales
 		NumSoundChannels
@@ -479,6 +484,14 @@ public:
 		CrabDetection,
 		CrabIdle,
 
+		//Pirata
+		PirateAttack,
+		PirateShot,
+		PirateDetection1,
+		PirateDetection2,
+		PirateIdle,
+		PirateChase,
+
 		//Calabaza
 		AgroPumpkin,
 		AttackPumpkin,
@@ -491,6 +504,18 @@ public:
 		MovePumpkin,
 		TauntPumpkin1,
 		TauntPumpkin2,
+
+		//Kraken
+		KrakenIdle,
+		KrakenInk,
+		KrakenSplash,
+		KrakenDive,
+		KrakenSurface,
+		KrakenSlam1,
+		KrakenSlam2,
+		KrakenSweep1,
+		KrakenSweep2,
+		KrakenSweep3,
 
 		//Tutorial
 		Glass,

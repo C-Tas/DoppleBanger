@@ -92,6 +92,7 @@ void Kraken::initObject()
 	initAnims();
 	swimInit();
 	initRewards();
+	app_->getAudioManager()->playChannel(Resources::KrakenIdle, -1, Resources::KrakenChannel1);
 }
 
 void Kraken::slam()
@@ -112,6 +113,16 @@ void Kraken::slam()
 	Tentacle* tentacle = new Tentacle(app_, this, tentPos, tentScale, (180 / M_PI) * angle, ATTACKS::SLAM);
 	tentacles_.push_back(tentacle);
 	static_cast<PlayState*>(app_->getGameStateMachine()->getState())->addEnemy(tentacle);
+
+	switch (rand() % 2)
+	{
+	case 0:
+		app_->getAudioManager()->playChannel(Resources::KrakenSlam1, 0, Resources::KrakenChannel2);
+		break;
+	case 1:
+		app_->getAudioManager()->playChannel(Resources::KrakenSlam2, 0, Resources::KrakenChannel2);
+		break;
+	}
 }
 
 void Kraken::sweep()
@@ -147,6 +158,19 @@ void Kraken::sweep()
 	Tentacle* tentacle = new Tentacle(app_, this, tentPos, tentScale, (180 / M_PI) * angle, ATTACKS::SWEEP);
 	tentacles_.push_back(tentacle);
 	static_cast<PlayState*>(app_->getGameStateMachine()->getState())->addEnemy(tentacle);
+
+	switch (rand() % 3)
+	{
+	case 0:
+		app_->getAudioManager()->playChannel(Resources::KrakenSweep1, 0, Resources::KrakenChannel2);
+		break;
+	case 1:
+		app_->getAudioManager()->playChannel(Resources::KrakenSweep2, 0, Resources::KrakenChannel2);
+		break;
+	case 2:
+		app_->getAudioManager()->playChannel(Resources::KrakenSweep3, 0, Resources::KrakenChannel2);
+		break;
+	}
 }
 
 void Kraken::swimInit()
@@ -155,6 +179,7 @@ void Kraken::swimInit()
 	//Empieza animación (cambiar el valor de swimTime)
 
 	swimCD_.initCooldown(SWIM_DURATION); //Esto se tendría que hacer al acabar la animación
+	app_->getAudioManager()->playChannel(Resources::KrakenDive, 0, Resources::KrakenChannel2);
 }
 
 void Kraken::swimEnd()
@@ -173,10 +198,12 @@ void Kraken::swimEnd()
 	}
 	pos_.setX(krakenSpots_[(int)closest.getX()].getX() - (scale_.getX() / 2));
 	pos_.setY(krakenSpots_[(int)closest.getX()].getY() - (scale_.getY() / 2));
+	app_->getAudioManager()->playChannel(Resources::KrakenSurface, 0, Resources::KrakenChannel2);
 }
 
 void Kraken::ink()
 {
+	app_->getAudioManager()->playChannel(Resources::KrakenInk, 0, Resources::KrakenChannel2);
 	Vector2D pos;
 	Vector2D scale = Vector2D(scale_.getX() / 5, scale_.getY() / 5);
 	int numShots = AVERAGE_INK_SHOTS + ((rand() % NORMAL_DESVIATION * 2 + 1) - NORMAL_DESVIATION);

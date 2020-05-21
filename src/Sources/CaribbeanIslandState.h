@@ -30,7 +30,7 @@ protected:
 	const int TILE_DRAWING_SIZE = gm_->getTileSize();
 
 	///<summary>Direccion en la que se encuentra el archivo de Tiled del mapa de la zona 1</summary>
-	const std::string ZONE1_TILEMAP = "../Sources/assets/mapas/Isla1-1/test.tmx";
+	const std::string ZONE1_TILEMAP = "../Sources/assets/mapas/Isla1-1/Isla 1.tmx";
 	///<summary>Direccion en la que se encuentra el archivo de Tiled del mapa de la zona 2</summary>
 	const std::string ZONE2_TILEMAP = "../Sources/assets/mapas/Isla1-1/Zona2/Isla1.2.tmx";
 	///<summary>Direccion en la que se encuentra el archivo de Tiled del mapa de la zona 3
