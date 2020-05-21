@@ -11,6 +11,7 @@
 #include "PlayerBullet.h"
 #include <list>
 #include <vector>
+#include "Barrel.h"
 
 class PlayerBullet;
 class CollisionCtrl {
@@ -51,10 +52,14 @@ public:
 	void shipCollisions();
 	//Gestiona las colisiones con los objetos del tutorial
 	void tutorialCollision();
+	//Gestina las colisiones contra los barriles
+	void volcanicCollision();
 	///<summary>Para renderizar los textBox en caso de ser necesario</summary>
 	void drawTextBox();
 	///<summary>Devuelve los objetos en un area</summary>
 	list<Enemy*> getEnemiesInArea(Point2D center, int radius);
+	//Devuelve los objetos un área
+	list<Collider*> getEntitiesInArea(Point2D center, int radius);
 
 #pragma region Remove
 	///<summary>Quita las colisiones con el NPC (si el NPC se desbloquea y deja de aparecer en la isla)</summary>
@@ -73,7 +78,8 @@ public:
 	void removeCollider(Collider* collider) { collidersToErase_.push_back(collider); };
 	///<summary>Quita el dummy</summary>
 	void removeDummy() { enemies_.clear(); dummy_ = nullptr; };
-
+	//Quita un barril
+	void removeBarrel(Barrel* collider) { barrelsToErase_.push_back(collider); }
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
 	void clearList() {
 		//Listas de las islas
@@ -86,6 +92,8 @@ public:
 		npcCollision.id = NPCsNames::Nobody;
 		npcCollision.object = nullptr;
 		collisionWithEndOfZone_ = false;
+		//Listas del volcanica
+		barrels_.clear();
 	};
 #pragma endregion
 
@@ -129,7 +137,9 @@ public:
 	void setBottle(Enemy* obj) { bottle_ = obj; }
 	void setDummy(Enemy* obj) { dummy_ = obj; }
 
-
+	//Volcanica
+	void addBarrel(Barrel* collider) { barrels_.push_back(collider); }
+		
 #pragma endregion
 
 private:	//Private est� abajo porque necesitan enum del p�blico
@@ -168,6 +178,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Bullet*> enemyBullets_;
 	list<Trigger*> triggers_;
 	list<Collider*> colliders_;
+	list<Barrel*> barrels_;
 
 	list<Enemy*> enemiesToErase_;
 	list<Chest*> chestsToErase_;
@@ -175,6 +186,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Bullet*> enemyBulletsToErase_;
 	list<Trigger*> triggersToErase_;
 	list<Collider*> collidersToErase_;
+	list<Barrel*> barrelsToErase_;
 
 	bool collisionWithEndOfZone_ = false;
 

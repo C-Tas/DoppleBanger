@@ -298,7 +298,6 @@ void CollisionCtrl::tutorialCollision()
 				bottle_->onCollider();
 				bullet->onCollider();
 				bottle_ = nullptr;
-				
 			}
 		}
 	}
@@ -308,6 +307,35 @@ void CollisionCtrl::tutorialCollision()
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			chest->onCollider();
 			removeChest(chest);	//Para que no pueda volver a abrirse el mismo cofre
+		}
+	}
+}
+
+void CollisionCtrl::volcanicCollision()
+{
+	for (auto it = barrelsToErase_.begin(); it != barrelsToErase_.end(); ++it) {
+		barrels_.remove(*it);
+	}
+	barrelsToErase_.clear();
+
+	for (auto barrel : barrels_) {
+		if (barrel->getBarrelState() == BARREL_STATE::READY) {
+			//Collisión contra el player
+			if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
+				barrel->getPos(), barrel->getScaleX(), barrel->getScaleY())) {
+				barrel->onCollider();
+				removeBarrel(barrel);
+			}
+			//Collisión contra las balas
+			for (auto bullet : playerBullets_) {
+				if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+					barrel->getPos(), barrel->getScaleX(), barrel->getScaleY())) {
+					barrel->onCollider();
+					bullet->onCollider();
+					removeBarrel(barrel);
+					removePlayerBullet(bullet);
+				}
+			}
 		}
 	}
 }
@@ -323,6 +351,22 @@ list<Enemy*> CollisionCtrl::getEnemiesInArea(Point2D center, int radius)
 		}
 	}
 	return enemiesWithin;
+}
+
+list<Collider*> CollisionCtrl::getEntitiesInArea(Point2D center, int radius)
+{
+	list<Collider*> entities;
+	SDL_Rect coll = player_->getCollider();
+	if (RectBall(coll.x + coll.w / 2, coll.y + coll.h / 2, coll.w, coll.h, center.getX(), center.getY(), radius)) {
+		entities.push_back(player_);
+	}
+	for (auto enemy : enemies_) {
+		coll = (enemy)->getCollider();
+		if (RectBall(coll.x + coll.w / 2, coll.y + coll.h / 2, coll.w, coll.h, center.getX(), center.getY(), radius)) {
+			entities.push_back((enemy));
+		}
+	}
+	return entities;
 }
 
 void CollisionCtrl::drawTextBox() {

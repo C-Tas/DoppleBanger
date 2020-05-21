@@ -49,6 +49,8 @@ void Actor::updateDirVisMouse()
 
 //A falta de definir la gesti�n del da�o en funci�n de la armadura
 void Actor::receiveDamage(int damage) {
+	cout << "BARREL DMG PLAYER \n";
+
 	lastTint_ = SDL_GetTicks();
 	feedBackHurtSounds();
 	/*double finalDamage = (currStats_.armor_ * damage) / 100;
