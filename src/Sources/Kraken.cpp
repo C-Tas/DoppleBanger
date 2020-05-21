@@ -94,7 +94,10 @@ void Kraken::initObject()
 	initAnims();
 	swimInit();
 	initRewards();
+	app_->resetMusicChannels();
 	app_->getAudioManager()->playChannel(Resources::KrakenIdle, -1, Resources::KrakenChannel1);
+	app_->getAudioManager()->playChannel(Resources::KrakenMusic, -1, Resources::MainMusicChannel);
+	app_->getAudioManager()->setChannelVolume(20, Resources::MainMusicChannel);
 }
 
 void Kraken::slam()

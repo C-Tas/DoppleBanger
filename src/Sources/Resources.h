@@ -517,6 +517,7 @@ public:
 		KrakenSweep2,
 		KrakenSweep3,
 		KrakenDeath,
+		KrakenMusic,
 
 		//Tutorial
 		Glass,
