@@ -66,7 +66,6 @@ private:
 	void initMelee();
 	void meleeAnim();
 
-
 	const int W_H_CLON_FRAME = 100;
 
 	//Idle
@@ -162,13 +161,6 @@ private:
 	//Desaparicion abajo
 	const int VANISH_D_FRAMES = 5;			//Frames de la animación
 	const int VANISH_D_FRAME_RATE = 100;		//Frame rate
-
-
-
-
-	
-
-
 
 #pragma endregion
 };

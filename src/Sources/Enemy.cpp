@@ -16,10 +16,13 @@ Vector2D Enemy::isPlayerInRange(double rangeAttack)
 	GameManager* gm = GameManager::instance();
 	if (gm->getPlayer() == nullptr) { return NOPE; }
 
-	Point2D playerPos = gm->getPlayerPos();
+	Vector2D playerPos = gm->getPlayer()->getCenter();
+	Vector2D scalePlayer = gm->getPlayer()->getScale();
+	Vector2D center = getCenter();
+
 	if (currEnemy_ == nullptr &&
-		playerPos.getX() <= pos_.getX() + (getScaleX() / 2) + rangeAttack && playerPos.getX() >= pos_.getX() - rangeAttack
-		&& playerPos.getY() <= pos_.getY() + (getScaleY() / 2) + rangeAttack && playerPos.getY() >= pos_.getY() - rangeAttack) {
+		RectBall(playerPos.getX(), playerPos.getY(),  scalePlayer.getX(), scalePlayer.getY(),
+			center.getX(), center.getY(), rangeAttack)){
 		return playerPos;
 	}
 	else
@@ -33,16 +36,18 @@ Vector2D Enemy::isClonInRange(double n)
 	GameManager* gm = GameManager::instance();
 	if (gm->getClon() == nullptr) { return NOPE; }
 
-	Point2D clonPos = gm->getClon()->getPos();
+	Vector2D clonPos = gm->getClon()->getCenter();
+	Vector2D scaleClon = gm->getClon()->getScale();
+	Vector2D center = getCenter();
+
 	if (currEnemy_ == nullptr &&
-		clonPos.getX() <= pos_.getX() + (getScaleX() / 2) + n && clonPos.getX() >= pos_.getX() - n
-		&& clonPos.getY() <= pos_.getY() + (getScaleY() / 2) + n && clonPos.getY() >= pos_.getY() - n) {
-		//static_cast<Clon*>(gm->getClon())->addAgredEnemy(this);
+		RectBall(clonPos.getX(), clonPos.getY(), scaleClon.getX(), scaleClon.getY(),
+			center.getX(), center.getY(), n)) {
 		return clonPos;
 	}
 	else
 	{
-		return NOPE;
+		return  NOPE;
 	}
 }
 

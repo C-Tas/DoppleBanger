@@ -12,7 +12,7 @@ public:
 	virtual void onCollider() {};
 	//<summary>Metodo que mata a este enemigo</summary>
 	virtual void die();
-	virtual void lostAggro() {};
+	virtual void lostAggro() { currEnemy_ = nullptr; };
 	//Cuando se crea un clon se fija como nuevo objetivo
 	virtual void newEnemy(GameObject* obj) { currEnemy_ = obj; };
 
