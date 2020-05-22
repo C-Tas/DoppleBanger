@@ -53,6 +53,10 @@ bool Cleon::update() {
 			//Estocada
 			thrust();
 		}
+		else if (onRange(currStats_.meleeRange_) && !lastSweep_.isCooldownActive()) {
+			//Barrido
+			sweep();
+		}
 		//Sí está a rango de carga
 		else if (onRange(CHARGE_RANGE) && !lastCharge_.isCooldownActive()) {
 			//Carga
@@ -67,16 +71,16 @@ bool Cleon::update() {
 	if (currState_ == STATE::CHARGING) {
 		selectTarget();
 		SDL_Rect targetRect = { target_.getX(),target_.getY(),25,25 };
-			//Cleón llego al destino de su carga
-			if (SDL_HasIntersection(&getDestiny(), &targetRect)) {
-				auto currEnemy = dynamic_cast<Player*>(currEnemy_);
-				//Si Cleón colisiona contra el player
-				if (currEnemy && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny())) {
-					currEnemy->receiveDamage(CHARGE_DMG);
-				}
-				currState_ = STATE::ATTACKING;
-				currStats_.moveSpeed_ = movSpeed_;
+		//Cleón llego al destino de su carga
+		if (SDL_HasIntersection(&getDestiny(), &targetRect)) {
+			auto currEnemy = dynamic_cast<Player*>(currEnemy_);
+			//Si Cleón colisiona contra el player
+			if (currEnemy && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny())) {
+				currEnemy->receiveDamage(CHARGE_DMG);
 			}
+			currState_ = STATE::ATTACKING;
+			currStats_.moveSpeed_ = movSpeed_;
+		}
 	}
 	//Si Cleón está siguiendo a un enemigo
 	if (currState_ == STATE::FOLLOWING) {
@@ -92,7 +96,7 @@ bool Cleon::update() {
 
 void Cleon::onCollider()
 {
-	
+
 }
 
 
@@ -144,6 +148,16 @@ void Cleon::pirateCharge()
 	app_->getCurrState()->addRenderUpdateLists(currBarrel);
 	barrelsInGame++;
 
+}
+
+void Cleon::sweep()
+{
+	cout << "Barrido!" << endl;
+	lastSweep_.initCooldown(SWEEP_TIME);
+	auto sweepAttack = dynamic_cast<Player*>(currEnemy_);
+	if (sweepAttack) {
+		sweepAttack->receiveDamage(currStats_.meleeDmg_);
+	}
 }
 
 void Cleon::createBarrel()
