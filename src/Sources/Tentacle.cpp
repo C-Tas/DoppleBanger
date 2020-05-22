@@ -169,7 +169,9 @@ void Tentacle::onCollider()
 			Point2D p1, p2;
 			Vector2D dir;
 
-			player->receiveDamage(kraken_->getMeleeDmg());
+			double realDamage = kraken_->getMeleeDmg();
+			if (kraken_->applyCritic()) realDamage *= 1.5;
+			player->receiveDamage(realDamage);
 
 			double a, b, c, d;
 

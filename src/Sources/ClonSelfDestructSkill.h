@@ -22,7 +22,7 @@ public:
 		//Si no está en cooldown la habilidad
 		if (mana >= costMana_ && player_->getClon() != nullptr && !destructCD_.isCooldownActive())
 		{
-			player_->removeMana(costMana_);
+			player_->addMana(-costMana_);
 			player_->getClon()->initSelfDestruction();
 			//Consigue la lista de los enemigos golpeados y les hace daño
 			Vector2D clonCenter = Vector2D(player_->getClon()->getPos().getX() + player_->getClon()->getScale().getX(), player_->getClon()->getPos().getY() + player_->getClon()->getScale().getY());

@@ -105,10 +105,7 @@ public:
 		void equip(Gloves* gloves) { gloves_ = gloves; gm_->setGloves(gloves); };
 		void equip(Boots* boots) { boots_ = boots; gm_->setBoots(boots);};
 		void equip(Sword* sword) { sword_ = sword; gm_->setSword(sword);};
-		void equip(Gun* gun) { 
-			changeDistWeaponStats(gun);
-			gm_->setGun(gun);
-		}
+		void equip(Gun* gun) { gun_ = gun; gm_->setGun(gun); }
 		void addMaxHealth(double addition) { maxHealth_ += addition; };
 		//Aumenta la cadencia de tiro del player
 		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
@@ -161,7 +158,7 @@ private:
 	vector<Skill*> skills_ = { nullptr, nullptr, nullptr, nullptr};
 
 	//cambia los stats de un arma
-	void changeDistWeaponStats(Gun* newWeapon);
+	//void changeDistWeaponStats(Gun* newWeapon);
 
 	//Objetos
 	//<Speed, Damage, Armor, Crit>
@@ -270,7 +267,7 @@ private:
 	const int RANGE_SPEED = 1000;	//Velocidad extra para el pistolero raudo (a falta de equilibrado)
 	bool empoweredAct_ = false;		//Si tiene la habilidad activada
 	bool meleeActive_ = false;		//Para saber si la animación se ha inicializado
-	double empoweredBonus_ = 1.5;	//Bonus porcentual del daño
+	double empoweredBonus_ = 2.5;	//Bonus porcentual del daño
 	bool perforate_ = false;	//Para saber si el siguiente disparo perfora
 #pragma endregion
 	//<summary>Variables de los cooldowns del jugador</summary>

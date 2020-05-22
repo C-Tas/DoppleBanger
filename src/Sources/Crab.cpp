@@ -105,7 +105,11 @@ void Crab::attack() {
 		app_->getAudioManager()->playChannel(Resources::CrabAttackSound, 0, Resources::CrabChannel2);
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
-			dmg->receiveDamage(currStats_.meleeDmg_);
+			//Critico
+			double realDamage = currStats_.meleeDmg_;
+			if (applyCritic()) realDamage *= 1.5;
+
+			dmg->receiveDamage(realDamage);
 		}
 	}
 }

@@ -17,7 +17,7 @@ public:
 		//Si no está en cooldown la habilidad
 		if (mana >= costMana_ && !skillCD_.isCooldownActive())
 		{
-			player_->removeMana(costMana_);
+			player_->addMana(-costMana_);
 			player_->activateEmpowered();
 			skillCD_.initCooldown(COOLDOWN);
 		}

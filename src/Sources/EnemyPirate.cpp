@@ -192,7 +192,11 @@ void EnemyPirate::attack() {
 		meleeCD_.initCooldown(currStats_.meleeRate_);
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
-			dmg->receiveDamage(currStats_.meleeDmg_);
+			//Critico
+			double realDamage = currStats_.meleeDmg_;
+			if (applyCritic()) realDamage *= 1.5;
+
+			dmg->receiveDamage(realDamage);
 		}
 	}
 
