@@ -7,7 +7,7 @@
 //#include "CaribbeanIslandState.h"
 
 void Skeleton::initialStats() {
-	HEALTH = 100;
+	HEALTH = 1500;
 	MANA = 100;
 	MANA_REG = 1;
 	ARMOR = 10;
@@ -18,7 +18,7 @@ void Skeleton::initialStats() {
 	DIST_RANGE = 250;
 	MOVE_SPEED = 100;
 	MELEE_RATE = 0;
-	DIST_RATE = 2500;
+	DIST_RATE = 3500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
@@ -60,7 +60,8 @@ bool Skeleton::update() {
 
 	//Si el esqueleto ha muerto
 	if (currState_ == STATE::DYING) {
-		//sonidomuerte
+		//Sonido muerte
+		app_->getAudioManager()->playChannel(Resources::SkeletonDeath, 0, Resources::SkeletonChannel1);
 		// animación de muerte si la tiene
 		//Cuando acabe la animación, lo mata
 		applyRewards();
@@ -157,6 +158,8 @@ void Skeleton::initAnims()
 void Skeleton::initIdle()
 {
 	currState_ = STATE::IDLE;
+	//Sonido ataque
+	app_->getAudioManager()->playChannel(Resources::SkeletonIdle, -1, Resources::SkeletonChannel1);
 	texture_ = idleTx_[(int)currDir_];
 	currAnim_ = idleAnims_;
 	frame_.x = 0; frame_.y = 0;
@@ -168,7 +171,7 @@ void Skeleton::shootAnim() {
 	if (!shooted_ &&currAnim_.currFrame_ == frameAction_ ) {
 		shooted_ = true;
 		attack();
-		lastHit = SDL_GetTicks();
+		shootCD_.initCooldown(currStats_.distRate_);
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();
@@ -177,6 +180,8 @@ void Skeleton::shootAnim() {
 
 void Skeleton::initShoot() {
 	currState_ = STATE::SHOOTING;	//Cambio de estado
+	//Sonido ataque
+	app_->getAudioManager()->playChannel(Resources::SkeletonAttack, 0, Resources::SkeletonChannel2);
 	shooted_ = false;	//Aún no se ha creado la bala
 	updateDirVisObjective(currEnemy_);	//Hacia dónde mira
 	texture_ = shootTx_[(int)currDir_];
@@ -206,11 +211,26 @@ void Skeleton::initShoot() {
 
 void Skeleton::initMove()
 {
-	app_->getAudioManager()->playChannel(Resources::MovePumpkin, -1, 6);
 	currState_ = STATE::FOLLOWING;
 	texture_ = moveTx_[(int)currDir_];
 	currAnim_ = moveAnims_[(int)currDir_];
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+}
+
+void Skeleton::feedBackHurtSounds()
+{
+	switch (rand() % 3)
+	{
+	case 0:
+		app_->getAudioManager()->playChannel(Resources::SkeletonHit1, 0, Resources::SkeletonChannel3);
+		break;
+	case 1:
+		app_->getAudioManager()->playChannel(Resources::SkeletonHit2, 0, Resources::SkeletonChannel3);
+		break;
+	case 2:
+		app_->getAudioManager()->playChannel(Resources::SkeletonHit3, 0, Resources::SkeletonChannel3);
+		break;
+	}
 }

@@ -433,6 +433,31 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ MonkeyShootSound ,"../Sources/assets/efectos_sonido/monkey/monoShoot.wav" },
 	{ MonkeyDieSound ,"../Sources/assets/efectos_sonido/monkey/monoDie.ogg" },
 #pragma endregion
+	//Esqueleto
+#pragma region Skeleton
+	{ SkeletonAttack ,"../Sources/assets/efectos_sonido/skeleton/attack.mp3" },
+	{ SkeletonBoomerang ,"../Sources/assets/efectos_sonido/skeleton/boomerang.mp3" },
+	{ SkeletonDeath ,"../Sources/assets/efectos_sonido/skeleton/death.mp3" },
+	{ SkeletonHit1 ,"../Sources/assets/efectos_sonido/skeleton/hit1.mp3" },
+	{ SkeletonHit2 ,"../Sources/assets/efectos_sonido/skeleton/hit2.mp3" },
+	{ SkeletonHit3 ,"../Sources/assets/efectos_sonido/skeleton/hit3.mp3" },
+	{ SkeletonIdle ,"../Sources/assets/efectos_sonido/skeleton/idle.mp3" },
+#pragma endregion
+	//Cangrejo
+#pragma region Crab
+	{ CrabAttackSound ,"../Sources/assets/efectos_sonido/crab/attack.mp3" },
+	{ CrabDetection ,"../Sources/assets/efectos_sonido/crab/detection.mp3" },
+	{ CrabIdle ,"../Sources/assets/efectos_sonido/crab/idle.mp3" },
+#pragma endregion
+	//Pirata
+#pragma region Pirate
+	{ PirateAttack ,"../Sources/assets/efectos_sonido/pirate/attack.mp3" },
+	{ PirateShot ,"../Sources/assets/efectos_sonido/pirate/shot.mp3" },
+	{ PirateDetection1 ,"../Sources/assets/efectos_sonido/pirate/detect1.mp3" },
+	{ PirateDetection2 ,"../Sources/assets/efectos_sonido/pirate/detect2.mp3" },
+	{ PirateIdle ,"../Sources/assets/efectos_sonido/pirate/idle.mp3" },
+	{ PirateChase ,"../Sources/assets/efectos_sonido/pirate/chase.mp3" },
+#pragma endregion
 	//Calabaza
 #pragma region Pumpkin
 	{ AgroPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/agro.mp3" },
@@ -446,6 +471,21 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ MovePumpkin ,"../Sources/assets/efectos_sonido/pumpkin/move.mp3" },
 	{ TauntPumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/taunt.mp3" },
 	{ TauntPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/taunt1.mp3" },
+#pragma endregion
+	//Kraken
+#pragma region Kraken
+	{ KrakenIdle ,"../Sources/assets/efectos_sonido/kraken/idle.mp3" },
+	{ KrakenInk ,"../Sources/assets/efectos_sonido/kraken/ink.wav" },
+	{ KrakenSplash ,"../Sources/assets/efectos_sonido/kraken/splash.mp3" },
+	{ KrakenDive ,"../Sources/assets/efectos_sonido/kraken/dive.mp3" },
+	{ KrakenSurface ,"../Sources/assets/efectos_sonido/kraken/surface.mp3" },
+	{ KrakenSlam1 ,"../Sources/assets/efectos_sonido/kraken/slam1.wav" },
+	{ KrakenSlam2 ,"../Sources/assets/efectos_sonido/kraken/slam2.wav" },
+	{ KrakenSweep1 ,"../Sources/assets/efectos_sonido/kraken/sweep1.wav" },
+	{ KrakenSweep2 ,"../Sources/assets/efectos_sonido/kraken/sweep2.wav" },
+	{ KrakenSweep3 ,"../Sources/assets/efectos_sonido/kraken/sweep3.wav" },
+	{ KrakenDeath ,"../Sources/assets/efectos_sonido/kraken/death.wav" },
+	{ KrakenMusic ,"../Sources/assets/efectos_sonido/kraken/music.wav" },
 #pragma endregion
 	//Tutorial
 	{ Glass, "../Sources/assets/efectos_sonido/tutorial/glass.wav" },
@@ -476,12 +516,24 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ WolfChannel, 6 },
 	//Canal del mono
 	{ MonkeyChannel, 6 },
-
 	//Canal de la calabaza
 	{ PumpkinChannel1, 6 },
 	{ PumpkinChannel2, 6 },
+	//Canal del esqueleto
+	{ SkeletonChannel1, 40 },
+	{ SkeletonChannel2, 40 },
+	{ SkeletonChannel3, 40 },
+	{ SkeletonChannel4, 6 },
+	//Canal de la cangrejo
+	{ CrabChannel1, 10 },
+	{ CrabChannel2, 10 },
 	//Canal del pirata
-	{ EnemyPirateChannel, 6 }
+	{ PirateChannel1, 10 },
+	{ PirateChannel2, 10 },
+	{ PirateChannel3, 10 },
+	//Canal de la kraken
+	{ KrakenChannel1, 15 },
+	{ KrakenChannel2, 20 },
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{

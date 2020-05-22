@@ -9,13 +9,13 @@ bool Tentacle::update()
 	updateCooldowns();
 
 	//Si el tentaculo esta cayendo
-	if (currState_ == STATE::FOLLOWING)
+	if (currState_ == STATE::FOLLOWING && !fallingCD_.isCooldownActive())
 	{
 		//Una vez cae se le asigna su hitbox
 		collisionArea_ = collArea_;
 		setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
 		currState_ = STATE::ATTACKING;
-		//Durante 1 frame se hace danyo al jugador
+		//Durante 1 frame se hace daño al jugador
 	}
 	else
 	{
@@ -106,12 +106,13 @@ bool Tentacle::sweepUpdate()
 void Tentacle::updateCooldowns()
 {
 	if (lifeCD_.isCooldownActive()) lifeCD_.updateCooldown();
+	if (fallingCD_.isCooldownActive()) fallingCD_.updateCooldown();
 }
 
 bool Tentacle::slamUpdate()
 {
 	//Mientras dure el tent�culo
-	if (!lifeCD_.isCooldownActive())
+	if (lifeCD_.isCooldownActive())
 	{
 		if (currState_ == STATE::ATTACKING)
 		{
@@ -140,6 +141,7 @@ void Tentacle::initObject()
 	CollisionCtrl::instance()->addEnemy(this);
 	initAnims();
 	lifeCD_.initCooldown(TENTACLE_DURATION);
+	fallingCD_.initCooldown(FALL_DURATION);
 	//El tent�culo empieza cayendo
 	currState_ = STATE::FOLLOWING;
 	double angle = collisionRot_ * (M_PI / 180) + M_PI / 2;

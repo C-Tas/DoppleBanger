@@ -45,7 +45,8 @@ bool EnemyPirate::update() {
 	//Si el pirata ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte?
-		//CollisionCtrl::instance()->addEnemiesToErase(this);
+		CollisionCtrl::instance()->removeEnemy(this);
+		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
@@ -62,6 +63,7 @@ bool EnemyPirate::update() {
 		}
 		else
 		{
+			app_->getAudioManager()->playChannel(Resources::PirateChase, -1, Resources::PirateChannel1);
 			currState_ = STATE::FOLLOWING;
 			//changeAnim(walkAnim_);
 			selectTarget();
@@ -72,6 +74,7 @@ bool EnemyPirate::update() {
 		if (onRange()) {
 			currState_ = STATE::ATTACKING;
 			stop();
+			app_->getAudioManager()->playChannel(Resources::PirateIdle, -1, Resources::PirateChannel1);
 			attack();
 		}
 		else
@@ -132,8 +135,8 @@ bool EnemyPirate::onRange() {
 	SDL_Rect enemyRect = SDL_Rect({ (int)currEnemy_->getPosX(),(int)currEnemy_->getPosY(),
 		(int)currEnemy_->getScaleX(),(int)currEnemy_->getScaleY() });
 
-	double meleePosX = getPosX() + getScaleX() / 2 - currStats_.meleeRange_ - getScaleX() / 2;
-	double meleePosY = getPosY() + getScaleY() / 2 - currStats_.meleeRange_ - getScaleY() / 2;
+	double meleePosX = getCenter().getX() - currStats_.meleeRange_ - getScaleX() / 2;
+	double meleePosY = getCenter().getY() - currStats_.meleeRange_ - getScaleY() / 2;
 	double meleeRangeX = currStats_.meleeRange_ + getScaleX() / 2;
 	double meleeRangeY = currStats_.meleeRange_ + getScaleY() / 2;
 
@@ -176,6 +179,7 @@ void EnemyPirate::initAnims()
 //Se encarga de gestionar el ataque a melee o distancia DONE
 void EnemyPirate::attack() {
 	if (currAtackStatus_ == ATK_STATUS::RANGE && !shootCD_.isCooldownActive()) {
+		app_->getAudioManager()->playChannel(Resources::PirateShot, 0, Resources::PirateChannel3);
 		shootCD_.initCooldown(currStats_.distRate_);
 		Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet),
 			getCenter(), currEnemy_->getCenter(), currStats_.distDmg_);
@@ -184,6 +188,7 @@ void EnemyPirate::attack() {
 	}
 	else if (!meleeCD_.isCooldownActive())
 	{
+		app_->getAudioManager()->playChannel(Resources::PirateAttack, 0, Resources::PirateChannel2);
 		meleeCD_.initCooldown(currStats_.meleeRate_);
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
@@ -199,6 +204,7 @@ void EnemyPirate::initObject() {
 	initRewards();
 	setTexture(app_->getTextureManager()->getTexture(Resources::PlayerFront));
 	rangeVision_ = VIS_RANGE;
+	app_->getAudioManager()->playChannel(Resources::PirateIdle, -1, Resources::PirateChannel1);
 }
 
 //Esto es un apaño, se eliminara cuando este completa la gestión de muertes
@@ -212,16 +218,7 @@ void EnemyPirate::onCollider()
 void EnemyPirate::lostAggro()
 {
 	currEnemy_ = GameManager::instance()->getPlayer();
-}
-
-//Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_ DONE
-bool EnemyPirate::getEnemy() {
-	if (Enemy::getEnemy(rangeVision_)) {
-		app_->getAudioManager()->playChannel(Resources::AudioId::Agro, 0, Resources::EnemyPirateChannel);
-		
-		return true;
-	}
-	else return false;
+	app_->getAudioManager()->playChannel(Resources::PirateIdle, -1, Resources::PirateChannel1);
 }
 
 //Cuando el pirata pierde el agro, se le asigna el agro del player
@@ -229,8 +226,21 @@ bool EnemyPirate::getEnemy() {
 void EnemyPirate::lostAgro()
 {
 	currEnemy_ = GameManager::instance()->getPlayer();
+	app_->getAudioManager()->playChannel(Resources::PirateIdle, -1, Resources::PirateChannel1);
 }
 
+//Devuelve true si encontro un enemigo cerca y lo asigna a currEnemy_ DONE
+bool EnemyPirate::getEnemy() {
+	if (Enemy::getEnemy(rangeVision_)) {
+		if (rand() % 2 == 0)
+			app_->getAudioManager()->playChannel(Resources::PirateDetection1, 0, Resources::PirateChannel3);
+		else
+			app_->getAudioManager()->playChannel(Resources::PirateDetection2, 0, Resources::PirateChannel3);
+		
+		return true;
+	}
+	else return false;
+}
 
 //Genera la posici�n a la que se mueve el pirata en funci�n de su rango 
 void EnemyPirate::selectTarget() {

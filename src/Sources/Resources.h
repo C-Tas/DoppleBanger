@@ -379,8 +379,21 @@ public:
 		//Canal de la calabaza
 		PumpkinChannel1,
 		PumpkinChannel2,
+		//Canal del esqueleto
+		SkeletonChannel1,
+		SkeletonChannel2,
+		SkeletonChannel3,
+		SkeletonChannel4,
+		//Canal del congrejo
+		CrabChannel1,
+		CrabChannel2,
 		//Canal del pirata
-		EnemyPirateChannel,
+		PirateChannel1,
+		PirateChannel2,
+		PirateChannel3,
+		//Canal del kraken
+		KrakenChannel1,
+		KrakenChannel2,
 
 		//Numero de canales
 		NumSoundChannels
@@ -461,6 +474,28 @@ public:
 		MonkeyShootSound,
 		MonkeyDieSound,
 
+		//Esqueleto
+		SkeletonAttack,
+		SkeletonBoomerang,
+		SkeletonDeath,
+		SkeletonHit1,
+		SkeletonHit2,
+		SkeletonHit3,
+		SkeletonIdle,
+
+		//Cangrejo
+		CrabAttackSound,
+		CrabDetection,
+		CrabIdle,
+
+		//Pirata
+		PirateAttack,
+		PirateShot,
+		PirateDetection1,
+		PirateDetection2,
+		PirateIdle,
+		PirateChase,
+
 		//Calabaza
 		AgroPumpkin,
 		AttackPumpkin,
@@ -473,6 +508,20 @@ public:
 		MovePumpkin,
 		TauntPumpkin1,
 		TauntPumpkin2,
+
+		//Kraken
+		KrakenIdle,
+		KrakenInk,
+		KrakenSplash,
+		KrakenDive,
+		KrakenSurface,
+		KrakenSlam1,
+		KrakenSlam2,
+		KrakenSweep1,
+		KrakenSweep2,
+		KrakenSweep3,
+		KrakenDeath,
+		KrakenMusic,
 
 		//Tutorial
 		Glass,

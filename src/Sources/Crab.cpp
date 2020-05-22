@@ -4,11 +4,19 @@
 #include <iostream>
 
 bool Crab::update() {
-	updateFrame(); //Redefinir
-#ifdef _DEBUG
+	updateFrame();
+	updateCooldowns();
 
-#endif // _DEBUG
-	if (currState_ == STATE::DYING) {}
+	if (currState_ == STATE::DYING) {
+		//Falta animacion de muerte
+		GameManager* gm_ = GameManager::instance();
+			
+		applyRewards();
+		CollisionCtrl::instance()->removeEnemy(this);						//Se quita del gestor de colisiones
+		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);	//Se quita de la lista de enemigos
+		app_->getCurrState()->removeRenderUpdateLists(this);				//Se elimina del programa
+		return true;
+	}
 	else
 	{
 		if (currState_ == STATE::PATROLLING && !getEnemy(rangeVision_)) {
@@ -16,28 +24,19 @@ bool Crab::update() {
 		}
 		else
 		{
-			//Si entramos en este caso indica que el enemigo esta al alcance ya que es el factor que rechazo el anterior if y así tiene coste O(1) y no coste O(getenemy)
+			//Si entramos en este caso indica que el enemigo esta al alcance ya que es el factor que rechazo 
+			//el anterior if y así tiene coste O(1) y no coste O(getenemy)
 			if (currState_ == STATE::PATROLLING) {
-				currState_ = STATE::ATTACKING;
-				currAnim_ = attackAnim_;
-				texture_ = attackTex_;
-				frame_.x = 0; frame_.y = 0;
-				frame_.w = currAnim_.widthFrame_;
-				frame_.h = currAnim_.heightFrame_;
+				initMeleeAnim();
 			}
 			//Se vuelve a comprobar la posicion del enemigo ya que sino podria no parar de atacar
 			//cambairr a on range
 			if (currState_ == STATE::ATTACKING && onRange()) {
-				attack();
+				meleeAnim();
 			}
 			else
 			{
-				currState_ = STATE::PATROLLING;
-				texture_ = walkTex_;
-				currAnim_ = walkAnim_;
-				frame_.x = 0; frame_.y = 0;
-				frame_.w = currAnim_.widthFrame_;
-				frame_.h = currAnim_.heightFrame_;
+				initWalk();
 			}
 		}
 	}
@@ -72,18 +71,41 @@ void Crab::move(Point2D target)
 		updateTarget();
 	}
 }
+void Crab::initMeleeAnim()
+{
+	app_->getAudioManager()->playChannel(Resources::CrabDetection, 0, Resources::CrabChannel2);
+	currState_ = STATE::ATTACKING;
+	currAnim_ = attackAnim_;
+	texture_ = attackTex_;
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+void Crab::initWalk()
+{
+	app_->getAudioManager()->playChannel(Resources::CrabWalk, -1, Resources::CrabChannel2);
+	currState_ = STATE::PATROLLING;
+	texture_ = walkTex_;
+	currAnim_ = walkAnim_;
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+void Crab::meleeAnim()
+{
+	if (currAnim_.currFrame_ == FRAME_ACTION) {
+		attack();
+	}
+}
 void Crab::attack() {
-	if (!cd) { 
-		cd = true;
-		entra_ = SDL_GetTicks(); 
+	if (!shootCD_.isCooldownActive()) {
+		shootCD_.initCooldown(currStats_.meleeRate_);
+		app_->getAudioManager()->playChannel(Resources::CrabAttackSound, 0, Resources::CrabChannel2);
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
 			dmg->receiveDamage(currStats_.meleeDmg_);
-		}
-	}
-	else {
-		if (SDL_GetTicks() - entra_ >= 1000) {
-			cd = false;
 		}
 	}
 }
@@ -93,7 +115,9 @@ void Crab::initObject()
 	texture_ = app_->getTextureManager()->getTexture(Resources::CrabWalk);
 	Enemy::initObject();
 	initAnims();
+	initialStats();
 	rangeVision_ = 40;
+	app_->getAudioManager()->playChannel(Resources::CrabIdle, 0, Resources::CrabChannel1);
 }
 
 void Crab::initAnims()
@@ -103,15 +127,11 @@ void Crab::initAnims()
 	//Cambiar los n�meros magicos
 	attackAnim_ = Anim(NUM_FRAMES_ATK, W_CLIP_ATK, H_CLIP_ATK, ATK_FRAME_RATE,true);
 	attackTex_ = app_->getTextureManager()->getTexture(Resources::CrabAttack);
-	//Faltan las otras animaciones
-	texture_ = walkTex_;
-	currAnim_ = walkAnim_;
-	frame_.x = 0; frame_.y = 0;
-	frame_.w = currAnim_.widthFrame_;
-	frame_.h = currAnim_.heightFrame_;
+
+	initWalk();
 }
 void Crab::initialStats() {
-	HEALTH = 1000;
+	HEALTH = 1;
 	MANA = 0;
 	MANA_REG = 0;
 	ARMOR = 1000;
@@ -121,7 +141,12 @@ void Crab::initialStats() {
 	MELEE_RANGE = 50;
 	DIST_RANGE = 0;
 	MOVE_SPEED = 100;
-	MELEE_RATE = 1;
+	MELEE_RATE = 1000;	//En milisegundos
 	DIST_RATE = 2;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+}
+
+void Crab::updateCooldowns()
+{
+	if (shootCD_.isCooldownActive())shootCD_.updateCooldown();
 }

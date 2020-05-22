@@ -20,9 +20,6 @@ protected:
 	//�ltimo ataque
 	Cooldown shootCD_;
 
-	//Diferentes animaciones del esqueleto
-	//Anim moveAnim_ = { 0,0,0,0,false };
-
 	//Constantes para crear las animaciones 
 	//la animacion aun no esta 
 #pragma region Constantes
@@ -56,6 +53,7 @@ protected:
 	void initialStats();
 	//Actualiza los cooldowns
 	virtual void updateCooldowns();
+	virtual void feedBackHurtSounds();
 
 
 #pragma region Anims
