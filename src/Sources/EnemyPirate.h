@@ -17,7 +17,8 @@ public:
 	virtual void onCollider();
 	virtual void move(Vector2D pos);
 	//Cuando pierde agro del enemigo
-	virtual void lostAggro();
+	//virtual void lostAggro();
+	void setPatrol(Vector2D pos);
 	virtual  ~EnemyPirate() {};
 
 private:
@@ -25,19 +26,16 @@ private:
 	vector<Point2D> patrol_;
 	//Punto que representa dentro del vector de patrulla
 	int currPatrol_ = 0;
-	//Enum que representa los diferentes estados de ataque del pirata
-	enum class ATK_STATUS
-	{
-		MELEE, RANGE
-	};
-	//Estado de ataque actual del pirata
-	ATK_STATUS currAtackStatus_ = ATK_STATUS::RANGE;
+
 	//Tiempo que espera entre disparos
 	Cooldown shootCD_;
 	//Tiempo que espera entre golpes
 	Cooldown meleeCD_;
 	//Tiempo que espera parado
 	const double IDLE_PAUSE = 5000;
+	const double BULLET_VEL = 1500;							//Velocidad del proyectil
+	const double BULLET_LIFE = 500;								//Vida del proyectil en milisegundos
+	bool idle_ = false;
 	Cooldown idleCD_;
 
 	//Constantes para crear las diferentes animaciones 
@@ -130,15 +128,8 @@ private:
 	//Frame para renderizar dentro de un spritesheet
 	const SDL_Rect FIRST_FRAME = { 0,0,0,0 };
 	//Ataque del pirata enemigo
-	void attack();
-	//Devuelve true si el target est� dentro del rango de ataque
-	bool onRange();
-	//Busca y actualiza al enemigo que atacar
-	virtual bool getEnemy();
-	//Cuando pierde agro del enemigo
-	virtual void lostAgro();
-	//Genera la posición a la que se mueve el pirata en función de su rango 
-	void selectTarget();
+	void shoot();
+
 	virtual void initialStats();
 	virtual void initRewards();
 	virtual void updateCooldowns();

@@ -8,7 +8,7 @@
 bool Pumpkin::onDistRange() {
 	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
-		Point2D currEnemyCenter = getCenter();
+		Point2D currEnemyCenter = currEnemy_->getCenter();
 		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
 			center.getX(), center.getY(), currStats_.distRange_))
 		{

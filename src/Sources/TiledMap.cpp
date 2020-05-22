@@ -328,6 +328,10 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		collisionCtrl_->addEnemy(pirate);
 		//state_->addRenderUpdateLists(pirate);
 	}
+	else if (objectType == "EnemyPiratePatrol") {
+		auto tag = state_->getEnemyByTag("EnemyPirate");
+		if (tag != nullptr) dynamic_cast<EnemyPirate*>(tag)->setPatrol(pos);
+	}
 	else if (objectType == "Cleon") {
 		//A�adir Cleon
 	}
