@@ -71,7 +71,9 @@ bool Cleon::update() {
 				auto currEnemy = dynamic_cast<Player*>(currEnemy_);
 				//Si Cleón colisiona contra el player
 				if (currEnemy && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny())) {
-					currEnemy->receiveDamage(CHARGE_DMG);
+					double realDamage = CHARGE_DMG;
+					if (applyCritic()) realDamage *= 1.5;
+					currEnemy->receiveDamage(realDamage);
 				}
 				currState_ = STATE::ATTACKING;
 				currStats_.moveSpeed_ = movSpeed_;
@@ -93,12 +95,14 @@ void Cleon::onCollider()
 	
 }
 
-void Cleon::receiveDamage(int damage)
+void Cleon::receiveDamage(double damage)
 {
 	if (!activeBlock()) {
 		lastTint_ = SDL_GetTicks();
 		feedBackHurtSounds();
-		currStats_.health_ -= damage;
+		//Reduccion de daño
+		double realDamage = damage - (damage * currStats_.armor_ / 100);
+		currStats_.health_ -= realDamage;
 		if (currStats_.health_ <= 0) {
 			this->die();
 		}
@@ -122,7 +126,11 @@ void Cleon::thrust()
 	lastThrust_.initCooldown(THRUST_TIME);
 	auto thrustAttack = dynamic_cast<Player*>(currEnemy_);
 	if (thrustAttack) {
-		thrustAttack->receiveDamage(currStats_.meleeDmg_);
+		//Critico
+		double realDamage = currStats_.meleeDmg_;
+		if (applyCritic()) realDamage *= 1.5;
+
+		thrustAttack->receiveDamage(realDamage);
 	}
 }
 

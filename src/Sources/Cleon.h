@@ -17,7 +17,7 @@ public:
 	//Métodos virtuales públicos
 	virtual bool update() override ;
 	virtual void onCollider()override;
-	virtual void receiveDamage(int damage) override;
+	virtual void receiveDamage(double damage) override;
 	virtual void lostAggro();
 
 	//Habilidades

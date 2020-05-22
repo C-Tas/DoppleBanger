@@ -10,8 +10,8 @@ void Boots::equip(Player* player)
 
 void Boots::remove(Player* player)
 {
-	player->removeMoveSpeed(moveSpeed_);
-	player->removeArmor(armor_);
+	player->addMoveSpeed(-moveSpeed_);
+	player->addArmor(-armor_);
 }
 
 void Boots::getDescription(TextBox* tex)
