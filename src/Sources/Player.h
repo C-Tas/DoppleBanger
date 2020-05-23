@@ -105,15 +105,12 @@ public:
 		void equip(Gloves* gloves) { gloves_ = gloves; gm_->setGloves(gloves); };
 		void equip(Boots* boots) { boots_ = boots; gm_->setBoots(boots);};
 		void equip(Sword* sword) { sword_ = sword; gm_->setSword(sword);};
-		void equip(Gun* gun) { 
-			changeDistWeaponStats(gun);
-			gm_->setGun(gun);
-		}
+		void equip(Gun* gun) { gun_ = gun; gm_->setGun(gun); }
 		void addMaxHealth(double addition) { maxHealth_ += addition; };
 		//Aumenta la cadencia de tiro del player
 		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 		//Activa el ataque potenciado
-		void activateEmpowered() { empoweredAct_ = true; };
+		void activateEmpowered() { initEmpowered(); };
 
 		//Carga el equipamiento del player
 		void load();
@@ -139,6 +136,8 @@ public:
 			if(skills_[key]!= nullptr)delete skills_[key]; 
 			skills_[key] = skill; }
 		vector <Skill*>& getSkillsArray() { return skills_; }
+		//Inicia la animacion empowered
+		void initEmpowered();
 	#pragma endregion
 		//Determina si el player utiliza el golpe fuerte
 		bool isDummyAttack() { return empoweredAct_; }
@@ -159,7 +158,7 @@ private:
 	vector<Skill*> skills_ = { nullptr, nullptr, nullptr, nullptr};
 
 	//cambia los stats de un arma
-	void changeDistWeaponStats(Gun* newWeapon);
+	//void changeDistWeaponStats(Gun* newWeapon);
 
 	//Objetos
 	//<Speed, Damage, Armor, Crit>
@@ -168,7 +167,6 @@ private:
 	vector<double> valuePotion_{ 0, 0, 0, 0 };		//Para guardar los valores de incremento de Stats
 	vector<double> lastTicksPotion_{ 0, 0, 0, 0 };	//Para guardar el último tick 
 	#pragma region Animaciones
-		Vector2D mousePos_{ 0,0 };				//Vector donde se ha hecho click al disparar
 		int frameAction_ = 0;					//Frame en el que se realiza la acción
 		const int W_H_PLAYER_FRAME = 100;		//Ancho del frame, estándar para todas
 	
@@ -238,7 +236,17 @@ private:
 		const int MELEE_D_FRAMES = 5;			//Frames de la animación
 		const int MELEE_D_FRAME_RATE = 200;		//Frame rate
 
-	virtual void feedBackHurtSounds();
+		//Golpe Fuerte
+		vector<Texture*>empoweredTx_;
+		vector<Anim> empoweredAnims_;
+		//Derecha e izquierda
+		const int EMPOWERED_R_L_FRAMES = 11;
+		const int EMPOWERED_R_L_RATE = 70;
+		//Arriba y abajo
+		const int EMPOWERED_U_D_FRAMES = 12;
+		const int EMPOWERED_U_D_RATE = 75;
+
+		virtual void feedBackHurtSounds();
 		//Inicialización de las animaciones
 		virtual void initAnims();
 		//Inicia la animación
@@ -249,6 +257,7 @@ private:
 		//Controla la animación
 		void shootAnim();
 		void meleeAnim();
+		void empoweredAnim();
 	#pragma endregion
 	//<summary>Variables relativas a las habilidades</summary>
 	#pragma region Abilities
@@ -257,8 +266,8 @@ private:
 	int liberation_ = 2;	//Nivel de la habilidad del clon, debería llevarse a GameManager
 	const int RANGE_SPEED = 1000;	//Velocidad extra para el pistolero raudo (a falta de equilibrado)
 	bool empoweredAct_ = false;		//Si tiene la habilidad activada
-	bool empoweredAnim_ = false; //Si ha empezado la animación del ataque potenciado
-	double empoweredBonus_ = 1.5;	//Bonus porcentual del daño
+	bool meleeActive_ = false;		//Para saber si la animación se ha inicializado
+	double empoweredBonus_ = 2.5;	//Bonus porcentual del daño
 	bool perforate_ = false;	//Para saber si el siguiente disparo perfora
 #pragma endregion
 	//<summary>Variables de los cooldowns del jugador</summary>
@@ -278,7 +287,7 @@ private:
 
 	//<summary>Estadisticas iniciales del jugador</summary>
 	#pragma region Stats
-	double maxHealth_ = 1000;			//Representa la cantidad maxima de vida
+	double maxHealth_ = 100000000;			//Representa la cantidad maxima de vida
 	double maxMana_ = 100;				//Representa la cantidad maxima de mana
 	const double MANA_REG = 1;			//Regeneración de maná por segundo
 	const double ARMOR = 10;			//Armadura

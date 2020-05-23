@@ -47,22 +47,12 @@ void TextBox::nextTutorialVenancio(Application* app)
 }
 void TextBox::goToShipState(Application* app)
 {
-	if (GameManager::instance()->getCurrIsland() == Island::Caribbean) {
-		GameManager::instance()->setCurrentZone(Zone::CaribeanA);
-	}
-	else if (GameManager::instance()->getCurrIsland() == Island::Spooky) {
-		GameManager::instance()->setCurrentZone(Zone::SpookyA);
-	}
-	else if (GameManager::instance()->getCurrIsland() == Island::Volcanic) {
-		GameManager::instance()->setCurrentZone(Zone::Volcanic);
-	}
-	//GameManager::instance()->setHudActive(false);
+	GameManager::instance()->resetIsland();
 	app->getGameStateMachine()->changeState(new ShipState(app));
 }
 
 void TextBox::changeZone(Application* app)
 {
-	GameManager::instance()->resetIsland();
 	static_cast<PlayState*>(app->getCurrState())->changeZone();
 }
 

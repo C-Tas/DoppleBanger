@@ -14,6 +14,7 @@
 #include "Pumpkin.h"
 #include "PlayState.h"
 #include "GameManager.h"
+#include "Cleon.h"
 
 TiledMap::TiledMap(Application* app, PlayState* state, const string& filename, int tileTilesetHeight, int tileTilesetWidth, int tileSize, 
 	Texture* tileset, int filsTileset, int colsTileset,  Vector2D iniPos,  const list<int>& idCollisionTiles, const list<int>& idWallTiles)
@@ -166,7 +167,6 @@ void TiledMap::addIsometricObstacle(Tile tile, int gid, tileType tileType_)
 
 }
 
-
 void TiledMap::addOrthogonalObstacle(Tile tile)
 {
 	SDL_Rect collisionArea = { (int)tile.worldPos_.getX(), (int)tile.worldPos_.getY(), tileSize_ , tileSize_ };
@@ -257,7 +257,6 @@ void TiledMap::createObjects(vector<tmx::Object> object_tiles, tmx::Vector2u map
 void TiledMap::createElement(Vector2D pos, string objectType){
 	if (objectType == "Monkey") {
 		MonkeyCoco* monkey = new MonkeyCoco(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
-		//state_->addRenderUpdateLists(monkey);
 		monkey->setIniPosMap_(iniPos_);
 		monkey->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addEnemy(monkey);
@@ -270,13 +269,16 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 
 	}
 	else if (objectType == "Crab") {
-		//A�adir cangrejo
 		////Por ahora parece que no se pueden crear pero creo que es por las texturas
 		Crab* crab = new Crab(app_, pos, Vector2D(W_CRAB, H_CRAB));
 		state_->addEnemy(crab);
 		crab->setIniPosMap_(iniPos_);
 		crab->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		CollisionCtrl::instance()->addEnemy(crab);
+	}
+	else if (objectType == "CrabPatrol") {
+		auto tag = state_->getEnemyByTag("Crab");
+		if (tag != nullptr) dynamic_cast<Crab*>(tag)->setPositions(pos);
 	}
 	else if (objectType == "Wolf") {
 		//A�adir lobo
@@ -328,7 +330,9 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		collisionCtrl_->addEnemy(pirate);
 	}
 	else if (objectType == "Cleon") {
-		//A�adir Cleon
+		Cleon* cleon = new Cleon(app_, pos, Vector2D(W_PLAYER, H_PLAYER));
+		state_->addEnemy(cleon);
+		collisionCtrl_->addEnemy(cleon);
 	}
 	else if (objectType == "Chef") {
 		if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {

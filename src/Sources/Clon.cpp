@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "GameManager.h"
 #include "PlayerBullet.h"
+#include "Gun.h"
 
 bool Clon::update() {
 	updateFrame();
@@ -22,10 +23,10 @@ bool Clon::update() {
 		}
 
 		Vector2D clonPos = getVisPos();
-		if (meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING ||
-			Vector2D(abs(objective_->getVisPos().getX() - clonPos.getX()), abs(objective_->getVisPos().getY() - clonPos.getY())).magnitude() > range_))
+		if (currStats_.meleeDmg_ > 0 && (objective_ == nullptr || objective_->getState() == STATE::DYING ||
+			Vector2D(abs(objective_->getVisPos().getX() - clonPos.getX()), abs(objective_->getVisPos().getY() - clonPos.getY())).magnitude() > currStats_.meleeRange_))
 			objective_ = static_cast<PlayState*>(app_->getGameStateMachine()->getState())->findClosestEnemy(pos_);
-		else if (meleeDmg_ > 0 && !meleeCD_.isCooldownActive())
+		else if (currStats_.meleeDmg_ > 0 && !meleeCD_.isCooldownActive())
 		{
 			initMelee();
 		}
@@ -45,12 +46,12 @@ void Clon::initObject() {
 	GameManager::instance()->setClon(this);
 	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
 	lifeTimeCD_.initCooldown(DURATION_);
-	range_ = player_->getStats().meleeRange_ * 2;
-	meleeRate_ = (player_->getStats().meleeRate_ / 2) * player_->getLiberation();
-	meleeDmg_ = (player_->getStats().meleeDmg_ / 2) * player_->getLiberation();
-	distDmg_ = (player_->getStats().distDmg_ / 2) * player_->getLiberation();
-	distRange_ = (player_->getStats().distRange_ / 2) * player_->getLiberation();
-	//buletSpeed_ = player_->getInfoEquip().fireGun_->getSpeed(); //Si no la bala del clon no se mueve
+	int liberation = player_->getLiberation();
+	Stats stats = player_->getStats();
+
+	initStats(0, 0, 0, 0, (stats.meleeDmg_ / 2) * liberation, (stats.distDmg_ / 2) * liberation, (stats.crit_ / 2) * liberation, 
+		stats.meleeRange_, (stats.distRange_ / 2) * liberation , 0, (stats.meleeRate_ / 2) * liberation, (stats.distRate_ / 2) * liberation);
+
 	taunt();
 	initAnim();
 }
@@ -185,7 +186,9 @@ void Clon::meleeAnim() {
 
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
 		if (objective_ != nullptr) {
-			objective_->receiveDamage(meleeDmg_);
+			double realDamage = currStats_.crit_;
+			if (applyCritic()) realDamage *= 1.5;
+			objective_->receiveDamage(realDamage);
 			if (objective_->getState() == STATE::DYING)
 				enemies_.remove(static_cast<Enemy*>(objective_));
 		}
@@ -236,7 +239,7 @@ void Clon::initShoot(Vector2D dir)
 }
 
 void Clon::shoot() {
-	if (distDmg_ > 0)
+	if (currStats_.distDmg_ > 0)
 	{
 		//Se calcula la posici�n desde la cual se dispara la bala
 		Vector2D shootPos;
@@ -244,7 +247,8 @@ void Clon::shoot() {
 		shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
 
-		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, shootingDir_, distDmg_, distRange_, buletSpeed_);
+		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, shootingDir_, currStats_.distDmg_,
+			currStats_.distRange_, GameManager::instance()->getEquip().gun_->getBulletSpeed());
 
 		//Se añade a los bucles del juegos
 		app_->getCurrState()->addRenderUpdateLists(bullet);

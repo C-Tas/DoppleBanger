@@ -102,12 +102,14 @@ bool Pumpkin::update() {
 	return false;
 }
 void Pumpkin::disAttack() {
-	app_->getAudioManager()->haltChannel(6);
-	app_->getAudioManager()->haltChannel(5);
-	app_->getAudioManager()->playChannel(Resources::AttackPumpkin, 0, Resources::PumpkinChannel1);
+	app_->getAudioManager()->playChannel(Resources::AttackPumpkin, 0, Resources::PumpkinChannel1); 
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
+	//Critico
+	double realDamage = currStats_.distDmg_;
+	if (applyCritic()) realDamage *= 1.5;
+
 	Bullet* seed = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
-		getCenter(), dir, currStats_.distDmg_, seedLife, seedVel, Vector2D(wHSeed, wHSeed));
+		getCenter(), dir, realDamage, seedLife, seedVel, Vector2D(wHSeed, wHSeed));
 	app_->getCurrState()->addRenderUpdateLists(seed);
 	CollisionCtrl::instance()->addEnemyBullet(seed);
 }
@@ -280,8 +282,6 @@ bool Pumpkin::explosionAnim()
 	}
 	if (!explosion_ && currAnim_.currFrame_ == FRAME_ACTION_EXPLOSION) {
 		explosion_ = true;
-		app_->getAudioManager()->haltChannel(6);
-		app_->getAudioManager()->haltChannel(5);
 		app_->getAudioManager()->playChannel(Resources::ExplosionPumpkin, 0, Resources::PumpkinChannel2);
 		auto s = app_->getRandom()->nextInt(0,101);
 		if (s >= 75) {

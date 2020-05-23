@@ -79,7 +79,7 @@ void CaribbeanIslandState::initZone3()
 void CaribbeanIslandState::initBossZone()
 {
 	currentMap_ = new TiledMap(app_, this, BOSSZONE_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
-		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone1);
+		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone2);
 }
 
 void CaribbeanIslandState::changeZone()
@@ -87,6 +87,7 @@ void CaribbeanIslandState::changeZone()
 	delete currentMap_;
 	collisionCtrl_->clearList();
 
+	enemies_.clear();
 	if (gm_->getCurrentZone() == Zone::CaribeanA) {
 		deleteExceptHUD(Zone::CaribeanB);
 		initZone2();
@@ -96,13 +97,11 @@ void CaribbeanIslandState::changeZone()
 		deleteExceptHUD(Zone::CaribeanC);
 		initZone3();
 		addRenderUpdateLists(hud_);
-
 	}
 	else if (gm_->getCurrentZone() == Zone::CaribeanC) {
 		deleteExceptHUD(Zone::CaribeanBoss);
 		initBossZone();
 		addRenderUpdateLists(hud_);
-
 	}
 	hud_->setPlayerInHUD(player_);
 	player_->initSkills();

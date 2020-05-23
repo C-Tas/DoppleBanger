@@ -15,7 +15,7 @@ bool AltarSkeleton::update()
 	}
 	//Si el mob se puede resucitar y el altar lo permite -> resucita
 	else if (mobState_ == MOBSTATE::RISEABLE && altarOwner_->canResurrect()) {
-		texture_ = app_->getTextureManager()->getTexture(Resources::Skeleton);
+		texture_ = app_->getTextureManager()->getTexture(Resources::Rock);
 		mobState_ = MOBSTATE::ALIVE;
 		currState_ = STATE::IDLE;
 		CollisionCtrl::instance()->addEnemy(this);
@@ -110,5 +110,3 @@ void AltarSkeleton::move(Vector2D posToReach) {
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 	pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 }
-
-

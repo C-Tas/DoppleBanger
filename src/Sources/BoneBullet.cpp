@@ -32,4 +32,5 @@ void BoneBullet::initObject()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+	app_->getAudioManager()->playChannel(Resources::SkeletonBoomerang, 0, Resources::SkeletonChannel3);
 }

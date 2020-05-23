@@ -2,6 +2,8 @@
 #include "Enemy.h"
 
 
+class Player;
+
 class Cleon : public Enemy { 
 public: 
 
@@ -12,25 +14,56 @@ public:
 	};
 	~Cleon() {};
 
-	virtual bool update();
-	virtual void onCollider() {};
+	//Métodos virtuales públicos
+	virtual bool update() override ;
+	virtual void onCollider()override;
+	virtual void receiveDamage(double damage) override;
+	virtual void lostAggro();
+
+	//Habilidades
+		//*Bloqueo
+			//Posibilidad de bloquear un ataque
+	const int BLOCK_CHANCE = 5;
+			//Devuelve true si activa el bloqueo
+	bool activeBlock() { return app_->getRandom()->nextInt(0, BLOCK_CHANCE + 1) == BLOCK_CHANCE ? true : false; }
+		
+		//*Estocada
+			//última estocada
+	Cooldown lastThrust_;
+			//Cooldown de la estocada
+	const double THRUST_TIME = 2500;
+			//Método que se encarga de crear la estocada
+	void thrust();
+
+		//*Carga
+			//Rango en que aplica la carga del pirata
+	const double CHARGE_RANGE = 200;
+			//Úlima carga
+	Cooldown lastCharge_;
+			//Método que crea la carga del pirata
+	void pirateCharge();
+			//Cooldown de la carga
+	const double CHARGE_TIME = 2000;
+			//Velocidad con la que carga Cleón
+	const double CHARGE_SPEED = 1000;
+			//Velocidad de movimiento de Cleón para recuperar luego
+	double movSpeed_ = 0;
+			//Daño que produce la carga
+	const int CHARGE_DMG = 300;
+	//Fin habilidades//
 
 private:
-	//Estadisticas de Cleon
-#pragma region Stats
-	const double HEALTH = 0;
-	const double MANA = 0;
-	const double MANA_REG = 0;
-	const double ARMOR = 0;
-	const double MELEE_DMG = 0;
-	const double DIST_DMG = 0;
-	const double CRIT = 0;
-	const double MELEE_RANGE = 0;
-	const double DIST_RANGE = 0;
-	const double MOVE_SPEED = 0;
-	const double MELEE_RATE = 0;
-	const double DIST_RATE = 0;
-#pragma endregion
+	//Métodos virtuales privados
+	virtual void initialStats()override;
+	virtual void initObject()override;
+	virtual void initRewards()override;
+	virtual void initAnims()override;
+	virtual void updateCooldowns() override;
+	virtual void move(Point2D target);
+
+	void selectTarget();
+	//Punteros
+	Player* player_ = nullptr;
 
 	//Animaciones de Cleon
 	Anim idleAnim_ = { 0,0,0,0,"" };
@@ -38,11 +71,6 @@ private:
 	Anim assaultAnim_ = { 0,0,0,0,"" };
 	Anim meleeAnim_ = { 0,0,0,0, "" };
 	Anim barrelAnim_ = { 0,0,0,0, "" };
-
-	//Inicializa objetos
-	virtual void initObject();
-	//Inicializa animaciones
-	void initAnims();
 
 #pragma region Constantes
 	//Animacion idle de Cleon

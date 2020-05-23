@@ -628,7 +628,6 @@ void Inventory::getHorizontal(InventoryButton* but)
 
 void Inventory::getVertical(InventoryButton* but)
 {
-
 	equipType type_ = static_cast<Sword*>(but->getObject())->getEquipType();
 	if (type_ == equipType::SwordI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword1));
 	else if (type_ == equipType::SwordII) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword2));

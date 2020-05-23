@@ -21,6 +21,8 @@ public:
 	virtual void initialStats() {};
 	virtual void lostAggro();
 	virtual void initRewards();
+	//Se redefine como publico porque el tentaculo necesita acceso a el
+	virtual bool applyCritic() { return Actor::applyCritic(); }
 private:
 	Cooldown attackCD_;
 	Cooldown swimCD_;

@@ -7,6 +7,14 @@ void Actor::initStats(double health, double mana, double manaReg, double armor, 
 {
 	currStats_ = Stats(health, mana, manaReg, armor, meleeDmg, distDmg, crit, meleeRange, distRange, moveSpeed, meleeRate, distRate);
 }
+
+bool Actor::applyCritic()
+{
+	//Probabilidad de critico
+	int crit = app_->getRandom()->nextInt(1, 101);
+	if (crit <= currStats_.crit_) return true;
+	else return false;
+}
  
 void Actor::updateDirVisObjective(GameObject* objective) {
 	if (objective != nullptr) {
@@ -30,7 +38,7 @@ void Actor::updateDirVisObjective(GameObject* objective) {
 
 void Actor::updateDirVisMouse()
 {
-	Vector2D mousePos_ = HandleEvents::instance()->getRelativeMousePos();
+	mousePos_ = HandleEvents::instance()->getRelativeMousePos();
 	Vector2D center = getCenter();		//Punto de referencia
 	Vector2D dir = mousePos_ - center;	//Vector dirección
 	dir.normalize();
@@ -47,13 +55,12 @@ void Actor::updateDirVisMouse()
 	}
 }
 
-//A falta de definir la gesti�n del da�o en funci�n de la armadura
-void Actor::receiveDamage(int damage) {
+void Actor::receiveDamage(double damage) {
 	lastTint_ = SDL_GetTicks();
 	feedBackHurtSounds();
-	/*double finalDamage = (currStats_.armor_ * damage) / 100;
-	currStats_.health_ -= finalDamage;*/
- 	currStats_.health_ -= damage;
+	//Reduccion de daño
+	double realDamage = damage - (damage * currStats_.armor_ / 100);
+ 	currStats_.health_ -= realDamage;
 	if (currStats_.health_ <= 0) {
 		this->die();
 	}

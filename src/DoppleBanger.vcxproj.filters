@@ -106,6 +106,10 @@
     <ClCompile Include="tmxLite\pugixml.cpp" />
     <ClCompile Include="tmxLite\TileLayer.cpp" />
     <ClCompile Include="tmxLite\Tileset.cpp" />
+    <ClCompile Include="Sources\Kirin.cpp" />
+    <ClCompile Include="Sources\TestState.cpp" />
+    <ClCompile Include="Sources\tutorialObject.cpp" />
+    <ClCompile Include="Sources\tutorialState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -221,5 +225,9 @@
     <ClInclude Include="tmxLite\TileLayer.hpp" />
     <ClInclude Include="tmxLite\Tileset.hpp" />
     <ClInclude Include="tmxLite\Types.hpp" />
+    <ClInclude Include="Sources\Kirin.h" />
+    <ClInclude Include="Sources\TestState.h" />
+    <ClInclude Include="Sources\tutorialObject.h" />
+    <ClInclude Include="Sources\tutorialState.h" />
   </ItemGroup>
 </Project>

@@ -8,7 +8,6 @@ bool PlayerBullet::update()
 
 	//Si se le ha acabado el tiempo de vida
 	if (!bulletlifeCD_.isCooldownActive()) {
-		cout << "Eliminada" << endl;
  		CollisionCtrl::instance()->removePlayerBullet(this);
 		onCollider();
 	}

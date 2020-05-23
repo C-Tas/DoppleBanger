@@ -194,7 +194,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
 	{ Cartographer, "../Sources/assets/npc/idleCartografa.png" },
-	{ Skeleton, "../Sources/assets/enemigos/skeleton/skeleton.png" },
 	{ Morty, "../Sources/assets/npc/idleMorty.png" },
 	{ VenancioFuneral, "../Sources/assets/npc/venancioFuneral.png" },
 	{ MerchantFuneral, "../Sources/assets/npc/mercaderFuneral.png" },
@@ -220,6 +219,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PlayerMeleeLeftAnim, "../Sources/assets/player/animaciones/melee/meleeIz.png" },
 	{ PlayerMeleeUpAnim, "../Sources/assets/player/animaciones/melee/meleeTop.png" },
 	{ PlayerMeleeDownAnim, "../Sources/assets/player/animaciones/melee/meleeDown.png" },
+	{ PlayerEmpoweredRight, "../Sources/assets/player/animaciones/golpeFuerte/golpeRight.png" },
+	{ PlayerEmpoweredLeft, "../Sources/assets/player/animaciones/golpeFuerte/golpeLeft.png" },
+	{ PlayerEmpoweredUp, "../Sources/assets/player/animaciones/golpeFuerte/golpeUp.png" },
+	{ PlayerEmpoweredDown, "../Sources/assets/player/animaciones/golpeFuerte/golpeDown.png" },
 	//Clon
 	{ ClonSelfDestructionRightAnim, "../Sources/assets/clon/autodestruccion/ClonRightExplosion.png" },
 	{ ClonSelfDestructionLeftAnim, "../Sources/assets/clon/autodestruccion/ClonLeftExplosion.png" },
@@ -280,10 +283,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ SkeletonIdleLeftAnim, "../Sources/assets/enemigos/skeleton/IdleLadoIzq.png" },
 	{ SkeletonIdleUpAnim, "../Sources/assets/enemigos/skeleton/IdleEspaldas.png" },
 	{ SkeletonIdleDownAnim, "../Sources/assets/enemigos/skeleton/IdleFrente.png" },
-	{ SkeletonAttackRightAnim, "../Sources/assets/enemigos/skeleton/ThrowingLadoDer.png" },
-	{ SkeletonAttackLeftAnim, "../Sources/assets/enemigos/skeleton/ThrowingLadoIzq.png" },
-	{ SkeletonAttackUpAnim, "../Sources/assets/enemigos/skeleton/ThrowingEspaldas.png" },
-	{ SkeletonAttackDownAnim, "../Sources/assets/enemigos/skeleton/ThrowingFrente.png" },
+	{ SkeletonAttackRightAnim, "../Sources/assets/enemigos/skeleton/disparoDer.png" },
+	{ SkeletonAttackLeftAnim, "../Sources/assets/enemigos/skeleton/disparoIz.png" },
+	{ SkeletonAttackUpAnim, "../Sources/assets/enemigos/skeleton/disparoTop.png" },
+	{ SkeletonAttackDownAnim, "../Sources/assets/enemigos/skeleton/disparoDown.png" },
 	{ SkeletonMoveRightAnim, "../Sources/assets/enemigos/skeleton/MovementLadoDer.png" },
 	{ SkeletonMoveLeftAnim, "../Sources/assets/enemigos/skeleton/MovementLadoIzq.png" },
 	{ SkeletonMoveDownAnim, "../Sources/assets/enemigos/skeleton/MovementFrente.png" },
@@ -429,6 +432,31 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ MonkeyShootSound ,"../Sources/assets/efectos_sonido/monkey/monoShoot.wav" },
 	{ MonkeyDieSound ,"../Sources/assets/efectos_sonido/monkey/monoDie.ogg" },
 #pragma endregion
+	//Esqueleto
+#pragma region Skeleton
+	{ SkeletonAttack ,"../Sources/assets/efectos_sonido/skeleton/attack.mp3" },
+	{ SkeletonBoomerang ,"../Sources/assets/efectos_sonido/skeleton/boomerang.mp3" },
+	{ SkeletonDeath ,"../Sources/assets/efectos_sonido/skeleton/death.mp3" },
+	{ SkeletonHit1 ,"../Sources/assets/efectos_sonido/skeleton/hit1.mp3" },
+	{ SkeletonHit2 ,"../Sources/assets/efectos_sonido/skeleton/hit2.mp3" },
+	{ SkeletonHit3 ,"../Sources/assets/efectos_sonido/skeleton/hit3.mp3" },
+	{ SkeletonIdle ,"../Sources/assets/efectos_sonido/skeleton/idle.mp3" },
+#pragma endregion
+	//Cangrejo
+#pragma region Crab
+	{ CrabAttackSound ,"../Sources/assets/efectos_sonido/crab/attack.mp3" },
+	{ CrabDetection ,"../Sources/assets/efectos_sonido/crab/detection.mp3" },
+	{ CrabIdle ,"../Sources/assets/efectos_sonido/crab/idle.mp3" },
+#pragma endregion
+	//Pirata
+#pragma region Pirate
+	{ PirateAttack ,"../Sources/assets/efectos_sonido/pirate/attack.mp3" },
+	{ PirateShot ,"../Sources/assets/efectos_sonido/pirate/shot.mp3" },
+	{ PirateDetection1 ,"../Sources/assets/efectos_sonido/pirate/detect1.mp3" },
+	{ PirateDetection2 ,"../Sources/assets/efectos_sonido/pirate/detect2.mp3" },
+	{ PirateIdle ,"../Sources/assets/efectos_sonido/pirate/idle.mp3" },
+	{ PirateChase ,"../Sources/assets/efectos_sonido/pirate/chase.mp3" },
+#pragma endregion
 	//Calabaza
 #pragma region Pumpkin
 	{ AgroPumpkin ,"../Sources/assets/efectos_sonido/pumpkin/agro.mp3" },
@@ -443,6 +471,21 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ TauntPumpkin1 ,"../Sources/assets/efectos_sonido/pumpkin/taunt.mp3" },
 	{ TauntPumpkin2 ,"../Sources/assets/efectos_sonido/pumpkin/taunt1.mp3" },
 #pragma endregion
+	//Kraken
+#pragma region Kraken
+	{ KrakenIdle ,"../Sources/assets/efectos_sonido/kraken/idle.mp3" },
+	{ KrakenInk ,"../Sources/assets/efectos_sonido/kraken/ink.wav" },
+	{ KrakenSplash ,"../Sources/assets/efectos_sonido/kraken/splash.mp3" },
+	{ KrakenDive ,"../Sources/assets/efectos_sonido/kraken/dive.mp3" },
+	{ KrakenSurface ,"../Sources/assets/efectos_sonido/kraken/surface.mp3" },
+	{ KrakenSlam1 ,"../Sources/assets/efectos_sonido/kraken/slam1.wav" },
+	{ KrakenSlam2 ,"../Sources/assets/efectos_sonido/kraken/slam2.wav" },
+	{ KrakenSweep1 ,"../Sources/assets/efectos_sonido/kraken/sweep1.wav" },
+	{ KrakenSweep2 ,"../Sources/assets/efectos_sonido/kraken/sweep2.wav" },
+	{ KrakenSweep3 ,"../Sources/assets/efectos_sonido/kraken/sweep3.wav" },
+	{ KrakenDeath ,"../Sources/assets/efectos_sonido/kraken/death.wav" },
+	{ KrakenMusic ,"../Sources/assets/efectos_sonido/kraken/music.wav" },
+#pragma endregion
 	//Tutorial
 	{ Glass, "../Sources/assets/efectos_sonido/tutorial/glass.wav" },
 	{ DummyDie, "../Sources/assets/efectos_sonido/tutorial/dummy.wav" },
@@ -450,6 +493,18 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ VenancioTalk, "../Sources/assets/efectos_sonido/tutorial/VenancioTalk.wav" },
 	//Otros
 	{ Agro ,"../Sources/assets/efectos_sonido/agro.mp3" },
+	//jarls
+	{ jarl1 ,"../Sources/assets/efectos_sonido/jarl/jar1.wav" },
+	{ jarl2 ,"../Sources/assets/efectos_sonido/jarl/jar2.wav" },
+	{ jarl3 ,"../Sources/assets/efectos_sonido/jarl/jar3.wav" },
+	{ jarl4 ,"../Sources/assets/efectos_sonido/jarl/jar4.wav" },
+	{ jarl5 ,"../Sources/assets/efectos_sonido/jarl/jar5.wav" },
+	{ jarl6 ,"../Sources/assets/efectos_sonido/jarl/jar6.wav" },
+	{ jarl7 ,"../Sources/assets/efectos_sonido/jarl/jar7.wav" },
+	{ jarl8 ,"../Sources/assets/efectos_sonido/jarl/jar8.wav" },
+	{ jarl9 ,"../Sources/assets/efectos_sonido/jarl/jar9.wav" },
+	{ jarl10 ,"../Sources/assets/efectos_sonido/jarl/jar10.wav" },
+	{ jarl11 ,"../Sources/assets/efectos_sonido/jarl/jar11.wav" },
 };
 
 vector<Resources::AudioVolume> Resources::audioVolume{
@@ -472,12 +527,26 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ WolfChannel, 6 },
 	//Canal del mono
 	{ MonkeyChannel, 6 },
-
 	//Canal de la calabaza
 	{ PumpkinChannel1, 6 },
 	{ PumpkinChannel2, 6 },
+	//Canal del esqueleto
+	{ SkeletonChannel1, 40 },
+	{ SkeletonChannel2, 40 },
+	{ SkeletonChannel3, 40 },
+	{ SkeletonChannel4, 6 },
+	//Canal de la cangrejo
+	{ CrabChannel1, 10 },
+	{ CrabChannel2, 10 },
 	//Canal del pirata
-	{ EnemyPirateChannel, 6 }
+	{ PirateChannel1, 10 },
+	{ PirateChannel2, 10 },
+	{ PirateChannel3, 10 },
+	//Canal de la kraken
+	{ KrakenChannel1, 15 },
+	{ KrakenChannel2, 20 },
+	//canal de jarl
+	{ JarlChannel, 6 },
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{

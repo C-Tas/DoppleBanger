@@ -174,7 +174,9 @@ void Wolf::attack() {
 		app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttackAudio, 0, Resources::WolfChannel);
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
-			dmg->receiveDamage(currStats_.meleeDmg_);
+			double realDamage = currStats_.meleeDmg_;
+			if (applyCritic()) realDamage *= 1.5;
+			dmg->receiveDamage(realDamage);
 
 		}
 	}

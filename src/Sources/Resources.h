@@ -179,7 +179,6 @@ public:
 		//Bosses
 		Magordito,
 		Cleon,
-		Skeleton,
 
 		//gizmos
 		Rojo,
@@ -205,8 +204,12 @@ public:
 		PlayerMeleeLeftAnim,
 		PlayerMeleeUpAnim,
 		PlayerMeleeDownAnim,
+		PlayerEmpoweredRight,
+		PlayerEmpoweredLeft,
+		PlayerEmpoweredUp,
+		PlayerEmpoweredDown,
+
 		//clon
-			
 		ClonSelfDestructionRightAnim,
 		ClonSelfDestructionLeftAnim,
 		ClonSelfDestructionUpAnim,
@@ -375,9 +378,24 @@ public:
 		//Canal de la calabaza
 		PumpkinChannel1,
 		PumpkinChannel2,
+		//Canal del esqueleto
+		SkeletonChannel1,
+		SkeletonChannel2,
+		SkeletonChannel3,
+		SkeletonChannel4,
+		//Canal del congrejo
+		CrabChannel1,
+		CrabChannel2,
 		//Canal del pirata
-		EnemyPirateChannel,
+		PirateChannel1,
+		PirateChannel2,
+		PirateChannel3,
+		//Canal del kraken
+		KrakenChannel1,
+		KrakenChannel2,
 
+		//Canal de jarl
+		JarlChannel,
 		//Numero de canales
 		NumSoundChannels
 	};
@@ -457,6 +475,28 @@ public:
 		MonkeyShootSound,
 		MonkeyDieSound,
 
+		//Esqueleto
+		SkeletonAttack,
+		SkeletonBoomerang,
+		SkeletonDeath,
+		SkeletonHit1,
+		SkeletonHit2,
+		SkeletonHit3,
+		SkeletonIdle,
+
+		//Cangrejo
+		CrabAttackSound,
+		CrabDetection,
+		CrabIdle,
+
+		//Pirata
+		PirateAttack,
+		PirateShot,
+		PirateDetection1,
+		PirateDetection2,
+		PirateIdle,
+		PirateChase,
+
 		//Calabaza
 		AgroPumpkin,
 		AttackPumpkin,
@@ -470,12 +510,39 @@ public:
 		TauntPumpkin1,
 		TauntPumpkin2,
 
+		//Kraken
+		KrakenIdle,
+		KrakenInk,
+		KrakenSplash,
+		KrakenDive,
+		KrakenSurface,
+		KrakenSlam1,
+		KrakenSlam2,
+		KrakenSweep1,
+		KrakenSweep2,
+		KrakenSweep3,
+		KrakenDeath,
+		KrakenMusic,
+
 		//Tutorial
 		Glass,
 		DummyDie,
 
 		//NPC
 		VenancioTalk,
+
+		//Jarls
+		jarl1,
+		jarl2,
+		jarl3,
+		jarl4,
+		jarl5,
+		jarl6,
+		jarl7,
+		jarl8,
+		jarl9,
+		jarl10,
+		jarl11,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

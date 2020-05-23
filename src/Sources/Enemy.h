@@ -12,7 +12,7 @@ public:
 	virtual void onCollider() {};
 	//<summary>Metodo que mata a este enemigo</summary>
 	virtual void die();
-	virtual void lostAggro() {};
+	virtual void lostAggro() { currEnemy_ = nullptr; };
 	//Cuando se crea un clon se fija como nuevo objetivo
 	virtual void newEnemy(GameObject* obj) { currEnemy_ = obj; };
 
@@ -30,8 +30,6 @@ protected:
 	AStar::Vec2i pathPos_;
 	//Posicion inicial del mapa
 	Vector2D iniPosMap_;
-	//Último ataque
-	Uint32 lastHit = 0;
 	//Rango de puntos de hazaña de la calabaza
 	int maxArchievementPoints = 0;
 	int minArchievementPoints = 0;
