@@ -64,6 +64,7 @@ void PlayState::addEnemy(Enemy* obj) {
 	addRenderUpdateLists(obj);
 }
 
+
 void PlayState::addObject(Collider* obj) {
 	objects_.push_back(obj);
 }
@@ -136,7 +137,7 @@ Enemy* PlayState::findClosestEnemy(Point2D pos) {
 
 Enemy* PlayState::getEnemyByTag(string tag)
 {
-	for (auto i = gameObjects_.begin(); i != gameObjects_.end(); i++) {
+	for (auto i = enemies_.begin(); i != enemies_.end(); i++) {
 		auto aux = dynamic_cast<Enemy*>(*(i));
 		if (aux != nullptr && aux->getTag() == tag) {
 			return aux;
