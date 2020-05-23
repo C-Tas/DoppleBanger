@@ -316,6 +316,18 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ MagorditoKirinTopLeft, "../Sources/assets/enemigos/magordito/kirin/kirinTopIz.png" },
 	{ Kirin, "../Sources/assets/enemigos/magordito/kirin/rayo.png" },
 
+ //Kraken
+	{ KrakenIdleAnim,"../Sources/assets/enemigos/Kraken/krakenIdleanim.png"},
+	{ KrakenInkAnim,"../Sources/assets/enemigos/Kraken/Kraken Splash.png"},
+	{ KrakenDiveAnim,"../Sources/assets/enemigos/Kraken/kraken nado rapido.png" },
+	{ KrakenExitAnim,"../Sources/assets/enemigos/Kraken/kraken nado rapido atras.png" },
+		//tinta
+	{ InkAnim,"../Sources/assets/enemigos/Kraken/tinta.png" },
+		//tentaculo
+	{ KrakenAzoteAnim,"../Sources/assets/enemigos/Kraken/kraken azote.png" },
+
+
+
 #pragma region Barco
 	//Interactuables
 	{ Wheel, "../Sources/assets/player/timon.png" },

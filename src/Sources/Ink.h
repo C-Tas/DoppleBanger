@@ -22,13 +22,26 @@ private:
 	Cooldown lifeCD_;
 	STATE state_;
 	Kraken* kraken_ = nullptr;
+	//animacion
+	Texture* inkTx_;
+	const int NUM_FRAMES_IDLE = 9;
+	const uint W_FRAME_IDLE = 100;
+	const uint H_FRAME_IDLE = 100;
+	const int FRAME_RATE_IDLE = 200;
+
+	//animacion
+	Anim inkanim_ = { 0,0,0,0,false };
 
 	bool update();
+	virtual void initAnims();
+	void initInk();
 	void initObject();
 	void onCollider();
 	void updateCooldowns() {
 		if (fallingCD_.isCooldownActive()) fallingCD_.updateCooldown();
 		if (lifeCD_.isCooldownActive()) lifeCD_.updateCooldown();
+
 	};
+	bool falling = true;
 };
 

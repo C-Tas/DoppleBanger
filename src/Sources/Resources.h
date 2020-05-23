@@ -299,6 +299,17 @@ public:
 		SkeletonMoveLeftAnim,
 		SkeletonMoveDownAnim,
 		SkeletonMoveUpAnim,
+
+		//kraken
+		KrakenIdleAnim,
+		KrakenInkAnim,
+		KrakenDiveAnim,
+		KrakenExitAnim,
+			//Tinta
+			InkAnim,
+			//Tentaculo
+			KrakenAzoteAnim,
+
 		//Interactuables
 		Wheel,
 		Stash,

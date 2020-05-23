@@ -55,6 +55,7 @@ private:
 	void swimInit(); //Empieza la animación de sumergirse y calcula a donde nadar
 	void swimEnd(); //Se mueve a la posición calculada y empieza la animacion de emerger
 	void ink();
+	void idle();
 	virtual void updateCooldowns();
 
 	//Constantes para crear las diferentes animaciones 
@@ -66,25 +67,29 @@ private:
 	const int AVERAGE_INK_SHOTS = 7;
 	const int NORMAL_DESVIATION = 2;
 	//Idle
-	const int NUM_FRAMES_IDLE = 0;
-	const uint W_FRAME_IDLE = 0;
-	const uint H_FRAME_IDLE = 0;
-	const int FRAME_RATE_IDLE = 0;
+	Texture* IdleTx_;
+	const int NUM_FRAMES_IDLE = 11;
+	const uint W_FRAME_IDLE = 190;
+	const uint H_FRAME_IDLE = 85;
+	const int FRAME_RATE_IDLE = 200;
 	//Disparo de tinta
-	const int NUM_FRAMES_INK = 0;
-	const uint W_FRAME_INK = 0;
-	const uint H_FRAME_INK = 0;
-	const int FRAME_RATE_INK = 0;
+	Texture* InkTx_;
+	const int NUM_FRAMES_INK = 10;
+	const uint W_FRAME_INK = 190;
+	const uint H_FRAME_INK = 85;
+	const int FRAME_RATE_INK = 200;
 	//Sumergirse
-	const int NUM_FRAMES_DIVE = 0;
-	const uint W_FRAME_DIVE = 0;
-	const uint H_FRAME_DIVE = 0;
-	const int FRAME_RATE_DIVE = 0;
+	Texture* DiveTx_;
+	const int NUM_FRAMES_DIVE = 9;
+	const uint W_FRAME_DIVE = 190;
+	const uint H_FRAME_DIVE = 85;
+	const int FRAME_RATE_DIVE = 200;
 	//Salir del agua
-	const int NUM_FRAMES_EXIT = 0;
-	const uint W_FRAME_EXIT = 0;
-	const uint H_FRAME_EXIT = 0;
-	const int FRAME_RATE_EXIT = 0;
+	Texture* ExitTx_;
+	const int NUM_FRAMES_EXIT = 9;
+	const uint W_FRAME_EXIT = 190;
+	const uint H_FRAME_EXIT = 85;
+	const int FRAME_RATE_EXIT = 200;
 #pragma endregion
 
 #pragma region Stats

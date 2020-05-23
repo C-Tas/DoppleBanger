@@ -11,12 +11,23 @@ bool Kraken::update() {
 
 	updateFrame();
 	updateCooldowns();
-
+	cout << (int)currState_ << endl;
 	if (currEnemy_ == nullptr)
 		currEnemy_ = static_cast<Draw*>(GameManager::instance()->getPlayer());
 
+	if (currState_ == STATE::STOPSWIMMING && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
+		idle();
+	}
+	else if (currState_ == STATE::SWIMMING && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
+		swimCD_.initCooldown(SWIM_DURATION); //Esto se tendría que hacer al acabar la animación
+	}
+	else if ((currState_ == STATE::SHOOTING && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1)) {
+		idle();
+	}
+
 	if (!attackCD_.isCooldownActive())
 	{
+		
 		int probSwim, probInk, probSweep, probSlam;
 		if ((currEnemy_->getPos() - getCenter()).magnitude() < 1.5 * scale_.getX())
 		{
@@ -46,7 +57,7 @@ bool Kraken::update() {
 		attackCD_.initCooldown(currStats_.meleeRate_);
 	}
 
-	if (currState_ == STATE::SWIMMING && !swimCD_.isCooldownActive())
+	if (currState_ == STATE::SWIMMING/* && !swimCD_.isCooldownActive()*/ && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1)
 		swimEnd();
 
 	//Si ha muerto
@@ -79,9 +90,16 @@ bool Kraken::update() {
 void Kraken::initAnims()
 {
 	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, false);
+	IdleTx_ = app_->getTextureManager()->getTexture(Resources::KrakenIdleAnim);
 	inkAnim_ = Anim(NUM_FRAMES_INK, W_FRAME_INK, H_FRAME_INK, FRAME_RATE_INK, false);
+	InkTx_ = app_->getTextureManager()->getTexture(Resources::KrakenInkAnim);
 	diveAnim_ = Anim(NUM_FRAMES_DIVE, W_FRAME_DIVE, H_FRAME_DIVE, FRAME_RATE_DIVE, false);
+	DiveTx_ = app_->getTextureManager()->getTexture(Resources::KrakenDiveAnim);
 	exitAnim_ = Anim(NUM_FRAMES_EXIT, W_FRAME_EXIT, H_FRAME_EXIT, FRAME_RATE_EXIT, false);
+	ExitTx_ = app_->getTextureManager()->getTexture(Resources::KrakenExitAnim);
+
+	//comenzamos idle
+	idle();
 }
 
 //Inicializa el kraken
@@ -94,7 +112,7 @@ void Kraken::initObject()
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	CollisionCtrl::instance()->addEnemy(this);
 	initAnims();
-	swimInit();
+	//swimInit();
 	initRewards();
 	app_->resetMusicChannels();
 	app_->getAudioManager()->playChannel(Resources::KrakenIdle, -1, Resources::KrakenChannel1);
@@ -184,15 +202,27 @@ void Kraken::swimInit()
 {
 	currState_ = STATE::SWIMMING;
 	//Empieza animación (cambiar el valor de swimTime)
+	texture_ = DiveTx_;
+	currAnim_ = diveAnim_;
 
-	swimCD_.initCooldown(SWIM_DURATION); //Esto se tendría que hacer al acabar la animación
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	
 	app_->getAudioManager()->playChannel(Resources::KrakenDive, 0, Resources::KrakenChannel2);
 }
 
 void Kraken::swimEnd()
 {
 	//Empieza animación
-	currState_ = STATE::IDLE;
+	currState_ = STATE::STOPSWIMMING;
+	texture_ = ExitTx_;
+	currAnim_ = exitAnim_;
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
 
 	//Se encuentra y guarda el índice de la posición más cercana al jugador y su distancia
 	Vector2D closest = Vector2D(-1, -1);
@@ -210,6 +240,14 @@ void Kraken::swimEnd()
 
 void Kraken::ink()
 {
+	currState_ = STATE::SHOOTING;
+	texture_ = InkTx_;
+	currAnim_ = inkAnim_;
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
 	app_->getAudioManager()->playChannel(Resources::KrakenInk, 0, Resources::KrakenChannel2);
 	Vector2D pos;
 	Vector2D scale = Vector2D(scale_.getX() / 5, scale_.getY() / 5);
@@ -228,6 +266,17 @@ void Kraken::ink()
 
 	Ink* ink = new Ink(app_, this, { 1148, 1800 }, scale);
 	app_->getGameStateMachine()->getState()->addRenderUpdateLists(ink);
+}
+
+void Kraken::idle()
+{
+	currState_ = STATE::IDLE;
+	texture_ = IdleTx_;
+	currAnim_ = idleAnim_;
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
 }
 
 void Kraken::updateCooldowns()

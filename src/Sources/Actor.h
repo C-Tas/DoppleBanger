@@ -14,7 +14,8 @@ enum class STATE
 	SELFDESTRUCT,
 	SWIMMING,
 	VANISH,
-	CHARGING
+	CHARGING,
+	STOPSWIMMING,
 };
 
 //Enumerado para representar la dirección a la que mira una entidad
