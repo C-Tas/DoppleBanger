@@ -7,8 +7,8 @@ class Crab : public Enemy
 public:
 	virtual bool update();
 	//<summary>Constructor tanto por defecto como por contenido si no se le pasan valores ser?n los puestos, si se le pasan valores los editara</summary>
-	Crab(Application* app, Point2D pos, Vector2D scale, vector<Vector2D> positions = { {0,0},{1200,1200},{3600,1800} }) :
-		Enemy(app, pos, scale), targetsVector_(positions), actualTarget_(0) { initObject(); }
+	Crab(Application* app, Point2D pos, Vector2D scale) :
+		Enemy(app, pos, scale), actualTarget_(0) { initObject(); }
 	//<summary>Constructor por copia</summary>
 	Crab(Crab& other) :Enemy(other.app_, other.pos_, other.scale_) { initAnims(); };
 	//<summary>Constructor por movimiento<summary>
@@ -18,7 +18,7 @@ public:
 	//<summary>Establece la direccion del movimiento</summary>	
 	virtual void move(Point2D target);
 	//Asigna los vectores
-	inline void setPositions(vector<Vector2D> targets) { targetsVector_ = targets; };
+	inline void setPositions(Vector2D target) { targetsVector_.push_back(target); };
 	virtual void initRewards() {};
 private:
 	Cooldown shootCD_;

@@ -257,7 +257,6 @@ void TiledMap::createObjects(vector<tmx::Object> object_tiles, tmx::Vector2u map
 void TiledMap::createElement(Vector2D pos, string objectType){
 	if (objectType == "Monkey") {
 		MonkeyCoco* monkey = new MonkeyCoco(app_, pos, Vector2D(W_MONKEY, H_MONKEY));
-		//state_->addRenderUpdateLists(monkey);
 		monkey->setIniPosMap_(iniPos_);
 		monkey->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addEnemy(monkey);
@@ -270,13 +269,16 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 
 	}
 	else if (objectType == "Crab") {
-		//A�adir cangrejo
 		////Por ahora parece que no se pueden crear pero creo que es por las texturas
 		Crab* crab = new Crab(app_, pos, Vector2D(W_CRAB, H_CRAB));
 		state_->addEnemy(crab);
 		crab->setIniPosMap_(iniPos_);
 		crab->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		CollisionCtrl::instance()->addEnemy(crab);
+	}
+	else if (objectType == "CrabPatrol") {
+		auto tag = state_->getEnemyByTag("Crab");
+		if (tag != nullptr) dynamic_cast<Crab*>(tag)->setPositions(pos);
 	}
 	else if (objectType == "Wolf") {
 		//A�adir lobo

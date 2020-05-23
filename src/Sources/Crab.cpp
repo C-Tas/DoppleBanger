@@ -116,12 +116,13 @@ void Crab::attack() {
 
 void Crab::initObject()
 {
-	texture_ = app_->getTextureManager()->getTexture(Resources::CrabWalk);
 	Enemy::initObject();
+	texture_ = app_->getTextureManager()->getTexture(Resources::CrabWalk);
 	initAnims();
 	initialStats();
 	rangeVision_ = 40;
 	app_->getAudioManager()->playChannel(Resources::CrabIdle, 0, Resources::CrabChannel1);
+	tag_ = "Crab";
 }
 
 void Crab::initAnims()
