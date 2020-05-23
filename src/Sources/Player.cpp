@@ -113,11 +113,6 @@ bool Player::update()
 		shootCD_.initCooldown(currStats_.distRate_);
 		initShoot(); 
 	}
-
-	//Si se pulsa el boton de en medio
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::MIDDLE)) {
-		cout << getCenter().getX() << " " << getCenter().getY() << endl;
-	}
 	
 	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr ) {
 		usePotion(potions_[0], 0);
@@ -352,13 +347,9 @@ void Player::meleeAnim()
 			empoweredAct_ = false;
 			totalDmg = currStats_.meleeDmg_ * empoweredBonus_;
 			static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
-			cout << "Empowered" << endl;
 		}
 		else {
-			if (applyCritic()) {
-				totalDmg *= 1.5;
-				cout << "CON CRIT: " << totalDmg << ", SIN CRIT: " << currStats_.meleeDmg_ << endl;
-			}
+			if (applyCritic()) totalDmg *= 1.5;
 			static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
 		}
 
@@ -497,8 +488,6 @@ void Player::shoot(Vector2D dir)
 	//Critico
 	double realDamage = currStats_.distDmg_;
 	if (applyCritic()) realDamage *= 1.25;
-	cout << "Sin CRIT: " << currStats_.distDmg_ << endl;
-	cout << "CON CRIT: " << realDamage << endl;
 	if (auxGunType == equipType::PistolI || auxGunType == equipType::PistolII) {
 		app_->getAudioManager()->playChannel(Resources::Pistol, 0, Resources::SoundChannels::PlayerChannel2);
 		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,

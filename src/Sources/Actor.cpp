@@ -12,7 +12,7 @@ bool Actor::applyCritic()
 {
 	//Probabilidad de critico
 	int crit = app_->getRandom()->nextInt(1, 101);
-	if (crit <= currStats_.crit_) { cout << "CRITICO" << endl; return true; }
+	if (crit <= currStats_.crit_) return true;
 	else return false;
 }
  
