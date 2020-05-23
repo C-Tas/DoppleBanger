@@ -117,9 +117,15 @@ void CreditsState::openTwitterWeb(int option)
 	case 295:
 		system("start https://twitter.com/AmaroBlestPolo");
 		break;
-		//
+		//Dani
 	case 296:
-
+		break;
+		//Georgi
+	case 297:
+		break;
+		//Leyre
+	case 298:
+		system("start https://twitter.com/eryeLuka");
 		break;
 	default:
 		system("start https://twitter.com/DoppleBangerVG");
@@ -149,11 +155,17 @@ void CreditsState::openGitWeb(int option)
 	case 295:
 		system("start https://github.com/Sounagix");
 		break;
-		//
+		//Dani
 	case 296:
 
 		break;
-		//
+		//Georgi
+	case 297:
+		break;
+		//Leyre
+	case 298:
+		system("start https://github.com/leoses");
+		break;
 	default:
 		system("start https://github.com/C-Tas/DoppleBanger");
 		break;
