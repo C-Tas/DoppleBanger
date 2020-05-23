@@ -47,14 +47,14 @@ void Crab::move(Point2D target)
 		visPos.getY() < target_.getY() - 2 ||
 		visPos.getX() > target_.getX() + 2)
 	{
-		if ((getCenter() - target_).magnitude() <= 0.05)
+		if ((getCenter() - nextTarget_).magnitude() <= 0.05)
 		{
-			pathPos_ = { (int)PosToTile(target_).getX(), (int)PosToTile(target_).getY() };
+			pathPos_ = { (int)PosToTile(nextTarget_).getX(), (int)PosToTile(nextTarget_).getY() };
 			pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(target).getX(), (int)PosToTile(target).getY() }, pathPos_);
 			if (pathing_.size() > 1)
-				target_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+				nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
 		}
-		dir_.setVec(target_ - getCenter());
+		dir_.setVec(nextTarget_ - getCenter());
 		dir_.normalize();
 		double delta = app_->getDeltaTime();
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));

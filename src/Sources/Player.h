@@ -65,25 +65,25 @@ public:
 	virtual void stop() { dir_ = Vector2D(0, 0); initIdle(); onCollision_ = true; };
 
 	#pragma region Getters
-		const bool getDead() { return dead_; };
+	const bool getDead() { return dead_; };
 	const bool getOnCollision() { return onCollision_; };
-		const bool isEquipInit() { return initEquip_; };
-		const int getLiberation() { return liberation_; };
-		const double getMaxHealth() { return maxHealth_; }; //Devuelve la vida maxima del player
-		const double getMaxMana() { return maxMana_; };		//Devuelve el mana maximo del player
-		Clon* getClon() { return clon_; };
+	const bool isEquipInit() { return initEquip_; };
+	const int getLiberation() { return liberation_; };
+	const double getMaxHealth() { return maxHealth_; }; //Devuelve la vida maxima del player
+	const double getMaxMana() { return maxMana_; };		//Devuelve el mana maximo del player
+	Clon* getClon() { return clon_; };
 
-		const Vector2D getPreviousPos() { return previousPos_; }
+	const Vector2D getPreviousPos() { return previousPos_; }
 		 
-		const Stats& getStats() { return currStats_; };
-		//habilidades
-		//activa la pasiva invencible y aplica los efectos de esta
-		void activeInvincible();
+	const Stats& getStats() { return currStats_; };
+	//habilidades
+	//activa la pasiva invencible y aplica los efectos de esta
+	void activeInvincible();
 
-		//<summary>Método para obtener el textbox que sale cuando el player llega al final del nivel</summary>
-		TextBox* getEndZoneTextBox() { return endZoneTextBox_; };
+	//<summary>Método para obtener el textbox que sale cuando el player llega al final del nivel</summary>
+	TextBox* getEndZoneTextBox() { return endZoneTextBox_; };
+	#pragma endregion
 	
-#pragma endregion
 	#pragma region Setters
 	//Activa la perforación
 	void setPerforate(bool perforate) {
@@ -169,6 +169,7 @@ private:
 	vector<double> timerPotion_{ 0, 0, 0, 0 };		//Para guardar y restablecer el tiempo de las pociones
 	vector<double> valuePotion_{ 0, 0, 0, 0 };		//Para guardar los valores de incremento de Stats
 	vector<double> lastTicksPotion_{ 0, 0, 0, 0 };	//Para guardar el último tick 
+
 	#pragma region Animaciones
 		int frameAction_ = 0;					//Frame en el que se realiza la acción
 		const int W_H_PLAYER_FRAME = 100;		//Ancho del frame, estándar para todas

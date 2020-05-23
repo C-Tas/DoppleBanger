@@ -281,6 +281,8 @@ void Player::initShoot()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 
+	shootCD_.initCooldown(currStats_.distRate_);
+
 	if (clon_ != nullptr)clon_->initShoot(mousePos_);
 }
 

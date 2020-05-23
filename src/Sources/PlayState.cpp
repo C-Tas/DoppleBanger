@@ -64,6 +64,7 @@ void PlayState::addEnemy(Enemy* obj) {
 	addRenderUpdateLists(obj);
 }
 
+
 void PlayState::addObject(Collider* obj) {
 	objects_.push_back(obj);
 }

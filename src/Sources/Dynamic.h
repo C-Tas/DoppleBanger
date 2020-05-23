@@ -24,6 +24,7 @@ protected:
 	Vector2D dir_{ 0,0 };
 	//<summary>Lugar al que tiene que llegar</summary>	
 	Point2D target_{ 0,0 };
+	Point2D nextTarget_{ 0,0 };
 
 	//<summary>Constructor vacio de la clase Dynamic</summary>	
 	Dynamic() {};
