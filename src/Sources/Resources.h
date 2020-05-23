@@ -351,6 +351,38 @@ public:
 		//Tilesets de los mapas
 		Tileset1,
 		CollisionTile,
+
+		//CreditState
+		CreditBackground,
+		fichaPrimera,
+		TwitterButton,
+		GitButton,
+		//Avatares
+		Agus,
+		//Aida,
+		Amaro,
+		//Aurora,
+		Dani,
+		Georgi,
+		Leyre,
+		//Paula
+		Oscar,
+		Stiven,
+		//Fichas
+		AgusFicha,
+		//AidaFicha
+		AmaroFicha,
+		//AuroraFicha
+		DaniFicha,
+		GeorgiFicha,
+		LeyreFicha,
+		//PaulaFicha
+		OscarFicha,
+		StivenFicha,
+		//agradecientos
+		PanelCollaborators,
+		BotonBonus,
+		Bonus,
 	};
 	
 	enum MusicChannels : int {
@@ -413,6 +445,7 @@ public:
 		Storyboard,
 		WavesSound,
 		FuneralTheme,
+		CreditTheme,
 
 		//Efectos de sonido
 		Agro,
@@ -572,6 +605,7 @@ public:
 		jarl9,
 		jarl10,
 		jarl11,
+
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

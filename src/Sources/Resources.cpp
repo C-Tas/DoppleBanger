@@ -358,7 +358,38 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 
 	//Tilesets de los mapas
 	{ Tileset1, "../Sources/assets/mapas/Isla1-1/tileset_v2.png" },
-	{ CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png" }
+	{ CollisionTile, "../Sources/assets/mapas/barco/CollisionTile.png" },
+
+	//CreditState cuidado!, no cambiar el orden
+	{ TwitterButton, "../Sources/assets/creditState/images/twiter.png" },
+	{ CreditBackground, "../Sources/assets/creditState/images/fondo.png" },
+	{ fichaPrimera, "../Sources/assets/creditState/images/ficha.png" },
+	{ GitButton, "../Sources/assets/creditState/images/git.png" },
+	//Avatares
+	{ Agus, "../Sources/assets/creditState/images/Agus.png" },
+	//{ Aida, "../Sources/assets/creditState/images/Aida.png" },
+	{ Amaro, "../Sources/assets/creditState/images/Amaro.png" },
+	//{ Aurora, "../Sources/assets/creditState/images/Aurora.png" },
+	{ Dani, "../Sources/assets/creditState/images/Dani.png" },
+	{ Georgi, "../Sources/assets/creditState/images/Georgi.png" },
+	{ Leyre, "../Sources/assets/creditState/images/Leyre.png" },
+	//{ Paula, "../Sources/assets/creditState/images/Paula.png" },
+	{ Oscar, "../Sources/assets/creditState/images/Oscar.png" },//
+	{ Stiven, "../Sources/assets/creditState/images/Stiven.png" },
+	//Fichas
+	{ AgusFicha, "../Sources/assets/creditState/images/agusFicha.png" },
+	//{ AidaFicha, "../Sources/assets/creditState/images/aidaFicha.png" },
+	{ AmaroFicha, "../Sources/assets/creditState/images/amaroFicha.png" },
+	//{ AuroraFicha, "../Sources/assets/creditState/images/auroraFicha.png" },
+	{ DaniFicha, "../Sources/assets/creditState/images/daniFicha.png" },
+	{ GeorgiFicha, "../Sources/assets/creditState/images/georgiFicha.png" },
+	{ LeyreFicha, "../Sources/assets/creditState/images/leyreFicha.png" },
+	//{ PaulaFicha, "../Sources/assets/creditState/images/paulaFicha.png" },
+	{ OscarFicha, "../Sources/assets/creditState/images/oscarFicha.png" },
+	{ StivenFicha, "../Sources/assets/creditState/images/stivenFicha.png" },
+	{ PanelCollaborators, "../Sources/assets/creditState/images/agradecimientos.png" },
+	{ BotonBonus, "../Sources/assets/creditState/images/botonBonus.png" },
+	{ Bonus, "../Sources/assets/creditState/images/bonus.png" },
 
 #pragma endregion
 };
@@ -372,7 +403,8 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" },
 	{ Shop ,"../Sources/assets/music/background/shopMusic.mp3" },
 	{ Storyboard ,"../Sources/assets/music/background/storyboardMusic.mp3" },
-	{ FuneralTheme ,"../Sources/assets/music/funeralTheme.mp3" },
+	{ FuneralTheme ,"../Sources/assets/music/funeralTheme.mp3" },//CreditTheme
+	{ CreditTheme ,"../Sources/assets/creditState/audio/mainTheme.mp3" },
 
 #pragma region
 	//Player

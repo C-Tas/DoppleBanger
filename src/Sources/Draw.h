@@ -105,5 +105,6 @@ public:
 		destiny_ = destiny;
 	};
 	void setTexture(Texture* texture) { texture_ = texture; }; //Asigna la textura
+	Texture* getTexture() { return texture_; }
 #pragma endregion
 };
