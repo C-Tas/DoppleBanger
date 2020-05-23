@@ -225,6 +225,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 		}
 	}
 
+	bool auxMerchCollision = false;
 	//Colisi�n con los NPCs desbloqueados
 	for (auto npc : npcs_) {
 		if (Collisions::collides(npc.object->getPos(), npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 1.1,
@@ -248,6 +249,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 				break;
 			case NPCsNames::Merchant:
 				npcCollision.id = NPCsNames::Merchant;
+				auxMerchCollision = true;
 				break;
 	        case NPCsNames::Chef:
 				npcCollision.id = NPCsNames::Chef;
@@ -267,6 +269,12 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			}
 		}
 	}
+
+	if (auxMerchCollision && !isCollidingWithMechant_) {
+		isCollidingWithMechant_ = true;
+		randomPhrase_ = rand() % MAX_MERCHANT_PHRASES;
+	}
+	else if (!auxMerchCollision) isCollidingWithMechant_ = false;
 
 	///Colision con las paredes del barco
 	for (auto ob : obstacles_) {
@@ -336,7 +344,7 @@ void CollisionCtrl::drawTextBox() {
 		npcCollision.object->getTextBox()->dialogElderMan(numConversation_);
 		break;
 	case NPCsNames::Merchant:
-		npcCollision.object->getTextBox()->dialogMerchant();
+		npcCollision.object->getTextBox()->dialogMerchant(randomPhrase_);
 		break;
 	case NPCsNames::Chef:
 		npcCollision.object->getTextBox()->dialogChef(onShip, numConversation_);

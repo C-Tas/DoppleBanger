@@ -137,6 +137,22 @@ void GameManager::saveMissions(jute::jValue& mainJson)
 		questFinished.add_element(aux);
 	}
 	mainJson.add_property("questFinished", questFinished);
+	
+	////Recompensas obtenidas
+	jValue rewardObtained(jType::JARRAY);
+	for (int i = 0; i < missionsRewardObtained_.size(); i++) {
+		switch (missionsRewardObtained_[i])
+		{
+		case true:
+			aux.set_string("true");
+			break;
+		case false:
+			aux.set_string("false");
+			break;
+		}
+		rewardObtained.add_element(aux);
+	}
+	mainJson.add_property("rewardObtained", rewardObtained);
 }
 
 void GameManager::saveSkills(jute::jValue& mainJson)
@@ -351,6 +367,9 @@ void GameManager::loadMissions(jute::jValue& mainJson){
 	}
 	for (int i = 0; i < missionsComplete_.size(); i++) {
 		missionsComplete_[i] = mainJson["questFinished"][i].as_bool();
+	}
+	for (int i = 0; i <missionsRewardObtained_.size(); i++) {
+		missionsRewardObtained_[i] = mainJson["rewardObtained"][i].as_bool();
 	}
 }
 
@@ -679,6 +698,45 @@ void GameManager::resetInventory()
 {
 	for (InventoryButton* ob : *inventory_) delete ob;
 	inventory_->clear();
+}
+
+void GameManager::setCompleteMission(missions mission, bool complete)
+{
+	missionsRewardObtained_[(int)mission] = complete;
+	if (complete) {
+		inventoryGold_ += goldReward_.at((int)mission);
+		achievementPoints_ += pointsReward_.at((int)mission);
+
+		switch (mission)
+		{
+		case missions::gallegaEnProblemas:
+			for (int i = 0; i < getNumOfObjectsReward(mission); i++) {
+				addToInventory(new usable(app_, potionType::Health));
+			}
+			getPlayer()->addMaxHealth(getStatsReward(mission));
+			break;
+		case missions::papelesSiniestros:
+			for (int i = 0; i < getNumOfObjectsReward(mission); i++) {
+				//TO DO: nivelar
+				addToInventory(new Armor(app_, 500, 200, 10, equipType::ArmorII));
+			}
+			getPlayer()->addMaxMana(getStatsReward(mission));
+			break;
+		case missions::masValePajaroEnMano:
+			break;
+		case missions::arlongPark:
+			for (int i = 0; i < getNumOfObjectsReward(mission); i++) {
+				//TO DO: nivelar
+				addToInventory(new Gun(app_,300,150,2000,equipType::ShotgunII ));
+			}
+			getPlayer()->addMoveSpeed(getStatsReward(mission));
+			break;
+		case missions::Size:
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void GameManager::setSkillCooldown(bool cooldown, Key key)

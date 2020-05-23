@@ -86,6 +86,13 @@ void Skeleton::lostAggro()
 	currEnemy_ = GameManager::instance()->getPlayer();
 }
 
+Skeleton::~Skeleton()
+{
+	if (GameManager::instance()->isThatMissionStarted(missions::papelesSiniestros))
+		GameManager::instance()->addMissionCounter(missions::papelesSiniestros);
+	if (GameManager::instance()->isThatMissionStarted(missions::arlongPark))
+		GameManager::instance()->addMissionCounter(missions::arlongPark);
+}
 void Skeleton::initRewards()
 {
 	minGold = 30;
