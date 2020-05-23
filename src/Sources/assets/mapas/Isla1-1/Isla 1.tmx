@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="28" nextobjectid="75">
+<map version="1.2" tiledversion="1.3.1" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="55" tilewidth="256" tileheight="128" infinite="0" nextlayerid="28" nextobjectid="75">
  <tileset firstgid="1" source="DoppleBanger.tsx"/>
  <layer id="22" name="Pathfinding" width="50" height="55" visible="0">
   <data encoding="csv">
@@ -650,7 +650,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="15" name="Skeleton" offsetx="0" offsety="-56">
+ <objectgroup id="15" name="Monkey" offsetx="0" offsety="-56">
   <object id="4" gid="222" x="2369" y="3747" width="256" height="256"/>
   <object id="5" gid="222" x="2370" y="3978" width="256" height="256"/>
   <object id="6" gid="222" x="2023" y="2361" width="256" height="256"/>

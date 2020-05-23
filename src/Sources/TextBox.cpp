@@ -56,6 +56,7 @@ void TextBox::changeZone(Application* app)
 
 void TextBox::unlockCookerReward(Application* app)
 {
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	GameManager::instance()->setCompleteMission(missions::gallegaEnProblemas, true);
 	GameManager::instance()->setMissionRewardObtained(missions::gallegaEnProblemas, true);
 
@@ -63,12 +64,14 @@ void TextBox::unlockCookerReward(Application* app)
 
 void TextBox::unlockMortyReward(Application* app)
 {
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	GameManager::instance()->setCompleteMission(missions::papelesSiniestros, true);
 	GameManager::instance()->setMissionRewardObtained(missions::papelesSiniestros, true);
 }
 
 void TextBox::unlockNamiReward(Application* app)
 {
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	GameManager::instance()->setCompleteMission(missions::arlongPark, true);
 	GameManager::instance()->setMissionRewardObtained(missions::arlongPark, true);
 }
@@ -800,7 +803,7 @@ void TextBox::dialogCartographer(bool unlock, int num) {
 			Texture text(app_->getRenderer(), "Muchas gracias. No pensaba que iba a salir con vida de esta...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), Resources::tildes_['¡'] + "Ah si! Toma esto como muestra de agradecimiento.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "Te espero en tu barco, " + Resources::tildes_['¿'] +"Tienes mandarinas all" + Resources::tildes_['i'], app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
 		}
 	}
