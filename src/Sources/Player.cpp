@@ -102,7 +102,8 @@ bool Player::update()
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE)) shout();
 
-	else if (slowed_)
+	//Si se acaba el efecto de la tinta recuperamos la velocidad correspondiente
+	if (slowed_ && !slowTimeCD_.isCooldownActive())
 	{
 		currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
 		slowed_ = false;
@@ -366,7 +367,6 @@ void Player::meleeAnim()
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();	//Activa el idle
 	}
-	
 }
 
 void Player::empoweredAnim()
@@ -582,7 +582,8 @@ void Player::usePotion(usable* potion, int key) {
 		break;
 	case potionType::Speed:
 		if (!potionUsing_[0]) {
-			currStats_.moveSpeed_ += auxValue;
+			if (slowed_) currStats_.moveSpeed_ += (auxValue * slowEffect_);
+			else currStats_.moveSpeed_ += auxValue;
 			potionUsing_[0] = true;
 			valuePotion_[0] = auxValue;
 		}

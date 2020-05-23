@@ -14,7 +14,7 @@ public:
 private:
 	const double INK_DURATION = 4000;	//En milisegundos
 	const double FALL_DURATION = 1000;
-	const double SLOW_DURATION = 2;
+	const double SLOW_DURATION = 3000;
 	const double SLOW_EFFECT = 0.5;
 
 	bool fallen_ = false;
