@@ -111,6 +111,7 @@ void ShipState::initState()
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
 	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, 0);
+
 }
 
 void ShipState::update()

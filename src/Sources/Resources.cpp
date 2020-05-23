@@ -536,5 +536,21 @@ map<char, string> Resources::tildes_{
 	//exclamación española
 	{
 		'¡', "\u00A1"
+	},
+	//coma
+	{
+		',',"\u002C"
+	},
+	//punto
+	{
+		'.', "\u002E"
+	},
+	//comillas
+	{
+		'“', "\u0022"
+	},
+	//comillas2
+	{
+		'”', "\u0022"
 	}
 };

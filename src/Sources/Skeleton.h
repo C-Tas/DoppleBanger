@@ -15,7 +15,7 @@ public:
 	virtual void initObject();
 	virtual void lostAggro();
 	//virtual void onCollider();
-	virtual ~Skeleton() {};
+	virtual ~Skeleton() ;
 protected:
 	//�ltimo ataque
 	Cooldown shootCD_;

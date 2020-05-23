@@ -50,7 +50,6 @@ bool Wolf::update() {
 
 		//Esta línea habría que moverla al cangrejo cuando esté hecho
 		GameManager* gm_ = GameManager::instance();
-		if (gm_->isThatMissionStarted(missions::gallegaEnProblemas)) gm_->addMissionCounter(missions::gallegaEnProblemas);
 
 		applyRewards();
 		app_->getCurrState()->removeRenderUpdateLists(this);

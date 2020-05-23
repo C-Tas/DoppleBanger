@@ -54,6 +54,14 @@ void Skeleton::lostAggro()
 	currEnemy_ = nullptr;
 }
 
+Skeleton::~Skeleton()
+{
+	if (GameManager::instance()->isThatMissionStarted(missions::papelesSiniestros))
+		GameManager::instance()->addMissionCounter(missions::papelesSiniestros);
+	if (GameManager::instance()->isThatMissionStarted(missions::arlongPark))
+		GameManager::instance()->addMissionCounter(missions::arlongPark);
+}
+
 bool Skeleton::update() {
 	updateFrame();
 	updateCooldowns();

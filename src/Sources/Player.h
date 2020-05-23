@@ -110,6 +110,7 @@ public:
 			gm_->setGun(gun);
 		}
 		void addMaxHealth(double addition) { maxHealth_ += addition; };
+		void addMaxMana(double addition) { maxMana_ += addition; };
 		//Aumenta la cadencia de tiro del player
 		void activateSwiftGunslinger() { currStats_.distRate_ -= RANGE_SPEED; };
 		//Activa el ataque potenciado

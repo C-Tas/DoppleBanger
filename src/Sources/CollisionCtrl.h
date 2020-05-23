@@ -176,6 +176,7 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Trigger*> triggersToErase_;
 	list<Collider*> collidersToErase_;
 
+	//Colision con el trigger de fin de zona
 	bool collisionWithEndOfZone_ = false;
 
 	//Barco
@@ -190,4 +191,9 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	vector<ShipObjectsInfo> shipObjects_;
 
 	static unique_ptr<CollisionCtrl> instance_;
+
+	//MerchantDialog
+	bool isCollidingWithMechant_ = false;
+	int randomPhrase_ = 0;
+	const int MAX_MERCHANT_PHRASES = 4;
 };
