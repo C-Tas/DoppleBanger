@@ -26,7 +26,7 @@ bool Crab::update() {
 		{
 			//Si entramos en este caso indica que el enemigo esta al alcance ya que es el factor que rechazo 
 			//el anterior if y así tiene coste O(1) y no coste O(getenemy)
-			if (currState_ == STATE::PATROLLING) {
+			if (currState_ == STATE::PATROLLING && !meleeCD_.isCooldownActive()) {
 				initMeleeAnim();
 			}
 			//Se vuelve a comprobar la posicion del enemigo ya que sino podria no parar de atacar
@@ -43,6 +43,7 @@ bool Crab::update() {
 
 	return false;
 }
+
 void Crab::move(Point2D target)
 {
 	Vector2D visPos = getVisPos();
@@ -71,6 +72,7 @@ void Crab::move(Point2D target)
 		updateTarget();
 	}
 }
+
 void Crab::initMeleeAnim()
 {
 	app_->getAudioManager()->playChannel(Resources::CrabDetection, 0, Resources::CrabChannel2);
@@ -82,6 +84,7 @@ void Crab::initMeleeAnim()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 }
+
 void Crab::initWalk()
 {
 	app_->getAudioManager()->playChannel(Resources::CrabWalk, -1, Resources::CrabChannel2);
@@ -93,24 +96,32 @@ void Crab::initWalk()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 }
+
+void Crab::initIdle()
+{
+}
+
 void Crab::meleeAnim()
 {
 	if (currAnim_.currFrame_ == FRAME_ACTION) {
 		attack();
+		meleeCD_.initCooldown(currStats_.meleeRate_);
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();
+		currEnemy_ = nullptr;
 	}
 }
-void Crab::attack() {
-	if (!shootCD_.isCooldownActive()) {
-		shootCD_.initCooldown(currStats_.meleeRate_);
-		app_->getAudioManager()->playChannel(Resources::CrabAttackSound, 0, Resources::CrabChannel2);
-		auto dmg = dynamic_cast<Player*>(currEnemy_);
-		if (dmg != nullptr) {
-			//Critico
-			double realDamage = currStats_.meleeDmg_;
-			if (applyCritic()) realDamage *= 1.5;
 
-			dmg->receiveDamage(realDamage);
-		}
+void Crab::attack() {
+	app_->getAudioManager()->playChannel(Resources::CrabAttackSound, 0, Resources::CrabChannel2);
+	auto dmg = dynamic_cast<Player*>(currEnemy_);
+	if (dmg != nullptr) {
+		//Critico
+		double realDamage = currStats_.meleeDmg_;
+		if (applyCritic()) realDamage *= 1.5;
+
+		dmg->receiveDamage(realDamage);
 	}
 }
 
@@ -121,20 +132,25 @@ void Crab::initObject()
 	initAnims();
 	initialStats();
 	rangeVision_ = 40;
-	app_->getAudioManager()->playChannel(Resources::CrabIdle, 0, Resources::CrabChannel1);
+	app_->getAudioManager()->playChannel(Resources::CrabIdleSound, 0, Resources::CrabChannel1);
 	tag_ = "Crab";
 }
 
 void Crab::initAnims()
 {
-	walkAnim_ = Anim(NUM_FRAMES_WALK, W_CLIP_WALK, H_CLIP_WALK, WALK_FRAME_RATE,true);
+	//Caminar
+	walkAnim_ = Anim(NUM_FRAMES_WALK, W_H_FRAME, W_H_FRAME, WALK_FRAME_RATE, true);
+	walkTex_ = app_->getTextureManager()->getTexture(Resources::CrabIdle);
+	//Caminar
+	walkAnim_ = Anim(NUM_FRAMES_WALK, W_H_FRAME, W_H_FRAME, WALK_FRAME_RATE,true);
 	walkTex_= app_->getTextureManager()->getTexture(Resources::CrabWalk);
-	//Cambiar los n�meros magicos
-	attackAnim_ = Anim(NUM_FRAMES_ATK, W_CLIP_ATK, H_CLIP_ATK, ATK_FRAME_RATE,true);
+	//Atacar
+	attackAnim_ = Anim(NUM_FRAMES_ATK, W_H_FRAME, W_H_FRAME, ATK_FRAME_RATE,true);
 	attackTex_ = app_->getTextureManager()->getTexture(Resources::CrabAttack);
 
 	initWalk();
 }
+
 void Crab::initialStats() {
 	HEALTH = 1;
 	MANA = 0;
@@ -153,5 +169,5 @@ void Crab::initialStats() {
 
 void Crab::updateCooldowns()
 {
-	if (shootCD_.isCooldownActive())shootCD_.updateCooldown();
+	if (meleeCD_.isCooldownActive()) meleeCD_.updateCooldown();
 }

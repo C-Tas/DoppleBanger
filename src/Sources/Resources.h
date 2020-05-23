@@ -187,6 +187,8 @@ public:
 		//Animaciones
 		CrabWalk,
 		CrabAttack,
+		CrabIdle,
+
 		//Player
 		PlayerIdleRightAnim,
 		PlayerIdleLeftAnim,
@@ -524,7 +526,7 @@ public:
 		//Cangrejo
 		CrabAttackSound,
 		CrabDetection,
-		CrabIdle,
+		CrabIdleSound,
 
 		//Pirata
 		PirateAttack,

@@ -21,7 +21,7 @@ public:
 	inline void setPositions(Vector2D target) { targetsVector_.push_back(target); };
 	virtual void initRewards() {};
 private:
-	Cooldown shootCD_;
+	Cooldown meleeCD_;
 
 	//Dimensiones de collisionArea
 	const int W_COLLISION = scale_.getX() * 0.5;
@@ -30,25 +30,28 @@ private:
 	//Inicializa la animacion
 	void initMeleeAnim();
 	void initWalk();
+	void initIdle();
 
 	//Gestiona la animacion
 	void meleeAnim();
+	const int W_H_FRAME = 100;
+
+	//Idle
+	const int IDLE_NUM_FRAMES = 8;
+	const int IDLE_FRAME_RATE = 100;
+	Anim idleAnim_{ 0, 0, 0, 0, true };
+	Texture* idleTx_ = nullptr;
 
 	//Ataque
 	const int FRAME_ACTION = 9;
 	const int NUM_FRAMES_ATK = 15;	//Numero de frames
-	const int W_CLIP_ATK = 100;		//Ancho del clip
-	const int H_CLIP_ATK = 100;		//Alto del clip
-	const int ATK_FRAME_RATE = 70;	//Velocidad de animacion
+	const int ATK_FRAME_RATE = 60;	//Velocidad de animacion
 	//Animaciones
 	Anim attackAnim_{ 0,0,0,0, false };
 	Texture* attackTex_;
 
 	//N�mero de frames
 	const int NUM_FRAMES_WALK = 4;
-	//Dimensiones del clip del spritesheet
-	const int W_CLIP_WALK = 100;
-	const int H_CLIP_WALK = 100;
 	const int WALK_FRAME_RATE = 100;
 	//Animaciones
 	Anim walkAnim_{ 0,0,0,0, false };

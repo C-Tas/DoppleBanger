@@ -261,8 +261,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PumpkinAttackUpAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispAtras.png" },
 	{ PumpkinAttackDownAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispDelante.png" },
 //crab
-     {CrabAttack,"../Sources/assets/enemigos/crab/crabAttack.png" },
-     {CrabWalk,"../Sources/assets/enemigos/crab/crabWalk.png"},
+	 { CrabIdle,"../Sources/assets/enemigos/crab/crabIdle.png" },
+     { CrabAttack,"../Sources/assets/enemigos/crab/crabAttack.png" },
+     { CrabWalk,"../Sources/assets/enemigos/crab/crabWalk.png" },
 		//Move
 	{ PumpkinMoveRightAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDer.png" },
 	{ PumpkinMoveLeftAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovIzq.png" },
@@ -478,7 +479,7 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 #pragma region Crab
 	{ CrabAttackSound ,"../Sources/assets/efectos_sonido/crab/attack.mp3" },
 	{ CrabDetection ,"../Sources/assets/efectos_sonido/crab/detection.mp3" },
-	{ CrabIdle ,"../Sources/assets/efectos_sonido/crab/idle.mp3" },
+	{ CrabIdleSound ,"../Sources/assets/efectos_sonido/crab/idle.mp3" },
 #pragma endregion
 	//Pirata
 #pragma region Pirate
