@@ -79,9 +79,4 @@
  <objectgroup id="11" name="Cleon">
   <object id="66" gid="162" x="128" y="1136" width="256" height="256"/>
  </objectgroup>
- <objectgroup id="12" name="Altar">
-  <object id="67" gid="162" x="696" y="1368" width="256" height="256"/>
-  <object id="68" gid="162" x="708" y="348" width="256" height="256"/>
-  <object id="69" gid="162" x="1804" y="324" width="256" height="256"/>
- </objectgroup>
 </map>
