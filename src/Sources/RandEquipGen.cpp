@@ -134,6 +134,9 @@ Item* RandEquipGen::genEquip(int type)
 			price = rn_->nextInt(4 * area, 6 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
+		case equipType::Size:
+			obj = genEquip();
+			break;
 		default:
 			return nullptr;
 			break;
@@ -187,6 +190,9 @@ Item* RandEquipGen::genEquip(int type)
 		cout << "h" << endl;
 #endif // _DEBUG
 		obj = new usable(app_, (potionType)type);
+		break;
+	case potionType::Size:
+		obj = genEquip();
 		break;
 	default:
 		return nullptr;

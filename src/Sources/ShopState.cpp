@@ -79,13 +79,13 @@ void ShopState::draw() const
 
 	//pintar textos
 	//descripcion objetos
-	if (selected_ != nullptr) {
+	if (selected_ != nullptr && selected_->getObject() != nullptr) {
 		selected_->getObject()->getDescription(descriptionBox);
 	}
 	double posx1 = (double)(app_->getWindowWidth() / 1.684);//950;
 	double posy = (double)(app_->getWindowHeight() / 1.184);//770;
 
-	if (selected_ != nullptr) {
+	if (selected_ != nullptr && selected_->getObject() != nullptr) {
 		Texture potionText(app_->getRenderer(), "Precio: " + to_string((int)selected_->getObject()->getPrice()), app_->getFontManager()->getFont(Resources::FontId::RETRO), SDL_Color({ 0,0,0,1 }));
 		potionText.render(posx1, posy);
 	}
@@ -142,8 +142,10 @@ void ShopState::initState() {
 	//Texturas con texto
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
 
+	app_->getRandom()->initObject();
 	//Cogemos la referencia de las listas que hay en GameManager
-	createItems(8);
+	if(gm_->getShop() != nullptr)
+		createItems(8);
 	shop_.objects_ = gm_->getShop();
 	inventory_.objects_ = gm_->getInventory();
 
