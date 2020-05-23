@@ -298,7 +298,6 @@ void CollisionCtrl::tutorialCollision()
 				bottle_->onCollider();
 				bullet->onCollider();
 				bottle_ = nullptr;
-				
 			}
 		}
 	}

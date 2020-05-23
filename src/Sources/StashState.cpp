@@ -10,6 +10,7 @@
 #pragma region Callbacks
 
 void StashState::backToPrevious(Application* app) {
+	app->getAudioManager()->playChannel(Resources::Time, 0, Resources::AuxMusicChannel1);
 	SDL_ShowCursor(SDL_DISABLE);
 	app->getGameStateMachine()->popState();
 }
@@ -184,6 +185,7 @@ void StashState::endState()
 void StashState::advanceInventoryPage() {
 	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
 	if (((inventory_.page_ + 1) * INVENTORY_VISIBLE_ELEMENTS) < inventory_.objects_->size()) {
+		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel1);
 		inventory_.page_++;
 		advance(inventory_.firstDrawn, INVENTORY_VISIBLE_ELEMENTS);
 	}
@@ -192,6 +194,7 @@ void StashState::advanceInventoryPage() {
 void StashState::previousInventoryPage()
 {	//Si el primer elemento de la p�gina anterior del la lista no es negativo(no existe), retrocedemos
 	if (((inventory_.page_ - 1) * INVENTORY_VISIBLE_ELEMENTS) >=0) {
+		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel1);
 		inventory_.page_--;
 		advance(inventory_.firstDrawn, -INVENTORY_VISIBLE_ELEMENTS);
 	}
@@ -200,6 +203,7 @@ void StashState::previousInventoryPage()
 void StashState::advanceStashPage()
 {	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
 	if ((stash_.page_ + 1) * STASH_VISIBLE_ELEMENTS < stash_.objects_->size()) {
+		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel1);
 		stash_.page_++;
 		advance(stash_.firstDrawn, STASH_VISIBLE_ELEMENTS);
 	}
@@ -208,6 +212,7 @@ void StashState::advanceStashPage()
 void StashState::previousStashPage()
 {	//Si el primer elemento de la p�gina anterior del la lista no es negativo(no existe), retrocedemos
 	if ((stash_.page_ - 1) * STASH_VISIBLE_ELEMENTS >= 0) {
+		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel1);
 		stash_.page_--;
 		advance(stash_.firstDrawn, -STASH_VISIBLE_ELEMENTS);
 	}
@@ -230,7 +235,7 @@ void StashState::changeBetweenLists()
 		
 		//Una vez sabemos a cual, lo intercambiamos de lista
 		if (it == inventory_.objects_->end()) {
-
+			app_->getAudioManager()->playChannel(Resources::Equip, 0, Resources::AuxMusicChannel3);
 			selectedIsLastElement(stash_, STASH_VISIBLE_ELEMENTS);
 			//Insertamos en la otra lista
 			it = inventory_.objects_->insert(inventory_.objects_->end(), selected_);
@@ -243,6 +248,7 @@ void StashState::changeBetweenLists()
 			if (stash_.objects_->size() == 0) stash_.firstDrawn = stash_.objects_->begin();
 		}
 		else {
+			app_->getAudioManager()->playChannel(Resources::Equip, 0, Resources::AuxMusicChannel3);
 			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
 			//Insertamos en la otra lista
 			it = stash_.objects_->insert(stash_.objects_->end(), selected_);
@@ -291,6 +297,7 @@ void StashState::deleteObject()
 
 void StashState::addMoneyToInventory()
 {
+	app_->getAudioManager()->playChannel(Resources::Gold, 0, Resources::AuxMusicChannel2);
 	inventory_.money_ += stash_.money_;
 	stash_.money_ = 0;
 	moneyChange();
@@ -298,6 +305,7 @@ void StashState::addMoneyToInventory()
 
 void StashState::addMoneyToStash()
 {
+	app_->getAudioManager()->playChannel(Resources::Gold, 0, Resources::AuxMusicChannel2);
 	stash_.money_ += inventory_.money_;
 	inventory_.money_ = 0;
 	moneyChange();

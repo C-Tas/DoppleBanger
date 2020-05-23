@@ -13,6 +13,7 @@ public:
 	virtual void onCollider() {};
 	virtual void initialStats();
 	virtual void initRewards();
+	virtual void feedBackHurtSounds() override;
 	void teleport();
 	inline bool isAlive() { return currState_ == STATE::DYING ? false : true; }
 	//Agrega un altar al magordio
@@ -23,11 +24,11 @@ private:
 	Player* player_ = nullptr;
 	//Vector de altares
 	vector<Altar*> altars;
-	#pragma region Kirin
-	double lastKirin_ = 0;
+#pragma region Kirin
+	Cooldown kirinCD_;
 	const double AREA_DMG_W = 100;
 	const double AREA_DMG_H = 100;
-	const double KIRIN_CD = 2;
+	const double KIRIN_CD = 2000;
 	const double KIRIN_RANGE_ATTACK = 500;
 #pragma endregion
 
@@ -86,15 +87,16 @@ private:
 	//inicializa el ataque kirin
 	void kirin();
 #pragma region teleport
+	//Posicion actual
+	int currChoice_ = 0;
 	//Representa el rango que se usa para determinar si el enemigo est� muy cerca
 	const double RANGE_TO_TP = 100;
 	//Devuelve true si el player est� dentro del rango que se considera cerca del magordito
 	inline bool enemyIsTooClose();
-	//CD para realizar el teleport en ms
-	const double TP_CD = 2; 
-	//�ltimo TP hecho
-	double lastTeleport_ = 0;
-	//Vector con las posiciones a las que se puede teleportar
+	//Tiempo desde el ultimo tp
+	const double TP_CD = 2000;
+	//Cooldown
+	Cooldown tpCD_;
 #pragma endregion
 
 #pragma region Constantes

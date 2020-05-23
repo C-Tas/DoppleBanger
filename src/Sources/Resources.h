@@ -351,6 +351,38 @@ public:
 		//Tilesets de los mapas
 		Tileset1,
 		CollisionTile,
+
+		//CreditState
+		CreditBackground,
+		fichaPrimera,
+		TwitterButton,
+		GitButton,
+		//Avatares
+		Agus,
+		//Aida,
+		Amaro,
+		//Aurora,
+		Dani,
+		Georgi,
+		Leyre,
+		//Paula
+		Oscar,
+		Stiven,
+		//Fichas
+		AgusFicha,
+		//AidaFicha
+		AmaroFicha,
+		//AuroraFicha
+		DaniFicha,
+		GeorgiFicha,
+		LeyreFicha,
+		//PaulaFicha
+		OscarFicha,
+		StivenFicha,
+		//agradecientos
+		PanelCollaborators,
+		BotonBonus,
+		Bonus,
 	};
 	
 	enum MusicChannels : int {
@@ -393,6 +425,10 @@ public:
 		//Canal del kraken
 		KrakenChannel1,
 		KrakenChannel2,
+		//canal de magordito
+		MagorditoChannel1,
+		MagorditoChannel2,
+		MagorditoChannel3,
 
 		//Canal de jarl
 		JarlChannel,
@@ -409,6 +445,7 @@ public:
 		Storyboard,
 		WavesSound,
 		FuneralTheme,
+		CreditTheme,
 
 		//Efectos de sonido
 		Agro,
@@ -524,12 +561,37 @@ public:
 		KrakenDeath,
 		KrakenMusic,
 
+		//Magordito
+		//IdleMagordito,
+		//MovementMagordito,
+		MagorditoDeath,
+		MagorditoKirin,
+		MagorditoTeleport,
+		MagorditoResurrection,
+		//ThemeMagordito,
+		Magorditolaugh1,
+		Magorditolaugh2,
+		Magorditolaugh3,
+		Magorditolaugh4,
+		MagorditoAttack1,
+		MagorditoAttack2,
+		MagorditoAttack3,
+		MagorditoAttack4,
+		MagorditoAttack5,
+		MagorditoAggro,
+
 		//Tutorial
 		Glass,
 		DummyDie,
 
 		//NPC
 		VenancioTalk,
+
+		//Tienda/inventario/alijo
+		Pag,
+		Equip,
+		Time,
+		Gold,
 
 		//Jarls
 		jarl1,
@@ -543,6 +605,7 @@ public:
 		jarl9,
 		jarl10,
 		jarl11,
+
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

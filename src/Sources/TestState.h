@@ -24,6 +24,7 @@ public:
 		}
 	}
 
+
 	virtual void draw()const {
 		currentMap_->draw();
 		PlayState::draw();

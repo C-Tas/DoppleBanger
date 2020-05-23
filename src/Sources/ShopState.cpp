@@ -16,6 +16,7 @@ void ShopState::backToPrevious(Application* app) {
 	SDL_ShowCursor(SDL_DISABLE);
 	//Se resetea la musica del barco
 	app->resetMusicChannels();
+	app->getAudioManager()->playChannel(Resources::Time, 0, Resources::AuxMusicChannel2);
 	app->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
 }
 
@@ -176,6 +177,7 @@ void ShopState::endState()
 void ShopState::advanceInventoryPage() {
 	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
 	if (((inventory_.page_ + 1) * INVENTORY_VISIBLE_ELEMENTS) < inventory_.objects_->size()) {
+		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel3);
 		inventory_.page_++;
 		advance(inventory_.firstDrawn, INVENTORY_VISIBLE_ELEMENTS);
 	}
@@ -184,6 +186,7 @@ void ShopState::advanceInventoryPage() {
 void ShopState::previousInventoryPage()
 {	//Si el primer elemento de la p�gina anterior del la lista no es negativo(no existe), retrocedemos
 	if (((inventory_.page_ - 1) * INVENTORY_VISIBLE_ELEMENTS) >= 0) {
+		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel3);
 		inventory_.page_--;
 		advance(inventory_.firstDrawn, -INVENTORY_VISIBLE_ELEMENTS);
 	}
@@ -192,6 +195,7 @@ void ShopState::previousInventoryPage()
 void ShopState::advanceShopPage()
 {	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
 	if ((shop_.page_ + 1) * SHOP_VISIBLE_ELEMENTS < shop_.objects_->size()) {
+		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel3);
 		shop_.page_++;
 		advance(shop_.firstDrawn, SHOP_VISIBLE_ELEMENTS);
 	}
@@ -200,6 +204,7 @@ void ShopState::advanceShopPage()
 void ShopState::previousShopPage()
 {	//Si el primer elemento de la p�gina anterior del la lista no es negativo(no existe), retrocedemos
 	if ((shop_.page_ - 1) * SHOP_VISIBLE_ELEMENTS >= 0) {
+		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel3);
 		shop_.page_--;
 		advance(shop_.firstDrawn, -SHOP_VISIBLE_ELEMENTS);
 	}
@@ -219,7 +224,7 @@ void ShopState::changeBetweenLists()
 
 		//Buscamos si el objeto selected est� en la lista del inventario
 		auto it = find(inventory_.firstDrawn, inventory_.objects_->end(), selected_);
-		
+		app_->getAudioManager()->playChannel(Resources::Equip, 0, Resources::AuxMusicChannel3);
 		//Una vez sabemos a cual, lo intercambiamos de lista
 		if (it == inventory_.objects_->end()) {
 			selectedIsLastElement(shop_, SHOP_VISIBLE_ELEMENTS);
@@ -340,6 +345,7 @@ void ShopState::selectedIsLastElement(ContainerSHOP& list_, int nVisibleElements
 
 void ShopState::moneyChange()
 {
+	app_->getAudioManager()->playChannel(Resources::Gold, 0, Resources::AuxMusicChannel1);
 	delete inventoryMoneyTex_;
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(gm_->getInventoryGold()), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
 }

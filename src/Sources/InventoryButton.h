@@ -15,6 +15,7 @@ using CallBackOnClickInventory = void(Application* app, InventoryButton* button)
 class InventoryButton: public Button
 {
 private:
+	int declarator = 0;
 	list <InventoryButton*> ::iterator inventoryIterator_ ;
 	Item* object_ = nullptr;
 	bool equipped = false;
@@ -46,6 +47,8 @@ public:
 	Item* getObject() { return object_; }
 	void setNewCallBack(CallBackOnClickInventory* newCallBack) { callBackInventory_ = newCallBack; };
 
+	void setDeclarator(int decl) { declarator = decl; };
+	int getDeclarator() { return declarator; }
 	#pragma region Guardar/Cargar
 	//Guarda las propiedades del boton en el contenedor
 	void saveButton(jute::jValue& container);
