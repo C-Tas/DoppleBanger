@@ -29,8 +29,8 @@ void Skeleton::updateCooldowns()
 
 
 void Skeleton::attack() {
-	if (!shootCD_.isCooldownActive()) {
-		shootCD_.initCooldown(currStats_.distRate_);
+	//Sonido ataque
+	app_->getAudioManager()->playChannel(Resources::SkeletonAttack, 0, Resources::SkeletonChannel2);
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
 	//Critico
 	double realDamage = currStats_.distDmg_;
@@ -39,27 +39,23 @@ void Skeleton::attack() {
 	BoneBullet* bone = new BoneBullet(app_, getCenter(), dir, realDamage, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
 	app_->getCurrState()->addRenderUpdateLists(bone);
 	CollisionCtrl::instance()->addEnemyBullet(bone);
-	}
 }
 
 void Skeleton::initObject() {
-	setTexture(app_->getTextureManager()->getTexture(Resources::Skeleton));
 	initialStats();
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
-	rangeVision_ = 270;
 	initAnims();
 }
 
 void Skeleton::lostAggro()
 {
-	currEnemy_ = nullptr;
+	currEnemy_ = GameManager::instance()->getPlayer();
 }
 
 bool Skeleton::update() {
 	updateFrame();
-	updateCooldowns();
 
 	//Si el esqueleto ha muerto
 	if (currState_ == STATE::DYING) {
@@ -74,32 +70,21 @@ bool Skeleton::update() {
 		
 		return true;
 	}
-	else if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
-		currState_ = STATE::ATTACKING;
-	}
-	//Si el esqueleto tiene enemigo y puede atacar
-	if (currState_ == STATE::ATTACKING && !shootCD_.isCooldownActive()) {
-		//Si el esqueeto tiene un enemigo y lo tiene a rango
-		if (onRange()) {
-			//changeAnim(attackAnim_);//animacion de ataque del esqueleto
-			initShoot();
+	else {
+		updateCooldowns();
+
+		if (!attacking_) {
+			if (getEnemy(currStats_.distRange_) && !shootCD_.isCooldownActive() && onRange(currStats_.distRange_)) {
+				//Si esta a rango dispara
+				cout << "DISPARANDO" << endl;
+				initShoot();
+			}
 		}
-		//Tengo enemigo como objetivo, pero no a rango, busco si hay otro cerca para atacar
-		else if (getEnemy(currStats_.distRange_))
-		{
-			//changeAnim(attackAnim_);//animacion de ataque del esqueleto
-			initShoot();
-		}
-		//Tengo enemigo pero no a rango
-		else
-		{
-			initIdle();
-			//changeAnim(idleAnim_); animacion de idle del esqueleto
-			currEnemy_ = nullptr;
+
+		if (currState_ == STATE::SHOOTING) {
+			shootAnim();
 		}
 	}
-	if(currState_ == STATE::SHOOTING)
-		shootAnim();
 	return false;
 }
 
@@ -115,6 +100,12 @@ void Skeleton::initRewards()
 
 void Skeleton::initAnims() 
 {
+	/*
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
+	*/
 	//Animaci�n de idle
 	idleAnims_= Anim(IDLE_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, IDLE_FRAME_RATE, true);
 	//Arriba
@@ -125,34 +116,21 @@ void Skeleton::initAnims()
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonIdleDownAnim));
 	//Izquierda
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonIdleLeftAnim));
-	/*
-	//Animaciones movimiento
-	//Animacion movimiento arriba y abajo
-	moveAnims_.push_back(Anim(MOVE_UD_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, MOVE_UD_FRAME_RATE, true));
-	//Arriba
-	moveTx_.push_back(app_ ->getTextureManager()->getTexture(Resources::SkeletonMoveUpAnim));
-	//Abajo
-	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonMoveDownAnim));
-	//Animacion movimiento derecha e izquierda
-	moveAnims_.push_back(Anim(MOVE_RL_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, MOVE_RL_FRAMES_RATE, true));
-	//Derecha
-	moveTx_.push_back(app_ ->getTextureManager()->getTexture(Resources::SkeletonMoveRightAnim));
-	//Izquierda
-	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonMoveLeftAnim));*/
 
 	//Animacion de disparo
-	//Abajo
-	shootAnims_.push_back(Anim(SHOOT_D_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, SHOOT_D_FRAME_RATE, false)),
-	shootTx_.push_back(app_ ->getTextureManager()->getTexture(Resources::SkeletonAttackDownAnim));
 	//Arriba
 	shootAnims_.push_back(Anim(SHOOT_U_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, SHOOT_U_FRAME_RATE, false));
 	shootTx_.push_back(app_ ->getTextureManager()->getTexture(Resources::SkeletonAttackUpAnim));
 	//Animacion derecha
 	shootAnims_.push_back(Anim(SHOOT_RL_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, SHOOT_RL_FRAME_RATE, false));
 	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonAttackRightAnim));
+	//Abajo
+	shootAnims_.push_back(Anim(SHOOT_D_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, SHOOT_D_FRAME_RATE, false)),
+	shootTx_.push_back(app_ ->getTextureManager()->getTexture(Resources::SkeletonAttackDownAnim));
 	//Anim izquierda
 	shootAnims_.push_back(Anim(SHOOT_RL_FRAMES, W_SKELETON_FRAME, H_SKELETON_FRAME, SHOOT_RL_FRAME_RATE, false));
 	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::SkeletonAttackLeftAnim));
+
 	//Inicializamos con la animación del idle
 	currDir_ = DIR::LEFT;
 	initIdle();
@@ -160,6 +138,8 @@ void Skeleton::initAnims()
 
 void Skeleton::initIdle()
 {
+	attacking_ = false;
+	currEnemy_ = nullptr;
 	currState_ = STATE::IDLE;
 	//Sonido ataque
 	app_->getAudioManager()->playChannel(Resources::SkeletonIdle, -1, Resources::SkeletonChannel1);
@@ -182,9 +162,11 @@ void Skeleton::shootAnim() {
 }
 
 void Skeleton::initShoot() {
-	currState_ = STATE::SHOOTING;	//Cambio de estado
 	//Sonido ataque
 	app_->getAudioManager()->playChannel(Resources::SkeletonAttack, 0, Resources::SkeletonChannel2);
+	//Para decir que esta atacando
+	attacking_ = true;
+	currState_ = STATE::SHOOTING;	//Cambio de estado
 	shooted_ = false;	//Aún no se ha creado la bala
 	updateDirVisObjective(currEnemy_);	//Hacia dónde mira
 	texture_ = shootTx_[(int)currDir_];
@@ -194,18 +176,19 @@ void Skeleton::initShoot() {
 	switch (currDir_)
 	{
 	case DIR::UP:		//arriba
-		frameAction_ = 12;
+		frameAction_ = 10;
 		break;
 	case DIR::RIGHT:	//derecha
-		frameAction_ = 11;
+		frameAction_ = 10;
 		break;
 	case DIR::DOWN:		//abajo
 		frameAction_ = 19;
 		break;
 	case DIR::LEFT:		// izquierda
-		frameAction_ = 11;
+		frameAction_ = 10;
 	}
 
+	shootCD_.initCooldown(currStats_.distRate_);
 	//Inicio de lso frames
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;

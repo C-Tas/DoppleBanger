@@ -60,9 +60,6 @@ void Actor::receiveDamage(double damage) {
 	feedBackHurtSounds();
 	//Reduccion de daño
 	double realDamage = damage - (damage * currStats_.armor_ / 100);
-	cout << "ARMOR" << endl;
-	cout << "DANYO SIN ARMOR: " << damage << ", DANYO CON ARMOR: " << realDamage << endl;
-	cout << "VIDA ANTES: " << currStats_.health_ << ", VIDA DESPUES: " << currStats_.health_ - realDamage << endl;
  	currStats_.health_ -= realDamage;
 	if (currStats_.health_ <= 0) {
 		this->die();
