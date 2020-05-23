@@ -4,9 +4,8 @@ class EnemyPirate :
 	public Enemy
 {
 public:
-	EnemyPirate(Application* app = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0, 0 },
-		vector<Point2D> patrol = { {0,0} }) :
-		Enemy(app, pos, scale), patrol_(patrol) {
+	EnemyPirate(Application* app, Vector2D pos, Vector2D scale) :
+		Enemy(app, pos, scale) {
 		initObject();
 	};
 	EnemyPirate(EnemyPirate& other) :Enemy(other.app_, other.pos_, other.scale_) { initObject(); };

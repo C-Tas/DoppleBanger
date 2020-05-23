@@ -31,7 +31,7 @@ bool EnemyPirate::update() {
 				updateDirVisObjective(target_);
 				move(target_);
 				//Cuando ha llegado al target empieza el idle
-				if (dir_.magnitude() == 0) {
+				if (RectRect(getCenter().getX(), getCenter().getY(), getScaleX(), getScaleY(), target_.getX(), target_.getY(), 1, 1)) {
 					initIdle();
 					idleCD_.initCooldown(IDLE_PAUSE);
 					//Pasamos al siguiente patrol
@@ -67,6 +67,7 @@ bool EnemyPirate::update() {
 			else if (currState_ != STATE::ATTACKING && currState_ != STATE::SHOOTING) {
 				currEnemy_ = nullptr;
 				initMove();
+				target_ = patrol_[currPatrol_];
 				idle_ = false;
 			}
 		}
