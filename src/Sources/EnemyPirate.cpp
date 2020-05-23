@@ -79,14 +79,14 @@ bool EnemyPirate::update() {
 
 void EnemyPirate::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
-	if ((getCenter() - posToReach).magnitude() <= 0.05)
+	if ((getCenter() - nextTarget_).magnitude() <= 0.05)
 	{
-		pathPos_ = { (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() };
+		pathPos_ = { (int)PosToTile(nextTarget_).getX(), (int)PosToTile(nextTarget_).getY() };
 		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
 		if (pathing_.size() > 1)
-			posToReach.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+			nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
 	}
-	dir_.setVec(posToReach - getCenter());
+	dir_.setVec(nextTarget_ - getCenter());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
@@ -288,6 +288,7 @@ void EnemyPirate::initObject() {
 	Enemy::initObject();
 	initRewards();
 	target_ = pos_;
+	nextTarget_ = pos_;
 	rangeVision_ = VIS_RANGE;
 	initAnims();
 	tag_ = "EnemyPirate";
