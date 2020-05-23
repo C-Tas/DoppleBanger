@@ -10,8 +10,8 @@ void Sword::equip(Player* player)
 
 void Sword::remove(Player* player)
 {
-	player->removeMeleeDamage(meleeDmg_);
-	player->removeMeleeRate(meleeRate_);
+	player->addMeleeDmg(-meleeDmg_);
+	player->addMeleeRate(-meleeRate_);
 }
 
 void Sword::getDescription(TextBox* tex)

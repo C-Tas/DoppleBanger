@@ -44,7 +44,11 @@ void Ink::onCollider()
 	Player* player = GameManager::instance()->getPlayer();
 	if (state_ == STATE::ATTACKING)
 	{
-		player->receiveDamage(kraken_->getDistDmg());
+		//Critico
+		double realDamage = kraken_->getDistDmg();
+		if (kraken_->applyCritic()) realDamage *= 1.5;
+
+		player->receiveDamage(realDamage);
 		state_ = STATE::IDLE;
 	}
 

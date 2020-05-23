@@ -10,8 +10,8 @@ void Gloves::equip(Player* player)
 
 void Gloves::remove(Player* player)
 {
-	player->removeCrit(crit_);
-	player->removeArmor(armor_);
+	player->addCrit(-crit_);
+	player->addCrit(-armor_);
 }
 
 void Gloves::getDescription(TextBox* tex)

@@ -167,7 +167,6 @@ void TiledMap::addIsometricObstacle(Tile tile, int gid, tileType tileType_)
 
 }
 
-
 void TiledMap::addOrthogonalObstacle(Tile tile)
 {
 	SDL_Rect collisionArea = { (int)tile.worldPos_.getX(), (int)tile.worldPos_.getY(), tileSize_ , tileSize_ };

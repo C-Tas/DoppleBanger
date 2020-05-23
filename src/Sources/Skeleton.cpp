@@ -32,8 +32,11 @@ void Skeleton::attack() {
 	if (!shootCD_.isCooldownActive()) {
 		shootCD_.initCooldown(currStats_.distRate_);
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
-	BoneBullet* bone = new BoneBullet(app_,
-		getCenter(), dir, currStats_.distDmg_, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
+	//Critico
+	double realDamage = currStats_.distDmg_;
+	if (applyCritic()) realDamage *= 1.5;
+
+	BoneBullet* bone = new BoneBullet(app_, getCenter(), dir, realDamage, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
 	app_->getCurrState()->addRenderUpdateLists(bone);
 	CollisionCtrl::instance()->addEnemyBullet(bone);
 	}

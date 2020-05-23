@@ -114,11 +114,6 @@ bool Player::update()
 		shootCD_.initCooldown(currStats_.distRate_);
 		initShoot(); 
 	}
-
-	//Si se pulsa el boton de en medio
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::MIDDLE)) {
-		cout << getCenter().getX() << " " << getCenter().getY() << endl;
-	}
 	
 	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr ) {
 		usePotion(potions_[0], 0);
@@ -349,13 +344,16 @@ void Player::meleeAnim()
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
 		double totalDmg = currStats_.meleeDmg_;
 		if (empoweredAct_) { //Golpe fuerte
-			static_cast<Actor*>(currEnemy_)->receiveDamage(currStats_.meleeDmg_ * empoweredBonus_);
+			empoweredCD_.initCooldown(EMPOWERED_DELAY);
 			empoweredAct_ = false;
 			totalDmg = currStats_.meleeDmg_ * empoweredBonus_;
-			empoweredCD_.initCooldown(EMPOWERED_DELAY);
+			static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
 		}
-		else static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
-		
+		else {
+			if (applyCritic()) totalDmg *= 1.5;
+			static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
+		}
+
 		if (currEnemy_ == nullptr) {
 			attacking_ = false;
 			dir_ = Vector2D(0, 0);
@@ -487,10 +485,13 @@ void Player::shoot(Vector2D dir)
 	shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
 	equipType auxGunType = gun_->getEquipType();
+	//Critico
+	double realDamage = currStats_.distDmg_;
+	if (applyCritic()) realDamage *= 1.25;
 	if (auxGunType == equipType::PistolI || auxGunType == equipType::PistolII) {
 		app_->getAudioManager()->playChannel(Resources::Pistol, 0, Resources::SoundChannels::PlayerChannel2);
 		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,
-			currStats_.distDmg_, currStats_.distRange_, gun_->getBulletSpeed());
+			realDamage, currStats_.distRange_, gun_->getBulletSpeed());
 
 		//Activa perforación en la bala
 		if (perforate_) {
@@ -507,7 +508,7 @@ void Player::shoot(Vector2D dir)
 	else if (auxGunType == equipType::ShotgunI || auxGunType == equipType::ShotgunII) {
 		app_->getAudioManager()->playChannel(Resources::Trabuco, 0, Resources::SoundChannels::PlayerChannel2);
 		Blunderbuss* blunderbuss = new Blunderbuss(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,
-			currStats_.distDmg_, currStats_.distRange_, gun_->getBulletSpeed());
+			realDamage, currStats_.distRange_, gun_->getBulletSpeed());
 		if (perforate_) {
 			blunderbuss->activatePerforate();
 			perforate_ = false;
@@ -674,23 +675,6 @@ void Player::updateBuffPotion(){
 			}
 		}
 	}
-}
-
-void Player::changeDistWeaponStats(Gun* gun)
-{
-	if (gun_ != nullptr) {
-		//se quitan los stats del equipo anterior
-		currStats_.crit_ -= gun_->getCrit();
-		currStats_.distDmg_ -= gun_->getDistDmg();
-		currStats_.distRange_ -= gun_->getDistRange();
-		currStats_.distDmg_ -= gun_->getDistDmg();
-	}
-	//se agregan los stats del equipo nuevo
-	currStats_.crit_ += gun->getCrit();
-	currStats_.distDmg_ += gun->getDistDmg();
-	currStats_.distRange_ += gun->getDistRange();
-	currStats_.distDmg_ += gun->getDistDmg();
-	gun_ = gun;
 }
 
 void Player::createClon()

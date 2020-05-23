@@ -21,7 +21,7 @@ public:
 		//Si no est� en cooldown la habilidad
 		if (mana >= costMana_ && !skillCD_.isCooldownActive())
 		{
-			player_->removeMana(costMana_);
+			player_->addMana(-costMana_);
 			//Consigue la lista de los enemigos golpeados y les hace da�o
 			Vector2D playerCenter = Vector2D(player_->getPosX() + player_->getScaleX(), player_->getPosY() + player_->getScaleY());
 			list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(playerCenter, RADIUS);

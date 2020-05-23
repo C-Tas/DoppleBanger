@@ -32,7 +32,7 @@ void Armor::remove(Player* player)
 	maxHealth_ -= health_;
 	//Se modifica la vida actual en funcion de la proporcion
 	player->setHealth(maxHealth_ * prop);
-	player->removeArmor(armor_);
+	player->addArmor(-armor_);
 }
 
 void Armor::getDescription(TextBox* tex)
