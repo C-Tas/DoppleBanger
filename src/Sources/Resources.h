@@ -179,7 +179,6 @@ public:
 		//Bosses
 		Magordito,
 		Cleon,
-		Skeleton,
 
 		//gizmos
 		Rojo,

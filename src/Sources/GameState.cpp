@@ -36,7 +36,7 @@ void GameState::update() {
 	}
 	objRendToRemove_.clear();
 
-	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+ 	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
 		if ((*it)->update())return;
 	}
 }
