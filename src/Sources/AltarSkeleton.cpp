@@ -9,9 +9,7 @@ bool AltarSkeleton::update()
 
 	//muerte definitiva del esqueleto
 	if (mobState_ == MOBSTATE::DIE) {
-		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		return true;
+		dieAnim();
 	}
 	//Si el mob se puede resucitar y el altar lo permite -> resucita
 	else if (mobState_ == MOBSTATE::RISEABLE && altarOwner_->canResurrect()) {

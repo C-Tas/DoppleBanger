@@ -8,14 +8,7 @@ bool Crab::update() {
 	updateCooldowns();
 
 	if (currState_ == STATE::DYING) {
-		//Falta animacion de muerte
-		GameManager* gm_ = GameManager::instance();
-			
-		applyRewards();
-		CollisionCtrl::instance()->removeEnemy(this);						//Se quita del gestor de colisiones
-		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);	//Se quita de la lista de enemigos
-		app_->getCurrState()->removeRenderUpdateLists(this);				//Se elimina del programa
-		return true;
+		dieAnim();
 	}
 	else
 	{

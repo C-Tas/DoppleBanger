@@ -6,7 +6,6 @@
 void Enemy::die()
 {
 	static_cast<Player*>(GameManager::instance()->getPlayer())->isEnemyDead(this);
-	Actor::die();
 	//CollisionCtrl::instance()->removeEnemy(this);
 	//static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 }
@@ -67,6 +66,19 @@ bool Enemy::getEnemy(double n)
 	return true;
 }
 
+void Enemy::receiveDamage(int damage) {
+	/*double finalDamage = (currStats_.armor_ * damage) / 100;
+	currStats_.health_ -= finalDamage;*/
+	currStats_.health_ -= damage;
+	if (currStats_.health_ <= 0) {
+		Player* player_ = dynamic_cast<Player*>(currEnemy_);
+		initDie();
+		if (player_ != nullptr && player_ -> getEnemy() != nullptr && player_ -> getEnemy() == this )
+		{
+			player_->setEnemy(nullptr);
+		}
+	}
+}
 
 void Enemy::initObject()
 {
@@ -87,6 +99,17 @@ Vector2D Enemy::TileToPos(Vector2D tile)
 {
 	return Vector2D((iniPosMap_.getX() - ((double)(GameManager::instance()->getTileSize() / 2) * tile.getY()) + ((double)(GameManager::instance()->getTileSize() / 2) * (double)tile.getX())),
 					(iniPosMap_.getY() + ((double)(GameManager::instance()->getTileSize() / 4) * tile.getY()) + ((double)(GameManager::instance()->getTileSize() / 4) * (double)tile.getX())));
+}
+
+void Enemy::initDie()
+{
+	Actor::initDie();
+	CollisionCtrl::instance()->removeEnemy(this);
+	auto aux = dynamic_cast <PlayState*>(app_->getCurrState());
+	if (aux) {
+		aux->removeEnemy(this);
+	}
+	applyRewards();
 }
 
 void Enemy::applyRewards()

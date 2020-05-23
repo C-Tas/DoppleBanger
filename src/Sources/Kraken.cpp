@@ -67,9 +67,7 @@ bool Kraken::update() {
 			}
 			tentacles_.clear();
 		}
-
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		return true;
+		dieAnim();
 	}
 
 	return false;

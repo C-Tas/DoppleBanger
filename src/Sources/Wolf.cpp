@@ -50,10 +50,7 @@ bool Wolf::update() {
 
 		//Esta línea habría que moverla al cangrejo cuando esté hecho
 		GameManager* gm_ = GameManager::instance();
-
-		applyRewards();
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		return true;
+		dieAnim();
 	}
 	//Si el lobo no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
 	if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && getEnemy()) {

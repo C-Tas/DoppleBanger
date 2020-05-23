@@ -5,6 +5,7 @@
 //Enum que repesenta los diferentes estados que puede tener un personaje
 enum class STATE
 {
+	DIED,
 	ATTACKING,
 	SHOOTING,
 	IDLE,
@@ -57,7 +58,8 @@ public:
 		double getMoveSpeed() { return currStats_.moveSpeed_; };
 		double getMeleeRate() { return currStats_.meleeRate_; };
 		double getDistRate() { return currStats_.distRate_; };
-		const DIR getDir() { return currDir_; }
+		GameObject* getEnemy() { return currEnemy_; };
+		const DIR getDir() { return currDir_; };
 	#pragma endregion
 
 	#pragma region addition/substract
@@ -86,14 +88,14 @@ public:
 	//Método para gestionar el daño recibido 
 	virtual void receiveDamage(double damage);
 
-	//Método para matar
-	virtual void die() { currState_ = STATE::DYING; };
 	//Devuelve el estado actual del actor
 	const STATE getState() { return currState_; };
 	//Detiene el movimiento
 	virtual void stop() { dir_ = Vector2D(0, 0); };
 	//Cambia al enemigo al que está atacando
 	inline void changeAgro(GameObject* newEnemy) { currEnemy_ = newEnemy; };
+	
+	
 
 protected:
 	//Posicion del raton
@@ -128,7 +130,6 @@ protected:
 		currStats_(other.currStats_), currState_(other.currState_) {};
 	///<summary>Destructor de la clase Actor</summary>
 	virtual ~Actor() {};
-
 	//Inicializa al actor
 	virtual void initObject() { am_ = app_->getAudioManager(); };
 	virtual void initAnims() {};
@@ -138,4 +139,14 @@ protected:
 	void initStats(double health, double mana, double manaReg, double armor, double meleeDmg, double distDmg, 
 		double crit, double meleeRange, double distRange, double moveSpeed, double meleeRate, double distRate);
 	bool applyCritic();
+
+	//Animacion muerte
+	virtual void initDie();
+	virtual void dieAnim();
+	//Animacion morir
+	const int W_DIE_FRAME = 79;			//Ancho del frame, estándar para todas
+	const int H_DIE_FRAME = 74;			//Alto del frame, estándar para todas
+	//void initAnims();
+	const int DIE_FRAMES = 4;			//Frames de la animación
+	const int DIE_FRAME_RATE = 250;		//Frame rate
 };

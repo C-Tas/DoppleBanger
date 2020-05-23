@@ -10,6 +10,7 @@ public:
 	//virtuales
 	virtual bool update() { return false; };
 	virtual void onCollider() {};
+	virtual void receiveDamage(int damage);
 	//<summary>Metodo que mata a este enemigo</summary>
 	virtual void die();
 	virtual void lostAggro() { currEnemy_ = nullptr; };
@@ -67,6 +68,8 @@ protected:
 	virtual void initObject();
 	//Inicializa las animaciones
 	virtual void initAnims() {};
+
+	virtual void initDie();
 	//en cada enemigo establece las stats de los enemigos
 	virtual void initialStats() = 0;
 

@@ -10,51 +10,49 @@ bool MonkeyCoco::update() {
 	updateCooldowns();
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
- 		app_->getAudioManager()->playChannel(Resources::MonkeyDieSound, 0, Resources::SoundChannels::MonkeyChannel);
 
-		//Esta línea habría que moverla al cangrejo cuando esté hecho
-		GameManager* gm_ = GameManager::instance();
-		if (gm_->isThatMissionStarted(missions::gallegaEnProblemas))
- 			gm_->addMissionCounter(missions::gallegaEnProblemas);
+		if (currAnim_.currFrame_ == 0) {
+			app_->getAudioManager()->playChannel(Resources::MonkeyDieSound, 0, Resources::SoundChannels::MonkeyChannel);
 
-		//Tendr�a que hacer la animaci�n de muerte?
-		//Cuando acabe la animaci�n, lo mata
-		applyRewards();
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		CollisionCtrl::instance()->removeEnemy(this);
-		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
-		return true;
-	}
-	//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
-	else if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
-		currState_ = STATE::SHOOTING;
-		if (firstAttack && onRange()) {
-			app_->getAudioManager()->playChannel(Resources::MonkeyAttackSound, 0, Resources::MonkeyChannel);
-			firstIdle = true;
+			//Esta línea habría que moverla al cangrejo cuando esté hecho
+			GameManager* gm_ = GameManager::instance();
+			if (gm_->isThatMissionStarted(missions::gallegaEnProblemas))
+				gm_->addMissionCounter(missions::gallegaEnProblemas);
 		}
-		firstAttack = false;
+		dieAnim();
 	}
-
-	//Si el mono tiene enemigo y puede atacar
-	if (currState_ == STATE::SHOOTING) {
-		if (!shootCD_.isCooldownActive()) {
-			//Si el mono tiene un enemigo y lo tiene a rango
-			if (onRange()) {
-				initShoot();
+	else {
+		//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
+		if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
+			currState_ = STATE::SHOOTING;
+			if (firstAttack && onRange()) {
+				app_->getAudioManager()->playChannel(Resources::MonkeyAttackSound, 0, Resources::MonkeyChannel);
+				firstIdle = true;
 			}
-			//Tengo enemigo pero no a rango
-			else {
-				if (firstIdle) {
-					app_->getAudioManager()->playChannel(Resources::MonkeyIdleSound, 0, Resources::MonkeyChannel);
-					firstIdle = false;
+			firstAttack = false;
+		}
+
+		//Si el mono tiene enemigo y puede atacar
+		if (currState_ == STATE::SHOOTING) {
+			if (!shootCD_.isCooldownActive()) {
+				//Si el mono tiene un enemigo y lo tiene a rango
+				if (onRange()) {
+					initShoot();
 				}
-				initIdle();
-				currEnemy_ = nullptr;
-				firstAttack = true;
+				//Tengo enemigo pero no a rango
+				else {
+					if (firstIdle) {
+						app_->getAudioManager()->playChannel(Resources::MonkeyIdleSound, 0, Resources::MonkeyChannel);
+						firstIdle = false;
+					}
+					initIdle();
+					currEnemy_ = nullptr;
+					firstAttack = true;
+				}
+				shootCD_.initCooldown(currStats_.distRate_);
 			}
-			shootCD_.initCooldown(currStats_.distRate_);
+			if (currEnemy_ != nullptr) shootAnim();
 		}
-		if (currEnemy_ != nullptr) shootAnim();
 	}
 	return false;
 }

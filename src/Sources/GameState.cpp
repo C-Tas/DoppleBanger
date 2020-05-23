@@ -6,6 +6,7 @@ GameState::~GameState() {
 	//Borra todos los objetos de la lista de gameObjects
 	for (auto it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
 		delete (*it);
+		(*it) = nullptr;
 	}
 	gameObjects_.clear(); //Clear lista objetos
 	objectsToRender_.clear(); //Clear lista de objetos a dibujar

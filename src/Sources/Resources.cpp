@@ -202,6 +202,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ CartographerFuneral, "../Sources/assets/npc/cartografaFuneral.png" },
 
 	//Animaciones
+	{ EntityDie, "../Sources/assets/enemigos/dieAnim.png"},
 	//Player
 	{ PlayerIdleRightAnim, "../Sources/assets/player/animaciones/idle/idleDcha.png" },
 	{ PlayerIdleLeftAnim, "../Sources/assets/player/animaciones/idle/idleIz.png" },

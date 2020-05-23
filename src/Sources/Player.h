@@ -51,6 +51,8 @@ public:
 	void manaReg();
 	//Cambia de estado a muriendo
 	virtual void die() { currState_ = STATE::DYING; }
+
+	virtual void dieAnim();
 	//Mata al clon
 	bool killClon() {
 		if (clon_ != nullptr) {

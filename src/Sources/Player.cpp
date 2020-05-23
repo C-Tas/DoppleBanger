@@ -6,6 +6,7 @@
 #include "Resources.h"
 #include "TextBox.h"
 #include "PlayerBullet.h"
+#include "ShipState.h"
 
 //Habilidades y pociones
 #include "ClonSkill.h"
@@ -83,112 +84,119 @@ bool Player::update()
 {
 	updateFrame();
 	manageTint();
-	updateCooldowns();
 
-	//Regeneramos mana
-	manaReg();
-	//SKILLS
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0] != nullptr) {
-		skills_[0]->action();
-	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_W) && skills_[1] != nullptr) {
-		skills_[1]->action();
-	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_E) && skills_[2] != nullptr) {
-		skills_[2]->action();
-	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_R) && skills_[3] != nullptr) {
-		skills_[3]->action();
-	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE)) shout();
-
-	//Si se acaba el efecto de la tinta recuperamos la velocidad correspondiente
-	if (slowed_ && !slowTimeCD_.isCooldownActive())
-	{
-		currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
-		slowed_ = false;
-	}
-
-	//Si se pulsa el boton derecho del raton y se ha acabado el cooldown
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && !shootCD_.isCooldownActive()) {
-		shootCD_.initCooldown(currStats_.distRate_);
-		initShoot(); 
-	}
-	
-	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr ) {
-		usePotion(potions_[0], 0);
-		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
-	}
-	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr ) {
-		usePotion(potions_[1], 1);
-		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
-	}
-
-	//Pociones
-	updateBuffPotion();
-
-	Enemy* objective = static_cast<Enemy*>(currEnemy_);
-	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
-	Vector2D target = target_;
-	if (attacking_ && objective != nullptr) {
-		target = objective->getVisPos();
-		updateDir(target);
-	}
-	else
-		attacking_ = false;
-
-	Vector2D visPos = getVisPos();
-	list<Enemy*> enemiesInRange = CollisionCtrl::instance()->getEnemiesInArea(getCenter(), currStats_.meleeRange_);
-	if ((visPos.getX() < target.getX() - 2 || visPos.getX() > target.getX() + 2 || visPos.getY() < target.getY() - 2 || visPos.getY() > target.getY() + 2) &&
-		(!attacking_ || objective == nullptr || objective->getState() == STATE::DYING || enemiesInRange.empty()))
-	{
-		double delta = app_->getDeltaTime();
-		previousPos_ = pos_;
-		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
-		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
-		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
-		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
-	}
-	else if (attacking_ && objective != nullptr && objective->getState() != STATE::DYING && !enemiesInRange.empty())
-	{
- 		bool found = false;
-		for (auto it = enemiesInRange.begin(); !found && it != enemiesInRange.end(); ++it)
-			if ((*it) == objective)
-				found = true;
-
-		if (found && empoweredAct_ && !meleeActive_)
-		{
-			meleeActive_ = true;
-			app_->getAudioManager()->playChannel(Resources::EmpoweredSkillAudio, 0, Resources::PlayerChannel4);
-			initMelee();
+	if (currState_ == STATE::DYING) {
+		if (currAnim_.currFrame_ == 0) {
+			app_->getAudioManager()->playChannel(Resources::AudioId::DyingAudio, 0, 0);
 		}
-		else if (found && !meleeCD_.isCooldownActive())
-		{
-			initMelee();
-		}
-	}
-	//En caso de que no esté atacando y ya haya llegado al objetivo (primer if)
-	//cambiará de moviéndose a Idle
-	else if (currState_ == STATE::FOLLOWING) {
-		initIdle();
-	}
-
-	//Gestion de estados y animaciones
-	if (currState_ == STATE::SHOOTING) {
-		shootAnim();
-	}
-	else if (currState_ == STATE::ATTACKING) {
-		meleeAnim();
-	}
-	else if (currState_ == STATE::SWIMMING) {
-		empoweredAnim();
-	}
-	else if (currState_ == STATE::DYING) {
-		app_->getAudioManager()->playChannel(Resources::DyingAudio, 0, Resources::PlayerChannel4);
-		//Tendría que hacer la animación de muerte
-		//Cuando se acabe la animación es cuando muere y se puede resetear el juego
-		dead_ = true;
+		dieAnim();
 		return true;
+	}
+	else{
+
+		updateCooldowns();
+
+		//Regeneramos mana
+		manaReg();
+
+
+		//SKILLS
+		if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0] != nullptr) {
+			skills_[0]->action();
+		}
+		if (eventHandler_->isKeyDown(SDL_SCANCODE_W) && skills_[1] != nullptr) {
+			skills_[1]->action();
+		}
+		if (eventHandler_->isKeyDown(SDL_SCANCODE_E) && skills_[2] != nullptr) {
+			skills_[2]->action();
+		}
+		if (eventHandler_->isKeyDown(SDL_SCANCODE_R) && skills_[3] != nullptr) {
+			skills_[3]->action();
+		}
+		if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE)) shout();
+
+		//Si se acaba el efecto de la tinta recuperamos la velocidad correspondiente
+		if (slowed_ && !slowTimeCD_.isCooldownActive())
+		{
+			currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
+			slowed_ = false;
+		}
+
+		//Si se pulsa el boton derecho del raton y se ha acabado el cooldown
+		if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && !shootCD_.isCooldownActive()) {
+			shootCD_.initCooldown(currStats_.distRate_);
+			initShoot();
+		}
+
+		if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr) {
+			usePotion(potions_[0], 0);
+			gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
+		}
+		if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr) {
+			usePotion(potions_[1], 1);
+			gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
+		}
+
+		//Pociones
+		updateBuffPotion();
+
+		Enemy* objective = static_cast<Enemy*>(currEnemy_);
+		//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
+		Vector2D target = target_;
+		if (attacking_ && objective != nullptr) {
+			target = objective->getVisPos();
+			updateDir(target);
+		}
+		else
+			attacking_ = false;
+
+		Vector2D visPos = getVisPos();
+		list<Enemy*> enemiesInRange = CollisionCtrl::instance()->getEnemiesInArea(getCenter(), currStats_.meleeRange_);
+		if ((visPos.getX() < target.getX() - 2 || visPos.getX() > target.getX() + 2 || visPos.getY() < target.getY() - 2 || visPos.getY() > target.getY() + 2) &&
+			(!attacking_ || objective == nullptr || objective->getState() == STATE::DYING || enemiesInRange.empty()))
+		{
+			double delta = app_->getDeltaTime();
+			previousPos_ = pos_;
+			pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
+			pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
+			//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
+			if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
+		}
+		else if (attacking_ && objective != nullptr && objective->getState() != STATE::DYING && currState_ != STATE::DYING && !enemiesInRange.empty())
+		{
+			bool found = false;
+			for (auto it = enemiesInRange.begin(); !found && it != enemiesInRange.end(); ++it)
+				if ((*it) == objective)
+					found = true;
+
+			if (found && empoweredAct_ && !meleeActive_)
+			{
+				meleeActive_ = true;
+				app_->getAudioManager()->playChannel(Resources::EmpoweredSkillAudio, 0, Resources::PlayerChannel4);
+				initMelee();
+			}
+			else if (found && !meleeCD_.isCooldownActive())
+			{
+				initMelee();
+			}
+		}
+		//En caso de que no esté atacando y ya haya llegado al objetivo (primer if)
+		//cambiará de moviéndose a Idle
+		else if (currState_ == STATE::FOLLOWING) {
+			initIdle();
+		}
+
+		//Gestion de estados y animaciones
+		if (currState_ == STATE::SHOOTING) {
+			shootAnim();
+		}
+		else if (currState_ == STATE::ATTACKING) {
+			meleeAnim();
+		}
+		else if (currState_ == STATE::SWIMMING) {
+			empoweredAnim();
+		}
+
 	}
 	return false;
 }
@@ -778,5 +786,14 @@ void Player::isEnemyDead(Actor* obj)
 	if (obj == currEnemy_) {
 		attacking_ = false;
 		currEnemy_ = nullptr;
+	}
+}
+
+void Player::dieAnim()
+{
+	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
+		currState_ = STATE::DIED;
+		app_->getCurrState()->removeRenderUpdateLists(this);
+		dead_ = true;
 	}
 }

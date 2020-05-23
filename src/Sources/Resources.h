@@ -185,6 +185,7 @@ public:
 		Azul,
 
 		//Animaciones
+		EntityDie,
 		CrabWalk,
 		CrabAttack,
 		CrabIdle,
