@@ -4,7 +4,40 @@
 #include "BoneBullet.h"
 #include "CollisionCtrl.h"
 #include "PlayState.h"
-//#include "CaribbeanIslandState.h"
+
+bool Skeleton::update() {
+	updateFrame();
+
+	//Si el esqueleto ha muerto
+	if (currState_ == STATE::DYING) {
+		//Sonido muerte
+		app_->getAudioManager()->playChannel(Resources::SkeletonDeath, 0, Resources::SkeletonChannel1);
+		// animación de muerte si la tiene
+		//Cuando acabe la animación, lo mata
+		applyRewards();
+		CollisionCtrl::instance()->removeEnemy(this);
+		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
+		app_->getCurrState()->removeRenderUpdateLists(this);
+		
+		return true;
+	}
+	else {
+		updateCooldowns();
+
+		if (!attacking_) {
+			//Si no esta atacando, se mira a ver cual e sel target mas cercano
+			if (getEnemy(currStats_.distRange_) && !shootCD_.isCooldownActive() && onRange(currStats_.distRange_)) {
+				//Si esta a rango dispara
+				initShoot();
+			}
+		}
+
+		if (currState_ == STATE::SHOOTING) {
+			shootAnim();
+		}
+	}
+	return false;
+}
 
 void Skeleton::initialStats() {
 	HEALTH = 1500;
@@ -26,7 +59,6 @@ void Skeleton::updateCooldowns()
 {
 	if (shootCD_.isCooldownActive()) shootCD_.updateCooldown();
 }
-
 
 void Skeleton::attack() {
 	//Sonido ataque
@@ -52,40 +84,6 @@ void Skeleton::initObject() {
 void Skeleton::lostAggro()
 {
 	currEnemy_ = GameManager::instance()->getPlayer();
-}
-
-bool Skeleton::update() {
-	updateFrame();
-
-	//Si el esqueleto ha muerto
-	if (currState_ == STATE::DYING) {
-		//Sonido muerte
-		app_->getAudioManager()->playChannel(Resources::SkeletonDeath, 0, Resources::SkeletonChannel1);
-		// animación de muerte si la tiene
-		//Cuando acabe la animación, lo mata
-		applyRewards();
-		CollisionCtrl::instance()->removeEnemy(this);
-		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		
-		return true;
-	}
-	else {
-		updateCooldowns();
-
-		if (!attacking_) {
-			if (getEnemy(currStats_.distRange_) && !shootCD_.isCooldownActive() && onRange(currStats_.distRange_)) {
-				//Si esta a rango dispara
-				cout << "DISPARANDO" << endl;
-				initShoot();
-			}
-		}
-
-		if (currState_ == STATE::SHOOTING) {
-			shootAnim();
-		}
-	}
-	return false;
 }
 
 void Skeleton::initRewards()
