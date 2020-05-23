@@ -73,7 +73,6 @@ void tutorialState::update()
 void tutorialState::createBottle()
 {
 	bottleCreated_ = true;
-	app_->getWindowHeight() / 7;
 	bottlePos_ = Vector2D(app_->getWindowWidth() / 3, app_->getWindowHeight() / 7);
 	tutorialObject* bottle = new tutorialObject(app_, bottlePos_, Vector2D(50, 60), app_->getTextureManager()->getTexture(Resources::Bottle),1);
 	collisionCtrl_->setBottle(bottle);
@@ -84,7 +83,6 @@ void tutorialState::createBottle()
 void tutorialState::createDummy()
 {
 	dummyCreated_ = true;
-	app_->getWindowHeight() / 7;
 	dummyPos_ = Vector2D(app_->getWindowWidth() / 3, app_->getWindowHeight() * 7 / 10 );
 	tutorialObject* dummy = new tutorialObject(app_, dummyPos_, Vector2D(100, 100), app_->getTextureManager()->getTexture(Resources::Dummy),2);
 	collisionCtrl_->setDummy(dummy);

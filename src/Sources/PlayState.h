@@ -38,9 +38,7 @@ public:
 	///<summary>Quita un objeto a la lista objects_</summary>
 	void removeObject(Collider* obj);
 	///<summary>Comprueba las posibles acciones del jugador</summary>
-	void checkPlayerActions();
-	///<summary>Comprueba si el jugador ha hecho click en algún enemigo, y de ser el caso, devuelve el que se renderiza el último</summary>
-	Enemy* checkAttack();
+	void checkInput();
 	///<summary>Encuentra al enemigo más cercano a una posición</summary>
 	Enemy* findClosestEnemy(Point2D pos);
 	///<summary>Comprueba colisiones con los enemigos y devuelve el primer enemigo en caso de haber colisión</summary>
@@ -48,6 +46,8 @@ public:
 
 	AStar::Generator* getGenerator() { return generator_; };
 
+	//Devuelve la lista de enemigos
+	list<Enemy*>& getListEnemies() { return enemies_; };
 	//Devuelve el primer enemigo en función de un tag
 	Enemy* getEnemyByTag(string tag);
 	//intercambia posiciones de dos objetos en el orden de renderizado

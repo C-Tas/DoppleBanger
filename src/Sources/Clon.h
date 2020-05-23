@@ -6,7 +6,6 @@
 
 class Player;
 
-
 class Clon : public Actor
 {
 public:

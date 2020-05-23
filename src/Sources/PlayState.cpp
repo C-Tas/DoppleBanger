@@ -32,7 +32,7 @@ void PlayState::update() {
 	else {
 		updateMousePointer();
 		GameState::update();
-		checkPlayerActions();
+		checkInput();
 	}
 }
 
@@ -78,22 +78,9 @@ void PlayState::removeObject(Collider* obj) {
 	objects_.remove(obj);
 }
 
-void PlayState::checkPlayerActions() {
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
-	{
-		Enemy* obj; obj = checkAttack();
-		player_->updateDirVisMouse();
-		if (obj != nullptr) {
-			player_->attack(obj);
-		}
-		else if (!player_->getOnCollision()) {
-			player_->move(eventHandler_->getRelativeMousePos());
-		}
-		else player_->setOnCollision(false);
-
-		if (collisionCtrl_->isNextZoneTextBoxActive())player_->getEndZoneTextBox()->updateButtons();
-	}
-	else if (eventHandler_->isKeyDown(SDLK_p)) {
+void PlayState::checkInput() {
+	
+	if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
 		player_->stop();
 	}
@@ -105,22 +92,6 @@ void PlayState::checkPlayerActions() {
 		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
 		player_->stop();
 	}
-
-
-}
-
-Enemy* PlayState::checkAttack() {
-	bool found = false;
-	Enemy* obj = nullptr;
-	Vector2D mousePos = eventHandler_->getRelativeMousePos();
-	SDL_Point mouse = { 0, 0 }; mouse.x = mousePos.getX(); mouse.y = mousePos.getY();
-	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
-		if (SDL_PointInRect(&mouse, &(*it)->getCollider())) {
-			obj = (*it);
-			found = true;
-		}
-	}
-	return obj;
 }
 
 Enemy* PlayState::findClosestEnemy(Point2D pos) {

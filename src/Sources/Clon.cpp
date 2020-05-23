@@ -246,14 +246,12 @@ void Clon::shoot() {
 		shootPos.setX(pos_.getX() + (scale_.getX() / 2));
 		shootPos.setY(pos_.getY() + (scale_.getY() / 2));
 
-
 		PlayerBullet* bullet = new PlayerBullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, shootingDir_, currStats_.distDmg_,
 			currStats_.distRange_, GameManager::instance()->getEquip().gun_->getBulletSpeed());
 
 		//Se añade a los bucles del juegos
 		app_->getCurrState()->addRenderUpdateLists(bullet);
 		CollisionCtrl::instance()->addPlayerBullet(bullet);
-		
 	}
 }
 
