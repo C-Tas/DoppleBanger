@@ -8,9 +8,13 @@
 
 bool Magordito::update() {
 	updateFrame();
+	updateCooldowns();
+	manageTint();
+
 	//Si Magordito muere
 	if (currState_ == STATE::DYING) {
 		//Desbloqueamos la �ltima isla
+		app_->getAudioManager()->playChannel(Resources::MagorditoDeath, 0, Resources::MagorditoChannel3);
 		GameManager::instance()->setUnlockedIslands(Island::Volcanic);
 		CollisionCtrl::instance()->removeEnemy(this);
 		dynamic_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
@@ -18,15 +22,16 @@ bool Magordito::update() {
 		return false;
 	}
 	if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
+		auto chance = app_->getRandom()->nextInt(Resources::Magorditolaugh1, Resources::Magorditolaugh4 + 1);
+		app_->getAudioManager()->playChannel(chance, 0, Resources::MagorditoChannel3);
 		currState_ = STATE::ATTACKING;
 	}
 	if (currState_ == STATE::ATTACKING) {
 		//Si el player est� cerca y no tengo enfriamiento en el teleport
-		if ((SDL_GetTicks() - lastTeleport_) / 1000 > TP_CD) {
+		if (!tpCD_.isCooldownActive()) {
 			enemyIsTooClose();
 		}
- 		double aux = SDL_GetTicks() - lastKirin_;
-		if ((SDL_GetTicks() - lastKirin_) / 1000 > KIRIN_CD && onRange(KIRIN_RANGE_ATTACK)) {
+		if (!kirinCD_.isCooldownActive() && onRange(KIRIN_RANGE_ATTACK)) {
 			initKirinAnim();
 		}
 	}
@@ -37,6 +42,7 @@ bool Magordito::update() {
 	else if (currState_ == STATE::FOLLOWING) {
 		kirinAnim();
 	}
+
 	return false;
 }
 
@@ -122,6 +128,8 @@ void Magordito::initAnims() {
 
 void Magordito::updateCooldowns()
 {
+	if (kirinCD_.isCooldownActive()) kirinCD_.updateCooldown();
+	if (tpCD_.isCooldownActive()) tpCD_.updateCooldown();
 }
 
 void Magordito::kirin()
@@ -151,7 +159,7 @@ inline bool Magordito::enemyIsTooClose()
 
 void Magordito::initialStats()
 {
-	rangeVision_ = 200;
+	rangeVision_ = 500;
 	HEALTH = 4000;
 	MANA = 100;
 	MANA_REG = 1;
@@ -169,8 +177,12 @@ void Magordito::initialStats()
 
 void Magordito::teleport()
 {
-	lastTeleport_ = SDL_GetTicks();
-	auto choice = app_->getRandom()->nextInt(0, altars.size());
+	tpCD_.initCooldown(TP_CD);
+	int choice = app_->getRandom()->nextInt(0, altars.size());
+	while (currChoice_ == choice) {
+		choice = app_->getRandom()->nextInt(0, altars.size());
+	}
+	currChoice_ = choice;
 	double newX = altars[choice]->getCenter().getX() - scale_.getX() / 2;
 	double newY = altars[choice]->getPos().getY();
 	pos_.setVec(Vector2D(newX, newY));
@@ -181,6 +193,7 @@ void Magordito::teleport()
 
 void Magordito::lostAggro()
 {
+	app_->getAudioManager()->playChannel(Resources::MagorditoAggro, 0, Resources::MagorditoChannel1);
 	currEnemy_ = GameManager::instance()->getPlayer(); 
 }
 
@@ -197,6 +210,7 @@ void Magordito::initIdle()
 
 void Magordito::initTeleport()
 {
+	app_->getAudioManager()->playChannel(Resources::MagorditoTeleport, 0, Resources::MagorditoChannel1);
 	currState_ = STATE::SWIMMING;
 	texture_ = tpTx_[(int)currDir_];
 	currAnim_ = tpAnims_[(int)currDir_];
@@ -231,9 +245,10 @@ void Magordito::teleportAnim()
 void Magordito::kirinAnim()
 {
 	if (!kirined_ && currAnim_.currFrame_ == KIRIN_ACTION) {
+		app_->getAudioManager()->playChannel(Resources::AudioId::MagorditoKirin, 0, Resources::MagorditoChannel2);
 		kirined_ = true;
 		kirin();
-		lastKirin_ = SDL_GetTicks();
+		kirinCD_.initCooldown(KIRIN_CD);
 	}
 	else if (currAnim_.currFrame_ >= KIRIN_FRAMES) {
 		initIdle();
@@ -248,4 +263,10 @@ void Magordito::initRewards()
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
+}
+
+void Magordito::feedBackHurtSounds()
+{
+	auto choice = app_->getRandom()->nextInt(Resources::MagorditoAttack1, Resources::MagorditoAttack5 + 1);
+	app_->getAudioManager()->playChannel(choice, 0, Resources::MagorditoChannel1);
 }

@@ -486,6 +486,26 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ KrakenDeath ,"../Sources/assets/efectos_sonido/kraken/death.wav" },
 	{ KrakenMusic ,"../Sources/assets/efectos_sonido/kraken/music.wav" },
 #pragma endregion
+
+	//Magordito
+	//{ IdleMagordito ,"../Sources/assets/efectos_sonido/Magordito/taunt1.mp3" },
+	//{ MovementMagordito ,"../Sources/assets/efectos_sonido/Magordito/taunt1.mp3" },
+	{ MagorditoDeath ,"../Sources/assets/efectos_sonido/Magordito/death.mp3" },
+	{ MagorditoKirin ,"../Sources/assets/efectos_sonido/Magordito/kirin.wav" },
+	{ MagorditoTeleport ,"../Sources/assets/efectos_sonido/Magordito/teleport.wav" },
+	{ MagorditoResurrection ,"../Sources/assets/efectos_sonido/Magordito/resurrection.wav" },
+	//{ ThemeMagordito ,"../Sources/assets/efectos_sonido/Magordito/taunt1.mp3" },
+	{ Magorditolaugh1 ,"../Sources/assets/efectos_sonido/Magordito/laugh1.mp3" },
+	{ Magorditolaugh2 ,"../Sources/assets/efectos_sonido/Magordito/laugh2.mp3" },
+	{ Magorditolaugh3 ,"../Sources/assets/efectos_sonido/Magordito/laugh3.mp3" },
+	{ Magorditolaugh4 ,"../Sources/assets/efectos_sonido/Magordito/laugh4.mp3" },
+	{ MagorditoAttack1 ,"../Sources/assets/efectos_sonido/Magordito/attack1.mp3" },
+	{ MagorditoAttack2 ,"../Sources/assets/efectos_sonido/Magordito/attack2.mp3" },
+	{ MagorditoAttack3 ,"../Sources/assets/efectos_sonido/Magordito/attack3.mp3" },
+	{ MagorditoAttack4 ,"../Sources/assets/efectos_sonido/Magordito/attack4.mp3" },
+	{ MagorditoAttack5 ,"../Sources/assets/efectos_sonido/Magordito/attack5.mp3" },
+	{ MagorditoAggro ,"../Sources/assets/efectos_sonido/Magordito/aggro.mp3" },
+
 	//Tutorial
 	{ Glass, "../Sources/assets/efectos_sonido/tutorial/glass.wav" },
 	{ DummyDie, "../Sources/assets/efectos_sonido/tutorial/dummy.wav" },
@@ -493,6 +513,11 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ VenancioTalk, "../Sources/assets/efectos_sonido/tutorial/VenancioTalk.wav" },
 	//Otros
 	{ Agro ,"../Sources/assets/efectos_sonido/agro.mp3" },
+	//inventario/tienda/alijo
+	{ Pag, "../Sources/assets/efectos_sonido/inventario/page.wav" },
+	{ Equip, "../Sources/assets/efectos_sonido/inventario/equip.wav" },
+	{ Time, "../Sources/assets/efectos_sonido/inventario/timeBack.wav" },
+	{ Gold, "../Sources/assets/efectos_sonido/inventario/gold.mp3" },
 	//jarls
 	{ jarl1 ,"../Sources/assets/efectos_sonido/jarl/jar1.wav" },
 	{ jarl2 ,"../Sources/assets/efectos_sonido/jarl/jar2.wav" },
@@ -547,6 +572,10 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ KrakenChannel2, 20 },
 	//canal de jarl
 	{ JarlChannel, 6 },
+
+	{ MagorditoChannel1, 6 },
+	{ MagorditoChannel2, 6 },
+	{ MagorditoChannel3, 6 }
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{

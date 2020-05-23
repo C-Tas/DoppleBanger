@@ -393,6 +393,10 @@ public:
 		//Canal del kraken
 		KrakenChannel1,
 		KrakenChannel2,
+		//canal de magordito
+		MagorditoChannel1,
+		MagorditoChannel2,
+		MagorditoChannel3,
 
 		//Canal de jarl
 		JarlChannel,
@@ -524,12 +528,37 @@ public:
 		KrakenDeath,
 		KrakenMusic,
 
+		//Magordito
+		//IdleMagordito,
+		//MovementMagordito,
+		MagorditoDeath,
+		MagorditoKirin,
+		MagorditoTeleport,
+		MagorditoResurrection,
+		//ThemeMagordito,
+		Magorditolaugh1,
+		Magorditolaugh2,
+		Magorditolaugh3,
+		Magorditolaugh4,
+		MagorditoAttack1,
+		MagorditoAttack2,
+		MagorditoAttack3,
+		MagorditoAttack4,
+		MagorditoAttack5,
+		MagorditoAggro,
+
 		//Tutorial
 		Glass,
 		DummyDie,
 
 		//NPC
 		VenancioTalk,
+
+		//Tienda/inventario/alijo
+		Pag,
+		Equip,
+		Time,
+		Gold,
 
 		//Jarls
 		jarl1,
