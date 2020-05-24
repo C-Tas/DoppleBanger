@@ -34,31 +34,35 @@ bool Cleon::update() {
 	manageTint();
 	updateCooldowns();
 
-	//si Cleón palma
+	//si Cleï¿½n palma
 	if (currState_ == STATE::DYING) {
 		applyRewards();
 		CollisionCtrl::instance()->removeEnemy(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return false;
 	}
-	//Si Cleón encuentra un enemigo
+	//Si Cleï¿½n encuentra un enemigo
 	if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
 		currState_ = STATE::ATTACKING;
 	}
 	//Si estoy en modo ataque
 	if (currState_ == STATE::ATTACKING) {
 		createBarrel();
-		//Si está a rango de melee
+		//Si estï¿½ a rango de melee
 		if (onRange(currStats_.meleeRange_) && !lastThrust_.isCooldownActive()) {
 			//Estocada
 			thrust();
 		}
-		//Sí está a rango de carga
+		else if (onRange(currStats_.meleeRange_) && !lastSweep_.isCooldownActive()) {
+			//Barrido
+			sweep();
+		}
+		//Sï¿½ estï¿½ a rango de carga
 		else if (onRange(CHARGE_RANGE) && !lastCharge_.isCooldownActive()) {
 			//Carga
 			pirateCharge();
 		}
-		//Cleón no tiene a nadie a rango
+		//Cleï¿½n no tiene a nadie a rango
 		else
 		{
 			currState_ = STATE::FOLLOWING;
@@ -67,10 +71,10 @@ bool Cleon::update() {
 	if (currState_ == STATE::CHARGING) {
 		selectTarget();
 		SDL_Rect targetRect = { target_.getX(),target_.getY(),25,25 };
-			//Cleón llego al destino de su carga
+			//Cleï¿½n llego al destino de su carga
 			if (SDL_HasIntersection(&getDestiny(), &targetRect)) {
 				auto currEnemy = dynamic_cast<Player*>(currEnemy_);
-				//Si Cleón colisiona contra el player
+				//Si Cleï¿½n colisiona contra el player
 				if (currEnemy && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny())) {
 					double realDamage = CHARGE_DMG;
 					if (applyCritic()) realDamage *= 1.5;
@@ -79,8 +83,11 @@ bool Cleon::update() {
 				currState_ = STATE::ATTACKING;
 				currStats_.moveSpeed_ = movSpeed_;
 			}
+			currState_ = STATE::ATTACKING;
+			currStats_.moveSpeed_ = movSpeed_;
+		}
 	}
-	//Si Cleón está siguiendo a un enemigo
+	//Si Cleï¿½n estï¿½ siguiendo a un enemigo
 	if (currState_ == STATE::FOLLOWING) {
 		createBarrel();
 		selectTarget();
@@ -94,7 +101,7 @@ bool Cleon::update() {
 
 void Cleon::onCollider()
 {
-	
+
 }
 
 void Cleon::receiveDamage(double damage)
@@ -103,7 +110,7 @@ void Cleon::receiveDamage(double damage)
 	if (!activeBlock()) {
 		lastTint_ = SDL_GetTicks();
 		feedBackHurtSounds();
-		//Reduccion de daño
+		//Reduccion de daï¿½o
 		double realDamage = damage - (damage * currStats_.armor_ / 100);
 		currStats_.health_ -= realDamage;
 		if (currStats_.health_ <= 0) {
@@ -113,7 +120,7 @@ void Cleon::receiveDamage(double damage)
 	else
 	{
 		cout << "BLOQUEADO! \n";
-		//Poner feedback del bloqueo de Cleón
+		//Poner feedback del bloqueo de Cleï¿½n
 	}
 }
 
@@ -151,6 +158,16 @@ void Cleon::pirateCharge()
 	app_->getCurrState()->addRenderUpdateLists(currBarrel);
 	barrelsInGame++;
 
+}
+
+void Cleon::sweep()
+{
+	cout << "Barrido!" << endl;
+	lastSweep_.initCooldown(SWEEP_TIME);
+	auto sweepAttack = dynamic_cast<Player*>(currEnemy_);
+	if (sweepAttack) {
+		sweepAttack->receiveDamage(currStats_.meleeDmg_);
+	}
 }
 
 void Cleon::createBarrel()
@@ -199,7 +216,7 @@ void Cleon::initObject() {
 
 void Cleon::initRewards()
 {
-	//Poner lo que dropea Cleón
+	//Poner lo que dropea Cleï¿½n
 }
 
 void Cleon::initAnims() {

@@ -58,6 +58,13 @@ private:
 	const int CHARGE_DMG = 300;
 			//Método que crea la carga del pirata
 	void pirateCharge();
+	
+		//* Barrido
+	void sweep();
+		//Úlimo barrido
+	Cooldown lastSweep_;
+		//Cooldown del barrido
+	const double SWEEP_TIME = 3000;
 
 		//*Barril
 			//Número máximo de barriles a crear
