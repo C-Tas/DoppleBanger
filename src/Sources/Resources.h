@@ -385,22 +385,22 @@ public:
 		Agus,
 		//Aida,
 		Amaro,
-		//Aurora,
+		Aurora,
 		Dani,
 		Georgi,
 		Leyre,
-		//Paula
+		Paula,
 		Oscar,
 		Stiven,
 		//Fichas
 		AgusFicha,
 		//AidaFicha
 		AmaroFicha,
-		//AuroraFicha
+		AuroraFicha,
 		DaniFicha,
 		GeorgiFicha,
 		LeyreFicha,
-		//PaulaFicha
+		PaulaFicha,
 		OscarFicha,
 		StivenFicha,
 		//agradecientos
