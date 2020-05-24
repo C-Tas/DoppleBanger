@@ -254,6 +254,7 @@ private:
 		//Inicialización de las animaciones
 		virtual void initAnims();
 		//Inicia la animación
+		virtual void initDie();
 		void initIdle();
 		void initMove();
 		void initShoot();
@@ -291,7 +292,7 @@ private:
 
 	//<summary>Estadisticas iniciales del jugador</summary>
 	#pragma region Stats
-	double maxHealth_ = 100000000;			//Representa la cantidad maxima de vida
+	double maxHealth_ = 1;			//Representa la cantidad maxima de vida
 	double maxMana_ = 100;				//Representa la cantidad maxima de mana
 	const double MANA_REG = 1;			//Regeneración de maná por segundo
 	const double ARMOR = 10;			//Armadura

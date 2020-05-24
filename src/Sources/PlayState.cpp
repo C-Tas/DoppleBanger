@@ -23,10 +23,6 @@ void PlayState::draw() const {
 
 void PlayState::update() {
 	if (player_->getDead()) { //Comprobamos que el player haya muerto para cambiar de estado
-		//Cargamos música de fondo
-		app_->resetMusicChannels();
-		app_->resetSoundsChannels();
-		app_->getAudioManager()->playChannel(Resources::AudioId::FuneralTheme, -1, Resources::MainMusicChannel);
 		app_->getGameStateMachine()->changeState(new EndState(app_));
 	}
 	else {

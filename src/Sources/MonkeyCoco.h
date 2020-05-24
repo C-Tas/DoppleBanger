@@ -19,6 +19,7 @@ public:
 	virtual void initObject();
 	virtual void onCollider() {};
 	virtual void initRewards();
+	virtual void initDie();
 	//Cuando pierde agro del enemigo
 	virtual void lostAggro() { currEnemy_ = nullptr; };
 

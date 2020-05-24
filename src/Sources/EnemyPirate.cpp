@@ -12,10 +12,7 @@ bool EnemyPirate::update() {
 	//Si el pirata ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendría que hacer la animación de muerte?
-		CollisionCtrl::instance()->removeEnemy(this);
-		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		return true;
+		dieAnim();
 	}
 	else {
 		if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && currEnemy_ == nullptr && getEnemy(rangeVision_) && !idle_) {

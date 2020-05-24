@@ -10,15 +10,6 @@ bool MonkeyCoco::update() {
 	updateCooldowns();
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
-
-		if (currAnim_.currFrame_ == 0) {
-			app_->getAudioManager()->playChannel(Resources::MonkeyDieSound, 0, Resources::SoundChannels::MonkeyChannel);
-
-			//Esta línea habría que moverla al cangrejo cuando esté hecho
-			GameManager* gm_ = GameManager::instance();
-			if (gm_->isThatMissionStarted(missions::gallegaEnProblemas))
-				gm_->addMissionCounter(missions::gallegaEnProblemas);
-		}
 		dieAnim();
 	}
 	else {
@@ -56,7 +47,6 @@ bool MonkeyCoco::update() {
 	}
 	return false;
 }
-
 
 //Inicializa todas las animaciones
 void MonkeyCoco::initAnims() {
@@ -201,6 +191,7 @@ void MonkeyCoco::shootAnim() {
 		initIdle();	//Activa el idle
 	}
 }
+
 void MonkeyCoco::initRewards()
 {
 	minGold = 30;
@@ -209,4 +200,14 @@ void MonkeyCoco::initRewards()
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
+}
+
+void MonkeyCoco::initDie() {
+	Enemy::initDie();
+	app_->getAudioManager()->playChannel(Resources::MonkeyDieSound, 0, Resources::SoundChannels::MonkeyChannel);
+
+	//Esta línea habría que moverla al cangrejo cuando esté hecho
+	GameManager* gm_ = GameManager::instance();
+	if (gm_->isThatMissionStarted(missions::gallegaEnProblemas))
+		gm_->addMissionCounter(missions::gallegaEnProblemas);
 }

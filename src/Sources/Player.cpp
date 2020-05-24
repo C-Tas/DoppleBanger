@@ -83,17 +83,13 @@ void Player::initSkills()
 bool Player::update()
 {
 	updateFrame();
-	manageTint();
 
 	if (currState_ == STATE::DYING) {
-		if (currAnim_.currFrame_ == 0) {
-			app_->getAudioManager()->playChannel(Resources::AudioId::DyingAudio, 0, 0);
-		}
 		dieAnim();
-		return true;
+		return dead_;
 	}
 	else{
-
+		manageTint();
 		updateCooldowns();
 
 		//Regeneramos mana
@@ -794,8 +790,14 @@ void Player::isEnemyDead(Actor* obj)
 void Player::dieAnim()
 {
 	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
-		currState_ = STATE::DIED;
-		app_->getCurrState()->removeRenderUpdateLists(this);
 		dead_ = true;
 	}
+}
+
+void Player::initDie() {
+	Actor::initDie();
+	//Cargamos música de fondo
+	app_->resetMusicChannels();
+	app_->resetSoundsChannels();
+	app_->getAudioManager()->playChannel(Resources::AudioId::FuneralTheme, -1, Resources::MainMusicChannel);
 }
