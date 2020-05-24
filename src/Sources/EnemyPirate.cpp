@@ -19,7 +19,7 @@ bool EnemyPirate::update() {
 	}
 	else {
 		if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && currEnemy_ == nullptr && getEnemy(rangeVision_) && !idle_) {
-			app_->getAudioManager()->playChannel(Resources::Agro, 0, Resources::EnemyPirateChannel);
+			app_->getAudioManager()->playChannel(Resources::Agro, 0, Resources::EnemyPirateChannel1);
 			initMove();
 		}
 

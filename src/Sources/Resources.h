@@ -443,9 +443,9 @@ public:
 		CrabChannel1,
 		CrabChannel2,
 		//Canal del pirata
-		PirateChannel1,
-		PirateChannel2,
-		PirateChannel3,
+		EnemyPirateChannel1,
+		EnemyPirateChannel2,
+		EnemyPirateChannel3,
 		//Canal del kraken
 		KrakenChannel1,
 		KrakenChannel2,

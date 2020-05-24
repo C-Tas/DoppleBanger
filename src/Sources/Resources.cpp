@@ -262,7 +262,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PumpkinAttackLeftAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispIzq.png" },
 	{ PumpkinAttackUpAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispAtras.png" },
 	{ PumpkinAttackDownAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispDelante.png" },
-	 { CrabIdle,"../Sources/assets/enemigos/crab/crabIdle.png" },
 		//Move
 	{ PumpkinMoveRightAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDer.png" },
 	{ PumpkinMoveLeftAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovIzq.png" },
@@ -270,6 +269,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PumpkinMoveDownAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDelante.png" },
 
 	//Crab
+	{ CrabIdle,"../Sources/assets/enemigos/crab/crabIdle.png" },
     { CrabAttack,"../Sources/assets/enemigos/crab/crabAttack.png" },
     { CrabWalk,"../Sources/assets/enemigos/crab/crabWalk.png"},
 
@@ -620,9 +620,9 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ CrabChannel1, 10 },
 	{ CrabChannel2, 10 },
 	//Canal del pirata
-	{ PirateChannel1, 10 },
-	{ PirateChannel2, 10 },
-	{ PirateChannel3, 10 },
+	{ EnemyPirateChannel1, 10 },
+	{ EnemyPirateChannel2, 10 },
+	{ EnemyPirateChannel3, 10 },
 	//Canal de la kraken
 	{ KrakenChannel1, 15 },
 	{ KrakenChannel2, 20 },
