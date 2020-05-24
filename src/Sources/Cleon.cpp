@@ -47,6 +47,7 @@ bool Cleon::update() {
 	}
 	//Si estoy en modo ataque
 	if (currState_ == STATE::ATTACKING) {
+		createBarrel();
 		//Si está a rango de melee
 		if (onRange(currStats_.meleeRange_) && !lastThrust_.isCooldownActive()) {
 			//Estocada
@@ -81,6 +82,7 @@ bool Cleon::update() {
 	}
 	//Si Cleón está siguiendo a un enemigo
 	if (currState_ == STATE::FOLLOWING) {
+		createBarrel();
 		selectTarget();
 		if (onRange(CHARGE_RANGE) || onRange(currStats_.meleeRange_)) {
 			currState_ = STATE::ATTACKING;
@@ -97,6 +99,7 @@ void Cleon::onCollider()
 
 void Cleon::receiveDamage(double damage)
 {
+	cout << "BARREL DMG CLEON \n";
 	if (!activeBlock()) {
 		lastTint_ = SDL_GetTicks();
 		feedBackHurtSounds();
@@ -142,6 +145,25 @@ void Cleon::pirateCharge()
 	movSpeed_ = currStats_.moveSpeed_;
 	currStats_.moveSpeed_ = CHARGE_SPEED;
 	currState_ = STATE::CHARGING;
+
+	Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
+	CollisionCtrl::instance()->addBarrel(currBarrel);
+	app_->getCurrState()->addRenderUpdateLists(currBarrel);
+	barrelsInGame++;
+
+}
+
+void Cleon::createBarrel()
+{
+	if (barrelsInGame < NUM_MAX_BARREL) {
+		auto chance = app_->getRandom()->nextInt(0, BARREL_CHANCE + 1);
+		if (chance == BARREL_CHANCE) {
+			Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
+			CollisionCtrl::instance()->addBarrel(currBarrel);
+			app_->getCurrState()->addRenderUpdateLists(currBarrel);
+			barrelsInGame++;
+		}
+	}
 }
 
 void Cleon::initialStats()
