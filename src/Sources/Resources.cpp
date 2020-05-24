@@ -477,9 +477,13 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 
 	//Lobo
 #pragma region Wolf
-	{ WolfHowlAudio ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
-	{ WolfAttackAudio ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
-	{ WolfDieAudio ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" },
+	{ WolfAttack1 ,"../Sources/assets/efectos_sonido/wolf/attack1.mp3" },
+	{ WolfAttack2 ,"../Sources/assets/efectos_sonido/wolf/attack2.wav" },
+	{ WolfIdle1 ,"../Sources/assets/efectos_sonido/wolf/idle1.mp3" },
+	{ WolfIdle2 ,"../Sources/assets/efectos_sonido/wolf/idle2.wav" },
+	{ WolfDetection ,"../Sources/assets/efectos_sonido/wolf/detect.mp3" },
+	{ WolfChase,"../Sources/assets/efectos_sonido/wolf/chase.mp3" },
+	{ WolfDeath ,"../Sources/assets/efectos_sonido/wolf/die.wav" },
 #pragma endregion
 	//Mono
 #pragma region Monkey
@@ -605,7 +609,8 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ PlayerChannel4, 10 },
 
 	//Canal del lobo
-	{ WolfChannel, 6 },
+	{ WolfChannel1, 6 },
+	{ WolfChannel2, 6 },
 	//Canal del mono
 	{ MonkeyChannel, 6 },
 	//Canal de la calabaza
