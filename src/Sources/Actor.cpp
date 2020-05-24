@@ -93,6 +93,7 @@ void Actor::manageTint() {
 		SDL_SetTextureColorMod(texture_->getSDLTex(), 255, 255, 255);
 	}
 }
+
 void Actor::initDie() {
 	setScale(Vector2D(getScaleX() * 0.75, getScaleY() * 0.75));
 	currState_ = STATE::DYING;

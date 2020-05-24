@@ -197,12 +197,11 @@ bool Player::update()
 		animator();
 
 		//Eventos de teclado
-		if (!bussy_) {
-			checkInput();
+		if (!bussy_) checkInput();
+		checkInputState();
 
-			//Gestion de movimiento
-			movementManager();
-		}
+		//Gestion de movimiento
+		movementManager();
 	}
 	return false;
 }
@@ -538,7 +537,9 @@ void Player::checkInput()
 
 		if (collisionCtrl_->isNextZoneTextBoxActive()) getEndZoneTextBox()->updateButtons();
 	}
+}
 
+void Player::checkInputState() {
 	if (eventHandler_->isKeyDown(SDLK_p)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
 		stop();
@@ -599,29 +600,31 @@ void Player::movementManager()
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
 		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
 	}
-	//Si se ha llegado al target y es un enemigo, estoy atacando
-	else if (attacking_ && objective != nullptr && objective->getState() != STATE::DYING && !enemiesInRange.empty() && !bussy_)
-	{
-		bool found = false;
-		for (auto it = enemiesInRange.begin(); !found && it != enemiesInRange.end(); ++it)
-			if ((*it) == objective)
-				found = true;
+	//Cuando se llegue al target
+	else {
+		//Si se viene desde following se inicia el idle
+		if (currState_ == STATE::FOLLOWING) initIdle();
+		//Si se ha llegado al target y es un enemigo, estoy atacando
+		if (attacking_ && objective != nullptr && objective->getState() != STATE::DYING && !enemiesInRange.empty() && !bussy_)
+		{
+			//Para cuando se llegue al target y cambiar de animacion
+			if (currState_ == STATE::FOLLOWING) initIdle();
+			bool found = false;
+			for (auto it = enemiesInRange.begin(); !found && it != enemiesInRange.end(); ++it)
+				if ((*it) == objective)
+					found = true;
 
-		if (found && empoweredAct_ && !empoweredInit_)
-		{
-			empoweredInit_ = true;
-			app_->getAudioManager()->playChannel(Resources::EmpoweredSkillAudio, 0, Resources::PlayerChannel4);
-			initMelee();
+			if (found && empoweredAct_ && !empoweredInit_)
+			{
+				empoweredInit_ = true;
+				app_->getAudioManager()->playChannel(Resources::EmpoweredSkillAudio, 0, Resources::PlayerChannel4);
+				initMelee();
+			}
+			else if (found && !meleeCD_.isCooldownActive())
+			{
+				initMelee();
+			}
 		}
-		else if (found && !meleeCD_.isCooldownActive())
-		{
-			initMelee();
-		}
-	}
-	//En caso de que no esté atacando y ya haya llegado al objetivo (primer if)
-	//cambiará de moviéndose a Idle
-	else if (currState_ == STATE::FOLLOWING) {
-		initIdle();
 	}
 }
 

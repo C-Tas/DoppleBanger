@@ -153,7 +153,7 @@ private:
 		int liberation_ = 2;			//Nivel de la habilidad del clon, debería llevarse a GameManager
 		double slowEffect_ = 0;			//Efecto del slow
 		double lastWalkSound_ = 0;		//Ultimo tick del sonido
-		double maxHealth_ = 1;			//Representa la cantidad maxima de vida
+		double maxHealth_ = 1000;		//Representa la cantidad maxima de vida
 		double maxMana_ = 100;			//Representa la cantidad maxima de mana
 
 		Vector2D previousPos_;
@@ -228,6 +228,8 @@ private:
 		virtual void updateCooldowns();
 		//Checkea si se ha pulsado alguna tecla
 		void checkInput();
+		//Checkea si se ha pulsado una tecla para cambiar de estado
+		void checkInputState();
 		//Mira si se ha pulsado sobre un enemigo
 		Enemy* checkAttack();
 		//Actualiza dir
