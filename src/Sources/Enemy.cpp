@@ -16,7 +16,7 @@ Vector2D Enemy::isPlayerInRange(double rangeAttack)
 	if (gm->getPlayer() == nullptr) { return NOPE; }
 
 	Vector2D playerPos = gm->getPlayer()->getCenter();
-	Vector2D scalePlayer = gm->getPlayer()->getScale();
+	Vector2D scalePlayer = gm->getPlayer()->getColliderScale();
 	Vector2D center = getCenter();
 
 	if (currEnemy_ == nullptr &&
@@ -140,6 +140,7 @@ bool Enemy::onRange(double range) {
 	Vector2D center = getCenter();
 	Vector2D enemCenter = enem->getCenter();
 	Vector2D enemScale = enem->getColliderScale();
+
 	if (RectBall(enemCenter.getX(), enemCenter.getY(), enemScale.getX(), enemScale.getY(),
 		center.getX(), center.getY(), range)){
 		return true;

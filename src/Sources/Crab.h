@@ -14,7 +14,7 @@ public:
 	//<summary>Constructor por movimiento<summary>
 	Crab(Crab&& other)noexcept :Enemy(other.app_, other.pos_, other.scale_) { initAnims(); };
 	//<summary>Metodo de colision</summary>
-	virtual void onCollider() { attack(); };
+	virtual void onCollider() {};
 	//<summary>Establece la direccion del movimiento</summary>	
 	virtual void move(Point2D target);
 	//Asigna los vectores
@@ -22,7 +22,7 @@ public:
 	virtual void initRewards() {};
 private:
 	Cooldown meleeCD_;
-
+	bool attacking_ = false;	//Para saber si el cangrejo esta atacando
 	//Dimensiones de collisionArea
 	const int W_COLLISION = scale_.getX() * 0.5;
 	const int H_COLLISION = scale_.getY() * (2 / 3);
