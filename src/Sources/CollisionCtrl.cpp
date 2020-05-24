@@ -58,7 +58,7 @@ void CollisionCtrl::islandCollisions() {
 	}
 
 	for (auto ob : obstacleWithRotation_) {
-		if (Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+		if (player_ != nullptr && Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
 			player_->getCollisionRot(), (ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY(), ob->getCollisionRot())) {
 			player_->setPos(player_->getPreviousPos());
 			player_->stop();
@@ -69,7 +69,7 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n enemigo con jugador o con balas del jugador
 	for (auto enem : enemies_) {
-		if (Collisions::collidesWithRotation(enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot(),
+		if (player_ != nullptr && Collisions::collidesWithRotation(enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY(), player_->getCollisionRot())) {
 			enem->onCollider();
 			//Cuando el jugador colisiona con el enemigo recibe da�o
@@ -96,7 +96,7 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n bala del enemigo con jugador
 	for (auto bullet : enemyBullets_) {
-		if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+		if (player_ != nullptr && Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			// si la bala puede hacer da�o al jugador
 			if (bullet->doDamage()) {
@@ -114,7 +114,7 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n NPC con jugador -- Como mucho habrá uno por zona
 	if (npcs_.size() > 0) {
-		if (Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX() * 1.1, npcs_[0].object->getScaleY() * 1.1,
+		if (player_ != nullptr && Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX() * 1.1, npcs_[0].object->getScaleY() * 1.1,
 			player_->getPos(), player_->getScaleX() * 1.1, player_->getScaleY() * 1.1)) {
 			if (Collisions::collides(npcs_[0].object->getColliderPos(), npcs_[0].object->getColliderScale().getX(), npcs_[0].object->getColliderScale().getY(),
 				player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
@@ -146,7 +146,7 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n cofres con jugador
 	for (auto chest : chests_) {
-		if (Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
+		if (player_ != nullptr && Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			chest->onCollider();
 			removeChest(chest);	//Para que no pueda volver a abrirse el mismo cofre
@@ -163,14 +163,14 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n colliders con jugador
 	for (auto collider : colliders_) {
-		if (Collisions::collides(collider->getPos(), collider->getScaleX(), collider->getScaleY(),
+		if (player_ != nullptr && Collisions::collides(collider->getPos(), collider->getScaleX(), collider->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			collider->onCollider();
 		}
 	}
 
 	for (auto ob : endObstacles_) {
-		if (Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+		if (player_ != nullptr && Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
 			player_->getCollisionRot(), (ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY(), ob->getCollisionRot())) {
 			player_->stop();
 			collisionWithEndOfZone_ = true;

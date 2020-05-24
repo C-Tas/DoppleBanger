@@ -208,7 +208,7 @@ bool Player::update()
 		//Gestion de movimiento
 		movementManager();
 	}
-	return false;
+	return changeZone_;
 }
 
 void Player::updateCooldowns()
@@ -570,8 +570,10 @@ void Player::checkInput()
 		}
 		else setOnCollision(false);
 
-		if (collisionCtrl_->isNextZoneTextBoxActive())
+		if (collisionCtrl_->isNextZoneTextBoxActive()) {
 			getEndZoneTextBox()->updateButtons();
+			changeZone_ = true;
+		}
 	}
 }
 
@@ -891,6 +893,7 @@ void Player::cheatPlayer()
 		currStats_.crit_ += critCheat_;			
 		currStats_.distRange_ += distRangeCheat_;		
 		currStats_.moveSpeed_ += moveSpeedCheat_;
+		collisionCtrl_->setPlayer(nullptr);
 	}
 	else {
 		cheat_ = false;
@@ -904,6 +907,7 @@ void Player::cheatPlayer()
 		currStats_.crit_ -= critCheat_;
 		currStats_.distRange_ -= distRangeCheat_;
 		currStats_.moveSpeed_ -= moveSpeedCheat_;
+		collisionCtrl_->setPlayer(this);
 	}
 }
 
