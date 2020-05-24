@@ -94,7 +94,7 @@ void Actor::manageTint() {
 	}
 }
 void Actor::initDie() {
-	//setScale(Vector2D(getScaleX(), getScaleY()));
+	setScale(Vector2D(getScaleX() * 0.75, getScaleY() * 0.75));
 	currState_ = STATE::DYING;
 	currAnim_ = Anim(DIE_FRAMES, W_DIE_FRAME, H_DIE_FRAME, DIE_FRAME_RATE, false);
 	texture_ = app_->getTextureManager()->getTexture(Resources::EntityDie);

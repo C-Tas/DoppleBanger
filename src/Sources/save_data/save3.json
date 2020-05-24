@@ -9,7 +9,7 @@
   "clon": 0,
   "questStarted": [false, false, false, false],
   "questFinished": [false, false, false, false],
-  "unlockedSkills": [false, false, false, false, false, false, true, false, false, false],
+  "unlockedSkills": [false, false, false, true, false, false, true, false, false, false],
   "skills": ["null", "null", "null"],
   "objects": ["null", "null"],
   "equipment": [{

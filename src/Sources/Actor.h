@@ -15,7 +15,8 @@ enum class STATE
 	SELFDESTRUCT,
 	SWIMMING,
 	VANISH,
-	CHARGING
+	CHARGING,
+	CHARGING_EMPOWERED
 };
 
 //Enumerado para representar la dirección a la que mira una entidad
@@ -97,7 +98,6 @@ public:
 	inline void changeAgro(GameObject* newEnemy) { currEnemy_ = newEnemy; };
 	
 	
-
 protected:
 	//Posicion del raton
 	Vector2D mousePos_{ 0, 0 };
@@ -149,5 +149,5 @@ protected:
 	const int H_DIE_FRAME = 74;			//Alto del frame, estándar para todas
 	//void initAnims();
 	const int DIE_FRAMES = 4;			//Frames de la animación
-	const int DIE_FRAME_RATE = 250;		//Frame rate
+	const int DIE_FRAME_RATE = 300;		//Frame rate
 };

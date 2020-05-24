@@ -5,7 +5,7 @@
 
 void Enemy::die()
 {
-	static_cast<Player*>(GameManager::instance()->getPlayer())->isEnemyDead(this);
+	GameManager::instance()->getPlayer()->isEnemyDead(this);
 	//CollisionCtrl::instance()->removeEnemy(this);
 	//static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 }
