@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "PlayState.h"
 #include <iostream>
+#include "Collisions.h"
 
 bool Crab::update() {
 	updateFrame();
@@ -12,26 +13,29 @@ bool Crab::update() {
 	}
 	else
 	{
-		if (currState_ == STATE::PATROLLING && !getEnemy(rangeVision_)) {
+		//Cuando no tenemos enemigo
+		if (currEnemy_ == nullptr && !getEnemy(currStats_.meleeRange_)) {
+			if (RectRect(getCenter().getX(), getCenter().getY(), getScaleX(), getScaleY(),
+				targetsVector_.at(actualTarget_).getX(), targetsVector_.at(actualTarget_).getY(), 1, 1)) {
+				updateTarget();
+			}
 			move(targetsVector_.at(actualTarget_));
 		}
-		else
-		{
-			//Si entramos en este caso indica que el enemigo esta al alcance ya que es el factor que rechazo 
-			//el anterior if y así tiene coste O(1) y no coste O(getenemy)
-			if (currState_ == STATE::PATROLLING && !meleeCD_.isCooldownActive()) {
+		//Cuando tenemos enemigo
+		if(currEnemy_ != nullptr){
+			//Si esta a rango y se puede atacar
+			if (onRange(currStats_.meleeRange_) && !meleeCD_.isCooldownActive()) {
 				initMeleeAnim();
+				cout << "INIT MELEE" << endl;
 			}
-			//Se vuelve a comprobar la posicion del enemigo ya que sino podria no parar de atacar
-			//cambairr a on range
-			if (currState_ == STATE::ATTACKING && onRange()) {
-				meleeAnim();
-			}
-			else
-			{
-				initWalk();
+			//Si no esta a rango
+			else if (!onRange(currStats_.meleeRange_)) {
+				cout << "INIT WALK" << endl;
+				initWalk();	//Si no esta a rango empieza a caminar
 			}
 		}
+
+		if (currState_ == STATE::ATTACKING) meleeAnim();
 	}
 
 	return false;
@@ -39,31 +43,20 @@ bool Crab::update() {
 
 void Crab::move(Point2D target)
 {
-	Vector2D visPos = getVisPos();
-	target_ = target;
-	//Margen de 2 pixeles
-	if (visPos.getX() < target_.getX() - 2 ||
-		visPos.getX() > target_.getX() + 2 ||
-		visPos.getY() < target_.getY() - 2 ||
-		visPos.getX() > target_.getX() + 2)
+	/*Vector2D visPos = getVisPos();
+	target_ = target;*/
+	if ((getCenter() - nextTarget_).magnitude() <= 0.05)
 	{
-		if ((getCenter() - nextTarget_).magnitude() <= 0.05)
-		{
-			pathPos_ = { (int)PosToTile(nextTarget_).getX(), (int)PosToTile(nextTarget_).getY() };
-			pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(target).getX(), (int)PosToTile(target).getY() }, pathPos_);
-			if (pathing_.size() > 1)
-				nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
-		}
-		dir_.setVec(nextTarget_ - getCenter());
-		dir_.normalize();
-		double delta = app_->getDeltaTime();
-		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
-		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
+		pathPos_ = { (int)PosToTile(nextTarget_).getX(), (int)PosToTile(nextTarget_).getY() };
+		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(target).getX(), (int)PosToTile(target).getY() }, pathPos_);
+		if (pathing_.size() > 1)
+			nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
 	}
-	else
-	{
-		updateTarget();
-	}
+	dir_.setVec(nextTarget_ - getCenter());
+	dir_.normalize();
+	double delta = app_->getDeltaTime();
+	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
+	pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 }
 
 void Crab::initMeleeAnim()
@@ -76,10 +69,13 @@ void Crab::initMeleeAnim()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+
+	meleeCD_.initCooldown(currStats_.meleeRate_);
 }
 
 void Crab::initWalk()
 {
+	currEnemy_ = nullptr;
 	app_->getAudioManager()->playChannel(Resources::CrabWalk, -1, Resources::CrabChannel2);
 	currState_ = STATE::PATROLLING;
 	texture_ = walkTex_;
@@ -92,11 +88,20 @@ void Crab::initWalk()
 
 void Crab::initIdle()
 {
+	currState_ = STATE::IDLE;
+	app_->getAudioManager()->playChannel(Resources::CrabIdle, -1, Resources::CrabChannel2);
+	texture_ = idleTx_;
+	currAnim_ = idleAnim_;
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
 }
 
 void Crab::meleeAnim()
 {
 	if (currAnim_.currFrame_ == FRAME_ACTION) {
+		cout << "ATACA" << endl;
 		attack();
 		meleeCD_.initCooldown(currStats_.meleeRate_);
 	}
@@ -125,20 +130,22 @@ void Crab::initObject()
 	initAnims();
 	initialStats();
 	rangeVision_ = 40;
+	target_ = pos_;
+	nextTarget_ = pos_;
 	app_->getAudioManager()->playChannel(Resources::CrabIdleSound, 0, Resources::CrabChannel1);
 	tag_ = "Crab";
 }
 
 void Crab::initAnims()
 {
-	//Caminar
-	walkAnim_ = Anim(NUM_FRAMES_WALK, W_H_FRAME, W_H_FRAME, WALK_FRAME_RATE, true);
-	walkTex_ = app_->getTextureManager()->getTexture(Resources::CrabIdle);
+	//Idle
+	idleAnim_ = Anim(IDLE_NUM_FRAMES, W_H_FRAME, W_H_FRAME, IDLE_FRAME_RATE, true);
+	idleTx_ = app_->getTextureManager()->getTexture(Resources::CrabIdle);
 	//Caminar
 	walkAnim_ = Anim(NUM_FRAMES_WALK, W_H_FRAME, W_H_FRAME, WALK_FRAME_RATE,true);
 	walkTex_= app_->getTextureManager()->getTexture(Resources::CrabWalk);
 	//Atacar
-	attackAnim_ = Anim(NUM_FRAMES_ATK, W_H_FRAME, W_H_FRAME, ATK_FRAME_RATE,true);
+	attackAnim_ = Anim(NUM_FRAMES_ATK, W_H_FRAME, W_H_FRAME, ATK_FRAME_RATE, false);
 	attackTex_ = app_->getTextureManager()->getTexture(Resources::CrabAttack);
 
 	initWalk();
@@ -152,7 +159,7 @@ void Crab::initialStats() {
 	MELEE_DMG = 10;
 	DIST_DMG = 0;
 	CRIT = 0;
-	MELEE_RANGE = 50;
+	MELEE_RANGE = getScaleX() / 2;	//Medido con photoshop
 	DIST_RANGE = 0;
 	MOVE_SPEED = 100;
 	MELEE_RATE = 1000;	//En milisegundos
