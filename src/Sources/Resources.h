@@ -428,7 +428,8 @@ public:
 		PlayerChannel3,
 		PlayerChannel4,
 		//Canal del lobo
-		WolfChannel, 
+		WolfChannel1,
+		WolfChannel2,
 		//Canal del mono
 		MonkeyChannel,
 		//Canal de la calabaza
@@ -526,9 +527,13 @@ public:
 		Explosion,
 
 		//Efectos para el lobo
-		WolfHowlAudio,
-		WolfAttackAudio,
-		WolfDieAudio,
+		WolfAttack1,
+		WolfAttack2,
+		WolfIdle1,
+		WolfIdle2,
+		WolfDetection,
+		WolfChase,
+		WolfDeath,
 
 		//Efectos para el mono
 		MonkeyIdleSound,
