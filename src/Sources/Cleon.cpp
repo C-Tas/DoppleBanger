@@ -71,22 +71,22 @@ bool Cleon::update() {
 	if (currState_ == STATE::CHARGING) {
 		selectTarget();
 		SDL_Rect targetRect = { target_.getX(),target_.getY(),25,25 };
-			//Cle�n llego al destino de su carga
-			if (SDL_HasIntersection(&getDestiny(), &targetRect)) {
-				auto currEnemy = dynamic_cast<Player*>(currEnemy_);
-				//Si Cle�n colisiona contra el player
-				if (currEnemy && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny())) {
-					double realDamage = CHARGE_DMG;
-					if (applyCritic()) realDamage *= 1.5;
-					currEnemy->receiveDamage(realDamage);
-				}
-				currState_ = STATE::ATTACKING;
-				currStats_.moveSpeed_ = movSpeed_;
+		//Cle�n llego al destino de su carga
+		if (SDL_HasIntersection(&getDestiny(), &targetRect)) {
+			auto currEnemy = dynamic_cast<Player*>(currEnemy_);
+			//Si Cle�n colisiona contra el player
+			if (currEnemy && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny())) {
+				double realDamage = CHARGE_DMG;
+				if (applyCritic()) realDamage *= 1.5;
+				currEnemy->receiveDamage(realDamage);
 			}
 			currState_ = STATE::ATTACKING;
 			currStats_.moveSpeed_ = movSpeed_;
 		}
+		currState_ = STATE::ATTACKING;
+		currStats_.moveSpeed_ = movSpeed_;
 	}
+
 	//Si Cle�n est� siguiendo a un enemigo
 	if (currState_ == STATE::FOLLOWING) {
 		createBarrel();
