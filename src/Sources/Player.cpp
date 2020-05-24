@@ -202,11 +202,11 @@ bool Player::update()
 		#endif // _DEBUG
 
 		//Eventos de teclado
-		if (!bussy_) checkInput();
 		checkInputState();
+		if (!bussy_) checkInput();
 
 		//Gestion de movimiento
-		movementManager();
+		if(!changeZone_) movementManager();
 	}
 	return changeZone_;
 }
@@ -517,7 +517,7 @@ void Player::dieAnim()
 
 //Input y sus dependencias
 void Player::checkInputCheat(){
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_L)) {
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_L) && !gm_->getOnShip() && !gm_->onTutorial()) {
 		cheatPlayer();
 	}
 }
@@ -578,15 +578,15 @@ void Player::checkInput()
 }
 
 void Player::checkInputState() {
-	if (eventHandler_->isKeyDown(SDLK_p)) {
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_P)) {
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
 		stop();
 	}
-	else if (eventHandler_->isKeyDown(SDLK_c)) {
+	else if (eventHandler_->isKeyDown(SDL_SCANCODE_C)) {
 		app_->getGameStateMachine()->pushState(new Inventory(app_));
 		stop();
 	}
-	else if (eventHandler_->isKeyDown(SDLK_v)) {
+	else if (eventHandler_->isKeyDown(SDL_SCANCODE_V)) {
 		app_->getGameStateMachine()->pushState(new SkillState(app_, this));
 		stop();
 	}
