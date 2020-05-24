@@ -5,15 +5,21 @@
 
 bool Tentacle::update()
 {
-	updateFrame();
+	/*if (animation) {
+		updateFrame();
+	}*/
+
 	updateCooldowns();
 
 	//Si el tentaculo esta cayendo
-	if (currState_ == STATE::FOLLOWING && !fallingCD_.isCooldownActive())
+	if (currState_ == STATE::FOLLOWING && !fallingCD_.isCooldownActive()/* && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1*/)
 	{
+
+		//termina la animacion 
+		//animation = false;
 		//Una vez cae se le asigna su hitbox
 		collisionArea_ = collArea_;
-		setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
+		//setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
 		currState_ = STATE::ATTACKING;
 		//Durante 1 frame se hace daño al jugador
 	}
@@ -95,8 +101,14 @@ bool Tentacle::sweepUpdate()
 	//Si ha hecho su recorrido y no se est� muriendo se muere
 	else if (currState_ != STATE::DYING)
 	{
-		kraken_->tentDeath(this);
-		app_->getCurrState()->removeRenderUpdateLists(this);
+		//primero la animacion de desaparecer el tentaculo
+		//initDespawnAnim();
+		//cuando acaba la animacion eliminamos el tentaculo
+		//if (currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
+			kraken_->tentDeath(this);
+			app_->getCurrState()->removeRenderUpdateLists(this);
+		//}
+		
 		return true;
 	}
 	return false;
@@ -124,22 +136,57 @@ bool Tentacle::slamUpdate()
 	//Cuando muere le dice al kraken que lo mate
 	else if (currState_ != STATE::DYING)
 	{
-		kraken_->tentDeath(this);
-		app_->getCurrState()->removeRenderUpdateLists(this);
+		//primero la animacion de desaparecer el tentaculo
+		//initDespawnAnim();
+		//cuando acaba la animacion eliminamos el tentaculo
+		//if (currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
+			kraken_->tentDeath(this);
+			app_->getCurrState()->removeRenderUpdateLists(this);
+		//}
+
+		
 		return true;
 	}
 }
 
+//void Tentacle::initSpawnAnim()
+//{
+//	animation = false;
+//	//currState_ = STATE::IDLE;
+//	texture_ = spawnTX_;
+//	currAnim_ = spawnAnim_;
+//
+//	frame_.x = 1710; frame_.y = 0;
+//	frame_.w = currAnim_.widthFrame_;
+//	frame_.h = currAnim_.heightFrame_;
+//}
+
+//void Tentacle::initDespawnAnim()
+//{
+//	animation = true;
+//	texture_ = despawnTX_;
+//	currAnim_ = despawnAnim_;
+//
+//	frame_.x = 0; frame_.y = 0;
+//	frame_.w = currAnim_.widthFrame_;
+//	frame_.h = currAnim_.heightFrame_;
+//}
+
+
+
 void Tentacle::initObject()
 {
-	setTexture(app_->getTextureManager()->getTexture(Resources::BlueBar));
+	//initAnims();
+	/*texture_ = spawnTX_;
+	currAnim_ = spawnAnim_;*/
+	setTexture(app_->getTextureManager()->getTexture(Resources::tentaculo));
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	//Empieza sin hitbox as� que se guarda en una variable a parte
 	collArea_ = SDL_Rect({ (int)pos_.getX(), (int)pos_.getY(), (int)scaleCollision_.getX(), (int)scaleCollision_.getY() });
 	collisionArea_ = SDL_Rect({ 0, 0, 0, 0 });
 	CollisionCtrl::instance()->addEnemy(this);
-	initAnims();
+
 	lifeCD_.initCooldown(TENTACLE_DURATION);
 	fallingCD_.initCooldown(FALL_DURATION);
 	//El tent�culo empieza cayendo
@@ -150,12 +197,15 @@ void Tentacle::initObject()
 }
 
 //Inicializa todas las animaciones
-void Tentacle::initAnims()
-{
-	Anim spawnAnim_ = Anim(NUM_FRAMES_SPAWN, W_FRAME_SPAWN, H_FRAME_SPAWN, FRAME_RATE_SPAWN, false);
-	Anim idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, false);
-	Anim despawnAnim_ = Anim(NUM_FRAMES_DESPAWN, W_FRAME_DESPAWN, H_FRAME_DESPAWN, FRAME_RATE_DESPAWN, false);
-}
+//void Tentacle::initAnims()
+//{
+//	 spawnAnim_ = Anim(NUM_FRAMES_SPAWN, W_FRAME_SPAWN, H_FRAME_SPAWN, FRAME_RATE_SPAWN, false);
+//	spawnTX_ = app_->getTextureManager()->getTexture(Resources::KrakenAzoteAnim);
+//	//Anim idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, false);
+//	 despawnAnim_ = Anim(NUM_FRAMES_DESPAWN, W_FRAME_DESPAWN, H_FRAME_DESPAWN, FRAME_RATE_DESPAWN, false);
+//	despawnTX_ = app_->getTextureManager()->getTexture(Resources::KrakenAzoteAtrasAnim);
+//	initSpawnAnim();
+//}
 
 void Tentacle::onCollider()
 {

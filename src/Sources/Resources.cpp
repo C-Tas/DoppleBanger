@@ -325,6 +325,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ InkAnim,"../Sources/assets/enemigos/Kraken/tinta.png" },
 		//tentaculo
 	{ KrakenAzoteAnim,"../Sources/assets/enemigos/Kraken/kraken azote.png" },
+	{ KrakenAzoteAtrasAnim,"../Sources/assets/enemigos/Kraken/azote atras.png" },
+	{ tentaculo,"../Sources/assets/enemigos/Kraken/tentaculo.png" },
 
 
 
