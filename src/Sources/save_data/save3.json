@@ -2,16 +2,17 @@
   "currIsland": 0,
   "unlockedIsland": 0,
   "currGold": 0,
-  "stashGold": 0,
+  "stashGold": 924,
   "skillPoints": 0,
   "precision": 0,
   "melee": 0,
   "clon": 0,
   "questStarted": [false, false, false, false],
   "questFinished": [false, false, false, false],
+  "rewardObtained": [false, false, false, false],
   "unlockedSkills": [false, false, false, true, false, false, true, false, false, false],
   "skills": ["null", "null", "null"],
-  "objects": ["null", "null"],
+  "objects": ["Armor", "Dmg"],
   "equipment": [{
       "name": 0,
       "price": 10,
@@ -38,8 +39,50 @@
       "rate": 0.000000,
       "damage": 0.000000
     }],
-  "inventory": [],
-  "inventorySize": 0,
-  "stash": [],
-  "stashSize": 0
+  "inventory": [{
+      "type": 0,
+      "name": 6,
+      "price": 3.000000,
+      "rate": 0.000000,
+      "damage": 0.000000
+    }, {
+      "type": 0,
+      "name": 4,
+      "price": 1.000000,
+      "armor": 0.000000,
+      "speed": 0.000000
+    }, {
+      "type": 0,
+      "name": 11,
+      "price": 5.000000,
+      "rate": 0.000000,
+      "damage": 0.000000
+    }, {
+      "type": 1,
+      "name": 3
+    }],
+  "inventorySize": 4,
+  "stash": [{
+      "type": 0,
+      "name": 10,
+      "price": 5.000000,
+      "rate": 0.000000,
+      "damage": 0.000000
+    }, {
+      "type": 0,
+      "name": 4,
+      "price": 1.000000,
+      "armor": 0.000000,
+      "speed": 0.000000
+    }, {
+      "type": 0,
+      "name": 0,
+      "price": 2.000000,
+      "armor": 3.000000,
+      "health": 14.000000
+    }, {
+      "type": 1,
+      "name": 4
+    }],
+  "stashSize": 4
 }
