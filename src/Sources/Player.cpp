@@ -196,6 +196,11 @@ bool Player::update()
 		//Gestion de animaciones con accion
 		animator();
 
+		#ifdef _DEBUG
+		//Checkea el input para chetar al player
+		checkInputCheat();
+		#endif // _DEBUG
+
 		//Eventos de teclado
 		if (!bussy_) checkInput();
 		checkInputState();
@@ -319,7 +324,10 @@ void Player::animator()
 	//Inits
 void Player::initIdle()
 {
+	//Resteo los booleanos bussy
 	bussy_ = false;
+	meleeBussy_ = false;
+
 	//Apaño para que deje de sonar al caminar
 	if(currState_ == STATE::FOLLOWING)
 		app_->getAudioManager()->playChannel(Resources::WalkAudio, 0, Resources::PlayerChannel1);
@@ -388,15 +396,19 @@ void Player::initShoot()
 
 void Player::initMelee()
 {
+	//Sonidos
 	auto choice = app_->getRandom()->nextInt(Resources::Attack1, Resources::Attack6);
 	app_->getAudioManager()->playChannel(choice, 0, Resources::PlayerChannel1);
 	auto melee = app_->getRandom()->nextInt(Resources::SwordSound1, Resources::SwordSound6);
 	app_->getAudioManager()->playChannel(melee, 0, Resources::PlayerChannel2);
-	currState_ = STATE::ATTACKING;	//Cambio de estado
-	attacked_ = false;	//Aún no se ha atacado
-	updateDirVisObjective(currEnemy_);	//Hacia dónde está el enemigo
-	texture_ = meleeTx_[(int)currDir_];
-	currAnim_ = meleeAnims_[(int)currDir_];
+
+	currState_ = STATE::ATTACKING;			//Cambio de estado
+	attacked_ = false;						//Aún no se ha atacado
+	meleeBussy_ = true;						//Para no inicializar otra vez el melee si se dan mas clicks
+	updateDirVisObjective(currEnemy_);		//Hacia dónde está el enemigo
+	texture_ = meleeTx_[(int)currDir_];		//Cambio de textura
+	currAnim_ = meleeAnims_[(int)currDir_];	//Cambio de animacion
+
 	//Frame exacto del ataque
 	switch (currDir_)
 	{
@@ -418,7 +430,8 @@ void Player::initMelee()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
-	//Inicia 
+
+	//Inicia cooldown
 	meleeCD_.initCooldown(currStats_.meleeRate_);
 }
 
@@ -437,6 +450,14 @@ void Player::initEmpowered()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+}
+
+void Player::initDie() {
+	Actor::initDie();
+	//Cargamos música de fondo
+	app_->resetMusicChannels();
+	app_->resetSoundsChannels();
+	app_->getAudioManager()->playChannel(Resources::AudioId::FuneralTheme, -1, Resources::MainMusicChannel);
 }
 
 	//Managers
@@ -459,11 +480,11 @@ void Player::meleeAnim()
 			empoweredCD_.initCooldown(EMPOWERED_DELAY);
 			empoweredAct_ = false;
 			totalDmg = currStats_.meleeDmg_ * EMPOWERED_BONUS;
-			static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
+			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
 		}
 		else {
 			if (applyCritic()) totalDmg *= 1.5;
-			static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
+			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
 		}
 
 		if (currEnemy_ == nullptr) {
@@ -486,7 +507,21 @@ void Player::empoweredAnim()
 	}
 }
 
+void Player::dieAnim()
+{
+	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
+
+		dead_ = true;
+	}
+}
+
 //Input y sus dependencias
+void Player::checkInputCheat(){
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_L)) {
+		cheatPlayer();
+	}
+}
+
 void Player::checkInput()
 {
 	//Skills
@@ -528,14 +563,15 @@ void Player::checkInput()
 		Enemy* obj; obj = checkAttack();
 		updateDirVisMouse();
 		if (obj != nullptr) {
-			attack(obj);
+			if(!meleeBussy_) attack(obj);
 		}
 		else if (!getOnCollision()) {
 			move(eventHandler_->getRelativeMousePos());
 		}
 		else setOnCollision(false);
 
-		if (collisionCtrl_->isNextZoneTextBoxActive()) getEndZoneTextBox()->updateButtons();
+		if (collisionCtrl_->isNextZoneTextBoxActive())
+			getEndZoneTextBox()->updateButtons();
 	}
 }
 
@@ -591,7 +627,7 @@ void Player::movementManager()
 		|| visPos.getY() < target.getY() - 2
 		|| visPos.getY() > target.getY() + 2)
 		&&
-		(!attacking_ || objective == nullptr || objective->getState() == STATE::DYING || enemiesInRange.empty()))
+		(!attacking_ || objective == nullptr || objective->getState() == STATE::DYING || enemiesInRange.empty()) && !bussy_)
 	{
 		double delta = app_->getDeltaTime();
 		previousPos_ = pos_;
@@ -841,6 +877,36 @@ bool Player::killClon()
 }
 
 //Otros
+void Player::cheatPlayer()
+{
+	if (!cheat_) {
+		cheat_ = true;
+		cout << "CHEAT ACTIVE" << endl;
+		maxHealth_ += healthCheat_;
+		currStats_.health_ = maxHealth_;
+		currStats_.manaReg_ += manaRegCheat_;	
+		currStats_.armor_ += armorCheat_;			
+		currStats_.meleeDmg_ += meleeDamageCheat_;	
+		currStats_.distDmg_ += distDmgCheat_;		
+		currStats_.crit_ += critCheat_;			
+		currStats_.distRange_ += distRangeCheat_;		
+		currStats_.moveSpeed_ += moveSpeedCheat_;
+	}
+	else {
+		cheat_ = false;
+		cout << "CHEAT DESACTIVE" << endl;
+		maxHealth_ -= healthCheat_;
+		currStats_.health_ = maxHealth_;
+		currStats_.manaReg_ -= manaRegCheat_;
+		currStats_.armor_ -= armorCheat_;
+		currStats_.meleeDmg_ -= meleeDamageCheat_;
+		currStats_.distDmg_ -= distDmgCheat_;
+		currStats_.crit_ -= critCheat_;
+		currStats_.distRange_ -= distRangeCheat_;
+		currStats_.moveSpeed_ -= moveSpeedCheat_;
+	}
+}
+
 void Player::shout()
 {
 	auto choice = app_->getRandom()->nextInt(Resources::jarl1, Resources::jarl11 + 1);
@@ -884,20 +950,4 @@ void Player::isEnemyDead(Actor* obj)
 		attacking_ = false;
 		currEnemy_ = nullptr;
 	}
-}
-
-void Player::dieAnim()
-{
-	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
-
-		dead_ = true;
-	}
-}
-
-void Player::initDie() {
-	Actor::initDie();
-	//Cargamos música de fondo
-	app_->resetMusicChannels();
-	app_->resetSoundsChannels();
-	app_->getAudioManager()->playChannel(Resources::AudioId::FuneralTheme, -1, Resources::MainMusicChannel);
 }

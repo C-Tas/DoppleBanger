@@ -67,8 +67,6 @@ bool Enemy::getEnemy(double n)
 }
 
 void Enemy::receiveDamage(int damage) {
-	/*double finalDamage = (currStats_.armor_ * damage) / 100;
-	currStats_.health_ -= finalDamage;*/
 	currStats_.health_ -= damage;
 	if (currStats_.health_ <= 0) {
 		Player* player_ = dynamic_cast<Player*>(currEnemy_);

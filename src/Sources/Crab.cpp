@@ -26,11 +26,9 @@ bool Crab::update() {
 			//Si esta a rango y se puede atacar
 			if (onRange(currStats_.meleeRange_) && !meleeCD_.isCooldownActive()) {
 				initMeleeAnim();
-				cout << "INIT MELEE" << endl;
 			}
 			//Si no esta a rango
 			else if (!onRange(currStats_.meleeRange_)) {
-				cout << "INIT WALK" << endl;
 				initWalk();	//Si no esta a rango empieza a caminar
 			}
 		}
@@ -101,7 +99,6 @@ void Crab::initIdle()
 void Crab::meleeAnim()
 {
 	if (currAnim_.currFrame_ == FRAME_ACTION) {
-		cout << "ATACA" << endl;
 		attack();
 		meleeCD_.initCooldown(currStats_.meleeRate_);
 	}
