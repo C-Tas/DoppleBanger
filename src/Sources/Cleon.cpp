@@ -33,7 +33,8 @@ bool Cleon::update() {
 	updateFrame();
 	manageTint();
 	updateCooldowns();
-
+	STATE atStart = currState_;
+	DIR dirStart = currDir_;
 	//si Cleón palma
 	if (currState_ == STATE::DYING) {
 		applyRewards();
@@ -42,20 +43,24 @@ bool Cleon::update() {
 		return false;
 	}
 	//Si Cleón encuentra un enemigo
-	if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
+	if ((currState_ == STATE::IDLE||currState_==STATE::FOLLOWING) && getEnemy(rangeVision_)) {
 		currState_ = STATE::ATTACKING;
 	}
 	//Si estoy en modo ataque
-	if (currState_ == STATE::ATTACKING) {
+	if (currState_ == STATE::ATTACKING ) {
 		//Si está a rango de melee
 		if (onRange(currStats_.meleeRange_) && !lastThrust_.isCooldownActive()) {
 			//Estocada
 			thrust();
+			stop();
+			updateDirVisObjective(currEnemy_);
+			if (atStart != currState_ || dirStart != currDir_)  initMelee();
 		}
 		//Sí está a rango de carga
 		else if (onRange(CHARGE_RANGE) && !lastCharge_.isCooldownActive()) {
 			//Carga
 			pirateCharge();
+			//if (atStart != currState_ || dirStart != currDir_) inicia carga;
 		}
 		//Cleón no tiene a nadie a rango
 		else
@@ -82,11 +87,23 @@ bool Cleon::update() {
 	//Si Cleón está siguiendo a un enemigo
 	if (currState_ == STATE::FOLLOWING) {
 		selectTarget();
-		if (onRange(CHARGE_RANGE) || onRange(currStats_.meleeRange_)) {
-			currState_ = STATE::ATTACKING;
+
+		if (atStart != currState_||dirStart!=currDir_) initRun();
+		bool x = atStart != currState_,y= dirStart != currDir_;
+		cout <<"x" <<x << boolalpha << endl;
+		cout <<"y" <<y << boolalpha<<endl;
+		if (!getEnemy(rangeVision_) /*|| onRange(currStats_.meleeRange_)*/) {
+			//currState_ = STATE::IDLE;
 		}
 	}
+//#pragma region ParaProbarIdle
+//#ifdef _DEBUG
+//	if (!getEnemy(rangeVision_+200)) {
+//		if (atStart != currState_ || dirStart != currDir_) initIdle();
+//	}
+//#endif // _DEBUG
 
+//#pragma endregion
 	return false;
 }
 
@@ -132,6 +149,8 @@ void Cleon::thrust()
 
 		thrustAttack->receiveDamage(realDamage);
 	}
+	//Para probar animacion estocada desmutear lo de abajo
+	//currState_=STATE::PATROLLING;
 }
 
 void Cleon::pirateCharge()
@@ -142,6 +161,7 @@ void Cleon::pirateCharge()
 	movSpeed_ = currStats_.moveSpeed_;
 	currStats_.moveSpeed_ = CHARGE_SPEED;
 	currState_ = STATE::CHARGING;
+
 }
 
 void Cleon::initialStats()
@@ -163,7 +183,6 @@ void Cleon::initialStats()
 }
 
 void Cleon::initObject() {
-	texture_ = app_->getTextureManager()->getTexture(Resources::Cleon);
 	CollisionCtrl::instance()->addEnemy(this);
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
@@ -171,6 +190,7 @@ void Cleon::initObject() {
 	initialStats();
 	initRewards();
 	initAnims();
+	initIdle();
 	player_ = GameManager::instance()->getPlayer();
 	tag_ = "Cleon";
 }
@@ -181,11 +201,37 @@ void Cleon::initRewards()
 }
 
 void Cleon::initAnims() {
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
-	runAnim_ = Anim(NUM_FRAMES_RUN, W_FRAME_RUN, H_FRAME_RUN, FRAME_RATE_RUN, true);
-	assaultAnim_ = Anim(NUM_FRAMES_ASSAULT, W_FRAME_ASSAULT, H_FRAME_ASSAULT, FRAME_RATE_ASSAULT, false);
-	meleeAnim_ = Anim(NUM_FRAMES_MELEE, W_FRAME_MELEE, H_FRAME_MELEE, FRAME_RATE_MELEE, false);
-	barrelAnim_ = Anim(NUM_FRAMES_BARREL, W_FRAME_BARREL, H_FRAME_BARREL, FRAME_RATE_BARREL, false);
+	//DIR{up right down left}
+	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true));
+	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonIdleUp)) ;
+	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true));
+	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonIdleRight));
+	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true));
+	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonIdleDown));
+	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true));
+	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonIdleLeft));
+
+	runAnim_.push_back(Anim(NUM_FRAMES_RUN_UD, W_FRAME_RUN_UD, H_FRAME_RUN_UD, FRAME_RATE_RUN_UD, true));
+	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMovUp));
+	runAnim_.push_back(Anim(NUM_FRAMES_RUN_RL, W_FRAME_RUN_RL, H_FRAME_RUN_RL, FRAME_RATE_RUN_RL, true));
+	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMovRight));
+	runAnim_.push_back(Anim(NUM_FRAMES_RUN_UD, W_FRAME_RUN_UD, H_FRAME_RUN_UD, FRAME_RATE_RUN_UD, true));
+	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMovDown));
+	runAnim_.push_back(Anim(NUM_FRAMES_RUN_RL, W_FRAME_RUN_RL, H_FRAME_RUN_RL, FRAME_RATE_RUN_RL, true));
+	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMovLeft));
+
+	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_UD, W_FRAME_MELEE_UD, H_FRAME_MELEE_UD, FRAME_RATE_MELEE_UD, false));
+	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMelUp));
+	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_RL, W_FRAME_MELEE_RL, H_FRAME_MELEE_RL, FRAME_RATE_MELEE_RL, false));
+	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMelRight));
+	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_UD, W_FRAME_MELEE_UD, H_FRAME_MELEE_UD, FRAME_RATE_MELEE_UD, false));
+	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMelDown));
+	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_RL, W_FRAME_MELEE_RL, H_FRAME_MELEE_RL, FRAME_RATE_MELEE_RL, false));
+	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMelLeft));
+	//runAnim_.push_back(Anim(NUM_FRAMES_RUN, W_FRAME_RUN, H_FRAME_RUN, FRAME_RATE_RUN, true));
+	//assaultAnim_.push_back( Anim(NUM_FRAMES_ASSAULT, W_FRAME_ASSAULT, H_FRAME_ASSAULT, FRAME_RATE_ASSAULT, false));
+	//meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE, W_FRAME_MELEE, H_FRAME_MELEE, FRAME_RATE_MELEE, false));
+	//barrelAnim_.push_back( Anim(NUM_FRAMES_BARREL, W_FRAME_BARREL, H_FRAME_BARREL, FRAME_RATE_BARREL, false));
 }
 
 void Cleon::updateCooldowns()
@@ -208,6 +254,35 @@ void Cleon::selectTarget()
 	if (currEnemy_ != nullptr) {
 		target_ = currEnemy_->getCenter();
 		move(currEnemy_->getCenter());
+		updateDirVisObjective(currEnemy_);
 	}
 }
 
+void Cleon::initIdle() {
+	int dir = (int)currDir_;
+	texture_ = idleTxt_[dir];
+	currAnim_ = idleAnim_[dir];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+void Cleon:: initMelee(){
+	int dir = (int)currDir_;
+	texture_ = meleeTxt_[dir];
+	currAnim_ = meleeAnim_[dir];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Cleon::initRun() {
+int dir = (int)currDir_;
+texture_ = runTxt_[dir];
+currAnim_ = runAnim_[dir];
+frame_.x = 0; frame_.y = 0;
+frame_.w = currAnim_.widthFrame_;
+frame_.h = currAnim_.heightFrame_;
+}
+void Cleon::initBarrel() {}
+
+void Cleon::initCharge() {}

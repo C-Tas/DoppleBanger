@@ -315,6 +315,21 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ MagorditoKirinTopRight, "../Sources/assets/enemigos/magordito/kirin/kirinTopDcha.png" },
 	{ MagorditoKirinTopLeft, "../Sources/assets/enemigos/magordito/kirin/kirinTopIz.png" },
 	{ Kirin, "../Sources/assets/enemigos/magordito/kirin/rayo.png" },
+	#pragma region CLeon
+	{ CLeonIdleUp,"../Sources/assets/enemigos/cleon/Idle/CleonIdleBack.png" },
+	{ CLeonIdleDown,"../Sources/assets/enemigos/cleon/Idle/CleonIdleFront.png" },
+	{ CLeonIdleRight,"../Sources/assets/enemigos/cleon/Idle/CleonIdleRight.png" },
+	{ CLeonIdleLeft, "../Sources/assets/enemigos/cleon/Idle/CleonIdleLeft.png" },
+	{ CLeonMovUp,"../Sources/assets/enemigos/cleon/Movimiento/CleonMoveBack.png" },
+	{ CLeonMovDown,"../Sources/assets/enemigos/cleon/Movimiento/CleonMoveFront.png" },
+	{ CLeonMovRight,"../Sources/assets/enemigos/cleon/Movimiento/CleonMoveRight.png" },
+	{ CLeonMovLeft, "../Sources/assets/enemigos/cleon/Movimiento/CleonMoveLeft.png" },
+
+	{ CLeonMelUp,"../Sources/assets/enemigos/cleon/Melee/CleonEstocadaBack.png" },
+	{ CLeonMelDown,"../Sources/assets/enemigos/cleon/Melee/CleonEstocadaFront.png" },
+	{ CLeonMelRight,"../Sources/assets/enemigos/cleon/Melee/CleonEstocadaRight.png" },
+	{ CLeonMelLeft, "../Sources/assets/enemigos/cleon/Melee/CleonEstocadaLeft.png" },
+	#pragma endregion
 
 #pragma region Barco
 	//Interactuables

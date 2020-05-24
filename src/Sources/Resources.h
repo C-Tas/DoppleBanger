@@ -214,33 +214,33 @@ public:
 		ClonSelfDestructionLeftAnim,
 		ClonSelfDestructionUpAnim,
 		ClonSelfDestructionDownAnim,
-			//desaparecer
+		//desaparecer
 		ClonVanishRightAnim,
 		ClonVanishLeftAnim,
 		ClonVanishDownAnim,
 		ClonVanishUpAnim,
 		//Calabaza
-			//Idle
-			PumpkinIdleRightAnim,
-			PumpkinIdleLeftAnim,
-			PumpkinIdleUpAnim,
-			PumpkinIdleDownAnim,
-			//Explosion
-			PumpkinExpRightAnim,
-			PumpkinExpLeftAnim,
-			PumpkinExpUpAnim,
-			PumpkinExpDownAnim,
-			//Attack
-			PumpkinAttackRightAnim,
-			PumpkinAttackLeftAnim,
-			PumpkinAttackUpAnim,
-			PumpkinAttackDownAnim,
-			//Move
+		//Idle
+		PumpkinIdleRightAnim,
+		PumpkinIdleLeftAnim,
+		PumpkinIdleUpAnim,
+		PumpkinIdleDownAnim,
+		//Explosion
+		PumpkinExpRightAnim,
+		PumpkinExpLeftAnim,
+		PumpkinExpUpAnim,
+		PumpkinExpDownAnim,
+		//Attack
+		PumpkinAttackRightAnim,
+		PumpkinAttackLeftAnim,
+		PumpkinAttackUpAnim,
+		PumpkinAttackDownAnim,
+		//Move
 		PumpkinMoveRightAnim,
 		PumpkinMoveLeftAnim,
 		PumpkinMoveUpAnim,
 		PumpkinMoveDownAnim,
-			//Clon
+		//Clon
 		ClonIdleRightAnim,
 		ClonIdleLeftAnim,
 		ClonIdleUpAnim,
@@ -253,7 +253,7 @@ public:
 		ClonShootLeftAnim,
 		ClonShootUpAnim,
 		ClonShootDownAnim,
-			//Monkey
+		//Monkey
 		MonkeyIdleRightAnim,
 		MonkeyIdleLeftAnim,
 		MonkeyIdleUpAnim,
@@ -264,29 +264,29 @@ public:
 		MonkeyShootDownAnim,
 		//Magordito
 		Altar,
-			//Idle
+		//Idle
 		MagorditoIdleRight,
 		MagorditoIdleLeft,
 		MagorditoIdleTopRight,
 		MagorditoIdleTopLeft,
-			//Disparo
+		//Disparo
 		MagorditoShootRight,
 		MagorditoShootLeft,
 		MagorditoShootDown,
 		MagorditoShootTopRight,
 		MagorditoShootTopLeft,
-			//Viaje
+		//Viaje
 		MagorditoTpRight,
 		MagorditoTpLeft,
 		MagorditoTpTopRight,
 		MagorditoTpTopLeft,
-			//Kirin
+		//Kirin
 		MagorditoKirinRight,
 		MagorditoKirinLeft,
 		MagorditoKirinTopRight,
 		MagorditoKirinTopLeft,
 		Kirin,
-			//Skeleton
+		//Skeleton
 		SkeletonIdleRightAnim,
 		SkeletonIdleLeftAnim,
 		SkeletonIdleUpAnim,
@@ -299,6 +299,21 @@ public:
 		SkeletonMoveLeftAnim,
 		SkeletonMoveDownAnim,
 		SkeletonMoveUpAnim,
+		//Cleon
+		CLeonIdleUp,
+		CLeonIdleDown,
+		CLeonIdleRight,
+		CLeonIdleLeft,
+		//CLeonMov
+		CLeonMovUp,
+		CLeonMovDown,
+		CLeonMovRight,
+		CLeonMovLeft,
+		//estocada
+			CLeonMelUp,
+			CLeonMelDown,
+			CLeonMelRight,
+			CLeonMelLeft,
 		//Interactuables
 		Wheel,
 		Stash,
@@ -309,20 +324,20 @@ public:
 
 		//Colsionable
 		Rock,
-			//Tutorial
+		//Tutorial
 		Bottle,
 		Dummy,
 
-				//Textos
-				PlayText,
-				ExitText,
-				ControlsText,
-				LoadText,
-				CreditsText,
-				ResumeText,
-				MainMenuText,
-				StashMoneyText,
-				InventoryMoneyText,
+		//Textos
+		PlayText,
+		ExitText,
+		ControlsText,
+		LoadText,
+		CreditsText,
+		ResumeText,
+		MainMenuText,
+		StashMoneyText,
+		InventoryMoneyText,
 
 		//proyectiles
 		Coco,
@@ -384,7 +399,7 @@ public:
 		BotonBonus,
 		Bonus,
 	};
-	
+
 	enum MusicChannels : int {
 		//Musica auxiliar
 		MainMusicChannel,
@@ -404,7 +419,7 @@ public:
 		PlayerChannel3,
 		PlayerChannel4,
 		//Canal del lobo
-		WolfChannel, 
+		WolfChannel,
 		//Canal del mono
 		MonkeyChannel,
 		//Canal de la calabaza
@@ -658,7 +673,7 @@ public:
 
 	///<summary>Vector con las rutas de los audios a cargar</summary>
 	static vector<AudioInfo> audioRoutes;
-	
+
 	//<summary>Vector para el volumen de cada canal</summary>	
 	static vector<AudioVolume> audioVolume;
 
