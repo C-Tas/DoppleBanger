@@ -163,9 +163,9 @@ private:
 	vector<int> countEnemiesMission_ = { 0, 0, 0, 0 };
 	//Recompensas de las misiones
 	//Oro <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector <int> goldReward_ = { 200, 200, 200, 200 };
+	vector <int> goldReward_ = { 100, 200, 250, 300 };
 	//Hazaña <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector <int> pointsReward_ = { 200, 200, 200, 200 };
+	vector <int> pointsReward_ = { 50, 50, 50, 50 };
 	//Objetos que te dan en las misiones <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
 	vector<int> numOfItemsReward_ = { 4,1,1,1 };
 	//Objetos que te dan en las misiones <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >

@@ -155,8 +155,8 @@ private:
 		int liberation_ = 2;			//Nivel de la habilidad del clon, debería llevarse a GameManager
 		double slowEffect_ = 0;			//Efecto del slow
 		double lastWalkSound_ = 0;		//Ultimo tick del sonido
-		double maxHealth_ = 1000;		//Representa la cantidad maxima de vida
-		double maxMana_ = 100;			//Representa la cantidad maxima de mana
+		double maxHealth_ = 1500;		//Representa la cantidad maxima de vida
+		double maxMana_ = 1000;			//Representa la cantidad maxima de mana
 
 		Vector2D previousPos_;
 		TextBox* endZoneTextBox_ = nullptr;
@@ -205,15 +205,15 @@ private:
 		#pragma region Constantes
 		//Estadisticas iniciales del jugador</summary>
 		const double MANA_REG = 1;				//Regeneración de maná por segundo, porcentaje
-		const double ARMOR = 0;					//Armadura, porcentaje
-		const double MELEE_DAMAGE = 100;		//Daño a melee
-		const double DIST_DAMAGE = 1000;		//Daño a distancia y de las habilidades
+		const double ARMOR = 5;					//Armadura, porcentaje
+		const double MELEE_DAMAGE = 200;		//Daño a melee
+		const double DIST_DAMAGE = 150;		//Daño a distancia y de las habilidades
 		const double CRIT = 0;					//Crítico
-		const double MELEE_RANGE = 20;			//Rango del ataque a melee
-		const double DIST_RANGE = 2000;			//Rango del ataque a distancia
-		const double MOVE_SPEED = 300;			//Velocidad de movimiento
-		const double MELEE_RATE = 3000;			//Velocidad del ataque a melee en milisegundos
-		const double DIST_RATE = 5000;			//Velocidad del ataque a distancia en milisegundos
+		const double MELEE_RANGE = 50;			//Rango del ataque a melee
+		const double DIST_RANGE = 1000;			//Rango del ataque a distancia
+		const double MOVE_SPEED = 250;			//Velocidad de movimiento
+		const double MELEE_RATE = 1000;			//Velocidad del ataque a melee en milisegundos
+		const double DIST_RATE = 500;			//Velocidad del ataque a distancia en milisegundos
 
 		//Additional Stats
 		const int CRIT_INV = 20;				//Crítico agregado al player después de activar invencible( a falta de equilibrado)

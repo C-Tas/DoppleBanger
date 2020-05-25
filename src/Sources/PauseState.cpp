@@ -74,19 +74,19 @@ void PauseState::initState()
 	Vector2D sizeButton(winWidth * 5 / 11, winHeight / 5);
 	Vector2D posButton(winWidth / 9 , winHeight / 4 - sizeButton.getY() / 2);
 
-	SDL_Rect textButon = { posButton.getX(),posButton.getY(), sizeButton.getX(),sizeButton.getY() };
+	SDL_Rect textButon = { (int)round(posButton.getX()),(int)round(posButton.getY()), (int)round(sizeButton.getX()),(int)round(sizeButton.getY()) };
 
 	//Bot�n de reanudar
 	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::ResumeButton), posButton, sizeButton, resume, this);
 
 	//Bot�n de controles
 	posButton = posButton + Vector2D(0, winHeight / 4);
-	textButon.y = posButton.getY();
+	textButon.y = (int)round(posButton.getY());
 	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::ControlsButton), posButton, sizeButton, showControls, this);
 
 	//Bot�n de men� principal
 	posButton = posButton + Vector2D(0, winHeight / 4 );
-	textButon.y = posButton.getY();
+	textButon.y =(int)round(posButton.getY());
 	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState, this);
 	
 	//Botones de mute

@@ -227,7 +227,6 @@ void Player::updateCooldowns()
 	if (empoweredCD_.isCooldownActive()) { empoweredCD_.updateCooldown(); }
 	if (ricochetCD_.isCooldownActive()) { ricochetCD_.updateCooldown(); }
 	if (slowTimeCD_.isCooldownActive()) slowTimeCD_.updateCooldown();
-
 }
 
 void Player::updateBuffPotion(){
@@ -475,22 +474,24 @@ void Player::shootAnim()
 void Player::meleeAnim()
 {
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
-		double totalDmg = currStats_.meleeDmg_;
-		if (empoweredAct_) { //Golpe fuerte
-			empoweredCD_.initCooldown(EMPOWERED_DELAY);
-			empoweredAct_ = false;
-			totalDmg = currStats_.meleeDmg_ * EMPOWERED_BONUS;
-			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
-		}
-		else {
-			if (applyCritic()) totalDmg *= 1.5;
-			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
-		}
-
 		if (currEnemy_ == nullptr) {
 			attacking_ = false;
 			dir_ = Vector2D(0, 0);
 		}
+		else {
+			double totalDmg = currStats_.meleeDmg_;
+			if (empoweredAct_) { //Golpe fuerte
+				empoweredCD_.initCooldown(EMPOWERED_DELAY);
+				empoweredAct_ = false;
+				totalDmg = currStats_.meleeDmg_ * EMPOWERED_BONUS;
+				static_cast<Enemy*>(currEnemy_)->receiveDamage((int)round(totalDmg));
+			}
+			else {
+				if (applyCritic()) totalDmg *= 1.5;
+				static_cast<Enemy*>(currEnemy_)->receiveDamage((int)round(totalDmg));
+			}
+		}
+
 		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
 		attacked_ = true;
 		empoweredInit_ = false;
@@ -519,6 +520,13 @@ void Player::dieAnim()
 void Player::checkInputCheat(){
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_L) && !gm_->getOnShip() && !gm_->onTutorial()) {
 		cheatPlayer();
+	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_K) && !gm_->getOnShip() && !gm_->onTutorial()) {
+		list<Enemy*> enemies_ = dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies();
+		for (auto it = enemies_.begin(); it != enemies_.end(); ++it) {
+			app_->getCurrState()->removeRenderUpdateLists((*it));
+		}
+		dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies().clear();
 	}
 }
 
@@ -596,7 +604,7 @@ Enemy* Player::checkAttack() {
 	bool found = false;
 	Enemy* obj = nullptr;
 	Vector2D mousePos = eventHandler_->getRelativeMousePos();
-	SDL_Point mouse = { 0, 0 }; mouse.x = mousePos.getX(); mouse.y = mousePos.getY();
+	SDL_Point mouse = { 0, 0 }; mouse.x =(int)round( mousePos.getX()); mouse.y =(int)round( mousePos.getY());
 	list<Enemy*> enemies_ = dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies();
 	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
 		if (SDL_PointInRect(&mouse, &(*it)->getCollider())) {
@@ -622,7 +630,7 @@ void Player::movementManager()
 	//Pies del player
 	Vector2D visPos = getVisPos();
 	//Para 
-	list<Enemy*> enemiesInRange = collisionCtrl_->getEnemiesInArea(getCenter(), currStats_.meleeRange_);
+	list<Enemy*> enemiesInRange = collisionCtrl_->getEnemiesInArea(getCenter(), (int)round(currStats_.meleeRange_));
 	//Movimiento hasta llegar al target 
 	if ((visPos.getX() < target.getX() - 2		//Comprueba si se ha llegado
 		|| visPos.getX() > target.getX() + 2
@@ -636,7 +644,7 @@ void Player::movementManager()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
-		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
+		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera((int)round(pos_.getX() + scale_.getX() / 2),(int)round( pos_.getY() + scale_.getY() / 2));
 	}
 	//Cuando se llegue al target
 	else {
@@ -668,7 +676,6 @@ void Player::movementManager()
 
 void Player::shoot(Vector2D dir)
 {
-
 	//Se calcula la posici�n desde la cual se dispara la bala
 	Vector2D shootPos;
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));
@@ -692,13 +699,13 @@ void Player::shoot(Vector2D dir)
 		bullet->setRicochet(ricochetCD_.isCooldownActive());
 
 		//Se añade a los bucles del juegos
-		app_->getCurrState()->addRenderUpdateLists(bullet);
+		app_->getCurrState()->addRenderUpdateListsAsFirst(bullet);
 		collisionCtrl_->addPlayerBullet(bullet);
 	}
 	else if (auxGunType == equipType::ShotgunI || auxGunType == equipType::ShotgunII) {
 		app_->getAudioManager()->playChannel(Resources::Trabuco, 0, Resources::SoundChannels::PlayerChannel2);
 		Blunderbuss* blunderbuss = new Blunderbuss(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,
-			realDamage, currStats_.distRange_, gun_->getBulletSpeed());
+			(int)round(realDamage), currStats_.distRange_, gun_->getBulletSpeed());
 		if (perforate_) {
 			blunderbuss->activatePerforate();
 			perforate_ = false;

@@ -70,7 +70,7 @@ bool Cleon::update() {
 	}
 	if (currState_ == STATE::CHARGING) {
 		selectTarget();
-		SDL_Rect targetRect = { target_.getX(),target_.getY(),25,25 };
+		SDL_Rect targetRect = { (int)round(target_.getX()),(int)round(target_.getY()),25,25 };
 		//Cle�n llego al destino de su carga
 		if (SDL_HasIntersection(&getDestiny(), &targetRect)) {
 			auto currEnemy = dynamic_cast<Player*>(currEnemy_);
@@ -155,7 +155,7 @@ void Cleon::pirateCharge()
 
 	Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
 	CollisionCtrl::instance()->addBarrel(currBarrel);
-	app_->getCurrState()->addRenderUpdateLists(currBarrel);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(currBarrel);
 	barrelsInGame++;
 
 }
@@ -177,7 +177,7 @@ void Cleon::createBarrel()
 		if (chance == BARREL_CHANCE) {
 			Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
 			CollisionCtrl::instance()->addBarrel(currBarrel);
-			app_->getCurrState()->addRenderUpdateLists(currBarrel);
+			app_->getCurrState()->addRenderUpdateListsAsFirst(currBarrel);
 			barrelsInGame++;
 		}
 	}

@@ -45,6 +45,7 @@ void TextBox::nextTutorialVenancio(Application* app)
 }
 void TextBox::goToShipState(Application* app)
 {
+	CollisionCtrl::instance()->clearList();
 	GameManager::instance()->resetIsland();
 	app->getGameStateMachine()->changeState(new ShipState(app));
 }
@@ -90,8 +91,8 @@ void TextBox::initDescription(Point2D pos) {
 	//Caja donde se representa el texto de las descripciones
 	dest.w = app_->getWindowWidth() / 4;
 	dest.h = app_->getWindowHeight() / 7;
-	dest.x = pos.getX();
-	dest.y = pos.getY();
+	dest.x = (int)round(pos.getX());
+	dest.y = (int)round(pos.getY());
 }
 
 void TextBox::passZoneDialog()
@@ -174,8 +175,11 @@ void TextBox::dialogElderMan(int num) {
 				text.loadFromText(app_->getRenderer(), "Ahora usa ese acesso para activar la habilidad y mocha al susodicho.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
-				text.loadFromText(app_->getRenderer(), "Utilizar una habilidad te consumir" + Resources::tildes_['a'] + " man" + Resources::tildes_['a'] + ", puedes ver la cantidad que tienes en la barra azul del tim" + Resources::tildes_['o'] + "n.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "Utilizar una habilidad te consumir" + Resources::tildes_['a'] + " man" + Resources::tildes_['a'] + ", puedes ver la cantidad que tienes en la barra", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 3));
+
+				text.loadFromText(app_->getRenderer(), "azul del tim" + Resources::tildes_['o'] + "n.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + (lineSpacing * 4));
 				break;
 			}
 			break;
@@ -209,6 +213,7 @@ void TextBox::dialogElderMan(int num) {
 		case 6:
 			switch (num) {
 			case 0:
+				skipTutorial_->setTexture(app_->getTextureManager()->getTexture(Resources::ButtonFinishTutorial));
 				text.loadFromText(app_->getRenderer(), "Ten cuidado ah" + Resources::tildes_['i'] + " fuera porque si eres derrotada podr" + Resources::tildes_['e'] + " ir a salvarte",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
@@ -275,7 +280,7 @@ void TextBox::dialogElderMan(int num) {
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
 
-				text.loadFromText(app_->getRenderer(), "tanto que el propio tiempo ha perdido la cuenta de los a" + Resources::tildes_['ñ'] + "os. M" + Resources::tildes_['a'] + "s animal que hombre,este pirata", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "tanto que el propio tiempo ha perdido la cuenta de los a" + Resources::tildes_['ñ'] + "os. M" + Resources::tildes_['a'] + "s animal que hombre, este pirata", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing * 2);
 
 				text.loadFromText(app_->getRenderer(), "era infame por su s" + Resources::tildes_['a'] + "dica violencia y brutalidad, saqueando a piratas, ciudadanos y gobiernos por igual.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -407,7 +412,7 @@ void TextBox::dialogElderMan(int num) {
 				
 				break;
 			case 5:
-				text.loadFromText(app_->getRenderer(), "Una forma de venganza extrema, pero parece que efectiva, ya que se dice que desde ese d" + Resources::tildes_['i'] + "a  ",
+				text.loadFromText(app_->getRenderer(), "Una forma de venganza extrema, pero parece que efectiva, ya que se dice que desde ese d" + Resources::tildes_['i'] + "a ",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
 				text.loadFromText(app_->getRenderer(), "a mayor" + Resources::tildes_['i'] + "a de estas islas est" + Resources::tildes_['a'] + "n habitadas, pero no por seres vivos.",
@@ -462,8 +467,10 @@ void TextBox::dialogMerchant(int dialog) {
 		text.render(lineSpacing, dest.y + lineSpacing);
 	}
 	else if (dialog == 2) {
-		Texture text(app_->getRenderer(), "Paga una y ll" + Resources::tildes_['e'] + "vate una, paga dos y ll" + Resources::tildes_['e'] + "vate dos." + Resources::tildes_['¿'] + "Qu" + Resources::tildes_['e'] + " te esperabas? ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		Texture text(app_->getRenderer(), "Paga una y ll" + Resources::tildes_['e'] + "vate una, paga dos y ll" + Resources::tildes_['e'] + "vate dos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + lineSpacing);
+		text.loadFromText(app_->getRenderer(), Resources::tildes_['¿'] + "Qu" + Resources::tildes_['e'] + " te esperabas? ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing * 2);
 	}
 	else {
 		Texture text(app_->getRenderer(), Resources::tildes_['¡'] + "Arrasa con lo que veas, y generoso no seas!... Espera no, mejor se generoso y deja propina. ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -481,9 +488,9 @@ void TextBox::dialogChef(bool unlock, int num) {
 		Texture text;
 		if (gm_->isThatMissionPass(missions::gallegaEnProblemas) && !gm_->isThatRewardUnlocked(missions::gallegaEnProblemas)) {
 			text.loadFromText(app_->getRenderer(), "Muchas gracias por ayudarme. Aqu" + Resources::tildes_['i'] + " est" + Resources::tildes_['a'] +
-				" t" + Resources::tildes_['u'] + " recompensa", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				" t" + Resources::tildes_['u'] + " recompensa.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
-			text.loadFromText(app_->getRenderer(), "A parte del caldito, te doy algo de oro, qu" + Resources::tildes_['e'] + " seguro que no te vendr" + Resources::tildes_['a'] + " mal", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "A parte del caldito, te doy algo de oro, qu" + Resources::tildes_['e'] + " seguro que no te vendr" + Resources::tildes_['a'] + " mal.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			unlockReward_->setCallBack(unlockCookerReward);
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
 			unlockReward_->setCallBack(unlockCookerReward);
@@ -491,66 +498,67 @@ void TextBox::dialogChef(bool unlock, int num) {
 			unlockReward_->update();
 		}
 		else {
-
 			text.loadFromText(app_->getRenderer(), "Y la levadura la tiene Pamplona" + Resources::tildes_[','] + " por eso no amasa la t" + Resources::tildes_['i'] + "a Melitona...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
-
 		}
 	}
 	//Di�logo del chef cuando a�n est� bloqueado
 	else {
 		//Mientras no se hayan matado todos los enemigos
 		if (gm_->getCounterEnemiesMission(missions::gallegaEnProblemas) < gm_->getEnemiesMission(missions::gallegaEnProblemas)) {
+			Texture text;
 
-			Texture text(app_->getRenderer(), "Necesito que mates 4 monos para cocinarte un cocidito gallego. Adem" +
-				Resources::tildes_['a'] + "s te podr" + Resources::tildes_['i'] + "a obsequiar con m" + Resources::tildes_['a'] + "s regalos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-
-			switch (num) {
-			case 0:
-				text.loadFromText(app_->getRenderer(), Resources::tildes_['¡'] + "Hostia, una pirata! " + Resources::tildes_['¡'] + "No me hagas da" + Resources::tildes_['ñ'] + "o por favor!", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			if (gm_->getCounterEnemiesMission(missions::gallegaEnProblemas) > 0) {
+				text.loadFromText(app_->getRenderer(), "Necesito que mates 4 cangrejos para cocinarte un cocidito.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
-
-				text.loadFromText(app_->getRenderer(), "Mmm no pareces peligrosa" + Resources::tildes_['.'] + Resources::tildes_['.'] + Resources::tildes_['.'] + "Tal vez t" + Resources::tildes_['u'] + " podr" + Resources::tildes_['i'] + "as sacarme de esta isla" + Resources::tildes_['.'], app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-				text.render(lineSpacing, dest.y + (lineSpacing * 2));
-
-				button_->draw();
-				button_->update();
-				break;
-			case 1:
-				text.loadFromText(app_->getRenderer(), "Ver" + Resources::tildes_['a'] + "s yo antes trabajaba en un barco de lujo, hasta que me ascendieron ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-				text.render(lineSpacing, dest.y + (lineSpacing));
-
-				text.loadFromText(app_->getRenderer(), "a" + Resources::tildes_['“'] + "cocinera prescindible ejecutiva" + Resources::tildes_['“'] + " y me abandonaron en esta isla" + Resources::tildes_['.'], app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-				text.render(lineSpacing, dest.y + (lineSpacing * 2));
-
-				button_->draw();
-				button_->update();
-				break;
-			case 2:
-				text.loadFromText(app_->getRenderer(), Resources::tildes_['¡'] + "Por favor, s" + Resources::tildes_['a'] + "came de aqu" + Resources::tildes_['i'] + "! A cambio yo podr" + Resources::tildes_['i'] + "a" + Resources::tildes_['.'] + Resources::tildes_['.'] + Resources::tildes_['.'] + " no s" +
-					Resources::tildes_['e'] + Resources::tildes_['.'] + Resources::tildes_['.'] + Resources::tildes_['.'] + " " + Resources::tildes_['¡'] + "Ser la cocinera de tu barco!", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-				text.render(lineSpacing, dest.y + (lineSpacing));
-
-				text.loadFromText(app_->getRenderer(), "Soy una cocinera espectacular, aunque bueno" + Resources::tildes_['.'] + Resources::tildes_['.'] + Resources::tildes_['.'] +
-					" eso depende " + Resources::tildes_['¡'] + "Mi especialidad es la carne!"
-					, app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-				text.render(lineSpacing, dest.y + (lineSpacing * 2));
-				text.loadFromText(app_->getRenderer(), Resources::tildes_['¿'] + "Qu" + Resources::tildes_['e'] + " te parece si matas 4 monos y te preparo un salteado?"
-					, app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-				text.render(lineSpacing, dest.y + (lineSpacing * 3));
-
-				break;
+				text.loadFromText(app_->getRenderer(), "Adem" + Resources::tildes_['a'] + "s te podr" + Resources::tildes_['i'] + "a obsequiar con m" + Resources::tildes_['a'] + "s regalos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 2);
 			}
+			else {
+				switch (num) {
+				case 0:
+					text.loadFromText(app_->getRenderer(), Resources::tildes_['¡'] + "Hostia, una pirata! " + Resources::tildes_['¡'] + "No me hagas da" + Resources::tildes_['ñ'] + "o por favor!", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + lineSpacing);
 
+					text.loadFromText(app_->getRenderer(), "Mmm no pareces peligrosa" + Resources::tildes_['.'] + Resources::tildes_['.'] + Resources::tildes_['.'] + " Tal vez t" + Resources::tildes_['u'] + " podr" + Resources::tildes_['i'] + "as sacarme de esta isla." + Resources::tildes_['.'], app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+					button_->draw();
+					button_->update();
+					break;
+				case 1:
+					text.loadFromText(app_->getRenderer(), "Ver" + Resources::tildes_['a'] + "s yo antes trabajaba en un barco de lujo, hasta que me ascendieron ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing));
+
+					text.loadFromText(app_->getRenderer(), "a " + Resources::tildes_['“'] + "cocinera prescindible ejecutiva" + Resources::tildes_['“'] + " y me abandonaron en esta isla." + Resources::tildes_['.'], app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+					button_->draw();
+					button_->update();
+					break;
+				case 2:
+					text.loadFromText(app_->getRenderer(), Resources::tildes_['¡'] + "Por favor, s" + Resources::tildes_['a'] + "came de aqu" + Resources::tildes_['i'] + "! A cambio yo podr" + Resources::tildes_['i'] + "a" + Resources::tildes_['.'] + Resources::tildes_['.'] + Resources::tildes_['.'] + " no s" +
+						Resources::tildes_['e'] + Resources::tildes_['.'] + Resources::tildes_['.'] + Resources::tildes_['.'] + " " + Resources::tildes_['¡'] + "Ser la cocinera de tu barco!", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing));
+
+					text.loadFromText(app_->getRenderer(), "Soy una cocinera espectacular, aunque bueno" + Resources::tildes_['.'] + Resources::tildes_['.'] + Resources::tildes_['.'] +
+						" eso depende " + Resources::tildes_['¡'] + "Mi especialidad es la carne!"
+						, app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing * 2));
+					text.loadFromText(app_->getRenderer(), Resources::tildes_['¿'] + "Qu" + Resources::tildes_['e'] + " te parece si matas 4 cangrejos y te preparo un cocidito gallego?"
+						, app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing * 3));
+					break;
+				}
+			}
 		}
 		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
 		else {
 			if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) gm_->setMissionFinished(missions::gallegaEnProblemas, true);
 
-			Texture text(app_->getRenderer(), Resources::tildes_['¡'] + "Genial, con estos monos es suficiente! Te espero en el barco, as" + Resources::tildes_['i'] + " cuando vuelvas ya estar" +
+			Texture text(app_->getRenderer(), Resources::tildes_['¡'] + "Genial!" + Resources::tildes_['¡'] + " Con estos cangrejos es suficiente! Te espero en el barco, as" + Resources::tildes_['i'] + " cuando vuelvas ya estar" +
 				Resources::tildes_['a'] + " lista la cena.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
-
 		}
 	}
 }
@@ -562,7 +570,7 @@ void TextBox::dialogMorty(bool unlock, int num) {
 	if (unlock) {
 
 		if (gm_->isThatMissionPass(missions::papelesSiniestros) && !gm_->isThatRewardUnlocked(missions::papelesSiniestros)) {
-			Texture text(app_->getRenderer(), "Hey, toma esta armadura, como muestra de agradecimiento por lo de antes. Yo ya no la necesito", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Hey, toma esta armadura, como muestra de agradecimiento por lo de antes. Yo ya no la necesito.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			unlockReward_->setCallBack(unlockMortyReward);
 			unlockReward_->draw();

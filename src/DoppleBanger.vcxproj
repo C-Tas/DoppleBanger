@@ -110,7 +110,6 @@
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\TiledMap.cpp" />
-    <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\tutorialObject.cpp" />
     <ClCompile Include="Sources\tutorialState.cpp" />
     <ClCompile Include="Sources\usable.cpp" />
@@ -223,7 +222,6 @@
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\TiledMap.h" />
-    <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\tutorialObject.h" />
     <ClInclude Include="Sources\tutorialState.h" />
     <ClInclude Include="Sources\usable.h" />
@@ -302,7 +300,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)dll</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(LibraryPath)</LibraryPath>
@@ -328,6 +326,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)SDL2_image-2.0.5\include;$(SolutionDir)SDL2_ttf-2.0.14\include;$(SolutionDir)SDL2_mixer-2.0.2\include;$(SolutionDir)SDL2\include;$(SolutionDir)SDL2_gfx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

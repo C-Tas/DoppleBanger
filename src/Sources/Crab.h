@@ -19,18 +19,19 @@ public:
 	virtual void move(Point2D target);
 	//Asigna los vectores
 	inline void setPositions(Vector2D target) { targetsVector_.push_back(target); };
-	virtual void initRewards() {};
+
 private:
 	Cooldown meleeCD_;
 	bool attacking_ = false;	//Para saber si el cangrejo esta atacando
 	//Dimensiones de collisionArea
-	const int W_COLLISION = scale_.getX() * 0.5;
-	const int H_COLLISION = scale_.getY() * (2 / 3);
+	const int W_COLLISION = (int)round(scale_.getX() * 0.5);
+	const int H_COLLISION = (int)round(scale_.getY() * (2 / 3));
 #pragma region Animaciones
 	//Inicializa la animacion
 	void initMeleeAnim();
 	void initWalk();
 	void initIdle();
+	virtual void initDie();
 
 	//Gestiona la animacion
 	void meleeAnim();
@@ -64,7 +65,7 @@ private:
 	///<summary>posicion del vector al que se dirige</summary>
 	int actualTarget_;
 	///<summary>actualiza el objetivo al que se dirige</summary>
-	void updateTarget() { actualTarget_ = (actualTarget_ + 1) % (targetsVector_.size()); }
+	void updateTarget() { actualTarget_ =(actualTarget_ + 1) % (targetsVector_.size()); }
 	///<summary>devuelve si ataca o no</summary>
 	void attack();
 	//Inicializa el objeto
@@ -73,6 +74,8 @@ private:
 	virtual void initAnims();
 	//Inicializa los stats
 	virtual void initialStats();
+	//Inicializa el valor de las recompensas
+	virtual void initRewards();
 	//Acutaliza Cooldowns
 	virtual void updateCooldowns();
 };

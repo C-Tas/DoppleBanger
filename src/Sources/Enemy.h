@@ -28,7 +28,7 @@ protected:
 	//Ultimo actualizacion del AStar
 	AStar::CoordinateList pathing_;
 	//Posicion en el mapa de tiled
-	AStar::Vec2i pathPos_;
+	AStar::Vec2i pathPos_ = {};
 	//Posicion inicial del mapa
 	Vector2D iniPosMap_;
 	//Rango de puntos de hazaña de la calabaza

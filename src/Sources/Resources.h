@@ -61,6 +61,7 @@ public:
 		LoadButtonNull,
 		ButtonInitTutorial,
 		ButtonSkipTutorial,
+		ButtonFinishTutorial,
 		BackToShipButton,
 		YesButton,
 		NoButton,

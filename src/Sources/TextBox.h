@@ -11,7 +11,7 @@ protected:
 	Application* app_ = nullptr;
 	GameManager* gm_ = GameManager::instance();
 	SDL_Rect dest; //Posici�n de la caja de texto, inicializada en init()
-	const int lineSpacing = GameManager::instance()->getFontSize() * 1.5;	//Interlineado y m�rgenes del texto
+	const int lineSpacing = (int)round(GameManager::instance()->getFontSize() * 1.5);	//Interlineado y m�rgenes del texto
 
 	Button* shopButton_ = nullptr;
 	Button* button_ = nullptr;
@@ -44,8 +44,8 @@ public:
 		shopButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToShopButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 }, 
 			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, goShopState);
 
-		button_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::RightArrow), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
-			Vector2D{ (double)(app_->getWindowWidth() / 17),  (double)(app_->getWindowHeight() / 20) }, nextConversation);
+		button_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToNextZoneButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, nextConversation);
 
 		tutorialButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::ButtonInitTutorial), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
 			Vector2D{ (double)(app_->getWindowWidth() / 4),  (double)(app_->getWindowHeight() / 20) }, nextTutorialVenancio);

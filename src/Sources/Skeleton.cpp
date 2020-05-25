@@ -40,18 +40,18 @@ bool Skeleton::update() {
 }
 
 void Skeleton::initialStats() {
-	HEALTH = 1500;
-	MANA = 100;
-	MANA_REG = 1;
-	ARMOR = 10;
+	HEALTH = 1200;
+	MANA = 0;
+	MANA_REG = 0;
+	ARMOR = 5;
 	MELEE_DMG = 0;
-	DIST_DMG = 100;
+	DIST_DMG = 500;
 	CRIT = 0;
-	MELEE_RANGE = 20;
-	DIST_RANGE = 250;
-	MOVE_SPEED = 100;
+	MELEE_RANGE = 0;
+	DIST_RANGE = 2100;
+	MOVE_SPEED = 300;
 	MELEE_RATE = 0;
-	DIST_RATE = 3500;
+	DIST_RATE = 2000;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
@@ -69,7 +69,7 @@ void Skeleton::attack() {
 	if (applyCritic()) realDamage *= 1.5;
 
 	BoneBullet* bone = new BoneBullet(app_, getCenter(), dir, realDamage, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
-	app_->getCurrState()->addRenderUpdateLists(bone);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(bone);
 	CollisionCtrl::instance()->addEnemyBullet(bone);
 }
 
@@ -93,11 +93,12 @@ Skeleton::~Skeleton()
 	if (GameManager::instance()->isThatMissionStarted(missions::arlongPark))
 		GameManager::instance()->addMissionCounter(missions::arlongPark);
 }
+
 void Skeleton::initRewards()
 {
-	minGold = 30;
-	maxGold = 50;
-	minArchievementPoints = 2;
+	minGold = 150;
+	maxGold = 200;
+	minArchievementPoints = 4;
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
