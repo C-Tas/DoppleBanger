@@ -113,8 +113,8 @@ void ShipState::initState()
 	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, 0);
 
 
-	//TEMPORAL PARA PROBAR LAS COLISIONES DE LA ISLA SPOOKY
-	gm_->setCurrIsland(Island::Spooky);
+	//TEMPORAL PARA PROBAR LAS COLISIONES DE LA ISLA VOLCANICA
+	gm_->setCurrIsland(Island::Volcanic);
 }
 
 void ShipState::update()
