@@ -465,7 +465,7 @@ void TextBox::dialogMerchant(int dialog) {
 	else if (dialog == 2) {
 		Texture text(app_->getRenderer(), "Paga una y ll" + Resources::tildes_['e'] + "vate una, paga dos y ll" + Resources::tildes_['e'] + "vate dos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + lineSpacing);
-		Texture text(app_->getRenderer(), Resources::tildes_['¿'] + "Qu" + Resources::tildes_['e'] + " te esperabas? ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.loadFromText(app_->getRenderer(), Resources::tildes_['¿'] + "Qu" + Resources::tildes_['e'] + " te esperabas? ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + lineSpacing * 2);
 	}
 	else {
