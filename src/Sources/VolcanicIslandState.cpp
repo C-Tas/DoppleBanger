@@ -29,8 +29,7 @@ void VolcanicIslandState::initState()
 
 	//Setteamos que la zona en la que nos encontramos es la SpookyA
 	//TO DO: BORRAR LUEGO
-	gm_->setCurrentZone(Zone::SpookyA);
-	gm_->setCurrIsland(Island::Volcanic);
+	gm_->setCurrentZone(Zone::Volcanic);
 
 }
 
@@ -43,7 +42,6 @@ void VolcanicIslandState::update()
 {
 	if (enemies_.empty() && gm_->getCurrentZone() == Zone::Volcanic) {
 		collisionCtrl_->clearList();
-		//app_->getAudioManager()->haltMusic();
 		app_->getGameStateMachine()->changeState(new WinState(app_));
 	}
 	else {

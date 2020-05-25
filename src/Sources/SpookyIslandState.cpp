@@ -33,7 +33,6 @@ void SpookyIslandState::initState()
 
 	//Setteamos que la zona en la que nos encontramos es la SpookyA
 	gm_->setCurrentZone(Zone::SpookyA);
-	gm_->setCurrIsland(Island::Spooky);
 	
 }
 
@@ -49,9 +48,9 @@ SpookyIslandState::~SpookyIslandState()
 
 void SpookyIslandState::update()
 {
-	if (enemies_.empty() && gm_->getCurrentZone() == Zone::CaribeanBoss) {
+	if (enemies_.empty() && gm_->getCurrentZone() == Zone::SpookyBoss) {
 		collisionCtrl_->clearList();
-		//app_->getAudioManager()->haltMusic();
+		gm_->setUnlockedIslands(Island::Volcanic);
 		app_->getGameStateMachine()->changeState(new ShipState(app_));
 	}
 	else {
