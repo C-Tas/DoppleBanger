@@ -112,9 +112,6 @@ void ShipState::initState()
 	app_->resetSoundsChannels();
 	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, 0);
 
-
-	//TEMPORAL PARA PROBAR LAS COLISIONES DE LA ISLA VOLCANICA
-	gm_->setCurrIsland(Island::Volcanic);
 }
 
 void ShipState::update()
