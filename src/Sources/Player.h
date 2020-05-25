@@ -149,6 +149,7 @@ private:
 		bool onCollision_ = false;		//Para saber si el player esta colisionando
 		bool initEquip_ = true;			//Para saber si hay que inicializar el equipamiento
 		bool slowed_ = false;			//Para saber si esta ralentizado
+		bool changeZone_ = false;		//Para saber si hay que cambiar de zona
 
 		int liberation_ = 2;			//Nivel de la habilidad del clon, debería llevarse a GameManager
 		double slowEffect_ = 0;			//Efecto del slow

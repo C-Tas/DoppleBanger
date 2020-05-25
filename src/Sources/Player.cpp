@@ -201,9 +201,9 @@ bool Player::update()
 		checkInputState();
 
 		//Gestion de movimiento
-		movementManager();
+		if (!changeZone_) movementManager();
 	}
-	return false;
+	return changeZone_;
 }
 
 void Player::updateCooldowns()
@@ -535,7 +535,9 @@ void Player::checkInput()
 		}
 		else setOnCollision(false);
 
-		if (collisionCtrl_->isNextZoneTextBoxActive()) getEndZoneTextBox()->updateButtons();
+		if (collisionCtrl_->isNextZoneTextBoxActive()) {
+			changeZone_  = getEndZoneTextBox()->updateButtons();
+		}
 	}
 }
 
