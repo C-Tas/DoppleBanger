@@ -19,7 +19,7 @@ public:
 	virtual void move(Point2D target);
 	//Asigna los vectores
 	inline void setPositions(Vector2D target) { targetsVector_.push_back(target); };
-	virtual void initRewards() {};
+
 private:
 	Cooldown meleeCD_;
 	bool attacking_ = false;	//Para saber si el cangrejo esta atacando
@@ -74,6 +74,8 @@ private:
 	virtual void initAnims();
 	//Inicializa los stats
 	virtual void initialStats();
+	//Inicializa el valor de las recompensas
+	virtual void initRewards();
 	//Acutaliza Cooldowns
 	virtual void updateCooldowns();
 };

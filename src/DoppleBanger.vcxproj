@@ -110,7 +110,6 @@
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\TiledMap.cpp" />
-    <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\tutorialObject.cpp" />
     <ClCompile Include="Sources\tutorialState.cpp" />
     <ClCompile Include="Sources\usable.cpp" />
@@ -223,7 +222,6 @@
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\TiledMap.h" />
-    <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\tutorialObject.h" />
     <ClInclude Include="Sources\tutorialState.h" />
     <ClInclude Include="Sources\usable.h" />

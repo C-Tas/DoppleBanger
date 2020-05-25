@@ -10,7 +10,6 @@ void CollisionCtrl::islandCollisions() {
 		enemies_.remove(*it);
 	}
 	enemiesToErase_.clear();
-
 	//Quitamos a los cofres de la lista
 	for (auto it = chestsToErase_.begin(); it != chestsToErase_.end(); ++it) {
 		chests_.remove(*it);
@@ -25,11 +24,6 @@ void CollisionCtrl::islandCollisions() {
 		enemyBullets_.remove(*it);
 	}
 	enemyBulletsToErase_.clear();
-	//Quitamos a los triggers de la lista
-	for (auto it = triggersToErase_.begin(); it != triggersToErase_.end(); ++it) {
-		triggers_.remove(*it);
-	}
-	triggersToErase_.clear();
 
 	collisionWithEndOfZone_ = false;
 

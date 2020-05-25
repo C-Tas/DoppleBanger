@@ -17,18 +17,24 @@ void GameState::update() {
 	//de ese estado
 	for (auto it = objectsToRemove_.begin(); it != objectsToRemove_.end(); ++it) {
 		gameObjects_.remove(*it);
-		delete (*it);
+		if ((*it) != nullptr) {
+			delete (*it);
+			(*it) = nullptr;
+		}
 	}
 	objectsToRemove_.clear();
 
 	for (auto it = rendersToRemove_.begin(); it != rendersToRemove_.end(); ++it) {
 		objectsToRender_.remove(*it);
-		delete (*it);
+		if ((*it) != nullptr) {
+			delete (*it);
+			(*it) = nullptr;
+		}
 	}
 	rendersToRemove_.clear();
 
 	for (auto it = objRendToRemove_.begin(); it != objRendToRemove_.end(); ++it) {
-		gameObjects_.remove(*it); 
+		gameObjects_.remove(*it);
 		objectsToRender_.remove(*it);
 		if ((*it) != nullptr) {
 			delete (*it);
@@ -99,6 +105,15 @@ void GameState::addUpdateList(GameObject* obj) {
 void GameState::addUpdateListAsFirst(GameObject* obj)
 {
 	gameObjects_.push_front(obj);
+}
+
+void GameState::addRenderListAsFirst(Draw* obj) {
+	objectsToRender_.push_front(obj);
+}
+
+void GameState::addRenderUpdateListsAsFirst(Draw* obj) {
+	addUpdateListAsFirst(obj);
+	addRenderListAsFirst(obj);
 }
 
 void GameState::addRenderList(Draw* obj) {

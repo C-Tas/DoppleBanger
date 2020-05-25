@@ -88,9 +88,10 @@ void ShipState::initState()
 	addObject(exit_);
 
 	collisionCtrl_->addShipObjects(stash_, door_, wheel_, exit_);
+
 	//Posición de Venancio
 	POST_TUTORIAL_POS = Vector2D((double)(W_WIN * 2 / 7), (double)(H_WIN / 10));
-	TUTORIAL_POS = Vector2D((double)(destRect.x - W_WIN / 7), (double)(destRect.y - H_WIN / 8));
+	TUTORIAL_POS = Vector2D((double)(destRect.x - W_WIN / 8), (double)(destRect.y - H_WIN / 9));
 
 	createNPCs();	//Método de testeo de los NPCs del barco, faltaría hacer uno definitivo para todos los NPCs desbloqueados
 

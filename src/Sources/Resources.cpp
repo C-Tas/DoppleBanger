@@ -15,6 +15,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ ResumeButton, "../Sources/assets/botones/resumeButton.png" },
 	{ BackButton, "../Sources/assets/botones/volver.png" },
 	{ SkipButton, "../Sources/assets/botones/skipButton.png" },
+	{ ViajarButton, "../Sources/assets/botones/viajarButton.png" },
+	{ IslaActualButton, "../Sources/assets/botones/islaActualButton.png" },
 	{ SkipStoryButton, "../Sources/assets/botones/skipStoryButton.png" },
 	{ RestartGame, "../Sources/assets/botones/restartGame.png" },
 	{ MuteSoundOff, "../Sources/assets/botones/muteSoundOff.png" },
@@ -60,6 +62,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ ButtonUpgradeYellow, "../Sources/assets/botones/UpgradeButtonYellow.png"},
 	{ ButtonInitTutorial, "../Sources/assets/botones/botonEscucharVenancio.png"},
 	{ ButtonSkipTutorial, "../Sources/assets/botones/botonPasarVenancio.png"},
+	{ ButtonFinishTutorial, "../Sources/assets/botones/botonAcabarTutorial.png"},
 
 	//Animaciones de botones
 	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},

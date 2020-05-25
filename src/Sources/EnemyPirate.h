@@ -121,7 +121,7 @@ private:
 #pragma endregion
 
 	//Estadisticas para inicializar
-	const int VIS_RANGE = 500;
+	const int VIS_RANGE = 2000;
 	//Entero que representa la cantidad de frames que tiene para las animaciones
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet

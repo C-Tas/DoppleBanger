@@ -17,7 +17,7 @@ private:
 	const int NUM_FRAMES_OPEN = 9;
 	const uint W_FRAME_OPEN = 40;
 	const uint H_FRAME_OPEN = 40;
-	const int FRAME_RATE_OPEN = 200;
+	const int FRAME_RATE_OPEN = 100;
 	int gold_ = 0;
 	bool open = false;	//Booleano que determina si el cofre se ha abierto o no
 

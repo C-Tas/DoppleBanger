@@ -6,7 +6,6 @@
 #include "Enemy.h"
 #include "Chest.h"
 #include "Bullet.h"
-#include "Trigger.h"
 #include "ShipObject.h"
 #include "PlayerBullet.h"
 #include <list>
@@ -72,8 +71,6 @@ public:
 	void removePlayerBullet(PlayerBullet* bullet) { playerBulletsToErase_.push_back(bullet); };
 	///<summary>Quita una bala de la lista</summary>
 	void removeEnemyBullet(Bullet* bullet) { enemyBulletsToErase_.push_back(bullet); };
-	///<summary>Quita un trigger de la lista</summary>
-	void removeTrigger(Trigger* trigger) { triggersToErase_.push_back(trigger); };
 	///<summary>Quita un nuevo colliders</summary>
 	void removeCollider(Collider* collider) { collidersToErase_.push_back(collider); };
 	///<summary>Quita el dummy</summary>
@@ -84,8 +81,8 @@ public:
 	void clearList() {
 		//Listas de las islas
 		obstacles_.clear(); obstacleWithRotation_.clear(); enemies_.clear();
-		chests_.clear(); triggers_.clear(); enemiesToErase_.clear(); chestsToErase_.clear();
-		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
+		chests_.clear(); enemiesToErase_.clear(); chestsToErase_.clear();
+		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear();
 		endObstacles_.clear();
 		//Listas del barco
 		npcs_.clear(); shipObjects_.clear(); newNpc = true;
@@ -118,8 +115,6 @@ public:
 	void addPlayerBullet(PlayerBullet* bullet) { playerBullets_.push_back(bullet); };
 	///<summary>A�ade una nueva bala a la lista</summary>
 	void addEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); };
-	///<summary>A�ade un nuevo trigger</summary>
-	void addTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
 	///<summary>A�ade un nuevo colliders</summary>
 	void addCollider(Collider* collider) { colliders_.push_back(collider); };
 	//<summary>Método para saber si está activado el textbox de cambio de zona</summary>
@@ -176,7 +171,6 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Chest*> chests_;
 	list<PlayerBullet*> playerBullets_;
 	list<Bullet*> enemyBullets_;
-	list<Trigger*> triggers_;
 	list<Collider*> colliders_;
 	list<Barrel*> barrels_;
 
@@ -184,7 +178,6 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Chest*> chestsToErase_;
 	list<PlayerBullet*> playerBulletsToErase_;
 	list<Bullet*> enemyBulletsToErase_;
-	list<Trigger*> triggersToErase_;
 	list<Collider*> collidersToErase_;
 	list<Barrel*> barrelsToErase_;
 

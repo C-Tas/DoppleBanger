@@ -44,6 +44,10 @@ public:
 	void addUpdateList(GameObject* obj);
 	///<summary>A�ade un objeto como primer elemento a la lista de gameObjects</summary>
 	void addUpdateListAsFirst(GameObject* obj);
+	///<summary>A�ade un objeto como primer elemento a la lista de objectsToRender_</summary>
+	void addRenderListAsFirst(Draw* obj);
+	///<summary>A�ade un objeto a las listas de objectsToRender_ y gameObjects_ como primer elemento</summary>
+	void addRenderUpdateListsAsFirst(Draw* obj);
 	///<summary>A�ade un objeto a la lista de objectsToRender_</summary>
 	void addRenderList(Draw* obj);
 	///<summary>A�ade un objeto a las listas de objectsToRender_ y gameObjects_</summary>
