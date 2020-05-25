@@ -22,7 +22,7 @@ bool Crab::update() {
 			move(targetsVector_.at(actualTarget_));
 		}
 		//Cuando tenemos enemigo
-		if(currEnemy_ != nullptr){
+		if (currEnemy_ != nullptr) {
 			//Si esta a rango y se puede atacar
 			if (onRange(currStats_.meleeRange_) && !meleeCD_.isCooldownActive()) {
 				initMeleeAnim();
@@ -138,8 +138,12 @@ void Crab::initObject()
 	rangeVision_ = 40;
 	nextTarget_ = pos_;
 	app_->getAudioManager()->playChannel(Resources::CrabIdleSound, 0, Resources::CrabChannel1);
-	scaleCollision_.setVec(Vector2D(scale_.getX()/3, scale_.getY())/5);
-	posCollision_ = Vector2D(scale_.getX() / 3, scale_.getY() / 5);
+	double w = 2 / 4,
+		h = 1 / 3,
+		x = 1 / 4,
+		y = 1 / 3;
+	scaleCollision_.setVec(Vector2D(scale_.getX() * w, scale_.getY() * h));
+	posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	tag_ = "Crab";
 }
@@ -150,8 +154,8 @@ void Crab::initAnims()
 	idleAnim_ = Anim(IDLE_NUM_FRAMES, W_H_FRAME, W_H_FRAME, IDLE_FRAME_RATE, true);
 	idleTx_ = app_->getTextureManager()->getTexture(Resources::CrabIdle);
 	//Caminar
-	walkAnim_ = Anim(NUM_FRAMES_WALK, W_H_FRAME, W_H_FRAME, WALK_FRAME_RATE,true);
-	walkTex_= app_->getTextureManager()->getTexture(Resources::CrabWalk);
+	walkAnim_ = Anim(NUM_FRAMES_WALK, W_H_FRAME, W_H_FRAME, WALK_FRAME_RATE, true);
+	walkTex_ = app_->getTextureManager()->getTexture(Resources::CrabWalk);
 	//Atacar
 	attackAnim_ = Anim(NUM_FRAMES_ATK, W_H_FRAME, W_H_FRAME, ATK_FRAME_RATE, false);
 	attackTex_ = app_->getTextureManager()->getTexture(Resources::CrabAttack);

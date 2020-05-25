@@ -76,8 +76,15 @@ void Skeleton::attack() {
 void Skeleton::initObject() {
 	initialStats();
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
-	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
+
+	double w = 1 / 3,
+		h = 2 / 3,
+		x = 1 / 3,
+		y = 1 / 3;
+	scaleCollision_.setVec(Vector2D(scale_.getX() * w, scale_.getY() * h));
+	posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
+
 	initAnims();
 }
 

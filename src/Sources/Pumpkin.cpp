@@ -131,6 +131,13 @@ void Pumpkin::initObject() {
 	initRewards();
 	target_ = pos_;
 	explosionRange_ = getScaleX();
+	double w = 2 / 4,
+		h = 2 / 4,
+		x = 1 / 4,
+		y = 1 / 4;
+	scaleCollision_.setVec(Vector2D(scale_.getX() * w, scale_.getY() * h));
+	posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);
+	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 }
 void Pumpkin::lostAgro()
 {
