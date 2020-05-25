@@ -22,6 +22,7 @@ bool Kraken::update() {
 		swimCD_.initCooldown(SWIM_DURATION); //Esto se tendría que hacer al acabar la animación
 	}
 	else if ((currState_ == STATE::SHOOTING && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1)) {
+		InkAction();
 		idle();
 	}
 
@@ -249,6 +250,10 @@ void Kraken::ink()
 	frame_.h = currAnim_.heightFrame_;
 
 	app_->getAudioManager()->playChannel(Resources::KrakenInk, 0, Resources::KrakenChannel2);
+
+}
+
+void Kraken:: InkAction() {
 	Vector2D pos;
 	Vector2D scale = Vector2D(scale_.getX() / 5, scale_.getY() / 5);
 	int numShots = AVERAGE_INK_SHOTS + ((rand() % NORMAL_DESVIATION * 2 + 1) - NORMAL_DESVIATION);

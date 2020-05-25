@@ -55,6 +55,7 @@ private:
 	void swimInit(); //Empieza la animación de sumergirse y calcula a donde nadar
 	void swimEnd(); //Se mueve a la posición calculada y empieza la animacion de emerger
 	void ink();
+	void InkAction();
 	void idle();
 	virtual void updateCooldowns();
 
