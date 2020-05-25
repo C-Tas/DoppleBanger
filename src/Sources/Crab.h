@@ -31,6 +31,7 @@ private:
 	void initMeleeAnim();
 	void initWalk();
 	void initIdle();
+	virtual void initDie();
 
 	//Gestiona la animacion
 	void meleeAnim();

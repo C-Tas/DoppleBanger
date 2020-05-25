@@ -96,6 +96,15 @@ void Crab::initIdle()
 	frame_.h = currAnim_.heightFrame_;
 }
 
+void Crab::initDie()
+{
+	Enemy::initDie();
+
+	GameManager* gm_ = GameManager::instance();
+	if (gm_->isThatMissionStarted(missions::gallegaEnProblemas))
+		gm_->addMissionCounter(missions::gallegaEnProblemas);
+}
+
 void Crab::meleeAnim()
 {
 	if (currAnim_.currFrame_ == FRAME_ACTION) {
