@@ -144,6 +144,7 @@ protected:
 	//Animacion muerte
 	virtual void initDie();
 	virtual void dieAnim();
+	virtual void dieAudio() {};
 	//Animacion morir
 	const int W_DIE_FRAME = 79;			//Ancho del frame, estándar para todas
 	const int H_DIE_FRAME = 74;			//Alto del frame, estándar para todas
