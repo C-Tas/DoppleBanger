@@ -23,6 +23,8 @@ public:
 		ResumeButton,
 		BackButton,
 		SkipButton,
+		ViajarButton,
+		IslaActualButton,
 		SkipStoryButton,
 		MuteSoundOff,
 		MuteSoundOn,
