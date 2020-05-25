@@ -33,7 +33,7 @@ void tutorialState::update()
 	case 3:
 		//crear dummy
 		if (!dummyCreated_) {
-			gm_->setMeleePoints((gm_->getMaxPoints() / 3) - 10);
+			gm_->setMeleePoints(gm_->getMeleePoints() + (gm_->getMaxPoints() / 3) - 10);
 			createDummy();
 		}
 		break;
@@ -69,7 +69,6 @@ void tutorialState::update()
 	}
 }
 
-
 void tutorialState::createBottle()
 {
 	bottleCreated_ = true;
@@ -83,7 +82,7 @@ void tutorialState::createBottle()
 void tutorialState::createDummy()
 {
 	dummyCreated_ = true;
-	dummyPos_ = Vector2D(app_->getWindowWidth() / 3, app_->getWindowHeight() * 7 / 10 );
+	dummyPos_ = Vector2D(app_->getWindowWidth() / 3, app_->getWindowHeight() * 7 / 10);
 	tutorialObject* dummy = new tutorialObject(app_, dummyPos_, Vector2D(100, 100), app_->getTextureManager()->getTexture(Resources::Dummy),2);
 	collisionCtrl_->setDummy(dummy);
 	addEnemy(dummy);
@@ -93,7 +92,7 @@ void tutorialState::createDummy()
 void tutorialState::createChest()
 {
 	chestCreated_ = true;
-	Chest* chest = new Chest(app_,dummyPos_,Vector2D(150,150), 50);
+	Chest* chest = new Chest(app_, Vector2D(app_->getWindowWidth() * 2 / 3, app_->getWindowHeight() / 6), Vector2D(150,150), 50);
 	collisionCtrl_->addChest(chest);
 	addRenderUpdateLists(chest);
 }

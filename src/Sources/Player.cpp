@@ -227,7 +227,6 @@ void Player::updateCooldowns()
 	if (empoweredCD_.isCooldownActive()) { empoweredCD_.updateCooldown(); }
 	if (ricochetCD_.isCooldownActive()) { ricochetCD_.updateCooldown(); }
 	if (slowTimeCD_.isCooldownActive()) slowTimeCD_.updateCooldown();
-
 }
 
 void Player::updateBuffPotion(){
@@ -478,9 +477,9 @@ void Player::meleeAnim()
 		double totalDmg = currStats_.meleeDmg_;
 		if (empoweredAct_) { //Golpe fuerte
 			empoweredCD_.initCooldown(EMPOWERED_DELAY);
-			empoweredAct_ = false;
 			totalDmg = currStats_.meleeDmg_ * EMPOWERED_BONUS;
 			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
+			empoweredAct_ = false;
 		}
 		else {
 			if (applyCritic()) totalDmg *= 1.5;
@@ -668,7 +667,6 @@ void Player::movementManager()
 
 void Player::shoot(Vector2D dir)
 {
-
 	//Se calcula la posici�n desde la cual se dispara la bala
 	Vector2D shootPos;
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));

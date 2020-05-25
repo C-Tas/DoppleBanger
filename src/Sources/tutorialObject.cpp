@@ -3,18 +3,18 @@
 bool tutorialObject::update() {
 	//Solo entra con el dummy
 	if (currState_ == STATE::DYING) {
-		
-		switch (id_)
-		{
-		case 1:
+		if (id_ >= 2) app_->getAudioManager()->playChannel(Resources::AudioId::DummyDie, 0, (int)EFFECT::TUTORIAL);
+		//switch (id_)
+		//{
+		//case 1:
 
-			break;
-		case 2:
-			app_->getAudioManager()->playChannel(Resources::AudioId::DummyDie, 0, (int)EFFECT::TUTORIAL);
-			break;
-		default:
-			break;
-		}
+		//	break;
+		//case 2:
+		//	app_->getAudioManager()->playChannel(Resources::AudioId::DummyDie, 0, (int)EFFECT::TUTORIAL);
+		//	break;
+		//default:
+		//	break;
+		//}
 		onCollider();	//Para dar la misión como terminada
 		applyRewards();
 		CollisionCtrl::instance()->removeDummy();
@@ -25,7 +25,7 @@ bool tutorialObject::update() {
 
 void tutorialObject::initialStats() {
 	rangeVision_ = 0;
-	HEALTH = 400;
+	HEALTH = 800;
 	MANA = 0;
 	MANA_REG = 0;
 	ARMOR = 0;
@@ -55,6 +55,7 @@ void tutorialObject::receiveDamage(int damage) {
 	else if (app_->getGameManager()->getVenancioPhase() == 3 && app_->getGameManager()->getPlayer()->isDummyAttack()) currStats_.health_ = 0;
 	if (currStats_.health_ <= 0) {
 		this->die();
+		currState_ = STATE::DYING;
 	}
 }
 
