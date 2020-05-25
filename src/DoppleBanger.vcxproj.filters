@@ -229,5 +229,9 @@
     <ClInclude Include="Sources\tutorialObject.h" />
     <ClInclude Include="Sources\tutorialState.h" />
     <ClInclude Include="Sources\Barrel.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
 </Project>
