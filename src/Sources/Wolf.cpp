@@ -193,7 +193,7 @@ void Wolf::initObject() {
 	Enemy::initObject();
 	setTexture(app_->getTextureManager()->getTexture(Resources::WolfFront));
 	initRewards();
-	rangeVision_ = 80;//numero magico
+	rangeVision_ = 2500;//numero magico
 	switch (rand() % 2)
 	{
 	case 0:
@@ -263,30 +263,28 @@ void Wolf::lostAgro()
 	}
 }
 
-
-
 void Wolf::initialStats()
 {
-	HEALTH = 1000;
-	MANA = 100;
-	MANA_REG = 100;
-	ARMOR = 10;
-	MELEE_DMG = 100;
+	HEALTH = 1500;
+	MANA = 0;
+	MANA_REG = 0;
+	ARMOR = 0;
+	MELEE_DMG = 450;
 	DIST_DMG = 0;
-	CRIT = 2000;
+	CRIT = 10;
 	MELEE_RANGE = 50;
-	DIST_RANGE = 75;
-	MOVE_SPEED = 250;
-	MELEE_RATE = 1500;
-	DIST_RATE = 1500;
+	DIST_RANGE = 0;
+	MOVE_SPEED = 350;
+	MELEE_RATE = 500;
+	DIST_RATE = 0;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
 void Wolf::initRewards()
 {
-	minGold = 30;
-	maxGold = 50;
-	minArchievementPoints = 2;
+	minGold = 110;
+	maxGold = 160;
+	minArchievementPoints = 4;
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);

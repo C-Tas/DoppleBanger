@@ -139,18 +139,18 @@ void Pumpkin::lostAgro()
 void Pumpkin::initialStats()
 {
 	rangeVision_ = 350;
-	HEALTH = 100;
-	MANA = 100;
-	MANA_REG = 1;
-	ARMOR = 10;
-	MELEE_DMG = 0;
-	DIST_DMG = 0;
+	HEALTH = 1200;
+	MANA = 0;
+	MANA_REG = 0;
+	ARMOR = 0;
+	MELEE_DMG = 1000;
+	DIST_DMG = 300;
 	CRIT = 0;
-	MELEE_RANGE = 200;
-	DIST_RANGE = 350;
-	MOVE_SPEED = 100;
-	MELEE_RATE = 1;
-	DIST_RATE = 2500;
+	MELEE_RANGE = 50;
+	DIST_RANGE = 1200;
+	MOVE_SPEED = 400;
+	MELEE_RATE = 0;
+	DIST_RATE = 1500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 void Pumpkin::move(Point2D posToReach) {
@@ -229,10 +229,10 @@ void Pumpkin::initAnims()
 }
 void Pumpkin::initRewards()
 {
-	minGold = 30;
-	maxGold = 50;
-	minArchievementPoints = 2;
-	maxArchievementPoints = 10;
+	minGold = 180;
+	maxGold = 230;
+	minArchievementPoints = 5;
+	maxArchievementPoints = 12;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }

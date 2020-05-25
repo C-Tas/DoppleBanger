@@ -766,7 +766,7 @@
   <object id="70" gid="166" x="1985.52" y="4126.24" width="256" height="256"/>
   <object id="89" gid="166" x="5120" y="1920" width="256" height="256"/>
   <object id="90" gid="166" x="2432" y="2432" width="256" height="256"/>
-  <object id="112" gid="166" x="4480" y="5760" width="256" height="256"/>
+  <object id="112" gid="166" x="3978" y="5822" width="256" height="256"/>
   <object id="113" gid="166" x="3200" y="6784" width="256" height="256"/>
  </objectgroup>
  <objectgroup id="36" name="Monkey">

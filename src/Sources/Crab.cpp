@@ -158,19 +158,29 @@ void Crab::initAnims()
 }
 
 void Crab::initialStats() {
-	HEALTH = 1;
+	HEALTH = 750;
 	MANA = 0;
 	MANA_REG = 0;
-	ARMOR = 1000;
-	MELEE_DMG = 10;
+	ARMOR = 10;
+	MELEE_DMG = 150;
 	DIST_DMG = 0;
-	CRIT = 0;
+	CRIT = 5;
 	MELEE_RANGE = getScaleX() / 2;	//Medido con photoshop
 	DIST_RANGE = 0;
-	MOVE_SPEED = 100;
-	MELEE_RATE = 1000;	//En milisegundos
-	DIST_RATE = 2;
+	MOVE_SPEED = 300;
+	MELEE_RATE = 1500;	//En milisegundos
+	DIST_RATE = 0;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+}
+
+void Crab::initRewards()
+{
+	minGold = 50;
+	maxGold = 100;
+	minArchievementPoints = 3;
+	maxArchievementPoints = 8;
+	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
+	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
 
 void Crab::updateCooldowns()

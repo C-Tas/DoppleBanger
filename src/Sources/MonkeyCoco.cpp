@@ -102,19 +102,19 @@ void MonkeyCoco::initObject() {
 
 void MonkeyCoco::initialStats() 
 {
-	rangeVision_ = 300;
+	rangeVision_ = 1200;
 	HEALTH = 500;
-	MANA = 100;
-	MANA_REG = 1;
-	ARMOR = 10;
+	MANA = 0;
+	MANA_REG = 0;
+	ARMOR = 5;
 	MELEE_DMG = 0;
-	DIST_DMG = 200;
-	CRIT = 0;
+	DIST_DMG = 250;
+	CRIT = 5;
 	MELEE_RANGE = 0;
-	DIST_RANGE = 300;
+	DIST_RANGE = 1000;
 	MOVE_SPEED = 0;
 	MELEE_RATE = 0;
-	DIST_RATE = 1300;
+	DIST_RATE = 1500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
@@ -194,9 +194,9 @@ void MonkeyCoco::shootAnim() {
 
 void MonkeyCoco::initRewards()
 {
-	minGold = 30;
-	maxGold = 50;
-	minArchievementPoints = 2;
+	minGold = 70;
+	maxGold = 120;
+	minArchievementPoints = 4;
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);

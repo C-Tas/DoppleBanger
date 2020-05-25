@@ -310,26 +310,26 @@ void EnemyPirate::setPatrol(Vector2D pos)
 void EnemyPirate::initialStats()
 {
 	HEALTH = 1000;
-	MANA = 100;
-	MANA_REG = 100;
-	ARMOR = 10;
-	MELEE_DMG = 0;
-	DIST_DMG = 0;
-	CRIT = 2000;
-	MELEE_RANGE = 100;
-	DIST_RANGE = 300;
-	MOVE_SPEED = 250;
-	MELEE_RATE = 2000;
-	DIST_RATE = 2500;
+	MANA = 0;
+	MANA_REG = 0;
+	ARMOR = 15;
+	MELEE_DMG = 300;
+	DIST_DMG = 350;
+	CRIT = 10;
+	MELEE_RANGE = 50;
+	DIST_RANGE = 1500;
+	MOVE_SPEED = 300;
+	MELEE_RATE = 1000;
+	DIST_RATE = 1000;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
 void EnemyPirate::initRewards()
 {
-	minGold = 30;
-	maxGold = 50;
-	minArchievementPoints = 2;
-	maxArchievementPoints = 10;
+	minGold = 90;
+	maxGold = 140;
+	minArchievementPoints = 5;
+	maxArchievementPoints = 12;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
