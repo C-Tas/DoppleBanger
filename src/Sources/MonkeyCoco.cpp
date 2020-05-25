@@ -205,9 +205,4 @@ void MonkeyCoco::initRewards()
 void MonkeyCoco::initDie() {
 	Enemy::initDie();
 	app_->getAudioManager()->playChannel(Resources::MonkeyDieSound, 0, Resources::SoundChannels::MonkeyChannel);
-
-	//Esta línea habría que moverla al cangrejo cuando esté hecho
-	GameManager* gm_ = GameManager::instance();
-	if (gm_->isThatMissionStarted(missions::gallegaEnProblemas))
-		gm_->addMissionCounter(missions::gallegaEnProblemas);
 }
