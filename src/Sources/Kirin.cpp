@@ -41,5 +41,5 @@ void Kirin::initObject()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 
-	app_->getCurrState()->addRenderUpdateLists(this);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(this);
 }

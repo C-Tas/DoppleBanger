@@ -11,7 +11,6 @@ bool EnemyPirate::update() {
 	updateCooldowns();
 	//Si el pirata ha muerto
 	if (currState_ == STATE::DYING) {
-		//Tendría que hacer la animación de muerte?
 		dieAnim();
 	}
 	else {
@@ -279,7 +278,7 @@ void EnemyPirate::meleeAnim() {
 void EnemyPirate::shoot() {
 	Bullet* bullet = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Bullet),
 		getCenter(), currEnemy_->getCenter(), currStats_.distDmg_, BULLET_LIFE, BULLET_VEL);
-	app_->getCurrState()->addRenderUpdateLists(bullet);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(bullet);
 	CollisionCtrl::instance()->addEnemyBullet(bullet);
 
 	shootCD_.initCooldown(currStats_.distRate_);

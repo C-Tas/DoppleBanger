@@ -110,7 +110,7 @@ void Pumpkin::disAttack() {
 
 	Bullet* seed = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
 		getCenter(), dir, realDamage, seedLife, seedVel, Vector2D(wHSeed, wHSeed));
-	app_->getCurrState()->addRenderUpdateLists(seed);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(seed);
 	CollisionCtrl::instance()->addEnemyBullet(seed);
 }
 void Pumpkin::follow() {

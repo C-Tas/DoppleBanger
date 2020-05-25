@@ -69,7 +69,7 @@ void Skeleton::attack() {
 	if (applyCritic()) realDamage *= 1.5;
 
 	BoneBullet* bone = new BoneBullet(app_, getCenter(), dir, realDamage, BONE_LIFE, BONE_VEL, Vector2D(BONE_WIDTH, BONE_HEIGHT));
-	app_->getCurrState()->addRenderUpdateLists(bone);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(bone);
 	CollisionCtrl::instance()->addEnemyBullet(bone);
 }
 

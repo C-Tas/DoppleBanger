@@ -250,7 +250,7 @@ void Clon::shoot() {
 			currStats_.distRange_, GameManager::instance()->getEquip().gun_->getBulletSpeed());
 
 		//Se añade a los bucles del juegos
-		app_->getCurrState()->addRenderUpdateLists(bullet);
+		app_->getCurrState()->addRenderUpdateListsAsFirst(bullet);
 		CollisionCtrl::instance()->addPlayerBullet(bullet);
 	}
 }

@@ -9,7 +9,7 @@
 #include "WinState.h"
 
 CaribbeanIslandState::~CaribbeanIslandState() { 
-	if (currentMap_ != nullptr)delete currentMap_;
+	if (currentMap_ != nullptr) delete currentMap_;
 	//Reseteo de misiones
 	if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
 		gm_->setStartedMission(missions::gallegaEnProblemas, false);
@@ -21,7 +21,6 @@ void CaribbeanIslandState::update()
 {
 	if (enemies_.empty() && gm_->getCurrentZone() == Zone::CaribeanBoss) {
 		collisionCtrl_->clearList();
-		//app_->getAudioManager()->haltMusic();
 		app_->getGameStateMachine()->changeState(new ShipState(app_));
 	}
 	else {
@@ -32,6 +31,10 @@ void CaribbeanIslandState::update()
 
 void CaribbeanIslandState::initState()
 {
+	//Resteo de la isla
+	gm_->setCurrentZone(Zone::CaribeanA);
+	gm_->setCurrIsland(Island::Caribbean);
+
 	//Inicializamos la musica
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();

@@ -475,22 +475,24 @@ void Player::shootAnim()
 void Player::meleeAnim()
 {
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
-		double totalDmg = currStats_.meleeDmg_;
-		if (empoweredAct_) { //Golpe fuerte
-			empoweredCD_.initCooldown(EMPOWERED_DELAY);
-			empoweredAct_ = false;
-			totalDmg = currStats_.meleeDmg_ * EMPOWERED_BONUS;
-			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
-		}
-		else {
-			if (applyCritic()) totalDmg *= 1.5;
-			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
-		}
-
 		if (currEnemy_ == nullptr) {
 			attacking_ = false;
 			dir_ = Vector2D(0, 0);
 		}
+		else {
+			double totalDmg = currStats_.meleeDmg_;
+			if (empoweredAct_) { //Golpe fuerte
+				empoweredCD_.initCooldown(EMPOWERED_DELAY);
+				empoweredAct_ = false;
+				totalDmg = currStats_.meleeDmg_ * EMPOWERED_BONUS;
+				static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
+			}
+			else {
+				if (applyCritic()) totalDmg *= 1.5;
+				static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
+			}
+		}
+
 		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
 		attacked_ = true;
 		empoweredInit_ = false;
@@ -519,6 +521,13 @@ void Player::dieAnim()
 void Player::checkInputCheat(){
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_L) && !gm_->getOnShip() && !gm_->onTutorial()) {
 		cheatPlayer();
+	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_K) && !gm_->getOnShip() && !gm_->onTutorial()) {
+		list<Enemy*> enemies_ = dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies();
+		for (auto it = enemies_.begin(); it != enemies_.end(); ++it) {
+			app_->getCurrState()->removeRenderUpdateLists((*it));
+		}
+		dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies().clear();
 	}
 }
 
@@ -692,7 +701,7 @@ void Player::shoot(Vector2D dir)
 		bullet->setRicochet(ricochetCD_.isCooldownActive());
 
 		//Se añade a los bucles del juegos
-		app_->getCurrState()->addRenderUpdateLists(bullet);
+		app_->getCurrState()->addRenderUpdateListsAsFirst(bullet);
 		collisionCtrl_->addPlayerBullet(bullet);
 	}
 	else if (auxGunType == equipType::ShotgunI || auxGunType == equipType::ShotgunII) {

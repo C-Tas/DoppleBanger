@@ -155,7 +155,7 @@ void Cleon::pirateCharge()
 
 	Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
 	CollisionCtrl::instance()->addBarrel(currBarrel);
-	app_->getCurrState()->addRenderUpdateLists(currBarrel);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(currBarrel);
 	barrelsInGame++;
 
 }
@@ -177,7 +177,7 @@ void Cleon::createBarrel()
 		if (chance == BARREL_CHANCE) {
 			Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
 			CollisionCtrl::instance()->addBarrel(currBarrel);
-			app_->getCurrState()->addRenderUpdateLists(currBarrel);
+			app_->getCurrState()->addRenderUpdateListsAsFirst(currBarrel);
 			barrelsInGame++;
 		}
 	}
