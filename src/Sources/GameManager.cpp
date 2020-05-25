@@ -764,7 +764,7 @@ void GameManager::setCompleteMission(missions mission, bool complete)
 				//TO DO: nivelar
 				addToInventory(new Gun(app_,300,150,2000,equipType::ShotgunII ));
 			}
-			getPlayer()->addMoveSpeed(getStatsReward(mission));
+			getPlayer()->addMoveSpeed((int)round(getStatsReward(mission)));
 			break;
 		case missions::Size:
 			break;

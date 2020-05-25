@@ -20,7 +20,7 @@ bool BeerButton::update(){
 	if (!currentState_->getButtonClick() || clicked_) {
 		HandleEvents* input = HandleEvents::instance();
 		Vector2D aux = input->getRealMousePos(); //Guardas la posicion del raton
-		SDL_Point mouse = { aux.getX(), aux.getY() };
+		SDL_Point mouse = { (int)round(aux.getX()), (int)round(aux.getY()) };
 
 		if (clicked_ && currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 			resetButton();
@@ -67,10 +67,10 @@ void BeerButton::initAnims(){
 	texture_ = app_->getTextureManager()->getTexture(Resources::BeerAnim);
 	currAnim_ = beerAnim;
 
-	beerRect.w = scale_.getX() * 1.5;
-	beerRect.h = scale_.getY() * 1.7;
-	beerRect.x = pos_.getX() + scale_.getX() / 2 - beerRect.w / 2;
-	beerRect.y = pos_.getY() + scale_.getY() / 2 - beerRect.h / 2;
+	beerRect.w = (int)round(scale_.getX() * 1.5);
+	beerRect.h = (int)round(scale_.getY() * 1.7);
+	beerRect.x = (int)round(pos_.getX() + scale_.getX() / 2 - beerRect.w / 2);
+	beerRect.y = (int)round(pos_.getY() + scale_.getY() / 2 - beerRect.h / 2);
 
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;

@@ -35,7 +35,7 @@ void Barrel::initAnims()
 void Barrel::applyRangeDmg()
 {
 	currState_ = BARREL_STATE::EXPLODING;
-	list<Collider*>affecteds = CollisionCtrl::instance()->getEntitiesInArea(getCenter(), EXPL_BARREL_RANGE);
+	list<Collider*>affecteds = CollisionCtrl::instance()->getEntitiesInArea(getCenter(), (int)round(EXPL_BARREL_RANGE));
 	for (auto afected : affecteds) {
 		dynamic_cast<Actor*>(afected)->receiveDamage(BARREL_DMG);
 	}

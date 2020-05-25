@@ -70,7 +70,7 @@ bool Cleon::update() {
 	}
 	if (currState_ == STATE::CHARGING) {
 		selectTarget();
-		SDL_Rect targetRect = { target_.getX(),target_.getY(),25,25 };
+		SDL_Rect targetRect = { (int)round(target_.getX()),(int)round(target_.getY()),25,25 };
 		//Cle�n llego al destino de su carga
 		if (SDL_HasIntersection(&getDestiny(), &targetRect)) {
 			auto currEnemy = dynamic_cast<Player*>(currEnemy_);

@@ -15,8 +15,8 @@ bool Crab::update() {
 	{
 		//Cuando no tenemos enemigo
 		if (currEnemy_ == nullptr && !getEnemy(currStats_.meleeRange_)) {
-			if (RectRect(getCenter().getX(), getCenter().getY(), getScaleX(), getScaleY(),
-				targetsVector_.at(actualTarget_).getX(), targetsVector_.at(actualTarget_).getY(), 1, 1)) {
+			if (RectRect((float)getCenter().getX(), (float)getCenter().getY(), (float)getScaleX(), (float)getScaleY(),
+				(float)(targetsVector_.at(actualTarget_).getX()), (float)(targetsVector_.at(actualTarget_).getY()), 1, 1)) {
 				updateTarget();
 			}
 			move(targetsVector_.at(actualTarget_));

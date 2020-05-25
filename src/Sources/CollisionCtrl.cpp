@@ -80,7 +80,7 @@ void CollisionCtrl::islandCollisions() {
 				if (Collisions::collidesWithRotation(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(), bullet->getCollisionRot(),
 					enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot())) {
 					if (bullet != nullptr) {
-						enem->receiveDamage(bullet->getDamage());
+						enem->receiveDamage((int)round(bullet->getDamage()));
 						if (bullet->getRicochet()) {	//Cuando esté rebotando
 							bullet->searchEnemy(enemies_, enem);
 						}
@@ -209,9 +209,9 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 	//Colisi�n con los objetos del barco
 	for (int i = 0; i < shipObjects_.size(); i++) {
-		if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getColliderScale().getX(), player_->getScaleY() / 10,
-			shipObjects_[i].object->getPosX() + shipObjects_[i].object->getScaleX() / 2, shipObjects_[i].object->getPosY() + 
-			shipObjects_[i].object->getScaleY() / 2, shipObjects_[i].object->getScaleX(), shipObjects_[i].object->getScaleY())) {
+		if (RectRect((float)(player_->getPosX() + player_->getScaleX() / 2),(float) (player_->getPosY() + player_->getScaleY() / 2),(float)( player_->getColliderScale().getX()), (float)(player_->getScaleY() / 10),
+			(float)(shipObjects_[i].object->getPosX() + shipObjects_[i].object->getScaleX() / 2), (float)(shipObjects_[i].object->getPosY() + 
+			shipObjects_[i].object->getScaleY() / 2),(float)( shipObjects_[i].object->getScaleX()),(float)( shipObjects_[i].object->getScaleY()))) {
 			player_->stop();
 			player_->setPos(player_->getPreviousPos());
 
@@ -354,7 +354,7 @@ list<Enemy*> CollisionCtrl::getEnemiesInArea(Point2D center, int radius)
 	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
 	{
 		SDL_Rect coll = (*it)->getCollider();
-		if (RectBall(coll.x + coll.w / 2, coll.y + coll.h / 2, coll.w, coll.h, center.getX(), center.getY(), radius)) {
+		if (RectBall((float)(coll.x + coll.w / 2), (float)(coll.y + coll.h / 2), (float)coll.w, (float)coll.h, (float)center.getX(), (float)center.getY(), (float)radius)) {
 			enemiesWithin.push_back((*it));
 		}
 	}
@@ -365,12 +365,12 @@ list<Collider*> CollisionCtrl::getEntitiesInArea(Point2D center, int radius)
 {
 	list<Collider*> entities;
 	SDL_Rect coll = player_->getCollider();
-	if (RectBall(coll.x + coll.w / 2, coll.y + coll.h / 2, coll.w, coll.h, center.getX(), center.getY(), radius)) {
+	if (RectBall((float)(coll.x + coll.w / 2), (float)(coll.y + coll.h / 2), (float)coll.w, (float)coll.h, (float)center.getX(), (float)center.getY(), (float)radius)) {
 		entities.push_back(player_);
 	}
 	for (auto enemy : enemies_) {
 		coll = (enemy)->getCollider();
-		if (RectBall(coll.x + coll.w / 2, coll.y + coll.h / 2, coll.w, coll.h, center.getX(), center.getY(), radius)) {
+		if (RectBall((float)(coll.x + coll.w / 2), (float)(coll.y + coll.h / 2), (float)coll.w, (float)coll.h, (float)center.getX(), (float)center.getY(), (float)radius)) {
 			entities.push_back((enemy));
 		}
 	}

@@ -20,8 +20,8 @@ Vector2D Enemy::isPlayerInRange(double rangeAttack)
 	Vector2D center = getCenter();
 
 	if (currEnemy_ == nullptr &&
-		RectBall(playerPos.getX(), playerPos.getY(),  scalePlayer.getX(), scalePlayer.getY(),
-			center.getX(), center.getY(), rangeAttack)){
+		RectBall((float)playerPos.getX(), (float)playerPos.getY(), (float)scalePlayer.getX(), (float)scalePlayer.getY(),
+			(float)center.getX(), (float)center.getY(), (float)rangeAttack)){
 		return playerPos;
 	}
 	else
@@ -40,7 +40,7 @@ Vector2D Enemy::isClonInRange(double n)
 	Vector2D center = getCenter();
 
 	if (currEnemy_ == nullptr &&
-		RectBall(clonPos.getX(), clonPos.getY(), scaleClon.getX(), scaleClon.getY(),
+		RectBall((float)clonPos.getX(), (float)clonPos.getY(), (float)scaleClon.getX(), (float)scaleClon.getY(),
 			center.getX(), center.getY(), n)) {
 		return clonPos;
 	}
@@ -121,8 +121,8 @@ bool Enemy::onRange() {
 	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = currEnemy_->getCenter();
-		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
-			center.getX(), center.getY(), rangeVision_))
+		if (RectBall((float)currEnemyCenter.getX(), (float)currEnemyCenter.getY(), (float)currEnemy_->getScaleX(), (float)currEnemy_->getScaleY(),
+			(float)center.getX(), (float)center.getY(), (float)rangeVision_))
 		{
 			return true;
 		}
@@ -139,8 +139,8 @@ bool Enemy::onRange(double range) {
 	Vector2D enemCenter = enem->getCenter();
 	Vector2D enemScale = enem->getColliderScale();
 
-	if (RectBall(enemCenter.getX(), enemCenter.getY(), enemScale.getX(), enemScale.getY(),
-		center.getX(), center.getY(), range)){
+	if (RectBall((float)enemCenter.getX(), (float)enemCenter.getY(), (float)enemScale.getX(), (float)enemScale.getY(),
+		(float)center.getX(), (float)center.getY(), (float)range)){
 		return true;
 	}
 	else

@@ -21,7 +21,7 @@ Button::Button(NoParCallBack* callBack, Application* app, Texture* texture, Vect
 bool Button::update() {
 	HandleEvents* input = HandleEvents::instance();
 	Vector2D aux = input->getRealMousePos(); //Guardas la posicion del raton
-	SDL_Point mouse = { aux.getX(), aux.getY() };
+	SDL_Point mouse = { (int)round(aux.getX()), (int)round(aux.getY()) };
 
 	if (SDL_PointInRect(&mouse, &getDestiny()) && input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
 		if (cbClick_ != nullptr) {

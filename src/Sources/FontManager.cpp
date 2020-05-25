@@ -32,10 +32,10 @@ bool FontManager::loadFont(std::size_t tag, const string& fileName, int size) {
 
 	Font* font = new Font();
 	if (font->load(fileName, size)) {
-		Font* curr = fonts_[tag];
+		Font* curr = fonts_[(int)tag];
 		if (curr != nullptr)
 			delete curr;
-		fonts_[tag] = font;
+		fonts_[(int)tag] = font;
 		return true;
 	}
 	else {
