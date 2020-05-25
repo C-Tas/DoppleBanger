@@ -107,6 +107,7 @@ void Actor::initDie() {
 void Actor::dieAnim() {
 	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
 		currState_ = STATE::DIED;
+		dieAudio();
 		app_->getCurrState()->removeRenderUpdateLists(this);
 	}
 }
