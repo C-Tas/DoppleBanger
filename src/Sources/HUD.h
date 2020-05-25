@@ -7,12 +7,12 @@ class Player;
 struct potionHUD
 {
 	bool active_ = false;
-	double duration_;
-	double lastTick_;
-	double currentTick_;
-	VisualElement* potionBackground_;
-	VisualElement* potionHUD_;
-	Texture* potionTimeHUD_;
+	double duration_=0;
+	double lastTick_=0;
+	double currentTick_=0;
+	VisualElement* potionBackground_=nullptr;
+	VisualElement* potionHUD_=nullptr;
+	Texture* potionTimeHUD_=nullptr;
 };
 
 class HUD : public Draw
@@ -68,7 +68,7 @@ private:
 	//Tama�o de los iconos
 	const int W_H_ICON = app_->getWindowHeight() / 16;
 	//Separaci�n entre cada icono
-	const int DISTANCE_BTW_ICON = app_->getWindowWidth() / 17.15;
+	const int DISTANCE_BTW_ICON =(int)round( app_->getWindowWidth() / 17.15);
 
 	//Timon
 	const uint W_WHEEL = app_->getWindowWidth() * 3 / 19;

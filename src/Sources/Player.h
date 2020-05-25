@@ -144,6 +144,7 @@ private:
 		bool empoweredInit_ = false;	//Para saber si la animación se ha inicializado
 		bool perforate_ = false;		//Para saber si el siguiente disparo perfora
 		bool bussy_ = false;			//Para saber si el player esta ocupado ejecutando otras acciones
+		bool meleeBussy_ = false;		//Para no inicializar otra vez el melee si se dan mas clicks
 		bool dead_ = false;				//Para saber si el player ha muerto de verdad (fin animacion)
 		bool attacking_ = false;		//Para saber si el player esta atacando
 		bool onCollision_ = false;		//Para saber si el player esta colisionando
@@ -177,6 +178,19 @@ private:
 		vector<double> lastTicksPotion_{ 0, 0, 0, 0 };	//Para guardar el último tick 
 		//Habilidades
 		vector<Skill*> skills_ = { nullptr, nullptr, nullptr, nullptr};
+		#pragma region Cheats
+				bool cheat_ = false;			//Para saber si el player esta chetado
+
+				//Valores adicionales para el cheat
+				double healthCheat_ = 100000;			//Vida
+				double manaRegCheat_ = 100;				//Regeneración de maná por segundo, porcentaje
+				double armorCheat_ = 100;				//Armadura
+				double meleeDamageCheat_ = 1000000;		//Daño a melee
+				double distDmgCheat_ = 100000;			//Daño a distancia y de las habilidades
+				double critCheat_ = 100;				//Crítico
+				double distRangeCheat_ = 10000;			//Rango del ataque a distancia
+				double moveSpeedCheat_ = 500;			//Velocidad de movimiento
+		#pragma endregion
 
 		#pragma region Cooldowns
 			Cooldown slowTimeCD_;		//Tiempo que nos queda "slow"
@@ -190,8 +204,8 @@ private:
 
 		#pragma region Constantes
 		//Estadisticas iniciales del jugador</summary>
-		const double MANA_REG = 1;				//Regeneración de maná por segundo
-		const double ARMOR = 10;				//Armadura
+		const double MANA_REG = 1;				//Regeneración de maná por segundo, porcentaje
+		const double ARMOR = 0;					//Armadura, porcentaje
 		const double MELEE_DAMAGE = 100;		//Daño a melee
 		const double DIST_DAMAGE = 1000;		//Daño a distancia y de las habilidades
 		const double CRIT = 0;					//Crítico
@@ -200,23 +214,27 @@ private:
 		const double MOVE_SPEED = 300;			//Velocidad de movimiento
 		const double MELEE_RATE = 3000;			//Velocidad del ataque a melee en milisegundos
 		const double DIST_RATE = 5000;			//Velocidad del ataque a distancia en milisegundos
-		const double CLON_SPAWN_RANGE = 200;	//Rango maximo para invocar al clon
+
 		//Additional Stats
 		const int CRIT_INV = 20;				//Crítico agregado al player después de activar invencible( a falta de equilibrado)
 		const int DMG_INV = 20;					//Daño agregado al player después de activar invencible( a falta de equilibrado)
 		const double EMPOWERED_BONUS = 2.5;		//Bonus porcentual del daño
 		const int RANGE_SPEED = 1000;			//Velocidad extra para el pistolero raudo (a falta de equilibrado)
+
 		//Cooldowns milisegundos
 		const double EMPOWERED_DELAY = 10000;	//Cooldown del golpe fuerte
 		const double RICOCHET_DELAY = 5000;		//Cooldown del rebote
 		const double MANA_REG_DELAY = 3000;		//Tiempo regeneracion de mana = 1 seg
+
 		//Balas
 		const double W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
 		const double BULLET_VEL = 1000;							//Velocidad de la bala
 		const double BULLET_LIFE = 1;							//Vida de la bala, en segundo
+
 		//Sonidos
 		const double WALK_TIME = 600;
 		#pragma endregion
+
 	#pragma endregion
 
 	#pragma region Metodos
@@ -227,6 +245,8 @@ private:
 		void updateDebuffs();
 		//Actualiza los cooldowns
 		virtual void updateCooldowns();
+		//Checkea si se ha pulsado la tecla para el cheto
+		void checkInputCheat();
 		//Checkea si se ha pulsado alguna tecla
 		void checkInput();
 		//Checkea si se ha pulsado una tecla para cambiar de estado
@@ -353,6 +373,8 @@ private:
 			void attack(Enemy* obj);
 			//Grita
 			void shout();
+			//Para chetar al player
+			void cheatPlayer();
 		#pragma endregion
 	#pragma endregion
 };

@@ -60,7 +60,7 @@ private:
 
 public:
 	//<summary>enum para diferenciar los botones del raton</summary>
-	enum MOUSEBUTTON : Uint8 {
+	enum  MOUSEBUTTON : Uint8 {
 		LEFT = 0, MIDDLE = 1, RIGHT = 2
 	};
 
@@ -136,7 +136,7 @@ public:
 	}
 
 	//<summary>devuelve la posicion del raton</summary>
-	inline const Vector2D& getRelativeMousePos() {
+	inline const Vector2D getRelativeMousePos() {
 		Vector2D pos = mousePos_;
 		pos.setX(pos.getX() + Camera::instance()->getCamera().getX());
 		pos.setY(pos.getY() + Camera::instance()->getCamera().getY());
@@ -144,7 +144,7 @@ public:
 	}
 
 	//<summary>devuelve el estado del boton que le pases por paremtro</summary>
-	inline int getMouseButtonState(MOUSEBUTTON button) {
+	inline bool getMouseButtonState(MOUSEBUTTON button) {
 		return mbState_[button];
 	}
 

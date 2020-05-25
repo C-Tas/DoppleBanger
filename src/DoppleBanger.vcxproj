@@ -29,6 +29,7 @@
     <ClCompile Include="Sources\Application.cpp" />
     <ClCompile Include="Sources\Armor.cpp" />
     <ClCompile Include="Sources\AStar.cpp" />
+    <ClCompile Include="Sources\Barrel.cpp" />
     <ClCompile Include="Sources\BeerButton.cpp" />
     <ClCompile Include="Sources\Blunderbuss.cpp" />
     <ClCompile Include="Sources\Boots.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Sources\Application.h" />
     <ClInclude Include="Sources\Armor.h" />
     <ClInclude Include="Sources\AStar.hpp" />
+    <ClInclude Include="Sources\Barrel.h" />
     <ClInclude Include="Sources\BeerButton.h" />
     <ClInclude Include="Sources\Blunderbuss.h" />
     <ClInclude Include="Sources\Boots.h" />
@@ -300,7 +302,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)dll</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(LibraryPath)</LibraryPath>
@@ -326,6 +328,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)SDL2_image-2.0.5\include;$(SolutionDir)SDL2_ttf-2.0.14\include;$(SolutionDir)SDL2_mixer-2.0.2\include;$(SolutionDir)SDL2\include;$(SolutionDir)SDL2_gfx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

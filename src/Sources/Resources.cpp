@@ -394,22 +394,22 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ Agus, "../Sources/assets/creditState/images/Agus.png" },
 	//{ Aida, "../Sources/assets/creditState/images/Aida.png" },
 	{ Amaro, "../Sources/assets/creditState/images/Amaro.png" },
-	//{ Aurora, "../Sources/assets/creditState/images/Aurora.png" },
+	{ Aurora, "../Sources/assets/creditState/images/Aurora.png" },
 	{ Dani, "../Sources/assets/creditState/images/Dani.png" },
 	{ Georgi, "../Sources/assets/creditState/images/Georgi.png" },
 	{ Leyre, "../Sources/assets/creditState/images/Leyre.png" },
-	//{ Paula, "../Sources/assets/creditState/images/Paula.png" },
+	{ Paula, "../Sources/assets/creditState/images/Paula.png" },
 	{ Oscar, "../Sources/assets/creditState/images/Oscar.png" },//
 	{ Stiven, "../Sources/assets/creditState/images/Stiven.png" },
 	//Fichas
 	{ AgusFicha, "../Sources/assets/creditState/images/agusFicha.png" },
 	//{ AidaFicha, "../Sources/assets/creditState/images/aidaFicha.png" },
 	{ AmaroFicha, "../Sources/assets/creditState/images/amaroFicha.png" },
-	//{ AuroraFicha, "../Sources/assets/creditState/images/auroraFicha.png" },
+	{ AuroraFicha, "../Sources/assets/creditState/images/auroraFicha.png" },
 	{ DaniFicha, "../Sources/assets/creditState/images/daniFicha.png" },
 	{ GeorgiFicha, "../Sources/assets/creditState/images/georgiFicha.png" },
 	{ LeyreFicha, "../Sources/assets/creditState/images/leyreFicha.png" },
-	//{ PaulaFicha, "../Sources/assets/creditState/images/paulaFicha.png" },
+	{ PaulaFicha, "../Sources/assets/creditState/images/paulaFicha.png" },
 	{ OscarFicha, "../Sources/assets/creditState/images/oscarFicha.png" },
 	{ StivenFicha, "../Sources/assets/creditState/images/stivenFicha.png" },
 	{ PanelCollaborators, "../Sources/assets/creditState/images/agradecimientos.png" },
@@ -477,9 +477,13 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 
 	//Lobo
 #pragma region Wolf
-	{ WolfHowlAudio ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
-	{ WolfAttackAudio ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
-	{ WolfDieAudio ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" },
+	{ WolfAttack1 ,"../Sources/assets/efectos_sonido/wolf/attack1.mp3" },
+	{ WolfAttack2 ,"../Sources/assets/efectos_sonido/wolf/attack2.wav" },
+	{ WolfIdle1 ,"../Sources/assets/efectos_sonido/wolf/idle1.mp3" },
+	{ WolfIdle2 ,"../Sources/assets/efectos_sonido/wolf/idle2.wav" },
+	{ WolfDetection ,"../Sources/assets/efectos_sonido/wolf/detect.mp3" },
+	{ WolfChase,"../Sources/assets/efectos_sonido/wolf/chase.mp3" },
+	{ WolfDeath ,"../Sources/assets/efectos_sonido/wolf/die.wav" },
 #pragma endregion
 	//Mono
 #pragma region Monkey
@@ -605,7 +609,8 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ PlayerChannel4, 10 },
 
 	//Canal del lobo
-	{ WolfChannel, 6 },
+	{ WolfChannel1, 6 },
+	{ WolfChannel2, 6 },
 	//Canal del mono
 	{ MonkeyChannel, 6 },
 	//Canal de la calabaza

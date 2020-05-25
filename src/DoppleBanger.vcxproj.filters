@@ -110,6 +110,7 @@
     <ClCompile Include="Sources\TestState.cpp" />
     <ClCompile Include="Sources\tutorialObject.cpp" />
     <ClCompile Include="Sources\tutorialState.cpp" />
+    <ClCompile Include="Sources\Barrel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -229,5 +230,6 @@
     <ClInclude Include="Sources\TestState.h" />
     <ClInclude Include="Sources\tutorialObject.h" />
     <ClInclude Include="Sources\tutorialState.h" />
+    <ClInclude Include="Sources\Barrel.h" />
   </ItemGroup>
 </Project>
