@@ -227,7 +227,6 @@ void Player::updateCooldowns()
 	if (empoweredCD_.isCooldownActive()) { empoweredCD_.updateCooldown(); }
 	if (ricochetCD_.isCooldownActive()) { ricochetCD_.updateCooldown(); }
 	if (slowTimeCD_.isCooldownActive()) slowTimeCD_.updateCooldown();
-
 }
 
 void Player::updateBuffPotion(){
@@ -677,7 +676,6 @@ void Player::movementManager()
 
 void Player::shoot(Vector2D dir)
 {
-
 	//Se calcula la posici�n desde la cual se dispara la bala
 	Vector2D shootPos;
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));

@@ -175,8 +175,11 @@ void TextBox::dialogElderMan(int num) {
 				text.loadFromText(app_->getRenderer(), "Ahora usa ese acesso para activar la habilidad y mocha al susodicho.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
-				text.loadFromText(app_->getRenderer(), "Utilizar una habilidad te consumir" + Resources::tildes_['a'] + " man" + Resources::tildes_['a'] + ", puedes ver la cantidad que tienes en la barra azul del tim" + Resources::tildes_['o'] + "n.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "Utilizar una habilidad te consumir" + Resources::tildes_['a'] + " man" + Resources::tildes_['a'] + ", puedes ver la cantidad que tienes en la barra", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 3));
+
+				text.loadFromText(app_->getRenderer(), "azul del tim" + Resources::tildes_['o'] + "n.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + (lineSpacing * 4));
 				break;
 			}
 			break;
@@ -210,6 +213,7 @@ void TextBox::dialogElderMan(int num) {
 		case 6:
 			switch (num) {
 			case 0:
+				skipTutorial_->setTexture(app_->getTextureManager()->getTexture(Resources::ButtonFinishTutorial));
 				text.loadFromText(app_->getRenderer(), "Ten cuidado ah" + Resources::tildes_['i'] + " fuera porque si eres derrotada podr" + Resources::tildes_['e'] + " ir a salvarte",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
