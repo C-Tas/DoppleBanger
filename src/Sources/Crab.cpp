@@ -136,9 +136,11 @@ void Crab::initObject()
 	initAnims();
 	initialStats();
 	rangeVision_ = 40;
-	target_ = pos_;
 	nextTarget_ = pos_;
 	app_->getAudioManager()->playChannel(Resources::CrabIdleSound, 0, Resources::CrabChannel1);
+	scaleCollision_.setVec(Vector2D(scale_.getX()/3, scale_.getY())/5);
+	posCollision_ = Vector2D(scale_.getX() / 3, scale_.getY() / 5);
+	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	tag_ = "Crab";
 }
 

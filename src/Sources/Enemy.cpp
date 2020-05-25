@@ -6,8 +6,8 @@
 void Enemy::die()
 {
 	GameManager::instance()->getPlayer()->isEnemyDead(this);
-	//CollisionCtrl::instance()->removeEnemy(this);
-	//static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
+	CollisionCtrl::instance()->removeEnemy(this);
+	static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
 }
 
 Vector2D Enemy::isPlayerInRange(double rangeAttack)
@@ -83,6 +83,7 @@ void Enemy::initObject()
 	initialStats();
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
+	posCollision_ = Vector2D(0, 0);
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	initAnims();
 }

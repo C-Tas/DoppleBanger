@@ -557,6 +557,11 @@ void Player::checkInput()
 		initShoot();
 	}
 
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::MIDDLE)) {
+		cout << mousePos_.getX() + Camera::instance()->getCamera().getX() << endl;
+		cout << mousePos_.getY() + Camera::instance()->getCamera().getY() << endl;
+	}
+
 	//Ataque/movimiento
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
 	{

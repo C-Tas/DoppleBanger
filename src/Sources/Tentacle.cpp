@@ -13,11 +13,13 @@ bool Tentacle::update()
 	{
 		//Una vez cae se le asigna su hitbox
 		collisionArea_ = collArea_;
+		posCollision_ = Point2D(0,0);
+		scaleCollision_ = scale_;
 		setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
 		currState_ = STATE::ATTACKING;
 		//Durante 1 frame se hace daño al jugador
 	}
-	else
+	else if (currState_ != STATE::FOLLOWING)
 	{
 		//Dependiendo del ataque para el que se ha invocado
 		switch (attack_)
@@ -36,7 +38,7 @@ bool Tentacle::update()
 bool Tentacle::sweepUpdate()
 {
 	//Mientras no haya llegado a la posici�n inicial con un margen de error (y no haya hecho ning�n giro para que funcione la primera vez)
-	if (turns_ < 4 || !((abs(pos_.getX() - initPos_.getX()) < (kraken_->getScaleX() * 0.05)) && (abs(pos_.getY() - initPos_.getY()) < (kraken_->getScaleY() * 0.05))))
+	if (turns_ < 4 || !((abs(pos_.getX() - initPos_.getX()) < (kraken_->getScaleX() * 0.05)) && (abs(pos_.getY() - initPos_.getY()) < (kraken_->getScaleY() * 0.1))))
 	{
 		if (!rotating_)
 		{
@@ -44,25 +46,25 @@ bool Tentacle::sweepUpdate()
 			double deltaY = (kraken_->getScaleX() - kraken_->getScaleY()) / 2;
 
 			//Comprobaciones de si el tent�culo ha llegado a una de las esquinas en las que gira (dependientes de pos y scale de kraken)
-			if (abs(collisionRot_ - 0) <= 1 && pos_.getY() + scale_.getY() / 2 > kraken_->getPosY() + kraken_->getScaleY())
+			if (abs(abs(collisionRot_) - 0) <= 1 && pos_.getY() + scale_.getY() / 2 > kraken_->getPosY() + kraken_->getScaleY())
 			{
 				collisionRot_ = 0;
 				centerRot_ = Vector2D(getCenter().getX() - scale_.getX() / 2, getCenter().getY());
 				rotating_ = true;
 			}
-			else if (abs(collisionRot_ - 270) <= 1 && pos_.getX() + scale_.getX() / 2 > kraken_->getPosX() + kraken_->getScaleX())
+			else if (abs(abs(collisionRot_) - 270) <= 1 && pos_.getX() + scale_.getX() / 2 > kraken_->getPosX() + kraken_->getScaleX())
 			{
 				collisionRot_ = 270;
 				centerRot_ = Vector2D(getCenter().getX(), getCenter().getY() + scale_.getX() / 2);
 				rotating_ = true;
 			}
-			else if (abs(collisionRot_ - 180) <= 1 && pos_.getY() + scale_.getY() / 2 < kraken_->getPosY())
+			else if (abs(abs(collisionRot_) - 180) <= 1 && pos_.getY() + scale_.getY() / 2 < kraken_->getPosY())
 			{
 				collisionRot_ = 180;
 				centerRot_ = Vector2D(getCenter().getX() + scale_.getX() / 2, getCenter().getY());
 				rotating_ = true;
 			}
-			else if (abs(collisionRot_ - 90) <= 1 && pos_.getX() + scale_.getX() / 2 < kraken_->getPosX())
+			else if (abs(abs(collisionRot_) - 90) <= 1 && pos_.getX() + scale_.getX() / 2 < kraken_->getPosX())
 			{
 				collisionRot_ = 90;
 				centerRot_ = Vector2D(getCenter().getX(), getCenter().getY() - scale_.getX() / 2);
@@ -84,7 +86,7 @@ bool Tentacle::sweepUpdate()
 			{
 				rotating_ = false;
 				deltaAngle_ = 0;
-				collisionRot_ = round(collisionRot_);
+				collisionRot_ = floor(collisionRot_);
 				if (collisionRot_ == -90) collisionRot_ = 270;
 				sweepDir_ = Vector2D(cos(collisionRot_ * (M_PI / 180) + M_PI / 2), sin(collisionRot_ * (M_PI / 180) + M_PI / 2));
 				turns_++;
@@ -160,53 +162,14 @@ void Tentacle::initAnims()
 void Tentacle::onCollider()
 {
 	Player* player = static_cast<Player*>(GameManager::instance()->getPlayer());
-	if (Collisions::collidesWithRotation(player->getPos(), player->getScaleX(), player->getScaleY(),player->getCollisionRot(), pos_, scale_.getX(), scale_.getY(), collisionRot_))
+	if (Collisions::collidesWithRotation(player->getPos(), player->getScaleX(), player->getScaleY(), player->getCollisionRot(), pos_, scale_.getX(), scale_.getY(), collisionRot_))
 	{
-		if (currState_ == STATE::ATTACKING)
-		{
-
-			double radians = collisionRot_ * (M_PI / 180);
-			Point2D p1, p2;
-			Vector2D dir;
-
-			double realDamage = kraken_->getMeleeDmg();
-			if (kraken_->applyCritic()) realDamage *= 1.5;
-			player->receiveDamage(realDamage);
-
-			double a, b, c, d;
-
-			// y = mx + b 
-			// a = m; c = a* (-x0) + y0 
-			// y - y0 = a * (x-x0)
-			// ax + c = y = bx + d 
-			// P((d-c)/ (a - b), (a*d -b*c)/(a-b))
-
-			a = tan(radians + M_PI / 2);
-			b = tan(radians);
-			c = tan(radians + M_PI / 2) * -(player->getCenter().getX()) + player->getCenter().getY();
-			d = tan(radians) * -(pos_.getX()) + pos_.getY();
-
-			p1.setX((d - c) / (a - b));
-			p1.setY((a * d - b * c) / (a - b));
-
-			d = tan(radians) * -(pos_.getX() + scale_.getX()) + pos_.getY() + scale_.getY();
-
-			p2.setX((d - c) / (a - b));
-			p2.setY((a * d - b * c) / (a - b));
-
-			if ((p2 - player->getCenter()).magnitude() < (p1 - player->getCenter()).magnitude())
-				dir = (p2 - player->getCenter());
-			else
-				dir = (p1 - player->getCenter());
-
-			dir.normalize();
-
-			int margin = scale_.getY() * 0.6 + (player->getScaleX() / 2 + player->getScaleY() / 2);
-			player->displace(dir, margin);
-
-		}
-		else if (currState_ == STATE::IDLE)
+		if (currState_ == STATE::IDLE) {
 			player->stop();
+		}
+		else if (currState_ == STATE::ATTACKING) {
+			player->receiveDamage(currStats_.meleeDmg_);
+		}
 	}
 }
 
@@ -221,4 +184,6 @@ const void Tentacle::draw()
 	SDL_Rect dest = getDestiny(); dest.x = dest.x - Camera::instance()->getCamera().getX(); dest.y = dest.y - Camera::instance()->getCamera().getY();
 	if (currAnim_.numberFrames_ <= 0) texture_->render(dest, collisionRot_);
 	else texture_->render(dest, collisionRot_, frame_);
+
+	app_->getTextureManager()->getTexture(Resources::GreenBar)->render({ (int)(getColliderPos().getX() - Camera::instance()->getCamera().getX()), (int)(getColliderPos().getY() - Camera::instance()->getCamera().getY()),(int)(scaleCollision_.getX()), (int)(scaleCollision_.getY()) }, collisionRot_);
 }

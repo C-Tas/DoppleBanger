@@ -292,6 +292,9 @@ void EnemyPirate::initObject() {
 	target_ = pos_;
 	nextTarget_ = pos_;
 	rangeVision_ = VIS_RANGE;
+	scaleCollision_.setVec(Vector2D(scale_.getX() / 3, scale_.getY()) / 5);
+	posCollision_ = Vector2D(scaleCollision_.getX(), scaleCollision_.getY());
+	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	initAnims();
 	tag_ = "EnemyPirate";
 }

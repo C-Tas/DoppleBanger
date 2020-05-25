@@ -147,18 +147,10 @@ void CollisionCtrl::islandCollisions() {
 		}
 	}
 
-	//Jugador con triggers
-	/*for (auto trigg : triggers_) {
-		if (player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getScaleX(), player_->getScaleY() / 10,
-			trigg->getPosX() + trigg->getScaleX() / 2, trigg->getPosY() + trigg->getScaleY() / 2, trigg->getScaleX(), trigg->getScaleY()) {
-			trigg->onOverlap();
-		}
-	}*/
-
 	//Colisi�n colliders con jugador
 	for (auto collider : colliders_) {
 		if (player_ != nullptr && Collisions::collides(collider->getPos(), collider->getScaleX(), collider->getScaleY(),
-			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
+			player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
 			collider->onCollider();
 		}
 	}

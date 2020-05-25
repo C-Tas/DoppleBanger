@@ -17,7 +17,7 @@ bool Kraken::update() {
 
 	if (!attackCD_.isCooldownActive())
 	{
-		int probSwim, probInk, probSweep/*, probSlam*/;
+		int probSwim, probInk, probSweep;
 		if ((currEnemy_->getPos() - getCenter()).magnitude() < 1.5 * scale_.getX())
 		{
 			//Frecuencias acumuladas de los ataques
@@ -55,7 +55,6 @@ bool Kraken::update() {
 		app_->getAudioManager()->setChannelVolume(7, Resources::MainMusicChannel);
 		app_->getAudioManager()->playChannel(Resources::KrakenDeath, 0, Resources::KrakenChannel1);
 		app_->getAudioManager()->haltChannel(Resources::KrakenChannel2);
-		//Tendr�a que hacer la animaci�n de muerte?
 		//Cuando acabe la animaci�n, lo mata
 		if (!tentacles_.empty()) {
 			for (Tentacle* i : tentacles_) {
@@ -63,6 +62,7 @@ bool Kraken::update() {
 				{
 					i->die();
 					app_->getCurrState()->removeRenderUpdateLists(i);
+					static_cast<PlayState*>(app_->getCurrState())->removeEnemy(i);
 				}
 			}
 			tentacles_.clear();
@@ -94,6 +94,7 @@ void Kraken::initObject()
 	initAnims();
 	swimInit();
 	initRewards();
+	tag_ = "Kraken";
 	app_->resetMusicChannels();
 	app_->getAudioManager()->playChannel(Resources::KrakenIdle, -1, Resources::KrakenChannel1);
 	app_->getAudioManager()->playChannel(Resources::KrakenMusic, -1, Resources::MainMusicChannel);
@@ -185,6 +186,20 @@ void Kraken::swimInit()
 
 	swimCD_.initCooldown(SWIM_DURATION); //Esto se tendría que hacer al acabar la animación
 	app_->getAudioManager()->playChannel(Resources::KrakenDive, 0, Resources::KrakenChannel2);
+
+	cout << "nada" << endl;
+
+	if (!tentacles_.empty()) {
+		for (Tentacle* i : tentacles_) {
+			if (i != nullptr)
+			{
+				i->die();
+				i->setState(STATE::DYING);
+				app_->getCurrState()->removeRenderUpdateLists(i);
+			}
+		}
+		tentacles_.clear();
+	}
 }
 
 void Kraken::swimEnd()
@@ -195,7 +210,7 @@ void Kraken::swimEnd()
 	//Se encuentra y guarda el índice de la posición más cercana al jugador y su distancia
 	Vector2D closest = Vector2D(-1, -1);
 	Player* player = static_cast<Player*>(GameManager::instance()->getPlayer());
-	for (int i = 0; i < NUM_KRAKEN_SPOTS; i++)
+	for (int i = 0; i < krakenSpots_.size(); i++)
 	{
 		double dist = Vector2D(player->getCenter().getX() - krakenSpots_[i].getX(), player->getCenter().getY() - krakenSpots_[i].getY()).magnitude();
 		if (closest.getX() < 0 || dist < closest.getY())
@@ -215,7 +230,7 @@ void Kraken::ink()
 	for (int i = 0; i < numShots; i++)
 	{
 		//El punto sale aleatoriamente entre dos radios, scaleX y 2 scaleX
-		int radius = (int)round(rand() % (int)(scale_.getX()) + scale_.getX());
+		int radius = (int)round(rand() % (int)(scale_.getX()) + scale_.getX()/2);
 		int angle = rand();
 		pos.setX(radius * cos(angle) + getCenter().getX());
 		pos.setY(radius * sin(angle) + getCenter().getY());
@@ -223,9 +238,6 @@ void Kraken::ink()
 		Ink* ink = new Ink(app_, this, pos, scale);
 		app_->getGameStateMachine()->getState()->addRenderUpdateLists(ink);
 	}
-
-	Ink* ink = new Ink(app_, this, { 1148, 1800 }, scale);
-	app_->getGameStateMachine()->getState()->addRenderUpdateLists(ink);
 }
 
 void Kraken::updateCooldowns()

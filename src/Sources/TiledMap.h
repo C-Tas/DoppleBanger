@@ -89,8 +89,8 @@ private:
 	void setObstacleType(int gid, Obstacle* obstacle);
 	
 #pragma region ObjectsSize
-	const double W_KRAKEN = app_->getWindowWidth() / 4;
-	const double H_KRAKEN = app_->getWindowHeight() / 2.5;
+	const double W_KRAKEN = app_->getWindowWidth() / 8;
+	const double H_KRAKEN = app_->getWindowHeight() / 5;
 
 	const double W_MONKEY = app_->getWindowWidth() / 12;
 	const double H_MONKEY = app_->getWindowHeight() / 5;

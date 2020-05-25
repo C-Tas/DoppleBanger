@@ -92,6 +92,7 @@ public:
 
 	//Devuelve el estado actual del actor
 	const STATE getState() { return currState_; };
+	void setState(STATE state) { currState_ = state; };
 	//Detiene el movimiento
 	virtual void stop() { dir_ = Vector2D(0, 0); };
 	//Cambia al enemigo al que está atacando

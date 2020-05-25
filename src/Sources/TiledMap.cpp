@@ -312,6 +312,10 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		state_->addEnemy(kraken);
 		collisionCtrl_->addEnemy(kraken);
 	}
+	else if (objectType == "KrakenSpots") {
+		auto tag = state_->getEnemyByTag("Kraken");
+		if (tag != nullptr) dynamic_cast<Kraken*>(tag)->setPositions(pos);
+	}
 	else if (objectType == "Magordito") {
 		//A�adir Magordito
 		Magordito* magordito = new Magordito(app_, pos, Vector2D(W_WOLF, H_WOLF));
