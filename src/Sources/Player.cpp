@@ -484,11 +484,11 @@ void Player::meleeAnim()
 				empoweredCD_.initCooldown(EMPOWERED_DELAY);
 				empoweredAct_ = false;
 				totalDmg = currStats_.meleeDmg_ * EMPOWERED_BONUS;
-				static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
+				static_cast<Enemy*>(currEnemy_)->receiveDamage((int)round(totalDmg));
 			}
 			else {
 				if (applyCritic()) totalDmg *= 1.5;
-				static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
+				static_cast<Enemy*>(currEnemy_)->receiveDamage((int)round(totalDmg));
 			}
 		}
 
@@ -604,7 +604,7 @@ Enemy* Player::checkAttack() {
 	bool found = false;
 	Enemy* obj = nullptr;
 	Vector2D mousePos = eventHandler_->getRelativeMousePos();
-	SDL_Point mouse = { 0, 0 }; mouse.x = mousePos.getX(); mouse.y = mousePos.getY();
+	SDL_Point mouse = { 0, 0 }; mouse.x =(int)round( mousePos.getX()); mouse.y =(int)round( mousePos.getY());
 	list<Enemy*> enemies_ = dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies();
 	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
 		if (SDL_PointInRect(&mouse, &(*it)->getCollider())) {
@@ -630,7 +630,7 @@ void Player::movementManager()
 	//Pies del player
 	Vector2D visPos = getVisPos();
 	//Para 
-	list<Enemy*> enemiesInRange = collisionCtrl_->getEnemiesInArea(getCenter(), currStats_.meleeRange_);
+	list<Enemy*> enemiesInRange = collisionCtrl_->getEnemiesInArea(getCenter(), (int)round(currStats_.meleeRange_));
 	//Movimiento hasta llegar al target 
 	if ((visPos.getX() < target.getX() - 2		//Comprueba si se ha llegado
 		|| visPos.getX() > target.getX() + 2
@@ -644,7 +644,7 @@ void Player::movementManager()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
-		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
+		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera((int)round(pos_.getX() + scale_.getX() / 2),(int)round( pos_.getY() + scale_.getY() / 2));
 	}
 	//Cuando se llegue al target
 	else {
@@ -705,7 +705,7 @@ void Player::shoot(Vector2D dir)
 	else if (auxGunType == equipType::ShotgunI || auxGunType == equipType::ShotgunII) {
 		app_->getAudioManager()->playChannel(Resources::Trabuco, 0, Resources::SoundChannels::PlayerChannel2);
 		Blunderbuss* blunderbuss = new Blunderbuss(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,
-			realDamage, currStats_.distRange_, gun_->getBulletSpeed());
+			(int)round(realDamage), currStats_.distRange_, gun_->getBulletSpeed());
 		if (perforate_) {
 			blunderbuss->activatePerforate();
 			perforate_ = false;
