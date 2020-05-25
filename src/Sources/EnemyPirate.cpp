@@ -29,7 +29,7 @@ bool EnemyPirate::update() {
 				updateDirVisObjective(target_);
 				move(target_);
 				//Cuando ha llegado al target empieza el idle
-				if (RectRect(getCenter().getX(), getCenter().getY(), getScaleX(), getScaleY(), target_.getX(), target_.getY(), 1, 1)) {
+				if (RectRect((float)getCenter().getX(), (float)getCenter().getY(), (float)getScaleX(), (float)getScaleY(), (float)target_.getX(), (float)target_.getY(), 1, 1)) {
 					initIdle();
 					idleCD_.initCooldown(IDLE_PAUSE);
 					//Pasamos al siguiente patrol

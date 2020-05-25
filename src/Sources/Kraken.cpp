@@ -17,7 +17,7 @@ bool Kraken::update() {
 
 	if (!attackCD_.isCooldownActive())
 	{
-		int probSwim, probInk, probSweep, probSlam;
+		int probSwim, probInk, probSweep/*, probSlam*/;
 		if ((currEnemy_->getPos() - getCenter()).magnitude() < 1.5 * scale_.getX())
 		{
 			//Frecuencias acumuladas de los ataques
@@ -215,7 +215,7 @@ void Kraken::ink()
 	for (int i = 0; i < numShots; i++)
 	{
 		//El punto sale aleatoriamente entre dos radios, scaleX y 2 scaleX
-		int radius = rand() % (int)(scale_.getX()) + scale_.getX();
+		int radius = (int)round(rand() % (int)(scale_.getX()) + scale_.getX());
 		int angle = rand();
 		pos.setX(radius * cos(angle) + getCenter().getX());
 		pos.setY(radius * sin(angle) + getCenter().getY());

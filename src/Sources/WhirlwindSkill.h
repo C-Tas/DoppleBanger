@@ -8,7 +8,7 @@ class WhirlwindSkill : public Skill
 {
 private:
 	const int RADIUS = 150;
-	const int BONUS = 1.3;
+	const int BONUS = 1;
 	const double COOLDOWN = 5000;	//En milisegundos
 	const double MANA_COST = 10;
 
@@ -26,7 +26,7 @@ public:
 			Vector2D playerCenter = Vector2D(player_->getPosX() + player_->getScaleX(), player_->getPosY() + player_->getScaleY());
 			list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(playerCenter, RADIUS);
 			for (auto it = enemies.begin(); it != enemies.end(); ++it)
-				(*it)->receiveDamage(player_->getMeleeDmg() * BONUS);
+				(*it)->receiveDamage((int)round(player_->getMeleeDmg() * BONUS));
 
 			skillCD_.initCooldown(COOLDOWN);
 		}

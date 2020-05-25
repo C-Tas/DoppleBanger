@@ -143,7 +143,7 @@ bool Wolf::onRange() {
 	double meleeRangeX = currStats_.meleeRange_ + getScaleX() / 2;
 	double meleeRangeY = currStats_.meleeRange_ + getScaleY() / 2;
 
-	SDL_Rect meleeAttack = { meleePosX   ,meleePosY,meleeRangeX * 2, meleeRangeY * 2 };
+	SDL_Rect meleeAttack = { (int)round(meleePosX)   ,(int)round(meleePosY),(int)round(meleeRangeX * 2), (int)round(meleeRangeY * 2) };
 	if (currEnemy_ != nullptr && SDL_HasIntersection(&enemyRect, &meleeAttack)) {
 		return true;
 	}

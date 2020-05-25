@@ -11,7 +11,7 @@ protected:
 	Application* app_ = nullptr;
 	GameManager* gm_ = GameManager::instance();
 	SDL_Rect dest; //Posici�n de la caja de texto, inicializada en init()
-	const int lineSpacing = GameManager::instance()->getFontSize() * 1.5;	//Interlineado y m�rgenes del texto
+	const int lineSpacing = (int)round(GameManager::instance()->getFontSize() * 1.5);	//Interlineado y m�rgenes del texto
 
 	Button* shopButton_ = nullptr;
 	Button* button_ = nullptr;

@@ -28,8 +28,8 @@ bool Altar::update() {
 void Altar::createMobs(PlayState* playState)
 {
 	for (int i = 0; i < numMobs_; i++) {
-		double xPos = app_->getRandom()->nextInt(getPosX() - ALTAR_RANGE, getPosX() + ALTAR_RANGE);
-		double yPos = app_->getRandom()->nextInt(getPosY() - ALTAR_RANGE, getPosY() + ALTAR_RANGE);
+		double xPos = app_->getRandom()->nextInt((int)round(getPosX() - ALTAR_RANGE), (int)round(getPosX() + ALTAR_RANGE));
+		double yPos = app_->getRandom()->nextInt((int)round(getPosY() - ALTAR_RANGE), (int)round(getPosY() + ALTAR_RANGE));
 		AltarSkeleton* skeleton = new AltarSkeleton(app_, { xPos, yPos }, { SKELETON_W,SKELETON_H }, this);
 		playState->addEnemy(skeleton);
 		mobs.push_back(skeleton);
@@ -44,8 +44,8 @@ bool Altar::outRange(AltarSkeleton* skeleton)
 	Vector2D center = getCenter();
 	Vector2D skeletonCenter = skeleton->getCenter();
 	Vector2D scaleSkeleton = skeleton->getColliderScale();
-	if (RectBall(skeletonCenter.getX(), skeletonCenter.getY(), scaleSkeleton.getX(), scaleSkeleton.getY(),
-		center.getX(), center.getY(), scale_.getX())) {
+	if (RectBall((float)skeletonCenter.getX(), (float)skeletonCenter.getY(), (float)scaleSkeleton.getX(), (float)scaleSkeleton.getY(),
+		(float)center.getX(), (float)center.getY(), (float)scale_.getX())) {
 		return false;
 	}
 	return true;

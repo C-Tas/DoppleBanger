@@ -91,8 +91,8 @@ void TextBox::initDescription(Point2D pos) {
 	//Caja donde se representa el texto de las descripciones
 	dest.w = app_->getWindowWidth() / 4;
 	dest.h = app_->getWindowHeight() / 7;
-	dest.x = pos.getX();
-	dest.y = pos.getY();
+	dest.x = (int)round(pos.getX());
+	dest.y = (int)round(pos.getY());
 }
 
 void TextBox::passZoneDialog()

@@ -8,7 +8,7 @@ class ClonSelfDestructSkill : public Skill
 {
 private:
 	const int RADIUS = 150;
-	const int BONUS = 1.5;
+	const int BONUS = 2;
 	const double COOLDOWN = 5000;	//En milisegundos
 	Cooldown destructCD_;			//Cooldown
 	const int MANA_COST = 10;
@@ -28,7 +28,7 @@ public:
 			Vector2D clonCenter = Vector2D(player_->getClon()->getPos().getX() + player_->getClon()->getScale().getX(), player_->getClon()->getPos().getY() + player_->getClon()->getScale().getY());
 			list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(clonCenter, RADIUS);
 			for (auto it = enemies.begin(); it != enemies.end(); ++it)
-				(*it)->receiveDamage(player_->getMeleeDmg() * BONUS);
+				(*it)->receiveDamage((int)round(player_->getMeleeDmg() * BONUS));
 
 			if (player_->getClon() != nullptr) destructCD_.initCooldown(COOLDOWN);
 		}
