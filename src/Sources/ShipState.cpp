@@ -147,7 +147,7 @@ void ShipState::loadState(){
 
 	if (gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
 		NPC* parrot;
-		parrot = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Parrot), Vector2D(W_WIN / 2, (double)H_WIN * 3 / 4), Vector2D(W_PARROT, H_PARROT), 4);
+		parrot = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Parrot), Vector2D(W_WIN / 4, (double)H_WIN * 7 / 16), Vector2D(W_PARROT, H_PARROT), 4);
 		addRenderUpdateLists(parrot);
 	}
 
