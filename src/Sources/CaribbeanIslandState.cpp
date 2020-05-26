@@ -79,7 +79,6 @@ void CaribbeanIslandState::initZone3()
 	GameManager* gm_ = GameManager::instance();
 	if (!gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
 		gm_->setMissionFinished(missions::masValePajaroEnMano, true);
-		gm_->setCompleteMission(missions::masValePajaroEnMano, true);
 	}
 	
 	currentMap_ = new TiledMap(app_, this, ZONE3_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),

@@ -60,7 +60,13 @@ void TextBox::unlockCookerReward(Application* app)
 	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	GameManager::instance()->setCompleteMission(missions::gallegaEnProblemas, true);
 	GameManager::instance()->setMissionRewardObtained(missions::gallegaEnProblemas, true);
+}
 
+void TextBox::unlockParrotReward(Application* app)
+{
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
+	GameManager::instance()->setCompleteMission(missions::masValePajaroEnMano, true);
+	GameManager::instance()->setMissionRewardObtained(missions::masValePajaroEnMano, true);
 }
 
 void TextBox::unlockMortyReward(Application* app)
@@ -491,8 +497,8 @@ void TextBox::dialogChef(bool unlock, int num) {
 				" t" + Resources::tildes_['u'] + " recompensa.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			text.loadFromText(app_->getRenderer(), "A parte del caldito, te doy algo de oro, qu" + Resources::tildes_['e'] + " seguro que no te vendr" + Resources::tildes_['a'] + " mal.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			unlockReward_->setCallBack(unlockCookerReward);
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
 			unlockReward_->setCallBack(unlockCookerReward);
 			unlockReward_->draw();
 			unlockReward_->update();
@@ -704,21 +710,34 @@ void TextBox::dialogParrot(int dialog) {
 	//El loro gerera una frase aleatoria cada vez que se habla con �l
 	initDialog();
 
-	if (dialog == 0) {
-		Texture text(app_->getRenderer(), "Texto 1.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	if (!gm_->isThatRewardUnlocked(missions::masValePajaroEnMano)) {
+		Texture text;
+		text.loadFromText(app_->getRenderer(), Resources::tildes_['¡'] + "Pistachines! " + Resources::tildes_['¡'] + "Quiero pistachines!", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + lineSpacing);
-	}
-	else if (dialog == 1) {
-		Texture text(app_->getRenderer(), "Texto 2.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + lineSpacing);
-	}
-	else if (dialog == 2) {
-		Texture text (app_->getRenderer(), "Texto 3.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + lineSpacing);
+		text.loadFromText(app_->getRenderer(), "Os he visto y me preguntaba si aqu" + Resources::tildes_['¡'] + " podr" + Resources::tildes_['¡'] + "a comer pistachines...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+		unlockReward_->setCallBack(unlockParrotReward);
+		unlockReward_->draw();
+		unlockReward_->update();
 	}
 	else {
-		Texture text(app_->getRenderer(), "Texto 4.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + lineSpacing);
+		if (dialog == 0) {
+			Texture text(app_->getRenderer(), "Texto 1.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+		}
+		else if (dialog == 1) {
+			Texture text(app_->getRenderer(), "Texto 2.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+		}
+		else if (dialog == 2) {
+			Texture text(app_->getRenderer(), "Texto 3.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+		}
+		else {
+			Texture text(app_->getRenderer(), "Texto 4.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+		}
 	}
 }
 

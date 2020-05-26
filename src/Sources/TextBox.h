@@ -28,10 +28,9 @@ protected:
 	static void goToShipState(Application* app);
 	static void changeZone(Application* app);
 	static void unlockCookerReward(Application* app);
+	static void unlockParrotReward(Application* app);
 	static void unlockMortyReward(Application* app);
 	static void unlockNamiReward(Application* app);
-
-
 
 public:
 	///<summary>Constructora del textBox de di�logo</summary>

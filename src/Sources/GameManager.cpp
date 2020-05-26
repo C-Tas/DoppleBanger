@@ -757,8 +757,6 @@ void GameManager::setCompleteMission(missions mission, bool complete)
 			}
 			getPlayer()->addMaxMana(getStatsReward(mission));
 			break;
-		case missions::masValePajaroEnMano:
-			break;
 		case missions::arlongPark:
 			for (int i = 0; i < getNumOfObjectsReward(mission); i++) {
 				//TO DO: nivelar
