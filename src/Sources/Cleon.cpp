@@ -39,9 +39,11 @@ bool Cleon::update() {
 		break;
 	}
 	cout << "ESTADO AL INICIO DEL UPDATE:  " << state << endl;*/
+	DIR lastDir_ = currDir_;
 	updateFrame();
 	manageTint();
 	updateCooldowns();
+	updateDirVisObjective(currEnemy_);
 
 	//si Cle�n palma
 	if (currState_ == STATE::DYING) {
@@ -88,7 +90,8 @@ bool Cleon::update() {
 		}
 		else {
 			cout << "ATTACKING SIN HACER NADA" << endl;
-			selectTarget();
+			if (lastDir_ != currDir_)initRun();
+			else selectTarget();
 		}
 	}
 
@@ -122,7 +125,8 @@ bool Cleon::update() {
 	}
 	//El estado es following
 	else {
-		selectTarget();
+		if (lastDir_ != currDir_)initRun();
+		else selectTarget();
 	}
 
 
@@ -374,6 +378,7 @@ void Cleon::updateCooldowns()
 
 void Cleon::move(Point2D target)
 {
+
 	dir_.setVec(target_ - getCenter());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
