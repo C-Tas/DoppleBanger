@@ -41,7 +41,7 @@ Vector2D Enemy::isClonInRange(double n)
 
 	if (currEnemy_ == nullptr &&
 		RectBall((float)clonPos.getX(), (float)clonPos.getY(), (float)scaleClon.getX(), (float)scaleClon.getY(),
-			center.getX(), center.getY(), n)) {
+			(float)center.getX(), (float)center.getY(), (float)n)) {
 		return clonPos;
 	}
 	else

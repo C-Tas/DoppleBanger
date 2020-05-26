@@ -851,3 +851,21 @@ void GameManager::resetIsland()
 		break;
 	}
 }
+GameManager::~GameManager() {
+	for (InventoryButton* ob : *inventory_)delete ob;
+	for (InventoryButton* ob : *stash_)delete ob;
+	for (InventoryButton* ob : *shop_)delete ob;
+	delete shop_;
+	delete inventory_;
+	delete stash_;
+	//Se borra el equipo
+	if (currEquip_.armor_ != nullptr) delete currEquip_.armor_;
+	if (currEquip_.gloves_ != nullptr) delete currEquip_.gloves_;
+	if (currEquip_.boots_ != nullptr) delete currEquip_.boots_;
+	if (currEquip_.sword_ != nullptr) delete currEquip_.sword_;
+	if (currEquip_.gun_ != nullptr) delete currEquip_.gun_;
+	for (int i = 0; i < currEquip_.potions_.size(); i++) {
+		if (currEquip_.potions_.at(i) != nullptr)
+			delete currEquip_.potions_.at(i);
+	}
+}

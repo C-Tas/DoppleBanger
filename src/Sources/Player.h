@@ -2,7 +2,6 @@
 #include <array>
 #include "jute.h"
 #include "TextBox.h"
-
 #include "Actor.h"
 
 class CollisionCtrl;
@@ -114,10 +113,8 @@ public:
 
 		void addMaxHealth(double addition) { maxHealth_ += addition; };
 		void addMaxMana(double addition) { maxMana_ += addition; };
-		void setSkillAt(int key, Skill* skill) {
-			if (skills_[key] != nullptr)delete skills_[key];
-			skills_[key] = skill;
-		}
+		void setSkillAt(int key, Skill* skill);
+
 	#pragma endregion
 
 	#pragma region Otros

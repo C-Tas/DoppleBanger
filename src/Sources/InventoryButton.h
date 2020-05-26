@@ -33,10 +33,7 @@ public:
 	virtual bool update();
 	bool isEquipped() { return equipped; }
 	void Enable(bool e) { equipped = e; }
-	virtual ~InventoryButton() {
-		if(!equipped)
-			delete object_;
-	};
+	virtual ~InventoryButton();
 
 	//iterator
 	void setIterator(list <InventoryButton*> ::iterator iterator) { inventoryIterator_ = iterator; }

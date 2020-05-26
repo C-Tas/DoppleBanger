@@ -149,7 +149,7 @@ bool Wolf::onRange() {
 	}
 	else
 	{
-		false;
+		return false;
 	}
 }
 
