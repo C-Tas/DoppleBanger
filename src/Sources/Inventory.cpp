@@ -75,7 +75,7 @@ void Inventory::initState(){
 	//Boton para ir al SkillState
 	auxpos = Vector2D{ 7 * (double)(app_->getWindowWidth() / 13), 1 * (double)(app_->getWindowHeight() / 40) };
 	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 2.62),  (double)(app_->getWindowWidth() / 7.5) };
-	goToSkillsButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos, { 610, 120 }, callSkillsState);
+	goToSkillsButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos,auxSize, callSkillsState);
 	addRenderUpdateLists(goToSkillsButton_);
 
 	//Cogemos los objetos equpados de player
@@ -554,7 +554,7 @@ void Inventory::printCompareObject() const
 		Texture compareText1(app_->getRenderer(),auxTex1, app_->getFontManager()->getFont(Resources::FontId::RETRO), auxcolor1);
 		Texture compareText2(app_->getRenderer(), auxTex2, app_->getFontManager()->getFont(Resources::FontId::RETRO), auxcolor2);
 		compareText1.render((int)round(posx1), (int)round(posy));
-		compareText2.render((int)round(posx1), (int)round(posy));
+		compareText2.render((int)round(posx2), (int)round(posy));
 	}
 	else if (select_ != nullptr) {
 	Texture potionText(app_->getRenderer(), "valor: " + to_string((int)static_cast<usable*>(select_->getObject())->getValue()), app_->getFontManager()->getFont(Resources::FontId::RETRO), SDL_Color({ 0,0,0,1 }));

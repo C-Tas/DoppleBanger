@@ -5,23 +5,16 @@
 
 bool Tentacle::update()
 {
-	/*if (animation) {
-		updateFrame();
-	}*/
-
+	updateFrame();
 	updateCooldowns();
 
 	//Si el tentaculo esta cayendo
-	if (currState_ == STATE::FOLLOWING && !fallingCD_.isCooldownActive()/* && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1*/)
+	if (currState_ == STATE::FOLLOWING && !fallingCD_.isCooldownActive())
 	{
-
-		//termina la animacion 
-		//animation = false;
 		//Una vez cae se le asigna su hitbox
 		collisionArea_ = collArea_;
-		posCollision_ = Point2D(0,0);
 		scaleCollision_ = scale_;
-
+		//setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
 		currState_ = STATE::ATTACKING;
 		//Durante 1 frame se hace daño al jugador
 	}
@@ -99,18 +92,13 @@ bool Tentacle::sweepUpdate()
 			}
 		}
 
+		cout << collisionRot_ << endl;
 	}
 	//Si ha hecho su recorrido y no se est� muriendo se muere
 	else if (currState_ != STATE::DYING)
 	{
-		//primero la animacion de desaparecer el tentaculo
-		//initDespawnAnim();
-		//cuando acaba la animacion eliminamos el tentaculo
-		//if (currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
-			kraken_->tentDeath(this);
-			app_->getCurrState()->removeRenderUpdateLists(this);
-		//}
-		
+		kraken_->tentDeath(this);
+		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
 	return false;
@@ -138,49 +126,14 @@ bool Tentacle::slamUpdate()
 	//Cuando muere le dice al kraken que lo mate
 	else if (currState_ != STATE::DYING)
 	{
-		//primero la animacion de desaparecer el tentaculo
-		//initDespawnAnim();
-		//cuando acaba la animacion eliminamos el tentaculo
-		//if (currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
-			kraken_->tentDeath(this);
-			app_->getCurrState()->removeRenderUpdateLists(this);
-		//}
-
-		
+		kraken_->tentDeath(this);
+		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
 }
 
-//void Tentacle::initSpawnAnim()
-//{
-//	animation = false;
-//	//currState_ = STATE::IDLE;
-//	texture_ = spawnTX_;
-//	currAnim_ = spawnAnim_;
-//
-//	frame_.x = 1710; frame_.y = 0;
-//	frame_.w = currAnim_.widthFrame_;
-//	frame_.h = currAnim_.heightFrame_;
-//}
-
-//void Tentacle::initDespawnAnim()
-//{
-//	animation = true;
-//	texture_ = despawnTX_;
-//	currAnim_ = despawnAnim_;
-//
-//	frame_.x = 0; frame_.y = 0;
-//	frame_.w = currAnim_.widthFrame_;
-//	frame_.h = currAnim_.heightFrame_;
-//}
-
-
-
 void Tentacle::initObject()
 {
-	//initAnims();
-	/*texture_ = spawnTX_;
-	currAnim_ = spawnAnim_;*/
 	setTexture(app_->getTextureManager()->getTexture(Resources::tentaculo));
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
@@ -196,30 +149,22 @@ void Tentacle::initObject()
 	double angle = collisionRot_ * (M_PI / 180) + M_PI / 2;
 	sweepDir_ = Vector2D(cos(angle), sin(angle));
 	initPos_ = pos_;
+	posCollision_ = Point2D(0, 0);
 }
 
-//Inicializa todas las animaciones
-//void Tentacle::initAnims()
-//{
-//	 spawnAnim_ = Anim(NUM_FRAMES_SPAWN, W_FRAME_SPAWN, H_FRAME_SPAWN, FRAME_RATE_SPAWN, false);
-//	spawnTX_ = app_->getTextureManager()->getTexture(Resources::KrakenAzoteAnim);
-//	//Anim idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, false);
-//	 despawnAnim_ = Anim(NUM_FRAMES_DESPAWN, W_FRAME_DESPAWN, H_FRAME_DESPAWN, FRAME_RATE_DESPAWN, false);
-//	despawnTX_ = app_->getTextureManager()->getTexture(Resources::KrakenAzoteAtrasAnim);
-//	initSpawnAnim();
-//}
+
+
 
 void Tentacle::onCollider()
 {
 	Player* player = static_cast<Player*>(GameManager::instance()->getPlayer());
-	if (Collisions::collidesWithRotation(player->getPos(), player->getScaleX(), player->getScaleY(), player->getCollisionRot(), pos_, scale_.getX(), scale_.getY(), collisionRot_))
-	{
-		if (currState_ == STATE::IDLE) {
-			player->stop();
-		}
-		else if (currState_ == STATE::ATTACKING) {
-			player->receiveDamage(currStats_.meleeDmg_);
-		}
+	if (currState_ == STATE::IDLE) {
+		player->stop();
+	}
+	else if (currState_ == STATE::ATTACKING) {
+		player->receiveDamage(kraken_->getMeleeDmg());
+		cout << "Daño" << endl;
+		currState_ == STATE::IDLE;
 	}
 }
 
@@ -234,6 +179,4 @@ const void Tentacle::draw()
 	SDL_Rect dest = getDestiny(); dest.x = dest.x - Camera::instance()->getCamera().getX(); dest.y = dest.y - Camera::instance()->getCamera().getY();
 	if (currAnim_.numberFrames_ <= 0) texture_->render(dest, collisionRot_);
 	else texture_->render(dest, collisionRot_, frame_);
-
-	app_->getTextureManager()->getTexture(Resources::GreenBar)->render({ (int)(getColliderPos().getX() - Camera::instance()->getCamera().getX()), (int)(getColliderPos().getY() - Camera::instance()->getCamera().getY()),(int)(scaleCollision_.getX()), (int)(scaleCollision_.getY()) }, collisionRot_);
 }
