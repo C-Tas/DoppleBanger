@@ -129,7 +129,7 @@ private:
 	//Booleano que indica si estamos en el barco
 	bool onShip_ = true;
 	//Enum de la �ltima isla desbloqueada
-	Island unlockedIslands_ = Island::Caribbean;
+	Island unlockedIslands_ = Island::Volcanic;
 	//Enum de la isla actual
 	Island currIsland_ = Island::Caribbean;
 	//Maximo de los puntos de hazaña

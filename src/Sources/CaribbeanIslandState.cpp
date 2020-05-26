@@ -21,6 +21,7 @@ void CaribbeanIslandState::update()
 {
 	if (enemies_.empty() && gm_->getCurrentZone() == Zone::CaribeanBoss) {
 		collisionCtrl_->clearList();
+		gm_->setUnlockedIslands(Island::Spooky);
 		app_->getGameStateMachine()->changeState(new ShipState(app_));
 	}
 	else {

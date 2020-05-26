@@ -206,7 +206,7 @@ bool Player::update()
 		if (!bussy_) checkInput();
 
 		//Gestion de movimiento
-		if(!changeZone_) movementManager();
+		if (!changeZone_) movementManager();
 	}
 	return changeZone_;
 }
@@ -579,8 +579,7 @@ void Player::checkInput()
 		else setOnCollision(false);
 
 		if (collisionCtrl_->isNextZoneTextBoxActive()) {
-			getEndZoneTextBox()->updateButtons();
-			changeZone_ = true;
+			changeZone_  = getEndZoneTextBox()->updateButtons();
 		}
 	}
 }
