@@ -66,10 +66,10 @@ bool Enemy::getEnemy(double n)
 	return true;
 }
 
-void Enemy::receiveDamage(int damage) {
+void Enemy::receiveDamage(double damage) {
 	currStats_.health_ -= damage;
 	if (currStats_.health_ <= 0) {
-		Player* player_ = dynamic_cast<Player*>(currEnemy_);
+		Player* player_ = GameManager::instance()->getPlayer();
 		initDie();
 		if (player_ != nullptr && player_ -> getEnemy() != nullptr && player_ -> getEnemy() == this )
 		{

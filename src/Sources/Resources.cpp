@@ -227,6 +227,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PlayerEmpoweredLeft, "../Sources/assets/player/animaciones/golpeFuerte/golpeLeft.png" },
 	{ PlayerEmpoweredUp, "../Sources/assets/player/animaciones/golpeFuerte/golpeUp.png" },
 	{ PlayerEmpoweredDown, "../Sources/assets/player/animaciones/golpeFuerte/golpeDown.png" },
+	{ PlayerWhirlRight, "../Sources/assets/player/animaciones/torbellino/der.png" },
+	{ PlayerWhirlLeft, "../Sources/assets/player/animaciones/torbellino/izq.png" },
+	{ PlayerWhirlTop, "../Sources/assets/player/animaciones/torbellino/top.png" },
+	{ PlayerWhirlDown, "../Sources/assets/player/animaciones/torbellino/down.png" },
 	//Clon
 	{ ClonSelfDestructionRightAnim, "../Sources/assets/clon/autodestruccion/ClonRightExplosion.png" },
 	{ ClonSelfDestructionLeftAnim, "../Sources/assets/clon/autodestruccion/ClonLeftExplosion.png" },

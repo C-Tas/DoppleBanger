@@ -10,7 +10,7 @@
   "questStarted": [false, false, false, false],
   "questFinished": [false, false, false, false],
   "rewardObtained": [false, false, false, false],
-  "unlockedSkills": [false, false, false, true, false, false, true, false, false, false],
+  "unlockedSkills": [false, false, false, true, true, true, true, false, false, false],
   "skills": ["null", "null", "null"],
   "objects": ["Armor", "Dmg"],
   "equipment": [{
