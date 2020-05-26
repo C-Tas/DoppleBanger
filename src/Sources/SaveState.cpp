@@ -6,7 +6,6 @@ void SaveState::backToPreviousState(Application* app) {
 	SDL_ShowCursor(SDL_DISABLE);
 	//Se resetea el sonido del barco
 	app->resetMusicChannels();
-	app->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
 }
 
 void SaveState::saveSlot1() {

@@ -18,6 +18,11 @@ void SkillState::initState() {
 	SDL_ShowCursor(SDL_ENABLE);
 	player_ = gm_->getPlayer();
 
+	//Se cambia la canción
+	app_->resetSoundsChannels();
+	app_->getAudioManager()->pauseChannel(Resources::MainMusicChannel);
+	app_->getAudioManager()->playChannel(Resources::SkillState, -1, Resources::InventoryMusicChannel);
+
 	bg_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::TextureId::SkillMenu));
 	createButtons();
 	createTexts();
@@ -435,6 +440,8 @@ SkillState::~SkillState()
 void SkillState::backToPreviousState(Application* app) {
 	static_cast<SkillState*>(app->getCurrState())->setPlayerSkills();
 	SDL_ShowCursor(SDL_DISABLE);
+	app->getAudioManager()->resumeChannel(Resources::MainMusicChannel);
+	app->getAudioManager()->pauseChannel(Resources::InventoryMusicChannel);
 	app->getGameStateMachine()->popState();
 }
 

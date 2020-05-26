@@ -17,7 +17,7 @@ void ShopState::backToPrevious(Application* app) {
 	//Se resetea la musica del barco
 	app->resetMusicChannels();
 	app->getAudioManager()->playChannel(Resources::Time, 0, Resources::AuxMusicChannel2);
-	app->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
+	app->getAudioManager()->playChannel(Resources::ShipTheme, -1, Resources::MainMusicChannel);
 }
 
 void ShopState::callbackAdvanceInventoryPage(Application* app) {

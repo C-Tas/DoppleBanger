@@ -32,12 +32,10 @@ void CaribbeanIslandState::update()
 
 void CaribbeanIslandState::initState()
 {
-	//Inicializamos la musica
+	//Resetamos los sonidos
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
-	app_->getAudioManager()->playChannel(Resources::Caribbean, -1, Resources::MainMusicChannel);
-	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
-
+	
 	//Borramos la lista de objetos del CollisionCtrl
 	collisionCtrl_->clearList();
 	gm_->setOnShip(false);
@@ -54,6 +52,9 @@ void CaribbeanIslandState::initState()
 
 void CaribbeanIslandState::initZone1()
 {
+	//Se inicia la música
+	app_->getAudioManager()->playChannel(Resources::Isle1Zone1, -1, Resources::MainMusicChannel);
+
 	//Se inicia la mision de la cocinera si no se ha completado ya
 	if (!gm_->isThatMissionPass(missions::gallegaEnProblemas)) {
 		gm_->setStartedMission(missions::gallegaEnProblemas, true);
@@ -66,12 +67,18 @@ void CaribbeanIslandState::initZone1()
 
 void CaribbeanIslandState::initZone2()
 {
+	//Se inicia la música
+	app_->getAudioManager()->playChannel(Resources::Isle1Zone2, -1, Resources::MainMusicChannel);
+
 	currentMap_ = new TiledMap(app_, this, ZONE2_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
 		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone2);
 }
 
 void CaribbeanIslandState::initZone3()
 {
+	//Se inicia la música
+	app_->getAudioManager()->playChannel(Resources::Isle1Zone3, -1, Resources::MainMusicChannel);
+
 	currentMap_ = new TiledMap(app_, this, ZONE3_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
 		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone2);
 }

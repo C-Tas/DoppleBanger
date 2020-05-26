@@ -583,6 +583,7 @@ void Player::checkInputState() {
 		stop();
 	}
 	else if (eventHandler_->isKeyDown(SDL_SCANCODE_C)) {
+
 		app_->getGameStateMachine()->pushState(new Inventory(app_));
 		stop();
 	}

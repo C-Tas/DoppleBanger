@@ -10,7 +10,7 @@ void PauseState::resume(Application* app)
 {
 	SDL_ShowCursor(SDL_DISABLE);
 	app->getAudioManager()->resumeChannel(Resources::MainMusicChannel);
-	app->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
+	app->getAudioManager()->pauseChannel(Resources::AuxMusicChannel1);
 	app->getGameStateMachine()->popState();
 }
 

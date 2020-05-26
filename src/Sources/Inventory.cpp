@@ -31,6 +31,8 @@ void callBackList(Application* app) {
 void callExit(Application* app){
 	app->getAudioManager()->playChannel(Resources::Time, 0, Resources::AuxMusicChannel2);
 	SDL_ShowCursor(SDL_DISABLE);
+	app->getAudioManager()->resumeChannel(Resources::MainMusicChannel);
+	app->getAudioManager()->pauseChannel(Resources::InventoryMusicChannel);
 	app->getGameStateMachine()->popState();
 }
 void callSkillsState(Application* app) {
@@ -41,6 +43,11 @@ void callSkillsState(Application* app) {
 void Inventory::initState(){
 	//Fondo
 	SDL_ShowCursor(SDL_ENABLE);
+
+	//Se cambia la canción
+	app_->resetSoundsChannels();
+	app_->getAudioManager()->pauseChannel(Resources::MainMusicChannel);
+	app_->getAudioManager()->playChannel(Resources::Inventory, -1, Resources::InventoryMusicChannel);
 
 	background_ = app_->getTextureManager()->getTexture(Resources::InventoryMenu);
 	Vector2D auxpos = Vector2D{ 12 * (double)(app_->getWindowWidth() / 14), 14 * (double)(app_->getWindowHeight() / 17) };
