@@ -38,5 +38,7 @@ public:
 	double getBulletSpeed() { return bulletSpeed_; };
 
 	virtual void getDescription(TextBox* tex);
+	virtual double getDistRate() { return distRange_; };
+	virtual double getDistDmg() { return distDmg_; };
 };
 

@@ -25,7 +25,7 @@ public:
 	virtual double getSpeed() { return 0; }; // Devuelve el valor de Speed
 	virtual double getDistRate() { return 0; }; // Devuelve el valor de DistRate
 	virtual double getMeleeRate() { return 0; }; // Devuelve el valor de MeleeRate
-	virtual double getDistRange() { return 0; }//devuelve el rango del arma a distancia
+	virtual double getDistRange() { return 0; };//devuelve el rango del arma a distancia
 	virtual inline equipType getEquipType()const { return type_; };
 #pragma endregion
 	virtual void equip(Player* player) = 0;

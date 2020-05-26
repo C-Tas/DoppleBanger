@@ -24,6 +24,9 @@ public:
 
 	virtual void getDescription(TextBox* tex);
 
+	virtual double getMeleeRate() { return meleeRate_; }
+	virtual double getMeleeDmg() { return meleeDmg_; };
+
 
 };
 

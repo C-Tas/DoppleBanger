@@ -1,5 +1,5 @@
 {
-  "currIsland": 1,
+  "currIsland": 0,
   "unlockedIsland": 2,
   "currGold": 0,
   "stashGold": 924,
@@ -21,8 +21,8 @@
     }, {
       "name": 2,
       "price": 10,
-      "armor": 0.000000,
-      "critic": 0.000000
+      "armor": 10.000000,
+      "critic": 12.000000
     }, {
       "name": 4,
       "price": 10,
@@ -39,29 +39,41 @@
       "rate": 0.000000,
       "damage": 0.000000
     }],
-  "inventory": [{
-      "type": 0,
-      "name": 6,
-      "price": 3.000000,
-      "rate": 0.000000,
-      "damage": 0.000000
-    }, {
-      "type": 0,
-      "name": 4,
-      "price": 1.000000,
-      "armor": 0.000000,
-      "speed": 0.000000
-    }, {
-      "type": 0,
-      "name": 11,
-      "price": 5.000000,
-      "rate": 0.000000,
-      "damage": 0.000000
-    }, {
-      "type": 1,
-      "name": 3
-    }],
-  "inventorySize": 4,
+    "inventory": [
+        {
+	    "type": 0,
+            "name": 2,
+            "price": 10,
+            "armor": 7.000000,
+            "critic": 9.000000
+        },
+        {
+            "type": 0,
+            "name": 6,
+            "price": 3.000000,
+            "rate": 0.000000,
+            "damage": 0.000000
+        },
+        {
+            "type": 0,
+            "name": 4,
+            "price": 1.000000,
+            "armor": 0.000000,
+            "speed": 0.000000
+        },
+        {
+            "type": 0,
+            "name": 11,
+            "price": 5.000000,
+            "rate": 0.000000,
+            "damage": 0.000000
+        },
+        {
+            "type": 1,
+            "name": 3
+        }
+    ],
+  "inventorySize": 5,
   "stash": [{
       "type": 0,
       "name": 10,

@@ -23,4 +23,6 @@ public:
 	virtual void remove(Player* player);
 
 	virtual void getDescription(TextBox* tex);
+	virtual double getArmor() { return armor_; };
+	virtual double getCrit() { return crit_; };
 };

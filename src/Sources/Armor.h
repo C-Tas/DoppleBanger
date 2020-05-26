@@ -22,7 +22,7 @@ public:
 
 	//Desequiparlo y perder sus stats
 	virtual void remove(Player* player);
-	double getHealth() { return health_; }; // Devuelve el valor de Health
-	double getArmor() { return armor_; }; // Devuelve el valor de Armor
+	virtual double getHealth() { return health_; };
+	virtual double getArmor() { return armor_; };
 	virtual void getDescription(TextBox* tex);
 };

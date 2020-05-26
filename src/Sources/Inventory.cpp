@@ -532,7 +532,7 @@ void Inventory::printCompareObject() const
 			}
 			else {
 				aux1 = (int)round(static_cast<Equipment*>(select_->getObject())->getDistDmg() - static_cast<Equipment*>(equipment_.sword_->getObject())->getDistDmg());
-				aux2 = (int)round(static_cast<Equipment*>(select_->getObject())->getDistRate() - static_cast<Equipment*>(equipment_.sword_->getObject())->getDistRate());
+				aux2 = (int)round(static_cast<Gun*>(select_->getObject())->getBulletSpeed() - static_cast<Gun*>(equipment_.sword_->getObject())->getBulletSpeed());
 				if (aux1 >= 0) auxcolor1 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
 				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
