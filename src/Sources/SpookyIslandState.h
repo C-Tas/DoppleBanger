@@ -1,6 +1,20 @@
 #pragma once
 #include "PlayState.h"
 #include "checkML.h"
+
+/*
+Cambios realizados por We Balance Team #2:
+	- Modificados los precios de los objetos.
+	- Nerfeado el esqueleto
+	- Nerfeado el pirata
+	- Bufado el esqueleto
+	- Nerfeado el lobo
+	- Arreglado pila bugs
+	- Nerfeado la calabaza
+	- Nerfeado el esqueleto
+	- Arreglado pila bugs, otra vez
+*/
+
 class SpookyIslandState : public PlayState
 {
 private:
@@ -31,6 +45,5 @@ public:
 	virtual void update();
 	///<summary>Método para cambiar de zona(Redefinido)</summary>
 	virtual void changeZone();
-
+	
 };
-

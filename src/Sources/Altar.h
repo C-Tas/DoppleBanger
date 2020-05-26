@@ -39,9 +39,9 @@ private:
 	//Variable que representa el rango del resurrección del altar
 	const double ALTAR_RANGE = 100;
 	//constantes que representa la anchura del esqueleto
-	const double SKELETON_W = 45;
+	const double SKELETON_W = app_->getWindowWidth() / 12;
 	//constantes que representa la altura del esqueleto
-	const double SKELETON_H = 75;
+	const double SKELETON_H = app_->getWindowHeight() / 5;
 	//Animacion
 	const int NUM_FRAMES = 3;
 	const int W_H_FRAME = 150;

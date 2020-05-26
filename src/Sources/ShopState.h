@@ -36,7 +36,7 @@ private:
 	///<summary>Numero de elementos del inventario que se ven por pantalla</summary>
 	const int INVENTORY_VISIBLE_ELEMENTS = 4;
 	///<summary>Numero de elementos del tienda que se ven por pantalla</summary>
-	const int SHOP_VISIBLE_ELEMENTS = 8;
+	const int SHOP_VISIBLE_ELEMENTS = 10;
 	///<summary>Tama�o de los botones que son "cuadrados"</summary>
 	const int BUTTON_SIZE = app_->getWindowHeight() / 12;
 	///<summary>Tama�o de los botones que son "cuadrados"</summary>
@@ -58,13 +58,13 @@ private:
 	///<summary>Posici�n en x en la que se pintan los botones de borrar objeto y cambiar de lista</summary>
 	const int FUNCTIONALITY_BUTTONS_ROW = MONEY_BUTTON_ROW;
 	///<summary>Distancia entre los elementos del tienda</summary>
-	const Vector2D DISTANCE_BETWEEN_ELEMENTS = { (app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8) };
+	const Vector2D DISTANCE_BETWEEN_ELEMENTS = { (app_->getWindowWidth() / 5), (app_->getWindowHeight() / 8.5) };
 	///<summary>Posicion en el eje y en la que se empieza a dibujar las listas de objetos</summary>
-	const int FIRST_ELEMENT_Y = (long long int)(app_->getWindowHeight() / 4) + (long long int)(app_->getWindowHeight() / 12);
+	const int FIRST_ELEMENT_Y = (long long int)(app_->getWindowHeight() / 4) + (long long int)(app_->getWindowHeight() / 13);
 	///<summary>Posición en la que se va a pintar el primer elemento de la lista del tienda</summary>
 	const Vector2D FIRST_SHOP_ELEMENT = Vector2D((app_->getWindowWidth() / 9), FIRST_ELEMENT_Y);
 	///<summary>Posición en la que se va a pintar el primer elemento de la lista del inventario</summary>
-	const Vector2D FIRST_INVENTORY_ELEMENT = Vector2D(7 * (double)(app_->getWindowWidth() / 13), FIRST_ELEMENT_Y);
+	const Vector2D FIRST_INVENTORY_ELEMENT = Vector2D(7 * (double)(app_->getWindowWidth() / 12.5), FIRST_ELEMENT_Y);
 	///<summary>Tamaño de los objetos de tipo Gun</summary>
 	const Vector2D GUN_SIZE = Vector2D(app_->getWindowWidth() / 12, app_->getWindowHeight() / 18);
 	///<summary>Posición del Rect de las descripciones</summary>

@@ -26,7 +26,9 @@ public:
 	}
 	//<summary>Método para iniciar la animación de disparo del clon, recibe un vector2D que es la dirección hacia la que dispara</summary>
 	void initShoot(Vector2D dir);
-
+	void enemyToRemove(Enemy* obj) {
+		enemies_.remove(obj);
+	};
 	void die();
 
 private:

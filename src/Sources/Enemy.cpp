@@ -108,6 +108,10 @@ void Enemy::initDie()
 	if (aux) {
 		aux->removeEnemy(this);
 	}
+	Clon* clon = static_cast<Clon*>(GameManager::instance()->getClon());
+	if (clon != nullptr) {
+		clon->enemyToRemove(this);
+	}
 	applyRewards();
 }
 

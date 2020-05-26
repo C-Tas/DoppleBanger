@@ -646,15 +646,18 @@ void Player::checkInput()
 }
 
 void Player::checkInputState() {
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_P)) {
+	if (eventHandler_->isKeyDown(SDLK_ESCAPE)) {
+		killClon();
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
 		stop();
 	}
 	else if (eventHandler_->isKeyDown(SDL_SCANCODE_C)) {
+		killClon();
 		app_->getGameStateMachine()->pushState(new Inventory(app_));
 		stop();
 	}
 	else if (eventHandler_->isKeyDown(SDL_SCANCODE_V)) {
+		killClon();
 		app_->getGameStateMachine()->pushState(new SkillState(app_, this));
 		stop();
 	}
@@ -932,7 +935,7 @@ void Player::createClon()
 	pos.setX(eventHandler_->getRelativeMousePos().getX() - (scale_.getX() / 2));
 	pos.setY(eventHandler_->getRelativeMousePos().getY() - (scale_.getY() * 0.8));
 	clon_ = new Clon(app_, pos, scale_, this);
-	app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
+	app_->getGameStateMachine()->getState()->addRenderUpdateListsAsFirst(clon_);
 }
 
 bool Player::killClon()

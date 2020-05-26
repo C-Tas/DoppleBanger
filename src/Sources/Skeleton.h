@@ -98,5 +98,7 @@ protected:
 	virtual void updateCooldowns();
 	virtual void feedBackHurtSounds();
 
+	void initDie();
+
 };
 

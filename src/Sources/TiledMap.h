@@ -126,6 +126,11 @@ private:
 	const double W_CHEST = app_->getWindowWidth() / 12.8;
 	const double H_CHEST = app_->getWindowWidth() / 12.8;
 
+	const double W_MAGORDITO = app_->getWindowWidth() / 9;
+	const double H_MAGORDITO = app_->getWindowHeight() / 7.5;
+
+	const double W_ALTAR = app_->getWindowWidth() / 4;
+	const double H_ALTAR = app_->getWindowHeight() / 2.5;
 
 #pragma endregion
 #pragma region TilesIdentifiers

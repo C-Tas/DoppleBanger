@@ -318,7 +318,7 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 	}
 	else if (objectType == "Magordito") {
 		//A�adir Magordito
-		Magordito* magordito = new Magordito(app_, pos, Vector2D(W_WOLF, H_WOLF));
+		Magordito* magordito = new Magordito(app_, pos, Vector2D(W_MAGORDITO, H_MAGORDITO));
 		magordito->setIniPosMap_(iniPos_);
 		magordito->setPathPos({ (int)PosToTile(pos).getX(),(int)PosToTile(pos).getY() });
 		state_->addEnemy(magordito);
@@ -384,8 +384,8 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		player->setColliderScale(Vector2D((player->getScale().getX() / 3),  (player->getScale().getY() / 4)));
 	}
 	else if (objectType == "Altar") {
-		Altar* altar = new Altar(app_, pos, { 100,100 });
-		state_->addRenderUpdateLists(altar);
+		Altar* altar = new Altar(app_, pos, { W_ALTAR, H_ALTAR });
+		state_->addRenderUpdateListsAsFirst(altar);
 		altar->createMobs(state_);
 	}
 

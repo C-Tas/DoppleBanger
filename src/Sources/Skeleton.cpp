@@ -11,15 +11,9 @@ bool Skeleton::update() {
 	//Si el esqueleto ha muerto
 	if (currState_ == STATE::DYING) {
 		//Sonido muerte
-		app_->getAudioManager()->playChannel(Resources::SkeletonDeath, 0, Resources::SkeletonChannel1);
-		// animación de muerte si la tiene
-		//Cuando acabe la animación, lo mata
-		applyRewards();
-		CollisionCtrl::instance()->removeEnemy(this);
-		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		
-		return true;
+
+		dieAnim();
+
 	}
 	else {
 		updateCooldowns();
@@ -45,10 +39,10 @@ void Skeleton::initialStats() {
 	MANA_REG = 0;
 	ARMOR = 5;
 	MELEE_DMG = 0;
-	DIST_DMG = 500;
+	DIST_DMG = 150;
 	CRIT = 0;
 	MELEE_RANGE = 0;
-	DIST_RANGE = 2100;
+	DIST_RANGE = 800;
 	MOVE_SPEED = 300;
 	MELEE_RATE = 0;
 	DIST_RATE = 2000;
@@ -75,6 +69,7 @@ void Skeleton::attack() {
 
 void Skeleton::initObject() {
 	initialStats();
+	initRewards();
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 
 	double w = 1 / 3,
@@ -103,10 +98,10 @@ Skeleton::~Skeleton()
 
 void Skeleton::initRewards()
 {
-	minGold = 150;
-	maxGold = 200;
-	minArchievementPoints = 4;
-	maxArchievementPoints = 10;
+	minGold = 20;
+	maxGold = 30;
+	minArchievementPoints = 65;
+	maxArchievementPoints = 95;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
@@ -232,4 +227,10 @@ void Skeleton::feedBackHurtSounds()
 		app_->getAudioManager()->playChannel(Resources::SkeletonHit3, 0, Resources::SkeletonChannel3);
 		break;
 	}
+}
+
+void Skeleton::initDie() 
+{
+	Enemy::initDie();
+	app_->getAudioManager()->playChannel(Resources::SkeletonDeath, 0, Resources::SkeletonChannel1);
 }
