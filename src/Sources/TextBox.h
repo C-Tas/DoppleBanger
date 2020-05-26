@@ -90,7 +90,7 @@ public:
 	void dialogMorty(bool unlock, int num);
 
 	///<summary>Frases del loro, se genera una al azar</summary>
-	void dialogParrot();
+	void dialogParrot(int dialog);
 
 	///<summary>Frases del esqueleto</summary>
 	void dialogSkeleton(bool unlock);

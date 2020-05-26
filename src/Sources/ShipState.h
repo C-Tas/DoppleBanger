@@ -77,8 +77,8 @@ private:
 	const double W_MORTY = W_WIN / 14;
 	const double H_MORTY = H_WIN / 5;
 
-	const double W_PARROT = W_WIN / 20;
-	const double H_PARROT = H_WIN / 10;
+	const double W_PARROT = W_WIN / 16;
+	const double H_PARROT = H_WIN / 8;
 
 	const double W_SKELETON = W_WIN / 20;
 	const double H_SKELETON = H_WIN / 10;

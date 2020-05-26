@@ -50,10 +50,10 @@ private:
 	const int FRAME_RATE_MORTY= 300;
 
 	//Loro
-	const int NUM_FRAMES_PARROT = 0;
-	const int W_FRAME_PARROT = 0;
-	const int H_FRAME_PARROT = 0;
-	const int FRAME_RATE_PARROT = 0;
+	const int NUM_FRAMES_PARROT = 11;
+	const int W_FRAME_PARROT = 57;
+	const int H_FRAME_PARROT = 53;
+	const int FRAME_RATE_PARROT = 300;
 
 	//Esqueleto
 	const int NUM_FRAMES_SKELETON = 9;

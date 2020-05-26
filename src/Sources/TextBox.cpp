@@ -700,9 +700,26 @@ void TextBox::dialogMorty(bool unlock, int num) {
 	}
 }
 
-void TextBox::dialogParrot() {
+void TextBox::dialogParrot(int dialog) {
 	//El loro gerera una frase aleatoria cada vez que se habla con �l
-	//Mirar como esta hecha la del mercader, variables necesarias en collisionCtrl
+	initDialog();
+
+	if (dialog == 0) {
+		Texture text(app_->getRenderer(), "Texto 1.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing);
+	}
+	else if (dialog == 1) {
+		Texture text(app_->getRenderer(), "Texto 2.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing);
+	}
+	else if (dialog == 2) {
+		Texture text (app_->getRenderer(), "Texto 3.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing);
+	}
+	else {
+		Texture text(app_->getRenderer(), "Texto 4.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.render(lineSpacing, dest.y + lineSpacing);
+	}
 }
 
 void TextBox::dialogSkeleton(bool unlock) {

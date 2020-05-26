@@ -169,6 +169,7 @@ public:
 		VenancioPushFinish,
 		Merchant,
 		Cooker,
+		Parrot,
 		SkeletonMusician,
 		Cartographer,
 		Morty,
