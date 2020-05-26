@@ -616,7 +616,7 @@ void Inventory::getHorizontal(InventoryButton* but)
 	if (type_ == equipType::SwordI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword1H));
 	else if (type_ == equipType::SwordII) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword2H));
 	else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber1H));
-	else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber2H));
+	else if (type_ == equipType::SaberII) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber2H));
 }
 
 void Inventory::getVertical(InventoryButton* but)
@@ -625,7 +625,7 @@ void Inventory::getVertical(InventoryButton* but)
 	if (type_ == equipType::SwordI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword1));
 	else if (type_ == equipType::SwordII) but->setTexture(app_->getTextureManager()->getTexture(Resources::Sword2));
 	else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber1));
-	else if (type_ == equipType::SaberI) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber2));
+	else if (type_ == equipType::SaberII) but->setTexture(app_->getTextureManager()->getTexture(Resources::Saber2));
 }
 
 Inventory::~Inventory() {
