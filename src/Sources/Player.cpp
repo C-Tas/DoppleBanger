@@ -103,6 +103,7 @@ void Player::initSkills()
 void Player::initAnims()
 {
 	//Animación de idle
+
 	//Arriba
 	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, IDLE_U_FRAME_RATE, true));
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleUpAnim));
@@ -117,6 +118,7 @@ void Player::initAnims()
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleLeftAnim));
 
 	//Animación de movimiento
+
 	//Arriba
 	moveAnims_.push_back(Anim(MOVE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_U_FRAME_RATE, true));
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMoveUpAnim));
@@ -131,6 +133,7 @@ void Player::initAnims()
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMoveLeftAnim));
 
 	//Animación de disparo
+
 	//Arriba
 	shootAnims_.push_back(Anim(SHOOT_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_U_FRAME_RATE, false));
 	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootUpAnim));
@@ -145,6 +148,7 @@ void Player::initAnims()
 	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootLeftAnim));
 
 	//Animación de melee
+
 	//Arriba
 	meleeAnims_.push_back(Anim(MELEE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_U_FRAME_RATE, false));
 	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeUpAnim));
@@ -159,6 +163,7 @@ void Player::initAnims()
 	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeLeftAnim));
 
 	//Animacion GolpeFuerte
+
 	//Arriba
 	empoweredAnims_.push_back(Anim(EMPOWERED_U_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, EMPOWERED_U_D_RATE, false));
 	empoweredTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerEmpoweredUp));
@@ -171,6 +176,21 @@ void Player::initAnims()
 	//Izquierda
 	empoweredAnims_.push_back(Anim(EMPOWERED_R_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, EMPOWERED_R_L_RATE, false));
 	empoweredTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerEmpoweredLeft));
+
+	//Animacion Torbellino
+
+	//Arriba
+	whirlAnim_.push_back(Anim(WHIRL_FRAMES, W_H_WHIRL_FRAME, W_H_WHIRL_FRAME, WHIRL_FRAME_RATE, false));
+	whirlTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerWhirlTop));
+	//Derecha
+	whirlAnim_.push_back(Anim(WHIRL_FRAMES, W_H_WHIRL_FRAME, W_H_WHIRL_FRAME, WHIRL_FRAME_RATE, false));
+	whirlTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerWhirlRight));
+	//Abajo
+	whirlAnim_.push_back(Anim(WHIRL_FRAMES, W_H_WHIRL_FRAME, W_H_WHIRL_FRAME, WHIRL_FRAME_RATE, false));
+	whirlTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerWhirlDown));
+	//Izquierda
+	whirlAnim_.push_back(Anim(WHIRL_FRAMES, W_H_WHIRL_FRAME, W_H_WHIRL_FRAME, WHIRL_FRAME_RATE, false));
+	whirlTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerWhirlLeft));
 
 	//Inicializamos con la animación del idle
 	currDir_ = DIR::DOWN;
@@ -319,6 +339,9 @@ void Player::animator()
 	else if (currState_ == STATE::CHARGING_EMPOWERED) {
 		empoweredAnim();
 	}
+	else if (currState_ == STATE::WHIRLING) {
+		whirlAnim();
+	}
 }
 	//Inits
 void Player::initIdle()
@@ -451,8 +474,26 @@ void Player::initEmpowered()
 	frame_.h = currAnim_.heightFrame_;
 }
 
+void Player::initWhirl()
+{
+	stop();
+	bussy_ = true;
+	//Apaño para que deje de sonar al caminar
+	if (currState_ == STATE::FOLLOWING)
+		app_->getAudioManager()->playChannel(Resources::WalkAudio, 0, Resources::PlayerChannel1);
+	currState_ = STATE::WHIRLING;
+	texture_ = whirlTx_[(int)currDir_];
+	currAnim_ = whirlAnim_[(int)currDir_];
+
+	frameAction_ = 9;
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
 void Player::initDie() {
 	Actor::initDie();
+	collisionCtrl_->setPlayer(nullptr);
 	//Cargamos música de fondo
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
@@ -504,6 +545,21 @@ void Player::meleeAnim()
 void Player::empoweredAnim()
 {
 	if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();
+	}
+}
+
+void Player::whirlAnim()
+{
+	if (currAnim_.currFrame_ == frameAction_ && attacked_) {
+		attacked_ = false;
+		//Consigue la lista de los enemigos golpeados y les hace da�o
+		Vector2D playerCenter = getCenter();
+		list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(playerCenter, scale_.getX() / 2);
+		for (auto it = enemies.begin(); it != enemies.end(); ++it)
+			(*it)->receiveDamage((int)round(currStats_.meleeDmg_ * BONUS_WHIRL));
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
 		initIdle();
 	}
 }
@@ -961,6 +1017,7 @@ void Player::isEnemyDead(Actor* obj)
 		currEnemy_ = nullptr;
 	}
 }
+
 void Player:: setSkillAt(int key, Skill* skill) {
 	if (skills_[key] != nullptr)delete skills_[key];
 	skills_[key] = skill;

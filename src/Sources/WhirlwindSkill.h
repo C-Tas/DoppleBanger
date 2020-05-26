@@ -22,11 +22,7 @@ public:
 		if (mana >= costMana_ && !skillCD_.isCooldownActive())
 		{
 			player_->addMana(-costMana_);
-			//Consigue la lista de los enemigos golpeados y les hace da�o
-			Vector2D playerCenter = Vector2D(player_->getPosX() + player_->getScaleX(), player_->getPosY() + player_->getScaleY());
-			list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(playerCenter, RADIUS);
-			for (auto it = enemies.begin(); it != enemies.end(); ++it)
-				(*it)->receiveDamage((int)round(player_->getMeleeDmg() * BONUS));
+			player_->initWhirl();
 
 			skillCD_.initCooldown(COOLDOWN);
 		}
