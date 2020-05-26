@@ -37,9 +37,8 @@ bool Crab::update() {
 
 void Crab::move(Point2D target)
 {
-	/*Vector2D visPos = getVisPos();
-	target_ = target;*/
-	if ((getCenter() - nextTarget_).magnitude() <= 1)
+
+	if ((getCenter() - nextTarget_).magnitude() <= 3)
 	{
 		pathPos_ = { (int)PosToTile(nextTarget_).getX(), (int)PosToTile(nextTarget_).getY() };
 		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(target).getX(), (int)PosToTile(target).getY() }, pathPos_);
@@ -48,7 +47,6 @@ void Crab::move(Point2D target)
 		else updateTarget(); 
 		
 	}
-	/*cout << "DISTANCIA AL TARGET X:" << (getCenter() - nextTarget_).getX() << " , Y: " << (getCenter() - nextTarget_).getY() << endl;*/
 
 	dir_.setVec(nextTarget_ - getCenter());
 	dir_.normalize();

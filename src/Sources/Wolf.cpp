@@ -93,19 +93,6 @@ bool Wolf::update() {
 		if (currState_ == STATE::PATROLLING) {
 			updateDirVisObjective(target_);
 			move(target_);
-			//Cuando ha llegado al target empieza el idle
-			if (RectRect(getCenter().getX(), getCenter().getY(), getScaleX(), getScaleY(), target_.getX(), target_.getY(), 5, 5)) {
-				idleCD_.initCooldown(IDLE_PAUSE);
-				currState_ = STATE::IDLE;
-				//Pasamos al siguiente patrol
-				if (currPatrol_ == patrol_.size() - 1) {
-					currPatrol_ = 0;
-				}
-				else
-				{
-					currPatrol_++;
-				}
-			}
 		}
 	}
 	updateFrame();
@@ -121,6 +108,14 @@ void Wolf::move(Vector2D posToReach) {
 		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
 		if (pathing_.size() > 1)
 			nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+		else {
+			idleCD_.initCooldown(IDLE_PAUSE);
+			currState_ = STATE::IDLE;
+			//Pasamos al siguiente patrol
+			if (currPatrol_ == patrol_.size() - 1) currPatrol_ = 0;
+			else currPatrol_++;
+			
+		}
 	}
 	dir_.setVec(nextTarget_ - getCenter());
 	dir_.normalize();
