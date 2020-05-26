@@ -105,7 +105,7 @@ void InventoryButton::initTextureUsable()
 bool InventoryButton::update() {
 	HandleEvents* input = HandleEvents::instance();
 	Vector2D aux = input->getRealMousePos();
-	SDL_Point mouse = { aux.getX(), aux.getY() };
+	SDL_Point mouse = { (int)round(aux.getX()), (int)round(aux.getY()) };
 	if (SDL_PointInRect(&mouse, &getDestiny()) && input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
 		callBackInventory_(app_, this);
 		return true;
@@ -143,44 +143,76 @@ void InventoryButton::saveEquipButton(jute::jValue& container)
 	aux.set_string(to_string((int)auxType));
 	jObj_.add_property("name", aux);
 	//Precio
-	aux.set_string(to_string(auxEquip_->getPrice()));
+	string strAux = to_string(auxEquip_->getPrice());
+	replace(strAux.begin(), strAux.end(), ',', '.');
+	aux.set_string(strAux);
 	jObj_.add_property("price", aux);
 	//seleccion de objeto (Pechera, Guantes, Botas, Espada, Pistola)
 	if (auxType == equipType::ArmorI || auxType == equipType::ArmorII) {
 		Armor* auxArmor = dynamic_cast<Armor*>(auxEquip_);
-		aux.set_string(to_string(auxArmor->getArmor()));
+		//Armadura
+		strAux = to_string(auxEquip_->getArmor());
+		replace(strAux.begin(), strAux.end(), ',', '.');
+		aux.set_string(strAux);
 		jObj_.add_property("armor", aux);
-		aux.set_string(to_string(auxArmor->getHealth()));
+		//Vida
+		strAux = to_string(auxEquip_->getHealth());
+		replace(strAux.begin(), strAux.end(), ',', '.');
+		aux.set_string(strAux);
 		jObj_.add_property("health", aux);
 	}
 	else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
 		Gloves* auxGloves = dynamic_cast<Gloves*>(auxEquip_);
-		aux.set_string(to_string(auxGloves->getArmor()));
+		//Armadura
+		strAux = to_string(auxEquip_->getArmor());
+		replace(strAux.begin(), strAux.end(), ',', '.');
+		aux.set_string(strAux);
 		jObj_.add_property("armor", aux);
-		aux.set_string(to_string(auxGloves->getCrit()));
+		//Critico
+		strAux = to_string(auxEquip_->getCrit());
+		replace(strAux.begin(), strAux.end(), ',', '.');
+		aux.set_string(strAux);
 		jObj_.add_property("critic", aux);
 	}
 	else if (auxType == equipType::BootsI || auxType == equipType::BootsII) {
 		Boots* auxBoots = dynamic_cast<Boots*>(auxEquip_);
-		aux.set_string(to_string(auxBoots->getArmor()));
+		//Armadura
+		strAux = to_string(auxEquip_->getArmor());
+		replace(strAux.begin(), strAux.end(), ',', '.');
+		aux.set_string(strAux);
 		jObj_.add_property("armor", aux);
-		aux.set_string(to_string(auxBoots->getSpeed()));
+		//Velocidad de movimiento
+		strAux = to_string(auxEquip_->getSpeed());
+		replace(strAux.begin(), strAux.end(), ',', '.');
+		aux.set_string(strAux);
 		jObj_.add_property("speed", aux);
 	}
 	else if (auxType == equipType::SwordI || auxType == equipType::SwordII
 		|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
 		Sword* auxSword = dynamic_cast<Sword*>(auxEquip_);
-		aux.set_string(to_string(auxSword->getMeleeRate()));
+		//Velocidad de ataque melee
+		strAux = to_string(auxEquip_->getMeleeRate());
+		replace(strAux.begin(), strAux.end(), ',', '.');
+		aux.set_string(strAux);
 		jObj_.add_property("rate", aux);
-		aux.set_string(to_string(auxSword->getMeleeDmg()));
+		//Daño melee
+		strAux = to_string(auxEquip_->getMeleeDmg());
+		replace(strAux.begin(), strAux.end(), ',', '.');
+		aux.set_string(strAux);
 		jObj_.add_property("damage", aux);
 	}
 	else if (auxType == equipType::PistolI || auxType == equipType::PistolII
 		|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
 		Gun* auxGun = dynamic_cast<Gun*>(auxEquip_);
-		aux.set_string(to_string(auxGun->getDistRate()));
+		//Cadencia disparo
+		strAux = to_string(auxEquip_->getDistRate());
+		replace(strAux.begin(), strAux.end(), ',', '.');
+		aux.set_string(strAux);
 		jObj_.add_property("rate", aux);
-		aux.set_string(to_string(auxGun->getDistDmg()));
+		//Daño distancia
+		strAux = to_string(auxEquip_->getDistDmg());
+		replace(strAux.begin(), strAux.end(), ',', '.');
+		aux.set_string(strAux);
 		jObj_.add_property("damage", aux);
 	}
 
@@ -200,3 +232,7 @@ void InventoryButton::savePotButton(jute::jValue& container)
 
 	container.add_element(jObj_);
 }
+ InventoryButton::~InventoryButton() {
+	if (!equipped)
+		delete object_;
+};

@@ -23,6 +23,8 @@ public:
 		ResumeButton,
 		BackButton,
 		SkipButton,
+		ViajarButton,
+		IslaActualButton,
 		SkipStoryButton,
 		MuteSoundOff,
 		MuteSoundOn,
@@ -59,6 +61,7 @@ public:
 		LoadButtonNull,
 		ButtonInitTutorial,
 		ButtonSkipTutorial,
+		ButtonFinishTutorial,
 		BackToShipButton,
 		YesButton,
 		NoButton,
@@ -185,8 +188,11 @@ public:
 		Azul,
 
 		//Animaciones
+		EntityDie,
 		CrabWalk,
 		CrabAttack,
+		CrabIdle,
+
 		//Player
 		PlayerIdleRightAnim,
 		PlayerIdleLeftAnim,
@@ -208,17 +214,35 @@ public:
 		PlayerEmpoweredLeft,
 		PlayerEmpoweredUp,
 		PlayerEmpoweredDown,
+		PlayerWhirlRight,
+		PlayerWhirlLeft,
+		PlayerWhirlTop,
+		PlayerWhirlDown,
 
-		//clon
+		//Clon
+		ClonIdleRightAnim,
+		ClonIdleLeftAnim,
+		ClonIdleUpAnim,
+		ClonIdleDownAnim,
+		ClonMeleeRightAnim,
+		ClonMeleeLeftAnim,
+		ClonMeleeUpAnim,
+		ClonMeleeDownAnim,
+		ClonShootRightAnim,
+		ClonShootLeftAnim,
+		ClonShootUpAnim,
+		ClonShootDownAnim,
+			//Autodestrucción
 		ClonSelfDestructionRightAnim,
 		ClonSelfDestructionLeftAnim,
 		ClonSelfDestructionUpAnim,
 		ClonSelfDestructionDownAnim,
-		//desaparecer
+			//Desaparecer
 		ClonVanishRightAnim,
 		ClonVanishLeftAnim,
 		ClonVanishDownAnim,
 		ClonVanishUpAnim,
+
 		//Calabaza
 		//Idle
 		PumpkinIdleRightAnim,
@@ -253,6 +277,7 @@ public:
 		ClonShootLeftAnim,
 		ClonShootUpAnim,
 		ClonShootDownAnim,
+		
 		//Monkey
 		MonkeyIdleRightAnim,
 		MonkeyIdleLeftAnim,
@@ -262,6 +287,25 @@ public:
 		MonkeyShootLeftAnim,
 		MonkeyShootUpAnim,
 		MonkeyShootDownAnim,
+
+		//Pirata náufrago
+		PirateIdleRightAnim,
+		PirateIdleLeftAnim,
+		PirateIdleUpAnim,
+		PirateIdleDownAnim,
+		PirateMoveRightAnim,
+		PirateMoveLeftAnim,
+		PirateMoveUpAnim,
+		PirateMoveDownAnim,
+		PirateMeleeRightAnim,
+		PirateMeleeLeftAnim,
+		PirateMeleeUpAnim,
+		PirateMeleeDownAnim,
+		PirateShootRightAnim,
+		PirateShootLeftAnim,
+		PirateShootUpAnim,
+		PirateShootDownAnim,
+
 		//Magordito
 		Altar,
 		//Idle
@@ -376,28 +420,32 @@ public:
 		Agus,
 		//Aida,
 		Amaro,
-		//Aurora,
+		Aurora,
 		Dani,
 		Georgi,
 		Leyre,
-		//Paula
+		Paula,
 		Oscar,
 		Stiven,
 		//Fichas
 		AgusFicha,
 		//AidaFicha
 		AmaroFicha,
-		//AuroraFicha
+		AuroraFicha,
 		DaniFicha,
 		GeorgiFicha,
 		LeyreFicha,
-		//PaulaFicha
+		PaulaFicha,
 		OscarFicha,
 		StivenFicha,
 		//agradecientos
 		PanelCollaborators,
 		BotonBonus,
 		Bonus,
+
+		//Cleon
+		BarrelExplosion,
+		BarrelInitExpl,
 	};
 
 	enum MusicChannels : int {
@@ -419,7 +467,8 @@ public:
 		PlayerChannel3,
 		PlayerChannel4,
 		//Canal del lobo
-		WolfChannel,
+		WolfChannel1,
+		WolfChannel2,
 		//Canal del mono
 		MonkeyChannel,
 		//Canal de la calabaza
@@ -434,9 +483,9 @@ public:
 		CrabChannel1,
 		CrabChannel2,
 		//Canal del pirata
-		PirateChannel1,
-		PirateChannel2,
-		PirateChannel3,
+		EnemyPirateChannel1,
+		EnemyPirateChannel2,
+		EnemyPirateChannel3,
 		//Canal del kraken
 		KrakenChannel1,
 		KrakenChannel2,
@@ -447,8 +496,16 @@ public:
 
 		//Canal de jarl
 		JarlChannel,
+
+		//Canales de Cleón
+		CleonChannel1,
+		CleonChannel2,
+		CleonChannel3,
+		CleonChannel4,
+		CleonChannel5,
+
 		//Numero de canales
-		NumSoundChannels
+		NumSoundChannels,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
@@ -517,9 +574,13 @@ public:
 		Explosion,
 
 		//Efectos para el lobo
-		WolfHowlAudio,
-		WolfAttackAudio,
-		WolfDieAudio,
+		WolfAttack1,
+		WolfAttack2,
+		WolfIdle1,
+		WolfIdle2,
+		WolfDetection,
+		WolfChase,
+		WolfDeath,
 
 		//Efectos para el mono
 		MonkeyIdleSound,
@@ -539,7 +600,7 @@ public:
 		//Cangrejo
 		CrabAttackSound,
 		CrabDetection,
-		CrabIdle,
+		CrabIdleSound,
 
 		//Pirata
 		PirateAttack,
@@ -621,6 +682,17 @@ public:
 		jarl10,
 		jarl11,
 
+		//Cleón
+		CleonBarril,
+		CleonDie,
+		CleonInter1,
+		CleonInter2,
+		CleonInter3,
+		CleonInter4,
+		CleonInter5,
+		CleonInter6,
+		CleonInter7,
+		CleonLaugh,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

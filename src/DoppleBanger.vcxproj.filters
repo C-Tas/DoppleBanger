@@ -89,7 +89,6 @@
     <ClCompile Include="Sources\Texture.cpp" />
     <ClCompile Include="Sources\TextureManager.cpp" />
     <ClCompile Include="Sources\TiledMap.cpp" />
-    <ClCompile Include="Sources\Trigger.cpp" />
     <ClCompile Include="Sources\usable.cpp" />
     <ClCompile Include="Sources\Vector2D.cpp" />
     <ClCompile Include="Sources\VolcanicIslandState.cpp" />
@@ -110,6 +109,7 @@
     <ClCompile Include="Sources\TestState.cpp" />
     <ClCompile Include="Sources\tutorialObject.cpp" />
     <ClCompile Include="Sources\tutorialState.cpp" />
+    <ClCompile Include="Sources\Barrel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -201,7 +201,6 @@
     <ClInclude Include="Sources\Texture.h" />
     <ClInclude Include="Sources\TextureManager.h" />
     <ClInclude Include="Sources\TiledMap.h" />
-    <ClInclude Include="Sources\Trigger.h" />
     <ClInclude Include="Sources\usable.h" />
     <ClInclude Include="Sources\Vector2D.h" />
     <ClInclude Include="Sources\VisualElement.h" />
@@ -229,5 +228,6 @@
     <ClInclude Include="Sources\TestState.h" />
     <ClInclude Include="Sources\tutorialObject.h" />
     <ClInclude Include="Sources\tutorialState.h" />
+    <ClInclude Include="Sources\Barrel.h" />
   </ItemGroup>
 </Project>

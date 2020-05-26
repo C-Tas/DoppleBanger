@@ -19,6 +19,7 @@ public:
 		currentMap_->draw(); 
 		PlayState::draw();
 	};
+	TiledMap* currentMap_;
 
 protected:
 #pragma region Tilemap_Const
@@ -61,6 +62,4 @@ protected:
 	///<summary>Método para cambiar de zona(Redefinido)</summary>
 	virtual void changeZone();
 
-private:
-	TiledMap* currentMap_;
 };

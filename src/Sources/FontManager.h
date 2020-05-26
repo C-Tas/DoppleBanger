@@ -16,7 +16,7 @@ public:
 	bool initObject();
 
 	///<summary>Devuelve la fuente correspondiente al tag (Resources::FontId::NameTag)</summary>
-	Font* getFont(size_t tag) { return fonts_[tag]; };
+	Font* getFont(size_t tag) { return fonts_[(int)tag]; };
 	///<summary>Carga la fuente pedida</summary>
 	bool loadFont(size_t tag, const string& fileName, int size);
 };

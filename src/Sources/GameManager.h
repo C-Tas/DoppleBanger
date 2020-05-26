@@ -129,7 +129,7 @@ private:
 	//Booleano que indica si estamos en el barco
 	bool onShip_ = true;
 	//Enum de la �ltima isla desbloqueada
-	Island unlockedIslands_ = Island::Caribbean;
+	Island unlockedIslands_ = Island::Volcanic;
 	//Enum de la isla actual
 	Island currIsland_ = Island::Caribbean;
 	//Maximo de los puntos de hazaña
@@ -150,6 +150,8 @@ private:
 	vector<bool> missionsComplete_ = vector<bool>((int)missions::Size);
 	//Vector que representa las misiones secundarias empezadas
 	vector<bool> missionsStarted_ = vector<bool>((int)missions::Size);
+	//Vector que representa las recompensas desbloqueadas de las misiones secundarias
+	vector<bool> missionsRewardObtained_ = vector<bool>((int)missions::Size);
 	//Vector de cooldowns de las habilidades equipadas
 	vector<bool> skillsCooldown_ = { false, false, false, false };
 	//Vector que contiene las habilidades desbloquedadas v[Skillname] corresponde con si está desbloqueda
@@ -161,12 +163,16 @@ private:
 	vector<int> countEnemiesMission_ = { 0, 0, 0, 0 };
 	//Recompensas de las misiones
 	//Oro <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector <int> goldReward_ = { 200, 200, 200, 200 };
+	vector <int> goldReward_ = { 100, 200, 250, 300 };
 	//Hazaña <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector <int> pointsReward_ = { 200, 200, 200, 200 };
+	vector <int> pointsReward_ = { 50, 50, 50, 50 };
+	//Objetos que te dan en las misiones <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
+	vector<int> numOfItemsReward_ = { 4,1,1,1 };
+	//Objetos que te dan en las misiones <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
+	vector<double> statsReward_ = { 200,500,0,50 };
 	//Vector que contiene el numero de enemigos que se tiene que matar en cada mision
 	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<int> enemiesMission_ = { 4, 3, 2, 3 };
+	vector<int> enemiesMission_ = { 4, 3, 2, 5 };
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
@@ -238,24 +244,7 @@ public:
 	//Constructor vacio
 	GameManager();
 	//Destructor
-	~GameManager() {
-		for (InventoryButton* ob : *inventory_)delete ob;
-		for (InventoryButton* ob : *stash_)delete ob;
-		for (InventoryButton* ob : *shop_)delete ob;
-		delete shop_;
-		delete inventory_;
-		delete stash_;
-		//Se borra el equipo
-		if (currEquip_.armor_ != nullptr) delete currEquip_.armor_;
-		if (currEquip_.gloves_ != nullptr) delete currEquip_.gloves_;
-		if (currEquip_.boots_ != nullptr) delete currEquip_.boots_;
-		if (currEquip_.sword_ != nullptr) delete currEquip_.sword_;
-		if (currEquip_.gun_ != nullptr) delete currEquip_.gun_;
-		for (int i = 0; i < currEquip_.potions_.size(); i++) {
-			if(currEquip_.potions_.at(i) != nullptr)
-				delete currEquip_.potions_.at(i);
-		}
-	}
+	~GameManager();
 
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {
@@ -290,6 +279,8 @@ public:
 	const bool isThatMissionPass(missions mission) { return missionsComplete_[(int)mission]; };
 	//Devuelve true si la misi�n est� empezada
 	const bool isThatMissionStarted(missions mission) { return missionsStarted_[(int)mission]; };
+	//Devuelve true si ya se ha obtenido la recompensa de la misión secundaria
+	const bool isThatRewardUnlocked(missions missions) { return missionsRewardObtained_[(int)missions]; };
 	//Devuelve si está activo el cooldown de la habilidad
 	const bool getSkillCooldown(int skill) { return skillsCooldown_[skill]; };
 	//Devuelve si la skill está desbloqueda
@@ -347,7 +338,7 @@ public:
 	//Devuelve la tecla en la que está equipada la habilidad
 	const Key getEquippedSkillKey(SkillName skill);
 	//Devuelve el objeto equipado
-	const ObjectName getObjectEquipped(Key key) { return objectsEquipped_[(int)key - (int)Key::One]; };
+	const ObjectName getObjectEquipped(Key key) { return objectsEquipped_[((__int64)key - (__int64)Key::One)]; };
 	
 	//Devuelve la posici�n del player
 	const Point2D getPlayerPos();
@@ -365,7 +356,11 @@ public:
 	const double getCurrentPlayerLife() { return currPlayerLife_; }
 	//Devuelve el currentMana del player
 	const double getCurrentPlayerMana() { return currPlayerMana_; }
-	
+
+	//Devuelve el numero de objetos que se obtienen como recompensa al completar una mision
+	const int getNumOfObjectsReward(missions mission) { return numOfItemsReward_[(int)mission]; };
+	//Devuelve el numero de objetos que se obtienen como recompensa al completar una mision
+	const double getStatsReward(missions mission) { return statsReward_[(int)mission]; };
 #pragma endregion
 
 #pragma region setters
@@ -390,6 +385,8 @@ public:
 	//Indica si estamos o no en el barco
 	inline void setOnShip(bool onShip) { onShip_ = onShip; };
 
+	inline void setShop(list<InventoryButton*>* shop) { shop_ = shop; };
+
 	//Reseteo del inventario
 	void resetInventory();
 	//Asigna el puntero al inventario
@@ -402,13 +399,15 @@ public:
 	//Reinicia el contador de muertes de la mision
 	inline void resetMissionCounter(missions tagMission) { countEnemiesMission_.at((int)tagMission) = 0; }
 	//Completa una misi�n secundaria
-	inline void setCompleteMission(missions mission, bool complete) {
+	void setCompleteMission(missions mission, bool complete);
+	//Termina una misi�n secundaria
+	inline void setMissionFinished(missions mission, bool complete) {
 		missionsComplete_[(int)mission] = complete;
-		if (complete) {
-			inventoryGold_ += goldReward_.at((int)mission);
-			achievementPoints_ += pointsReward_.at((int)mission);
-		}
-	};
+	}
+	//Obtener recompensa tras hacer una mision
+	inline void setMissionRewardObtained(missions mission, bool obtained) {
+		missionsRewardObtained_[(int)mission] = obtained;
+	}
 	//Empieza una misi�n secundaria
 	inline void setStartedMission(missions mission, bool started) { missionsStarted_[(int)mission] = started; };
 	//Asigna a la ultima isla desbloqueada
@@ -462,6 +461,7 @@ public:
 	void addToInventory(Item* ob);
 	//Para añadir objetos al alijo
 	void addToStash(Item* ob);
+	void addToShop(Item* ob);
 
 	//tutorial
 	void activeTutorial() { tutorial = true; }

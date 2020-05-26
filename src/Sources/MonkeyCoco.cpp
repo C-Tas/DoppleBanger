@@ -10,55 +10,43 @@ bool MonkeyCoco::update() {
 	updateCooldowns();
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
- 		app_->getAudioManager()->playChannel(Resources::MonkeyDieSound, 0, Resources::SoundChannels::MonkeyChannel);
-
-		//Esta línea habría que moverla al cangrejo cuando esté hecho
-		GameManager* gm_ = GameManager::instance();
-		if (gm_->isThatMissionStarted(missions::gallegaEnProblemas))
- 			gm_->addMissionCounter(missions::gallegaEnProblemas);
-
-		//Tendr�a que hacer la animaci�n de muerte?
-		//Cuando acabe la animaci�n, lo mata
-		applyRewards();
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		CollisionCtrl::instance()->removeEnemy(this);
-		static_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
-		return true;
+		dieAnim();
 	}
-	//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
-	else if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
-		currState_ = STATE::SHOOTING;
-		if (firstAttack && onRange()) {
-			app_->getAudioManager()->playChannel(Resources::MonkeyAttackSound, 0, Resources::MonkeyChannel);
-			firstIdle = true;
-		}
-		firstAttack = false;
-	}
-
-	//Si el mono tiene enemigo y puede atacar
-	if (currState_ == STATE::SHOOTING) {
-		if (!shootCD_.isCooldownActive()) {
-			//Si el mono tiene un enemigo y lo tiene a rango
-			if (onRange()) {
-				initShoot();
+	else {
+		//Si el mono no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
+		if (currState_ == STATE::IDLE && getEnemy(currStats_.distRange_)) {
+			currState_ = STATE::SHOOTING;
+			if (firstAttack && onRange()) {
+				app_->getAudioManager()->playChannel(Resources::MonkeyAttackSound, 0, Resources::MonkeyChannel);
+				firstIdle = true;
 			}
-			//Tengo enemigo pero no a rango
-			else {
-				if (firstIdle) {
-					app_->getAudioManager()->playChannel(Resources::MonkeyIdleSound, 0, Resources::MonkeyChannel);
-					firstIdle = false;
+			firstAttack = false;
+		}
+
+		//Si el mono tiene enemigo y puede atacar
+		if (currState_ == STATE::SHOOTING) {
+			if (!shootCD_.isCooldownActive()) {
+				//Si el mono tiene un enemigo y lo tiene a rango
+				if (onRange()) {
+					initShoot();
 				}
-				initIdle();
-				currEnemy_ = nullptr;
-				firstAttack = true;
+				//Tengo enemigo pero no a rango
+				else {
+					if (firstIdle) {
+						app_->getAudioManager()->playChannel(Resources::MonkeyIdleSound, 0, Resources::MonkeyChannel);
+						firstIdle = false;
+					}
+					initIdle();
+					currEnemy_ = nullptr;
+					firstAttack = true;
+				}
+				shootCD_.initCooldown(currStats_.distRate_);
 			}
-			shootCD_.initCooldown(currStats_.distRate_);
+			if (currEnemy_ != nullptr) shootAnim();
 		}
-		if (currEnemy_ != nullptr) shootAnim();
 	}
 	return false;
 }
-
 
 //Inicializa todas las animaciones
 void MonkeyCoco::initAnims() {
@@ -100,7 +88,7 @@ void MonkeyCoco::attack() {
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
 	Bullet* coco = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
 		getCenter(), dir, currStats_.distDmg_, COCO_LIFE, COCO_VEL, Vector2D(W_H_COCO, W_H_COCO));
-	app_->getCurrState()->addRenderUpdateLists(coco);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(coco);
 	CollisionCtrl::instance()->addEnemyBullet(coco);
 }
 
@@ -114,19 +102,19 @@ void MonkeyCoco::initObject() {
 
 void MonkeyCoco::initialStats() 
 {
-	rangeVision_ = 300;
+	rangeVision_ = 1200;
 	HEALTH = 500;
-	MANA = 100;
-	MANA_REG = 1;
-	ARMOR = 10;
+	MANA = 0;
+	MANA_REG = 0;
+	ARMOR = 5;
 	MELEE_DMG = 0;
-	DIST_DMG = 200;
-	CRIT = 0;
+	DIST_DMG = 250;
+	CRIT = 5;
 	MELEE_RANGE = 0;
-	DIST_RANGE = 300;
+	DIST_RANGE = 1000;
 	MOVE_SPEED = 0;
 	MELEE_RATE = 0;
-	DIST_RATE = 1300;
+	DIST_RATE = 1500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 
@@ -203,12 +191,18 @@ void MonkeyCoco::shootAnim() {
 		initIdle();	//Activa el idle
 	}
 }
+
 void MonkeyCoco::initRewards()
 {
-	minGold = 30;
-	maxGold = 50;
-	minArchievementPoints = 2;
+	minGold = 70;
+	maxGold = 120;
+	minArchievementPoints = 4;
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
+}
+
+void MonkeyCoco::initDie() {
+	Enemy::initDie();
+	app_->getAudioManager()->playChannel(Resources::MonkeyDieSound, 0, Resources::SoundChannels::MonkeyChannel);
 }

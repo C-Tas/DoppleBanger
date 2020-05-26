@@ -104,11 +104,11 @@ private:
 	const double W_PUMPKIN = app_->getWindowWidth() / 20;
 	const double H_PUMPKIN = app_->getWindowHeight() / 15;
 
-	const double W_CRAB = app_->getWindowWidth() / 20;
-	const double H_CRAB = app_->getWindowHeight() / 15;
+	const double W_CRAB = app_->getWindowWidth() / 10;
+	const double H_CRAB = app_->getWindowHeight() / 7.5;
 
-	const double W_ENEMYPIRATE = app_->getWindowWidth() / 20;
-	const double H_ENEMYPIRATE = app_->getWindowHeight() / 15;
+	const double W_ENEMYPIRATE = app_->getWindowWidth() / 10;
+	const double H_ENEMYPIRATE = app_->getWindowHeight() / 7.5;
 
 	const double W_NPC_CHEF = app_->getWindowWidth() / 20;
 	const double H_NPC_CHEF = app_->getWindowHeight() / 8;

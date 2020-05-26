@@ -29,7 +29,7 @@ bool Chest::update() {
 	if (open) {
 		updateFrame();
 
-		if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
 			if (gold_ == 0) GameManager::instance()->addToInventory(rN.genEquip());
 			else GameManager::instance()->addInventoryGold(gold_);
 

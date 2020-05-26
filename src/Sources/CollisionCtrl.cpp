@@ -10,7 +10,6 @@ void CollisionCtrl::islandCollisions() {
 		enemies_.remove(*it);
 	}
 	enemiesToErase_.clear();
-
 	//Quitamos a los cofres de la lista
 	for (auto it = chestsToErase_.begin(); it != chestsToErase_.end(); ++it) {
 		chests_.remove(*it);
@@ -25,11 +24,6 @@ void CollisionCtrl::islandCollisions() {
 		enemyBullets_.remove(*it);
 	}
 	enemyBulletsToErase_.clear();
-	//Quitamos a los triggers de la lista
-	for (auto it = triggersToErase_.begin(); it != triggersToErase_.end(); ++it) {
-		triggers_.remove(*it);
-	}
-	triggersToErase_.clear();
 
 	collisionWithEndOfZone_ = false;
 
@@ -58,7 +52,7 @@ void CollisionCtrl::islandCollisions() {
 	}
 
 	for (auto ob : obstacleWithRotation_) {
-		if (Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+		if (player_ != nullptr && Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
 			player_->getCollisionRot(), (ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY(), ob->getCollisionRot())) {
 			player_->setPos(player_->getPreviousPos());
 			player_->stop();
@@ -69,7 +63,7 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n enemigo con jugador o con balas del jugador
 	for (auto enem : enemies_) {
-		if (Collisions::collidesWithRotation(enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot(),
+		if (player_ != nullptr && Collisions::collidesWithRotation(enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY(), player_->getCollisionRot())) {
 			enem->onCollider();
 			//Cuando el jugador colisiona con el enemigo recibe da�o
@@ -80,7 +74,7 @@ void CollisionCtrl::islandCollisions() {
 				if (Collisions::collidesWithRotation(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(), bullet->getCollisionRot(),
 					enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot())) {
 					if (bullet != nullptr) {
-						enem->receiveDamage(bullet->getDamage());
+						enem->receiveDamage((int)round(bullet->getDamage()));
 						if (bullet->getRicochet()) {	//Cuando esté rebotando
 							bullet->searchEnemy(enemies_, enem);
 						}
@@ -96,7 +90,7 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n bala del enemigo con jugador
 	for (auto bullet : enemyBullets_) {
-		if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
+		if (player_ != nullptr && Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			// si la bala puede hacer da�o al jugador
 			if (bullet->doDamage()) {
@@ -114,7 +108,7 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n NPC con jugador -- Como mucho habrá uno por zona
 	if (npcs_.size() > 0) {
-		if (Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX() * 1.1, npcs_[0].object->getScaleY() * 1.1,
+		if (player_ != nullptr && Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX() * 1.1, npcs_[0].object->getScaleY() * 1.1,
 			player_->getPos(), player_->getScaleX() * 1.1, player_->getScaleY() * 1.1)) {
 			if (Collisions::collides(npcs_[0].object->getColliderPos(), npcs_[0].object->getColliderScale().getX(), npcs_[0].object->getColliderScale().getY(),
 				player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
@@ -146,7 +140,7 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n cofres con jugador
 	for (auto chest : chests_) {
-		if (Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
+		if (player_ != nullptr && Collisions::collides(chest->getPos(), chest->getScaleX(), chest->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			chest->onCollider();
 			removeChest(chest);	//Para que no pueda volver a abrirse el mismo cofre
@@ -163,14 +157,14 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n colliders con jugador
 	for (auto collider : colliders_) {
-		if (Collisions::collides(collider->getPos(), collider->getScaleX(), collider->getScaleY(),
+		if (player_ != nullptr && Collisions::collides(collider->getPos(), collider->getScaleX(), collider->getScaleY(),
 			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			collider->onCollider();
 		}
 	}
 
 	for (auto ob : endObstacles_) {
-		if (Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
+		if (player_ != nullptr && Collisions::collidesWithRotation(player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(),
 			player_->getCollisionRot(), (ob)->getColliderPos(), (ob)->getColliderScale().getX(), (ob)->getColliderScale().getY(), ob->getCollisionRot())) {
 			player_->stop();
 			collisionWithEndOfZone_ = true;
@@ -209,9 +203,9 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 	//Colisi�n con los objetos del barco
 	for (int i = 0; i < shipObjects_.size(); i++) {
-		if (RectRect(player_->getPosX() + player_->getScaleX() / 2, player_->getPosY() + player_->getScaleY() / 2, player_->getColliderScale().getX(), player_->getScaleY() / 10,
-			shipObjects_[i].object->getPosX() + shipObjects_[i].object->getScaleX() / 2, shipObjects_[i].object->getPosY() + 
-			shipObjects_[i].object->getScaleY() / 2, shipObjects_[i].object->getScaleX(), shipObjects_[i].object->getScaleY())) {
+		if (RectRect((float)(player_->getPosX() + player_->getScaleX() / 2),(float) (player_->getPosY() + player_->getScaleY() / 2),(float)( player_->getColliderScale().getX()), (float)(player_->getScaleY() / 10),
+			(float)(shipObjects_[i].object->getPosX() + shipObjects_[i].object->getScaleX() / 2), (float)(shipObjects_[i].object->getPosY() + 
+			shipObjects_[i].object->getScaleY() / 2),(float)( shipObjects_[i].object->getScaleX()),(float)( shipObjects_[i].object->getScaleY()))) {
 			player_->stop();
 			player_->setPos(player_->getPreviousPos());
 
@@ -225,6 +219,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 		}
 	}
 
+	bool auxMerchCollision = false;
 	//Colisi�n con los NPCs desbloqueados
 	for (auto npc : npcs_) {
 		if (Collisions::collides(npc.object->getPos(), npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 1.1,
@@ -248,6 +243,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 				break;
 			case NPCsNames::Merchant:
 				npcCollision.id = NPCsNames::Merchant;
+				auxMerchCollision = true;
 				break;
 	        case NPCsNames::Chef:
 				npcCollision.id = NPCsNames::Chef;
@@ -267,6 +263,12 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 			}
 		}
 	}
+
+	if (auxMerchCollision && !isCollidingWithMechant_) {
+		isCollidingWithMechant_ = true;
+		randomPhrase_ = rand() % MAX_MERCHANT_PHRASES;
+	}
+	else if (!auxMerchCollision) isCollidingWithMechant_ = false;
 
 	///Colision con las paredes del barco
 	for (auto ob : obstacles_) {
@@ -311,17 +313,61 @@ void CollisionCtrl::tutorialCollision()
 	}
 }
 
+void CollisionCtrl::volcanicCollision()
+{
+	for (auto it = barrelsToErase_.begin(); it != barrelsToErase_.end(); ++it) {
+		barrels_.remove(*it);
+	}
+	barrelsToErase_.clear();
+
+	cout << barrels_.size() << endl;
+	for (auto barrel : barrels_) {
+		if (barrel->getBarrelState() == BARREL_STATE::INIT_EXPLOTION) {
+			//Collisión contra el player
+			if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
+				barrel->getPos(), barrel->getScaleX(), barrel->getScaleY())) {
+				barrel->onCollider();
+			}
+			//Collisión contra las balas
+			for (auto bullet : playerBullets_) {
+				if (Collisions::collidesWithRotation(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(), bullet->getCollisionRot(),
+					barrel->getPos(), barrel->getScaleX(), barrel->getScaleY(), barrel->getCollisionRot())) {
+					barrel->onCollider();
+					bullet->onCollider();
+					removePlayerBullet(bullet);
+				}
+			}
+		}
+	}
+}
+
 list<Enemy*> CollisionCtrl::getEnemiesInArea(Point2D center, int radius)
 {
 	list<Enemy*> enemiesWithin;
 	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
 	{
 		SDL_Rect coll = (*it)->getCollider();
-		if (RectBall(coll.x + coll.w / 2, coll.y + coll.h / 2, coll.w, coll.h, center.getX(), center.getY(), radius)) {
+		if (RectBall((float)(coll.x + coll.w / 2), (float)(coll.y + coll.h / 2), (float)coll.w, (float)coll.h, (float)center.getX(), (float)center.getY(), (float)radius)) {
 			enemiesWithin.push_back((*it));
 		}
 	}
 	return enemiesWithin;
+}
+
+list<Collider*> CollisionCtrl::getEntitiesInArea(Point2D center, int radius)
+{
+	list<Collider*> entities;
+	SDL_Rect coll = player_->getCollider();
+	if (RectBall((float)(coll.x + coll.w / 2), (float)(coll.y + coll.h / 2), (float)coll.w, (float)coll.h, (float)center.getX(), (float)center.getY(), (float)radius)) {
+		entities.push_back(player_);
+	}
+	for (auto enemy : enemies_) {
+		coll = (enemy)->getCollider();
+		if (RectBall((float)(coll.x + coll.w / 2), (float)(coll.y + coll.h / 2), (float)coll.w, (float)coll.h, (float)center.getX(), (float)center.getY(), (float)radius)) {
+			entities.push_back((enemy));
+		}
+	}
+	return entities;
 }
 
 void CollisionCtrl::drawTextBox() {
@@ -336,7 +382,7 @@ void CollisionCtrl::drawTextBox() {
 		npcCollision.object->getTextBox()->dialogElderMan(numConversation_);
 		break;
 	case NPCsNames::Merchant:
-		npcCollision.object->getTextBox()->dialogMerchant();
+		npcCollision.object->getTextBox()->dialogMerchant(randomPhrase_);
 		break;
 	case NPCsNames::Chef:
 		npcCollision.object->getTextBox()->dialogChef(onShip, numConversation_);

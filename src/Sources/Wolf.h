@@ -5,7 +5,7 @@ class Wolf :
 {
 public:
 	Wolf(Application* app = nullptr, Vector2D pos = { 0,0 }, Vector2D scale = { 0, 0 },
-		vector<Point2D> patrol = { {0,0} }) :
+		vector<Point2D> patrol = { }) :
 		Enemy(app, pos, scale), patrol_(patrol) {
 		initObject();
 	};
@@ -18,14 +18,18 @@ public:
 	virtual void move(Vector2D pos);
 	//Cuando pierde agro del enemigo
 	virtual void lostAggro();
-
+	void setPatrol(Vector2D pos);
 	virtual ~Wolf() {};
 
 private:
+	virtual void dieAudio() { app_->getAudioManager()->playChannel(Resources::AudioId::WolfDeath, 0, Resources::WolfChannel1); }
+	//Punto que representa dentro del vector de patrulla
+	int currPatrol_ = 0;
 	//Puntos del mapa donde va a patrullar
 	vector<Point2D> patrol_;
 	//Punto que representa dentro del vector de patrulla
 	int currTarget_ = 0;
+	//Point2D nextTarget_{ 0,0 };
 	//Cooldown melee
 	Cooldown meleeCD_;
 	//Tiempo que el lobo pasa parado cuando llega a un target
@@ -55,10 +59,12 @@ private:
 	const int FRAME_RATE_IDLE = 100;
 	#pragma endregion
 
+	void initIdle();
 	//Ataque del monkeyCoco
 	void attack();
 	//Devuelve true si el target est� dentro del rango de ataque
 	bool onRange();
+	void initMove();
 	//Inicializa todas las animaciones
 	void initAnims();
 	//Busca y actualiza al enemigo que atacar

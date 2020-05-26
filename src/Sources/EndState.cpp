@@ -19,6 +19,7 @@ void EndState::backToShip(Application* app)
 void EndState::chooseOption(Application* app) {
 	static_cast<EndState*>(app->getCurrState())->changeButtons();
 }
+
 void EndState::backToMainMenu(Application* app)
 {
 	app->getGameStateMachine()->clearAllStateExceptFirst();

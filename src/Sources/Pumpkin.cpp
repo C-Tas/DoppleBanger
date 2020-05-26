@@ -8,12 +8,13 @@
 bool Pumpkin::onDistRange() {
 	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
-		Point2D currEnemyCenter = getCenter();
-		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
-			center.getX(), center.getY(), currStats_.distRange_))
+		Point2D currEnemyCenter = currEnemy_->getCenter();
+		if (RectBall((float)round(currEnemyCenter.getX()), (float)round(currEnemyCenter.getY()), (float)round(currEnemy_->getScaleX()), (float)round(currEnemy_->getScaleY()),
+			(float)center.getX(), (float)center.getY(), (float)currStats_.distRange_))
 		{
 			return true;
 		}
+		else return false;
 	}
 	else
 	{
@@ -24,8 +25,8 @@ bool Pumpkin::onMeleeRange() {
 	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = currEnemy_->getCenter();
-		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
-			center.getX(), center.getY(), currStats_.meleeRange_)) {
+		if (RectBall((float)currEnemyCenter.getX(), (float)currEnemyCenter.getY(), (float)currEnemy_->getScaleX(), (float)currEnemy_->getScaleY(),
+			(float)center.getX(), (float)center.getY(), (float)currStats_.meleeRange_)) {
 			return true;
 		}
 		else return false;
@@ -110,7 +111,7 @@ void Pumpkin::disAttack() {
 
 	Bullet* seed = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
 		getCenter(), dir, realDamage, seedLife, seedVel, Vector2D(wHSeed, wHSeed));
-	app_->getCurrState()->addRenderUpdateLists(seed);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(seed);
 	CollisionCtrl::instance()->addEnemyBullet(seed);
 }
 void Pumpkin::follow() {
@@ -139,18 +140,18 @@ void Pumpkin::lostAgro()
 void Pumpkin::initialStats()
 {
 	rangeVision_ = 350;
-	HEALTH = 100;
-	MANA = 100;
-	MANA_REG = 1;
-	ARMOR = 10;
-	MELEE_DMG = 0;
-	DIST_DMG = 0;
+	HEALTH = 1200;
+	MANA = 0;
+	MANA_REG = 0;
+	ARMOR = 0;
+	MELEE_DMG = 1000;
+	DIST_DMG = 300;
 	CRIT = 0;
-	MELEE_RANGE = 200;
-	DIST_RANGE = 350;
-	MOVE_SPEED = 100;
-	MELEE_RATE = 1;
-	DIST_RATE = 2500;
+	MELEE_RANGE = 50;
+	DIST_RANGE = 1200;
+	MOVE_SPEED = 400;
+	MELEE_RATE = 0;
+	DIST_RATE = 1500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 }
 void Pumpkin::move(Point2D posToReach) {
@@ -229,10 +230,10 @@ void Pumpkin::initAnims()
 }
 void Pumpkin::initRewards()
 {
-	minGold = 30;
-	maxGold = 50;
-	minArchievementPoints = 2;
-	maxArchievementPoints = 10;
+	minGold = 180;
+	maxGold = 230;
+	minArchievementPoints = 5;
+	maxArchievementPoints = 12;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
@@ -290,8 +291,8 @@ bool Pumpkin::explosionAnim()
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = currEnemy_->getCenter();
-		if (dmg != nullptr && RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
-			center.getX(), center.getY(), explosionRange_)) {
+		if (dmg != nullptr && RectBall((float)currEnemyCenter.getX(), (float)currEnemyCenter.getY(), (float)currEnemy_->getScaleX(), (float)currEnemy_->getScaleY(),
+			(float)center.getX(), (float)center.getY(), (float)explosionRange_)) {
 
 			dmg->receiveDamage(currStats_.meleeDmg_);
 		}

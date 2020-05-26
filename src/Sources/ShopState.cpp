@@ -79,15 +79,15 @@ void ShopState::draw() const
 
 	//pintar textos
 	//descripcion objetos
-	if (selected_ != nullptr) {
+	if (selected_ != nullptr && selected_->getObject() != nullptr) {
 		selected_->getObject()->getDescription(descriptionBox);
 	}
 	double posx1 = (double)(app_->getWindowWidth() / 1.684);//950;
 	double posy = (double)(app_->getWindowHeight() / 1.184);//770;
 
-	if (selected_ != nullptr) {
+	if (selected_ != nullptr && selected_->getObject() != nullptr) {
 		Texture potionText(app_->getRenderer(), "Precio: " + to_string((int)selected_->getObject()->getPrice()), app_->getFontManager()->getFont(Resources::FontId::RETRO), SDL_Color({ 0,0,0,1 }));
-		potionText.render(posx1, posy);
+		potionText.render((int)round(posx1),(int)round(posy));
 	}
 }
 
@@ -116,19 +116,19 @@ void ShopState::initState() {
 	background_ = app_->getTextureManager()->getTexture(Resources::TextureId::ShopMenu);
 
 	//Bot�n de avanzar la p�gina del inventario
-	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow)*/, Vector2D((57 * (app_->getWindowWidth() / 70)), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceInventoryPage));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow)*/, Vector2D((double)(57 * ((__int64)app_->getWindowWidth() / 70)), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceInventoryPage));
 	//Bot�n de volver a la p�gina anterior del inventario
-	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow)*/, Vector2D(45 * (app_->getWindowWidth() / 70), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousInventoryPage));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow)*/, Vector2D((double)(45 * ((__int64)app_->getWindowWidth() / 70)), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousInventoryPage));
 
 	//Bot�n de avanzar la p�gina de la tienda
-	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow)*/, Vector2D(45 * (app_->getWindowWidth() / 140), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceShopPage));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ForwardArrow)*/, Vector2D((double)(45 * ((__int64)app_->getWindowWidth() / 140)), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackAdvanceShopPage));
 	//Bot�n de volver a la p�gina anterior de la tienda
-	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow)*/, Vector2D((29 * (app_->getWindowWidth() / 140)) + 10, ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousShopPage));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow)*/, Vector2D((double)(29 * ((__int64)app_->getWindowWidth() / 140) + 10), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousShopPage));
 
 	//Bot�n para cambiar el objeto de una lista a otra
-	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton)*/, Vector2D(45 * (app_->getWindowWidth() / 64), FUNCTIONALITY_BUTTONS_ROW), Vector2D(2*BUTTON_SIZE, BUTTON_SIZE), callbackChangeBetweenLists));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton)*/, Vector2D((double)(45 * ((__int64)app_->getWindowWidth() / 64)), FUNCTIONALITY_BUTTONS_ROW), Vector2D((double)(5* (__int64)BUTTON_SIZE), BUTTON_SIZE), callbackChangeBetweenLists));
 	//Bot�n para eliminar el objeto seleccionado
-	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton)*/, Vector2D( 26 * (app_->getWindowWidth() / 32), FUNCTIONALITY_BUTTONS_ROW), Vector2D(2*BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
+	//addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton)*/, Vector2D( 26 * (app_->getWindowWidth() / 32), FUNCTIONALITY_BUTTONS_ROW), Vector2D(2*BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
 
 	//Bot�n de volver al estado anterior
 	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ButtonX)*/, Vector2D(CLOSE_BUTTON_COLUMN, 2 * (double)(app_->getWindowHeight() / 9)), CLOSE_BUTTON_SIZE, backToPrevious));
@@ -142,9 +142,13 @@ void ShopState::initState() {
 	//Texturas con texto
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(inventory_.money_), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
 
+	app_->getRandom()->initObject();
 	//Cogemos la referencia de las listas que hay en GameManager
+	if(gm_->getShop() != nullptr)
+		createItems(8);
 	shop_.objects_ = gm_->getShop();
 	inventory_.objects_ = gm_->getInventory();
+
 	///Reasignamos el callback y el estado puesto que si se borra el antiguo Shop, no se podrá seleccionar 
 	//ninguno de los objetos al no estar la función en la misma direccion de memoria
 	for (auto ob = inventory_.objects_->begin(); ob != inventory_.objects_->end(); ++ob) {
@@ -174,7 +178,7 @@ void ShopState::endState()
 
 void ShopState::advanceInventoryPage() {
 	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
-	if (((inventory_.page_ + 1) * INVENTORY_VISIBLE_ELEMENTS) < inventory_.objects_->size()) {
+	if ((__int64)(((__int64)inventory_.page_ + 1) * INVENTORY_VISIBLE_ELEMENTS) < (int)inventory_.objects_->size()) {
 		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel3);
 		inventory_.page_++;
 		advance(inventory_.firstDrawn, INVENTORY_VISIBLE_ELEMENTS);
@@ -192,7 +196,7 @@ void ShopState::previousInventoryPage()
 
 void ShopState::advanceShopPage()
 {	//Si el primer elemento de la siguiente p�gina no se pasa del n�mero de objetos de la lista, avanzamos
-	if ((shop_.page_ + 1) * SHOP_VISIBLE_ELEMENTS < shop_.objects_->size()) {
+	if ((__int64)(((__int64)shop_.page_ + 1) * SHOP_VISIBLE_ELEMENTS) < (int)shop_.objects_->size()) {
 		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel3);
 		shop_.page_++;
 		advance(shop_.firstDrawn, SHOP_VISIBLE_ELEMENTS);
@@ -228,7 +232,7 @@ void ShopState::changeBetweenLists()
 			selectedIsLastElement(shop_, SHOP_VISIBLE_ELEMENTS);
 			if (gm_->getInventoryGold() >= selected_->getObject()->getPrice())
 			{
-				gm_->addInventoryGold(-selected_->getObject()->getPrice());
+				gm_->addInventoryGold(-(int)round(selected_->getObject()->getPrice()));
 				moneyChange();
 				//Insertamos en la otra lista
 				it = inventory_.objects_->insert(inventory_.objects_->end(), selected_);
@@ -243,7 +247,7 @@ void ShopState::changeBetweenLists()
 		}
 		else {
 			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
-			gm_->addInventoryGold(selected_->getObject()->getPrice());
+			gm_->addInventoryGold((int)round(selected_->getObject()->getPrice()));
 			moneyChange();
 			//Insertamos en la otra lista
 			it = shop_.objects_->insert(shop_.objects_->end(), selected_);
@@ -346,4 +350,14 @@ void ShopState::moneyChange()
 	app_->getAudioManager()->playChannel(Resources::Gold, 0, Resources::AuxMusicChannel1);
 	delete inventoryMoneyTex_;
 	inventoryMoneyTex_ = new Texture(app_->getRenderer(), to_string(gm_->getInventoryGold()), app_->getFontManager()->getFont(Resources::RETRO), SDL_Color({ 0,0,0,0 }));
+}
+
+void ShopState::createItems(int n)
+{
+	RandEquipGen* rand = app_->getEquipGen();
+	for (size_t i = 0; i < n; i++)
+	{
+		Item* ob = rand->genEquip();
+		gm_->addToShop(ob);
+	}
 }

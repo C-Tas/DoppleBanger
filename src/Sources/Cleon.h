@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "Barrel.h"
 
 
 class Player;
@@ -14,46 +15,81 @@ public:
 	};
 	~Cleon() {};
 
-	//Métodos virtuales públicos
+	//Mï¿½todos virtuales pï¿½blicos
 	virtual bool update() override ;
 	virtual void onCollider()override;
 	virtual void receiveDamage(double damage) override;
 	virtual void lostAggro();
 
 	//Habilidades
+		//*Barril
+			//Quita un barril de la cuenta de barriles totales
+	void quitBarrel() { barrelsInGame--; }
+	//Fin habilidades//
+
+private:
+	//Habilidades
 		//*Bloqueo
-			//Posibilidad de bloquear un ataque
+			//Posibilidad de bloquear un ataque 1 entre BLOCK_CHANCE
 	const int BLOCK_CHANCE = 5;
 			//Devuelve true si activa el bloqueo
 	bool activeBlock() { return app_->getRandom()->nextInt(0, BLOCK_CHANCE + 1) == BLOCK_CHANCE ? true : false; }
 		
 		//*Estocada
-			//última estocada
+			//Mï¿½todo que se encarga de crear la estocada
+	void thrust();
+			//ï¿½ltima estocada
 	Cooldown lastThrust_;
 			//Cooldown de la estocada
 	const double THRUST_TIME = 2500;
-			//Método que se encarga de crear la estocada
-	void thrust();
 
 		//*Carga
 			//Rango en que aplica la carga del pirata
-	const double CHARGE_RANGE = 200;
-			//Úlima carga
+	const double CHARGE_RANGE = 350;
+			//ï¿½lima carga
 	Cooldown lastCharge_;
-			//Método que crea la carga del pirata
-	void pirateCharge();
 			//Cooldown de la carga
-	const double CHARGE_TIME = 20000;
-			//Velocidad con la que carga Cleón
-	const double CHARGE_SPEED = 1000;
-			//Velocidad de movimiento de Cleón para recuperar luego
+	const double CHARGE_TIME = 5000;
+			//Velocidad con la que carga Cleï¿½n
+	const double CHARGE_SPEED = 3000;
+			//Velocidad de movimiento de Cleï¿½n para recuperar luego
 	double movSpeed_ = 0;
-			//Daño que produce la carga
+			//Daï¿½o que produce la carga
 	const int CHARGE_DMG = 300;
+			//Mï¿½todo que crea la carga del pirata
+	void pirateCharge();
+	
+		//* Barrido
+	void sweep();
+		//ï¿½limo barrido
+	Cooldown lastSweep_;
+		//Cooldown del barrido
+	const double SWEEP_TIME = 3000;
+
+		//*Barril
+			//Cooldown del barril
+	Cooldown lastBarrel_;
+			//Nï¿½mero mï¿½ximo de barriles a crear
+	const int NUM_MAX_BARREL = 10;
+			//Posibilidad de crear un barril
+	const int BARREL_CHANCE = 100;
+			//Anchura del barril
+	const double BARREL_W = 100;
+			//Altura del barril
+	const double BARREL_H = 100;
+			//Barriles creados
+	int barrelsInGame = 0;
+			//Tiempo de creaciï¿½n de barril
+	const double BARREL_CREATOR = 6500;
+			//Mï¿½todo que crea un barril
+	void createBarrel();
+
+		//*Combo
+	void combo();
 	//Fin habilidades//
 
-private:
-	//Métodos virtuales privados
+
+	//Mï¿½todos virtuales privados
 	virtual void initialStats()override;
 	virtual void initObject()override;
 	virtual void initRewards()override;

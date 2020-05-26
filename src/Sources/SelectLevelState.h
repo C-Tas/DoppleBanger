@@ -5,6 +5,7 @@
 class VisualElement;
 
 using CallBackOnClick = void(Application * App);
+
 class SelectLevelState :
 	public GameState
 {
@@ -13,16 +14,23 @@ public:
 	virtual ~SelectLevelState() {};
 
 private: 
-#pragma region Testeo
+	//Imagen del mapa
 	VisualElement* map_ = nullptr;
+
+	//Mesa de fondo
 	VisualElement* table_ = nullptr;
-#pragma endregion
 
-	///<summary>M�todo privado para iniciar el estado</summary>
+	//Imagen de la Isla Actual
+	VisualElement* currIsland = nullptr;
+
+	//Posiciones de los botones de las islas 1, 2 y 3
+	const Vector2D buttonPosition_[3] = { Vector2D(0.344 * app_->getWindowWidth(), 0.2777 * app_->getWindowHeight()),
+		Vector2D(0.404 * app_->getWindowWidth(), 0.7 * app_->getWindowHeight()),
+		Vector2D(0.75 * app_->getWindowWidth(), 0.4222 * app_->getWindowHeight()) };		
+
+	//Metodo privado para iniciar el estado
 	void initState();
-
-	///<summary>Arrays con la informaci�n de los botones para que su creaci�n dependiendo del n�mero de islas desbloqueadas
-	///sea m�s sencilla</summary>
-	const array <Vector2D, 3> buttonPositions_ = { Vector2D(100, 400), Vector2D(800, 400),Vector2D(1300, 400) };
+	//Crea los botones del State
+	void createButtons();
 }; 
 

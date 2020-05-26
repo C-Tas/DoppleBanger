@@ -6,11 +6,11 @@
 #include "Enemy.h"
 #include "Chest.h"
 #include "Bullet.h"
-#include "Trigger.h"
 #include "ShipObject.h"
 #include "PlayerBullet.h"
 #include <list>
 #include <vector>
+#include "Barrel.h"
 
 class PlayerBullet;
 class CollisionCtrl {
@@ -51,10 +51,14 @@ public:
 	void shipCollisions();
 	//Gestiona las colisiones con los objetos del tutorial
 	void tutorialCollision();
+	//Gestina las colisiones contra los barriles
+	void volcanicCollision();
 	///<summary>Para renderizar los textBox en caso de ser necesario</summary>
 	void drawTextBox();
 	///<summary>Devuelve los objetos en un area</summary>
 	list<Enemy*> getEnemiesInArea(Point2D center, int radius);
+	//Devuelve los objetos un área
+	list<Collider*> getEntitiesInArea(Point2D center, int radius);
 
 #pragma region Remove
 	///<summary>Quita las colisiones con el NPC (si el NPC se desbloquea y deja de aparecer en la isla)</summary>
@@ -67,25 +71,26 @@ public:
 	void removePlayerBullet(PlayerBullet* bullet) { playerBulletsToErase_.push_back(bullet); };
 	///<summary>Quita una bala de la lista</summary>
 	void removeEnemyBullet(Bullet* bullet) { enemyBulletsToErase_.push_back(bullet); };
-	///<summary>Quita un trigger de la lista</summary>
-	void removeTrigger(Trigger* trigger) { triggersToErase_.push_back(trigger); };
 	///<summary>Quita un nuevo colliders</summary>
 	void removeCollider(Collider* collider) { collidersToErase_.push_back(collider); };
 	///<summary>Quita el dummy</summary>
 	void removeDummy() { enemies_.clear(); dummy_ = nullptr; };
-
+	//Quita un barril
+	void removeBarrel(Barrel* collider) { barrelsToErase_.push_back(collider); }
 	///<summary>Vac�a todas las listas (para los cambios de zona)</summary>
 	void clearList() {
 		//Listas de las islas
 		obstacles_.clear(); obstacleWithRotation_.clear(); enemies_.clear();
-		chests_.clear(); triggers_.clear(); enemiesToErase_.clear(); chestsToErase_.clear();
-		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear(); triggersToErase_.clear();
+		chests_.clear(); enemiesToErase_.clear(); chestsToErase_.clear();
+		playerBulletsToErase_.clear(); enemyBulletsToErase_.clear();
 		endObstacles_.clear();
 		//Listas del barco
 		npcs_.clear(); shipObjects_.clear(); newNpc = true;
 		npcCollision.id = NPCsNames::Nobody;
 		npcCollision.object = nullptr;
 		collisionWithEndOfZone_ = false;
+		//Listas del volcanica
+		barrels_.clear();
 	};
 #pragma endregion
 
@@ -110,8 +115,6 @@ public:
 	void addPlayerBullet(PlayerBullet* bullet) { playerBullets_.push_back(bullet); };
 	///<summary>A�ade una nueva bala a la lista</summary>
 	void addEnemyBullet(Bullet* bullet) { enemyBullets_.push_back(bullet); };
-	///<summary>A�ade un nuevo trigger</summary>
-	void addTriggers(Trigger* trigger) { triggers_.push_back(trigger); };
 	///<summary>A�ade un nuevo colliders</summary>
 	void addCollider(Collider* collider) { colliders_.push_back(collider); };
 	//<summary>Método para saber si está activado el textbox de cambio de zona</summary>
@@ -129,7 +132,9 @@ public:
 	void setBottle(Enemy* obj) { bottle_ = obj; }
 	void setDummy(Enemy* obj) { dummy_ = obj; }
 
-
+	//Volcanica
+	void addBarrel(Barrel* collider) { barrels_.push_back(collider); }
+		
 #pragma endregion
 
 private:	//Private est� abajo porque necesitan enum del p�blico
@@ -166,16 +171,17 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	list<Chest*> chests_;
 	list<PlayerBullet*> playerBullets_;
 	list<Bullet*> enemyBullets_;
-	list<Trigger*> triggers_;
 	list<Collider*> colliders_;
+	list<Barrel*> barrels_;
 
 	list<Enemy*> enemiesToErase_;
 	list<Chest*> chestsToErase_;
 	list<PlayerBullet*> playerBulletsToErase_;
 	list<Bullet*> enemyBulletsToErase_;
-	list<Trigger*> triggersToErase_;
 	list<Collider*> collidersToErase_;
+	list<Barrel*> barrelsToErase_;
 
+	//Colision con el trigger de fin de zona
 	bool collisionWithEndOfZone_ = false;
 
 	//Barco
@@ -190,4 +196,9 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	vector<ShipObjectsInfo> shipObjects_;
 
 	static unique_ptr<CollisionCtrl> instance_;
+
+	//MerchantDialog
+	bool isCollidingWithMechant_ = false;
+	int randomPhrase_ = 0;
+	const int MAX_MERCHANT_PHRASES = 4;
 };

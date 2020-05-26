@@ -50,7 +50,7 @@ void CreditsState::createAvatars()
 {
 	int avatarTexture = Resources::Agus;
 	Vector2D initPos = { (double)app_->getWindowWidth() / 10, (double)app_->getWindowHeight() / 10 };
-	for (int i = 0; i < 7; i++) {
+	for (int i = 0; i < numAvatars - 1; i++) {
 		InventoryButton* avatar = new InventoryButton(app_, initPos, Vector2D(AVATAR_W, AVATAR_H), nullptr, selectAvatar);
 		avatar->setTexture(app_->getTextureManager()->getTexture(avatarTexture));
 		avatar->setDeclarator(avatarTexture +1);
@@ -91,13 +91,13 @@ void CreditsState::showAvatarInfo(InventoryButton* avatar)
 	SDL_Texture* tex = avatarSelected_->getTexture()->getSDLTex();
 	SDL_SetTextureAlphaMod(avatarSelected_->getTexture()->getSDLTex(), 255);
 	cout << avatar->getDeclarator() << endl;
-	currFile_->setTexture(app_->getTextureManager()->getTexture(avatar->getDeclarator() + 6));
+	currFile_->setTexture(app_->getTextureManager()->getTexture(avatar->getDeclarator() + 8));
 	twitterButton_->setDeclarator(avatar->getDeclarator());
 	gitButton_->setDeclarator(avatar->getDeclarator());
 }
 
 void CreditsState::openTwitterWeb(int option)
-{	//Cuando se agregen todos los twitters se cuadraran
+{	//Cuando se agregen todos los twitters, se cuadrara
 	/*	Agus,
 		//Aida,
 		Amaro,
@@ -117,9 +117,27 @@ void CreditsState::openTwitterWeb(int option)
 	case 295:
 		system("start https://twitter.com/AmaroBlestPolo");
 		break;
-		//
+		//Dani
 	case 296:
-
+		break;
+		//Georgi
+	case 297:
+		break;
+		//Leyre
+	case 298:
+		system("start https://twitter.com/eryeLuka");
+		break;
+		//Paula
+	case 299:
+		system("start https://twitter.com/eryeLuka");
+		break;
+		//Oscar
+	case 300:
+		system("start https://twitter.com/eryeLuka");
+		break;
+		//Stiven
+	case 301:
+		system("start https://twitter.com/eryeLuka");
 		break;
 	default:
 		system("start https://twitter.com/DoppleBangerVG");
@@ -149,11 +167,17 @@ void CreditsState::openGitWeb(int option)
 	case 295:
 		system("start https://github.com/Sounagix");
 		break;
-		//
+		//Dani
 	case 296:
 
 		break;
-		//
+		//Georgi
+	case 297:
+		break;
+		//Leyre
+	case 298:
+		system("start https://github.com/leoses");
+		break;
 	default:
 		system("start https://github.com/C-Tas/DoppleBanger");
 		break;

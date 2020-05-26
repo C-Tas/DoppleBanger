@@ -23,6 +23,7 @@ GameManager::GameManager() {
 		missionsComplete_[i] = false;
 	}
 }
+
 #pragma region Callbacks Guardar/Cargar
 void GameManager::saveSlot1()
 {
@@ -57,6 +58,7 @@ void GameManager::loadSlot3()
 	load("../Sources/save_data/save3.json");
 }
 #pragma endregion
+
 #pragma region Guardar
 void GameManager::save(ofstream& slot)
 {
@@ -137,6 +139,22 @@ void GameManager::saveMissions(jute::jValue& mainJson)
 		questFinished.add_element(aux);
 	}
 	mainJson.add_property("questFinished", questFinished);
+	
+	////Recompensas obtenidas
+	jValue rewardObtained(jType::JARRAY);
+	for (int i = 0; i < missionsRewardObtained_.size(); i++) {
+		switch (missionsRewardObtained_[i])
+		{
+		case true:
+			aux.set_string("true");
+			break;
+		case false:
+			aux.set_string("false");
+			break;
+		}
+		rewardObtained.add_element(aux);
+	}
+	mainJson.add_property("rewardObtained", rewardObtained);
 }
 
 void GameManager::saveSkills(jute::jValue& mainJson)
@@ -253,40 +271,72 @@ void GameManager::saveEquipment(jute::jValue& mainJson)
 			aux.set_string(to_string((int)vEquip[i]->getEquipType()));
 			equip[i].add_property("name", aux);
 			//Precio
-			aux.set_string(to_string((int)vEquip[i]->getPrice()));
+			string strAux = to_string((int)vEquip[i]->getPrice());
+			replace(strAux.begin(), strAux.end(), ',', '.');
+			aux.set_string(strAux);
 			equip[i].add_property("price", aux);
 			equipType auxType = vEquip[i]->getEquipType();
 			//Seleccion de equipo (Pechera, Guantes, Botas, Espada, Pistola)
 			if (auxType == equipType::ArmorI || auxType == equipType::ArmorII) {
-				aux.set_string(to_string(vEquip[i]->getArmor()));
+				//Armadura
+				strAux = to_string(vEquip[i]->getArmor());
+				replace(strAux.begin(), strAux.end(), ',', '.');
+				aux.set_string(strAux);
 				equip[i].add_property("armor", aux);
-				aux.set_string(to_string(vEquip[i]->getHealth()));
+				//Vida
+				strAux = to_string(vEquip[i]->getHealth());
+				replace(strAux.begin(), strAux.end(), ',', '.');
+				aux.set_string(strAux);
 				equip[i].add_property("health", aux); 
 			}
 			else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
-				aux.set_string(to_string(vEquip[i]->getArmor()));
+				//Armadura
+				strAux = to_string(vEquip[i]->getArmor());
+				replace(strAux.begin(), strAux.end(), ',', '.');
+				aux.set_string(strAux);
 				equip[i].add_property("armor", aux);
-				aux.set_string(to_string(vEquip[i]->getCrit()));
+				//Critico
+				strAux = to_string(vEquip[i]->getCrit());
+				replace(strAux.begin(), strAux.end(), ',', '.');
+				aux.set_string(strAux);
 				equip[i].add_property("critic", aux);
 			}
 			else if (auxType == equipType::BootsI || auxType == equipType::BootsII) {
-				aux.set_string(to_string(vEquip[i]->getArmor()));
+				//Armadura
+				strAux = to_string(vEquip[i]->getArmor());
+				replace(strAux.begin(), strAux.end(), ',', '.');
+				aux.set_string(strAux);
 				equip[i].add_property("armor", aux);
-				aux.set_string(to_string(vEquip[i]->getSpeed()));
+				//Velocidad de movimiento
+				strAux = to_string(vEquip[i]->getSpeed());
+				replace(strAux.begin(), strAux.end(), ',', '.');
+				aux.set_string(strAux);
 				equip[i].add_property("speed", aux);
 			}
 			else if (auxType == equipType::SwordI || auxType == equipType::SwordII
 				|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
-				aux.set_string(to_string(vEquip[i]->getMeleeRate()));
+				//Velocidad de ataque melee
+				strAux = to_string(vEquip[i]->getMeleeRate());
+				replace(strAux.begin(), strAux.end(), ',', '.');
+				aux.set_string(strAux);
 				equip[i].add_property("rate", aux);
-				aux.set_string(to_string(vEquip[i]->getMeleeDmg()));
+				//Daño melee
+				strAux = to_string(vEquip[i]->getMeleeDmg());
+				replace(strAux.begin(), strAux.end(), ',', '.');
+				aux.set_string(strAux);
 				equip[i].add_property("damage", aux);
 			}
 			else if(auxType == equipType::PistolI || auxType == equipType::PistolII
 				|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
-				aux.set_string(to_string(vEquip[i]->getDistRate()));
+				//Cadencia disparo
+				strAux = to_string(vEquip[i]->getDistRate());
+				replace(strAux.begin(), strAux.end(), ',', '.');
+				aux.set_string(strAux);
 				equip[i].add_property("rate", aux);
-				aux.set_string(to_string(vEquip[i]->getDistDmg()));
+				//Daño distancia
+				strAux = to_string(vEquip[i]->getDistDmg());
+				replace(strAux.begin(), strAux.end(), ',', '.');
+				aux.set_string(strAux);
 				equip[i].add_property("damage", aux);
 			}
 		}
@@ -315,6 +365,7 @@ void GameManager::saveInventory_Stash(jute::jValue& mainJson)
 	mainJson.add_property("stashSize", aux);
 }
 #pragma endregion
+
 #pragma region Cargar
 void GameManager::load(string jsonName)
 {
@@ -351,6 +402,9 @@ void GameManager::loadMissions(jute::jValue& mainJson){
 	}
 	for (int i = 0; i < missionsComplete_.size(); i++) {
 		missionsComplete_[i] = mainJson["questFinished"][i].as_bool();
+	}
+	for (int i = 0; i <missionsRewardObtained_.size(); i++) {
+		missionsRewardObtained_[i] = mainJson["rewardObtained"][i].as_bool();
 	}
 }
 
@@ -681,6 +735,45 @@ void GameManager::resetInventory()
 	inventory_->clear();
 }
 
+void GameManager::setCompleteMission(missions mission, bool complete)
+{
+	missionsRewardObtained_[(int)mission] = complete;
+	if (complete) {
+		inventoryGold_ += goldReward_.at((int)mission);
+		achievementPoints_ += pointsReward_.at((int)mission);
+
+		switch (mission)
+		{
+		case missions::gallegaEnProblemas:
+			for (int i = 0; i < getNumOfObjectsReward(mission); i++) {
+				addToInventory(new usable(app_, potionType::Health));
+			}
+			getPlayer()->addMaxHealth(getStatsReward(mission));
+			break;
+		case missions::papelesSiniestros:
+			for (int i = 0; i < getNumOfObjectsReward(mission); i++) {
+				//TO DO: nivelar
+				addToInventory(new Armor(app_, 500, 200, 10, equipType::ArmorII));
+			}
+			getPlayer()->addMaxMana(getStatsReward(mission));
+			break;
+		case missions::masValePajaroEnMano:
+			break;
+		case missions::arlongPark:
+			for (int i = 0; i < getNumOfObjectsReward(mission); i++) {
+				//TO DO: nivelar
+				addToInventory(new Gun(app_,300,150,2000,equipType::ShotgunII ));
+			}
+			getPlayer()->addMoveSpeed((int)round(getStatsReward(mission)));
+			break;
+		case missions::Size:
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 void GameManager::setSkillCooldown(bool cooldown, Key key)
 {
 	skillsCooldown_[(int)key] = cooldown;
@@ -732,6 +825,15 @@ void GameManager::addToStash(Item* ob)
 	b->setIterator(it);
 }
 
+void GameManager::addToShop(Item* ob) 
+{
+	//creamos un boton
+	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);
+	//A�adimos el boton a la lista y le asignamos un iterador con su posicion
+	list <InventoryButton*>::iterator it = shop_->insert(shop_->end(), b);
+	b->setIterator(it);
+}
+
 void GameManager::resetIsland()
 {
 	switch (currIsland_)
@@ -747,5 +849,23 @@ void GameManager::resetIsland()
 		break;
 	default:
 		break;
+	}
+}
+GameManager::~GameManager() {
+	for (InventoryButton* ob : *inventory_)delete ob;
+	for (InventoryButton* ob : *stash_)delete ob;
+	for (InventoryButton* ob : *shop_)delete ob;
+	delete shop_;
+	delete inventory_;
+	delete stash_;
+	//Se borra el equipo
+	if (currEquip_.armor_ != nullptr) delete currEquip_.armor_;
+	if (currEquip_.gloves_ != nullptr) delete currEquip_.gloves_;
+	if (currEquip_.boots_ != nullptr) delete currEquip_.boots_;
+	if (currEquip_.sword_ != nullptr) delete currEquip_.sword_;
+	if (currEquip_.gun_ != nullptr) delete currEquip_.gun_;
+	for (int i = 0; i < currEquip_.potions_.size(); i++) {
+		if (currEquip_.potions_.at(i) != nullptr)
+			delete currEquip_.potions_.at(i);
 	}
 }

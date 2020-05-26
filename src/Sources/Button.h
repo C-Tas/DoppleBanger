@@ -22,6 +22,7 @@ public:
 	};
 	void setCurrentState(GameState* state) { currentState_ = state; }
 	int getId() { return id_; };
+	void setCallBack(CallBackOnClick* cb) { cbClick_ = cb; }
 
 protected:
 	

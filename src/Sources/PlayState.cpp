@@ -23,22 +23,17 @@ void PlayState::draw() const {
 
 void PlayState::update() {
 	if (player_->getDead()) { //Comprobamos que el player haya muerto para cambiar de estado
-		//Cargamos música de fondo
-		app_->resetMusicChannels();
-		app_->resetSoundsChannels();
-		app_->getAudioManager()->playChannel(Resources::AudioId::FuneralTheme, -1, Resources::MainMusicChannel);
 		app_->getGameStateMachine()->changeState(new EndState(app_));
 	}
 	else {
 		updateMousePointer();
 		GameState::update();
-		checkPlayerActions();
 	}
 }
 
 void PlayState::updateMousePointer() {
-	point.x = eventHandler_->getRelativeMousePos().getX();
-	point.y = eventHandler_->getRelativeMousePos().getY();
+	point.x =(int) round(eventHandler_->getRelativeMousePos().getX());
+	point.y = (int)round(eventHandler_->getRelativeMousePos().getY());
 	mousePointer->setPos(Vector2D(point.x, point.y));
 
 	bool found = false;
@@ -64,6 +59,7 @@ void PlayState::addEnemy(Enemy* obj) {
 	addRenderUpdateLists(obj);
 }
 
+
 void PlayState::addObject(Collider* obj) {
 	objects_.push_back(obj);
 }
@@ -76,51 +72,6 @@ void PlayState::removeEnemy(Enemy* obj) {
 
 void PlayState::removeObject(Collider* obj) {
 	objects_.remove(obj);
-}
-
-void PlayState::checkPlayerActions() {
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
-	{
-		Enemy* obj; obj = checkAttack();
-		player_->updateDirVisMouse();
-		if (obj != nullptr) {
-			player_->attack(obj);
-		}
-		else if (!player_->getOnCollision()) {
-			player_->move(eventHandler_->getRelativeMousePos());
-		}
-		else player_->setOnCollision(false);
-
-		if (collisionCtrl_->isNextZoneTextBoxActive())player_->getEndZoneTextBox()->updateButtons();
-	}
-	else if (eventHandler_->isKeyDown(SDLK_p)) {
-		app_->getGameStateMachine()->pushState(new PauseState(app_));
-		player_->stop();
-	}
-	else if (eventHandler_->isKeyDown(SDLK_c)) {
-		app_->getGameStateMachine()->pushState(new Inventory(app_));
-		player_->stop();
-	}
-	else if (eventHandler_->isKeyDown(SDLK_v)) {
-		app_->getGameStateMachine()->pushState(new SkillState(app_, player_));
-		player_->stop();
-	}
-
-
-}
-
-Enemy* PlayState::checkAttack() {
-	bool found = false;
-	Enemy* obj = nullptr;
-	Vector2D mousePos = eventHandler_->getRelativeMousePos();
-	SDL_Point mouse = { 0, 0 }; mouse.x = mousePos.getX(); mouse.y = mousePos.getY();
-	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
-		if (SDL_PointInRect(&mouse, &(*it)->getCollider())) {
-			obj = (*it);
-			found = true;
-		}
-	}
-	return obj;
 }
 
 Enemy* PlayState::findClosestEnemy(Point2D pos) {
@@ -142,6 +93,7 @@ Enemy* PlayState::getEnemyByTag(string tag)
 			return aux;
 		}
 	}
+	return nullptr;
 }
 
 void PlayState::swapRenders(GameObject* obj, GameObject* other)
@@ -183,7 +135,7 @@ void PlayState::initState()
 
 	collisionCtrl_ = CollisionCtrl::instance();
 	generator_->setHeuristic(AStar::Heuristic::euclidean);
-	generator_->setDiagonalMovement(false);
+	generator_->setDiagonalMovement(true);
 }
 
 void PlayState::resetGame()

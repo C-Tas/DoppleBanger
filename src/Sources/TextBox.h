@@ -11,7 +11,7 @@ protected:
 	Application* app_ = nullptr;
 	GameManager* gm_ = GameManager::instance();
 	SDL_Rect dest; //Posici�n de la caja de texto, inicializada en init()
-	const int lineSpacing = GameManager::instance()->getFontSize() * 1.5;	//Interlineado y m�rgenes del texto
+	const int lineSpacing = (int)round(GameManager::instance()->getFontSize() * 1.5);	//Interlineado y m�rgenes del texto
 
 	Button* shopButton_ = nullptr;
 	Button* button_ = nullptr;
@@ -19,6 +19,7 @@ protected:
 	Button* skipTutorial_ = nullptr;	
 	Button* goToShipButton_ = nullptr;
 	Button* goToNextZoneButton_ = nullptr;
+	Button* unlockReward_ = nullptr;
 
 	static void goShopState(Application* app);
 	static void nextConversation(Application* app);
@@ -26,6 +27,10 @@ protected:
 	static void nextTutorialVenancio(Application* app);
 	static void goToShipState(Application* app);
 	static void changeZone(Application* app);
+	static void unlockCookerReward(Application* app);
+	static void unlockMortyReward(Application* app);
+	static void unlockNamiReward(Application* app);
+
 
 
 public:
@@ -39,8 +44,8 @@ public:
 		shopButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToShopButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 }, 
 			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, goShopState);
 
-		button_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::RightArrow), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
-			Vector2D{ (double)(app_->getWindowWidth() / 17),  (double)(app_->getWindowHeight() / 20) }, nextConversation);
+		button_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToNextZoneButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
+			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, nextConversation);
 
 		tutorialButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::ButtonInitTutorial), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 },
 			Vector2D{ (double)(app_->getWindowWidth() / 4),  (double)(app_->getWindowHeight() / 20) }, nextTutorialVenancio);
@@ -53,10 +58,13 @@ public:
 
 		goToNextZoneButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToNextZoneButton), Vector2D{ (double)6*(app_->getWindowWidth() / 7)-lineSpacing, dest.y + (double)lineSpacing * 5 },
 			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) }, changeZone);
+
+		unlockReward_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::GoToNextZoneButton), Vector2D{ (double)lineSpacing, dest.y + (double)lineSpacing * 5 }, 
+			Vector2D{ (double)(app_->getWindowWidth() / 7),  (double)(app_->getWindowHeight() / 20) },unlockCookerReward);
 	};
 	///<summary>Constructora del textBox de descripci�n</summary>
 	TextBox(Application* app, Point2D pos) : app_(app) { initDescription(pos); };
-	~TextBox() { delete shopButton_; delete button_; delete tutorialButton_; delete skipTutorial_; delete goToShipButton_; delete goToNextZoneButton_; };
+	~TextBox() { delete shopButton_; delete button_; delete tutorialButton_; delete skipTutorial_; delete goToShipButton_; delete goToNextZoneButton_; delete unlockReward_; };
 
 	///<summary>Carga el textBox de di�logo inicial</summary>
 	void initDialog();
@@ -67,12 +75,13 @@ public:
 	///<summary>Crea el textBox para pasar de zona</summary>
 	void passZoneDialog();
 
+
 #pragma region Dialogos
 	///<summary>Frases del viejo cuando se viaja a una isla nueva o se est� en el barco</summary>
 	void dialogElderMan(int num);
 
 	///<summary>Frase del comerciante</summary>
-	void dialogMerchant();
+	void dialogMerchant(int dialog);
 
 	///<summary>Frases del chef, tanto desbloqueado como no</summary>
 	void dialogChef(bool unlock, int num);

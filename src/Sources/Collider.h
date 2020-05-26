@@ -46,10 +46,10 @@ public:
 	///<summary>Devuelve el rect con el area de colisiones</summary>
 	const SDL_Rect& getCollider() {
 		posCollision_ = pos_;	//Provisional -> esta línea se borrará
-		collisionArea_.x = posCollision_.getX();
-		collisionArea_.y = posCollision_.getY();
-		collisionArea_.w = scaleCollision_.getX();
-		collisionArea_.h = scaleCollision_.getY();
+		collisionArea_.x =(int)round(posCollision_.getX());
+		collisionArea_.y = (int)round(posCollision_.getY());
+		collisionArea_.w = (int)round(scaleCollision_.getX());
+		collisionArea_.h = (int)round(scaleCollision_.getY());
 		return collisionArea_;
 	};
 	const Vector2D getColliderPos() {

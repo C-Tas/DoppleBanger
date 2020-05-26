@@ -14,41 +14,45 @@ public:
 	//<summary>Constructor por movimiento<summary>
 	Crab(Crab&& other)noexcept :Enemy(other.app_, other.pos_, other.scale_) { initAnims(); };
 	//<summary>Metodo de colision</summary>
-	virtual void onCollider() { attack(); };
+	virtual void onCollider() {};
 	//<summary>Establece la direccion del movimiento</summary>	
 	virtual void move(Point2D target);
 	//Asigna los vectores
 	inline void setPositions(Vector2D target) { targetsVector_.push_back(target); };
-	virtual void initRewards() {};
-private:
-	Cooldown shootCD_;
 
+private:
+	Cooldown meleeCD_;
+	bool attacking_ = false;	//Para saber si el cangrejo esta atacando
 	//Dimensiones de collisionArea
-	const int W_COLLISION = scale_.getX() * 0.5;
-	const int H_COLLISION = scale_.getY() * (2 / 3);
+	const int W_COLLISION = (int)round(scale_.getX() * 0.5);
+	const int H_COLLISION = (int)round(scale_.getY() * (2 / 3));
 #pragma region Animaciones
 	//Inicializa la animacion
 	void initMeleeAnim();
 	void initWalk();
+	void initIdle();
+	virtual void initDie();
 
 	//Gestiona la animacion
 	void meleeAnim();
+	const int W_H_FRAME = 100;
+
+	//Idle
+	const int IDLE_NUM_FRAMES = 8;
+	const int IDLE_FRAME_RATE = 100;
+	Anim idleAnim_{ 0, 0, 0, 0, true };
+	Texture* idleTx_ = nullptr;
 
 	//Ataque
 	const int FRAME_ACTION = 9;
 	const int NUM_FRAMES_ATK = 15;	//Numero de frames
-	const int W_CLIP_ATK = 100;		//Ancho del clip
-	const int H_CLIP_ATK = 100;		//Alto del clip
-	const int ATK_FRAME_RATE = 70;	//Velocidad de animacion
+	const int ATK_FRAME_RATE = 60;	//Velocidad de animacion
 	//Animaciones
 	Anim attackAnim_{ 0,0,0,0, false };
 	Texture* attackTex_;
 
 	//N�mero de frames
 	const int NUM_FRAMES_WALK = 4;
-	//Dimensiones del clip del spritesheet
-	const int W_CLIP_WALK = 100;
-	const int H_CLIP_WALK = 100;
 	const int WALK_FRAME_RATE = 100;
 	//Animaciones
 	Anim walkAnim_{ 0,0,0,0, false };
@@ -61,7 +65,7 @@ private:
 	///<summary>posicion del vector al que se dirige</summary>
 	int actualTarget_;
 	///<summary>actualiza el objetivo al que se dirige</summary>
-	void updateTarget() { actualTarget_ = (actualTarget_ + 1) % (targetsVector_.size()); }
+	void updateTarget() { actualTarget_ =(actualTarget_ + 1) % (targetsVector_.size()); }
 	///<summary>devuelve si ataca o no</summary>
 	void attack();
 	//Inicializa el objeto
@@ -70,6 +74,8 @@ private:
 	virtual void initAnims();
 	//Inicializa los stats
 	virtual void initialStats();
+	//Inicializa el valor de las recompensas
+	virtual void initRewards();
 	//Acutaliza Cooldowns
 	virtual void updateCooldowns();
 };

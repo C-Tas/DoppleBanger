@@ -4,40 +4,35 @@
 #include "CollisionCtrl.h"
 #include <string>
 #include "PlayState.h"
+#include "Collisions.h"
 
 bool Wolf::update() {
 #ifdef _DEBUG
-	/*string state;
-	switch (currAtackStatus_)
-	{
-	case ATK_STATUS::MELEE:
-		state = "melee";
-		break;
-	case ATK_STATUS::RANGE:
-		state = "range";
-	default:
-		break;
-	}
-	/*switch (currState_)
-	{
-	case STATE::ATTACKING:
-		state = "atacando";
-		break;
-	case STATE::DYING:
-		state = "muriendo";
-		break;
-	case STATE::FOLLOWING:
-		state = "siguiendo";
-		break;
-	case STATE::IDLE:
-		state = "parado";
-		break;
-	case STATE::PATROLLING:
-		state = "patrullando";
-		break;
-	default:
-		break;
-	}*/
+//	string state;
+//switch (currState_)
+//{
+//case STATE::ATTACKING:
+//	state = "atacando";
+//	break;
+//case STATE::CHARGING:
+//	state = "cargando";
+//	break;
+//case STATE::DYING:
+//	state = "muriendo";
+//	break;
+//case STATE::FOLLOWING:
+//	state = "siguiendo";
+//	break;
+//case STATE::IDLE:
+//	state = "parado";
+//	break;
+//case STATE::PATROLLING:
+//	state = "patrullando";
+//	break;
+//default:
+//	break;
+//}
+//cout << state << endl;
 #endif // _DEBUG
 
 	updateFrame();
@@ -46,68 +41,58 @@ bool Wolf::update() {
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendr�a que hacer la animaci�n de muerte?
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfDieAudio, 0, Resources::WolfChannel);
-
-		//Esta línea habría que moverla al cangrejo cuando esté hecho
-		GameManager* gm_ = GameManager::instance();
-		if (gm_->isThatMissionStarted(missions::gallegaEnProblemas)) gm_->addMissionCounter(missions::gallegaEnProblemas);
-
 		applyRewards();
-		app_->getCurrState()->removeRenderUpdateLists(this);
+		dieAnim();
 		return true;
 	}
-	//Si el lobo no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
-	if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && getEnemy()) {
-		currState_ = STATE::ATTACKING;
-	}
-	//Si el lobo tiene enemigo y puede atacar
-	if (currState_ == STATE::ATTACKING) {
-		//Si el lobo tiene un enemigo y lo tiene a rango
-		if (onRange()) {
-			//changeAnim(attackAnim_);
-			attack();
-		}
-		else
-		{
-			currState_ = STATE::FOLLOWING;
-			//changeAnim(walkAnim_);
-			selectTarget();
-		}
-	}
-	//Si el lobo se est� moviendo hacia un enemigo
-	if (currState_ == STATE::FOLLOWING) {
-		if (onRange()) {
+	else
+	{
+		//Si el lobo no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
+		if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && getEnemy()) {
+			app_->getAudioManager()->playChannel(Resources::AudioId::WolfDetection, 0, Resources::WolfChannel2);
 			currState_ = STATE::ATTACKING;
-			stop();
-			attack();
 		}
-		else
-		{
-			//changeAnim(walkAnim_);
-			selectTarget();
-		}
-	}
-	if (currState_ == STATE::IDLE && !idleCD_.isCooldownActive()) {
-		currState_ = STATE::PATROLLING;
-		target_ = patrol_[currTarget_];
-	}
-	//Si el lobo est� en patrulla
-	if (currState_ == STATE::PATROLLING) {
-		move(target_);
-		SDL_Rect targetPos = SDL_Rect(
-			{ (int)target_.getX() / 2,(int)target_.getY() / 2,(int)scale_.getX() / 2,(int)scale_.getY() / 2 });
-		SDL_Rect pos = SDL_Rect(
-			{ (int)pos_.getX() / 2,(int)pos_.getY() / 2,(int)scale_.getX() / 2,(int)scale_.getY() / 2 });
-		if (SDL_HasIntersection(&pos, &targetPos)) {
-			currState_ = STATE::IDLE;
-			idleCD_.initCooldown(IDLE_PAUSE);
-			if (currTarget_ == patrol_.size() - 1) {
-				currTarget_ = 0;
+		//Si el lobo tiene enemigo y puede atacar
+		if (currState_ == STATE::ATTACKING) {
+			//Si el lobo tiene un enemigo y lo tiene a rango ->ataca
+			if (onRange()) {
+				attack();
 			}
+			//Tengo enemigo pero no a rango -> lo sigue
 			else
 			{
-				currTarget_++;
+				cout << "FOLLOWING \n";
+				currState_ = STATE::FOLLOWING;
+				app_->getAudioManager()->playChannel(Resources::AudioId::WolfChase, -1, Resources::WolfChannel1);
+				selectTarget();
 			}
+		}
+		//Si el lobo se est� moviendo hacia un enemigo
+		if (currState_ == STATE::FOLLOWING) {
+			if (onRange()) {
+				currState_ = STATE::ATTACKING;
+				stop();
+			}
+			else//sigue follow al player
+			{
+				//changeAnim(walkAnim_);
+				selectTarget();
+				if (!Enemy::onRange(rangeVision_)) {
+					currEnemy_ = nullptr;
+					currState_ = STATE::IDLE;
+				}
+			}
+		}
+		//Paso a la siguiente patrulla
+		if (currState_ == STATE::IDLE && !idleCD_.isCooldownActive()) {
+			currState_ = STATE::PATROLLING;
+			target_ = patrol_[currPatrol_];
+			cout << "INIT PATROL \n";
+		}
+		//Si el lobo est� en patrulla
+		if (currState_ == STATE::PATROLLING) {
+			updateDirVisObjective(target_);
+			move(target_);
 		}
 	}
 	updateFrame();
@@ -117,15 +102,22 @@ bool Wolf::update() {
 //Mueve al lobo DONE
 void Wolf::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
-
-	if ((getCenter() - target_).magnitude() <= 0.05)
+	if ((getCenter() - nextTarget_).magnitude() <= 1)
 	{
-		pathPos_ = { (int)PosToTile(target_).getX(), (int)PosToTile(target_).getY() };
+		pathPos_ = { (int)PosToTile(getCenter()).getX(), (int)PosToTile(getCenter()).getY() };
 		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
 		if (pathing_.size() > 1)
-			target_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+			nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+		else {
+			idleCD_.initCooldown(IDLE_PAUSE);
+			currState_ = STATE::IDLE;
+			//Pasamos al siguiente patrol
+			if (currPatrol_ == patrol_.size() - 1) currPatrol_ = 0;
+			else currPatrol_++;
+			
+		}
 	}
-	dir_.setVec(target_ - getCenter());
+	dir_.setVec(nextTarget_ - getCenter());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
@@ -145,14 +137,25 @@ bool Wolf::onRange() {
 	double meleeRangeX = currStats_.meleeRange_ + getScaleX() / 2;
 	double meleeRangeY = currStats_.meleeRange_ + getScaleY() / 2;
 
-	SDL_Rect meleeAttack = { meleePosX   ,meleePosY,meleeRangeX * 2, meleeRangeY * 2 };
+	SDL_Rect meleeAttack = { (int)round(meleePosX)   ,(int)round(meleePosY),(int)round(meleeRangeX * 2), (int)round(meleeRangeY * 2) };
 	if (currEnemy_ != nullptr && SDL_HasIntersection(&enemyRect, &meleeAttack)) {
 		return true;
 	}
 	else
 	{
-		false;
+		return false;
 	}
+}
+
+void Wolf::initMove() {
+	if (currEnemy_ != nullptr) updateDirVisObjective(currEnemy_->getCenter());
+	else updateDirVisObjective(target_);
+
+
+	frame_.x = 0; frame_.y = 0;
+	currState_ = STATE::PATROLLING;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
 }
 
 //Inicializa todas las animaciones 
@@ -171,7 +174,15 @@ void Wolf::attack() {
 	if (!meleeCD_.isCooldownActive())
 	{
 		meleeCD_.initCooldown(currStats_.meleeRate_);
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttackAudio, 0, Resources::WolfChannel);
+		switch (rand() % 2)
+		{
+		case 0:
+			app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttack1, 0, Resources::WolfChannel1);
+			break;
+		case 1:
+			app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttack2, 0, Resources::WolfChannel1);
+			break;
+		}
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		if (dmg != nullptr) {
 			double realDamage = currStats_.meleeDmg_;
@@ -185,9 +196,22 @@ void Wolf::attack() {
 //Inicializa al lobo
 void Wolf::initObject() {
 	Enemy::initObject();
+	currState_ = STATE::IDLE;
+	target_ = pos_;
+	nextTarget_ = pos_;
 	setTexture(app_->getTextureManager()->getTexture(Resources::WolfFront));
 	initRewards();
 	rangeVision_ = 80;//numero magico
+	tag_ = "Wolf";
+	switch (rand() % 2)
+	{
+	case 0:
+		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle1, -1, Resources::WolfChannel1);
+		break;
+	case 1:
+		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle2, -1, Resources::WolfChannel1);
+		break;
+	}
 }
 
 //gesti�n de colisiones
@@ -195,30 +219,37 @@ void Wolf::onCollider()
 {
 }
 
-//Cuando el pirata pierde el agro, se le asigna el agro del player
 //Esto lo llama el clon cuando se destruye
 void Wolf::lostAggro()
 {
 	currEnemy_ = nullptr;
 	currState_ = STATE::PATROLLING;
+	switch (rand() % 2)
+	{
+	case 0:
+		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle1, -1, Resources::WolfChannel1);
+		break;
+	case 1:
+		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle2, -1, Resources::WolfChannel1);
+		break;
+	}
 }
 
 //Genera la posici�n a la que se mueve el pirata en funci�n de su rango 
 void Wolf::selectTarget() {
-
-	Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };
-	Point2D enemycenterPos = { currEnemy_->getPosX() + currEnemy_->getScaleX() / 2, currEnemy_->getPosY() + currEnemy_->getScaleY() / 2 };
-	Vector2D posToReach;
-	posToReach.setX((enemycenterPos.getX() + currStats_.meleeRange_) - centerPos.getX());
-	posToReach.setY((enemycenterPos.getY() + currStats_.meleeRange_) - centerPos.getY());
-	target_ = posToReach;
-	move(enemycenterPos);
+	if (currEnemy_ != nullptr) {
+		Point2D centerPos = { getPosX() + getScaleX() / 2, getPosY() + getScaleY() / 2 };
+		Point2D enemycenterPos = { currEnemy_->getPosX() + currEnemy_->getScaleX() / 2, currEnemy_->getPosY() + currEnemy_->getScaleY() / 2 };
+		Vector2D posToReach;
+		posToReach.setX((enemycenterPos.getX() + currStats_.meleeRange_) - centerPos.getX());
+		posToReach.setY((enemycenterPos.getY() + currStats_.meleeRange_) - centerPos.getY());
+		target_ = posToReach;
+		move(enemycenterPos);
+	}
 }
 
 bool Wolf::getEnemy() {
 	if (Enemy::getEnemy(rangeVision_)) {
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfHowlAudio, 0, Resources::WolfChannel);
-
 		return true;
 	}
 	else return false;
@@ -230,22 +261,30 @@ void Wolf::lostAgro()
 {
 	currEnemy_ = nullptr;
 	currState_ = STATE::PATROLLING;
+	switch (rand() % 2)
+	{
+	case 0:
+		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle1, -1, Resources::WolfChannel1);
+		break;
+	case 1:
+		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle2, -1, Resources::WolfChannel1);
+		break;
+	}
 }
-
 
 
 void Wolf::initialStats()
 {
-	HEALTH = 1000;
-	MANA = 100;
-	MANA_REG = 100;
-	ARMOR = 10;
-	MELEE_DMG = 100;
+	HEALTH = 1500;
+	MANA = 0;
+	MANA_REG = 0;
+	ARMOR = 0;
+	MELEE_DMG = 450;
 	DIST_DMG = 0;
-	CRIT = 2000;
+	CRIT = 10;
 	MELEE_RANGE = 50;
 	DIST_RANGE = 75;
-	MOVE_SPEED = 250;
+	MOVE_SPEED = 500;
 	MELEE_RATE = 1500;
 	DIST_RATE = 1500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
@@ -253,9 +292,9 @@ void Wolf::initialStats()
 
 void Wolf::initRewards()
 {
-	minGold = 30;
-	maxGold = 50;
-	minArchievementPoints = 2;
+	minGold = 110;
+	maxGold = 160;
+	minArchievementPoints = 4;
 	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
@@ -265,4 +304,19 @@ void Wolf::updateCooldowns()
 {
 	if (meleeCD_.isCooldownActive()) meleeCD_.updateCooldown();
 	if (idleCD_.isCooldownActive()) idleCD_.updateCooldown();
+}
+
+void Wolf::setPatrol(Vector2D pos)
+{
+	patrol_.push_back(pos);
+}
+
+void Wolf::initIdle() {
+	currState_ = STATE::IDLE;
+	//texture_ = idleTx_[(int)currDir_];
+	//currAnim_ = idleAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
 }

@@ -10,6 +10,7 @@ public:
 	//virtuales
 	virtual bool update() { return false; };
 	virtual void onCollider() {};
+	virtual void receiveDamage(double damage);
 	//<summary>Metodo que mata a este enemigo</summary>
 	virtual void die();
 	virtual void lostAggro() { currEnemy_ = nullptr; };
@@ -27,7 +28,7 @@ protected:
 	//Ultimo actualizacion del AStar
 	AStar::CoordinateList pathing_;
 	//Posicion en el mapa de tiled
-	AStar::Vec2i pathPos_;
+	AStar::Vec2i pathPos_ = {};
 	//Posicion inicial del mapa
 	Vector2D iniPosMap_;
 	//Rango de puntos de hazaña de la calabaza
@@ -67,6 +68,8 @@ protected:
 	virtual void initObject();
 	//Inicializa las animaciones
 	virtual void initAnims() {};
+
+	virtual void initDie();
 	//en cada enemigo establece las stats de los enemigos
 	virtual void initialStats() = 0;
 

@@ -19,8 +19,8 @@ bool Kirin::update()
 		Vector2D centerCollision = Vector2D(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() * 7 / 8);
 
 		//Si el rayo impacta hace daño al player
-		if (RectRect(playerCenter.getX(), playerCenter.getY(), playerCollider.getX(), playerCollider.getY(),
-			centerCollision.getX(), centerCollision.getY(), scale_.getX() / 2, scale_.getY() / 4)) {
+		if (RectRect((float)playerCenter.getX(), (float)playerCenter.getY(), (float)playerCollider.getX(), (float)playerCollider.getY(),
+			(float)centerCollision.getX(), (float)centerCollision.getY(), (float)(scale_.getX() / 2), (float)(scale_.getY() / 4))) {
 			player->receiveDamage(KIRIN_DMG);
 
 			return true;
@@ -41,5 +41,5 @@ void Kirin::initObject()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 
-	app_->getCurrState()->addRenderUpdateLists(this);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(this);
 }

@@ -4,13 +4,13 @@
 
 void Boots::equip(Player* player)
 {
-	player->addMoveSpeed(moveSpeed_);
+	player->addMoveSpeed((int)round(moveSpeed_));
 	player->addArmor(armor_);
 }
 
 void Boots::remove(Player* player)
 {
-	player->addMoveSpeed(-moveSpeed_);
+	player->addMoveSpeed(-(int)round(moveSpeed_));
 	player->addArmor(-armor_);
 }
 

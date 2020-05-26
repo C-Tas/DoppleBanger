@@ -8,41 +8,36 @@
 
 bool Magordito::update() {
 	updateFrame();
-	updateCooldowns();
 	manageTint();
 
 	//Si Magordito muere
 	if (currState_ == STATE::DYING) {
-		//Desbloqueamos la �ltima isla
-		app_->getAudioManager()->playChannel(Resources::MagorditoDeath, 0, Resources::MagorditoChannel3);
-		GameManager::instance()->setUnlockedIslands(Island::Volcanic);
-		CollisionCtrl::instance()->removeEnemy(this);
-		dynamic_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		return false;
+		dieAnim();
 	}
-	if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
-		auto chance = app_->getRandom()->nextInt(Resources::Magorditolaugh1, Resources::Magorditolaugh4 + 1);
-		app_->getAudioManager()->playChannel(chance, 0, Resources::MagorditoChannel3);
-		currState_ = STATE::ATTACKING;
-	}
-	if (currState_ == STATE::ATTACKING) {
-		//Si el player est� cerca y no tengo enfriamiento en el teleport
-		if (!tpCD_.isCooldownActive()) {
-			enemyIsTooClose();
+	else {
+		updateCooldowns();
+		if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
+			auto chance = app_->getRandom()->nextInt(Resources::Magorditolaugh1, Resources::Magorditolaugh4 + 1);
+			app_->getAudioManager()->playChannel(chance, 0, Resources::MagorditoChannel3);
+			currState_ = STATE::ATTACKING;
 		}
-		if (!kirinCD_.isCooldownActive() && onRange(KIRIN_RANGE_ATTACK)) {
-			initKirinAnim();
+		if (currState_ == STATE::ATTACKING) {
+			//Si el player est� cerca y no tengo enfriamiento en el teleport
+			if (!tpCD_.isCooldownActive()) {
+				enemyIsTooClose();
+			}
+			if (!kirinCD_.isCooldownActive() && onRange(KIRIN_RANGE_ATTACK)) {
+				initKirinAnim();
+			}
+		}
+
+		if (currState_ == STATE::SWIMMING) {
+			teleportAnim();
+		}
+		else if (currState_ == STATE::FOLLOWING) {
+			kirinAnim();
 		}
 	}
-
-	if (currState_ == STATE::SWIMMING) {
-		teleportAnim();
-	}
-	else if (currState_ == STATE::FOLLOWING) {
-		kirinAnim();
-	}
-
 	return false;
 }
 
@@ -147,8 +142,8 @@ inline bool Magordito::enemyIsTooClose()
 		Vector2D center = getCenter();
 		auto enem = dynamic_cast<Collider*>(currEnemy_);
 		Vector2D enemCenter = currEnemy_->getCenter();
-		if (RectRect(center.getX(), center.getY(), RANGE_TO_TP * 2, RANGE_TO_TP * 2,
-			enemCenter.getX(), enemCenter.getY(), enem->getColliderScale().getX(), enem->getColliderScale().getY())) {
+		if (RectRect((float)center.getX(), (float)center.getY(), (float)(RANGE_TO_TP * 2), (float)(RANGE_TO_TP * 2),
+			(float)enemCenter.getX(), (float)enemCenter.getY(), (float)enem->getColliderScale().getX(), (float)enem->getColliderScale().getY())) {
 			initTeleport();
 
 			return true;
@@ -178,9 +173,9 @@ void Magordito::initialStats()
 void Magordito::teleport()
 {
 	tpCD_.initCooldown(TP_CD);
-	int choice = app_->getRandom()->nextInt(0, altars.size());
+	int choice = app_->getRandom()->nextInt(0, (int)round(altars.size()));
 	while (currChoice_ == choice) {
-		choice = app_->getRandom()->nextInt(0, altars.size());
+		choice = app_->getRandom()->nextInt(0, (int)round(altars.size()));
 	}
 	currChoice_ = choice;
 	double newX = altars[choice]->getCenter().getX() - scale_.getX() / 2;
@@ -269,4 +264,11 @@ void Magordito::feedBackHurtSounds()
 {
 	auto choice = app_->getRandom()->nextInt(Resources::MagorditoAttack1, Resources::MagorditoAttack5 + 1);
 	app_->getAudioManager()->playChannel(choice, 0, Resources::MagorditoChannel1);
+}
+
+void Magordito::initDie() {
+	Enemy::initDie();
+	//Desbloqueamos la �ltima isla
+	app_->getAudioManager()->playChannel(Resources::MagorditoDeath, 0, Resources::MagorditoChannel3);
+	GameManager::instance()->setUnlockedIslands(Island::Volcanic);
 }
