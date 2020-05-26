@@ -419,6 +419,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ BotonBonus, "../Sources/assets/creditState/images/botonBonus.png" },
 	{ Bonus, "../Sources/assets/creditState/images/bonus.png" },
 
+	//Cleon		
+	{ BarrelExplosion, "../Sources/assets/colisionables/barrilExplosion.png" },
+	{ BarrelInitExpl, "../Sources/assets/colisionables/barrilMecha.png" },
+
 #pragma endregion
 };
 
@@ -593,6 +597,19 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ jarl9 ,"../Sources/assets/efectos_sonido/jarl/jar9.wav" },
 	{ jarl10 ,"../Sources/assets/efectos_sonido/jarl/jar10.wav" },
 	{ jarl11 ,"../Sources/assets/efectos_sonido/jarl/jar11.wav" },
+
+	//Cleón
+	{ CleonBarril ,"../Sources/assets/efectos_sonido/cleon/barril.wav" },
+	{ CleonDie ,"../Sources/assets/efectos_sonido/cleon/cleonDie.wav" },
+	{ CleonInter1 ,"../Sources/assets/efectos_sonido/cleon/cleonInter1.wav" },
+	{ CleonInter2 ,"../Sources/assets/efectos_sonido/cleon/cleonInter2.wav" },
+	{ CleonInter3 ,"../Sources/assets/efectos_sonido/cleon/cleonInter3.wav" },
+	{ CleonInter4 ,"../Sources/assets/efectos_sonido/cleon/cleonInter4.wav" },
+	{ CleonInter5 ,"../Sources/assets/efectos_sonido/cleon/cleonInter5.wav" },
+	{ CleonInter6 ,"../Sources/assets/efectos_sonido/cleon/cleonInter6.wav" },
+	{ CleonInter7 ,"../Sources/assets/efectos_sonido/cleon/cleonInter7.wav" },
+	{ CleonLaugh ,"../Sources/assets/efectos_sonido/cleon/cleonLaugh.wav" },
+
 };
 
 vector<Resources::AudioVolume> Resources::audioVolume{
@@ -639,7 +656,14 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 
 	{ MagorditoChannel1, 6 },
 	{ MagorditoChannel2, 6 },
-	{ MagorditoChannel3, 6 }
+	{ MagorditoChannel3, 6 },
+	//Canales de Cleón
+
+	{ CleonChannel1, 10 },
+	{ CleonChannel2, 10 },
+	{ CleonChannel3, 10 },
+	{ CleonChannel4, 10 },
+	{ CleonChannel5, 10 },
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{

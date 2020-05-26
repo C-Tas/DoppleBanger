@@ -45,13 +45,13 @@ private:
 
 		//*Carga
 			//Rango en que aplica la carga del pirata
-	const double CHARGE_RANGE = 200;
+	const double CHARGE_RANGE = 350;
 			//Úlima carga
 	Cooldown lastCharge_;
 			//Cooldown de la carga
-	const double CHARGE_TIME = 2000;
+	const double CHARGE_TIME = 5000;
 			//Velocidad con la que carga Cleón
-	const double CHARGE_SPEED = 1000;
+	const double CHARGE_SPEED = 3000;
 			//Velocidad de movimiento de Cleón para recuperar luego
 	double movSpeed_ = 0;
 			//Daño que produce la carga
@@ -67,18 +67,25 @@ private:
 	const double SWEEP_TIME = 3000;
 
 		//*Barril
+			//Cooldown del barril
+	Cooldown lastBarrel_;
 			//Número máximo de barriles a crear
 	const int NUM_MAX_BARREL = 10;
 			//Posibilidad de crear un barril
 	const int BARREL_CHANCE = 100;
 			//Anchura del barril
-	const double BARREL_W = 50;
+	const double BARREL_W = 100;
 			//Altura del barril
-	const double BARREL_H = 50;
+	const double BARREL_H = 100;
 			//Barriles creados
 	int barrelsInGame = 0;
+			//Tiempo de creación de barril
+	const double BARREL_CREATOR = 6500;
 			//Método que crea un barril
 	void createBarrel();
+
+		//*Combo
+	void combo();
 	//Fin habilidades//
 
 
