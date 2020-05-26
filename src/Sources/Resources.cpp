@@ -687,52 +687,52 @@ vector <Resources::TextMsgInfo> Resources::messages{
 	{ SkillText,"SkillMenu",SDL_Color{(0,0,0,1)},RETRO },
 };
 
-map<char, string> Resources::tildes_{
+map<string, string> Resources::tildes_{
 	//o con tilde
 	{
-		'o', "\u00f3"
+		"o", "\u00f3"
 	},
 	//a con tilde
 	{
-		'a', "\u00e1"
+		"a", "\u00e1"
 	},
 	//i con tilde
 	{
-		'i', "\u00ed"
+		"i", "\u00ed"
 	},
 	//u con tilde
 	{
-		'u', "\u00fa"
+		"u", "\u00fa"
 	},
 	//e con tilde
 	{
-		'e', "\u00e9"
+		"e", "\u00e9"
 	},
 	{
-		'ñ', "\u00F1"
+		"ñ", "\u00F1"
 	},
 	//interrogante español
 	{ 
-		'¿', "\u00BF" 
+		"¿", "\u00BF" 
 	},
 	//exclamación española
 	{
-		'¡', "\u00A1"
+		"¡", "\u00A1"
 	},
 	//coma
 	{
-		',',"\u002C"
+		",","\u002C"
 	},
 	//punto
 	{
-		'.', "\u002E"
+		".", "\u002E"
 	},
 	//comillas
 	{
-		'“', "\u0022"
+		"“", "\u0022"
 	},
 	//comillas2
 	{
-		'”', "\u0022"
+		"”", "\u0022"
 	}
 };

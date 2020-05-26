@@ -259,7 +259,7 @@ void Inventory::equipPotion() {
 void Inventory::forwardList() {
 	int aux = advanced;
 	aux += 1;
-	if (((aux * VIEW_LIST))<= inventoryList_->size()){
+	if ((((__int64)aux * VIEW_LIST))<= (int)inventoryList_->size()){
 		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel2);
 		advanced = aux;
 		advance(ListPos, VIEW_LIST);//avanzamos el iterador
@@ -475,7 +475,7 @@ void Inventory::printCompareObject() const
 		}
 		else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
 			if (select_->isEquipped()) {
-				auxTex1 = "Cr"+ Resources::tildes_['i'] +"tico: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getCrit());
+				auxTex1 = "Cr"+ Resources::tildes_["i"] +"tico: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getCrit());
 				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getArmor());
 			}
 			else {
@@ -485,7 +485,7 @@ void Inventory::printCompareObject() const
 				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
 				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
-				auxTex1 = "Cr" + Resources::tildes_['i'] + "tico: " + to_string(aux1);
+				auxTex1 = "Cr" + Resources::tildes_["i"] + "tico: " + to_string(aux1);
 				auxTex2 = "Defensa: " + to_string(aux2);
 			}
 		
@@ -513,7 +513,7 @@ void Inventory::printCompareObject() const
 			|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
 
 			if (select_->isEquipped()) {
-				auxTex1 = "da"+ Resources::tildes_['ñ'] +"o: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg());
+				auxTex1 = "da"+ Resources::tildes_["ñ"] +"o: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg());
 				auxTex2 = "AtaqueVel.: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeRate());
 			}
 			else {
@@ -523,7 +523,7 @@ void Inventory::printCompareObject() const
 				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
 				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
-				auxTex1 = "da" + Resources::tildes_['ñ'] + "o: " + to_string(aux1);
+				auxTex1 = "da" + Resources::tildes_["ñ"] + "o: " + to_string(aux1);
 				auxTex2 = "AtaqueVel.: " + to_string(aux2);
 			}
 
@@ -534,7 +534,7 @@ void Inventory::printCompareObject() const
 			|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
 
 			if (select_->isEquipped()) {
-				auxTex1 = "da" + Resources::tildes_['ñ'] + "o: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getDistDmg());
+				auxTex1 = "da" + Resources::tildes_["ñ"] + "o: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getDistDmg());
 				auxTex2 = "DisparoVel.: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getDistRate());
 			}
 			else {
@@ -544,7 +544,7 @@ void Inventory::printCompareObject() const
 				else auxcolor1 = SDL_Color({ 255,0,0,0 });//rojo
 				if (aux2 >= 0) auxcolor2 = SDL_Color({ 43,160,31,0 });//verde
 				else auxcolor2 = SDL_Color({ 255,0,0,0 });//rojo
-				auxTex1 = "da" + Resources::tildes_['ñ'] + "o: " + to_string(aux1);
+				auxTex1 = "da" + Resources::tildes_["ñ"] + "o: " + to_string(aux1);
 				auxTex2 = "DisparoVel.: " + to_string(aux2);
 			}
 		

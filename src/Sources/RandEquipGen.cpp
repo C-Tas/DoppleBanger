@@ -24,7 +24,7 @@ Item* RandEquipGen::genEquip(int type)
 {
 	//Aqu� visual me hizo declararlo todo a parte o no compilaba
 	int ad, health, armor, price, crit, speed;
-	double meleeRate, distRate, distRange;
+	double meleeRate, distRate/*, distRange*/;
 
 	Item* obj;
 	int area = (int)gameManager_->getUnlockedIslands() + 1;

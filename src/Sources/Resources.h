@@ -727,5 +727,5 @@ public:
 	static vector<TextMsgInfo> messages; // initialized in .cpp
 
 	//Diccionario de signos de puntuacion
-	static map<char, string>tildes_;
+	static map<string, string>tildes_;
 };

@@ -30,7 +30,7 @@ source distribution.
 #include "Map.hpp"
 #include "Tileset.hpp"
 #include "pugixml.hpp"
-#include "Log.hpp""
+#include "Log.hpp"
 
 #include <sstream>
 

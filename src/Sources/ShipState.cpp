@@ -56,32 +56,32 @@ void ShipState::initState()
 	SDL_Rect destRect; //Rect�ngulo para los objetos
 
 	//Creaci�n del alijo
-	destRect.w = W_STASH; destRect.h = H_STASH;
-	destRect.x = W_WIN / 2; destRect.y = H_WIN * 2 / 5;
+	destRect.w = (int)round(W_STASH); destRect.h = (int)round(H_STASH);
+	destRect.x = (int)round(W_WIN / 2); destRect.y = (int)round(H_WIN * 2 / 5);
 	stash_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::Stash), goStashState);
 	addRenderUpdateLists(stash_);
 	addObject(stash_);
 
 	//Creaci�n de la trampilla
-	destRect.w = W_DOOR; destRect.h = H_DOOR;
-	destRect.x = (W_WIN / 2) - W_DOOR * 1.5; destRect.y = H_WIN * 2 / 5 + H_WHEEL / 2;
+	destRect.w =(int)round( W_DOOR); destRect.h =(int)round(H_DOOR);
+	destRect.x =(int)round( (W_WIN / 2) - W_DOOR * 1.5); destRect.y =(int)round( H_WIN * 2 / 5 + H_WHEEL / 2);
 	door_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::ShipDoor), goSaveState);
 	addRenderUpdateLists(door_);
 	addObject(door_);
 
 	//Creaci�n del timon
-	destRect.w = W_WHEEL; destRect.h = H_WHEEL;
-	destRect.x = (W_WIN / 2) - W_WHEEL / 2; destRect.y = H_WIN / 7;
+	destRect.w = (int)round(W_WHEEL); destRect.h =(int)round( H_WHEEL);
+	destRect.x = (int)round((W_WIN / 2) - W_WHEEL / 2); destRect.y =(int)round( H_WIN / 7);
 	wheel_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::Wheel), goMap);
 	addRenderUpdateLists(wheel_);
 	addObject(wheel_);
 	
 	//Creacion de la salida
-	destRect.w = W_EXIT; destRect.h = H_EXIT;
-	destRect.x = W_WIN - W_EXIT; destRect.y = H_WIN * 2 / 3;
+	destRect.w = (int)round(W_EXIT); destRect.h = (int)round(H_EXIT);
+	destRect.x = (int)round(W_WIN - W_EXIT); destRect.y = (int)round(H_WIN * 2 / 3);
 	exit_ = new ShipObject(app_, Vector2D(destRect.x, destRect.y), Vector2D(destRect.w, destRect.h),
 		app_->getTextureManager()->getTexture(Resources::ExitShip), goIsland);
 	addRenderUpdateLists(exit_);
@@ -106,7 +106,7 @@ void ShipState::initState()
 	gm_->setCurrentPlayerMana(player_->getMana());
 
 
-	Camera::instance()->updateCamera(W_WIN / 2, H_WIN / 2);
+	Camera::instance()->updateCamera((int)round(W_WIN) / 2, (int)round(H_WIN) / 2);
 	addRenderUpdateLists(player_);
 
 	app_->resetMusicChannels();
