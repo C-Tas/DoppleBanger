@@ -76,10 +76,10 @@
  <objectgroup id="3" name="Player">
   <object id="5" gid="45" x="1152" y="1664" width="256" height="256"/>
  </objectgroup>
- <objectgroup id="13" name="Crab">
+ <objectgroup id="13" name="EnemyPirate">
   <object id="70" gid="45" x="902" y="394" width="256" height="256"/>
  </objectgroup>
- <objectgroup id="14" name="CrabPatrol">
+ <objectgroup id="14" name="EnemyPiratePatrol">
   <object id="71" gid="178" x="112" y="656" width="256" height="256"/>
   <object id="72" gid="178" x="848" y="2240" width="256" height="256"/>
   <object id="73" gid="178" x="2364" y="1508" width="256" height="256"/>

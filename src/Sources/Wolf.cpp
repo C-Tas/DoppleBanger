@@ -115,7 +115,7 @@ bool Wolf::update() {
 //Mueve al lobo DONE
 void Wolf::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
-	if ((getCenter() - nextTarget_).magnitude() <= 0.05)
+	if ((getCenter() - nextTarget_).magnitude() <= 1)
 	{
 		pathPos_ = { (int)PosToTile(getCenter()).getX(), (int)PosToTile(getCenter()).getY() };
 		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
