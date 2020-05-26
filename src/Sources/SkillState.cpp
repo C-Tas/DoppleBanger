@@ -30,8 +30,8 @@ void SkillState::update()
 	//Comprobamos si el rat�n est� sobre alguna de las skills equipadas
 	int i = 0;
 	SDL_Point point;
-	point.x = eventHandler_->getRealMousePos().getX();
-	point.y = eventHandler_->getRealMousePos().getY();
+	point.x = (int)round(eventHandler_->getRealMousePos().getX());
+	point.y = (int)round(eventHandler_->getRealMousePos().getY());
 	while (i < assignButtons.size() && !SDL_PointInRect(&point, &assignButtons[i]))i++;
 	//Si lo est�, actualizamos cual descripcion debe mostrarse
 	if (i < assignButtons.size()) lastPointed = gm_->getEquippedSkill((Key)i);

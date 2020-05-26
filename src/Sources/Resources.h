@@ -410,6 +410,10 @@ public:
 		PanelCollaborators,
 		BotonBonus,
 		Bonus,
+
+		//Cleon
+		BarrelExplosion,
+		BarrelInitExpl,
 	};
 	
 	enum MusicChannels : int {
@@ -460,8 +464,16 @@ public:
 
 		//Canal de jarl
 		JarlChannel,
+
+		//Canales de Cleón
+		CleonChannel1,
+		CleonChannel2,
+		CleonChannel3,
+		CleonChannel4,
+		CleonChannel5,
+
 		//Numero de canales
-		NumSoundChannels
+		NumSoundChannels,
 	};
 
 	///<summary>Enum para las distintos audios del juego</summary>
@@ -638,6 +650,17 @@ public:
 		jarl10,
 		jarl11,
 
+		//Cleón
+		CleonBarril,
+		CleonDie,
+		CleonInter1,
+		CleonInter2,
+		CleonInter3,
+		CleonInter4,
+		CleonInter5,
+		CleonInter6,
+		CleonInter7,
+		CleonLaugh,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

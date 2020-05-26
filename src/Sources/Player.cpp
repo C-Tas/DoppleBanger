@@ -961,3 +961,7 @@ void Player::isEnemyDead(Actor* obj)
 		currEnemy_ = nullptr;
 	}
 }
+void Player:: setSkillAt(int key, Skill* skill) {
+	if (skills_[key] != nullptr)delete skills_[key];
+	skills_[key] = skill;
+}

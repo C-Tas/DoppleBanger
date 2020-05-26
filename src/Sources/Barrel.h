@@ -9,6 +9,7 @@ enum class BARREL_STATE
 {
 	ASSEMBLING,
 	READY,
+	INIT_EXPLOTION,
 	EXPLODING
 };
 
@@ -41,6 +42,27 @@ private:
 	//Estado del barril
 	BARREL_STATE currState_ = BARREL_STATE::ASSEMBLING;
 
+	//Animaciones
+		//Explosión
+	Texture* explosionTex_;
+	Anim explosionAnim_ = { 0,0,0,0,false };
+
+	const int EXPLOTION_FRAMES = 11;			//Frames de la animación
+	const int EXPLOTION_FRAME_RATE = 80;		//Frame rate
+	const int EXPLOTION_H = 150;
+	const int EXPLOTION_W = 150;
+	const int EXPLOTION_ACTION = 3;
+
+
+		//InitExplosión
+	bool explote_ = false;
+	bool applyDmg_ = false;
+	Texture* mechaExplosionTex_;
+	Anim mechaExplosionAnim_ = { 0,0,0,0,false };
+	const int INIT_EXPLOTION_FRAMES = 6;			//Frames de la animación
+	const int INIT_EXPLOTION_FRAME_RATE = 666;
+
+
 	virtual void initObject()override;
 	virtual void initAnims() override;
 
@@ -48,5 +70,8 @@ private:
 	void applyRangeDmg();
 	//
 	void updateCooldowns();
+
+	void initMecha();
+	void initExplotion();
 };
 

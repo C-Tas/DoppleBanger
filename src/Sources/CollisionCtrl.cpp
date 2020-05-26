@@ -320,21 +320,20 @@ void CollisionCtrl::volcanicCollision()
 	}
 	barrelsToErase_.clear();
 
+	cout << barrels_.size() << endl;
 	for (auto barrel : barrels_) {
-		if (barrel->getBarrelState() == BARREL_STATE::READY) {
+		if (barrel->getBarrelState() == BARREL_STATE::INIT_EXPLOTION) {
 			//Collisión contra el player
 			if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
 				barrel->getPos(), barrel->getScaleX(), barrel->getScaleY())) {
 				barrel->onCollider();
-				removeBarrel(barrel);
 			}
 			//Collisión contra las balas
 			for (auto bullet : playerBullets_) {
-				if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
-					barrel->getPos(), barrel->getScaleX(), barrel->getScaleY())) {
+				if (Collisions::collidesWithRotation(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(), bullet->getCollisionRot(),
+					barrel->getPos(), barrel->getScaleX(), barrel->getScaleY(), barrel->getCollisionRot())) {
 					barrel->onCollider();
 					bullet->onCollider();
-					removeBarrel(barrel);
 					removePlayerBullet(bullet);
 				}
 			}
