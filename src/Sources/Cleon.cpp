@@ -5,14 +5,134 @@
 
 
 bool Cleon::update() {
-	//string state;
+	//ESTADOS A TENER EN CUENTA ->THRUSTINg(estocada), CHARGING(carga), CHARGING_EMPOWERED(barrido)
+	/*cout << "INICIO UPDATE" << endl;
+	string state;
+	switch (currState_)
+	{
+	case STATE::ATTACKING:
+		state = "ESTOCADA";
+		break;
+	case STATE::CHARGING:
+		state = "CARGA";
+		break;
+	case STATE::DYING:
+		state = "muriendo";
+		break;
+	case STATE::FOLLOWING:
+		state = "siguiendo";
+		break;
+	case STATE::IDLE:
+		state = "parado";
+		break;
+	case STATE::PATROLLING:
+		state = "patrullando";
+		break;
+	case STATE::CHARGING_EMPOWERED:
+		state = "BARRIDO";
+		break;
+	case STATE::THRUSTING:
+		state = "ESTOCADA";
+		break;
+	default:
+		state = "";
+		break;
+	}
+	cout << "ESTADO AL INICIO DEL UPDATE:  " << state << endl;*/
+	updateFrame();
+	manageTint();
+	updateCooldowns();
+
+	//si Cle�n palma
+	if (currState_ == STATE::DYING) {
+		applyRewards();
+		CollisionCtrl::instance()->removeEnemy(this);
+		app_->getCurrState()->removeRenderUpdateLists(this);
+		return false;
+	}
+	//Si Cle�n encuentra un enemigo
+	if ((currState_ == STATE::IDLE || currState_ == STATE::FOLLOWING) && getEnemy(rangeVision_)) {
+		currState_ = STATE::ATTACKING;
+	}
+	//Si estoy en modo ataque
+	if (currState_ == STATE::ATTACKING) {
+
+		createBarrel();
+		//Si est� a rango de melee
+		if (onRange(currStats_.meleeRange_) && !lastThrust_.isCooldownActive()) {
+			cout << "En rango de estocada y cooldown acabado" << endl;
+			updateDirVisObjective(currEnemy_);
+			initThrust();
+			stop();
+			/*
+			if (atStart != currState_ || dirStart != currDir_)  initMelee();
+			//meleeAnim();
+			thrust();*/
+		}
+		else if (onRange(currStats_.meleeRange_) && !lastSweep_.isCooldownActive()) {
+			cout << "En rango de barrido y cooldown acabado" << endl;
+
+			initSwept();
+			//if (atStart != currState_ || dirStart != currDir_)  initSwept();
+			////sweptAnim();
+			//swept();
+		}
+		//S� est� a rango de carga
+		else if (onRange(CHARGE_RANGE) && !lastCharge_.isCooldownActive()) {
+			cout << "En rango de carga y cooldown acabado" << endl;
+			initCharge();
+			/*
+			if (atStart != currState_ || dirStart != currDir_)  initCharge();
+			//chargeAnim();
+			pirateCharge();*/
+		}
+		else {
+			cout << "ATTACKING SIN HACER NADA" << endl;
+			selectTarget();
+		}
+	}
+
+
+	if (currState_ == STATE::CHARGING) {
+		selectTarget();
+		SDL_Rect targetRect = { (int)round(target_.getX()),(int)round(target_.getY()),25,25 };
+		//Cle�n llego al destino de su carga
+		if (SDL_HasIntersection(&getDestiny(), &targetRect) && !attacked_) {
+			cout << "DAÑO DE CARGA" << endl;
+			auto currEnemy = dynamic_cast<Player*>(currEnemy_);
+			//Si Cle�n colisiona contra el player
+			if (currEnemy && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny())) {
+				double realDamage = CHARGE_DMG;
+				if (applyCritic()) realDamage *= 1.5;
+				currEnemy->receiveDamage(realDamage);
+				combo();
+			}
+			currState_ = STATE::IDLE;
+			currStats_.moveSpeed_ = movSpeed_;
+			attacked_ = true;
+		}
+	}
+	
+	if (currState_ == STATE::THRUSTING)thrustAnim();
+	//Si el Cleon está en barrido
+	else if (currState_ == STATE::CHARGING_EMPOWERED)sweptAnim();
+	//Si Cle�n no está todavía en following y no está en carga o en cualquier otro estado de ataque
+	else if (currState_ == STATE::IDLE) {
+		initMove();
+	}
+	//El estado es following
+	else {
+		selectTarget();
+	}
+
+
 	//switch (currState_)
 	//{
 	//case STATE::ATTACKING:
-	//	state = "atacando";
+	//	state = "ESTOCADA";
 	//	break;
 	//case STATE::CHARGING:
-	//	state = "cargando";
+	//	state = "CARGA";
 	//	break;
 	//case STATE::DYING:
 	//	state = "muriendo";
@@ -26,92 +146,21 @@ bool Cleon::update() {
 	//case STATE::PATROLLING:
 	//	state = "patrullando";
 	//	break;
+	//case STATE::CHARGING_EMPOWERED:
+	//	state = "BARRIDO";
+	//	break;
+	//case STATE::THRUSTING:
+	//	state = "ESTOCADA";
+	//	break;
 	//default:
+	//	state = "";
 	//	break;
 	//}
-	//cout << state << endl;
-	updateFrame();
-	manageTint();
-	updateCooldowns();
-	STATE atStart = currState_;
-	DIR dirStart = currDir_;
-	//si Cle�n palma
-	if (currState_ == STATE::DYING) {
-		applyRewards();
-		CollisionCtrl::instance()->removeEnemy(this);
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		return false;
-	}
-	//Si Cle�n encuentra un enemigo
-	if ((currState_ == STATE::IDLE||currState_==STATE::FOLLOWING) && getEnemy(rangeVision_)) {
-		currState_ = STATE::ATTACKING;
-	}
-	//Si estoy en modo ataque
-	if (currState_ == STATE::ATTACKING) {
-		createBarrel();
-		//Si est� a rango de melee
-		if (onRange(currStats_.meleeRange_) && !lastThrust_.isCooldownActive()) {
-			//Estocada
-			thrust();
-			stop();
-			updateDirVisObjective(currEnemy_);
-			if (atStart != currState_ || dirStart != currDir_)  initMelee();
-		}
-		else if (onRange(currStats_.meleeRange_) && !lastSweep_.isCooldownActive()) {
-			//Barrido
-			sweep();
-		}
-		//S� est� a rango de carga
-		else if (onRange(CHARGE_RANGE) && !lastCharge_.isCooldownActive()) {
-			//Carga
-			pirateCharge();
-			//if (atStart != currState_ || dirStart != currDir_) inicia carga;
-		}
-		//Cle�n no tiene a nadie a rango
-		else
-		{
-			currState_ = STATE::FOLLOWING;
-		}
-	}
-	if (currState_ == STATE::CHARGING) {
-		selectTarget();
-		SDL_Rect targetRect = { (int)round(target_.getX()),(int)round(target_.getY()),25,25 };
-		//Cle�n llego al destino de su carga
-		if (SDL_HasIntersection(&getDestiny(), &targetRect)) {
-			auto currEnemy = dynamic_cast<Player*>(currEnemy_);
-			//Si Cle�n colisiona contra el player
-			if (currEnemy && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny())) {
-				double realDamage = CHARGE_DMG;
-				if (applyCritic()) realDamage *= 1.5;
-				currEnemy->receiveDamage(realDamage);
-				combo();
-			}
-			currState_ = STATE::ATTACKING;
-			currStats_.moveSpeed_ = movSpeed_;
-		}
-	}
+	//cout << "ESTADO AL FINAL DEL UPDATE:  " << state << endl;
 
-	//Si Cle�n est� siguiendo a un enemigo
-	if (currState_ == STATE::FOLLOWING) {
-		createBarrel();
-		selectTarget();
+	//cout << "FIN UPDATE" << endl << endl;;
+	cout << endl;
 
-		if (atStart != currState_||dirStart!=currDir_) initRun();
-		bool x = atStart != currState_,y= dirStart != currDir_;
-		cout <<"x" <<x << boolalpha << endl;
-		cout <<"y" <<y << boolalpha<<endl;
-		if (!getEnemy(rangeVision_) /*|| onRange(currStats_.meleeRange_)*/) {
-			//currState_ = STATE::IDLE;
-		}
-	}
-//#pragma region ParaProbarIdle
-//#ifdef _DEBUG
-//	if (!getEnemy(rangeVision_+200)) {
-//		if (atStart != currState_ || dirStart != currDir_) initIdle();
-//	}
-//#endif // _DEBUG
-
-//#pragma endregion
 	return false;
 }
 
@@ -150,23 +199,30 @@ void Cleon::lostAggro()
 
 void Cleon::thrust()
 {
-	cout << "ESTOCADA! \n";
 	lastThrust_.initCooldown(THRUST_TIME);
-	auto thrustAttack = dynamic_cast<Player*>(currEnemy_);
-	if (thrustAttack) {
-		//Critico
-		double realDamage = currStats_.meleeDmg_;
-		if (applyCritic()) realDamage *= 1.5;
+	if (!attacked_) {
+		cout << currAnim_.currFrame_ << endl;
+		cout << "FRAME DE THRUST" << endl;
+		attacked_ = true;
+		auto thrustAttack = dynamic_cast<Player*>(currEnemy_);
+		if (thrustAttack) {
+			cout << "DAÑO DE THRUST" << endl;
 
-		thrustAttack->receiveDamage(realDamage);
+			//Critico
+			double realDamage = currStats_.meleeDmg_;
+			if (applyCritic()) realDamage *= 1.5;
+
+			thrustAttack->receiveDamage(realDamage);
+		}
 	}
-	//Para probar animacion estocada desmutear lo de abajo
-	//currState_=STATE::PATROLLING;
 }
 
 void Cleon::combo() {
-	thrust();
-	sweep();
+	cout << "COMBO" << endl;
+	initThrust();
+	lastSweep_.endCoolDown();
+	//thrust();
+	//swept();
 }
 
 void Cleon::pirateCharge()
@@ -187,13 +243,19 @@ void Cleon::pirateCharge()
 	barrelsInGame++;
 }
 
-void Cleon::sweep()
+void Cleon::swept()
 {
-	cout << "Barrido!" << endl;
+	
 	lastSweep_.initCooldown(SWEEP_TIME);
-	auto sweepAttack = dynamic_cast<Player*>(currEnemy_);
-	if (sweepAttack) {
-		sweepAttack->receiveDamage(currStats_.meleeDmg_);
+	if (!attacked_) {
+		cout << "FRAME DE BARRIDO QUE HACE DAÑO" << endl;
+		auto sweepAttack = dynamic_cast<Player*>(currEnemy_);
+		if (sweepAttack) {
+			cout << "DAÑO DE BARRIDO" << endl;
+			sweepAttack->receiveDamage(currStats_.meleeDmg_);
+
+		}
+		attacked_ = true;
 	}
 }
 
@@ -250,36 +312,56 @@ void Cleon::initRewards()
 
 void Cleon::initAnims() {
 	//DIR{up right down left}
-	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true));
-	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonIdleUp)) ;
-	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true));
-	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonIdleRight));
-	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true));
-	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonIdleDown));
-	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true));
-	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonIdleLeft));
+	//idle
+	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_IDLE, true));
+	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonIdleUp));
+	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_IDLE, true));
+	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonIdleRight));
+	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_IDLE, true));
+	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonIdleDown));
+	idleAnim_.push_back(Anim(NUM_FRAMES_IDLE, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_IDLE, true));
+	idleTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonIdleLeft));
 
-	runAnim_.push_back(Anim(NUM_FRAMES_RUN_UD, W_FRAME_RUN_UD, H_FRAME_RUN_UD, FRAME_RATE_RUN_UD, true));
-	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMovUp));
-	runAnim_.push_back(Anim(NUM_FRAMES_RUN_RL, W_FRAME_RUN_RL, H_FRAME_RUN_RL, FRAME_RATE_RUN_RL, true));
-	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMovRight));
-	runAnim_.push_back(Anim(NUM_FRAMES_RUN_UD, W_FRAME_RUN_UD, H_FRAME_RUN_UD, FRAME_RATE_RUN_UD, true));
-	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMovDown));
-	runAnim_.push_back(Anim(NUM_FRAMES_RUN_RL, W_FRAME_RUN_RL, H_FRAME_RUN_RL, FRAME_RATE_RUN_RL, true));
-	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMovLeft));
+	//movimiento
+	runAnim_.push_back(Anim(NUM_FRAMES_RUN_UD, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_RUN_UD, true));
+	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonMovUp));
+	runAnim_.push_back(Anim(NUM_FRAMES_RUN_RL, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_RUN_RL, true));
+	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonMovRight));
+	runAnim_.push_back(Anim(NUM_FRAMES_RUN_UD, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_RUN_UD, true));
+	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonMovDown));
+	runAnim_.push_back(Anim(NUM_FRAMES_RUN_RL, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_RUN_RL, true));
+	runTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonMovLeft));
 
-	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_UD, W_FRAME_MELEE_UD, H_FRAME_MELEE_UD, FRAME_RATE_MELEE_UD, false));
-	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMelUp));
-	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_RL, W_FRAME_MELEE_RL, H_FRAME_MELEE_RL, FRAME_RATE_MELEE_RL, false));
-	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMelRight));
-	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_UD, W_FRAME_MELEE_UD, H_FRAME_MELEE_UD, FRAME_RATE_MELEE_UD, false));
-	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMelDown));
-	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_RL, W_FRAME_MELEE_RL, H_FRAME_MELEE_RL, FRAME_RATE_MELEE_RL, false));
-	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CLeonMelLeft));
-	//runAnim_.push_back(Anim(NUM_FRAMES_RUN, W_FRAME_RUN, H_FRAME_RUN, FRAME_RATE_RUN, true));
-	//assaultAnim_.push_back( Anim(NUM_FRAMES_ASSAULT, W_FRAME_ASSAULT, H_FRAME_ASSAULT, FRAME_RATE_ASSAULT, false));
-	//meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE, W_FRAME_MELEE, H_FRAME_MELEE, FRAME_RATE_MELEE, false));
-	//barrelAnim_.push_back( Anim(NUM_FRAMES_BARREL, W_FRAME_BARREL, H_FRAME_BARREL, FRAME_RATE_BARREL, false));
+	//estocada
+	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_UD, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_MELEE_UD, false));
+	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonMelUp));
+	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_RL, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_MELEE_RL, false));
+	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonMelRight));
+	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_UD, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_MELEE_UD, false));
+	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonMelDown));
+	meleeAnim_.push_back(Anim(NUM_FRAMES_MELEE_RL, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_MELEE_RL, false));
+	meleeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonMelLeft));
+
+	//barrido
+	sweptAnim_.push_back(Anim(NUM_FRAMES_SWEPT_UP, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_SWEPT_UP, false));
+	sweptTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonSweptUp));
+	sweptAnim_.push_back(Anim(NUM_FRAMES_SWEPT_RL, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_SWEPT_RL, false));
+	sweptTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonSweptRight));
+	sweptAnim_.push_back(Anim(NUM_FRAMES_SWEPT_DOWN, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_SWEPT_DOWN, false));
+	sweptTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonSweptDown));
+	sweptAnim_.push_back(Anim(NUM_FRAMES_SWEPT_RL, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_SWEPT_RL, false));
+	sweptTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonSweptLeft));
+
+	//carga
+	chargeAnim_.push_back(Anim(NUM_FRAMES_CHARGE_UD, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_CHARGE_UD, false));
+	chargeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonChargeUp));
+	chargeAnim_.push_back(Anim(NUM_FRAMES_CHARGE_RL, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_CHARGE_RL, false));
+	chargeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonChargeRight));
+	chargeAnim_.push_back(Anim(NUM_FRAMES_CHARGE_UD, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_CHARGE_UD, false));
+	chargeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonChargeDown));
+	chargeAnim_.push_back(Anim(NUM_FRAMES_CHARGE_RL, W_FRAME_CLEON, H_FRAME_CLEON, FRAME_RATE_CHARGE_RL, false));
+	chargeTxt_.push_back(app_->getTextureManager()->getTexture(Resources::CleonChargeLeft));
+
 }
 
 void Cleon::updateCooldowns()
@@ -287,6 +369,7 @@ void Cleon::updateCooldowns()
 	if (lastThrust_.isCooldownActive()) lastThrust_.updateCooldown();
 	if (lastCharge_.isCooldownActive()) lastCharge_.updateCooldown();//
 	if (lastBarrel_.isCooldownActive()) lastBarrel_.updateCooldown();
+	if (lastSweep_.isCooldownActive())lastSweep_.updateCooldown();
 }
 
 void Cleon::move(Point2D target)
@@ -314,8 +397,67 @@ void Cleon::initIdle() {
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+	currState_ = STATE::IDLE;
 }
-void Cleon:: initMelee(){
+
+void Cleon::initSwept()
+{
+	cout << "EMPIEZA BARRIDO \n";
+	lastSweep_.initCooldown(SWEEP_TIME);
+	currState_ = STATE::CHARGING_EMPOWERED;
+	int dir = (int)currDir_;
+	attacked_ = false;
+	texture_ = sweptTxt_[dir];
+	currAnim_ = sweptAnim_[dir];
+	switch (currDir_)
+	{
+	case DIR::UP:
+		frameAction_ = 3;
+		break;
+	case DIR::RIGHT:
+		frameAction_ = 3;
+
+		break;
+	case DIR::DOWN:
+		frameAction_ = 5;
+
+		break;
+	case DIR::LEFT:
+		frameAction_ = 3;
+
+		break;
+	default:
+		break;
+	}
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Cleon::initThrust() {
+	cout << "EMPIEZA ESTOCADA! \n";
+	currState_ = STATE::THRUSTING;
+	attacked_ = false;
+	switch (currDir_)
+	{
+	case DIR::UP:
+		frameAction_ = 5;
+		break;
+	case DIR::RIGHT:
+		frameAction_ = 6;
+
+		break;
+	case DIR::DOWN:
+		frameAction_ = 5;
+
+		break;
+	case DIR::LEFT:
+		frameAction_ = 6;
+
+		break;
+	default:
+		break;
+	}
 	int dir = (int)currDir_;
 	texture_ = meleeTxt_[dir];
 	currAnim_ = meleeAnim_[dir];
@@ -325,13 +467,62 @@ void Cleon:: initMelee(){
 }
 
 void Cleon::initRun() {
-int dir = (int)currDir_;
-texture_ = runTxt_[dir];
-currAnim_ = runAnim_[dir];
-frame_.x = 0; frame_.y = 0;
-frame_.w = currAnim_.widthFrame_;
-frame_.h = currAnim_.heightFrame_;
+	int dir = (int)currDir_;
+	texture_ = runTxt_[dir];
+	currAnim_ = runAnim_[dir];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
 }
-void Cleon::initBarrel() {}
 
-void Cleon::initCharge() {}
+void Cleon::initCharge() {
+	cout << "EMPIEZA CARGA! \n";
+
+	currState_ = STATE::CHARGING;
+	int dir = (int)currDir_;
+	attacked_ = false;
+	texture_ = chargeTxt_[dir];
+	currAnim_ = chargeAnim_[dir];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	pirateCharge();
+}
+
+void Cleon::initMove()
+{
+	cout << "EMPEZAR A CORRER" << endl;
+	int dir = (int)currDir_;
+	attacked_ = false;
+	texture_ = runTxt_[dir];
+	currAnim_ = runAnim_[dir];
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Cleon::thrustAnim()
+{
+	if (currAnim_.currFrame_ == frameAction_) thrust();
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_-1) {
+		cout << "FIN DE ESTOCADA" << endl;
+		cout << "CAMBIO A IDLE" << endl;
+		initIdle();
+	}
+}
+
+void Cleon::sweptAnim()
+{
+	if (currAnim_.currFrame_ == frameAction_) {
+		cout << currAnim_.currFrame_ << endl;
+		swept();
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		//initIdle();
+		cout << "FIN DE BARRIDO" << endl;
+		cout << "CAMBIO A IDLE" << endl;
+		initIdle();
+
+	}
+}

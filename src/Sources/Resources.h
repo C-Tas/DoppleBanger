@@ -232,12 +232,12 @@ public:
 		ClonShootLeftAnim,
 		ClonShootUpAnim,
 		ClonShootDownAnim,
-			//Autodestrucción
+		//Autodestrucción
 		ClonSelfDestructionRightAnim,
 		ClonSelfDestructionLeftAnim,
 		ClonSelfDestructionUpAnim,
 		ClonSelfDestructionDownAnim,
-			//Desaparecer
+		//Desaparecer
 		ClonVanishRightAnim,
 		ClonVanishLeftAnim,
 		ClonVanishDownAnim,
@@ -264,20 +264,7 @@ public:
 		PumpkinMoveLeftAnim,
 		PumpkinMoveUpAnim,
 		PumpkinMoveDownAnim,
-		//Clon
-		ClonIdleRightAnim,
-		ClonIdleLeftAnim,
-		ClonIdleUpAnim,
-		ClonIdleDownAnim,
-		ClonMeleeRightAnim,
-		ClonMeleeLeftAnim,
-		ClonMeleeUpAnim,
-		ClonMeleeDownAnim,
-		ClonShootRightAnim,
-		ClonShootLeftAnim,
-		ClonShootUpAnim,
-		ClonShootDownAnim,
-		
+
 		//Monkey
 		MonkeyIdleRightAnim,
 		MonkeyIdleLeftAnim,
@@ -343,21 +330,36 @@ public:
 		SkeletonMoveLeftAnim,
 		SkeletonMoveDownAnim,
 		SkeletonMoveUpAnim,
+
+
 		//Cleon
-		CLeonIdleUp,
-		CLeonIdleDown,
-		CLeonIdleRight,
-		CLeonIdleLeft,
-		//CLeonMov
-		CLeonMovUp,
-		CLeonMovDown,
-		CLeonMovRight,
-		CLeonMovLeft,
+		//idle
+		CleonIdleUp,
+		CleonIdleDown,
+		CleonIdleRight,
+		CleonIdleLeft,
+		//CleonMov
+		CleonMovUp,
+		CleonMovDown,
+		CleonMovRight,
+		CleonMovLeft,
 		//estocada
-			CLeonMelUp,
-			CLeonMelDown,
-			CLeonMelRight,
-			CLeonMelLeft,
+		CleonMelUp,
+		CleonMelDown,
+		CleonMelRight,
+		CleonMelLeft,
+		//Barrido
+		CleonSweptUp,
+		CleonSweptDown,
+		CleonSweptRight,
+		CleonSweptLeft,
+		//Carga
+		CleonChargeUp,
+		CleonChargeDown,
+		CleonChargeRight,
+		CleonChargeLeft,
+
+
 		//Interactuables
 		Wheel,
 		Stash,

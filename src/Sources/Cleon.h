@@ -45,7 +45,7 @@ private:
 
 		//*Carga
 			//Rango en que aplica la carga del pirata
-	const double CHARGE_RANGE = 350;
+	const double CHARGE_RANGE = 500;
 			//�lima carga
 	Cooldown lastCharge_;
 			//Cooldown de la carga
@@ -60,7 +60,7 @@ private:
 	void pirateCharge();
 	
 		//* Barrido
-	void sweep();
+	void swept();
 		//�limo barrido
 	Cooldown lastSweep_;
 		//Cooldown del barrido
@@ -97,11 +97,16 @@ private:
 	virtual void updateCooldowns() override;
 	virtual void move(Point2D target);
 	virtual void initRun();
-	virtual void initAssault() {};
-	virtual void initMelee();
-	virtual void initBarrel();
+	virtual void initThrust();
 	virtual void initIdle();
+	void initSwept();
 	void initCharge();
+	void initMove();
+
+	//gestores de las animaciones
+	void thrustAnim();
+	void sweptAnim();
+
 	void selectTarget();
 	//Punteros
 	Player* player_ = nullptr;
@@ -109,59 +114,65 @@ private:
 	//Animaciones de Cleon
 	vector<Anim> idleAnim_;
 	vector<Anim> runAnim_;
-	vector<Anim> assaultAnim_;
 	vector<Anim> meleeAnim_;
-	vector<Anim> barrelAnim_;
+	vector<Anim> chargeAnim_;
+	vector<Anim> sweptAnim_;
 	vector<Texture*> idleTxt_;
 	vector<Texture*> runTxt_;
-	vector<Texture*> assaultTxt_;
 	vector<Texture*> meleeTxt_;
-	vector<Texture*> barrelTxt_;
+	vector<Texture*> chargeTxt_;
+	vector<Texture*> sweptTxt_;
+
+	bool attacked_ = false;
+
 #pragma region Constantes
+	//Frame en el cual vamos a atacar
+	int frameAction_ = 0;
+	//Constantes de ancho y alto de los frames
+	const uint W_FRAME_CLEON = 100;
+	const uint H_FRAME_CLEON = W_FRAME_CLEON;
+
 	//Animacion idle de Cleon
 	const int NUM_FRAMES_IDLE = 2;
 	const int NUM_FRAMES_ROW_IDLE = 0;
-	const uint W_FRAME_IDLE = 100;
-	const uint H_FRAME_IDLE = 100;
-	const int FRAME_RATE_IDLE = 20;
+	const int FRAME_RATE_IDLE = 500;
 
 	//Animacion correr
 	const int NUM_FRAMES_RUN_UD = 4;
 	const int NUM_FRAMES_ROW_RUN_UD = 0;
-	const uint W_FRAME_RUN_UD = 100;
-	const uint H_FRAME_RUN_UD = 100;
 	const int FRAME_RATE_RUN_UD = 30;
 	
 	const int NUM_FRAMES_RUN_RL = 7;
 	const int NUM_FRAMES_ROW_RUN_RL = 0;
-	const uint W_FRAME_RUN_RL = 100;
-	const uint H_FRAME_RUN_RL = 100;
 	const int FRAME_RATE_RUN_RL = 60;
-	//Animacion embestida
-	const int NUM_FRAMES_ASSAULT = 0;
-	const int NUM_FRAMES_ROW_ASSAULT = 0;
-	const uint W_FRAME_ASSAULT = 0;
-	const uint H_FRAME_ASSAULT = 0;
-	const int FRAME_RATE_ASSAULT = 0;
 
 	//Animacion cuerpo a cuerpo
 	const int NUM_FRAMES_MELEE_UD = 7;
-	const int NUM_FRAMES_ROW_MELEE_UD = 0;
-	const uint W_FRAME_MELEE_UD = 100;
-	const uint H_FRAME_MELEE_UD = 100;
 	const int FRAME_RATE_MELEE_UD = 30;
 
 	const int NUM_FRAMES_MELEE_RL = 9;
-	const int NUM_FRAMES_ROW_MELEE_RL = 0;
-	const uint W_FRAME_MELEE_RL = 100;
-	const uint H_FRAME_MELEE_RL = 100;
 	const int FRAME_RATE_MELEE_RL = 40;
-	//Animacion embestida
-	const int NUM_FRAMES_BARREL = 0;
-	const int NUM_FRAMES_ROW_BARREL = 0;
-	const uint W_FRAME_BARREL = 0;
-	const uint H_FRAME_BARREL = 0;
-	const int FRAME_RATE_BARREL = 0;
+
+	//Animacion carga
+	//arriba/abajo
+	const int NUM_FRAMES_CHARGE_UD = 9;
+	const int FRAME_RATE_CHARGE_UD = 60;
+	//izquierda/dcha
+	const int NUM_FRAMES_CHARGE_RL = 4;
+	const int FRAME_RATE_CHARGE_RL = 40;
+
+	//Animacion barrido
+	//arriba
+	const int NUM_FRAMES_SWEPT_UP = 5;
+	const int FRAME_RATE_SWEPT_UP = 60;
+	//abajo
+	const int NUM_FRAMES_SWEPT_DOWN = 6;
+	const int FRAME_RATE_SWEPT_DOWN = 50;
+	//izquierda/dcha
+	const int NUM_FRAMES_SWEPT_RL = 4;
+	const int FRAME_RATE_SWEPT_RL = 40;
+
+	
 #pragma endregion
 };
 
