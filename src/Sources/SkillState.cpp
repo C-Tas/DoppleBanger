@@ -311,7 +311,7 @@ Texture* SkillState::getTextureFromSkill(SkillName name)const
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillReboteC);
 		break;
 	case SkillName::Clon:
-		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillLiberationC);
+		tex = app_->getTextureManager()->getTexture(Resources::TextureId::ClonIconRect);
 		break;
 	case SkillName::Explosion:
 		tex = app_->getTextureManager()->getTexture(Resources::TextureId::SkillExplosionC);

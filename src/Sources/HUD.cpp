@@ -199,7 +199,7 @@ void HUD::initObject() {
 	icons.push_back(createSkillIcon((int)Key::Q));
 	icons.push_back(createSkillIcon((int)Key::W));
 	icons.push_back(createSkillIcon((int)Key::E));
-	icons.push_back(app_->getTextureManager()->getTexture(Resources::MonkeyFront));
+	icons.push_back(app_->getTextureManager()->getTexture(Resources::ClonIcon));
 	icons.push_back(createObjectIcon((int)Key::One));
 	icons.push_back(createObjectIcon((int)Key::Two));
 

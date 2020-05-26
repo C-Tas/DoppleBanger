@@ -101,6 +101,7 @@ public:
 		SkillReboteBN,
 		SkillTorbellinoC,
 		SkillTorbellinoBN,
+		ClonIconRect,
 
 		//Fondos
 		MenuBackground,
@@ -147,6 +148,7 @@ public:
 		RaudoIcon,
 		ReboteIcon,
 		TorbellinoIcon,
+		ClonIcon,
 
 		//Objects
 		HealthPot,

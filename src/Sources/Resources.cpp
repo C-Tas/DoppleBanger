@@ -122,6 +122,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ RaudoIcon, "../Sources/assets/hud/iconos/raudo.png" },
 	{ ReboteIcon, "../Sources/assets/hud/iconos/rebote.png" },
 	{ TorbellinoIcon, "../Sources/assets/hud/iconos/torbellino.png" },
+	{ ClonIcon, "../Sources/assets/hud/iconos/clon.png" },
 
 	//Objects
 	{ HealthPot, "../Sources/assets/hud/iconos/vidaPot.png" },
@@ -177,6 +178,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ SkillReboteBN, "../Sources/assets/skills/reboteHabBN.png" },
 	{ SkillTorbellinoC, "../Sources/assets/skills/torbellinoHab.png" },
 	{ SkillTorbellinoBN, "../Sources/assets/skills/torbellinoHabBN.png" },
+	{ ClonIconRect, "../Sources/assets/skills/clon.png" },
 #pragma endregion
 
 #pragma region Sprites y animaciones
