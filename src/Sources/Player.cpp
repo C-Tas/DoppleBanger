@@ -641,15 +641,18 @@ void Player::checkInput()
 }
 
 void Player::checkInputState() {
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_P)) {
+	if (eventHandler_->isKeyDown(SDLK_ESCAPE)) {
+		killClon();
 		app_->getGameStateMachine()->pushState(new PauseState(app_));
 		stop();
 	}
 	else if (eventHandler_->isKeyDown(SDL_SCANCODE_C)) {
+		killClon();
 		app_->getGameStateMachine()->pushState(new Inventory(app_));
 		stop();
 	}
 	else if (eventHandler_->isKeyDown(SDL_SCANCODE_V)) {
+		killClon();
 		app_->getGameStateMachine()->pushState(new SkillState(app_, this));
 		stop();
 	}

@@ -18,7 +18,7 @@ public:
 	//Cuando pierde agro del enemigo
 	//virtual void lostAggro();
 	void setPatrol(Vector2D pos);
-	virtual  ~EnemyPirate() {};
+	virtual ~EnemyPirate() {};
 
 private:
 	//Puntos del mapa donde va a patrullar

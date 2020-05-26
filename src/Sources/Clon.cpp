@@ -8,7 +8,7 @@
 bool Clon::update() {
 	updateFrame();
 
-	if (lifeTimeCD_.isCooldownActive()) {
+	if (lifeTimeCD_.isCooldownActive() && currState_ != STATE::VANISH){
 		updateCooldowns();
 
 		if (currState_ == STATE::SELFDESTRUCT && currAnim_.currFrame_ == currAnim_.numberFrames_ - 1) {
@@ -259,11 +259,11 @@ void Clon::die() {
 	GameManager* gm = GameManager::instance();
 	gm->setClon(nullptr);
 	app_->getGameStateMachine()->getState()->removeRenderUpdateLists(this);
-	taunt();
 	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
 		if ((*it) != nullptr) {
 			(*it)->lostAggro();
 		}
+	currState_ = STATE::VANISH;
 }
 
 void Clon::taunt() {

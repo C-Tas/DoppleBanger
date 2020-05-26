@@ -27,7 +27,7 @@ private:
 	///<summary>Move a la calabaza siguiendo al clon o al player</summary>
 	void move(Point2D posToReach);
 	///<summary>Metodo que realiza al colisionar</summary>
-	void onCollider() { /*initExplosion();*/ }
+	void onCollider() { initExplosion(); };
 	//Inicializa todas las animaciones
 	void initAnims();
 	//inicializa las recompenzas que la calabaza da

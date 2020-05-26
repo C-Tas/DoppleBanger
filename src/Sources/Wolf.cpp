@@ -41,7 +41,6 @@ bool Wolf::update() {
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {
 		//Tendr�a que hacer la animaci�n de muerte?
-		applyRewards();
 		dieAnim();
 		return true;
 	}
@@ -275,11 +274,11 @@ void Wolf::lostAgro()
 
 void Wolf::initialStats()
 {
-	HEALTH = 1500;
+	HEALTH = 900;
 	MANA = 0;
 	MANA_REG = 0;
 	ARMOR = 0;
-	MELEE_DMG = 450;
+	MELEE_DMG = 180;
 	DIST_DMG = 0;
 	CRIT = 10;
 	MELEE_RANGE = 50;
@@ -294,8 +293,8 @@ void Wolf::initRewards()
 {
 	minGold = 110;
 	maxGold = 160;
-	minArchievementPoints = 4;
-	maxArchievementPoints = 10;
+	minArchievementPoints = 55;
+	maxArchievementPoints = 75;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }

@@ -39,27 +39,27 @@ Item* RandEquipGen::genEquip(int type)
 		case equipType::ArmorI:
 			health = rn_->nextInt(7 * area, 16 * area);
 			armor = rn_->nextInt(3 * area, 8 * area);
-			price = rn_->nextInt(2 * area, 4 * area);
+			price = rn_->nextInt(50 * area, 150 * area);
 			obj = new Armor(app_, price, health, armor, (equipType)type);
 			break;
 
 		case equipType::ArmorII:
 			health = rn_->nextInt(7 * area, 16 * area);
 			armor = rn_->nextInt(3 * area, 8 * area);
-			price = rn_->nextInt(2 * area, 4 * area);
+			price = rn_->nextInt(50 * area, 150 * area);
 			obj = new Armor(app_, price, health, armor, (equipType)type);
 			break;
 			//Velocidad y armadura
 		case equipType::BootsI:
 			speed = rn_->nextInt(1 * area, 4 * area);
 			armor = rn_->nextInt(2 * area, 6 * area);
-			price = rn_->nextInt(1 * area, 2 * area);
+			price = rn_->nextInt(20 * area, 80 * area);
 			obj = new Boots(app_, price, speed, armor, (equipType)type);
 			break;
 		case equipType::BootsII:
 			speed = rn_->nextInt(1 * area, 4 * area);
 			armor = rn_->nextInt(2 * area, 6 * area);
-			price = rn_->nextInt(1 * area, 2 * area);
+			price = rn_->nextInt(20 * area, 80 * area);
 			obj = new Boots(app_, price, speed, armor, (equipType)type);
 			break;
 
@@ -67,13 +67,13 @@ Item* RandEquipGen::genEquip(int type)
 		case equipType::GlovesI:
 			crit = rn_->nextInt(3 * area, 8 * area);
 			armor = rn_->nextInt(1 * area, 3 * area);
-			price = rn_->nextInt(1 * area, 4 * area);
+			price = rn_->nextInt(35 * area, 100 * area);
 			obj = new Gloves(app_, price, crit, armor, (equipType)type);
 			break;
 		case equipType::GlovesII:
 			crit = rn_->nextInt(3 * area, 8 * area);
 			armor = rn_->nextInt(1 * area, 3 * area);
-			price = rn_->nextInt(1 * area, 4 * area);
+			price = rn_->nextInt(35 * area, 100 * area);
 			obj = new Gloves(app_, price, crit, armor, (equipType)type);
 			break;
 
@@ -82,13 +82,13 @@ Item* RandEquipGen::genEquip(int type)
 		case equipType::SwordI:
 			ad = rn_->nextInt(5 * area, 16 * area);
 			meleeRate = rn_->nextInt(3 * area, 6 * area);
-			price = rn_->nextInt(3 * area, 5 * area);
+			price = rn_->nextInt(50 * area, 100 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 			break;
 		case equipType::SwordII:
 			ad = rn_->nextInt(5 * area, 16 * area);
 			meleeRate = rn_->nextInt(3 * area, 6 * area);
-			price = rn_->nextInt(3 * area, 5 * area);
+			price = rn_->nextInt(50 * area, 100 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 			break;
 
@@ -96,13 +96,13 @@ Item* RandEquipGen::genEquip(int type)
 		case equipType::SaberI:
 			ad = rn_->nextInt(6 * area, 17 * area);
 			meleeRate = rn_->nextInt(1 * area, 4 * area);
-			price = rn_->nextInt(3 * area, 5 * area);
+			price = rn_->nextInt(60 * area, 90 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 			break;
 		case equipType::SaberII:
 			ad = rn_->nextInt(6 * area, 17 * area);
 			meleeRate = rn_->nextInt(1 * area, 4 * area);
-			price = rn_->nextInt(3 * area, 5 * area);
+			price = rn_->nextInt(60 * area, 90 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 			break;
 
@@ -111,13 +111,13 @@ Item* RandEquipGen::genEquip(int type)
 		case equipType::PistolI:
 			ad = rn_->nextInt(5 * area, 16 * area);
 			distRate = rn_->nextInt(2 * area, 4 * area);
-			price = rn_->nextInt(4 * area, 6 * area);
+			price = rn_->nextInt(75 * area, 165 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
 		case equipType::PistolII:
 			ad = rn_->nextInt(5 * area, 16 * area);
 			distRate = rn_->nextInt(2 * area, 4 * area);
-			price = rn_->nextInt(4 * area, 6 * area);
+			price = rn_->nextInt(75 * area, 165 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
 
@@ -125,13 +125,13 @@ Item* RandEquipGen::genEquip(int type)
 		case equipType::ShotgunI:
 			ad = rn_->nextInt(3 * area, 13 * area);
 			distRate = rn_->nextInt(1 * area, 2 * area);
-			price = rn_->nextInt(4 * area, 6 * area);
+			price = rn_->nextInt(80 * area, 175 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
 		case equipType::ShotgunII:
 			ad = rn_->nextInt(3 * area, 13 * area);
 			distRate = rn_->nextInt(1 * area, 2 * area);
-			price = rn_->nextInt(4 * area, 6 * area);
+			price = rn_->nextInt(80 * area, 175 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
 		case equipType::Size:

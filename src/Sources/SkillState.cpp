@@ -445,27 +445,36 @@ void SkillState::goToInventaryState(Application* app) {
 
 void SkillState::increasePrecisionBranch(Application* app) {
 	GameManager* gm = GameManager::instance();
-	if (gm->getAchievementPoints() > 0 && gm->getPresicionPoints() < gm->getMaxPoints() && !gm->onTutorial()) {	//Comprueba que tenga puntos de haza�a que invertir y que la rama no tenga ya el maximo
-		gm->setPrecisionPoints(gm->getPresicionPoints() + 1);				//Aumenta en uno los puntos de esta rama
-		gm->setArchievementPoints(gm->getAchievementPoints() - 1);				//Reduce en uno los puntos de haza�a
+	int earnedPoints = gm->getAchievementPoints();
+	int spendingPoints = 1;
+	if (earnedPoints > 0 && gm->getPresicionPoints() < gm->getMaxPoints() && !gm->onTutorial()) {	//Comprueba que tenga puntos de haza�a que invertir y que la rama no tenga ya el maximo
+		if (earnedPoints >= 10 && (gm->getMaxPoints() - gm->getPresicionPoints()) >= 10) spendingPoints = 10;
+		gm->setPrecisionPoints(gm->getPresicionPoints() + spendingPoints);				//Aumenta en uno los puntos de esta rama
+		gm->setArchievementPoints(gm->getAchievementPoints() - spendingPoints);				//Reduce en uno los puntos de haza�a
 		dynamic_cast<SkillState*>(app->getCurrState())->distancePointsActualized();
 	}
 };
 
 void SkillState::increaseMeleeBranch(Application* app) {
 	GameManager* gm = GameManager::instance();
-	if (gm->getAchievementPoints() > 0 && gm->getMeleePoints() < gm->getMaxPoints()) {
-		gm->setMeleePoints(gm->getMeleePoints() + 1);
-		gm->setArchievementPoints(gm->getAchievementPoints() - 1);
+	int earnedPoints = gm->getAchievementPoints();
+	int spendingPoints = 1;
+	if (earnedPoints > 0 && gm->getMeleePoints() < gm->getMaxPoints()) {
+		if (earnedPoints >= 10 && (gm->getMaxPoints() - gm->getMeleePoints()) >= 10) spendingPoints = 10;
+		gm->setMeleePoints(gm->getMeleePoints() + spendingPoints);
+		gm->setArchievementPoints(gm->getAchievementPoints() - spendingPoints);
 		dynamic_cast<SkillState*>(app->getCurrState())->meleePointsActualized();
 	}
 };
 
 void SkillState::increaseGhostBranch(Application* app) {
 	GameManager* gm = GameManager::instance();
-	if (gm->getAchievementPoints() > 0 && gm->getGhostPoints() < gm->getMaxPoints() && !gm->onTutorial()) {
-		gm->setGhostPoints(gm->getGhostPoints() + 1);
-		gm->setArchievementPoints(gm->getAchievementPoints() - 1);
+	int earnedPoints = gm->getAchievementPoints();
+	int spendingPoints = 1;
+	if (earnedPoints > 0 && gm->getGhostPoints() < gm->getMaxPoints() && !gm->onTutorial()) {
+		if (earnedPoints >= 10 && (gm->getMaxPoints() - gm->getGhostPoints()) >= 10) spendingPoints = 10;
+		gm->setGhostPoints(gm->getGhostPoints() + spendingPoints);
+		gm->setArchievementPoints(gm->getAchievementPoints() - spendingPoints);
 		dynamic_cast<SkillState*>(app->getCurrState())->ghostPointsActualized();
 	}
 }

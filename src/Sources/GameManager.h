@@ -123,7 +123,7 @@ private:
 	//Puntos de haza�a
 	int achievementPoints_ = 0;
 	//Cantidad de dinero almacenada en el inventario
-	int inventoryGold_ = 0;
+	int inventoryGold_ = 10000;
 	//Cantidad de dinero almacenada en el alijo
 	int stashGold_ = 0;
 	//Booleano que indica si estamos en el barco

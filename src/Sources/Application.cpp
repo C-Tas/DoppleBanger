@@ -58,7 +58,7 @@ void Application::runApp() {
 
 		SDL_RenderPresent(renderer_); //Draw
 
-		if (input->isKeyDown(SDLK_ESCAPE))
+		if (input->isKeyDown(SDL_SCANCODE_P))
 			appClosed_ = true;
 	
 	}

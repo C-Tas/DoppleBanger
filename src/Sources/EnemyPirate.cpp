@@ -309,8 +309,8 @@ void EnemyPirate::initialStats()
 	MANA = 0;
 	MANA_REG = 0;
 	ARMOR = 15;
-	MELEE_DMG = 300;
-	DIST_DMG = 350;
+	MELEE_DMG = 130;
+	DIST_DMG = 100;
 	CRIT = 10;
 	MELEE_RANGE = 50;
 	DIST_RANGE = 1500;
@@ -322,10 +322,10 @@ void EnemyPirate::initialStats()
 
 void EnemyPirate::initRewards()
 {
-	minGold = 90;
-	maxGold = 140;
-	minArchievementPoints = 5;
-	maxArchievementPoints = 12;
+	minGold = 30;
+	maxGold = 70;
+	minArchievementPoints = 35;
+	maxArchievementPoints = 50;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }

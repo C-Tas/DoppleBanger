@@ -206,13 +206,13 @@ private:
 		const double MANA_REG = 1;				//Regeneración de maná por segundo, porcentaje
 		const double ARMOR = 5;					//Armadura, porcentaje
 		const double MELEE_DAMAGE = 200;		//Daño a melee
-		const double DIST_DAMAGE = 150;		//Daño a distancia y de las habilidades
+		const double DIST_DAMAGE = 300;		//Daño a distancia y de las habilidades
 		const double CRIT = 0;					//Crítico
 		const double MELEE_RANGE = 50;			//Rango del ataque a melee
 		const double DIST_RANGE = 1000;			//Rango del ataque a distancia
 		const double MOVE_SPEED = 250;			//Velocidad de movimiento
 		const double MELEE_RATE = 1000;			//Velocidad del ataque a melee en milisegundos
-		const double DIST_RATE = 500;			//Velocidad del ataque a distancia en milisegundos
+		const double DIST_RATE = 1500;			//Velocidad del ataque a distancia en milisegundos
 
 		//Additional Stats
 		const int CRIT_INV = 20;				//Crítico agregado al player después de activar invencible( a falta de equilibrado)

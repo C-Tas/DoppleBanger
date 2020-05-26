@@ -87,7 +87,7 @@ void ShopState::draw() const
 
 	if (selected_ != nullptr && selected_->getObject() != nullptr) {
 		Texture potionText(app_->getRenderer(), "Precio: " + to_string((int)selected_->getObject()->getPrice()), app_->getFontManager()->getFont(Resources::FontId::RETRO), SDL_Color({ 0,0,0,1 }));
-		potionText.render((int)round(posx1),(int)round(posy));
+		potionText.render((int)round(posx1), (int)round(posy));
 	}
 }
 
@@ -126,7 +126,7 @@ void ShopState::initState() {
 	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::BackwardsArrow)*/, Vector2D((double)(29 * ((__int64)app_->getWindowWidth() / 140) + 10), ARROW_ROW), Vector2D(BUTTON_SIZE, BUTTON_SIZE), callbackPreviousShopPage));
 
 	//Bot�n para cambiar el objeto de una lista a otra
-	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton)*/, Vector2D((double)(45 * ((__int64)app_->getWindowWidth() / 64)), FUNCTIONALITY_BUTTONS_ROW), Vector2D((double)(5* (__int64)BUTTON_SIZE), BUTTON_SIZE), callbackChangeBetweenLists));
+	addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::ChangeButton)*/, Vector2D((double)(45 * ((__int64)app_->getWindowWidth() / 64)), FUNCTIONALITY_BUTTONS_ROW), Vector2D((double)(5 * (__int64)BUTTON_SIZE), BUTTON_SIZE), callbackChangeBetweenLists));
 	//Bot�n para eliminar el objeto seleccionado
 	//addRenderUpdateLists(new Button(app_, nullptr/*app_->getTextureManager()->getTexture(Resources::TextureId::TrashButton)*/, Vector2D( 26 * (app_->getWindowWidth() / 32), FUNCTIONALITY_BUTTONS_ROW), Vector2D(2*BUTTON_SIZE, BUTTON_SIZE), callbackDeleteObject));
 
@@ -144,8 +144,8 @@ void ShopState::initState() {
 
 	app_->getRandom()->initObject();
 	//Cogemos la referencia de las listas que hay en GameManager
-	if(gm_->getShop() != nullptr)
-		createItems(8);
+	if (gm_->getShop() != nullptr)
+		createItems(10);
 	shop_.objects_ = gm_->getShop();
 	inventory_.objects_ = gm_->getInventory();
 
@@ -247,7 +247,7 @@ void ShopState::changeBetweenLists()
 		}
 		else {
 			selectedIsLastElement(inventory_, INVENTORY_VISIBLE_ELEMENTS);
-			gm_->addInventoryGold((int)round(selected_->getObject()->getPrice()));
+			gm_->addInventoryGold((int)round(selected_->getObject()->getPrice() / 4));
 			moneyChange();
 			//Insertamos en la otra lista
 			it = shop_.objects_->insert(shop_.objects_->end(), selected_);
