@@ -156,10 +156,10 @@ private:
 	//Animacion carga
 	//arriba/abajo
 	const int NUM_FRAMES_CHARGE_UD = 9;
-	const int FRAME_RATE_CHARGE_UD = 60;
+	const int FRAME_RATE_CHARGE_UD = 120;
 	//izquierda/dcha
 	const int NUM_FRAMES_CHARGE_RL = 4;
-	const int FRAME_RATE_CHARGE_RL = 40;
+	const int FRAME_RATE_CHARGE_RL = 80;
 
 	//Animacion barrido
 	//arriba

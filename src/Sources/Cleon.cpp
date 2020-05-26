@@ -2,50 +2,18 @@
 #include "GameManager.h"
 #include "CollisionCtrl.h"
 #include "Player.h"
+#include "Collisions.h"
 
 
 bool Cleon::update() {
 	//ESTADOS A TENER EN CUENTA ->THRUSTINg(estocada), CHARGING(carga), CHARGING_EMPOWERED(barrido)
-	/*cout << "INICIO UPDATE" << endl;
-	string state;
-	switch (currState_)
-	{
-	case STATE::ATTACKING:
-		state = "ESTOCADA";
-		break;
-	case STATE::CHARGING:
-		state = "CARGA";
-		break;
-	case STATE::DYING:
-		state = "muriendo";
-		break;
-	case STATE::FOLLOWING:
-		state = "siguiendo";
-		break;
-	case STATE::IDLE:
-		state = "parado";
-		break;
-	case STATE::PATROLLING:
-		state = "patrullando";
-		break;
-	case STATE::CHARGING_EMPOWERED:
-		state = "BARRIDO";
-		break;
-	case STATE::THRUSTING:
-		state = "ESTOCADA";
-		break;
-	default:
-		state = "";
-		break;
-	}
-	cout << "ESTADO AL INICIO DEL UPDATE:  " << state << endl;*/
 	DIR lastDir_ = currDir_;
 	updateFrame();
 	manageTint();
 	updateCooldowns();
 	updateDirVisObjective(currEnemy_);
 
-	//si Cle�n palma
+	//si Cleon muere
 	if (currState_ == STATE::DYING) {
 		applyRewards();
 		CollisionCtrl::instance()->removeEnemy(this);
@@ -58,50 +26,26 @@ bool Cleon::update() {
 	}
 	//Si estoy en modo ataque
 	if (currState_ == STATE::ATTACKING) {
-
 		createBarrel();
 		//Si est� a rango de melee
 		if (onRange(currStats_.meleeRange_) && !lastThrust_.isCooldownActive()) {
-			cout << "En rango de estocada y cooldown acabado" << endl;
 			updateDirVisObjective(currEnemy_);
 			initThrust();
 			stop();
-			/*
-			if (atStart != currState_ || dirStart != currDir_)  initMelee();
-			//meleeAnim();
-			thrust();*/
 		}
-		else if (onRange(currStats_.meleeRange_) && !lastSweep_.isCooldownActive()) {
-			cout << "En rango de barrido y cooldown acabado" << endl;
-
-			initSwept();
-			//if (atStart != currState_ || dirStart != currDir_)  initSwept();
-			////sweptAnim();
-			//swept();
-		}
-		//S� est� a rango de carga
-		else if (onRange(CHARGE_RANGE) && !lastCharge_.isCooldownActive()) {
-			cout << "En rango de carga y cooldown acabado" << endl;
-			initCharge();
-			/*
-			if (atStart != currState_ || dirStart != currDir_)  initCharge();
-			//chargeAnim();
-			pirateCharge();*/
-		}
+		else if (onRange(currStats_.meleeRange_) && !lastSweep_.isCooldownActive()) initSwept();
+		else if (onRange(CHARGE_RANGE) && !lastCharge_.isCooldownActive()) initCharge();
 		else {
-			cout << "ATTACKING SIN HACER NADA" << endl;
 			if (lastDir_ != currDir_)initRun();
 			else selectTarget();
 		}
 	}
-
 
 	if (currState_ == STATE::CHARGING) {
 		selectTarget();
 		SDL_Rect targetRect = { (int)round(target_.getX()),(int)round(target_.getY()),25,25 };
 		//Cle�n llego al destino de su carga
 		if (SDL_HasIntersection(&getDestiny(), &targetRect) && !attacked_) {
-			cout << "DAÑO DE CARGA" << endl;
 			auto currEnemy = dynamic_cast<Player*>(currEnemy_);
 			//Si Cle�n colisiona contra el player
 			if (currEnemy && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny())) {
@@ -120,50 +64,12 @@ bool Cleon::update() {
 	//Si el Cleon está en barrido
 	else if (currState_ == STATE::CHARGING_EMPOWERED)sweptAnim();
 	//Si Cle�n no está todavía en following y no está en carga o en cualquier otro estado de ataque
-	else if (currState_ == STATE::IDLE) {
-		initMove();
-	}
+	else if (currState_ == STATE::IDLE) initMove();
 	//El estado es following
 	else {
 		if (lastDir_ != currDir_)initRun();
 		else selectTarget();
 	}
-
-
-	//switch (currState_)
-	//{
-	//case STATE::ATTACKING:
-	//	state = "ESTOCADA";
-	//	break;
-	//case STATE::CHARGING:
-	//	state = "CARGA";
-	//	break;
-	//case STATE::DYING:
-	//	state = "muriendo";
-	//	break;
-	//case STATE::FOLLOWING:
-	//	state = "siguiendo";
-	//	break;
-	//case STATE::IDLE:
-	//	state = "parado";
-	//	break;
-	//case STATE::PATROLLING:
-	//	state = "patrullando";
-	//	break;
-	//case STATE::CHARGING_EMPOWERED:
-	//	state = "BARRIDO";
-	//	break;
-	//case STATE::THRUSTING:
-	//	state = "ESTOCADA";
-	//	break;
-	//default:
-	//	state = "";
-	//	break;
-	//}
-	//cout << "ESTADO AL FINAL DEL UPDATE:  " << state << endl;
-
-	//cout << "FIN UPDATE" << endl << endl;;
-	cout << endl;
 
 	return false;
 }
@@ -175,7 +81,6 @@ void Cleon::onCollider()
 
 void Cleon::receiveDamage(double damage)
 {
-	cout << "BARREL DMG CLEON \n";
 	if (!activeBlock()) {
 		lastTint_ = SDL_GetTicks();
 		feedBackHurtSounds();
@@ -189,8 +94,6 @@ void Cleon::receiveDamage(double damage)
 	else
 	{
 		app_->getAudioManager()->playChannel(Resources::CleonLaugh, 0, Resources::CleonChannel3);
-		cout << "BLOQUEADO! \n";
-		//Poner feedback del bloqueo de Cle�n
 	}
 }
 
@@ -206,11 +109,9 @@ void Cleon::thrust()
 	lastThrust_.initCooldown(THRUST_TIME);
 	if (!attacked_) {
 		cout << currAnim_.currFrame_ << endl;
-		cout << "FRAME DE THRUST" << endl;
 		attacked_ = true;
 		auto thrustAttack = dynamic_cast<Player*>(currEnemy_);
 		if (thrustAttack) {
-			cout << "DAÑO DE THRUST" << endl;
 
 			//Critico
 			double realDamage = currStats_.meleeDmg_;
@@ -222,11 +123,8 @@ void Cleon::thrust()
 }
 
 void Cleon::combo() {
-	cout << "COMBO" << endl;
 	initThrust();
 	lastSweep_.endCoolDown();
-	//thrust();
-	//swept();
 }
 
 void Cleon::pirateCharge()
@@ -234,12 +132,10 @@ void Cleon::pirateCharge()
 	auto chance = app_->getRandom()->nextInt(Resources::CleonInter1, Resources::CleonInter7 + 1);
 	app_->getAudioManager()->playChannel(chance, 0, Resources::CleonChannel2);
 
-	cout << "CARGA! \n";
 	lastCharge_.initCooldown(CHARGE_TIME);
 	target_ = player_->getCenter();
 	movSpeed_ = currStats_.moveSpeed_;
 	currStats_.moveSpeed_ = CHARGE_SPEED;
-	currState_ = STATE::CHARGING;
 
 	Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
 	CollisionCtrl::instance()->addBarrel(currBarrel);
@@ -252,12 +148,9 @@ void Cleon::swept()
 	
 	lastSweep_.initCooldown(SWEEP_TIME);
 	if (!attacked_) {
-		cout << "FRAME DE BARRIDO QUE HACE DAÑO" << endl;
 		auto sweepAttack = dynamic_cast<Player*>(currEnemy_);
 		if (sweepAttack) {
-			cout << "DAÑO DE BARRIDO" << endl;
 			sweepAttack->receiveDamage(currStats_.meleeDmg_);
-
 		}
 		attacked_ = true;
 	}
@@ -389,9 +282,13 @@ void Cleon::move(Point2D target)
 void Cleon::selectTarget()
 {
 	if (currEnemy_ != nullptr) {
-		target_ = currEnemy_->getCenter();
-		move(currEnemy_->getCenter());
-		updateDirVisObjective(currEnemy_);
+
+		if (!Physics::PointBall((float)currEnemy_->getCenter().getX(), (float)currEnemy_->getCenter().getY(), (float)getCenter().getX(), (float)getCenter().getY(), currStats_.meleeRange_/2)) {
+			target_ = currEnemy_->getCenter() /*+ offset*/;
+			move(currEnemy_->getCenter());
+			updateDirVisObjective(currEnemy_);
+		}
+		else initIdle();
 	}
 }
 
@@ -407,7 +304,6 @@ void Cleon::initIdle() {
 
 void Cleon::initSwept()
 {
-	cout << "EMPIEZA BARRIDO \n";
 	lastSweep_.initCooldown(SWEEP_TIME);
 	currState_ = STATE::CHARGING_EMPOWERED;
 	int dir = (int)currDir_;
@@ -421,15 +317,12 @@ void Cleon::initSwept()
 		break;
 	case DIR::RIGHT:
 		frameAction_ = 3;
-
 		break;
 	case DIR::DOWN:
 		frameAction_ = 5;
-
 		break;
 	case DIR::LEFT:
 		frameAction_ = 3;
-
 		break;
 	default:
 		break;
@@ -440,7 +333,6 @@ void Cleon::initSwept()
 }
 
 void Cleon::initThrust() {
-	cout << "EMPIEZA ESTOCADA! \n";
 	currState_ = STATE::THRUSTING;
 	attacked_ = false;
 	switch (currDir_)
@@ -450,15 +342,12 @@ void Cleon::initThrust() {
 		break;
 	case DIR::RIGHT:
 		frameAction_ = 6;
-
 		break;
 	case DIR::DOWN:
 		frameAction_ = 5;
-
 		break;
 	case DIR::LEFT:
 		frameAction_ = 6;
-
 		break;
 	default:
 		break;
@@ -481,7 +370,6 @@ void Cleon::initRun() {
 }
 
 void Cleon::initCharge() {
-	cout << "EMPIEZA CARGA! \n";
 
 	currState_ = STATE::CHARGING;
 	int dir = (int)currDir_;
@@ -497,7 +385,6 @@ void Cleon::initCharge() {
 
 void Cleon::initMove()
 {
-	cout << "EMPEZAR A CORRER" << endl;
 	int dir = (int)currDir_;
 	attacked_ = false;
 	texture_ = runTxt_[dir];
@@ -510,24 +397,12 @@ void Cleon::initMove()
 void Cleon::thrustAnim()
 {
 	if (currAnim_.currFrame_ == frameAction_) thrust();
-	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_-1) {
-		cout << "FIN DE ESTOCADA" << endl;
-		cout << "CAMBIO A IDLE" << endl;
-		initIdle();
-	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_-1) initIdle();
+
 }
 
 void Cleon::sweptAnim()
 {
-	if (currAnim_.currFrame_ == frameAction_) {
-		cout << currAnim_.currFrame_ << endl;
-		swept();
-	}
-	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
-		//initIdle();
-		cout << "FIN DE BARRIDO" << endl;
-		cout << "CAMBIO A IDLE" << endl;
-		initIdle();
-
-	}
+	if (currAnim_.currFrame_ == frameAction_) swept();
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) initIdle();
 }
