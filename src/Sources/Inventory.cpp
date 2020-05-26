@@ -74,7 +74,7 @@ void Inventory::initState(){
 
 	//Boton para ir al SkillState
 	auxpos = Vector2D{ 7 * (double)(app_->getWindowWidth() / 13), 1 * (double)(app_->getWindowHeight() / 40) };
-	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 2.62),  (double)(app_->getWindowWidth() / 7.5) };
+	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 2.62),  (double)(app_->getWindowHeight() / 7.5) };
 	goToSkillsButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos,auxSize, callSkillsState);
 	addRenderUpdateLists(goToSkillsButton_);
 

@@ -45,25 +45,25 @@ bool Tentacle::sweepUpdate()
 			double deltaY = (kraken_->getScaleX() - kraken_->getScaleY()) / 2;
 
 			//Comprobaciones de si el tent�culo ha llegado a una de las esquinas en las que gira (dependientes de pos y scale de kraken)
-			if (abs(abs(collisionRot_) - 0) <= 1 && pos_.getY() + scale_.getY() / 2 > kraken_->getPosY() + kraken_->getScaleY())
+			if (abs(abs(collisionRot_) - 0) <= 10 && pos_.getY() + scale_.getY() / 2 > kraken_->getPosY() + kraken_->getScaleY())
 			{
 				collisionRot_ = 0;
 				centerRot_ = Vector2D(getCenter().getX() - scale_.getX() / 2, getCenter().getY());
 				rotating_ = true;
 			}
-			else if (abs(abs(collisionRot_) - 270) <= 1 && pos_.getX() + scale_.getX() / 2 > kraken_->getPosX() + kraken_->getScaleX())
+			  else if (abs(abs(collisionRot_) - 270) <= 10 && pos_.getX() + scale_.getX() / 2 > kraken_->getPosX() + kraken_->getScaleX())
 			{
 				collisionRot_ = 270;
 				centerRot_ = Vector2D(getCenter().getX(), getCenter().getY() + scale_.getX() / 2);
 				rotating_ = true;
 			}
-			else if (abs(abs(collisionRot_) - 180) <= 1 && pos_.getY() + scale_.getY() / 2 < kraken_->getPosY())
+			else if (abs(abs(collisionRot_) - 180) <= 10 && pos_.getY() + scale_.getY() / 2 < kraken_->getPosY())
 			{
 				collisionRot_ = 180;
 				centerRot_ = Vector2D(getCenter().getX() + scale_.getX() / 2, getCenter().getY());
 				rotating_ = true;
 			}
-			else if (abs(abs(collisionRot_) - 90) <= 1 && pos_.getX() + scale_.getX() / 2 < kraken_->getPosX())
+			else if (abs(abs(collisionRot_) - 90) <= 10 && pos_.getX() + scale_.getX() / 2 < kraken_->getPosX())
 			{
 				collisionRot_ = 90;
 				centerRot_ = Vector2D(getCenter().getX(), getCenter().getY() - scale_.getX() / 2);
@@ -86,13 +86,17 @@ bool Tentacle::sweepUpdate()
 				rotating_ = false;
 				deltaAngle_ = 0;
 				collisionRot_ = floor(collisionRot_);
-				if (collisionRot_ == -90) collisionRot_ = 270;
+				//if (collisionRot_ == -90) collisionRot_ = 270;
+				if (collisionRot_ <= -180) collisionRot_ = 180;
+				else if (collisionRot_ <= -90) collisionRot_ = 270;
+				else if (collisionRot_ <= 0) collisionRot_ = 0;
+				else if (collisionRot_ <= 90) collisionRot_ = 90;
 				sweepDir_ = Vector2D(cos(collisionRot_ * (M_PI / 180) + M_PI / 2), sin(collisionRot_ * (M_PI / 180) + M_PI / 2));
 				turns_++;
 			}
 		}
 
-		cout << collisionRot_ << endl;
+		//cout << collisionRot_ << endl;
 	}
 	//Si ha hecho su recorrido y no se est� muriendo se muere
 	else if (currState_ != STATE::DYING)
@@ -162,8 +166,17 @@ void Tentacle::onCollider()
 		player->stop();
 	}
 	else if (currState_ == STATE::ATTACKING) {
-		player->receiveDamage(kraken_->getMeleeDmg());
-		cout << "Daño" << endl;
+		if (attack_ == ATTACKS::SWEEP) {
+			player->receiveDamage(kraken_->getMeleeDmg());
+			cout << "Daño SWEEP" << endl;
+		}
+		else {
+			player->receiveDamage(kraken_->getMeleeDmg() *15);
+			cout << "Daño 2" << endl;
+
+		}
+	
+	
 		currState_ == STATE::IDLE;
 	}
 }

@@ -89,7 +89,7 @@ private:
 	const double MANA = 0;
 	const double MANA_REG = 0;
 	const double ARMOR = 10;
-	const double MELEE_DMG = 100;
+	const double MELEE_DMG = 5;
 	const double DIST_DMG = 75;
 	const double CRIT = 0;
 	const double MELEE_RANGE = 0;
