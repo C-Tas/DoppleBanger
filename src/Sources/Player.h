@@ -343,7 +343,7 @@ private:
 			vector<Anim> whirlAnim_;
 			const int W_H_WHIRL_FRAME = 500;
 			const int WHIRL_FRAMES = 11;
-			const int WHIRL_FRAME_RATE = 90;
+			const int WHIRL_FRAME_RATE = 70;
 			const double BONUS_WHIRL = 1.5;
 
 			virtual void feedBackHurtSounds();

@@ -479,8 +479,8 @@ void Player::initWhirl()
 	stop();
 	bussy_ = true;
 	//Apaño para que deje de sonar al caminar
-	if (currState_ == STATE::FOLLOWING)
-		app_->getAudioManager()->playChannel(Resources::WalkAudio, 0, Resources::PlayerChannel1);
+
+	app_->getAudioManager()->playChannel(Resources::AudioId::WhirlwindSkill, 0, Resources::PlayerChannel1);
 	currState_ = STATE::WHIRLING;
 	texture_ = whirlTx_[(int)currDir_];
 	currAnim_ = whirlAnim_[(int)currDir_];

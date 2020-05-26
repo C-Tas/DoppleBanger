@@ -7,8 +7,6 @@
 class WhirlwindSkill : public Skill
 {
 private:
-	const int RADIUS = 150;
-	const int BONUS = 1;
 	const double COOLDOWN = 5000;	//En milisegundos
 	const double MANA_COST = 10;
 
