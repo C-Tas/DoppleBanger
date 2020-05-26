@@ -46,6 +46,7 @@ void VolcanicIslandState::update()
 	}
 	else {
 		collisionCtrl_->islandCollisions();
+		collisionCtrl_->volcanicCollision();
 		PlayState::update();
 	}
 }
