@@ -930,7 +930,7 @@ void Player::createClon()
 	pos.setX(eventHandler_->getRelativeMousePos().getX() - (scale_.getX() / 2));
 	pos.setY(eventHandler_->getRelativeMousePos().getY() - (scale_.getY() * 0.8));
 	clon_ = new Clon(app_, pos, scale_, this);
-	app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
+	app_->getGameStateMachine()->getState()->addRenderUpdateListsAsFirst(clon_);
 }
 
 bool Player::killClon()
