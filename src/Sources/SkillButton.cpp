@@ -10,7 +10,7 @@ SkillButton::SkillButton(Application* app, Texture* texture, Vector2D pos, Vecto
 
 bool SkillButton::update()
 {
-	SDL_Point mouse = { handleEvents_->getRealMousePos().getX(), handleEvents_->getRealMousePos().getY() };
+	SDL_Point mouse = { (int)round(handleEvents_->getRealMousePos().getX()), (int)round(handleEvents_->getRealMousePos().getY()) };
 
 	if (unlocked_ && SDL_PointInRect(&mouse, &getDestiny()) && handleEvents_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
 		callbackSkill_(app_, this);

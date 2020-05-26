@@ -1,13 +1,17 @@
 #include "Player.h"
-#include "SDL_macros.h"
 #include "CollisionCtrl.h"
+#include "GameManager.h"
+#include "HandleEvents.h"
+#include "SDL_macros.h"
 #include "Collisions.h"
-#include "GameState.h"
-#include "Resources.h"
-#include "TextBox.h"
 #include "PlayerBullet.h"
+#include "PlayState.h"
+#include "PauseState.h"
+#include "Inventory.h"
+#include "SkillState.h"
 
 //Habilidades y pociones
+#include "Clon.h"
 #include "ClonSkill.h"
 #include "WhirlwindSkill.h"
 #include "ClonSelfDestructSkill.h"
@@ -15,6 +19,7 @@
 #include "RicochetSkill.h"
 #include "PerforateSkill.h"
 #include "usable.h"
+//Equipamiento
 #include "Armor.h"
 #include "Gloves.h"
 #include "Boots.h"
@@ -22,21 +27,22 @@
 #include "Gun.h"
 #include "Blunderbuss.h"
 
-void Player::initObject()
-{
-	texture_ = app_->getTextureManager()->getTexture(Resources::PlayerFront);
-	gm_ = GameManager::instance();
-	eventHandler_ = HandleEvents::instance();
-	initStats(maxHealth_, maxMana_, MANA_REG, ARMOR, MELEE_DAMAGE, DIST_DAMAGE, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
-	initAnims();
-	GameManager::instance()->setPlayer(this);
-	CollisionCtrl::instance()->setPlayer(this);
-	endZoneTextBox_ = new TextBox(app_);
-	posCollision_ = Vector2D((scale_.getX() / 3), (scale_.getY() / 4));
-	scaleCollision_ = { scale_.getX() / 3, scale_.getY() / 2 };
 
-	//Equipamiento inicial del jugador
-	playerEquipment auxEquip = gm_->initEquipment();
+//Inicializadores
+Player::Player(Application* app, Vector2D pos, Vector2D scale) : Actor(app, pos, scale) { initObject(); };
+
+Player::~Player()
+{
+	for (Skill* ob : skills_) {
+		delete ob; ob = nullptr;
+	}
+
+	delete endZoneTextBox_;
+}
+
+void Player::load()
+{
+	playerEquipment auxEquip = gm_->getEquip();
 	armor_ = auxEquip.armor_;
 	armor_->equip(this);
 	gloves_ = auxEquip.gloves_;
@@ -50,9 +56,24 @@ void Player::initObject()
 	potions_ = auxEquip.potions_;
 }
 
-void Player::load()
+void Player::initObject()
 {
-	playerEquipment auxEquip = gm_->getEquip();
+	gm_ = GameManager::instance();
+	eventHandler_ = HandleEvents::instance();
+	collisionCtrl_ = CollisionCtrl::instance();
+
+	initAnims();
+	initStats(maxHealth_, maxMana_, MANA_REG, ARMOR, MELEE_DAMAGE, DIST_DAMAGE, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	
+	gm_->setPlayer(this);
+	collisionCtrl_->setPlayer(this);
+	
+	endZoneTextBox_ = new TextBox(app_);
+	posCollision_ = Vector2D((scale_.getX() / 3), (scale_.getY() / 4));
+	scaleCollision_ = { scale_.getX() / 3, scale_.getY() / 2 };
+	
+	//Equipamiento inicial del jugador
+	playerEquipment auxEquip = gm_->initEquipment();
 	armor_ = auxEquip.armor_;
 	armor_->equip(this);
 	gloves_ = auxEquip.gloves_;
@@ -77,326 +98,6 @@ void Player::initSkills()
 		gm_->setSkillEquiped(skill, (Key)i);
 		i++;
 	}
-}
-
-bool Player::update()
-{
-	updateFrame();
-	manageTint();
-	updateCooldowns();
-
-	//Regeneramos mana
-	manaReg();
-	//SKILLS
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0] != nullptr) {
-		skills_[0]->action();
-	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_W) && skills_[1] != nullptr) {
-		skills_[1]->action();
-	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_E) && skills_[2] != nullptr) {
-		skills_[2]->action();
-	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_R) && skills_[3] != nullptr) {
-		skills_[3]->action();
-	}
-	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE)) shout();
-
-	//Si se acaba el efecto de la tinta recuperamos la velocidad correspondiente
-	if (slowed_ && !slowTimeCD_.isCooldownActive())
-	{
-		currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
-		slowed_ = false;
-	}
-
-	//Si se pulsa el boton derecho del raton y se ha acabado el cooldown
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && !shootCD_.isCooldownActive()) {
-		shootCD_.initCooldown(currStats_.distRate_);
-		initShoot(); 
-	}
-	
-	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr ) {
-		usePotion(potions_[0], 0);
-		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
-	}
-	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr ) {
-		usePotion(potions_[1], 1);
-		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
-	}
-
-	//Pociones
-	updateBuffPotion();
-
-	Enemy* objective = static_cast<Enemy*>(currEnemy_);
-	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
-	Vector2D target = target_;
-	if (attacking_ && objective != nullptr) {
-		target = objective->getVisPos();
-		updateDir(target);
-	}
-	else
-		attacking_ = false;
-
-	Vector2D visPos = getVisPos();
-	list<Enemy*> enemiesInRange = CollisionCtrl::instance()->getEnemiesInArea(getCenter(), currStats_.meleeRange_);
-	if ((visPos.getX() < target.getX() - 2 || visPos.getX() > target.getX() + 2 || visPos.getY() < target.getY() - 2 || visPos.getY() > target.getY() + 2) &&
-		(!attacking_ || objective == nullptr || objective->getState() == STATE::DYING || enemiesInRange.empty()))
-	{
-		double delta = app_->getDeltaTime();
-		previousPos_ = pos_;
-		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
-		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
-		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
-		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
-	}
-	else if (attacking_ && objective != nullptr && objective->getState() != STATE::DYING && !enemiesInRange.empty())
-	{
- 		bool found = false;
-		for (auto it = enemiesInRange.begin(); !found && it != enemiesInRange.end(); ++it)
-			if ((*it) == objective)
-				found = true;
-
-		if (found && empoweredAct_ && !meleeActive_)
-		{
-			meleeActive_ = true;
-			app_->getAudioManager()->playChannel(Resources::EmpoweredSkillAudio, 0, Resources::PlayerChannel4);
-			initMelee();
-		}
-		else if (found && !meleeCD_.isCooldownActive())
-		{
-			initMelee();
-		}
-	}
-	//En caso de que no esté atacando y ya haya llegado al objetivo (primer if)
-	//cambiará de moviéndose a Idle
-	else if (currState_ == STATE::FOLLOWING) {
-		initIdle();
-	}
-
-	//Gestion de estados y animaciones
-	if (currState_ == STATE::SHOOTING) {
-		shootAnim();
-	}
-	else if (currState_ == STATE::ATTACKING) {
-		meleeAnim();
-	}
-	else if (currState_ == STATE::SWIMMING) {
-		empoweredAnim();
-	}
-	else if (currState_ == STATE::DYING) {
-		app_->getAudioManager()->playChannel(Resources::DyingAudio, 0, Resources::PlayerChannel4);
-		//Tendría que hacer la animación de muerte
-		//Cuando se acabe la animación es cuando muere y se puede resetear el juego
-		dead_ = true;
-		return true;
-	}
-	return false;
-}
-
-void Player::manaReg() {
-	//Inicializa el cooldown sólo cuando el mana sea menor que el MAXMANA
-	if (currStats_.mana_ < maxMana_ && initManaReg_) {
-		manaCD_.initCooldown(MANA_REG_DELAY);
-		initManaReg_ = false;
-	}
-	//Actualiza el cooldown
-	if (manaCD_.isCooldownActive()) manaCD_.updateCooldown();
-	else if(!initManaReg_){
-		currStats_.mana_ += maxMana_ * (currStats_.manaReg_ / 100);
-		if (currStats_.mana_ >= maxMana_) {
-			currStats_.mana_ = maxMana_;
-		}
-		initManaReg_ = true;
-	}
-}
-
-void Player::initIdle()
-{
-	//Apaño para que deje de sonar al caminar
-	if(currState_ == STATE::FOLLOWING)
-		app_->getAudioManager()->playChannel(Resources::WalkAudio, 0, Resources::PlayerChannel1);
-	currState_ = STATE::IDLE;
-	texture_ = idleTx_[(int)currDir_];
-	currAnim_ = idleAnims_[(int)currDir_];
-
-	frame_.x = 0; frame_.y = 0;
-	frame_.w = currAnim_.widthFrame_;
-	frame_.h = currAnim_.heightFrame_;
-}
-
-void Player::initMove()
-{
-	if (SDL_GetTicks() - WALK_TIME > lastWalkSound_) {
-		lastWalkSound_ = SDL_GetTicks();
-		app_->getAudioManager()->playChannel(Resources::WalkAudio, -1, Resources::PlayerChannel1);
-		app_->getAudioManager()->setChannelVolume(Resources::PlayerChannel1, 50);
-	}
-	texture_ = moveTx_[(int)currDir_];
-	currAnim_ = moveAnims_[(int)currDir_];
-	if (currState_ != STATE::FOLLOWING) {
-		currState_ = STATE::FOLLOWING;
-		frame_.x = 0; frame_.y = 0;
-	}
-
-	frame_.w = currAnim_.widthFrame_;
-	frame_.h = currAnim_.heightFrame_;
-}
-
-void Player::initShoot()
-{
-	auto choice = app_->getRandom()->nextInt(Resources::Attack1, Resources::Attack6);
-	app_->getAudioManager()->playChannel(choice, 0, Resources::PlayerChannel1);
-	stop();
-	currState_ = STATE::SHOOTING;	//Cambio de estado
-	shooted_ = false;	//Aún no se ha creado la bala
-	updateDirVisMouse();	//Hacia dónde mira
-	texture_ = shootTx_[(int)currDir_];
-	currAnim_ = shootAnims_[(int)currDir_];
-	//Asigna el frame donde ocurrirá la acción
-	switch (currDir_)
-	{
-	case DIR::UP:
-		frameAction_ = 3;
-		break;
-	case DIR::RIGHT:
-		frameAction_ = 1;
-		break;
-	case DIR::DOWN:
-		frameAction_ = 3;
-		break;
-	case DIR::LEFT:
-		frameAction_ = 1;
-	}
-
-	//Inicio de lso frames
-	frame_.x = 0; frame_.y = 0;
-	frame_.w = currAnim_.widthFrame_;
-	frame_.h = currAnim_.heightFrame_;
-
-	if (clon_ != nullptr)clon_->initShoot(mousePos_);
-}
-
-void Player::initMelee()
-{
-	auto choice = app_->getRandom()->nextInt(Resources::Attack1, Resources::Attack6);
-	app_->getAudioManager()->playChannel(choice, 0, Resources::PlayerChannel1);
-	auto melee = app_->getRandom()->nextInt(Resources::SwordSound1, Resources::SwordSound6);
-	app_->getAudioManager()->playChannel(melee, 0, Resources::PlayerChannel2);
-	currState_ = STATE::ATTACKING;	//Cambio de estado
-	attacked_ = false;	//Aún no se ha atacado
-	updateDirVisObjective(currEnemy_);	//Hacia dónde está el enemigo
-	texture_ = meleeTx_[(int)currDir_];
-	currAnim_ = meleeAnims_[(int)currDir_];
-	//Frame exacto del ataque
-	switch (currDir_)
-	{
-	case DIR::UP:
-		frameAction_ = 1;
-		break;
-	case DIR::RIGHT:
-		frameAction_ = 2;
-		break;
-	case DIR::DOWN:
-		frameAction_ = 2;
-		break;
-	case DIR::LEFT:
-		frameAction_ = 2;
-		break;
-	}
-
-	//Se inicia el frame
-	frame_.x = 0; frame_.y = 0;
-	frame_.w = currAnim_.widthFrame_;
-	frame_.h = currAnim_.heightFrame_;
-	//Inicia 
-	meleeCD_.initCooldown(currStats_.meleeRate_);
-}
-
-void Player::initEmpowered()
-{
-	stop();
-	//Apaño para que deje de sonar al caminar
-	if (currState_ == STATE::FOLLOWING)
-		app_->getAudioManager()->playChannel(Resources::WalkAudio, 0, Resources::PlayerChannel1);
-	empoweredAct_ = true;
-	currState_ = STATE::SWIMMING;
-	texture_ = empoweredTx_[(int)currDir_];
-	currAnim_ = empoweredAnims_[(int)currDir_];
-
-	frame_.x = 0; frame_.y = 0;
-	frame_.w = currAnim_.widthFrame_;
-	frame_.h = currAnim_.heightFrame_;
-}
-
-void Player::shootAnim()
-{
-	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
-		shoot(mousePos_);
-		shooted_ = true;
-	}
-	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
-		initIdle();	//Activa el idle
-	}
-}
-
-void Player::meleeAnim()
-{
-	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
-		double totalDmg = currStats_.meleeDmg_;
-		if (empoweredAct_) { //Golpe fuerte
-			empoweredCD_.initCooldown(EMPOWERED_DELAY);
-			empoweredAct_ = false;
-			totalDmg = currStats_.meleeDmg_ * empoweredBonus_;
-			static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
-		}
-		else {
-			if (applyCritic()) totalDmg *= 1.5;
-			static_cast<Actor*>(currEnemy_)->receiveDamage(totalDmg);
-		}
-
-		if (currEnemy_ == nullptr) {
-			attacking_ = false;
-			dir_ = Vector2D(0, 0);
-		}
-		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
-		attacked_ = true;
-		meleeActive_ = false;
-	}
-	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
-		initIdle();	//Activa el idle
-	}
-}
-
-void Player::empoweredAnim()
-{
-	if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
-		initIdle();
-	}
-}
-
-void Player::feedBackHurtSounds()
-{
-	auto choice = app_->getRandom()->nextInt(Resources::Hurt1, Resources::Hurt4 + 1);
-	app_->getAudioManager()->playChannel(choice, 0, Resources::SoundChannels::PlayerChannel3);
-}
-
-void Player::updateCooldowns()
-{
-	//Resetea el coolDown en el HUD
-	for (int i = 0; i < skills_.size(); i++) {
-
-		if (skills_.at(i) != nullptr) {
-			skills_.at(i)->update();
-			GameManager::instance()->setSkillCooldown(skills_.at(i)->isCD(), (Key)i);
-		}
-	}
-	//COOLDOWN
-	if (shootCD_.isCooldownActive()) { shootCD_.updateCooldown(); }
-	if (meleeCD_.isCooldownActive()) { meleeCD_.updateCooldown(); }
-	if (empoweredCD_.isCooldownActive()) { empoweredCD_.updateCooldown(); }
-	if (ricochetCD_.isCooldownActive()) { ricochetCD_.updateCooldown(); }
-	if (slowTimeCD_.isCooldownActive()) slowTimeCD_.updateCooldown();
-
 }
 
 void Player::initAnims()
@@ -476,6 +177,500 @@ void Player::initAnims()
 	initIdle();
 }
 
+//Updates
+bool Player::update()
+{
+	updateFrame();		//Actualiza animacion
+	if (currState_ == STATE::DYING) {
+		dieAnim();
+		return dead_;
+	}
+	else {
+		//Actualizadores
+		manageTint();		//Actualiza el tint
+		updateCooldowns();	//Actualiza cooldowns
+		updateBuffPotion();	//Actualiza estado de pociones
+		updateDebuffs();	//Efectos de estado
+		manaReg();			//Regeneramos mana
+		
+		//Gestion de animaciones con accion
+		animator();
+
+		#ifdef _DEBUG
+		//Checkea el input para chetar al player
+		checkInputCheat();
+		#endif // _DEBUG
+
+		//Eventos de teclado
+		checkInputState();
+		if (!bussy_) checkInput();
+
+		//Gestion de movimiento
+		if(!changeZone_) movementManager();
+	}
+	return changeZone_;
+}
+
+void Player::updateCooldowns()
+{
+	//Resetea el coolDown en el HUD
+	for (int i = 0; i < skills_.size(); i++) {
+
+		if (skills_.at(i) != nullptr) {
+			skills_.at(i)->update();
+			gm_->setSkillCooldown(skills_.at(i)->isCD(), (Key)i);
+		}
+	}
+	//COOLDOWN
+	if (shootCD_.isCooldownActive()) { shootCD_.updateCooldown(); }
+	if (meleeCD_.isCooldownActive()) { meleeCD_.updateCooldown(); }
+	if (empoweredCD_.isCooldownActive()) { empoweredCD_.updateCooldown(); }
+	if (ricochetCD_.isCooldownActive()) { ricochetCD_.updateCooldown(); }
+	if (slowTimeCD_.isCooldownActive()) slowTimeCD_.updateCooldown();
+
+}
+
+void Player::updateBuffPotion(){
+	//Como se ha hecho previamente, se ha guardado el momento en el que se usó la poción
+	//de esa manera, si se vuelve a usar una poción del mismo tipo, se resetea timerPotion_[timerPos]
+	//por lo que unicamente quitara el debufo cuando se cumpla ese tiempo
+	for (int i = 0; i < potionUsing_.size(); i++) {
+		if (potionUsing_.at(i)) {
+			double currTick_ = SDL_GetTicks();
+
+			//Si se abre el inventario, los skills o la pausa no reducimos la duración (el valor suele estar entre 0 y 10, así que 200 que son 0,2 segundos es más que suficiente para determinar pausa)
+			if (currTick_ - lastTicksPotion_.at(i) <= gm_->getDelayTime()) {
+				timerPotion_.at(i) -= currTick_ - lastTicksPotion_.at(i);
+			}
+
+			lastTicksPotion_.at(i) = currTick_;
+			//Condicion para que se desactive la pocion
+			if (timerPotion_.at(i) <= 0) {
+				switch (i + 2)
+				{
+				case (int)potionType::Speed:
+					currStats_.moveSpeed_ -= valuePotion_.at(i);
+					potionUsing_[0] = false;
+					break;
+				case (int)potionType::Armor:
+					currStats_.armor_ -= valuePotion_.at(i);
+					potionUsing_[1] = false;
+					break;
+				case (int)potionType::Damage:
+					currStats_.meleeDmg_ = currStats_.meleeDmg_ / (1 + valuePotion_.at(i) / 100);
+					currStats_.distDmg_ = currStats_.distDmg_ / (1 + valuePotion_.at(i) / 100);
+					potionUsing_[2] = false;
+					break;
+				case (int)potionType::Crit:
+					currStats_.crit_ -= valuePotion_.at(i);
+					potionUsing_[3] = false;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+}
+
+void Player::updateDebuffs()
+{
+	//Slowed
+	if (slowed_ && !slowTimeCD_.isCooldownActive())
+	{
+		currStats_.moveSpeed_ = currStats_.moveSpeed_ / (1 - slowEffect_);
+		slowed_ = false;
+	}
+}
+
+void Player::manaReg() {
+	//Inicializa el cooldown sólo cuando el mana sea menor que el MAXMANA
+	if (currStats_.mana_ < maxMana_ && initManaReg_) {
+		manaCD_.initCooldown(MANA_REG_DELAY);
+		initManaReg_ = false;
+	}
+	//Actualiza el cooldown
+	if (manaCD_.isCooldownActive()) manaCD_.updateCooldown();
+	else if(!initManaReg_){
+		currStats_.mana_ += maxMana_ * (currStats_.manaReg_ / 100);
+		if (currStats_.mana_ >= maxMana_) {
+			currStats_.mana_ = maxMana_;
+		}
+		initManaReg_ = true;
+	}
+}
+
+void Player::updateDir(Vector2D target)
+{
+	Vector2D visPos = getVisPos();
+	dir_.setX(target.getX() - visPos.getX());
+	dir_.setY(target.getY() - visPos.getY());
+	dir_.normalize();
+}
+
+//Animaciones
+void Player::animator()
+{
+	if (currState_ == STATE::SHOOTING) {
+		shootAnim();
+	}
+	else if (currState_ == STATE::ATTACKING) {
+		meleeAnim();
+	}
+	else if (currState_ == STATE::CHARGING_EMPOWERED) {
+		empoweredAnim();
+	}
+}
+	//Inits
+void Player::initIdle()
+{
+	//Resteo los booleanos bussy
+	bussy_ = false;
+	meleeBussy_ = false;
+
+	//Apaño para que deje de sonar al caminar
+	if(currState_ == STATE::FOLLOWING)
+		app_->getAudioManager()->playChannel(Resources::WalkAudio, 0, Resources::PlayerChannel1);
+	currState_ = STATE::IDLE;
+	texture_ = idleTx_[(int)currDir_];
+	currAnim_ = idleAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Player::initMove()
+{
+	if (SDL_GetTicks() - WALK_TIME > lastWalkSound_) {
+		lastWalkSound_ = SDL_GetTicks();
+		app_->getAudioManager()->playChannel(Resources::WalkAudio, -1, Resources::PlayerChannel1);
+		app_->getAudioManager()->setChannelVolume(Resources::PlayerChannel1, 50);
+	}
+	texture_ = moveTx_[(int)currDir_];
+	currAnim_ = moveAnims_[(int)currDir_];
+	if (currState_ != STATE::FOLLOWING) {
+		currState_ = STATE::FOLLOWING;
+		frame_.x = 0; frame_.y = 0;
+	}
+
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Player::initShoot()
+{
+	auto choice = app_->getRandom()->nextInt(Resources::Attack1, Resources::Attack6);
+	app_->getAudioManager()->playChannel(choice, 0, Resources::PlayerChannel1);
+	stop();
+	currState_ = STATE::SHOOTING;	//Cambio de estado
+	shooted_ = false;	//Aún no se ha creado la bala
+	updateDirVisMouse();	//Hacia dónde mira
+	texture_ = shootTx_[(int)currDir_];
+	currAnim_ = shootAnims_[(int)currDir_];
+	//Asigna el frame donde ocurrirá la acción
+	switch (currDir_)
+	{
+	case DIR::UP:
+		frameAction_ = 3;
+		break;
+	case DIR::RIGHT:
+		frameAction_ = 1;
+		break;
+	case DIR::DOWN:
+		frameAction_ = 3;
+		break;
+	case DIR::LEFT:
+		frameAction_ = 1;
+	}
+
+	//Inicio de lso frames
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	shootCD_.initCooldown(currStats_.distRate_);
+
+	if (clon_ != nullptr)clon_->initShoot(mousePos_);
+}
+
+void Player::initMelee()
+{
+	//Sonidos
+	auto choice = app_->getRandom()->nextInt(Resources::Attack1, Resources::Attack6);
+	app_->getAudioManager()->playChannel(choice, 0, Resources::PlayerChannel1);
+	auto melee = app_->getRandom()->nextInt(Resources::SwordSound1, Resources::SwordSound6);
+	app_->getAudioManager()->playChannel(melee, 0, Resources::PlayerChannel2);
+
+	currState_ = STATE::ATTACKING;			//Cambio de estado
+	attacked_ = false;						//Aún no se ha atacado
+	meleeBussy_ = true;						//Para no inicializar otra vez el melee si se dan mas clicks
+	updateDirVisObjective(currEnemy_);		//Hacia dónde está el enemigo
+	texture_ = meleeTx_[(int)currDir_];		//Cambio de textura
+	currAnim_ = meleeAnims_[(int)currDir_];	//Cambio de animacion
+
+	//Frame exacto del ataque
+	switch (currDir_)
+	{
+	case DIR::UP:
+		frameAction_ = 1;
+		break;
+	case DIR::RIGHT:
+		frameAction_ = 2;
+		break;
+	case DIR::DOWN:
+		frameAction_ = 2;
+		break;
+	case DIR::LEFT:
+		frameAction_ = 2;
+		break;
+	}
+
+	//Se inicia el frame
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	//Inicia cooldown
+	meleeCD_.initCooldown(currStats_.meleeRate_);
+}
+
+void Player::initEmpowered()
+{
+	stop();
+	bussy_ = true;
+	//Apaño para que deje de sonar al caminar
+	if (currState_ == STATE::FOLLOWING)
+		app_->getAudioManager()->playChannel(Resources::WalkAudio, 0, Resources::PlayerChannel1);
+	empoweredAct_ = true;
+	currState_ = STATE::CHARGING_EMPOWERED;
+	texture_ = empoweredTx_[(int)currDir_];
+	currAnim_ = empoweredAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Player::initDie() {
+	Actor::initDie();
+	//Cargamos música de fondo
+	app_->resetMusicChannels();
+	app_->resetSoundsChannels();
+	app_->getAudioManager()->playChannel(Resources::AudioId::FuneralTheme, -1, Resources::MainMusicChannel);
+}
+
+	//Managers
+void Player::shootAnim()
+{
+	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
+		shoot(mousePos_);
+		shooted_ = true;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();	//Activa el idle
+	}
+}
+
+void Player::meleeAnim()
+{
+	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
+		double totalDmg = currStats_.meleeDmg_;
+		if (empoweredAct_) { //Golpe fuerte
+			empoweredCD_.initCooldown(EMPOWERED_DELAY);
+			empoweredAct_ = false;
+			totalDmg = currStats_.meleeDmg_ * EMPOWERED_BONUS;
+			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
+		}
+		else {
+			if (applyCritic()) totalDmg *= 1.5;
+			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
+		}
+
+		if (currEnemy_ == nullptr) {
+			attacking_ = false;
+			dir_ = Vector2D(0, 0);
+		}
+		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
+		attacked_ = true;
+		empoweredInit_ = false;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();	//Activa el idle
+	}
+}
+
+void Player::empoweredAnim()
+{
+	if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		initIdle();
+	}
+}
+
+void Player::dieAnim()
+{
+	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
+
+		dead_ = true;
+	}
+}
+
+//Input y sus dependencias
+void Player::checkInputCheat(){
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_L) && !gm_->getOnShip() && !gm_->onTutorial()) {
+		cheatPlayer();
+	}
+}
+
+void Player::checkInput()
+{
+	//Skills
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0] != nullptr) {
+		skills_[0]->action();
+	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_W) && skills_[1] != nullptr) {
+		skills_[1]->action();
+	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_E) && skills_[2] != nullptr) {
+		skills_[2]->action();
+	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_R) && skills_[3] != nullptr) {
+		skills_[3]->action();
+	}
+
+	//Pociones
+	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr) {
+		usePotion(potions_[0], 0);
+		gm_->setObjectEquipped(ObjectName::Unequipped, Key::One);
+	}
+	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_2) && potions_[1] != nullptr) {
+		usePotion(potions_[1], 1);
+		gm_->setObjectEquipped(ObjectName::Unequipped, Key::Two);
+	}
+
+	//Grito
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE)) shout();
+
+	//Disparo
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && !shootCD_.isCooldownActive()) {
+		shootCD_.initCooldown(currStats_.distRate_);
+		initShoot();
+	}
+
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::MIDDLE)) {
+		cout << mousePos_.getX() + Camera::instance()->getCamera().getX() << endl;
+		cout << mousePos_.getY() + Camera::instance()->getCamera().getY() << endl;
+	}
+
+	//Ataque/movimiento
+	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
+	{
+		Enemy* obj; obj = checkAttack();
+		updateDirVisMouse();
+		if (obj != nullptr) {
+			if(!meleeBussy_) attack(obj);
+		}
+		else if (!getOnCollision()) {
+			move(eventHandler_->getRelativeMousePos());
+		}
+		else setOnCollision(false);
+
+		if (collisionCtrl_->isNextZoneTextBoxActive()) {
+			getEndZoneTextBox()->updateButtons();
+			changeZone_ = true;
+		}
+	}
+}
+
+void Player::checkInputState() {
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_P)) {
+		app_->getGameStateMachine()->pushState(new PauseState(app_));
+		stop();
+	}
+	else if (eventHandler_->isKeyDown(SDL_SCANCODE_C)) {
+		app_->getGameStateMachine()->pushState(new Inventory(app_));
+		stop();
+	}
+	else if (eventHandler_->isKeyDown(SDL_SCANCODE_V)) {
+		app_->getGameStateMachine()->pushState(new SkillState(app_, this));
+		stop();
+	}
+}
+
+Enemy* Player::checkAttack() {
+	bool found = false;
+	Enemy* obj = nullptr;
+	Vector2D mousePos = eventHandler_->getRelativeMousePos();
+	SDL_Point mouse = { 0, 0 }; mouse.x = mousePos.getX(); mouse.y = mousePos.getY();
+	list<Enemy*> enemies_ = dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies();
+	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
+		if (SDL_PointInRect(&mouse, &(*it)->getCollider())) {
+			obj = (*it);
+			found = true;
+		}
+	}
+	return obj;
+}
+
+void Player::movementManager()
+{
+	Enemy* objective = static_cast<Enemy*>(currEnemy_);
+	//Si no est� atacando se mueve a la posici�n indicada con un margen de 2 pixels
+	Vector2D target = target_;
+	if (attacking_ && objective != nullptr) {
+		target = objective->getVisPos();
+		updateDir(target);
+	}
+	else
+		attacking_ = false;
+
+	//Pies del player
+	Vector2D visPos = getVisPos();
+	//Para 
+	list<Enemy*> enemiesInRange = collisionCtrl_->getEnemiesInArea(getCenter(), currStats_.meleeRange_);
+	//Movimiento hasta llegar al target 
+	if ((visPos.getX() < target.getX() - 2		//Comprueba si se ha llegado
+		|| visPos.getX() > target.getX() + 2
+		|| visPos.getY() < target.getY() - 2
+		|| visPos.getY() > target.getY() + 2)
+		&&
+		(!attacking_ || objective == nullptr || objective->getState() == STATE::DYING || enemiesInRange.empty()) && !bussy_)
+	{
+		double delta = app_->getDeltaTime();
+		previousPos_ = pos_;
+		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
+		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
+		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
+		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
+	}
+	//Cuando se llegue al target
+	else {
+		//Si se viene desde following se inicia el idle
+		if (currState_ == STATE::FOLLOWING) initIdle();
+		//Si se ha llegado al target y es un enemigo, estoy atacando
+		if (attacking_ && objective != nullptr && objective->getState() != STATE::DYING && !enemiesInRange.empty() && !bussy_)
+		{
+			//Para cuando se llegue al target y cambiar de animacion
+			if (currState_ == STATE::FOLLOWING) initIdle();
+			bool found = false;
+			for (auto it = enemiesInRange.begin(); !found && it != enemiesInRange.end(); ++it)
+				if ((*it) == objective)
+					found = true;
+
+			if (found && empoweredAct_ && !empoweredInit_)
+			{
+				empoweredInit_ = true;
+				app_->getAudioManager()->playChannel(Resources::EmpoweredSkillAudio, 0, Resources::PlayerChannel4);
+				initMelee();
+			}
+			else if (found && !meleeCD_.isCooldownActive())
+			{
+				initMelee();
+			}
+		}
+	}
+}
+
 void Player::shoot(Vector2D dir)
 {
 
@@ -503,7 +698,7 @@ void Player::shoot(Vector2D dir)
 
 		//Se añade a los bucles del juegos
 		app_->getCurrState()->addRenderUpdateLists(bullet);
-		CollisionCtrl::instance()->addPlayerBullet(bullet);
+		collisionCtrl_->addPlayerBullet(bullet);
 	}
 	else if (auxGunType == equipType::ShotgunI || auxGunType == equipType::ShotgunII) {
 		app_->getAudioManager()->playChannel(Resources::Trabuco, 0, Resources::SoundChannels::PlayerChannel2);
@@ -521,19 +716,6 @@ void Player::shoot(Vector2D dir)
 
 	if (clon_ != nullptr)
 		clon_->shoot();
-}
-
-void Player::onCollider()
-{
-	stop(); //Para
-}
-
-void Player::updateDir(Vector2D target)
-{
-	Vector2D visPos = getVisPos();
-	dir_.setX(target.getX() - visPos.getX());
-	dir_.setY(target.getY() - visPos.getY());
-	dir_.normalize();
 }
 
 void Player::move(Point2D target)
@@ -554,6 +736,52 @@ void Player::attack(Enemy* obj)
 	currEnemy_ = obj;
 	move(obj->getVisPos());
 	attacking_ = true;
+}
+
+//Habilidades y pociones
+Skill* Player::createSkill(SkillName name)
+{
+	Skill* skill;
+	switch (name)
+	{
+	case SkillName::Unequipped:
+		skill = nullptr;
+		break;
+	case SkillName::GolpeFuerte:
+		skill = new EmpoweredSkill(this);
+		break;
+	case SkillName::Invencible:
+		skill = nullptr;
+		break;
+	case SkillName::Torbellino:
+		skill = new WhirlwindSkill(this);
+		break;
+	case SkillName::DisparoPerforante:
+		skill = new PerforateSkill(this);
+		break;
+	case SkillName::Raudo:
+		skill = nullptr;
+		break;
+	case SkillName::Rebote:
+		skill = new RicochetSkill(this);
+		break;
+	case SkillName::Clon:
+		skill = new ClonSkill(this);
+		break;
+	case SkillName::LiberacionI:
+		skill = nullptr;
+		break;
+	case SkillName::Explosion:
+		skill = new ClonSelfDestructSkill(this);
+		break;
+	case SkillName::LiberacionII:
+		skill = nullptr;
+		break;
+	default:
+		skill = nullptr;
+		break;
+	}
+	return skill;
 }
 
 void Player::activeInvincible()
@@ -634,49 +862,6 @@ void Player::usePotion(usable* potion, int key) {
 	gm_->setPotion(key, nullptr);
 }
 
-void Player::updateBuffPotion(){
-	//Como se ha hecho previamente, se ha guardado el momento en el que se usó la poción
-	//de esa manera, si se vuelve a usar una poción del mismo tipo, se resetea timerPotion_[timerPos]
-	//por lo que unicamente quitara el debufo cuando se cumpla ese tiempo
-	for (int i = 0; i < potionUsing_.size(); i++) {
-		if (potionUsing_.at(i)) {
-			double currTick_ = SDL_GetTicks();
-
-			//Si se abre el inventario, los skills o la pausa no reducimos la duración (el valor suele estar entre 0 y 10, así que 200 que son 0,2 segundos es más que suficiente para determinar pausa)
-			if (currTick_ - lastTicksPotion_.at(i) <= gm_->getDelayTime()) {
-				timerPotion_.at(i) -= currTick_ - lastTicksPotion_.at(i);
-			}
-
-			lastTicksPotion_.at(i) = currTick_;
-			//Condicion para que se desactive la pocion
-			if (timerPotion_.at(i) <= 0) {
-				switch (i + 2)
-				{
-				case (int)potionType::Speed:
-					currStats_.moveSpeed_ -= valuePotion_.at(i);
-					potionUsing_[0] = false;
-					break;
-				case (int)potionType::Armor:
-					currStats_.armor_ -= valuePotion_.at(i);
-					potionUsing_[1] = false;
-					break;
-				case (int)potionType::Damage:
-					currStats_.meleeDmg_ = currStats_.meleeDmg_ / (1 + valuePotion_.at(i) / 100);
-					currStats_.distDmg_ = currStats_.distDmg_ / (1 + valuePotion_.at(i) / 100);
-					potionUsing_[2] = false;
-					break;
-				case (int)potionType::Crit:
-					currStats_.crit_ -= valuePotion_.at(i);
-					potionUsing_[3] = false;
-					break;
-				default:
-					break;
-				}
-			}
-		}
-	}
-}
-
 void Player::createClon()
 {
 	auto choice = app_->getRandom()->nextInt(Resources::Laugh1, Resources::Laugh7);
@@ -688,13 +873,47 @@ void Player::createClon()
 	app_->getGameStateMachine()->getState()->addRenderUpdateLists(clon_);
 }
 
-Player::~Player()
+bool Player::killClon()
 {
-	for (Skill* ob : skills_) {
-		delete ob; ob = nullptr;
+	if (clon_ != nullptr) {
+		clon_->die();
+		clon_ = nullptr;
+		return true;
 	}
+	else return false;
+}
 
-	delete endZoneTextBox_;
+//Otros
+void Player::cheatPlayer()
+{
+	if (!cheat_) {
+		cheat_ = true;
+		cout << "CHEAT ACTIVE" << endl;
+		maxHealth_ += healthCheat_;
+		currStats_.health_ = maxHealth_;
+		currStats_.manaReg_ += manaRegCheat_;	
+		currStats_.armor_ += armorCheat_;			
+		currStats_.meleeDmg_ += meleeDamageCheat_;	
+		currStats_.distDmg_ += distDmgCheat_;		
+		currStats_.crit_ += critCheat_;			
+		currStats_.distRange_ += distRangeCheat_;		
+		currStats_.moveSpeed_ += moveSpeedCheat_;
+		collisionCtrl_->setPlayer(nullptr);
+	}
+	else {
+		cheat_ = false;
+		cout << "CHEAT DESACTIVE" << endl;
+		maxHealth_ -= healthCheat_;
+		currStats_.health_ = maxHealth_;
+		currStats_.manaReg_ -= manaRegCheat_;
+		currStats_.armor_ -= armorCheat_;
+		currStats_.meleeDmg_ -= meleeDamageCheat_;
+		currStats_.distDmg_ -= distDmgCheat_;
+		currStats_.crit_ -= critCheat_;
+		currStats_.distRange_ -= distRangeCheat_;
+		currStats_.moveSpeed_ -= moveSpeedCheat_;
+		collisionCtrl_->setPlayer(this);
+	}
 }
 
 void Player::shout()
@@ -703,49 +922,10 @@ void Player::shout()
 	app_->getAudioManager()->playChannel(choice, 0, Resources::JarlChannel);
 }
 
-Skill* Player::createSkill(SkillName name)
+void Player::feedBackHurtSounds()
 {
-	Skill* skill;
-	switch (name)
-	{
-	case SkillName::Unequipped:
-		skill = nullptr;
-		break;
-	case SkillName::GolpeFuerte:
-		skill = new EmpoweredSkill(this);
-		break;
-	case SkillName::Invencible:
-		skill = nullptr;
-		break;
-	case SkillName::Torbellino:
-		skill = new WhirlwindSkill(this);
-		break;
-	case SkillName::DisparoPerforante:
-		skill = new PerforateSkill(this);
-		break;
-	case SkillName::Raudo:
-		skill = nullptr;
-		break;
-	case SkillName::Rebote:
-		skill = new RicochetSkill(this);
-		break;
-	case SkillName::Clon:
-		skill = new ClonSkill(this);
-		break;
-	case SkillName::LiberacionI:
-		skill = nullptr;
-		break;
-	case SkillName::Explosion:
-		skill = new ClonSelfDestructSkill(this);
-		break;
-	case SkillName::LiberacionII:
-		skill = nullptr;
-		break;
-	default:
-		skill = nullptr;
-		break;
-	}
-	return skill;
+	auto choice = app_->getRandom()->nextInt(Resources::Hurt1, Resources::Hurt4 + 1);
+	app_->getAudioManager()->playChannel(choice, 0, Resources::SoundChannels::PlayerChannel3);
 }
 
 void Player::displace(Vector2D dir, int dist)

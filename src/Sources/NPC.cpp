@@ -9,6 +9,7 @@ void NPC::initObject() {
 }
 
 void NPC::initAnims() {
+	double w, h, x, y;
 	switch (npcType_) {
 	case (int)CollisionCtrl::NPCsNames::ElderMan:
 		npcIdle = { NUM_FRAMES_ELDERMAN_DRINK, 100, 100, FRAME_RATE_ELDERMAN, true };
@@ -24,34 +25,66 @@ void NPC::initAnims() {
 		timeDrink_ = rand() % 15000 + 5000;
 		timePush_ = rand() % 15000 + 5000;
 		lastDrink_ = SDL_GetTicks();
+
+		w = 1 / 3;
+		h = 2 / 4;
+		x = 1 / 3;
+		y = 1 / 4;
+		scaleCollision_.setVec(Vector2D(scale_.getX() * w, scale_.getY() * h));
+		posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);
+		collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 		break;
 	case (int)CollisionCtrl::NPCsNames::Merchant:
 		npcIdle = { NUM_FRAMES_MERCHANT, W_FRAME_MERCHANT, H_FRAME_MERCHANT, FRAME_RATE_MERCHANT, true };
+		w = 1 / 3;
+		h = 1 / 1;
+		x = 1 / 3;
+		y = 1 / 1;
+		scaleCollision_.setVec(Vector2D(scale_.getX() * w, scale_.getY() * h));
+		posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);
+		collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 		break;
 	case (int)CollisionCtrl::NPCsNames::Chef:
 		npcIdle = { NUM_FRAMES_CHEF, W_FRAME_CHEF, H_FRAME_CHEF, FRAME_RATE_CHEF, true };
+		posCollision_ = { scale_.getX() / 5, scale_.getY() / 5 };
+		scaleCollision_ = { 7 * (scale_.getX() / 10), 3 * (scale_.getX() / 5) };
 		break;
 	case (int)CollisionCtrl::NPCsNames::Morty:
 		npcIdle = { NUM_FRAMES_MORTY, W_FRAME_MORTY, H_FRAME_MORTY, FRAME_RATE_MORTY, true };
+		posCollision_ = { scale_.getX() / 5, scale_.getY() / 5 };
+		scaleCollision_ = { 7 * (scale_.getX() / 10), 3 * (scale_.getX() / 5) };
 		break;
 	case (int)CollisionCtrl::NPCsNames::Parrot:
 		npcIdle = { NUM_FRAMES_PARROT, W_FRAME_PARROT, H_FRAME_PARROT, FRAME_RATE_PARROT, true };
+		posCollision_ = { scale_.getX() / 5, scale_.getY() / 5 };
+		scaleCollision_ = { 7 * (scale_.getX() / 10), 3 * (scale_.getX() / 5) };
 		break;
 	case (int)CollisionCtrl::NPCsNames::Skeleton:
 		npcIdle = { NUM_FRAMES_SKELETON, W_FRAME_SKELETON, H_FRAME_SKELETON, FRAME_RATE_SKELETON, true };
+		posCollision_ = { scale_.getX() / 5, scale_.getY() / 5 };
+		scaleCollision_ = { 7 * (scale_.getX() / 10), 3 * (scale_.getX() / 5) };
 		break;
 	case (int)CollisionCtrl::NPCsNames::Cartographer:
- 		npcIdle = { NUM_FRAMES_CARTOGRAPHER, W_FRAME_CARTOGRAPHER, H_FRAME_CARTOGRAPHER, FRAME_RATE_CARTOGRAPHER, true };
+		npcIdle = { NUM_FRAMES_CARTOGRAPHER, W_FRAME_CARTOGRAPHER, H_FRAME_CARTOGRAPHER, FRAME_RATE_CARTOGRAPHER, true };
+		w = 1 / 5;
+		h = 2 / 4;
+		x = 1 / 5;
+		y = 1 / 4;
+		scaleCollision_.setVec(Vector2D(scale_.getX() * w, scale_.getY() * h));
+		posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);
+		collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 		break;
 	case 7:
 		npcIdle = { NUM_FRAMES_ELDERMAN_FUNERAL, W_FRAME_ELDERMAN_FUNERAL, H_FRAME_ELDERMAN_FUNERAL, FRAME_RATE_ELDERMAN_FUNERAL, true };
+		posCollision_ = { scale_.getX() / 5, scale_.getY() / 5 };
+		scaleCollision_ = { 7 * (scale_.getX() / 10), 3 * (scale_.getX() / 5) };
 		break;
 	case 8:
 		npcIdle = { NUM_FRAMES_MERCHANT_FUNERAL, W_FRAME_MERCHANT_FUNERAL, H_FRAME_MERCHANT_FUNERAL, FRAME_RATE_MERCHANT_FUNERAL, true };
+		posCollision_ = { scale_.getX() / 5, scale_.getY() / 5 };
+		scaleCollision_ = { 7 * (scale_.getX() / 10), 3 * (scale_.getX() / 5) };
 		break;
 	}
-	posCollision_ = { scale_.getX() / 5, scale_.getY() / 5 };
-	scaleCollision_ = { 7 * (scale_.getX() / 10), 3 * (scale_.getX() / 5) };
 
 	currAnim_ = npcIdle;
 	frame_.x = frame_.y = 0;

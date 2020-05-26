@@ -23,6 +23,7 @@ public:
 	virtual void initRewards();
 	//Se redefine como publico porque el tentaculo necesita acceso a el
 	virtual bool applyCritic() { return Actor::applyCritic(); }
+	inline void setPositions(Vector2D pos){ krakenSpots_.push_back(pos); };
 private:
 	Cooldown attackCD_;
 	Cooldown swimCD_;
@@ -31,16 +32,7 @@ private:
 	list<Tentacle*> tentacles_;
 
 	//Posiciones en las que puede aparecer el kraken
-	static const int NUM_KRAKEN_SPOTS = 6;
-	Point2D krakenSpots_[NUM_KRAKEN_SPOTS]
-	{
-		{1148, 2063},
-		{1454, 2025},
-		{994, 1553},
-		{1398, 1375},
-		{1456, 1572},
-		{1363, 1138},
-	};
+	vector<Point2D> krakenSpots_;
 
 	//Diferentes animaciones del kraken
 	Anim idleAnim_ = { 0,0,0,0,false };
@@ -62,7 +54,6 @@ private:
 	//Constantes para crear las diferentes animaciones 
 	//(los valores puestos no son los correctos, a falta de hacer la animaci�n del kraken)
 #pragma region Constantes
-	const int ATTACK_RATE = 5;
 	//Tiempo desde que se sumerge hasta que emerge
 	const double SWIM_DURATION = 1000;
 	const int AVERAGE_INK_SHOTS = 7;
@@ -94,17 +85,17 @@ private:
 #pragma endregion
 
 #pragma region Stats
-	const double HEALTH = 200;
+	const double HEALTH = 5000;
 	const double MANA = 0;
 	const double MANA_REG = 0;
 	const double ARMOR = 10;
-	const double MELEE_DMG = 50;
-	const double DIST_DMG = 50;
+	const double MELEE_DMG = 100;
+	const double DIST_DMG = 75;
 	const double CRIT = 0;
 	const double MELEE_RANGE = 0;
 	const double DIST_RANGE = 0;
 	const double MOVE_SPEED = 0;
-	const double MELEE_RATE = 5000;	//En milisegundos
+	const double MELEE_RATE = 2000;	//En milisegundos
 	const double DIST_RATE = 5000;	//En milisegundos
 #pragma endregion
 };

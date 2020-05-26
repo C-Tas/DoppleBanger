@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "Barrel.h"
 
 
 class Player;
@@ -21,27 +22,32 @@ public:
 	virtual void lostAggro();
 
 	//Habilidades
+		//*Barril
+			//Quita un barril de la cuenta de barriles totales
+	void quitBarrel() { barrelsInGame--; }
+	//Fin habilidades//
+
+private:
+	//Habilidades
 		//*Bloqueo
-			//Posibilidad de bloquear un ataque
+			//Posibilidad de bloquear un ataque 1 entre BLOCK_CHANCE
 	const int BLOCK_CHANCE = 5;
 			//Devuelve true si activa el bloqueo
 	bool activeBlock() { return app_->getRandom()->nextInt(0, BLOCK_CHANCE + 1) == BLOCK_CHANCE ? true : false; }
 		
 		//*Estocada
+			//Método que se encarga de crear la estocada
+	void thrust();
 			//última estocada
 	Cooldown lastThrust_;
 			//Cooldown de la estocada
 	const double THRUST_TIME = 2500;
-			//Método que se encarga de crear la estocada
-	void thrust();
 
 		//*Carga
 			//Rango en que aplica la carga del pirata
 	const double CHARGE_RANGE = 200;
 			//Úlima carga
 	Cooldown lastCharge_;
-			//Método que crea la carga del pirata
-	void pirateCharge();
 			//Cooldown de la carga
 	const double CHARGE_TIME = 2000;
 			//Velocidad con la que carga Cleón
@@ -50,9 +56,32 @@ public:
 	double movSpeed_ = 0;
 			//Daño que produce la carga
 	const int CHARGE_DMG = 300;
+			//Método que crea la carga del pirata
+	void pirateCharge();
+	
+		//* Barrido
+	void sweep();
+		//Úlimo barrido
+	Cooldown lastSweep_;
+		//Cooldown del barrido
+	const double SWEEP_TIME = 3000;
+
+		//*Barril
+			//Número máximo de barriles a crear
+	const int NUM_MAX_BARREL = 10;
+			//Posibilidad de crear un barril
+	const int BARREL_CHANCE = 100;
+			//Anchura del barril
+	const double BARREL_W = 50;
+			//Altura del barril
+	const double BARREL_H = 50;
+			//Barriles creados
+	int barrelsInGame = 0;
+			//Método que crea un barril
+	void createBarrel();
 	//Fin habilidades//
 
-private:
+
 	//Métodos virtuales privados
 	virtual void initialStats()override;
 	virtual void initObject()override;

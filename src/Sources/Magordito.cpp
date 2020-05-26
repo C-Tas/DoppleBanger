@@ -8,41 +8,36 @@
 
 bool Magordito::update() {
 	updateFrame();
-	updateCooldowns();
 	manageTint();
 
 	//Si Magordito muere
 	if (currState_ == STATE::DYING) {
-		//Desbloqueamos la �ltima isla
-		app_->getAudioManager()->playChannel(Resources::MagorditoDeath, 0, Resources::MagorditoChannel3);
-		GameManager::instance()->setUnlockedIslands(Island::Volcanic);
-		CollisionCtrl::instance()->removeEnemy(this);
-		dynamic_cast<PlayState*>(app_->getCurrState())->removeEnemy(this);
-		app_->getCurrState()->removeRenderUpdateLists(this);
-		return false;
+		dieAnim();
 	}
-	if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
-		auto chance = app_->getRandom()->nextInt(Resources::Magorditolaugh1, Resources::Magorditolaugh4 + 1);
-		app_->getAudioManager()->playChannel(chance, 0, Resources::MagorditoChannel3);
-		currState_ = STATE::ATTACKING;
-	}
-	if (currState_ == STATE::ATTACKING) {
-		//Si el player est� cerca y no tengo enfriamiento en el teleport
-		if (!tpCD_.isCooldownActive()) {
-			enemyIsTooClose();
+	else {
+		updateCooldowns();
+		if (currState_ == STATE::IDLE && getEnemy(rangeVision_)) {
+			auto chance = app_->getRandom()->nextInt(Resources::Magorditolaugh1, Resources::Magorditolaugh4 + 1);
+			app_->getAudioManager()->playChannel(chance, 0, Resources::MagorditoChannel3);
+			currState_ = STATE::ATTACKING;
 		}
-		if (!kirinCD_.isCooldownActive() && onRange(KIRIN_RANGE_ATTACK)) {
-			initKirinAnim();
+		if (currState_ == STATE::ATTACKING) {
+			//Si el player est� cerca y no tengo enfriamiento en el teleport
+			if (!tpCD_.isCooldownActive()) {
+				enemyIsTooClose();
+			}
+			if (!kirinCD_.isCooldownActive() && onRange(KIRIN_RANGE_ATTACK)) {
+				initKirinAnim();
+			}
+		}
+
+		if (currState_ == STATE::SWIMMING) {
+			teleportAnim();
+		}
+		else if (currState_ == STATE::FOLLOWING) {
+			kirinAnim();
 		}
 	}
-
-	if (currState_ == STATE::SWIMMING) {
-		teleportAnim();
-	}
-	else if (currState_ == STATE::FOLLOWING) {
-		kirinAnim();
-	}
-
 	return false;
 }
 
@@ -50,8 +45,14 @@ bool Magordito::update() {
 void Magordito::initObject() {
 	texture_ = app_->getTextureManager()->getTexture(Resources::Magordito);
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
-	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
+	double w = 2 / 4,
+		h = 3 / 5,
+		x = 1 / 4,
+		y = 1 / 5;
+	scaleCollision_.setVec(Vector2D(scale_.getX() * w, scale_.getY() * h));
+	posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
+
 	initialStats();
 	initAnims();
 	currState_ = STATE::IDLE;
@@ -269,4 +270,11 @@ void Magordito::feedBackHurtSounds()
 {
 	auto choice = app_->getRandom()->nextInt(Resources::MagorditoAttack1, Resources::MagorditoAttack5 + 1);
 	app_->getAudioManager()->playChannel(choice, 0, Resources::MagorditoChannel1);
+}
+
+void Magordito::initDie() {
+	Enemy::initDie();
+	//Desbloqueamos la �ltima isla
+	app_->getAudioManager()->playChannel(Resources::MagorditoDeath, 0, Resources::MagorditoChannel3);
+	GameManager::instance()->setUnlockedIslands(Island::Volcanic);
 }

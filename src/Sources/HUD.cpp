@@ -62,7 +62,7 @@ const void HUD::draw() {
 			iconRect.x += DISTANCE_BTW_ICON;
 			cdRect_.x += DISTANCE_BTW_ICON;
 		}
-		else iconRect.x += app_->getWindowWidth() / 10.4;
+		else iconRect.x += (int)round(app_->getWindowWidth() / 10.4);
 	}
 
 	//Para los puntos de haza�a
@@ -73,9 +73,9 @@ const void HUD::draw() {
 
 	//Contenedor de vida
 	iconRect.x = app_->getWindowWidth() * 2 / 31;
-	iconRect.y = (app_->getWindowHeight() * 7 / 9) + (W_H_LIFE * (1 - propLife_));
+	iconRect.y = (int)round((app_->getWindowHeight() * 7 / 9) + (W_H_LIFE * (1 - propLife_)));
 	iconRect.w = W_H_LIFE;
-	iconRect.h = W_H_LIFE * propLife_;
+	iconRect.h = (int)round(W_H_LIFE * propLife_);
 	life_->render(iconRect, clipLife_);
 }
 
@@ -109,13 +109,13 @@ bool HUD::update() {
 	maxLife_ = player_->getMaxHealth();
 	//currentLife_ = gm_->getPlayer()->getHealth();
 	propLife_ = currentLife_ / maxLife_;
-	clipLife_.h = life_->getHeight() * propLife_;	//vidaAct * AltTotal / VidaMax
-	clipLife_.y = life_->getHeight() - clipLife_.h;
+	clipLife_.h =(int)round( life_->getHeight() * propLife_);	//vidaAct * AltTotal / VidaMax
+	clipLife_.y =(int)round( life_->getHeight() - clipLife_.h);
 
 	currentMana_ = player_->getMana();
 	maxMana_ = player_->getMaxMana();
 	propMana_ = currentMana_ / maxMana_;
-	endMana_ = (MAX_DEGREES_MANA * propMana_) + START_MANA;	//Proporci�n de vida para el arco del man�
+	endMana_ = (Sint16)((MAX_DEGREES_MANA * propMana_) + START_MANA);	//Proporci�n de vida para el arco del man�
 	if (endMana_ <= 90) endMana_ = 90;
 	return false;
 }

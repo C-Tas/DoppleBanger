@@ -185,8 +185,11 @@ public:
 		Azul,
 
 		//Animaciones
+		EntityDie,
 		CrabWalk,
 		CrabAttack,
+		CrabIdle,
+
 		//Player
 		PlayerIdleRightAnim,
 		PlayerIdleLeftAnim,
@@ -209,98 +212,119 @@ public:
 		PlayerEmpoweredUp,
 		PlayerEmpoweredDown,
 
-		//clon
+		//Clon
+		ClonIdleRightAnim,
+		ClonIdleLeftAnim,
+		ClonIdleUpAnim,
+		ClonIdleDownAnim,
+		ClonMeleeRightAnim,
+		ClonMeleeLeftAnim,
+		ClonMeleeUpAnim,
+		ClonMeleeDownAnim,
+		ClonShootRightAnim,
+		ClonShootLeftAnim,
+		ClonShootUpAnim,
+		ClonShootDownAnim,
+			//Autodestrucción
 		ClonSelfDestructionRightAnim,
-ClonSelfDestructionLeftAnim,
-ClonSelfDestructionUpAnim,
-ClonSelfDestructionDownAnim,
-//desaparecer
-ClonVanishRightAnim,
-ClonVanishLeftAnim,
-ClonVanishDownAnim,
-ClonVanishUpAnim,
-//Calabaza
-	//Idle
-	PumpkinIdleRightAnim,
-	PumpkinIdleLeftAnim,
-	PumpkinIdleUpAnim,
-	PumpkinIdleDownAnim,
-	//Explosion
-	PumpkinExpRightAnim,
-	PumpkinExpLeftAnim,
-	PumpkinExpUpAnim,
-	PumpkinExpDownAnim,
-	//Attack
-	PumpkinAttackRightAnim,
-	PumpkinAttackLeftAnim,
-	PumpkinAttackUpAnim,
-	PumpkinAttackDownAnim,
-	//Move
-	PumpkinMoveRightAnim,
-	PumpkinMoveLeftAnim,
-	PumpkinMoveUpAnim,
-	PumpkinMoveDownAnim,
-	//Clon
-	ClonIdleRightAnim,
-	ClonIdleLeftAnim,
-	ClonIdleUpAnim,
-	ClonIdleDownAnim,
-	ClonMeleeRightAnim,
-	ClonMeleeLeftAnim,
-	ClonMeleeUpAnim,
-	ClonMeleeDownAnim,
-	ClonShootRightAnim,
-	ClonShootLeftAnim,
-	ClonShootUpAnim,
-	ClonShootDownAnim,
-	//Monkey
-	MonkeyIdleRightAnim,
-	MonkeyIdleLeftAnim,
-	MonkeyIdleUpAnim,
-	MonkeyIdleDownAnim,
-	MonkeyShootRightAnim,
-	MonkeyShootLeftAnim,
-	MonkeyShootUpAnim,
-	MonkeyShootDownAnim,
-	//Magordito
-	Altar,
-	//Idle
-	MagorditoIdleRight,
-	MagorditoIdleLeft,
-	MagorditoIdleTopRight,
-	MagorditoIdleTopLeft,
-	//Disparo
-	MagorditoShootRight,
-	MagorditoShootLeft,
-	MagorditoShootDown,
-	MagorditoShootTopRight,
-	MagorditoShootTopLeft,
-	//Viaje
-	MagorditoTpRight,
-	MagorditoTpLeft,
-	MagorditoTpTopRight,
-	MagorditoTpTopLeft,
-	//Kirin
-	MagorditoKirinRight,
-	MagorditoKirinLeft,
-	MagorditoKirinTopRight,
-	MagorditoKirinTopLeft,
-	Kirin,
-	//Skeleton
-	SkeletonIdleRightAnim,
-	SkeletonIdleLeftAnim,
-	SkeletonIdleUpAnim,
-	SkeletonIdleDownAnim,
-	SkeletonAttackRightAnim,
-	SkeletonAttackLeftAnim,
-	SkeletonAttackUpAnim,
-	SkeletonAttackDownAnim,
-	SkeletonMoveRightAnim,
-	SkeletonMoveLeftAnim,
-	SkeletonMoveDownAnim,
-	SkeletonMoveUpAnim,
+		ClonSelfDestructionLeftAnim,
+		ClonSelfDestructionUpAnim,
+		ClonSelfDestructionDownAnim,
+			//Desaparecer
+		ClonVanishRightAnim,
+		ClonVanishLeftAnim,
+		ClonVanishDownAnim,
+		ClonVanishUpAnim,
 
-	//kraken
+		//Calabaza
+			//Idle
+		PumpkinIdleRightAnim,
+		PumpkinIdleLeftAnim,
+		PumpkinIdleUpAnim,
+		PumpkinIdleDownAnim,
+			//Explosion
+		PumpkinExpRightAnim,
+		PumpkinExpLeftAnim,
+		PumpkinExpUpAnim,
+		PumpkinExpDownAnim,
+			//Attack
+		PumpkinAttackRightAnim,
+		PumpkinAttackLeftAnim,
+		PumpkinAttackUpAnim,
+		PumpkinAttackDownAnim,
+			//Move
+		PumpkinMoveRightAnim,
+		PumpkinMoveLeftAnim,
+		PumpkinMoveUpAnim,
+		PumpkinMoveDownAnim,
+		
+		//Monkey
+		MonkeyIdleRightAnim,
+		MonkeyIdleLeftAnim,
+		MonkeyIdleUpAnim,
+		MonkeyIdleDownAnim,
+		MonkeyShootRightAnim,
+		MonkeyShootLeftAnim,
+		MonkeyShootUpAnim,
+		MonkeyShootDownAnim,
+
+		//Pirata náufrago
+		PirateIdleRightAnim,
+		PirateIdleLeftAnim,
+		PirateIdleUpAnim,
+		PirateIdleDownAnim,
+		PirateMoveRightAnim,
+		PirateMoveLeftAnim,
+		PirateMoveUpAnim,
+		PirateMoveDownAnim,
+		PirateMeleeRightAnim,
+		PirateMeleeLeftAnim,
+		PirateMeleeUpAnim,
+		PirateMeleeDownAnim,
+		PirateShootRightAnim,
+		PirateShootLeftAnim,
+		PirateShootUpAnim,
+		PirateShootDownAnim,
+
+		//Magordito
+		Altar,
+			//Idle
+		MagorditoIdleRight,
+		MagorditoIdleLeft,
+		MagorditoIdleTopRight,
+		MagorditoIdleTopLeft,
+			//Disparo
+		MagorditoShootRight,
+		MagorditoShootLeft,
+		MagorditoShootDown,
+		MagorditoShootTopRight,
+		MagorditoShootTopLeft,
+			//Viaje
+		MagorditoTpRight,
+		MagorditoTpLeft,
+		MagorditoTpTopRight,
+		MagorditoTpTopLeft,
+			//Kirin
+		MagorditoKirinRight,
+		MagorditoKirinLeft,
+		MagorditoKirinTopRight,
+		MagorditoKirinTopLeft,
+		Kirin,
+			//Skeleton
+		SkeletonIdleRightAnim,
+		SkeletonIdleLeftAnim,
+		SkeletonIdleUpAnim,
+		SkeletonIdleDownAnim,
+		SkeletonAttackRightAnim,
+		SkeletonAttackLeftAnim,
+		SkeletonAttackUpAnim,
+		SkeletonAttackDownAnim,
+		SkeletonMoveRightAnim,
+		SkeletonMoveLeftAnim,
+		SkeletonMoveDownAnim,
+		SkeletonMoveUpAnim,
+
+			//kraken
 	KrakenIdleAnim,
 	KrakenInkAnim,
 	KrakenDiveAnim,
@@ -311,7 +335,6 @@ ClonVanishUpAnim,
 	KrakenAzoteAnim,
 	KrakenAzoteAtrasAnim,
 	tentaculo,
-
 		//Interactuables
 		Wheel,
 		Stash,
@@ -326,16 +349,16 @@ ClonVanishUpAnim,
 		Bottle,
 		Dummy,
 
-				//Textos
-				PlayText,
-				ExitText,
-				ControlsText,
-				LoadText,
-				CreditsText,
-				ResumeText,
-				MainMenuText,
-				StashMoneyText,
-				InventoryMoneyText,
+		//Textos
+		PlayText,
+		ExitText,
+		ControlsText,
+		LoadText,
+		CreditsText,
+		ResumeText,
+		MainMenuText,
+		StashMoneyText,
+		InventoryMoneyText,
 
 		//proyectiles
 		Coco,
@@ -374,22 +397,22 @@ ClonVanishUpAnim,
 		Agus,
 		//Aida,
 		Amaro,
-		//Aurora,
+		Aurora,
 		Dani,
 		Georgi,
 		Leyre,
-		//Paula
+		Paula,
 		Oscar,
 		Stiven,
 		//Fichas
 		AgusFicha,
 		//AidaFicha
 		AmaroFicha,
-		//AuroraFicha
+		AuroraFicha,
 		DaniFicha,
 		GeorgiFicha,
 		LeyreFicha,
-		//PaulaFicha
+		PaulaFicha,
 		OscarFicha,
 		StivenFicha,
 		//agradecientos
@@ -417,7 +440,8 @@ ClonVanishUpAnim,
 		PlayerChannel3,
 		PlayerChannel4,
 		//Canal del lobo
-		WolfChannel, 
+		WolfChannel1,
+		WolfChannel2,
 		//Canal del mono
 		MonkeyChannel,
 		//Canal de la calabaza
@@ -432,9 +456,9 @@ ClonVanishUpAnim,
 		CrabChannel1,
 		CrabChannel2,
 		//Canal del pirata
-		PirateChannel1,
-		PirateChannel2,
-		PirateChannel3,
+		EnemyPirateChannel1,
+		EnemyPirateChannel2,
+		EnemyPirateChannel3,
 		//Canal del kraken
 		KrakenChannel1,
 		KrakenChannel2,
@@ -515,9 +539,13 @@ ClonVanishUpAnim,
 		Explosion,
 
 		//Efectos para el lobo
-		WolfHowlAudio,
-		WolfAttackAudio,
-		WolfDieAudio,
+		WolfAttack1,
+		WolfAttack2,
+		WolfIdle1,
+		WolfIdle2,
+		WolfDetection,
+		WolfChase,
+		WolfDeath,
 
 		//Efectos para el mono
 		MonkeyIdleSound,
@@ -537,7 +565,7 @@ ClonVanishUpAnim,
 		//Cangrejo
 		CrabAttackSound,
 		CrabDetection,
-		CrabIdle,
+		CrabIdleSound,
 
 		//Pirata
 		PirateAttack,

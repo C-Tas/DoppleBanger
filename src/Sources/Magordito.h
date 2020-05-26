@@ -83,6 +83,7 @@ private:
 	virtual void initObject();
 	//Inicializa animaciones
 	virtual void initAnims();
+	virtual void initDie();
 	virtual void updateCooldowns();
 	//inicializa el ataque kirin
 	void kirin();

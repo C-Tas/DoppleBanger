@@ -202,6 +202,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ CartographerFuneral, "../Sources/assets/npc/cartografaFuneral.png" },
 
 	//Animaciones
+	{ EntityDie, "../Sources/assets/enemigos/dieAnim.png"},
 	//Player
 	{ PlayerIdleRightAnim, "../Sources/assets/player/animaciones/idle/idleDcha.png" },
 	{ PlayerIdleLeftAnim, "../Sources/assets/player/animaciones/idle/idleIz.png" },
@@ -244,6 +245,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ ClonVanishLeftAnim, "../Sources/assets/clon/desaparecer/vanishLeft.png" },
 	{ ClonVanishDownAnim, "../Sources/assets/clon/desaparecer/vanishDown.png" },
 	{ ClonVanishUpAnim, "../Sources/assets/clon/desaparecer/vanishTop.png" },
+
 	//Pumpkin
 		//Idle
 	{ PumpkinIdleRightAnim, "../Sources/assets/enemigos/pumpkin/Idle/calabazaIdleDer.png" },
@@ -260,14 +262,18 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PumpkinAttackLeftAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispIzq.png" },
 	{ PumpkinAttackUpAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispAtras.png" },
 	{ PumpkinAttackDownAnim, "../Sources/assets/enemigos/pumpkin/Attack/calabazaDispDelante.png" },
-//crab
-     {CrabAttack,"../Sources/assets/enemigos/crab/crabAttack.png" },
-     {CrabWalk,"../Sources/assets/enemigos/crab/crabWalk.png"},
 		//Move
 	{ PumpkinMoveRightAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDer.png" },
 	{ PumpkinMoveLeftAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovIzq.png" },
 	{ PumpkinMoveUpAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovAtras.png" },
 	{ PumpkinMoveDownAnim, "../Sources/assets/enemigos/pumpkin/Move/calabazaMovDelante.png" },
+
+	//Crab
+	{ CrabIdle,"../Sources/assets/enemigos/crab/crabIdle.png" },
+    { CrabAttack,"../Sources/assets/enemigos/crab/crabAttack.png" },
+    { CrabWalk,"../Sources/assets/enemigos/crab/crabWalk.png"},
+
+	//Mono
 	{ MonkeyIdleRightAnim, "../Sources/assets/enemigos/monkey/idleDchaDown.png" },
 	{ MonkeyIdleLeftAnim, "../Sources/assets/enemigos/monkey/idleIzTop.png" },
 	{ MonkeyIdleUpAnim, "../Sources/assets/enemigos/monkey/idleDchaTop.png" },
@@ -277,8 +283,25 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ MonkeyShootUpAnim, "../Sources/assets/enemigos/monkey/shootDchaTop.png" },
 	{ MonkeyShootDownAnim, "../Sources/assets/enemigos/monkey/shootIzDown.png" },
 
-	//Magordito
-		//Skeleton
+	//Pirata náufrago
+	{ PirateIdleRightAnim, "../Sources/assets/enemigos/pirata/PirateIdleSideR.png" },
+	{ PirateIdleLeftAnim, "../Sources/assets/enemigos/pirata/PirateIdleSideL.png" },
+	{ PirateIdleUpAnim, "../Sources/assets/enemigos/pirata/PirateIdleBack.png" },
+	{ PirateIdleDownAnim, "../Sources/assets/enemigos/pirata/PirateIdleFront.png" },
+	{ PirateMoveRightAnim, "../Sources/assets/enemigos/pirata/PirateMoveRight.png" },
+	{ PirateMoveLeftAnim, "../Sources/assets/enemigos/pirata/PirateMoveLeft.png" },
+	{ PirateMoveUpAnim, "../Sources/assets/enemigos/pirata/PirateMoveBack.png" },
+	{ PirateMoveDownAnim, "../Sources/assets/enemigos/pirata/PirateMoveFront.png" },
+	{ PirateMeleeRightAnim, "../Sources/assets/enemigos/pirata/PirateSwordSideR.png" },
+	{ PirateMeleeLeftAnim, "../Sources/assets/enemigos/pirata/PirateSwordSideL.png" },
+	{ PirateMeleeUpAnim, "../Sources/assets/enemigos/pirata/PirateSwordBack.png" },
+	{ PirateMeleeDownAnim, "../Sources/assets/enemigos/pirata/PirateSwordFront.png" },
+	{ PirateShootRightAnim, "../Sources/assets/enemigos/pirata/PirateShootSideR.png" },
+	{ PirateShootLeftAnim, "../Sources/assets/enemigos/pirata/PirateShootSideL.png" },
+	{ PirateShootUpAnim, "../Sources/assets/enemigos/pirata/PirateShootBack.png" },
+	{ PirateShootDownAnim, "../Sources/assets/enemigos/pirata/PirateShootFront.png" },
+
+	//Skeleton
 	{ SkeletonIdleRightAnim, "../Sources/assets/enemigos/skeleton/IdleLadoDer.png" },
 	{ SkeletonIdleLeftAnim, "../Sources/assets/enemigos/skeleton/IdleLadoIzq.png" },
 	{ SkeletonIdleUpAnim, "../Sources/assets/enemigos/skeleton/IdleEspaldas.png" },
@@ -291,7 +314,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ SkeletonMoveLeftAnim, "../Sources/assets/enemigos/skeleton/MovementLadoIzq.png" },
 	{ SkeletonMoveDownAnim, "../Sources/assets/enemigos/skeleton/MovementFrente.png" },
 	{ SkeletonMoveUpAnim, "../Sources/assets/enemigos/skeleton/MovementEspaldas.png" },
-		//Interactuables
+	
+	//Magordito
 	{ Altar, "../Sources/assets/enemigos/magordito/altar.png" },
 		//Idle
 	{ MagorditoIdleRight, "../Sources/assets/enemigos/magordito/idle/idleDcha.png" },
@@ -315,6 +339,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ MagorditoKirinTopRight, "../Sources/assets/enemigos/magordito/kirin/kirinTopDcha.png" },
 	{ MagorditoKirinTopLeft, "../Sources/assets/enemigos/magordito/kirin/kirinTopIz.png" },
 	{ Kirin, "../Sources/assets/enemigos/magordito/kirin/rayo.png" },
+#pragma endregion
 
  //Kraken
 	{ KrakenIdleAnim,"../Sources/assets/enemigos/Kraken/krakenIdleanim.png"},
@@ -383,22 +408,22 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ Agus, "../Sources/assets/creditState/images/Agus.png" },
 	//{ Aida, "../Sources/assets/creditState/images/Aida.png" },
 	{ Amaro, "../Sources/assets/creditState/images/Amaro.png" },
-	//{ Aurora, "../Sources/assets/creditState/images/Aurora.png" },
+	{ Aurora, "../Sources/assets/creditState/images/Aurora.png" },
 	{ Dani, "../Sources/assets/creditState/images/Dani.png" },
 	{ Georgi, "../Sources/assets/creditState/images/Georgi.png" },
 	{ Leyre, "../Sources/assets/creditState/images/Leyre.png" },
-	//{ Paula, "../Sources/assets/creditState/images/Paula.png" },
+	{ Paula, "../Sources/assets/creditState/images/Paula.png" },
 	{ Oscar, "../Sources/assets/creditState/images/Oscar.png" },//
 	{ Stiven, "../Sources/assets/creditState/images/Stiven.png" },
 	//Fichas
 	{ AgusFicha, "../Sources/assets/creditState/images/agusFicha.png" },
 	//{ AidaFicha, "../Sources/assets/creditState/images/aidaFicha.png" },
 	{ AmaroFicha, "../Sources/assets/creditState/images/amaroFicha.png" },
-	//{ AuroraFicha, "../Sources/assets/creditState/images/auroraFicha.png" },
+	{ AuroraFicha, "../Sources/assets/creditState/images/auroraFicha.png" },
 	{ DaniFicha, "../Sources/assets/creditState/images/daniFicha.png" },
 	{ GeorgiFicha, "../Sources/assets/creditState/images/georgiFicha.png" },
 	{ LeyreFicha, "../Sources/assets/creditState/images/leyreFicha.png" },
-	//{ PaulaFicha, "../Sources/assets/creditState/images/paulaFicha.png" },
+	{ PaulaFicha, "../Sources/assets/creditState/images/paulaFicha.png" },
 	{ OscarFicha, "../Sources/assets/creditState/images/oscarFicha.png" },
 	{ StivenFicha, "../Sources/assets/creditState/images/stivenFicha.png" },
 	{ PanelCollaborators, "../Sources/assets/creditState/images/agradecimientos.png" },
@@ -420,7 +445,6 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ FuneralTheme ,"../Sources/assets/music/funeralTheme.mp3" },//CreditTheme
 	{ CreditTheme ,"../Sources/assets/creditState/audio/mainTheme.mp3" },
 
-#pragma region
 	//Player
 #pragma region PlayerSounds
 	{ WalkAudio	  ,"../Sources/assets/efectos_sonido/player/walk.wav" },
@@ -467,9 +491,13 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 
 	//Lobo
 #pragma region Wolf
-	{ WolfHowlAudio ,"../Sources/assets/efectos_sonido/wolf/wolfHowl.wav" },
-	{ WolfAttackAudio ,"../Sources/assets/efectos_sonido/wolf/wolfAttack.wav" },
-	{ WolfDieAudio ,"../Sources/assets/efectos_sonido/wolf/wolfDie.wav" },
+	{ WolfAttack1 ,"../Sources/assets/efectos_sonido/wolf/attack1.mp3" },
+	{ WolfAttack2 ,"../Sources/assets/efectos_sonido/wolf/attack2.wav" },
+	{ WolfIdle1 ,"../Sources/assets/efectos_sonido/wolf/idle1.mp3" },
+	{ WolfIdle2 ,"../Sources/assets/efectos_sonido/wolf/idle2.wav" },
+	{ WolfDetection ,"../Sources/assets/efectos_sonido/wolf/detect.mp3" },
+	{ WolfChase,"../Sources/assets/efectos_sonido/wolf/chase.mp3" },
+	{ WolfDeath ,"../Sources/assets/efectos_sonido/wolf/die.wav" },
 #pragma endregion
 	//Mono
 #pragma region Monkey
@@ -492,7 +520,7 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 #pragma region Crab
 	{ CrabAttackSound ,"../Sources/assets/efectos_sonido/crab/attack.mp3" },
 	{ CrabDetection ,"../Sources/assets/efectos_sonido/crab/detection.mp3" },
-	{ CrabIdle ,"../Sources/assets/efectos_sonido/crab/idle.mp3" },
+	{ CrabIdleSound ,"../Sources/assets/efectos_sonido/crab/idle.mp3" },
 #pragma endregion
 	//Pirata
 #pragma region Pirate
@@ -595,7 +623,8 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ PlayerChannel4, 10 },
 
 	//Canal del lobo
-	{ WolfChannel, 6 },
+	{ WolfChannel1, 6 },
+	{ WolfChannel2, 6 },
 	//Canal del mono
 	{ MonkeyChannel, 6 },
 	//Canal de la calabaza
@@ -610,9 +639,9 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ CrabChannel1, 10 },
 	{ CrabChannel2, 10 },
 	//Canal del pirata
-	{ PirateChannel1, 10 },
-	{ PirateChannel2, 10 },
-	{ PirateChannel3, 10 },
+	{ EnemyPirateChannel1, 10 },
+	{ EnemyPirateChannel2, 10 },
+	{ EnemyPirateChannel3, 10 },
 	//Canal de la kraken
 	{ KrakenChannel1, 15 },
 	{ KrakenChannel2, 20 },
@@ -676,5 +705,21 @@ map<char, string> Resources::tildes_{
 	//exclamación española
 	{
 		'¡', "\u00A1"
+	},
+	//coma
+	{
+		',',"\u002C"
+	},
+	//punto
+	{
+		'.', "\u002E"
+	},
+	//comillas
+	{
+		'“', "\u0022"
+	},
+	//comillas2
+	{
+		'”', "\u0022"
 	}
 };

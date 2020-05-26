@@ -18,7 +18,7 @@ public:
 		if (mana >= costMana_ && !skillCD_.isCooldownActive())
 		{
 			player_->addMana(-costMana_);
-			player_->activateEmpowered();
+			player_->initEmpowered();
 			skillCD_.initCooldown(COOLDOWN);
 		}
 	};
