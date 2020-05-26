@@ -7,34 +7,6 @@
 #include "Collisions.h"
 
 bool Wolf::update() {
-#ifdef _DEBUG
-//	string state;
-//switch (currState_)
-//{
-//case STATE::ATTACKING:
-//	state = "atacando";
-//	break;
-//case STATE::CHARGING:
-//	state = "cargando";
-//	break;
-//case STATE::DYING:
-//	state = "muriendo";
-//	break;
-//case STATE::FOLLOWING:
-//	state = "siguiendo";
-//	break;
-//case STATE::IDLE:
-//	state = "parado";
-//	break;
-//case STATE::PATROLLING:
-//	state = "patrullando";
-//	break;
-//default:
-//	break;
-//}
-//cout << state << endl;
-#endif // _DEBUG
-
 	updateFrame();
 	updateCooldowns();
 
@@ -313,8 +285,8 @@ void Wolf::setPatrol(Vector2D pos)
 
 void Wolf::initIdle() {
 	currState_ = STATE::IDLE;
-	//texture_ = idleTx_[(int)currDir_];
-	//currAnim_ = idleAnims_[(int)currDir_];
+	texture_ = idleTx_[(int)currDir_];
+	currAnim_ = idleAnims_[(int)currDir_];
 
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
