@@ -214,6 +214,10 @@ public:
 		PlayerEmpoweredLeft,
 		PlayerEmpoweredUp,
 		PlayerEmpoweredDown,
+		PlayerWhirlRight,
+		PlayerWhirlLeft,
+		PlayerWhirlTop,
+		PlayerWhirlDown,
 
 		//Clon
 		ClonIdleRightAnim,
