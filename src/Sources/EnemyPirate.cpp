@@ -27,19 +27,6 @@ bool EnemyPirate::update() {
 			if (currState_ == STATE::PATROLLING) {
 				updateDirVisObjective(target_);
 				move(target_);
-				//Cuando ha llegado al target empieza el idle
-				if (RectRect((float)getCenter().getX(), (float)getCenter().getY(), (float)getScaleX(), (float)getScaleY(), (float)target_.getX(), (float)target_.getY(), 1, 1)) {
-					initIdle();
-					idleCD_.initCooldown(IDLE_PAUSE);
-					//Pasamos al siguiente patrol
-					if (currPatrol_ == patrol_.size() - 1) {
-						currPatrol_ = 0;
-					}
-					else
-					{
-						currPatrol_++;
-					}
-				}
 			}
 		}
 		else {
@@ -76,12 +63,21 @@ bool EnemyPirate::update() {
 
 void EnemyPirate::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
-	if ((getCenter() - nextTarget_).magnitude() <= 0.05)
+	if ((getCenter() - nextTarget_).magnitude() <= 1)
 	{
 		pathPos_ = { (int)PosToTile(nextTarget_).getX(), (int)PosToTile(nextTarget_).getY() };
 		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
 		if (pathing_.size() > 1)
 			nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+		else
+		{
+			initIdle();
+			idleCD_.initCooldown(IDLE_PAUSE);
+
+			//Pasamos al siguiente patrol
+			if (currPatrol_ == patrol_.size() - 1) currPatrol_ = 0;
+			else currPatrol_++;
+		}
 	}
 	dir_.setVec(nextTarget_ - getCenter());
 	dir_.normalize();
@@ -243,6 +239,7 @@ void EnemyPirate::shootAnim() {
 	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
 		shoot();
 		shooted_ = true;
+		shootCD_.initCooldown(currStats_.distRate_);
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		idleCD_.initCooldown(IDLE_PAUSE);
@@ -281,7 +278,7 @@ void EnemyPirate::shoot() {
 	app_->getCurrState()->addRenderUpdateListsAsFirst(bullet);
 	CollisionCtrl::instance()->addEnemyBullet(bullet);
 
-	shootCD_.initCooldown(currStats_.distRate_);
+	//shootCD_.initCooldown(currStats_.distRate_);
 }
 
 //Inicializa al pirata

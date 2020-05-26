@@ -15,10 +15,6 @@ bool Crab::update() {
 	{
 		//Cuando no tenemos enemigo
 		if (currEnemy_ == nullptr && !getEnemy(currStats_.meleeRange_)) {
-			if (RectRect((float)getCenter().getX(), (float)getCenter().getY(), (float)getScaleX(), (float)getScaleY(),
-				(float)(targetsVector_.at(actualTarget_).getX()), (float)(targetsVector_.at(actualTarget_).getY()), 1, 1)) {
-				updateTarget();
-			}
 			move(targetsVector_.at(actualTarget_));
 		}
 		//Cuando tenemos enemigo
@@ -43,13 +39,17 @@ void Crab::move(Point2D target)
 {
 	/*Vector2D visPos = getVisPos();
 	target_ = target;*/
-	if ((getCenter() - nextTarget_).magnitude() <= 0.05)
+	if ((getCenter() - nextTarget_).magnitude() <= 1)
 	{
 		pathPos_ = { (int)PosToTile(nextTarget_).getX(), (int)PosToTile(nextTarget_).getY() };
 		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(target).getX(), (int)PosToTile(target).getY() }, pathPos_);
-		if (pathing_.size() > 1)
-			nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+
+		if (pathing_.size() > 1) nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+		else updateTarget(); 
+		
 	}
+	/*cout << "DISTANCIA AL TARGET X:" << (getCenter() - nextTarget_).getX() << " , Y: " << (getCenter() - nextTarget_).getY() << endl;*/
+
 	dir_.setVec(nextTarget_ - getCenter());
 	dir_.normalize();
 	double delta = app_->getDeltaTime();
@@ -110,11 +110,17 @@ void Crab::meleeAnim()
 	if (currAnim_.currFrame_ == FRAME_ACTION) {
 		attack();
 		meleeCD_.initCooldown(currStats_.meleeRate_);
+		cout << "CONTINUA ATACANDO" << endl;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();
+		cout << "CAMBIO A IDLE" << endl;
 		currEnemy_ = nullptr;
 	}
+	else {
+		cout << "MELEE ANIM NO HACE NADA (ATTACKING)" << endl;
+	}
+	
 }
 
 void Crab::attack() {

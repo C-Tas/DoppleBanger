@@ -135,7 +135,7 @@ void PlayState::initState()
 
 	collisionCtrl_ = CollisionCtrl::instance();
 	generator_->setHeuristic(AStar::Heuristic::euclidean);
-	generator_->setDiagonalMovement(false);
+	generator_->setDiagonalMovement(true);
 }
 
 void PlayState::resetGame()

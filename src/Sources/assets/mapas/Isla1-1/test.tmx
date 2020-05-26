@@ -79,4 +79,10 @@
  <objectgroup id="15" name="Cleon">
   <object id="75" gid="162" x="134" y="986" width="256" height="256"/>
  </objectgroup>
+ <objectgroup id="14" name="WolfPatrol">
+  <object id="71" gid="178" x="112" y="656" width="256" height="256"/>
+  <object id="72" gid="178" x="848" y="2240" width="256" height="256"/>
+  <object id="73" gid="178" x="2364" y="1508" width="256" height="256"/>
+  <object id="74" gid="178" x="1584" y="224" width="256" height="256"/>
+ </objectgroup>
 </map>

@@ -80,16 +80,16 @@ private:
 	vector<Texture*> shootTx_;				//Vector de las texturas
 	//Disparo derecha
 	const int SHOOT_R_FRAMES = 15;			//Frames de la animación
-	const int SHOOT_R_FRAME_RATE = 150;		//Frame rate
+	const int SHOOT_R_FRAME_RATE = 66;		//Frame rate
 	//Disparo hacia arriba
 	const int SHOOT_U_FRAMES = 17;			//Frames de la animación
-	const int SHOOT_U_FRAME_RATE = 132;		//Frame rate
+	const int SHOOT_U_FRAME_RATE = 60;		//Frame rate
 	//Disparo hacia izquierda
 	const int SHOOT_L_FRAMES = 16;			//Frames de la animación
-	const int SHOOT_L_FRAME_RATE = 141;		//Frame rate
+	const int SHOOT_L_FRAME_RATE = 63;		//Frame rate
 	//Disparo hacia abajo
 	const int SHOOT_D_FRAMES = 12;			//Frames de la animación
-	const int SHOOT_D_FRAME_RATE = 187;		//Frame rate
+	const int SHOOT_D_FRAME_RATE = 83;		//Frame rate
 
 	//Melee
 	bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
@@ -121,7 +121,7 @@ private:
 #pragma endregion
 
 	//Estadisticas para inicializar
-	const int VIS_RANGE = 2000;
+	const int VIS_RANGE = 200;
 	//Entero que representa la cantidad de frames que tiene para las animaciones
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet
