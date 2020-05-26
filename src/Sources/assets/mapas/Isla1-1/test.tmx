@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="isometric" renderorder="right-down" width="20" height="20" tilewidth="256" tileheight="128" infinite="0" nextlayerid="14" nextobjectid="71">
+<map version="1.2" tiledversion="1.3.1" orientation="isometric" renderorder="right-down" compressionlevel="0" width="20" height="20" tilewidth="256" tileheight="128" infinite="0" nextlayerid="17" nextobjectid="77">
  <tileset firstgid="1" source="Dopplebanger.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="20" height="20">
   <data encoding="csv">
@@ -76,7 +76,13 @@
  <objectgroup id="3" name="Player">
   <object id="5" gid="45" x="1152" y="1664" width="256" height="256"/>
  </objectgroup>
- <objectgroup id="13" name="Wolf">
-  <object id="70" gid="45" x="1678" y="562" width="256" height="256"/>
+ <objectgroup id="16" name="Wolf">
+  <object id="76" gid="95" x="768" y="512" width="256" height="256"/>
+ </objectgroup>
+ <objectgroup id="14" name="WolfPatrol">
+  <object id="71" gid="178" x="112" y="656" width="256" height="256"/>
+  <object id="72" gid="178" x="848" y="2240" width="256" height="256"/>
+  <object id="73" gid="178" x="2364" y="1508" width="256" height="256"/>
+  <object id="74" gid="178" x="1584" y="224" width="256" height="256"/>
  </objectgroup>
 </map>

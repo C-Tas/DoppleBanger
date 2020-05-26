@@ -148,8 +148,8 @@ inline bool Magordito::enemyIsTooClose()
 		Vector2D center = getCenter();
 		auto enem = dynamic_cast<Collider*>(currEnemy_);
 		Vector2D enemCenter = currEnemy_->getCenter();
-		if (RectRect(center.getX(), center.getY(), RANGE_TO_TP * 2, RANGE_TO_TP * 2,
-			enemCenter.getX(), enemCenter.getY(), enem->getColliderScale().getX(), enem->getColliderScale().getY())) {
+		if (RectRect((float)center.getX(), (float)center.getY(), (float)(RANGE_TO_TP * 2), (float)(RANGE_TO_TP * 2),
+			(float)enemCenter.getX(), (float)enemCenter.getY(), (float)enem->getColliderScale().getX(), (float)enem->getColliderScale().getY())) {
 			initTeleport();
 
 			return true;
@@ -179,9 +179,9 @@ void Magordito::initialStats()
 void Magordito::teleport()
 {
 	tpCD_.initCooldown(TP_CD);
-	int choice = app_->getRandom()->nextInt(0, altars.size());
+	int choice = app_->getRandom()->nextInt(0, (int)round(altars.size()));
 	while (currChoice_ == choice) {
-		choice = app_->getRandom()->nextInt(0, altars.size());
+		choice = app_->getRandom()->nextInt(0, (int)round(altars.size()));
 	}
 	currChoice_ = choice;
 	double newX = altars[choice]->getCenter().getX() - scale_.getX() / 2;

@@ -129,7 +129,7 @@ private:
 	//Booleano que indica si estamos en el barco
 	bool onShip_ = true;
 	//Enum de la �ltima isla desbloqueada
-	Island unlockedIslands_ = Island::Caribbean;
+	Island unlockedIslands_ = Island::Volcanic;
 	//Enum de la isla actual
 	Island currIsland_ = Island::Caribbean;
 	//Maximo de los puntos de hazaña
@@ -244,24 +244,7 @@ public:
 	//Constructor vacio
 	GameManager();
 	//Destructor
-	~GameManager() {
-		for (InventoryButton* ob : *inventory_)delete ob;
-		for (InventoryButton* ob : *stash_)delete ob;
-		for (InventoryButton* ob : *shop_)delete ob;
-		delete shop_;
-		delete inventory_;
-		delete stash_;
-		//Se borra el equipo
-		if (currEquip_.armor_ != nullptr) delete currEquip_.armor_;
-		if (currEquip_.gloves_ != nullptr) delete currEquip_.gloves_;
-		if (currEquip_.boots_ != nullptr) delete currEquip_.boots_;
-		if (currEquip_.sword_ != nullptr) delete currEquip_.sword_;
-		if (currEquip_.gun_ != nullptr) delete currEquip_.gun_;
-		for (int i = 0; i < currEquip_.potions_.size(); i++) {
-			if(currEquip_.potions_.at(i) != nullptr)
-				delete currEquip_.potions_.at(i);
-		}
-	}
+	~GameManager();
 
 	//Construye un nuevo gameManger si es null
 	static GameManager* instance() {
@@ -355,7 +338,7 @@ public:
 	//Devuelve la tecla en la que está equipada la habilidad
 	const Key getEquippedSkillKey(SkillName skill);
 	//Devuelve el objeto equipado
-	const ObjectName getObjectEquipped(Key key) { return objectsEquipped_[(int)key - (int)Key::One]; };
+	const ObjectName getObjectEquipped(Key key) { return objectsEquipped_[((__int64)key - (__int64)Key::One)]; };
 	
 	//Devuelve la posici�n del player
 	const Point2D getPlayerPos();

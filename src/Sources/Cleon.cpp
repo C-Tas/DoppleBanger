@@ -79,12 +79,11 @@ bool Cleon::update() {
 				double realDamage = CHARGE_DMG;
 				if (applyCritic()) realDamage *= 1.5;
 				currEnemy->receiveDamage(realDamage);
+				combo();
 			}
 			currState_ = STATE::ATTACKING;
 			currStats_.moveSpeed_ = movSpeed_;
 		}
-		currState_ = STATE::ATTACKING;
-		currStats_.moveSpeed_ = movSpeed_;
 	}
 
 	//Si Cle�n est� siguiendo a un enemigo
@@ -119,6 +118,7 @@ void Cleon::receiveDamage(double damage)
 	}
 	else
 	{
+		app_->getAudioManager()->playChannel(Resources::CleonLaugh, 0, Resources::CleonChannel3);
 		cout << "BLOQUEADO! \n";
 		//Poner feedback del bloqueo de Cle�n
 	}
@@ -126,6 +126,7 @@ void Cleon::receiveDamage(double damage)
 
 void Cleon::lostAggro()
 {
+	app_->getAudioManager()->playChannel(Resources::CleonLaugh, 0, Resources::CleonChannel2);
 	auto newEnemy = static_cast<GameObject*>(player_);
 	currEnemy_ = newEnemy;
 }
@@ -144,8 +145,16 @@ void Cleon::thrust()
 	}
 }
 
+void Cleon::combo() {
+	thrust();
+	sweep();
+}
+
 void Cleon::pirateCharge()
 {
+	auto chance = app_->getRandom()->nextInt(Resources::CleonInter1, Resources::CleonInter7 + 1);
+	app_->getAudioManager()->playChannel(chance, 0, Resources::CleonChannel2);
+
 	cout << "CARGA! \n";
 	lastCharge_.initCooldown(CHARGE_TIME);
 	target_ = player_->getCenter();
@@ -155,9 +164,8 @@ void Cleon::pirateCharge()
 
 	Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
 	CollisionCtrl::instance()->addBarrel(currBarrel);
-	app_->getCurrState()->addRenderUpdateLists(currBarrel);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(currBarrel);
 	barrelsInGame++;
-
 }
 
 void Cleon::sweep()
@@ -172,12 +180,14 @@ void Cleon::sweep()
 
 void Cleon::createBarrel()
 {
-	if (barrelsInGame < NUM_MAX_BARREL) {
+	if (barrelsInGame < NUM_MAX_BARREL && !lastBarrel_.isCooldownActive()) {
+		lastBarrel_.initCooldown(BARREL_CREATOR);
+		app_->getAudioManager()->playChannel(Resources::CleonBarril, 0, Resources::CleonChannel1);
 		auto chance = app_->getRandom()->nextInt(0, BARREL_CHANCE + 1);
 		if (chance == BARREL_CHANCE) {
 			Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
 			CollisionCtrl::instance()->addBarrel(currBarrel);
-			app_->getCurrState()->addRenderUpdateLists(currBarrel);
+			app_->getCurrState()->addRenderUpdateListsAsFirst(currBarrel);
 			barrelsInGame++;
 		}
 	}
@@ -230,7 +240,8 @@ void Cleon::initAnims() {
 void Cleon::updateCooldowns()
 {
 	if (lastThrust_.isCooldownActive()) lastThrust_.updateCooldown();
-	if (lastCharge_.isCooldownActive()) lastCharge_.updateCooldown();
+	if (lastCharge_.isCooldownActive()) lastCharge_.updateCooldown();//
+	if (lastBarrel_.isCooldownActive()) lastBarrel_.updateCooldown();
 }
 
 void Cleon::move(Point2D target)

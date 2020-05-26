@@ -254,5 +254,7 @@
   <object id="26" gid="49" x="2432" y="3072" width="256" height="256"/>
   <object id="27" gid="49" x="2432" y="2304" width="256" height="256"/>
   <object id="28" gid="49" x="2944" y="2688" width="256" height="256"/>
+ <objectgroup id="9" name="Monkey">
+  <object id="4" gid="163" x="2560" y="2944" width="256" height="256"/>
  </objectgroup>
 </map>

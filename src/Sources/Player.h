@@ -2,7 +2,6 @@
 #include <array>
 #include "jute.h"
 #include "TextBox.h"
-
 #include "Actor.h"
 
 class CollisionCtrl;
@@ -35,6 +34,8 @@ public:
 		void initSkills();
 		//Inicia la animacion empowered
 		void initEmpowered();
+		//Inicia la animacion torbellino
+		void initWhirl();
 	#pragma endregion
 
 	//Actualizador principal
@@ -114,10 +115,8 @@ public:
 
 		void addMaxHealth(double addition) { maxHealth_ += addition; };
 		void addMaxMana(double addition) { maxMana_ += addition; };
-		void setSkillAt(int key, Skill* skill) {
-			if (skills_[key] != nullptr)delete skills_[key];
-			skills_[key] = skill;
-		}
+		void setSkillAt(int key, Skill* skill);
+
 	#pragma endregion
 
 	#pragma region Otros
@@ -339,6 +338,14 @@ private:
 			const int EMPOWERED_U_D_FRAMES = 12;
 			const int EMPOWERED_U_D_RATE = 75;
 
+			//Torbellino
+			vector<Texture*>whirlTx_;
+			vector<Anim> whirlAnim_;
+			const int W_H_WHIRL_FRAME = 500;
+			const int WHIRL_FRAMES = 11;
+			const int WHIRL_FRAME_RATE = 70;
+			const double BONUS_WHIRL = 1.5;
+
 			virtual void feedBackHurtSounds();
 			//Inicialización de las animaciones
 			virtual void initAnims();
@@ -362,6 +369,8 @@ private:
 			void meleeAnim();
 			//Controla la animacion de empowered
 			void empoweredAnim();
+			//Controla la animacion de torbellino
+			void whirlAnim();
 		#pragma endregion
 
 		#pragma region Otros

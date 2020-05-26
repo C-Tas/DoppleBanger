@@ -30,8 +30,8 @@ void SkillState::update()
 	//Comprobamos si el rat�n est� sobre alguna de las skills equipadas
 	int i = 0;
 	SDL_Point point;
-	point.x = eventHandler_->getRealMousePos().getX();
-	point.y = eventHandler_->getRealMousePos().getY();
+	point.x = (int)round(eventHandler_->getRealMousePos().getX());
+	point.y = (int)round(eventHandler_->getRealMousePos().getY());
 	while (i < assignButtons.size() && !SDL_PointInRect(&point, &assignButtons[i]))i++;
 	//Si lo est�, actualizamos cual descripcion debe mostrarse
 	if (i < assignButtons.size()) lastPointed = gm_->getEquippedSkill((Key)i);
@@ -445,7 +445,7 @@ void SkillState::goToInventaryState(Application* app) {
 
 void SkillState::increasePrecisionBranch(Application* app) {
 	GameManager* gm = GameManager::instance();
-	if (gm->getAchievementPoints() > 0 && gm->getPresicionPoints() < gm->getMaxPoints()) {	//Comprueba que tenga puntos de haza�a que invertir y que la rama no tenga ya el maximo
+	if (gm->getAchievementPoints() > 0 && gm->getPresicionPoints() < gm->getMaxPoints() && !gm->onTutorial()) {	//Comprueba que tenga puntos de haza�a que invertir y que la rama no tenga ya el maximo
 		gm->setPrecisionPoints(gm->getPresicionPoints() + 1);				//Aumenta en uno los puntos de esta rama
 		gm->setArchievementPoints(gm->getAchievementPoints() - 1);				//Reduce en uno los puntos de haza�a
 		dynamic_cast<SkillState*>(app->getCurrState())->distancePointsActualized();
@@ -463,7 +463,7 @@ void SkillState::increaseMeleeBranch(Application* app) {
 
 void SkillState::increaseGhostBranch(Application* app) {
 	GameManager* gm = GameManager::instance();
-	if (gm->getAchievementPoints() > 0 && gm->getGhostPoints() < gm->getMaxPoints()) {
+	if (gm->getAchievementPoints() > 0 && gm->getGhostPoints() < gm->getMaxPoints() && !gm->onTutorial()) {
 		gm->setGhostPoints(gm->getGhostPoints() + 1);
 		gm->setArchievementPoints(gm->getAchievementPoints() - 1);
 		dynamic_cast<SkillState*>(app->getCurrState())->ghostPointsActualized();

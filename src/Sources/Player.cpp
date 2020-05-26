@@ -103,6 +103,7 @@ void Player::initSkills()
 void Player::initAnims()
 {
 	//Animación de idle
+
 	//Arriba
 	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, IDLE_U_FRAME_RATE, true));
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleUpAnim));
@@ -117,6 +118,7 @@ void Player::initAnims()
 	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerIdleLeftAnim));
 
 	//Animación de movimiento
+
 	//Arriba
 	moveAnims_.push_back(Anim(MOVE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MOVE_U_FRAME_RATE, true));
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMoveUpAnim));
@@ -131,6 +133,7 @@ void Player::initAnims()
 	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMoveLeftAnim));
 
 	//Animación de disparo
+
 	//Arriba
 	shootAnims_.push_back(Anim(SHOOT_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, SHOOT_U_FRAME_RATE, false));
 	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootUpAnim));
@@ -145,6 +148,7 @@ void Player::initAnims()
 	shootTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerShootLeftAnim));
 
 	//Animación de melee
+
 	//Arriba
 	meleeAnims_.push_back(Anim(MELEE_U_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, MELEE_U_FRAME_RATE, false));
 	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeUpAnim));
@@ -159,6 +163,7 @@ void Player::initAnims()
 	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerMeleeLeftAnim));
 
 	//Animacion GolpeFuerte
+
 	//Arriba
 	empoweredAnims_.push_back(Anim(EMPOWERED_U_D_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, EMPOWERED_U_D_RATE, false));
 	empoweredTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerEmpoweredUp));
@@ -171,6 +176,21 @@ void Player::initAnims()
 	//Izquierda
 	empoweredAnims_.push_back(Anim(EMPOWERED_R_L_FRAMES, W_H_PLAYER_FRAME, W_H_PLAYER_FRAME, EMPOWERED_R_L_RATE, false));
 	empoweredTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerEmpoweredLeft));
+
+	//Animacion Torbellino
+
+	//Arriba
+	whirlAnim_.push_back(Anim(WHIRL_FRAMES, W_H_WHIRL_FRAME, W_H_WHIRL_FRAME, WHIRL_FRAME_RATE, false));
+	whirlTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerWhirlTop));
+	//Derecha
+	whirlAnim_.push_back(Anim(WHIRL_FRAMES, W_H_WHIRL_FRAME, W_H_WHIRL_FRAME, WHIRL_FRAME_RATE, false));
+	whirlTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerWhirlRight));
+	//Abajo
+	whirlAnim_.push_back(Anim(WHIRL_FRAMES, W_H_WHIRL_FRAME, W_H_WHIRL_FRAME, WHIRL_FRAME_RATE, false));
+	whirlTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerWhirlDown));
+	//Izquierda
+	whirlAnim_.push_back(Anim(WHIRL_FRAMES, W_H_WHIRL_FRAME, W_H_WHIRL_FRAME, WHIRL_FRAME_RATE, false));
+	whirlTx_.push_back(app_->getTextureManager()->getTexture(Resources::PlayerWhirlLeft));
 
 	//Inicializamos con la animación del idle
 	currDir_ = DIR::DOWN;
@@ -206,7 +226,7 @@ bool Player::update()
 		if (!bussy_) checkInput();
 
 		//Gestion de movimiento
-		if(!changeZone_) movementManager();
+		if (!changeZone_) movementManager();
 	}
 	return changeZone_;
 }
@@ -227,7 +247,6 @@ void Player::updateCooldowns()
 	if (empoweredCD_.isCooldownActive()) { empoweredCD_.updateCooldown(); }
 	if (ricochetCD_.isCooldownActive()) { ricochetCD_.updateCooldown(); }
 	if (slowTimeCD_.isCooldownActive()) slowTimeCD_.updateCooldown();
-
 }
 
 void Player::updateBuffPotion(){
@@ -319,6 +338,9 @@ void Player::animator()
 	}
 	else if (currState_ == STATE::CHARGING_EMPOWERED) {
 		empoweredAnim();
+	}
+	else if (currState_ == STATE::WHIRLING) {
+		whirlAnim();
 	}
 }
 	//Inits
@@ -452,8 +474,26 @@ void Player::initEmpowered()
 	frame_.h = currAnim_.heightFrame_;
 }
 
+void Player::initWhirl()
+{
+	stop();
+	bussy_ = true;
+	//Apaño para que deje de sonar al caminar
+
+	app_->getAudioManager()->playChannel(Resources::AudioId::WhirlwindSkill, 0, Resources::PlayerChannel1);
+	currState_ = STATE::WHIRLING;
+	texture_ = whirlTx_[(int)currDir_];
+	currAnim_ = whirlAnim_[(int)currDir_];
+
+	frameAction_ = 9;
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
 void Player::initDie() {
 	Actor::initDie();
+	collisionCtrl_->setPlayer(nullptr);
 	//Cargamos música de fondo
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
@@ -475,22 +515,24 @@ void Player::shootAnim()
 void Player::meleeAnim()
 {
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
-		double totalDmg = currStats_.meleeDmg_;
-		if (empoweredAct_) { //Golpe fuerte
-			empoweredCD_.initCooldown(EMPOWERED_DELAY);
-			empoweredAct_ = false;
-			totalDmg = currStats_.meleeDmg_ * EMPOWERED_BONUS;
-			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
-		}
-		else {
-			if (applyCritic()) totalDmg *= 1.5;
-			static_cast<Enemy*>(currEnemy_)->receiveDamage(totalDmg);
-		}
-
 		if (currEnemy_ == nullptr) {
 			attacking_ = false;
 			dir_ = Vector2D(0, 0);
 		}
+		else {
+			double totalDmg = currStats_.meleeDmg_;
+			if (empoweredAct_) { //Golpe fuerte
+				empoweredCD_.initCooldown(EMPOWERED_DELAY);
+				empoweredAct_ = false;
+				totalDmg = currStats_.meleeDmg_ * EMPOWERED_BONUS;
+				static_cast<Enemy*>(currEnemy_)->receiveDamage((int)round(totalDmg));
+			}
+			else {
+				if (applyCritic()) totalDmg *= 1.5;
+				static_cast<Enemy*>(currEnemy_)->receiveDamage((int)round(totalDmg));
+			}
+		}
+
 		//if (static_cast<Actor*>(currEnemy_)->getState() == STATE::DYING) attacking_ = false;
 		attacked_ = true;
 		empoweredInit_ = false;
@@ -507,6 +549,21 @@ void Player::empoweredAnim()
 	}
 }
 
+void Player::whirlAnim()
+{
+	if (currAnim_.currFrame_ == frameAction_ && attacked_) {
+		attacked_ = false;
+		//Consigue la lista de los enemigos golpeados y les hace da�o
+		Vector2D playerCenter = getCenter();
+		list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(playerCenter, (int)round(scale_.getX() / 2));
+		for (auto it = enemies.begin(); it != enemies.end(); ++it)
+			(*it)->receiveDamage((int)round(currStats_.meleeDmg_ * BONUS_WHIRL));
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
+		initIdle();
+	}
+}
+
 void Player::dieAnim()
 {
 	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
@@ -519,6 +576,13 @@ void Player::dieAnim()
 void Player::checkInputCheat(){
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_L) && !gm_->getOnShip() && !gm_->onTutorial()) {
 		cheatPlayer();
+	}
+	if (eventHandler_->isKeyDown(SDL_SCANCODE_K) && !gm_->getOnShip() && !gm_->onTutorial()) {
+		list<Enemy*> enemies_ = dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies();
+		for (auto it = enemies_.begin(); it != enemies_.end(); ++it) {
+			app_->getCurrState()->removeRenderUpdateLists((*it));
+		}
+		dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies().clear();
 	}
 }
 
@@ -576,8 +640,7 @@ void Player::checkInput()
 		else setOnCollision(false);
 
 		if (collisionCtrl_->isNextZoneTextBoxActive()) {
-			getEndZoneTextBox()->updateButtons();
-			changeZone_ = true;
+			changeZone_  = getEndZoneTextBox()->updateButtons();
 		}
 	}
 }
@@ -601,7 +664,7 @@ Enemy* Player::checkAttack() {
 	bool found = false;
 	Enemy* obj = nullptr;
 	Vector2D mousePos = eventHandler_->getRelativeMousePos();
-	SDL_Point mouse = { 0, 0 }; mouse.x = mousePos.getX(); mouse.y = mousePos.getY();
+	SDL_Point mouse = { 0, 0 }; mouse.x =(int)round( mousePos.getX()); mouse.y =(int)round( mousePos.getY());
 	list<Enemy*> enemies_ = dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies();
 	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
 		if (SDL_PointInRect(&mouse, &(*it)->getCollider())) {
@@ -627,7 +690,7 @@ void Player::movementManager()
 	//Pies del player
 	Vector2D visPos = getVisPos();
 	//Para 
-	list<Enemy*> enemiesInRange = collisionCtrl_->getEnemiesInArea(getCenter(), currStats_.meleeRange_);
+	list<Enemy*> enemiesInRange = collisionCtrl_->getEnemiesInArea(getCenter(), (int)round(currStats_.meleeRange_));
 	//Movimiento hasta llegar al target 
 	if ((visPos.getX() < target.getX() - 2		//Comprueba si se ha llegado
 		|| visPos.getX() > target.getX() + 2
@@ -641,7 +704,7 @@ void Player::movementManager()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
-		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera(pos_.getX() + scale_.getX() / 2, pos_.getY() + scale_.getY() / 2);
+		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera((int)round(pos_.getX() + scale_.getX() / 2),(int)round( pos_.getY() + scale_.getY() / 2));
 	}
 	//Cuando se llegue al target
 	else {
@@ -673,7 +736,6 @@ void Player::movementManager()
 
 void Player::shoot(Vector2D dir)
 {
-
 	//Se calcula la posici�n desde la cual se dispara la bala
 	Vector2D shootPos;
 	shootPos.setX(pos_.getX() + (scale_.getX() / 2));
@@ -697,13 +759,13 @@ void Player::shoot(Vector2D dir)
 		bullet->setRicochet(ricochetCD_.isCooldownActive());
 
 		//Se añade a los bucles del juegos
-		app_->getCurrState()->addRenderUpdateLists(bullet);
+		app_->getCurrState()->addRenderUpdateListsAsFirst(bullet);
 		collisionCtrl_->addPlayerBullet(bullet);
 	}
 	else if (auxGunType == equipType::ShotgunI || auxGunType == equipType::ShotgunII) {
 		app_->getAudioManager()->playChannel(Resources::Trabuco, 0, Resources::SoundChannels::PlayerChannel2);
 		Blunderbuss* blunderbuss = new Blunderbuss(app_, app_->getTextureManager()->getTexture(Resources::Bullet), shootPos, dir,
-			realDamage, currStats_.distRange_, gun_->getBulletSpeed());
+			(int)round(realDamage), currStats_.distRange_, gun_->getBulletSpeed());
 		if (perforate_) {
 			blunderbuss->activatePerforate();
 			perforate_ = false;
@@ -959,4 +1021,9 @@ void Player::isEnemyDead(Actor* obj)
 		attacking_ = false;
 		currEnemy_ = nullptr;
 	}
+}
+
+void Player:: setSkillAt(int key, Skill* skill) {
+	if (skills_[key] != nullptr)delete skills_[key];
+	skills_[key] = skill;
 }

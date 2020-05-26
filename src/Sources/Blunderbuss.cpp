@@ -50,7 +50,7 @@ Blunderbuss::Blunderbuss(Application* app, Texture* tex, Vector2D pos, Vector2D 
 
 	for (int i = 0; i < NUM_BULLETS; i++) {
 		PlayerBullet* currBullet = new PlayerBullet(app, tex, pos, firstBullet, damage, lifeSpan, bulletSpeed);
-		app->getCurrState()->addRenderUpdateLists(currBullet);
+		app->getCurrState()->addRenderUpdateListsAsFirst(currBullet);
 		collisionCtrol->addPlayerBullet(currBullet);
 		bullets_.push_back(currBullet);
 		//modificar la siguiente

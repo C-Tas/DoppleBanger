@@ -9,11 +9,12 @@ bool Pumpkin::onDistRange() {
 	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = currEnemy_->getCenter();
-		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
-			center.getX(), center.getY(), currStats_.distRange_))
+		if (RectBall((float)round(currEnemyCenter.getX()), (float)round(currEnemyCenter.getY()), (float)round(currEnemy_->getScaleX()), (float)round(currEnemy_->getScaleY()),
+			(float)center.getX(), (float)center.getY(), (float)currStats_.distRange_))
 		{
 			return true;
 		}
+		else return false;
 	}
 	else
 	{
@@ -24,8 +25,8 @@ bool Pumpkin::onMeleeRange() {
 	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = currEnemy_->getCenter();
-		if (RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
-			center.getX(), center.getY(), currStats_.meleeRange_)) {
+		if (RectBall((float)currEnemyCenter.getX(), (float)currEnemyCenter.getY(), (float)currEnemy_->getScaleX(), (float)currEnemy_->getScaleY(),
+			(float)center.getX(), (float)center.getY(), (float)currStats_.meleeRange_)) {
 			return true;
 		}
 		else return false;
@@ -110,7 +111,7 @@ void Pumpkin::disAttack() {
 
 	Bullet* seed = new Bullet(app_, app_->getTextureManager()->getTexture(Resources::Coco),
 		getCenter(), dir, realDamage, seedLife, seedVel, Vector2D(wHSeed, wHSeed));
-	app_->getCurrState()->addRenderUpdateLists(seed);
+	app_->getCurrState()->addRenderUpdateListsAsFirst(seed);
 	CollisionCtrl::instance()->addEnemyBullet(seed);
 }
 void Pumpkin::follow() {
@@ -297,8 +298,8 @@ bool Pumpkin::explosionAnim()
 		auto dmg = dynamic_cast<Player*>(currEnemy_);
 		Point2D center = getCenter();
 		Point2D currEnemyCenter = currEnemy_->getCenter();
-		if (dmg != nullptr && RectBall(currEnemyCenter.getX(), currEnemyCenter.getY(), currEnemy_->getScaleX(), currEnemy_->getScaleY(),
-			center.getX(), center.getY(), explosionRange_)) {
+		if (dmg != nullptr && RectBall((float)currEnemyCenter.getX(), (float)currEnemyCenter.getY(), (float)currEnemy_->getScaleX(), (float)currEnemy_->getScaleY(),
+			(float)center.getX(), (float)center.getY(), (float)explosionRange_)) {
 
 			dmg->receiveDamage(currStats_.meleeDmg_);
 		}

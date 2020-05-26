@@ -34,7 +34,7 @@ void PlayerBullet::searchEnemy(list<Enemy*> enemies, Enemy* currEnemy)
 			enemyRect.y += enemyRect.h / 2; //Centro de la y
 
 			//Para detectar que no se el mismo enemigo que acaba de impactar y que esté dentro del radio de detección
-			if ((*it) != currEnemy && RectBall(enemyRect.x, enemyRect.y, enemyRect.w, enemyRect.h, centerBullet.getX(), centerBullet.getY(), RADIUS)) {
+			if ((*it) != currEnemy && RectBall((float)enemyRect.x, (float)enemyRect.y, (float)enemyRect.w, (float)enemyRect.h, (float)centerBullet.getX(), (float)centerBullet.getY(), RADIUS)) {
 				founded = true;
 				Vector2D enemyTarget(enemyRect.x, enemyRect.y);				//Posición del target encontrado
 				newTarget = target_.getClosest(enemyTarget, newTarget);	//Se mira cuál es el más cercano si el anterior o el nuevo

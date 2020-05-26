@@ -32,8 +32,8 @@ void PlayState::update() {
 }
 
 void PlayState::updateMousePointer() {
-	point.x = eventHandler_->getRelativeMousePos().getX();
-	point.y = eventHandler_->getRelativeMousePos().getY();
+	point.x =(int) round(eventHandler_->getRelativeMousePos().getX());
+	point.y = (int)round(eventHandler_->getRelativeMousePos().getY());
 	mousePointer->setPos(Vector2D(point.x, point.y));
 
 	bool found = false;
@@ -93,6 +93,7 @@ Enemy* PlayState::getEnemyByTag(string tag)
 			return aux;
 		}
 	}
+	return nullptr;
 }
 
 void PlayState::swapRenders(GameObject* obj, GameObject* other)
@@ -134,7 +135,7 @@ void PlayState::initState()
 
 	collisionCtrl_ = CollisionCtrl::instance();
 	generator_->setHeuristic(AStar::Heuristic::euclidean);
-	generator_->setDiagonalMovement(false);
+	generator_->setDiagonalMovement(true);
 }
 
 void PlayState::resetGame()

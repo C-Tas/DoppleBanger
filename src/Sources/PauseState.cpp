@@ -81,12 +81,12 @@ void PauseState::initState()
 
 	//Bot�n de controles
 	posButton = posButton + Vector2D(0, winHeight / 4);
-	textButon.y = posButton.getY();
+	textButon.y = (int)round(posButton.getY());
 	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::ControlsButton), posButton, sizeButton, showControls, this);
 
 	//Bot�n de men� principal
 	posButton = posButton + Vector2D(0, winHeight / 4 );
-	textButon.y = posButton.getY();
+	textButon.y =(int)round(posButton.getY());
 	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::GoMainMenuButton), posButton, sizeButton, goMainMenuState, this);
 	
 	//Botones de mute

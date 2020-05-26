@@ -10,7 +10,7 @@ public:
 	//virtuales
 	virtual bool update() { return false; };
 	virtual void onCollider() {};
-	virtual void receiveDamage(int damage);
+	virtual void receiveDamage(double damage);
 	//<summary>Metodo que mata a este enemigo</summary>
 	virtual void die();
 	virtual void lostAggro() { currEnemy_ = nullptr; };

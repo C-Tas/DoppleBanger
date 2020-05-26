@@ -15,6 +15,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ ResumeButton, "../Sources/assets/botones/resumeButton.png" },
 	{ BackButton, "../Sources/assets/botones/volver.png" },
 	{ SkipButton, "../Sources/assets/botones/skipButton.png" },
+	{ ViajarButton, "../Sources/assets/botones/viajarButton.png" },
+	{ IslaActualButton, "../Sources/assets/botones/islaActualButton.png" },
 	{ SkipStoryButton, "../Sources/assets/botones/skipStoryButton.png" },
 	{ RestartGame, "../Sources/assets/botones/restartGame.png" },
 	{ MuteSoundOff, "../Sources/assets/botones/muteSoundOff.png" },
@@ -60,6 +62,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ ButtonUpgradeYellow, "../Sources/assets/botones/UpgradeButtonYellow.png"},
 	{ ButtonInitTutorial, "../Sources/assets/botones/botonEscucharVenancio.png"},
 	{ ButtonSkipTutorial, "../Sources/assets/botones/botonPasarVenancio.png"},
+	{ ButtonFinishTutorial, "../Sources/assets/botones/botonAcabarTutorial.png"},
 
 	//Animaciones de botones
 	{ BeerAnim, "../Sources/assets/botones/beerAnim.png"},
@@ -224,6 +227,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PlayerEmpoweredLeft, "../Sources/assets/player/animaciones/golpeFuerte/golpeLeft.png" },
 	{ PlayerEmpoweredUp, "../Sources/assets/player/animaciones/golpeFuerte/golpeUp.png" },
 	{ PlayerEmpoweredDown, "../Sources/assets/player/animaciones/golpeFuerte/golpeDown.png" },
+	{ PlayerWhirlRight, "../Sources/assets/player/animaciones/torbellino/der.png" },
+	{ PlayerWhirlLeft, "../Sources/assets/player/animaciones/torbellino/izq.png" },
+	{ PlayerWhirlTop, "../Sources/assets/player/animaciones/torbellino/top.png" },
+	{ PlayerWhirlDown, "../Sources/assets/player/animaciones/torbellino/down.png" },
 	//Clon
 	{ ClonSelfDestructionRightAnim, "../Sources/assets/clon/autodestruccion/ClonRightExplosion.png" },
 	{ ClonSelfDestructionLeftAnim, "../Sources/assets/clon/autodestruccion/ClonLeftExplosion.png" },
@@ -430,6 +437,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ BotonBonus, "../Sources/assets/creditState/images/botonBonus.png" },
 	{ Bonus, "../Sources/assets/creditState/images/bonus.png" },
 
+	//Cleon		
+	{ BarrelExplosion, "../Sources/assets/colisionables/barrilExplosion.png" },
+	{ BarrelInitExpl, "../Sources/assets/colisionables/barrilMecha.png" },
+
 #pragma endregion
 };
 
@@ -604,6 +615,19 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ jarl9 ,"../Sources/assets/efectos_sonido/jarl/jar9.wav" },
 	{ jarl10 ,"../Sources/assets/efectos_sonido/jarl/jar10.wav" },
 	{ jarl11 ,"../Sources/assets/efectos_sonido/jarl/jar11.wav" },
+
+	//Cleón
+	{ CleonBarril ,"../Sources/assets/efectos_sonido/cleon/barril.wav" },
+	{ CleonDie ,"../Sources/assets/efectos_sonido/cleon/cleonDie.wav" },
+	{ CleonInter1 ,"../Sources/assets/efectos_sonido/cleon/cleonInter1.wav" },
+	{ CleonInter2 ,"../Sources/assets/efectos_sonido/cleon/cleonInter2.wav" },
+	{ CleonInter3 ,"../Sources/assets/efectos_sonido/cleon/cleonInter3.wav" },
+	{ CleonInter4 ,"../Sources/assets/efectos_sonido/cleon/cleonInter4.wav" },
+	{ CleonInter5 ,"../Sources/assets/efectos_sonido/cleon/cleonInter5.wav" },
+	{ CleonInter6 ,"../Sources/assets/efectos_sonido/cleon/cleonInter6.wav" },
+	{ CleonInter7 ,"../Sources/assets/efectos_sonido/cleon/cleonInter7.wav" },
+	{ CleonLaugh ,"../Sources/assets/efectos_sonido/cleon/cleonLaugh.wav" },
+
 };
 
 vector<Resources::AudioVolume> Resources::audioVolume{
@@ -650,7 +674,14 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 
 	{ MagorditoChannel1, 6 },
 	{ MagorditoChannel2, 6 },
-	{ MagorditoChannel3, 6 }
+	{ MagorditoChannel3, 6 },
+	//Canales de Cleón
+
+	{ CleonChannel1, 10 },
+	{ CleonChannel2, 10 },
+	{ CleonChannel3, 10 },
+	{ CleonChannel4, 10 },
+	{ CleonChannel5, 10 },
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{
@@ -674,52 +705,52 @@ vector <Resources::TextMsgInfo> Resources::messages{
 	{ SkillText,"SkillMenu",SDL_Color{(0,0,0,1)},RETRO },
 };
 
-map<char, string> Resources::tildes_{
+map<string, string> Resources::tildes_{
 	//o con tilde
 	{
-		'o', "\u00f3"
+		"o", "\u00f3"
 	},
 	//a con tilde
 	{
-		'a', "\u00e1"
+		"a", "\u00e1"
 	},
 	//i con tilde
 	{
-		'i', "\u00ed"
+		"i", "\u00ed"
 	},
 	//u con tilde
 	{
-		'u', "\u00fa"
+		"u", "\u00fa"
 	},
 	//e con tilde
 	{
-		'e', "\u00e9"
+		"e", "\u00e9"
 	},
 	{
-		'ñ', "\u00F1"
+		"ñ", "\u00F1"
 	},
 	//interrogante español
 	{ 
-		'¿', "\u00BF" 
+		"¿", "\u00BF" 
 	},
 	//exclamación española
 	{
-		'¡', "\u00A1"
+		"¡", "\u00A1"
 	},
 	//coma
 	{
-		',',"\u002C"
+		",","\u002C"
 	},
 	//punto
 	{
-		'.', "\u002E"
+		".", "\u002E"
 	},
 	//comillas
 	{
-		'“', "\u0022"
+		"“", "\u0022"
 	},
 	//comillas2
 	{
-		'”', "\u0022"
+		"”", "\u0022"
 	}
 };

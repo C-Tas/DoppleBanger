@@ -134,6 +134,7 @@ bool Tentacle::slamUpdate()
 		app_->getCurrState()->removeRenderUpdateLists(this);
 		return true;
 	}
+	return false;
 }
 
 void Tentacle::initObject()
@@ -189,7 +190,7 @@ void Tentacle::receiveDamage(int dmg)
 
 const void Tentacle::draw()
 {
-	SDL_Rect dest = getDestiny(); dest.x = dest.x - Camera::instance()->getCamera().getX(); dest.y = dest.y - Camera::instance()->getCamera().getY();
+	SDL_Rect dest = getDestiny(); dest.x = (int)round(dest.x - Camera::instance()->getCamera().getX()); dest.y =(int)round( dest.y - Camera::instance()->getCamera().getY());
 	if (currAnim_.numberFrames_ <= 0) texture_->render(dest, collisionRot_);
 	else texture_->render(dest, collisionRot_, frame_);
 }

@@ -278,7 +278,7 @@ void Kraken:: InkAction() {
 		pos.setY(radius * sin(angle) + getCenter().getY());
 
 		Ink* ink = new Ink(app_, this, pos, scale);
-		app_->getGameStateMachine()->getState()->addRenderUpdateLists(ink);
+		app_->getGameStateMachine()->getState()->addRenderUpdateListsAsFirst(ink);
 	}
 }
 
@@ -291,6 +291,8 @@ void Kraken::idle()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+	//Ink* ink = new Ink(app_, this, { 1148, 1800 }, scale);
+	//app_->getGameStateMachine()->getState()->addRenderUpdateListsAsFirst(ink);
 }
 
 void Kraken::updateCooldowns()

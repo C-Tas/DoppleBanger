@@ -7,16 +7,33 @@ void backShipSpooky(Application* app) {
 }
 void SpookyIslandState::initState()
 {
-	gm_->setOnShip(false);
-	//background_ = app_->getTextureManager()->getTexture(Resources::Spooky);
+	//Inicializamos la musica
+	app_->resetMusicChannels();
+	app_->resetSoundsChannels();
+
+	//Temporal hasta que esté la música de la isla Spooky
+	app_->getAudioManager()->playChannel(Resources::Caribbean, -1, Resources::MainMusicChannel);
+	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
+
 	//Borramos la lista de objetos del CollisionCtrl
 	collisionCtrl_->clearList();
+	gm_->setOnShip(false);
 
+	//Inicializamos el mapa de la zona 1
 	//Creamos el mapa
-	currentMap_ = new TiledMap(app_,this, ZONE1_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
-		TILESET_FILS, TILESET_COLS,  Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone1);
+	currentMap_ = new TiledMap(app_, this, ZONE1_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
+		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone_, wallTilesIdZone_);
 
+	//Inicializamos el hud
+	hud_ = new HUD(app_);
+	player_->initSkills();
+
+	//Añadimos el hud a objetos a renderizar
 	addRenderUpdateLists(hud_);
+
+	//Setteamos que la zona en la que nos encontramos es la SpookyA
+	gm_->setCurrentZone(Zone::SpookyA);
+	
 }
 
 SpookyIslandState::SpookyIslandState(Application* app) : PlayState(app)
@@ -31,8 +48,9 @@ SpookyIslandState::~SpookyIslandState()
 
 void SpookyIslandState::update()
 {
-	if (enemies_.empty() && gm_->getCurrentZone() == Zone::CaribeanBoss) {
+	if (enemies_.empty() && gm_->getCurrentZone() == Zone::SpookyBoss) {
 		collisionCtrl_->clearList();
+		gm_->setUnlockedIslands(Island::Volcanic);
 		app_->getGameStateMachine()->changeState(new ShipState(app_));
 	}
 	else {
@@ -45,24 +63,12 @@ void SpookyIslandState::changeZone()
 {
 	delete currentMap_;
 	collisionCtrl_->clearList();
+	enemies_.clear();
 
 	if (gm_->getCurrentZone() == Zone::SpookyA) {
-		deleteExceptHUD(Zone::SpookyB);
-		currentMap_ = new TiledMap(app_, this, ZONE2_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
-			TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone2);
-		addRenderUpdateLists(hud_);
-	}
-	else if (gm_->getCurrentZone() == Zone::SpookyB) {
-		deleteExceptHUD(Zone::SpookyC);
-		currentMap_ = new TiledMap(app_, this, ZONE3_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
-			TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone2);
-		addRenderUpdateLists(hud_);
-
-	}
-	else if (gm_->getCurrentZone() == Zone::SpookyC) {
 		deleteExceptHUD(Zone::SpookyBoss);
 		currentMap_ = new TiledMap(app_, this, BOSSZONE_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
-			TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone2);
+			TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone_, wallTilesIdZone_);
 		addRenderUpdateLists(hud_);
 	}
 	hud_->setPlayerInHUD(player_);

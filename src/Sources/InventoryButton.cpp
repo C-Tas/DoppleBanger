@@ -232,3 +232,7 @@ void InventoryButton::savePotButton(jute::jValue& container)
 
 	container.add_element(jObj_);
 }
+ InventoryButton::~InventoryButton() {
+	if (!equipped)
+		delete object_;
+};
