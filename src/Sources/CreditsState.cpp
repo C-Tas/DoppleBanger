@@ -50,11 +50,12 @@ void CreditsState::createAvatars()
 {
 	int avatarTexture = Resources::Agus;
 	Vector2D initPos = { (double)app_->getWindowWidth() / 10, (double)app_->getWindowHeight() / 10 };
-	for (int i = 0; i < numAvatars - 1; i++) {
+	for (int i = 0; i < numAvatars; i++) {
 		InventoryButton* avatar = new InventoryButton(app_, initPos, Vector2D(AVATAR_W, AVATAR_H), nullptr, selectAvatar);
 		avatar->setTexture(app_->getTextureManager()->getTexture(avatarTexture));
-		avatar->setDeclarator(avatarTexture +1);
 		SDL_SetTextureAlphaMod(avatar->getTexture()->getSDLTex(), 175);
+		cout << avatarTexture << endl;
+		avatar->setDeclarator(avatarTexture +1);
 		addRenderUpdateLists(avatar);
 		initPos.setX(initPos.getX() + AVATAR_W);
 		avatarTexture++;
@@ -90,7 +91,7 @@ void CreditsState::showAvatarInfo(InventoryButton* avatar)
 	avatarSelected_ = avatar;
 	SDL_Texture* tex = avatarSelected_->getTexture()->getSDLTex();
 	SDL_SetTextureAlphaMod(avatarSelected_->getTexture()->getSDLTex(), 255);
-	currFile_->setTexture(app_->getTextureManager()->getTexture(avatar->getDeclarator() + 8));
+	currFile_->setTexture(app_->getTextureManager()->getTexture(avatar->getDeclarator() + 9));
 	twitterButton_->setDeclarator(avatar->getDeclarator());
 	gitButton_->setDeclarator(avatar->getDeclarator());
 }
@@ -98,9 +99,9 @@ void CreditsState::showAvatarInfo(InventoryButton* avatar)
 void CreditsState::openTwitterWeb(int option)
 {	//Cuando se agregen todos los twitters, se cuadrara
 	/*	Agus,
-		//Aida,
+		Aida,
 		Amaro,
-		//Aurora,
+		Aurora,
 		Dani,
 		Georgi,
 		Leyre,
@@ -109,34 +110,41 @@ void CreditsState::openTwitterWeb(int option)
 		Stiven,*/
 	switch (option)
 	{
-		//Agus
-	case 294:
+		//Agus 
+	case 353:
+		system("start https://twitter.com/DoppleBangerVG");
+		break;
+		//Aida 
+	case 354:
+		system("start https://twitter.com/DoppleBangerVG");
 		break;
 		//Amaro
-	case 295:
+	case 355:
 		system("start https://twitter.com/AmaroBlestPolo");
 		break;
 		//Dani
-	case 296:
+	case 356:
+		system("start https://twitter.com/DoppleBangerVG");
 		break;
 		//Georgi
-	case 297:
+	case 357:
+		system("start https://twitter.com/DoppleBangerVG");
 		break;
 		//Leyre
-	case 298:
+	case 358:
 		system("start https://twitter.com/eryeLuka");
 		break;
 		//Paula
-	case 299:
-		system("start https://twitter.com/eryeLuka");
+	case 359:
+		system("start https://twitter.com/DoppleBangerVG");
 		break;
 		//Oscar
-	case 300:
-		system("start https://twitter.com/eryeLuka");
+	case 360:
+		system("start https://twitter.com/DoppleBangerVG");
 		break;
 		//Stiven
-	case 301:
-		system("start https://twitter.com/eryeLuka");
+	case 361:
+		system("start https://twitter.com/DoppleBangerVG");
 		break;
 	default:
 		system("start https://twitter.com/DoppleBangerVG");
@@ -146,36 +154,54 @@ void CreditsState::openTwitterWeb(int option)
 }
 
 void CreditsState::openGitWeb(int option)
-{	//Cuando se agregen todos los twitters se cuadraran
+{
 	/*	Agus,
-		//Aida,
+		Aida,
 		Amaro,
-		//Aurora,
+		Aurora,
 		Dani,
 		Georgi,
 		Leyre,
-		//Paula
+		Paula
 		Oscar,
 		Stiven,*/
 	switch (option)
 	{
 		//Agus
-	case 294:
+	case 353:
+		system("start https://github.com/Agusmoure");
+		break;
+		//Aida
+	case 354:
+		system("start https://github.com/AidaAcha");
 		break;
 		//Amaro
-	case 295:
+	case 355:
 		system("start https://github.com/Sounagix");
 		break;
-		//Dani
-	case 296:
-
+		//Dani	
+	case 356:
+		system("start https://github.com/danielcerdeiras");
 		break;
 		//Georgi
-	case 297:
+		system("start https://github.com/georgimednikov");
+	case 357:
 		break;
 		//Leyre
-	case 298:
+	case 358:
 		system("start https://github.com/leoses");
+		break;
+		//Paula
+	case 359:
+		system("start https://github.com/pamart24");
+		break;
+		//Oscar
+	case 360:
+		system("start https://github.com/OskarFreestyle");
+		break;
+		//Stiven
+	case 361:
+		system("start https://github.com/StAincrad");
 		break;
 	default:
 		system("start https://github.com/C-Tas/DoppleBanger");

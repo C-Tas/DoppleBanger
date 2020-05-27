@@ -130,7 +130,6 @@ void ShipState::update()
 #ifdef _DEBUG
 	}
 #endif // _DEBUG
-
 }
 
 void ShipState::loadState(){

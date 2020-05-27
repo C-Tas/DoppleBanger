@@ -79,7 +79,7 @@ void SpookyIslandState::changeZone()
 		deleteExceptHUD(Zone::SpookyBoss);
 
 		//Se inicia la música
-		app_->getAudioManager()->playChannel(Resources::Isle2Zone1, -1, Resources::MainMusicChannel);
+		app_->getAudioManager()->playChannel(Resources::ThemeMagordito, -1, Resources::MainMusicChannel);
 		currentMap_ = new TiledMap(app_, this, BOSSZONE_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
 			TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone_, wallTilesIdZone_);
 		addRenderUpdateLists(hud_);

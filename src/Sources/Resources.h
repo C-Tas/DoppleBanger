@@ -443,7 +443,7 @@ public:
 		GitButton,
 		//Avatares
 		Agus,
-		//Aida,
+		Aida,
 		Amaro,
 		Aurora,
 		Dani,
@@ -454,7 +454,7 @@ public:
 		Stiven,
 		//Fichas
 		AgusFicha,
-		//AidaFicha
+		AidaFicha,
 		AmaroFicha,
 		AuroraFicha,
 		DaniFicha,
@@ -687,7 +687,7 @@ public:
 		MagorditoKirin,
 		MagorditoTeleport,
 		MagorditoResurrection,
-		//ThemeMagordito,
+		ThemeMagordito,
 		Magorditolaugh1,
 		Magorditolaugh2,
 		Magorditolaugh3,

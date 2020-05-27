@@ -452,7 +452,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ GitButton, "../Sources/assets/creditState/images/git.png" },
 	//Avatares
 	{ Agus, "../Sources/assets/creditState/images/Agus.png" },
-	//{ Aida, "../Sources/assets/creditState/images/Aida.png" },
+	{ Aida, "../Sources/assets/creditState/images/Aida.png" },
 	{ Amaro, "../Sources/assets/creditState/images/Amaro.png" },
 	{ Aurora, "../Sources/assets/creditState/images/Aurora.png" },
 	{ Dani, "../Sources/assets/creditState/images/Dani.png" },
@@ -463,7 +463,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ Stiven, "../Sources/assets/creditState/images/Stiven.png" },
 	//Fichas
 	{ AgusFicha, "../Sources/assets/creditState/images/agusFicha.png" },
-	//{ AidaFicha, "../Sources/assets/creditState/images/aidaFicha.png" },
+	{ AidaFicha, "../Sources/assets/creditState/images/aidaFicha.png" },
 	{ AmaroFicha, "../Sources/assets/creditState/images/amaroFicha.png" },
 	{ AuroraFicha, "../Sources/assets/creditState/images/auroraFicha.png" },
 	{ DaniFicha, "../Sources/assets/creditState/images/daniFicha.png" },
@@ -625,7 +625,7 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ MagorditoKirin ,"../Sources/assets/efectos_sonido/Magordito/kirin.wav" },
 	{ MagorditoTeleport ,"../Sources/assets/efectos_sonido/Magordito/teleport.wav" },
 	{ MagorditoResurrection ,"../Sources/assets/efectos_sonido/Magordito/resurrection.wav" },
-	//{ ThemeMagordito ,"../Sources/assets/efectos_sonido/Magordito/taunt1.mp3" },
+	{ ThemeMagordito ,"../Sources/assets/efectos_sonido/Magordito/magorditoTheme.mp3" },
 	{ Magorditolaugh1 ,"../Sources/assets/efectos_sonido/Magordito/laugh1.mp3" },
 	{ Magorditolaugh2 ,"../Sources/assets/efectos_sonido/Magordito/laugh2.mp3" },
 	{ Magorditolaugh3 ,"../Sources/assets/efectos_sonido/Magordito/laugh3.mp3" },
