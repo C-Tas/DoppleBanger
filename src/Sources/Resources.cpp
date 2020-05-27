@@ -732,16 +732,16 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	//Canal del mono
 	{ MonkeyChannel, 6 },
 	//Canal de la calabaza
-	{ PumpkinChannel1, 6 },
-	{ PumpkinChannel2, 6 },
+	{ PumpkinChannel1, 4 },
+	{ PumpkinChannel2, 4 },
 	//Canal del esqueleto
-	{ SkeletonChannel1, 40 },
-	{ SkeletonChannel2, 40 },
-	{ SkeletonChannel3, 40 },
+	{ SkeletonChannel1, 20 },
+	{ SkeletonChannel2, 20 },
+	{ SkeletonChannel3, 20 },
 	{ SkeletonChannel4, 6 },
 	//Canal de la cangrejo
-	{ CrabChannel1, 6 },
-	{ CrabChannel2, 6 },
+	{ CrabChannel1, 3 },
+	{ CrabChannel2, 3 },
 	//Canal del pirata
 	{ EnemyPirateChannel1, 10 },
 	{ EnemyPirateChannel2, 10 },
