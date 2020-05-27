@@ -49,7 +49,7 @@ private:
 
 
 	void initObject();
-	//void initAnims();
+	void initDie() {};
 	bool slamUpdate();
 	bool sweepUpdate();
 	virtual void initialStats() {};	

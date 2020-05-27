@@ -3,8 +3,9 @@
 #include "Player.h"
 #include "Collisions.h"
 
-Kirin::Kirin(Application* app, Vector2D pos, Vector2D scale) : 
-	Draw(app, pos, scale){
+Kirin::Kirin(Application* app, Vector2D pos, Vector2D scale, double dmg) : 
+	Draw(app, pos, scale),
+	damage_(dmg){
 	initObject();
 }
 
@@ -21,7 +22,7 @@ bool Kirin::update()
 		//Si el rayo impacta hace daño al player
 		if (RectRect((float)playerCenter.getX(), (float)playerCenter.getY(), (float)playerCollider.getX(), (float)playerCollider.getY(),
 			(float)centerCollision.getX(), (float)centerCollision.getY(), (float)(scale_.getX() / 2), (float)(scale_.getY() / 4))) {
-			player->receiveDamage(KIRIN_DMG);
+			player->receiveDamage(damage_);
 
 			return true;
 		}

@@ -28,13 +28,13 @@ private:
 	Cleon* cleon_ = nullptr;
 	//Rango de explosión del barril
 	const double EXPL_BARREL_RANGE = 100;
-	//Daño que produce el barril
-	const int BARREL_DMG = 20;
 	//Tiempo de vida del barril
 	const double BARREL_TIME_LIFE = 4000;
 	//Tiempo que tarda el barril en armarse
 	const double BARREL_TIME_ACTIVE = 500;
 
+	//Daño que va a hacer
+	double damage_;
 	//Cooldown que representa cuando se autodestruye el barril
 	Cooldown explosion_;
 	//Cooldown que representa el tiempo en que se arma el barril
