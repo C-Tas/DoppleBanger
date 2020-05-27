@@ -343,7 +343,7 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 		if (tag != nullptr) dynamic_cast<Wolf*>(tag)->setPatrol(pos);
 	}
 	else if (objectType == "Cleon") {
-		Cleon* cleon = new Cleon(app_, pos, Vector2D(W_PLAYER, H_PLAYER));
+		Cleon* cleon = new Cleon(app_, pos, Vector2D(W_PLAYER * 2, H_PLAYER * 2));
 		state_->addEnemy(cleon);
 		collisionCtrl_->addEnemy(cleon);
 	}

@@ -146,10 +146,10 @@ void EndState::initState()
 		addRenderUpdateLists(morty);
 	}
 
+	if (gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
 		NPC* parrot;
 		parrot = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Parrot), Vector2D(W_WIN  * 11 / 20, (double)H_WIN * 3 / 4), Vector2D(W_PARROT, H_PARROT), 4);
 		addRenderUpdateLists(parrot);
-	if (gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
 	}
 
 	if (gm_->isThatMissionPass(missions::laboon)) {

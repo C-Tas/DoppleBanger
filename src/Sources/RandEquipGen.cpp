@@ -120,13 +120,13 @@ Item* RandEquipGen::genEquip(int type)
 
 			//Dispara en are recta con menos da�o
 		case equipType::ShotgunI:
-			ad = rn_->nextInt(30 * area, 40 * area);
+			ad = rn_->nextInt(40 * area, 70 * area);
 			distRate = rn_->nextInt(30 * area, 80 * area);
 			price = rn_->nextInt(80 * area, 175 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
 		case equipType::ShotgunII:
-			ad = rn_->nextInt(20 * area, 50 * area);
+			ad = rn_->nextInt(30 * area, 100 * area);
 			distRate = rn_->nextInt(20 * area, 90 * area);
 			price = rn_->nextInt(80 * area, 175 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);

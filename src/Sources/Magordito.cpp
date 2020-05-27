@@ -8,7 +8,7 @@
 
 Magordito::~Magordito()
 {
-	GameManager::instance()->setEndDemo(true);
+	GameManager::instance()->setMagorditoDead(true);
 }
 
 bool Magordito::update() {

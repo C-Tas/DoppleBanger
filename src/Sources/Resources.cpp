@@ -757,11 +757,11 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ MagorditoChannel3, 6 },
 	//Canales de Cleón
 
-	{ CleonChannel1, 10 },
-	{ CleonChannel2, 10 },
-	{ CleonChannel3, 10 },
-	{ CleonChannel4, 10 },
-	{ CleonChannel5, 10 },
+	{ CleonChannel1, 20 },
+	{ CleonChannel2, 20 },
+	{ CleonChannel3, 20 },
+	{ CleonChannel4, 20 },
+	{ CleonChannel5, 20 },
 	{ NPCChannel1, 30 },
 	{ ChestChannelChannel, 10 },
 	{ BulletRemoveChannel, 7 },

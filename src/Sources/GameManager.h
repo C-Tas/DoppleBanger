@@ -131,6 +131,8 @@ private:
 	bool onShip_ = true;
 	//Para finalizar la demo
 	bool endDemo_ = false;
+	//Muerte de Magordito
+	bool magorditoDead_ = false;
 	//Enum de la �ltima isla desbloqueada
 	Island unlockedIslands_ = Island::Volcanic;
 	//Enum de la isla actual
@@ -279,6 +281,8 @@ public:
 #pragma region getters
 	//Devuelve si se ha completado la demo
 	const bool endDemo() { return endDemo_; };
+	//Devuelve si ha muerto Magordito
+	const bool getMagorditoDead() { return magorditoDead_; };
 	//Devuelve true si la misi�n ha sido pasada
 	const bool isThatMissionPass(missions mission) { return missionsComplete_[(int)mission]; };
 	//Devuelve true si la misi�n est� empezada
@@ -368,6 +372,8 @@ public:
 #pragma endregion
 
 #pragma region setters
+	//Para poner magorditoDead_ a true
+	inline void setMagorditoDead(bool magorditoDead) { magorditoDead_ = magorditoDead; };
 	//Para poner la demo en acabada
 	inline void setEndDemo(bool endDemo) { endDemo_ = endDemo; };
 	//Suma puntos de hazaña

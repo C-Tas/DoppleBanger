@@ -57,7 +57,7 @@ void Crab::move(Point2D target)
 
 void Crab::initMeleeAnim()
 {
-	app_->getAudioManager()->playChannel(Resources::CrabDetection, 0, Resources::CrabChannel2);
+	app_->getAudioManager()->playChannel(Resources::AudioId::CrabDetection, 0, Resources::CrabChannel2);
 	currState_ = STATE::ATTACKING;
 	currAnim_ = attackAnim_;
 	texture_ = attackTex_;
@@ -97,6 +97,8 @@ void Crab::initIdle()
 void Crab::initDie()
 {
 	Enemy::initDie();
+	app_->getAudioManager()->haltChannel(Resources::CrabChannel1);
+	app_->getAudioManager()->haltChannel(Resources::CrabChannel2);
 
 	GameManager* gm_ = GameManager::instance();
 	if (gm_->isThatMissionStarted(missions::gallegaEnProblemas))
@@ -116,7 +118,7 @@ void Crab::meleeAnim()
 }
 
 void Crab::attack() {
-	app_->getAudioManager()->playChannel(Resources::CrabAttackSound, 0, Resources::CrabChannel2);
+	app_->getAudioManager()->playChannel(Resources::AudioId::CrabAttackSound, 0, Resources::CrabChannel2);
 	auto dmg = dynamic_cast<Player*>(currEnemy_);
 	if (dmg != nullptr) {
 		//Critico
@@ -135,7 +137,7 @@ void Crab::initObject()
 	initialStats();
 	rangeVision_ = 40;
 	nextTarget_ = pos_;
-	app_->getAudioManager()->playChannel(Resources::CrabIdleSound, 0, Resources::CrabChannel1);
+	app_->getAudioManager()->playChannel(Resources::AudioId::CrabIdleSound, 0, Resources::CrabChannel1);
 	/*double w = 2 / 4,
 		h = 1 / 3,
 		x = 1 / 4,

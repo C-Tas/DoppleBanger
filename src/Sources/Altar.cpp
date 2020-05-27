@@ -16,14 +16,11 @@ void Altar::initObject()
 	frame_.h = currAnim_.heightFrame_;
 }
 
-void Altar::updateVector()
+void Altar::elimina()
 {
-	for (int i = 0; i < mobs.size(); i++) {
-		if (mobs[i] == nullptr) {
-			mobs.erase(mobs.begin() + i);
-		}
-	}
+	actualS--;
 }
+
 
 Altar::~Altar()
 {
@@ -37,17 +34,17 @@ bool Altar::update() {
 
 void Altar::createMobs(PlayState* playState)
 {
-	updateVector();
-	if (mobs.size() < MAX_SKELETON) {
+	if (actualS < MAX_SKELETON) {
 
 
 		for (int i = 0; i < numMobs_; i++) {
 			double xPos = app_->getRandom()->nextInt((int)round(getPosX() - ALTAR_RANGE), (int)round(getPosX() + ALTAR_RANGE));
 			double yPos = app_->getRandom()->nextInt((int)round(getPosY() - ALTAR_RANGE), (int)round(getPosY() + ALTAR_RANGE));
-			Skeleton* skeleton = new Skeleton(app_, { xPos, yPos }, { SKELETON_W,SKELETON_H });
+			AltarSkeleton* skeleton = new AltarSkeleton(app_, { xPos, yPos }, { SKELETON_W,SKELETON_H },this);
 			playState->addEnemy(skeleton);
 			CollisionCtrl::instance()->addEnemy(skeleton);
 			mobs.push_back(skeleton);
+			actualS++;
 		}
 		magordito_ = playState->getEnemyByTag("Magordito");
 		static_cast<Magordito*>(magordito_)->setAltar(this);

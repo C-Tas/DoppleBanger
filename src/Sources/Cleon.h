@@ -13,7 +13,7 @@ public:
 		Enemy(app, pos, scale) {
 		initObject();
 	};
-	~Cleon() {};
+	~Cleon();
 
 	//M�todos virtuales p�blicos
 	virtual bool update() override ;
@@ -76,9 +76,9 @@ private:
 			//Posibilidad de crear un barril
 	const int BARREL_CHANCE = 100;
 			//Anchura del barril
-	const double BARREL_W = 100;
+	const double BARREL_W = app_->getWindowWidth() / 8;
 			//Altura del barril
-	const double BARREL_H = 100;
+	const double BARREL_H = app_->getWindowHeight() / 4.5;
 			//Barriles creados
 	int barrelsInGame = 0;
 			//Tiempo de creaci�n de barril

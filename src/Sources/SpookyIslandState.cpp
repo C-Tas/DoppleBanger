@@ -1,16 +1,16 @@
 ﻿#include "SpookyIslandState.h"
 #include "ShipState.h"
-#include "WinState.h"
 
 void backShipSpooky(Application* app) {
 	app->getGameStateMachine()->changeState(new ShipState(app));
 }
 void SpookyIslandState::initState()
 {
+	gm_->setMagorditoDead(false);
 	//Resetamos los sonidos
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
-
+	app_->getAudioManager()->playChannel(Resources::Isle1Zone1, -1, Resources::MainMusicChannel);
 
 	gm_->setOnShip(false);
 	//background_ = app_->getTextureManager()->getTexture(Resources::Spooky);
@@ -37,7 +37,6 @@ void SpookyIslandState::initState()
 
 	//Setteamos que la zona en la que nos encontramos es la SpookyA
 	gm_->setCurrentZone(Zone::SpookyA);
-	
 }
 
 SpookyIslandState::SpookyIslandState(Application* app) : PlayState(app)
@@ -58,10 +57,10 @@ SpookyIslandState::~SpookyIslandState()
 
 void SpookyIslandState::update()
 {
-	if (gm_->endDemo()) {
+	if (gm_->getMagorditoDead()) {
 		collisionCtrl_->clearList();
 		gm_->setUnlockedIslands(Island::Volcanic);
-		app_->getGameStateMachine()->changeState(new WinState(app_));
+		app_->getGameStateMachine()->changeState(new ShipState(app_));
 	}
 	else {
 		collisionCtrl_->islandCollisions();

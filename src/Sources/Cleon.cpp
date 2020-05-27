@@ -9,6 +9,11 @@
 //		  3 risa
 //		  4 movimiento
 
+Cleon::~Cleon()
+{
+	GameManager::instance()->setEndDemo(true);
+}
+
 bool Cleon::update() {
 	//ESTADOS A TENER EN CUENTA ->THRUSTINg(estocada), CHARGING(carga), CHARGING_EMPOWERED(barrido)
 	DIR lastDir_ = currDir_;

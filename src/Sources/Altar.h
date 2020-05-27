@@ -4,7 +4,7 @@
 #include "Clon.h"	//Para agregar los mobs a la lista de enemigos del clon
 
 
-class Skeleton;
+class AltarSkeleton;
 
 class Altar : public Draw
 {
@@ -27,13 +27,15 @@ public:
 	void setEnemyToMobs(Clon* enemy);
 	//Devuelve true si quedan mobs vivos en este altar
 	bool mobsAlive();
+	 void elimina();
 private:
+	int actualS;
 	//puntero al magordito
 	Enemy* magordito_ = nullptr;
 	////Bool que representa si se puede resucitar a los mobs de este altar
 	//bool resurrect_ = false;
 	//vector que representa los mobs asociados al altar
-	vector <Skeleton*> mobs;
+	vector <AltarSkeleton*> mobs;
 	//Variable que representa la cantidad de mobs a crear en este altar
 	int numMobs_ = 1;
 	//Variable que representa el rango del resurrección del altar
@@ -50,6 +52,5 @@ private:
 	const int MAX_SKELETON = 3;
 	//inicializa al altar
 	virtual void initObject();
-	void updateVector();
 };
 
