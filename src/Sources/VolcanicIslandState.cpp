@@ -21,6 +21,8 @@ void VolcanicIslandState::initState()
 
 	//Inicializamos el hud
 	hud_ = new HUD(app_);
+	Actor* boss = static_cast<Actor*>(gameObjects_.back());
+	GameManager::instance()->activeHealthBoss(boss);
 	player_->initSkills();
 
 	//A�adimos el hud a objetos a renderizar

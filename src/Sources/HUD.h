@@ -3,7 +3,7 @@
 #include "VisualElement.h"
 
 class Player;
-
+class Actor;
 struct potionHUD
 {
 	bool active_ = false;
@@ -31,6 +31,8 @@ public:
 	void setSkillCooldown(bool cooldown, int key);
 	//Crea el HUD de los objetos consumidos
 	void showPotionHUD(int index, double duration, double time);
+	//Para crear el healthBoss
+	void createHealthBoss(Actor* actor);
 	//Método para settear al player
 	void setPlayerInHUD(Player* player) { player_ = player; };
 private:
@@ -38,6 +40,8 @@ private:
 	vector<potionHUD> potionsHUD_;		//Lista de las pociones del HUD | 0 vel, 1 def, 2 da�, 3 crit
 	GameManager* gm_ = nullptr; //GameManager
 	Player* player_ = nullptr;
+	Actor* boss_ = nullptr;	//Boss actual
+
 	#pragma region Iconos
 	//Contiene todos los iconos
 	vector<Texture*> icons;
@@ -60,6 +64,12 @@ private:
 	double currentMana_ = 0.0;		//Man� actual
 	double maxLife_ = 0.0;			//Vida m�xima
 	double maxMana_ = 0.0;			//Man� m�ximo
+	//Boss
+	Texture* lifeBoss_ = nullptr;	//Textura vida boss
+	SDL_Rect clipLifeBoss_;			//Contenido vida boss
+	double maxLifeBoss_ = 0.0;		//Vida maxima
+	double propLifeBoss_ = 1.0;
+	double currentLifeBoss_ = 0.0;
 	#pragma endregion
 	
 	#pragma region Constantes

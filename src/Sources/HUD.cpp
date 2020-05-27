@@ -24,6 +24,16 @@ const void HUD::draw() {
 	//Esto deja basura, pero Carlitos nos deja
 	filledPieRGBA(app_->getRenderer(), xMana_, yMana_, W_WHEEL / 2, START_MANA, endMana_, 36, 113, 163, 255);
 
+	//Contenedor vida boss
+	SDL_Rect iconRect;
+	if (boss_ != nullptr) {
+		iconRect.w = (int)round((app_->getWindowWidth() * 6 / 20) * propLife_);
+		iconRect.h = (int)round(app_->getWindowHeight() / 14);
+		iconRect.x = (int)round((app_->getWindowWidth() / 2) - (iconRect.w / 2));
+		iconRect.y = (int)round(iconRect.h / 2);
+		lifeBoss_->render(iconRect, clipLifeBoss_);
+	}
+
 	for (auto it = elementsHUD_.begin(); it != elementsHUD_.end(); ++it) {
 		(*it)->draw();
 	}
@@ -42,7 +52,6 @@ const void HUD::draw() {
 		}
 	}
 
-	SDL_Rect iconRect;
 	//Tama�o est�ndar de los iconos
 	iconRect.w = iconRect.h = W_H_ICON;
 	//Posici�n inicial de los primeros iconos
@@ -104,6 +113,11 @@ bool HUD::update() {
 			}
 		}
 	}
+	if (boss_ != nullptr) {
+		currentLifeBoss_ = boss_->getHealth();
+		propLifeBoss_ = currentLifeBoss_ / maxLifeBoss_;
+		//clipLifeBoss_.w = (int)round(clipLifeBoss_.w * propLifeBoss_);
+	}
 
  	currentLife_ = player_->getHealth();
 	maxLife_ = player_->getMaxHealth();
@@ -164,6 +178,17 @@ void HUD::showPotionHUD(int index, double duration, double time)
 	potionsHUD_[index].active_ = true;
 	potionsHUD_[index].duration_ = duration;
 	potionsHUD_[index].lastTick_ = time;
+}
+
+void HUD::createHealthBoss(Actor* boss) {
+	boss_ = boss;
+	maxLifeBoss_ = boss_->getHealth();
+
+	lifeBoss_ = app_->getTextureManager()->getTexture(Resources::BossHealthBar);
+	clipLifeBoss_.x = 0;
+	clipLifeBoss_.y = 0;
+	clipLifeBoss_.w = lifeBoss_->getWidth();
+	clipLifeBoss_.h = lifeBoss_->getHeight();
 }
 
 void HUD::initObject() {

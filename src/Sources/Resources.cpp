@@ -121,6 +121,8 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ ReboteIcon, "../Sources/assets/hud/iconos/rebote.png" },
 	{ TorbellinoIcon, "../Sources/assets/hud/iconos/torbellino.png" },
 	{ ClonIcon, "../Sources/assets/hud/iconos/clon.png" },
+	{ BossHealthBg, "../Sources/assets/enemigos/healthBossBg.png" },
+	{ BossHealthBar, "../Sources/assets/enemigos/healthBoss.png" },
 
 	//Objects
 	{ HealthPot, "../Sources/assets/hud/iconos/vidaPot.png" },
