@@ -4,7 +4,7 @@
 #include "Clon.h"	//Para agregar los mobs a la lista de enemigos del clon
 
 
-class AltarSkeleton;
+class Skeleton;
 
 class Altar : public Draw
 {
@@ -14,15 +14,15 @@ public:
 	~Altar();
 	virtual bool update();
 	//Activa la resurreción de este altar
-	void activeResurrect() { resurrect_ = true; }
-	//Desactiva la resurreción de mobs 
-	void deactivateResurrect() { resurrect_ = false; }
+	//void activeResurrect() { resurrect_ = true; }
+	////Desactiva la resurreción de mobs 
+	//void deactivateResurrect() { resurrect_ = false; }
 	//Crea los esqueletos 
 	void createMobs(PlayState* playState);
-	//Determina si un esqueleto está fuera de rango de resurreción
-	bool outRange(AltarSkeleton* skeletonRect);
-	//Devuelve true si los mobs pueden resucitar
-	bool canResurrect() { return resurrect_; }
+	////Determina si un esqueleto está fuera de rango de resurreción
+	//bool outRange(AltarSkeleton* skeletonRect);
+	////Devuelve true si los mobs pueden resucitar
+	//bool canResurrect() { return resurrect_; }
 	//Setea al clon los enemigos si son invocados después del taunt
 	void setEnemyToMobs(Clon* enemy);
 	//Devuelve true si quedan mobs vivos en este altar
@@ -30,14 +30,14 @@ public:
 private:
 	//puntero al magordito
 	Enemy* magordito_ = nullptr;
-	//Bool que representa si se puede resucitar a los mobs de este altar
-	bool resurrect_ = false;
+	////Bool que representa si se puede resucitar a los mobs de este altar
+	//bool resurrect_ = false;
 	//vector que representa los mobs asociados al altar
-	vector <AltarSkeleton*> mobs;
+	vector <Skeleton*> mobs;
 	//Variable que representa la cantidad de mobs a crear en este altar
 	int numMobs_ = 1;
 	//Variable que representa el rango del resurrección del altar
-	const double ALTAR_RANGE = 100;
+	const double ALTAR_RANGE = 60;
 	//constantes que representa la anchura del esqueleto
 	const double SKELETON_W = app_->getWindowWidth() / 12;
 	//constantes que representa la altura del esqueleto
@@ -46,7 +46,10 @@ private:
 	const int NUM_FRAMES = 3;
 	const int W_H_FRAME = 150;
 	const int FRAME_RATE = 333;
+	//Número maximo de esqueletos en el altar
+	const int MAX_SKELETON = 3;
 	//inicializa al altar
 	virtual void initObject();
+	void updateVector();
 };
 

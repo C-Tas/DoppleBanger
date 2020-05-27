@@ -189,7 +189,8 @@ void Magordito::teleport()
 	pos_.setVec(Vector2D(newX, newY));
 	auto clon = dynamic_cast<Clon*>(currEnemy_);
 	if(clon != nullptr){ altars[choice]->setEnemyToMobs(clon); }
-	altars[choice]->activeResurrect();
+	//altars[choice]->activeResurrect();
+	altars[choice]->createMobs(static_cast<PlayState*>(app_->getCurrState()));
 }
 
 void Magordito::lostAggro()

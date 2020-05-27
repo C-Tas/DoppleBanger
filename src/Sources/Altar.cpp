@@ -4,6 +4,7 @@
 #include "Magordito.h"
 #include "AltarSkeleton.h"
 #include "Collisions.h"
+#include "Skeleton.h"
 
 void Altar::initObject()
 {
@@ -13,6 +14,15 @@ void Altar::initObject()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+}
+
+void Altar::updateVector()
+{
+	for (int i = 0; i < mobs.size(); i++) {
+		if (mobs[i] == nullptr) {
+			mobs.erase(mobs.begin() + i);
+		}
+	}
 }
 
 Altar::~Altar()
@@ -27,29 +37,35 @@ bool Altar::update() {
 
 void Altar::createMobs(PlayState* playState)
 {
-	for (int i = 0; i < numMobs_; i++) {
-		double xPos = app_->getRandom()->nextInt((int)round(getPosX() - ALTAR_RANGE), (int)round(getPosX() + ALTAR_RANGE));
-		double yPos = app_->getRandom()->nextInt((int)round(getPosY() - ALTAR_RANGE), (int)round(getPosY() + ALTAR_RANGE));
-		AltarSkeleton* skeleton = new AltarSkeleton(app_, { xPos, yPos }, { SKELETON_W,SKELETON_H }, this);
-		playState->addEnemy(skeleton);
-		mobs.push_back(skeleton);
+	updateVector();
+	if (mobs.size() < MAX_SKELETON) {
+
+
+		for (int i = 0; i < numMobs_; i++) {
+			double xPos = app_->getRandom()->nextInt((int)round(getPosX() - ALTAR_RANGE), (int)round(getPosX() + ALTAR_RANGE));
+			double yPos = app_->getRandom()->nextInt((int)round(getPosY() - ALTAR_RANGE), (int)round(getPosY() + ALTAR_RANGE));
+			Skeleton* skeleton = new Skeleton(app_, { xPos, yPos }, { SKELETON_W,SKELETON_H });
+			playState->addEnemy(skeleton);
+			CollisionCtrl::instance()->addEnemy(skeleton);
+			mobs.push_back(skeleton);
+		}
+		magordito_ = playState->getEnemyByTag("Magordito");
+		static_cast<Magordito*>(magordito_)->setAltar(this);
+		playState->swapRenders(magordito_, this);
 	}
-	magordito_ = playState->getEnemyByTag("Magordito");
-	static_cast<Magordito*>(magordito_)->setAltar(this);
-	playState->swapRenders(magordito_, this);
 }
 
-bool Altar::outRange(AltarSkeleton* skeleton)
-{
-	Vector2D center = getCenter();
-	Vector2D skeletonCenter = skeleton->getCenter();
-	Vector2D scaleSkeleton = skeleton->getColliderScale();
-	if (RectBall((float)skeletonCenter.getX(), (float)skeletonCenter.getY(), (float)scaleSkeleton.getX(), (float)scaleSkeleton.getY(),
-		(float)center.getX(), (float)center.getY(), (float)scale_.getX())) {
-		return false;
-	}
-	return true;
-}
+//bool Altar::outRange(AltarSkeleton* skeleton)
+//{
+//	Vector2D center = getCenter();
+//	Vector2D skeletonCenter = skeleton->getCenter();
+//	Vector2D scaleSkeleton = skeleton->getColliderScale();
+//	if (RectBall((float)skeletonCenter.getX(), (float)skeletonCenter.getY(), (float)scaleSkeleton.getX(), (float)scaleSkeleton.getY(),
+//		(float)center.getX(), (float)center.getY(), (float)scale_.getX())) {
+//		return false;
+//	}
+//	return true;
+//}
 
 void Altar::setEnemyToMobs(Clon* enemy)
 {
