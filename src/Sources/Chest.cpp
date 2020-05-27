@@ -40,4 +40,7 @@ bool Chest::update() {
 	return false;
 }
 
-void Chest::onCollider() { open = true; }
+void Chest::onCollider() {
+	open = true;	
+	app_->getAudioManager()->playChannel(Resources::ChestOpeningAudio, 0, Resources::ChestChannelChannel);
+}

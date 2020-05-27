@@ -25,16 +25,19 @@ void ShipState::goIsland(Application* app)
 //Callback del alijo para ir al men� de alijo
 void ShipState::goStashState(Application* app)
 {
+	app->getAudioManager()->playChannel(Resources::ChestOpeningAudio, 0, Resources::ChestChannelChannel);
 	app->getGameStateMachine()->pushState(new StashState(app));
 }
 //Callback del mapa
 void ShipState::goMap(Application* app)
 {
+	app->getAudioManager()->playChannel(Resources::WheelAudio, 0, Resources::ChestChannelChannel);
 	app->getGameStateMachine()->pushState(new SelectLevelState(app));
 }
 //Callback para ir al menu de guardado
 void ShipState::goSaveState(Application* app)
 {
+	app->getAudioManager()->playChannel(Resources::SaveGame, 0, Resources::ChestChannelChannel);
 	app->getGameStateMachine()->pushState(new SaveState(app));
 	app->resetMusicChannels();
 	app->getAudioManager()->playChannel(Resources::MainTheme, -1, Resources::MainMusicChannel);

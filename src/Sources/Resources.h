@@ -471,6 +471,8 @@ public:
 		//Cleon
 		BarrelExplosion,
 		BarrelInitExpl,
+
+
 	};
 
 	enum MusicChannels : int {
@@ -529,6 +531,13 @@ public:
 		CleonChannel3,
 		CleonChannel4,
 		CleonChannel5,
+
+		//NPC
+		NPCChannel1,
+
+		//varios
+		ChestChannelChannel,
+		BulletRemoveChannel,
 
 		//Numero de canales
 		NumSoundChannels,
@@ -695,6 +704,13 @@ public:
 
 		//NPC
 		VenancioTalk,
+		CookerTalk,
+		ParrotTalk,
+		Violin,
+		NavigatorTalk,
+		MortyTalk,
+		MerchantTalk,
+
 
 		//Tienda/inventario/alijo
 		Pag,
@@ -745,6 +761,12 @@ public:
 		//Barril
 		BarrelExpl,
 		InitBarrel,
+
+		//Chest
+		ChestOpeningAudio,
+		BulletDestroy,
+		WheelAudio,
+		SaveGame,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
