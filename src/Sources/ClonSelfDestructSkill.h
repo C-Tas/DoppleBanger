@@ -7,7 +7,7 @@
 class ClonSelfDestructSkill : public Skill
 {
 private:
-	const double RADIUS = player_->getClon()->getScaleX() * 1.5;
+	const double RADIUS = player_->getScaleX()/2;
 	const double DAMAGE = 500;
 	const double COOLDOWN = 5000;	//En milisegundos
 	Cooldown destructCD_;			//Cooldown

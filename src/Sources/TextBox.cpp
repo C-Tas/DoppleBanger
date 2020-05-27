@@ -1188,21 +1188,28 @@ void TextBox::Clon()
 
 void TextBox::LiberationI()
 {
-	Texture text(app_->getRenderer(), "Liberaci" + Resources::tildes_["o"] + "n I: El clon ataca a distancia y a melee", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Liberaci" + Resources::tildes_["o"] + "n I: El clon ataca a distancia", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), "con los stats al 50 % del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), "  y a melee con los stats al 50 % ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+
+	text.loadFromText(app_->getRenderer(), " del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
+	
 
 }
 
 void TextBox::LiberationII()
 {
-	Texture text(app_->getRenderer(), "Liberaci" + Resources::tildes_["o"] + "n II: El clon ataca a distancia y a melee", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	Texture text(app_->getRenderer(), "Liberaci" + Resources::tildes_["o"] + "n II: El clon ataca a distancia ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + lineSpacing);
 
-	text.loadFromText(app_->getRenderer(), " con los stats al 100 % del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.loadFromText(app_->getRenderer(), " y a melee con los stats al 100 % del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 2));
+
+	text.loadFromText(app_->getRenderer(), " del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
 }
 
 void TextBox::Explosion()

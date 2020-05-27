@@ -216,14 +216,14 @@ void Cleon::createBarrel()
 
 void Cleon::initialStats()
 {
-	rangeVision_ = 300;
-	initHealth_ = 4000;
+	rangeVision_ = 500;
+	initHealth_ = 8000;
 	initMana_ = 100;
 	initManaReg_ = 1;
-	initArmor_ = 15;
+	initArmor_ = 30;
 	initMeleeDmg = 350;
-	initDistDmg = 550;
-	initCrit_ = 0;
+	initDistDmg = 300;
+	initCrit_ = 10;
 	initMeleeRange = 60;
 	initDistRange_ = 350;
 	initMoveSpeed = 100;
