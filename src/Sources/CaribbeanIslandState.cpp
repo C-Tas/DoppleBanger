@@ -47,8 +47,8 @@ void CaribbeanIslandState::initState()
 	gm_->setOnShip(false);
 
 	//Inicializamos el mapa de la zona 1
-	initZone1();
-
+	//initZone1();
+	initBossZone();
 	//Inicializamos el hud
 	hud_ = new HUD(app_);
 	player_->initSkills();

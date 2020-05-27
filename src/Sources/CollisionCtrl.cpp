@@ -63,8 +63,8 @@ void CollisionCtrl::islandCollisions() {
 
 	//Colisi�n enemigo con jugador o con balas del jugador
 	for (auto enem : enemies_) {
-		if (player_ != nullptr && Collisions::collidesWithRotation(enem->getColliderPos(), enem->getColliderScale().getX(), enem->getColliderScale().getY(), enem->getCollisionRot(),
-			player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY(), player_->getCollisionRot())) {
+		if (player_ != nullptr && Collisions::collidesWithRotation(enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot(),
+			player_->getPos(), player_->getScaleX(), player_->getScaleY(), player_->getCollisionRot())) {
 			enem->onCollider();
 			//Cuando el jugador colisiona con el enemigo recibe da�o
 			//Falta a�adir el m�todo correspondiente
@@ -72,7 +72,7 @@ void CollisionCtrl::islandCollisions() {
 		if (enem != nullptr) {
 			for (auto bullet : playerBullets_) {
 				if (Collisions::collidesWithRotation(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(), bullet->getCollisionRot(),
-					enem->getColliderPos(), enem->getColliderScale().getX(), enem->getColliderScale().getY(), enem->getCollisionRot())) {
+					enem->getPos(), enem->getScaleX(), enem->getScaleY(), enem->getCollisionRot())) {
 					if (bullet != nullptr) {
 						enem->receiveDamage((int)round(bullet->getDamage()));
 						if (bullet->getRicochet()) {	//Cuando esté rebotando
@@ -91,7 +91,7 @@ void CollisionCtrl::islandCollisions() {
 	//Colisi�n bala del enemigo con jugador
 	for (auto bullet : enemyBullets_) {
 		if (player_ != nullptr && Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
-			player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
+			player_->getPos(), player_->getScaleX(), player_->getScaleY())) {
 			// si la bala puede hacer da�o al jugador
 			if (bullet->doDamage()) {
 				player_->receiveDamage(bullet->getDamage());//el jugador recibe da�o

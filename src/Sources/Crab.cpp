@@ -142,12 +142,12 @@ void Crab::initObject()
 	rangeVision_ = 40;
 	nextTarget_ = pos_;
 	app_->getAudioManager()->playChannel(Resources::CrabIdleSound, 0, Resources::CrabChannel1);
-	double w = 2 / 4,
+	/*double w = 2 / 4,
 		h = 1 / 3,
 		x = 1 / 4,
 		y = 1 / 3;
 	scaleCollision_.setVec(Vector2D(scale_.getX() * w, scale_.getY() * h));
-	posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);
+	posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);*/
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 	tag_ = "Crab";
 }

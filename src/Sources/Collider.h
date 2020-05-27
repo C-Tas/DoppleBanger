@@ -45,7 +45,8 @@ public:
 	const double getCollisionRot() { return collisionRot_; };
 	///<summary>Devuelve el rect con el area de colisiones</summary>
 	const SDL_Rect& getCollider() {
-		collisionArea_.x =(int)round(posCollision_.getX());
+		posCollision_ = pos_;   //TODO Provisional -> esta línea se borrará, o no, al parecer no es tan provisional
+		collisionArea_.x = (int)round(posCollision_.getX());
 		collisionArea_.y = (int)round(posCollision_.getY());
 		collisionArea_.w = (int)round(scaleCollision_.getX());
 		collisionArea_.h = (int)round(scaleCollision_.getY());

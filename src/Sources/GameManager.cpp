@@ -649,9 +649,9 @@ void GameManager::loadUsableType(jute::jValue& mainJson, string tag, int i)
 void GameManager::resetGameManager()
 {
 	//Reset isla actual
-	currIsland_ = Island::Spooky;
+	currIsland_ = Island::Caribbean;
 	//Reset islas desbloqueadas
-	unlockedIslands_ = Island::Spooky;
+	unlockedIslands_ = Island::Caribbean;
 	//Reset oro acumulado
 	inventoryGold_ = 0;
 	stashGold_ = 0;
