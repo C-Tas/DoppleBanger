@@ -36,7 +36,7 @@ private:
 	Cooldown lifeTimeCD_;
 	Cooldown meleeCD_;	//Cooldown ataque melee
 
-	const double DURATION_ = 8000; //En milisegundos
+	const double DURATION_ = 5000; //En milisegundos
 	const int CLON_TAUNT_RANGE = 500;
 
 	Actor* objective_ = nullptr;

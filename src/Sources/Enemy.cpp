@@ -103,6 +103,7 @@ Vector2D Enemy::TileToPos(Vector2D tile)
 void Enemy::initDie()
 {
 	Actor::initDie();
+	initRewards();
 	CollisionCtrl::instance()->removeEnemy(this);
 	auto aux = dynamic_cast <PlayState*>(app_->getCurrState());
 	if (aux) {
