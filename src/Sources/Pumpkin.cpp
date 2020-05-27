@@ -166,8 +166,13 @@ void Pumpkin::move(Point2D posToReach) {
 	{
 		pathPos_ = { (int)PosToTile(target_).getX(), (int)PosToTile(target_).getY() };
 		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
-		if (pathing_.size() > 1)
+		if (pathing_.size() > 1) {
 			target_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+
+			updateDirVisObjective(target_);
+			texture_ = moveTx_[(int)currDir_];
+			currAnim_ = moveAnims_[(int)currDir_];
+		}
 	}
 	dir_.setVec(target_ - getCenter());
 	dir_.normalize();

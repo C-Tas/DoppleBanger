@@ -98,8 +98,8 @@ private:
 	const double W_SKELETON = app_->getWindowWidth() / 12;
 	const double H_SKELETON = app_->getWindowHeight() / 5;
 
-	const double W_WOLF= app_->getWindowWidth() / 20;
-	const double H_WOLF = app_->getWindowHeight() / 15;
+	const double W_WOLF= app_->getWindowWidth() / 8;
+	const double H_WOLF = app_->getWindowHeight() / 6;
 
 	const double W_PUMPKIN = app_->getWindowWidth() / 20;
 	const double H_PUMPKIN = app_->getWindowHeight() / 15;
