@@ -543,7 +543,7 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 #pragma endregion
 #pragma region ClonSounds
 	//Clon
-	//{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
+	{ ClonExplosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
 #pragma endregion
 
 	//Lobo
@@ -765,6 +765,7 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ NPCChannel1, 30 },
 	{ ChestChannelChannel, 10 },
 	{ BulletRemoveChannel, 7 },
+	{ ClonChannel1,8},
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{

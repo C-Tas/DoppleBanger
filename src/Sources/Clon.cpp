@@ -212,6 +212,7 @@ void Clon::initSelfDestruction() {
 	frame_.h = currAnim_.heightFrame_;
 }
 void Clon::initVanish() {
+	app_->getAudioManager()->playChannel(Resources::ClonExplosion, 0, Resources::SoundChannels::ClonChannel1);
 	currState_ = STATE::VANISH;
 	//Aquí no hace falta actualizar la dirección porque desaparecerá en la dirección que estuviese previamente
 	texture_ = vanishTx_[(int)currDir_];

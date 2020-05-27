@@ -533,6 +533,9 @@ public:
 		CleonChannel4,
 		CleonChannel5,
 
+		//clon
+		ClonChannel1,
+
 		//NPC
 		NPCChannel1,
 
@@ -614,7 +617,7 @@ public:
 		Hurt4,
 
 		//CLon
-		Explosion,
+		ClonExplosion,
 
 		//Efectos para el lobo
 		WolfAttack1,
