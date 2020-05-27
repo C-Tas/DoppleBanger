@@ -22,6 +22,7 @@ public:
 	virtual bool update();
 	virtual void onCollider() {
 		if (!deleting) {
+			app_->getAudioManager()->playChannel(Resources::BulletDestroy, 0, Resources::BulletRemoveChannel);
 			deleting = true;
 			app_->getCurrState()->removeRenderUpdateLists(this);
 		};

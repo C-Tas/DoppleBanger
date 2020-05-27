@@ -72,7 +72,7 @@ void Crab::initMeleeAnim()
 void Crab::initWalk()
 {
 	currEnemy_ = nullptr;
-	app_->getAudioManager()->playChannel(Resources::CrabWalk, -1, Resources::CrabChannel2);
+	app_->getAudioManager()->playChannel(Resources::AudioId::CrabIdleSound, -1, Resources::CrabChannel2);
 	currState_ = STATE::PATROLLING;
 	texture_ = walkTex_;
 	currAnim_ = walkAnim_;

@@ -640,8 +640,16 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	//Tutorial
 	{ Glass, "../Sources/assets/efectos_sonido/tutorial/glass.wav" },
 	{ DummyDie, "../Sources/assets/efectos_sonido/tutorial/dummy.wav" },
+
 	//NPC
-	{ VenancioTalk, "../Sources/assets/efectos_sonido/tutorial/VenancioTalk.wav" },
+	{ VenancioTalk, "../Sources/assets/efectos_sonido/NPC/VenancioLaught.wav" },
+	{ CookerTalk, "../Sources/assets/efectos_sonido/NPC/cocinera.wav" },
+	{ ParrotTalk, "../Sources/assets/efectos_sonido/NPC/parrot.mp3" },
+	{ Violin, "../Sources/assets/efectos_sonido/NPC/violin.wav" },
+	{ NavigatorTalk, "../Sources/assets/efectos_sonido/NPC/navegante.mp3" },
+	{ MortyTalk, "../Sources/assets/efectos_sonido/NPC/morty.wav" },
+	{ MerchantTalk, "../Sources/assets/efectos_sonido/NPC/mercader.ogg" },
+
 	//Otros
 	{ Agro ,"../Sources/assets/efectos_sonido/agro.mp3" },
 	//inventario/tienda/alijo
@@ -692,6 +700,12 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ CleonTheme ,"../Sources/assets/efectos_sonido/cleon/cleonTheme.mp3" },
 	{ BarrelExpl ,"../Sources/assets/efectos_sonido/cleon/explosión.wav" },
 	{ InitBarrel ,"../Sources/assets/efectos_sonido/cleon/initBarrel.wav" },
+
+	//Varios
+	{ ChestOpeningAudio ,"../Sources/assets/efectos_sonido/varios/chestOp.wav" },
+	{ BulletDestroy ,"../Sources/assets/efectos_sonido/varios/bulletRemove.wav" },
+	{ WheelAudio ,"../Sources/assets/efectos_sonido/varios/timon.wav" },
+	{ SaveGame ,"../Sources/assets/efectos_sonido/varios/saveGame.wav" },
 };
 
 vector<Resources::AudioVolume> Resources::audioVolume{
@@ -747,6 +761,9 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ CleonChannel3, 10 },
 	{ CleonChannel4, 10 },
 	{ CleonChannel5, 10 },
+	{ NPCChannel1, 30 },
+	{ ChestChannelChannel, 10 },
+	{ BulletRemoveChannel, 7 },
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{

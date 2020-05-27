@@ -374,28 +374,51 @@ void CollisionCtrl::drawTextBox() {
 	switch (npcCollision.id) {
 	case NPCsNames::ElderMan:
 		if(canTalk){
-			GameManager::instance()->getApp()->getAudioManager()->setChannelVolume(80, (int)EFFECT::NPC);
-			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::VenancioTalk, 0, (int)EFFECT::NPC);
+			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::VenancioTalk, 0, Resources::SoundChannels::NPCChannel1);
 			canTalk = false;
 		}
 		npcCollision.object->getTextBox()->dialogElderMan(numConversation_);
 		break;
 	case NPCsNames::Merchant:
+		if (canTalk) {
+			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::MerchantTalk, 0, Resources::SoundChannels::NPCChannel1);
+			canTalk = false;
+		}
 		npcCollision.object->getTextBox()->dialogMerchant(randomPhrase_);
 		break;
 	case NPCsNames::Chef:
+		if (canTalk) {
+			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::CookerTalk, 0, Resources::SoundChannels::NPCChannel1);
+			canTalk = false;
+		}
 		npcCollision.object->getTextBox()->dialogChef(onShip, numConversation_);
 		break;
 	case NPCsNames::Morty:
+		if (canTalk) {
+			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::MortyTalk, 0, Resources::SoundChannels::NPCChannel1);
+			canTalk = false;
+		}
 		npcCollision.object->getTextBox()->dialogMorty(onShip, numConversation_);
 		break;
 	case NPCsNames::Parrot:
+		if (canTalk) {
+			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::ParrotTalk, 0, Resources::SoundChannels::NPCChannel1);
+			canTalk = false;
+		}
 		npcCollision.object->getTextBox()->dialogParrot(randomPhrase_);
 		break;
 	case NPCsNames::Skeleton:
+		if (canTalk) {
+			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::Violin, 0, Resources::SoundChannels::NPCChannel1);
+			canTalk = false;
+		}
 		npcCollision.object->getTextBox()->dialogSkeleton(onShip);
 		break;
 	case NPCsNames::Cartographer:
+		if (canTalk) {
+			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::NavigatorTalk, 0, Resources::SoundChannels::NPCChannel1);
+			canTalk = false;
+		}
 		npcCollision.object->getTextBox()->dialogCartographer(onShip, numConversation_);
 		break;
 	default:
