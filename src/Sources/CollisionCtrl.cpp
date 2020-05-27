@@ -292,6 +292,13 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 void CollisionCtrl::tutorialCollision()
 {
+
+	//Quitamos a los cofres de la lista
+	for (auto it = chestsToErase_.begin(); it != chestsToErase_.end(); ++it) {
+		chests_.remove(*it);
+	}
+	chestsToErase_.clear();
+
 	if (bottle_ != nullptr && GameManager::instance()->getVenancioPhase() == 1) {
 		for (auto bullet : playerBullets_) {
 			if (Collisions::collides(bullet->getPos(), bullet->getScaleX(), bullet->getScaleY(),
