@@ -815,6 +815,11 @@ playerEquipment& GameManager::initEquipment(){
 	return currEquip_;
 }
 
+void GameManager::activeHealthBoss(Actor* boss)
+{
+	if (hud_ != nullptr) hud_->createHealthBoss(boss);
+}
+
 void GameManager::addToInventory(Item* ob) {
 	//creamos un boton
 	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);

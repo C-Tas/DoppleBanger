@@ -147,6 +147,8 @@ public:
 		ReboteIcon,
 		TorbellinoIcon,
 		ClonIcon,
+		BossHealthBg,
+		BossHealthBar,
 
 		//Objects
 		HealthPot,

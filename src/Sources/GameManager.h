@@ -468,6 +468,9 @@ public:
 	inline void setCurrentPlayerLife(double newPlayerLife) { currPlayerLife_ = newPlayerLife; }
 	//Devuelve el currentMana del player
 	inline void setCurrentPlayerMana(double newPlayerMana) { currPlayerMana_ = newPlayerMana; }
+
+	//Activa el HUD del boss
+	void activeHealthBoss(Actor* boss);
 #pragma endregion
 	//Para añadir objetos al inventario
 	void addToInventory(Item* ob);

@@ -223,8 +223,8 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 			if (Collisions::collides(npc.object->getColliderPos(), npc.object->getColliderScale().getX(), npc.object->getColliderScale().getY(),
 				player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
-					player_->stop();
-					player_->setPos(player_->getPreviousPos());
+					/*player_->stop();
+					player_->setPos(player_->getPreviousPos());*/
 			}
 
 			onShip = true;

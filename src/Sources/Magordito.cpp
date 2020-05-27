@@ -47,6 +47,7 @@ bool Magordito::update() {
 }
 
 void Magordito::initObject() {
+	GameManager::instance()->activeHealthBoss(this);
 	texture_ = app_->getTextureManager()->getTexture(Resources::Magordito);
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getX(),(int)scale_.getX(),(int)scale_.getY() });
 	/*double w = 2 / 4,
