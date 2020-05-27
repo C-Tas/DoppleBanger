@@ -5,6 +5,7 @@
 
 void Barrel::initObject()
 {
+	app_->getAudioManager()->playChannel(Resources::InitBarrel, 0, Resources::CleonChannel5);
 	activeBarrel_.initCooldown(BARREL_TIME_ACTIVE);
 	initAnims();
 }
@@ -25,6 +26,7 @@ bool Barrel::update()
 	}
 	else if (currState_ == BARREL_STATE::EXPLODING) { //Hace daño a los que tenga a rango
 		if (currAnim_.currFrame_ == EXPLOTION_ACTION && !applyDmg_) {
+			app_->getAudioManager()->playChannel(Resources::BarrelExpl, 0, Resources::CleonChannel5);
 			applyRangeDmg();
 			applyDmg_ = true;
 		}

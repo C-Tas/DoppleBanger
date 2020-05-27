@@ -4,6 +4,10 @@
 #include "Player.h"
 #include "Collisions.h"
 
+//channel 1 interacciones
+//		  2 bloqueo y melee
+//		  3 risa
+//		  4 movimiento
 
 bool Cleon::update() {
 	//ESTADOS A TENER EN CUENTA ->THRUSTINg(estocada), CHARGING(carga), CHARGING_EMPOWERED(barrido)
@@ -15,6 +19,7 @@ bool Cleon::update() {
 
 	//si Cleon muere
 	if (currState_ == STATE::DYING) {
+		app_->getAudioManager()->playChannel(Resources::CleonDie, 0, Resources::CleonChannel1);
 		applyRewards();
 		CollisionCtrl::instance()->removeEnemy(this);
 		app_->getCurrState()->removeRenderUpdateLists(this);
@@ -36,41 +41,64 @@ bool Cleon::update() {
 		else if (onRange(currStats_.meleeRange_) && !lastSweep_.isCooldownActive()) initSwept();
 		else if (onRange(CHARGE_RANGE) && !lastCharge_.isCooldownActive()) initCharge();
 		else {
-			if (lastDir_ != currDir_)initRun();
+			if (lastDir_ != currDir_) {
+				cout << "init run atacking \n";
+				initRun();
+			}
 			else selectTarget();
 		}
 	}
-
 	if (currState_ == STATE::CHARGING) {
-		selectTarget();
-		SDL_Rect targetRect = { (int)round(target_.getX()),(int)round(target_.getY()),25,25 };
+		SDL_Rect targetRect = { (int)round(chargePoint_.getX()),(int)round(chargePoint_.getY()),25,25 };
 		//Cle�n llego al destino de su carga
-		if (SDL_HasIntersection(&getDestiny(), &targetRect) && !attacked_) {
+		if (SDL_HasIntersection(&getDestiny(), &targetRect) ) {
+			cout << "LLEGA A DESTINO \n";
 			auto currEnemy = dynamic_cast<Player*>(currEnemy_);
 			//Si Cle�n colisiona contra el player
-			if (currEnemy && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny())) {
+			if (currEnemy != nullptr && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny()) && !attacked_) {
+				cout << "CHOCA PLAYER \n";
 				double realDamage = CHARGE_DMG;
 				if (applyCritic()) realDamage *= 1.5;
 				currEnemy->receiveDamage(realDamage);
 				combo();
+				attacked_ = true;
 			}
 			currState_ = STATE::IDLE;
-			currStats_.moveSpeed_ = movSpeed_;
-			attacked_ = true;
+			currStats_.moveSpeed_ = MOVE_SPEED;
 		}
+
 	}
 	
 	if (currState_ == STATE::THRUSTING)thrustAnim();
 	//Si el Cleon está en barrido
 	else if (currState_ == STATE::CHARGING_EMPOWERED)sweptAnim();
 	//Si Cle�n no está todavía en following y no está en carga o en cualquier otro estado de ataque
-	else if (currState_ == STATE::IDLE) initMove();
+	else if (currState_ == STATE::IDLE) initRun();
 	//El estado es following
 	else {
-		if (lastDir_ != currDir_)initRun();
+		if (lastDir_ != currDir_) {
+			cout << "init run following \n";
+			initRun();
+		}
 		else selectTarget();
 	}
 
+	if (!walkTime_.isCooldownActive() && currState_ == STATE::ATTACKING) {
+		walkTime_.initCooldown(WALK_TIME);
+		app_->getAudioManager()->playChannel(Resources::CleonWalk, 0, Resources::CleonChannel4);
+	}
+	else if (currState_ != STATE::ATTACKING) {
+		app_->getAudioManager()->haltChannel(Resources::CleonChannel4);
+	}
+
+	if (!iteraction_.isCooldownActive()) {
+		iteraction_.initCooldown(ITER_TIME);
+		auto choice = app_->getRandom()->nextInt(Resources::CleonInter1, Resources::CleonInter7 + 1);
+		app_->getAudioManager()->playChannel(choice, 0, Resources::CleonChannel1);
+		app_->getAudioManager()->haltChannel(Resources::CleonChannel3);
+		app_->getAudioManager()->haltChannel(Resources::CleonChannel5);
+	}
+	cout << "FIN UPDATE \n";
 	return false;
 }
 
@@ -85,6 +113,8 @@ void Cleon::receiveDamage(double damage)
 		lastTint_ = SDL_GetTicks();
 		feedBackHurtSounds();
 		//Reduccion de da�o
+		/*auto choice = app_->getRandom()->nextInt(Resources::CleonHurt1, Resources::CleonHurt4 + 1);
+		app_->getAudioManager()->playChannel(choice, 0, Resources::CleonChannel1);*/
 		double realDamage = damage - (damage * currStats_.armor_ / 100);
 		currStats_.health_ -= realDamage;
 		if (currStats_.health_ <= 0) {
@@ -93,19 +123,32 @@ void Cleon::receiveDamage(double damage)
 	}
 	else
 	{
-		app_->getAudioManager()->playChannel(Resources::CleonLaugh, 0, Resources::CleonChannel3);
+		app_->getAudioManager()->playChannel(Resources::CleonBlock, 0 , Resources::CleonChannel2);
+		if (!laugh_.isCooldownActive()) {
+			laugh_.initCooldown(LAUGH_TIME);
+			app_->getAudioManager()->setChannelVolume(10, Resources::CleonChannel3);
+			app_->getAudioManager()->playChannel(Resources::CleonLaugh, 0, Resources::CleonChannel3);
+		}
 	}
 }
 
 void Cleon::lostAggro()
 {
-	app_->getAudioManager()->playChannel(Resources::CleonLaugh, 0, Resources::CleonChannel2);
+	initIdle();
+	if (!laugh_.isCooldownActive()) {
+		laugh_.initCooldown(LAUGH_TIME);
+		app_->getAudioManager()->setChannelVolume(10, Resources::CleonChannel3);
+		app_->getAudioManager()->playChannel(Resources::CleonLaugh, 0, Resources::CleonChannel3);
+	}
 	auto newEnemy = static_cast<GameObject*>(player_);
 	currEnemy_ = newEnemy;
+	currStats_.moveSpeed_ = movSpeed_;
 }
 
 void Cleon::thrust()
 {
+	auto meleeSound = app_->getRandom()->nextInt(Resources::CleonSword1, Resources::CleonSword4 + 1);
+	app_->getAudioManager()->playChannel(meleeSound, 0, Resources::CleonChannel2);
 	lastThrust_.initCooldown(THRUST_TIME);
 	if (!attacked_) {
 		cout << currAnim_.currFrame_ << endl;
@@ -129,12 +172,8 @@ void Cleon::combo() {
 
 void Cleon::pirateCharge()
 {
-	auto chance = app_->getRandom()->nextInt(Resources::CleonInter1, Resources::CleonInter7 + 1);
-	app_->getAudioManager()->playChannel(chance, 0, Resources::CleonChannel2);
-
 	lastCharge_.initCooldown(CHARGE_TIME);
-	target_ = player_->getCenter();
-	movSpeed_ = currStats_.moveSpeed_;
+	chargePoint_ = currEnemy_->getCenter();
 	currStats_.moveSpeed_ = CHARGE_SPEED;
 
 	Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
@@ -145,7 +184,6 @@ void Cleon::pirateCharge()
 
 void Cleon::swept()
 {
-	
 	lastSweep_.initCooldown(SWEEP_TIME);
 	if (!attacked_) {
 		auto sweepAttack = dynamic_cast<Player*>(currEnemy_);
@@ -160,7 +198,11 @@ void Cleon::createBarrel()
 {
 	if (barrelsInGame < NUM_MAX_BARREL && !lastBarrel_.isCooldownActive()) {
 		lastBarrel_.initCooldown(BARREL_CREATOR);
-		app_->getAudioManager()->playChannel(Resources::CleonBarril, 0, Resources::CleonChannel1);
+		auto barrilSound = app_->getRandom()->nextInt(0, 7);
+		if (barrilSound == 6) {
+			app_->getAudioManager()->setChannelVolume(10, Resources::CleonChannel5);
+			app_->getAudioManager()->playChannel(Resources::CleonBarril, 0, Resources::CleonChannel5);
+		}
 		auto chance = app_->getRandom()->nextInt(0, BARREL_CHANCE + 1);
 		if (chance == BARREL_CHANCE) {
 			Barrel* currBarrel = new Barrel(app_, pos_, Vector2D(BARREL_W, BARREL_H), this);
@@ -173,17 +215,17 @@ void Cleon::createBarrel()
 
 void Cleon::initialStats()
 {
-	rangeVision_ = 300;
+	rangeVision_ = 500;
 	HEALTH = 4000;
 	MANA = 100;
 	MANA_REG = 1;
 	ARMOR = 10;
 	MELEE_DMG = 20;
 	DIST_DMG = 300;
-	CRIT = 0;
+	CRIT = 10;
 	MELEE_RANGE = 50;
 	DIST_RANGE = 350;
-	MOVE_SPEED = 100;
+	MOVE_SPEED = 50;
 	MELEE_RATE = 1;
 	DIST_RATE = 2500;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
@@ -267,6 +309,9 @@ void Cleon::updateCooldowns()
 	if (lastCharge_.isCooldownActive()) lastCharge_.updateCooldown();//
 	if (lastBarrel_.isCooldownActive()) lastBarrel_.updateCooldown();
 	if (lastSweep_.isCooldownActive())lastSweep_.updateCooldown();
+	if (walkTime_.isCooldownActive())walkTime_.updateCooldown();
+	if (iteraction_.isCooldownActive())iteraction_.updateCooldown();
+	if (laugh_.isCooldownActive())laugh_.updateCooldown();
 }
 
 void Cleon::move(Point2D target)
@@ -283,7 +328,8 @@ void Cleon::selectTarget()
 {
 	if (currEnemy_ != nullptr) {
 
-		if (!Physics::PointBall((float)currEnemy_->getCenter().getX(), (float)currEnemy_->getCenter().getY(), (float)getCenter().getX(), (float)getCenter().getY(), currStats_.meleeRange_/2)) {
+		if (!Physics::PointBall((float)currEnemy_->getCenter().getX(), (float)currEnemy_->getCenter().getY(), 
+			(float)getCenter().getX(), (float)getCenter().getY(), currStats_.meleeRange_)) {
 			target_ = currEnemy_->getCenter() /*+ offset*/;
 			move(currEnemy_->getCenter());
 			updateDirVisObjective(currEnemy_);
@@ -304,6 +350,8 @@ void Cleon::initIdle() {
 
 void Cleon::initSwept()
 {
+	auto meleeSound = app_->getRandom()->nextInt(Resources::CleonSword1, Resources::CleonSword4 + 1);
+	app_->getAudioManager()->playChannel(meleeSound, 0, Resources::CleonChannel2);
 	lastSweep_.initCooldown(SWEEP_TIME);
 	currState_ = STATE::CHARGING_EMPOWERED;
 	int dir = (int)currDir_;
@@ -333,6 +381,8 @@ void Cleon::initSwept()
 }
 
 void Cleon::initThrust() {
+	auto meleeSound = app_->getRandom()->nextInt(Resources::CleonSword1, Resources::CleonSword4 + 1);
+	app_->getAudioManager()->playChannel(meleeSound, 0, Resources::CleonChannel2);
 	currState_ = STATE::THRUSTING;
 	attacked_ = false;
 	switch (currDir_)
@@ -370,7 +420,8 @@ void Cleon::initRun() {
 }
 
 void Cleon::initCharge() {
-
+	selectTarget();
+	app_->getAudioManager()->playChannel(Resources::CleonCharge, 0, Resources::CleonChannel2);
 	currState_ = STATE::CHARGING;
 	int dir = (int)currDir_;
 	attacked_ = false;
@@ -381,17 +432,6 @@ void Cleon::initCharge() {
 	frame_.h = currAnim_.heightFrame_;
 
 	pirateCharge();
-}
-
-void Cleon::initMove()
-{
-	int dir = (int)currDir_;
-	attacked_ = false;
-	texture_ = runTxt_[dir];
-	currAnim_ = runAnim_[dir];
-	frame_.x = 0; frame_.y = 0;
-	frame_.w = currAnim_.widthFrame_;
-	frame_.h = currAnim_.heightFrame_;
 }
 
 void Cleon::thrustAnim()

@@ -3,6 +3,7 @@
 
 void TestState::initState()
 {
+	app_->getAudioManager()->haltChannel(Resources::MainMusicChannel);
 	//Borramos la lista de objetos del CollisionCtrl
 	collisionCtrl_->clearList();
 	gm_->setOnShip(false);

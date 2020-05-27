@@ -695,6 +695,25 @@ public:
 		CleonInter6,
 		CleonInter7,
 		CleonLaugh,
+		CleonWalk,
+		CleonAttack1,
+		CleonAttack2,
+		CleonAttack3,
+		CleonBlock,
+		CleonCharge,
+		CleonHurt1,
+		CleonHurt2,
+		CleonHurt3,
+		CleonHurt4,
+		CleonSword1,
+		CleonSword2,
+		CleonSword3,
+		CleonSword4,
+		CleonRun,
+		CleonTheme,
+		//Barril
+		BarrelExpl,
+		InitBarrel,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>

@@ -58,6 +58,8 @@ private:
 	const int CHARGE_DMG = 300;
 			//M�todo que crea la carga del pirata
 	void pirateCharge();
+			//auxiliar de target
+	Vector2D chargePoint_;
 	
 		//* Barrido
 	void swept();
@@ -101,7 +103,6 @@ private:
 	virtual void initIdle();
 	void initSwept();
 	void initCharge();
-	void initMove();
 
 	//gestores de las animaciones
 	void thrustAnim();
@@ -124,7 +125,12 @@ private:
 	vector<Texture*> sweptTxt_;
 
 	bool attacked_ = false;
-
+	Cooldown walkTime_;
+	const int WALK_TIME = 750;
+	Cooldown iteraction_;
+	const int ITER_TIME = 10000;
+	Cooldown laugh_;
+	const int LAUGH_TIME = 3000;
 #pragma region Constantes
 	//Frame en el cual vamos a atacar
 	int frameAction_ = 0;
