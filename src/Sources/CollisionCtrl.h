@@ -56,9 +56,9 @@ public:
 	///<summary>Para renderizar los textBox en caso de ser necesario</summary>
 	void drawTextBox();
 	///<summary>Devuelve los objetos en un area</summary>
-	list<Enemy*> getEnemiesInArea(Point2D center, int radius);
+	list<Enemy*> getEnemiesInArea(Point2D center, double radius);
 	//Devuelve los objetos un área
-	list<Collider*> getEntitiesInArea(Point2D center, int radius);
+	list<Collider*> getEntitiesInArea(Point2D center, double radius);
 
 #pragma region Remove
 	///<summary>Quita las colisiones con el NPC (si el NPC se desbloquea y deja de aparecer en la isla)</summary>

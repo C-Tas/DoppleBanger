@@ -7,25 +7,23 @@ class ClonSkill : public Skill
 {
 private:
 	const double COOLDOWN = 10000;	//En milisegundos
-	const int CLON_SPAWN_RANGE = 700;
-	const double MANA_COST = 100;
+	const double CLON_SPAWN_RANGE = player_->getScaleX() * 3.5;
+	const double MANA_COST = 0.10;	//Porcentaje de mana
 public:
-	ClonSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) { costMana_ = MANA_COST; };
+	ClonSkill(Player* player) : Skill(player, SkillType::Active, SkillBranch::Physical) {};
 	virtual ~ClonSkill() {};
 
 	virtual void action() {
-		double mana = player_->getMana();
+		double mana = player_->getMaxMana();
+		costMana_ = mana * MANA_COST;
+		Vector2D dist = Vector2D(HandleEvents::instance()->getRelativeMousePos().getX() - player_->getPos().getX(), HandleEvents::instance()->getRelativeMousePos().getY() - player_->getPos().getY());
 		//Si no est� en cooldown la habilidad y hay mana suficiente
-		if (mana >= costMana_ && !skillCD_.isCooldownActive())
+		if (costMana_ <= player_->getMana() && !skillCD_.isCooldownActive() && dist.magnitude() <= CLON_SPAWN_RANGE)
 		{
-			Vector2D dist = Vector2D(HandleEvents::instance()->getRelativeMousePos().getX() - player_->getPos().getX(), HandleEvents::instance()->getRelativeMousePos().getY() - player_->getPos().getY());
-			if (dist.magnitude() <= CLON_SPAWN_RANGE)
-			{
-				player_->addMana(-costMana_);
-				player_->createClon();
-				skillCD_.initCooldown(COOLDOWN);
-				GameManager::instance()->setSkillCooldown(true, Key::R);
-			}
+			player_->addMana(-costMana_);
+			player_->createClon();
+			skillCD_.initCooldown(COOLDOWN);
+			GameManager::instance()->setSkillCooldown(true, Key::R);
 		}
 	};
 };

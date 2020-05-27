@@ -15,10 +15,11 @@ public:
 	virtual ~Kraken();
 
 	virtual bool update();
+	virtual void initDie();
 	virtual void initObject();
 	virtual void onCollider() {};
 	void tentDeath(Tentacle* obj);
-	virtual void initialStats() {};
+	virtual void initialStats();
 	virtual void lostAggro();
 	virtual void initRewards();
 	//Se redefine como publico porque el tentaculo necesita acceso a el
@@ -82,20 +83,5 @@ private:
 	const uint W_FRAME_EXIT = 190;
 	const uint H_FRAME_EXIT = 85;
 	const int FRAME_RATE_EXIT = 200;
-#pragma endregion
-
-#pragma region Stats
-	const double HEALTH = 5000;
-	const double MANA = 0;
-	const double MANA_REG = 0;
-	const double ARMOR = 10;
-	const double MELEE_DMG = 5;
-	const double DIST_DMG = 75;
-	const double CRIT = 0;
-	const double MELEE_RANGE = 0;
-	const double DIST_RANGE = 0;
-	const double MOVE_SPEED = 0;
-	const double MELEE_RATE = 2000;	//En milisegundos
-	const double DIST_RATE = 5000;	//En milisegundos
 #pragma endregion
 };

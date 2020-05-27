@@ -36,7 +36,6 @@ private:
 	///<summary>crea los 4 botones necesarios del main menu</summary>
 	void createButtons();
 
-
 	void changeMuteSound(); //Cambia la textura del botón muteMusic
 	void changeMuteMusic();	//Cambia la textura del botón muteSound
 #pragma region Callbacks

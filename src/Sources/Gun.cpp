@@ -18,14 +18,14 @@ void Gun::equip(Player* player)
 {
 	player->addDistDmg(distDmg_);
 	player->addDistRange(distRange_);
-	player->addDistRate(distRate_);
+	player->addDistRate(-distRate_);
 }
 
 void Gun::remove(Player* player)
 {
 	player->addDistDmg(-distDmg_);
 	player->addDistRange(-distRange_);
-	player->addDistRate(-distRate_);
+	player->addDistRate(distRate_);
 }
 
 void Gun::getDescription(TextBox* tex)

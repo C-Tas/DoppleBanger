@@ -76,6 +76,13 @@ void TextBox::unlockMortyReward(Application* app)
 	GameManager::instance()->setMissionRewardObtained(missions::papelesSiniestros, true);
 }
 
+void TextBox::unlockMusicianReward(Application* app)
+{
+	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
+	GameManager::instance()->setCompleteMission(missions::laboon, true);
+	GameManager::instance()->setMissionRewardObtained(missions::laboon, true);
+}
+
 void TextBox::unlockNamiReward(Application* app)
 {
 	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
@@ -639,9 +646,6 @@ void TextBox::dialogMorty(bool unlock, int num) {
 
 				break;
 			}
-
-
-
 		}
 	}
 	//Di�logo del Morty cuando a�n est� bloqueado
@@ -669,7 +673,7 @@ void TextBox::dialogMorty(bool unlock, int num) {
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
 
-				text.loadFromText(app_->getRenderer(), "Mira, hazme el favor y mata a 3 esqueletos de por ah" + Resources::tildes_["i"] + ". Los reconocer" + Resources::tildes_["a"] + "s cuando los veas, est" + Resources::tildes_["a"] + "n en los huesos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "Mira, hazme el favor y mata a 4 esqueletos de por ah" + Resources::tildes_["i"] + ". Los reconocer" + Resources::tildes_["a"] + "s cuando los veas, est" + Resources::tildes_["a"] + "n en los huesos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 3));
 
 				button_->draw();
@@ -759,22 +763,75 @@ void TextBox::dialogParrot(int dialog) {
 	}
 }
 
-void TextBox::dialogSkeleton(bool unlock) {
+void TextBox::dialogSkeleton(bool unlock, int num) {
 	initDialog();
-	//Di�logo del esqueleto cuando lo hemos desbloqueado
+	//Di�logo del músico cuando lo hemos desbloqueado
 	if (unlock) {
-		Texture text(app_->getRenderer(), "Este lindo esqueletito es una prueba de la generación de un NPC desbloquado. Para ello se han cambiado un poco las", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + lineSpacing);
+		Texture text;
+		if (gm_->isThatMissionPass(missions::laboon) && !gm_->isThatRewardUnlocked(missions::laboon)) {
+			text.loadFromText(app_->getRenderer(), "Muchas gracias por ayudarme. Aquello fue como una pesadilla.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "Cuando estaba all" + Resources::tildes_["i"] + " usaba estas pociones para tratar de defenderme de los lobos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 2));
+			text.loadFromText(app_->getRenderer(), "Ya no las necesitar" + Resources::tildes_["e"] + ", son todas tuyas.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + (lineSpacing * 3));
 
-		text.loadFromText(app_->getRenderer(), "colisiones con los NPCs, que podran reajustarse cuando se cambien las im�genes para gestionar que partes se", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 2));
-
-		text.loadFromText(app_->getRenderer(), "renderizan por encima y que por debajo del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-		text.render(lineSpacing, dest.y + (lineSpacing * 3));
+			unlockReward_->setCallBack(unlockCookerReward);
+			unlockReward_->draw();
+			unlockReward_->update();
+		}
+		else {
+			text.loadFromText(app_->getRenderer(), "Binkusu no sake wo todoke ni yuku yo umikaze kimakase namimakase...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+		}
 	}
-	//Di�logo del esqueleto cuando a�n est� bloqueado
+	//Di�logo del músico cuando a�n est� bloqueado
 	else {
+		//Mientras no se hayan matado todos los enemigos
+		if (gm_->getCounterEnemiesMission(missions::laboon) < gm_->getEnemiesMission(missions::laboon)) {
+			Texture text;
 
+			if (gm_->getCounterEnemiesMission(missions::laboon) > 0) {
+				text.loadFromText(app_->getRenderer(), "Por favor, ay" + Resources::tildes_["u"] + "dame y mata al menos a 5 lobos para que pueda salir de aqu" + Resources::tildes_["i"] + ".", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing);
+				text.loadFromText(app_->getRenderer(), "Vuelve para avisarme cuando acabes... Me da miedo arriesgarme.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.render(lineSpacing, dest.y + lineSpacing * 2);
+			}
+			else {
+				switch (num) {
+				case 0:
+					text.loadFromText(app_->getRenderer(), Resources::tildes_["¡"] + "Oh, buen d" + Resources::tildes_["i"] + "a, se" + Resources::tildes_["ñ"] + "orita!, aunque en esta isla es algo dif" + Resources::tildes_["i"] + "cil... ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + lineSpacing);
+
+					text.loadFromText(app_->getRenderer(), "Sobretodo por esos lobos que patrullan por ah" + Resources::tildes_["i"] + ". En cuanto me ven se lanzan a por mis pobres y viejos huesos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+					text.loadFromText(app_->getRenderer(), "S" + Resources::tildes_["o"] + "lo de pensarlo se me pone la piel de gallina... Aunque bueno, yo no tengo piel, yohohoho", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing * 3));
+
+					button_->draw();
+					button_->update();
+					break;
+				case 1:
+					text.loadFromText(app_->getRenderer(), "La verdad es que me encantar" + Resources::tildes_["i"] + "a irme de este sitio, si al menos me ayudaras y mataras a unos 5 lobos,", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing));
+
+					text.loadFromText(app_->getRenderer(), "podr" + Resources::tildes_["i"] + "a salir de aqu" + Resources::tildes_["i"] + " sin problemas.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing * 2));
+
+					text.loadFromText(app_->getRenderer(), "Y si me acoges en tu barco podr" + Resources::tildes_["e"] + " darte de todo lo que dispongo y tocarte buena m" + Resources::tildes_["u"] + "sica.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+					text.render(lineSpacing, dest.y + (lineSpacing * 3));
+					break;
+				}
+			}
+		}
+		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
+		else {
+			if (!gm_->isThatMissionPass(missions::laboon)) gm_->setMissionFinished(missions::laboon, true);
+
+			Texture text(app_->getRenderer(), Resources::tildes_["¿"] + "De verdad? " + Resources::tildes_["¡"] + "Menos mal que llegaste a esta isla perdida y me salvaste, siempre te lo agradecer" + Resources::tildes_["e"] + "." , app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+		}
 	}
 }
 
@@ -834,7 +891,7 @@ void TextBox::dialogCartographer(bool unlock, int num) {
 				text.loadFromText(app_->getRenderer(), "Sin embargo, sus secuaces no han dejado de perseguirme desde entonces", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
 
-				text.loadFromText(app_->getRenderer(), Resources::tildes_["¿"] + "Podr" + Resources::tildes_["i"] + "as acabar con ellos? Con unos 5 bastar" + Resources::tildes_["a"] + " ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), Resources::tildes_["¿"] + "Podr" + Resources::tildes_["i"] + "as acabar con ellos? Con unos 4 bastar" + Resources::tildes_["a"] + " ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
 				text.loadFromText(app_->getRenderer(), "Si lo logras, me unir" + Resources::tildes_["e"] + " a tu tripulaci" + Resources::tildes_["o"] + "n", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });

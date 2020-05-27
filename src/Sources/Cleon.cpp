@@ -42,7 +42,6 @@ bool Cleon::update() {
 		else if (onRange(CHARGE_RANGE) && !lastCharge_.isCooldownActive()) initCharge();
 		else {
 			if (lastDir_ != currDir_) {
-				cout << "init run atacking \n";
 				initRun();
 			}
 			else selectTarget();
@@ -52,11 +51,9 @@ bool Cleon::update() {
 		SDL_Rect targetRect = { (int)round(chargePoint_.getX()),(int)round(chargePoint_.getY()),25,25 };
 		//Cle�n llego al destino de su carga
 		if (SDL_HasIntersection(&getDestiny(), &targetRect) ) {
-			cout << "LLEGA A DESTINO \n";
 			auto currEnemy = dynamic_cast<Player*>(currEnemy_);
 			//Si Cle�n colisiona contra el player
 			if (currEnemy != nullptr && SDL_HasIntersection(&getDestiny(), &currEnemy->getDestiny()) && !attacked_) {
-				cout << "CHOCA PLAYER \n";
 				double realDamage = CHARGE_DMG;
 				if (applyCritic()) realDamage *= 1.5;
 				currEnemy->receiveDamage(realDamage);
@@ -64,7 +61,7 @@ bool Cleon::update() {
 				attacked_ = true;
 			}
 			currState_ = STATE::IDLE;
-			currStats_.moveSpeed_ = MOVE_SPEED;
+			currStats_.moveSpeed_ = initMoveSpeed;
 		}
 
 	}
@@ -99,7 +96,7 @@ bool Cleon::update() {
 	}
 
 	if (currState_ == STATE::FOLLOWING) {
-		currStats_.moveSpeed_ = MOVE_SPEED;
+		currStats_.moveSpeed_ = initMoveSpeed;
 	}
 	return false;
 }
@@ -151,7 +148,6 @@ void Cleon::thrust()
 	app_->getAudioManager()->playChannel(meleeSound, 0, Resources::CleonChannel2);
 	lastThrust_.initCooldown(THRUST_TIME);
 	if (!attacked_) {
-		//cout << currAnim_.currFrame_ << endl;
 		attacked_ = true;
 		auto thrustAttack = dynamic_cast<Player*>(currEnemy_);
 		if (thrustAttack) {
@@ -215,20 +211,20 @@ void Cleon::createBarrel()
 
 void Cleon::initialStats()
 {
-	rangeVision_ = 500;
-	HEALTH = 4000;
-	MANA = 100;
-	MANA_REG = 1;
-	ARMOR = 10;
-	MELEE_DMG = 20;
-	DIST_DMG = 300;
-	CRIT = 10;
-	MELEE_RANGE = 50;
-	DIST_RANGE = 350;
-	MOVE_SPEED = 50;
-	MELEE_RATE = 1;
-	DIST_RATE = 2500;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	rangeVision_ = 300;
+	initHealth_ = 4000;
+	initMana_ = 100;
+	initManaReg_ = 1;
+	initArmor_ = 10;
+	initMeleeDmg = 20;
+	initDistDmg = 300;
+	initCrit_ = 0;
+	initMeleeRange = 50;
+	initDistRange_ = 350;
+	initMoveSpeed = 100;
+	initMeleeRate_ = 1;
+	initDistRate_ = 2500;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
 
 void Cleon::initObject() {
@@ -329,7 +325,7 @@ void Cleon::selectTarget()
 	if (currEnemy_ != nullptr) {
 
 		if (!Physics::PointBall((float)currEnemy_->getCenter().getX(), (float)currEnemy_->getCenter().getY(), 
-			(float)getCenter().getX(), (float)getCenter().getY(), currStats_.meleeRange_)) {
+			(float)getCenter().getX(), (float)getCenter().getY(), (float)currStats_.meleeRange_)) {
 			target_ = currEnemy_->getCenter() /*+ offset*/;
 			move(currEnemy_->getCenter());
 			updateDirVisObjective(currEnemy_);

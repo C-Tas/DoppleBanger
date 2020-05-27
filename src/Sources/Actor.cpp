@@ -77,7 +77,9 @@ void Actor::receiveDamage(double damage) {
 	lastTint_ = SDL_GetTicks();
 	feedBackHurtSounds();
 	//Reduccion de daño
-	double realDamage = damage - (damage * currStats_.armor_ / 100);
+	double limitArmor = currStats_.armor_;
+	if (limitArmor >= 60) limitArmor = 60;
+	double realDamage = damage - (damage * limitArmor / 100);
  	currStats_.health_ -= realDamage;
 	if (currStats_.health_ <= 0) {
 		initDie();

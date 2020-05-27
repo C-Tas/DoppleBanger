@@ -90,7 +90,6 @@ void CreditsState::showAvatarInfo(InventoryButton* avatar)
 	avatarSelected_ = avatar;
 	SDL_Texture* tex = avatarSelected_->getTexture()->getSDLTex();
 	SDL_SetTextureAlphaMod(avatarSelected_->getTexture()->getSDLTex(), 255);
-	cout << avatar->getDeclarator() << endl;
 	currFile_->setTexture(app_->getTextureManager()->getTexture(avatar->getDeclarator() + 8));
 	twitterButton_->setDeclarator(avatar->getDeclarator());
 	gitButton_->setDeclarator(avatar->getDeclarator());

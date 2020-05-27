@@ -188,19 +188,19 @@ void Wolf::lostAgro()
 
 void Wolf::initialStats()
 {
-	HEALTH = 900;
-	MANA = 0;
-	MANA_REG = 0;
-	ARMOR = 0;
-	MELEE_DMG = 180;
-	DIST_DMG = 0;
-	CRIT = 10;
-	MELEE_RANGE = getScaleX() / 3;
-	DIST_RANGE = 0;
-	MOVE_SPEED = 500;
-	MELEE_RATE = 1500;
-	DIST_RATE = 0;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initHealth_ = 900;
+	initMana_ = 0;
+	initManaReg_ = 0;
+	initArmor_ = 0;
+	initMeleeDmg = 180;
+	initDistDmg = 0;
+	initCrit_ = 10;
+	initMeleeRange = getScaleX() / 3;
+	initDistRange_ = 0;
+	initMoveSpeed = 500;
+	initMeleeRate_ = 1500;
+	initDistRate_ = 0;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
 
 //Inicializa todas las animaciones 
@@ -256,8 +256,8 @@ void Wolf::initRewards()
 {
 	minGold = 110;
 	maxGold = 160;
-	minArchievementPoints = 55;
-	maxArchievementPoints = 75;
+	minArchievementPoints = 3;
+	maxArchievementPoints = 8;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
@@ -324,6 +324,14 @@ void Wolf::initMelee() {
 	frame_.h = currAnim_.heightFrame_;
 
 	meleeCD_.initCooldown(currStats_.meleeRate_);
+}
+
+void Wolf::initDie() {
+	Enemy::initDie();
+
+	GameManager* gm_ = GameManager::instance();
+	if (gm_->isThatMissionStarted(missions::laboon))
+		gm_->addMissionCounter(missions::laboon);
 }
 
 void Wolf::meleeAnim() {

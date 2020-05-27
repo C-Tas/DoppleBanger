@@ -107,18 +107,18 @@ void CollisionCtrl::islandCollisions() {
 	}
 
 	//Colisi�n NPC con jugador -- Como mucho habrá uno por zona
-	if (npcs_.size() > 0) {
-		if (player_ != nullptr && Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX() * 1.1, npcs_[0].object->getScaleY() * 1.1,
+	for (auto npc : npcs_) {
+		if (player_ != nullptr && Collisions::collides(npc.object->getPos(), npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 1.1,
 			player_->getPos(), player_->getScaleX() * 1.1, player_->getScaleY() * 1.1)) {
-			if (Collisions::collides(npcs_[0].object->getColliderPos(), npcs_[0].object->getColliderScale().getX(), npcs_[0].object->getColliderScale().getY(),
+			if (Collisions::collides(npc.object->getColliderPos(), npc.object->getColliderScale().getX(), npc.object->getColliderScale().getY(),
 				player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
 				player_->stop();
 				player_->setPos(player_->getPreviousPos());
 			}
 
 			onShip = false;
-			npcCollision.object = npcs_[0].object;
-			switch (npcs_[0].id) {
+			npcCollision.object = npc.object;
+			switch (npc.id) {
 			case NPCsNames::Chef:
 				npcCollision.id = NPCsNames::Chef;
 				break;
@@ -340,7 +340,7 @@ void CollisionCtrl::volcanicCollision()
 	}
 }
 
-list<Enemy*> CollisionCtrl::getEnemiesInArea(Point2D center, int radius)
+list<Enemy*> CollisionCtrl::getEnemiesInArea(Point2D center, double radius)
 {
 	list<Enemy*> enemiesWithin;
 	for (auto it = enemies_.begin(); it != enemies_.end(); ++it)
@@ -353,7 +353,7 @@ list<Enemy*> CollisionCtrl::getEnemiesInArea(Point2D center, int radius)
 	return enemiesWithin;
 }
 
-list<Collider*> CollisionCtrl::getEntitiesInArea(Point2D center, int radius)
+list<Collider*> CollisionCtrl::getEntitiesInArea(Point2D center, double radius)
 {
 	list<Collider*> entities;
 	SDL_Rect coll = player_->getCollider();
@@ -412,7 +412,7 @@ void CollisionCtrl::drawTextBox() {
 			GameManager::instance()->getApp()->getAudioManager()->playChannel(Resources::AudioId::Violin, 0, Resources::SoundChannels::NPCChannel1);
 			canTalk = false;
 		}
-		npcCollision.object->getTextBox()->dialogSkeleton(onShip);
+		npcCollision.object->getTextBox()->dialogSkeleton(onShip, numConversation_);
 		break;
 	case NPCsNames::Cartographer:
 		if (canTalk) {

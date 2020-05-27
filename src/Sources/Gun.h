@@ -9,10 +9,10 @@ private:
 	double bulletSpeed_ = 0;
 	//variables para las diferentes velocidades de las balas
 	const double PISTOL_BULLET_SPEED = 1000;
-	const double SHOTGUN_BULLET_SPEED = 500;
+	const double SHOTGUN_BULLET_SPEED = 800;
 	//Vida de la bala en segundos
-	const double PISTOL_BULLET_RANGE = 2;
-	const double SHOTGUN_BULLET_RANGE = 1;
+	const double PISTOL_BULLET_RANGE = 1000;
+	const double SHOTGUN_BULLET_RANGE = 300;
 
 	double distDmg_;
 	double distRate_;

@@ -8,7 +8,7 @@ public:
 	Magordito(Application* app = nullptr, Point2D pos = { 0, 0 }, Vector2D scale = { 0, 0 }) : 
 		Enemy(app, pos, scale) { initObject(); };
 
-	~Magordito() {}
+	~Magordito();
 	virtual bool update();
 	virtual void onCollider() {};
 	virtual void initialStats();
