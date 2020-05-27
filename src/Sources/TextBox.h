@@ -30,6 +30,7 @@ protected:
 	static void unlockCookerReward(Application* app);
 	static void unlockParrotReward(Application* app);
 	static void unlockMortyReward(Application* app);
+	static void unlockMusicianReward(Application* app);
 	static void unlockNamiReward(Application* app);
 
 public:
@@ -92,7 +93,7 @@ public:
 	void dialogParrot(int dialog);
 
 	///<summary>Frases del esqueleto</summary>
-	void dialogSkeleton(bool unlock);
+	void dialogSkeleton(bool unlock, int num);
 
 	///<summary>Frases de la cart�grafa</summary>
 	void dialogCartographer(bool unlock, int num = 0);

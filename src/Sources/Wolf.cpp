@@ -326,6 +326,14 @@ void Wolf::initMelee() {
 	meleeCD_.initCooldown(currStats_.meleeRate_);
 }
 
+void Wolf::initDie() {
+	Enemy::initDie();
+
+	GameManager* gm_ = GameManager::instance();
+	if (gm_->isThatMissionStarted(missions::laboon))
+		gm_->addMissionCounter(missions::laboon);
+}
+
 void Wolf::meleeAnim() {
 	stop();
 	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {

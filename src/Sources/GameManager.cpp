@@ -764,7 +764,14 @@ void GameManager::setCompleteMission(missions mission, bool complete)
 			}
 			getPlayer()->addMoveSpeed((int)round(getStatsReward(mission)));
 			break;
-		case missions::Size:
+		case missions::laboon:
+			for (int i = 0; i < getNumOfObjectsReward(mission) / 2; i++) {
+				addToInventory(new usable(app_, potionType::Damage));
+			}
+			for (int i = 0; i < getNumOfObjectsReward(mission) / 2; i++) {
+				addToInventory(new usable(app_, potionType::Armor));
+			}
+			getPlayer()->addCrit((int)round(getStatsReward(mission)));
 			break;
 		default:
 			break;
