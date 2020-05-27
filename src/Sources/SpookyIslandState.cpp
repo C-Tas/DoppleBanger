@@ -1,6 +1,5 @@
 ﻿#include "SpookyIslandState.h"
 #include "ShipState.h"
-#include "WinState.h"
 
 void backShipSpooky(Application* app) {
 	app->getGameStateMachine()->changeState(new ShipState(app));
@@ -58,10 +57,10 @@ SpookyIslandState::~SpookyIslandState()
 
 void SpookyIslandState::update()
 {
-	if (gm_->endDemo()) {
+	if (gm_->getMagorditoDead()) {
 		collisionCtrl_->clearList();
 		gm_->setUnlockedIslands(Island::Volcanic);
-		app_->getGameStateMachine()->changeState(new WinState(app_));
+		app_->getGameStateMachine()->changeState(new ShipState(app_));
 	}
 	else {
 		collisionCtrl_->islandCollisions();

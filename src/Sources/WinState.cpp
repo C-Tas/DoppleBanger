@@ -2,7 +2,8 @@
 #include "CreditsState.h"
 
 void resetGame(Application* app) {
-	app->getGameStateMachine()->changeState(new CreditsState(app));
+	app->getGameStateMachine()->clearAllStateExceptFirst();
+	app->getGameStateMachine()->pushState(new CreditsState(app));
 }
 
 void WinState::initState()

@@ -13,7 +13,7 @@ public:
 		Enemy(app, pos, scale) {
 		initObject();
 	};
-	~Cleon() {};
+	~Cleon();
 
 	//M�todos virtuales p�blicos
 	virtual bool update() override ;

@@ -260,6 +260,7 @@ void ShopState::changeBetweenLists()
 			if (inventory_.objects_->size() == 0)inventory_.firstDrawn = inventory_.objects_->begin();
 		}
 	}
+	selected_ = nullptr;
 }
 
 void ShopState::deleteObject()

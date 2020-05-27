@@ -118,7 +118,7 @@ void Kraken::initialStats() {
 	initMeleeRange = 0;
 	initDistRange_ = 0;
 	initMoveSpeed = 0;
-	initMeleeRate_ = 200;
+	initMeleeRate_ = 2000;
 	initDistRate_ = 5000;
 	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
