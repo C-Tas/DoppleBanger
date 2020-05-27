@@ -7,8 +7,8 @@ void VolcanicIslandState::initState()
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
 
-	//Temporal hasta que esté la música de la isla Spooky
-	app_->getAudioManager()->playChannel(Resources::Isle3, -1, Resources::MainMusicChannel);
+	//Temporal hasta que estï¿½ la mï¿½sica de la isla Spooky
+	app_->getAudioManager()->playChannel(Resources::CleonTheme, -1, Resources::MainMusicChannel);
 
 	//Borramos la lista de objetos del CollisionCtrl
 	collisionCtrl_->clearList();
@@ -23,11 +23,9 @@ void VolcanicIslandState::initState()
 	hud_ = new HUD(app_);
 	player_->initSkills();
 
-	//Añadimos el hud a objetos a renderizar
+	//Aï¿½adimos el hud a objetos a renderizar
 	addRenderUpdateLists(hud_);
 
-	//Setteamos que la zona en la que nos encontramos es la SpookyA
-	//TO DO: BORRAR LUEGO
 	gm_->setCurrentZone(Zone::Volcanic);
 
 }
@@ -45,6 +43,7 @@ void VolcanicIslandState::update()
 	}
 	else {
 		collisionCtrl_->islandCollisions();
+		collisionCtrl_->volcanicCollision();
 		PlayState::update();
 	}
 }

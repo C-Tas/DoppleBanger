@@ -312,7 +312,6 @@ void CollisionCtrl::volcanicCollision()
 	}
 	barrelsToErase_.clear();
 
-	cout << barrels_.size() << endl;
 	for (auto barrel : barrels_) {
 		if (barrel->getBarrelState() == BARREL_STATE::INIT_EXPLOTION) {
 			//Collisión contra el player
