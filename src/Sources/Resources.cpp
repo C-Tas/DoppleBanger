@@ -450,13 +450,20 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 vector<Resources::AudioInfo> Resources::audioRoutes{
 	//Musica principal
 #pragma region MainMusic
-	{ WavesSound ,"../Sources/assets/music/background/shipMusic.wav" },
 	{ MainTheme ,"../Sources/assets/music/background/menuMusic.mp3" },
-	{ Caribbean ,"../Sources/assets/music/caribbean.mp3" },
+	{ ShipTheme ,"../Sources/assets/music/background/shipMusic.wav" },
 	{ Shop ,"../Sources/assets/music/background/shopMusic.mp3" },
+	{ Inventory ,"../Sources/assets/music/background/inventoryMusic.mp3" },
+	{ SkillState ,"../Sources/assets/music/background/skillMusic.mp3" },
 	{ Storyboard ,"../Sources/assets/music/background/storyboardMusic.mp3" },
-	{ FuneralTheme ,"../Sources/assets/music/funeralTheme.mp3" },//CreditTheme
+	{ FuneralTheme ,"../Sources/assets/music/funeralTheme.mp3" },
 	{ CreditTheme ,"../Sources/assets/creditState/audio/mainTheme.mp3" },
+	{ Isle1Zone1 ,"../Sources/assets/music/isles/isla1zona1.mp3" },
+	{ Isle1Zone2 ,"../Sources/assets/music/isles/isla1zona2.mp3" },
+	{ Isle1Zone3 ,"../Sources/assets/music/isles/isla1zona3.mp3" },
+	{ Isle2Zone1 ,"../Sources/assets/music/isles/isla2zona1.mp3" },
+	{ Isle2Zone2 ,"../Sources/assets/music/isles/isla2zona2.mp3" },
+	{ Isle3 ,"../Sources/assets/music/isles/isla3.mp3" },
 
 	//Player
 #pragma region PlayerSounds
@@ -635,9 +642,10 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 vector<Resources::AudioVolume> Resources::audioVolume{
 	//Canal de musica
 	{ MainMusicChannel, 7 },
-	{ AuxMusicChannel1, 7 },
-	{ AuxMusicChannel2, 7 },
-	{ AuxMusicChannel3, 7 },
+	{ InventoryMusicChannel, 6 },
+	{ AuxMusicChannel1, 5 },
+	{ AuxMusicChannel2, 5 },
+	{ AuxMusicChannel3, 5 },
 
 	//Canal de los botones
 	{ BeerButtonChanel, 6 },
@@ -662,8 +670,8 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ SkeletonChannel3, 40 },
 	{ SkeletonChannel4, 6 },
 	//Canal de la cangrejo
-	{ CrabChannel1, 10 },
-	{ CrabChannel2, 10 },
+	{ CrabChannel1, 6 },
+	{ CrabChannel2, 6 },
 	//Canal del pirata
 	{ EnemyPirateChannel1, 10 },
 	{ EnemyPirateChannel2, 10 },

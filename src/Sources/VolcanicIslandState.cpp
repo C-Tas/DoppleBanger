@@ -8,8 +8,7 @@ void VolcanicIslandState::initState()
 	app_->resetSoundsChannels();
 
 	//Temporal hasta que esté la música de la isla Spooky
-	app_->getAudioManager()->playChannel(Resources::Caribbean, -1, Resources::MainMusicChannel);
-	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
+	app_->getAudioManager()->playChannel(Resources::Isle3, -1, Resources::MainMusicChannel);
 
 	//Borramos la lista de objetos del CollisionCtrl
 	collisionCtrl_->clearList();

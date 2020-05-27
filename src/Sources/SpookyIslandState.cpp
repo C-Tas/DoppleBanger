@@ -7,14 +7,13 @@ void backShipSpooky(Application* app) {
 }
 void SpookyIslandState::initState()
 {
-	//Inicializamos la musica
+	//Resetamos los sonidos
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
 
-	//Temporal hasta que esté la música de la isla Spooky
-	app_->getAudioManager()->playChannel(Resources::Caribbean, -1, Resources::MainMusicChannel);
-	app_->getAudioManager()->playChannel(Resources::WavesSound, -1, Resources::AuxMusicChannel1);
 
+	gm_->setOnShip(false);
+	//background_ = app_->getTextureManager()->getTexture(Resources::Spooky);
 	//Borramos la lista de objetos del CollisionCtrl
 	collisionCtrl_->clearList();
 	gm_->setOnShip(false);
@@ -67,6 +66,8 @@ void SpookyIslandState::changeZone()
 
 	if (gm_->getCurrentZone() == Zone::SpookyA) {
 		deleteExceptHUD(Zone::SpookyBoss);
+		//Se inicia la música
+		app_->getAudioManager()->playChannel(Resources::Isle2Zone1, -1, Resources::MainMusicChannel);
 		currentMap_ = new TiledMap(app_, this, BOSSZONE_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
 			TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone_, wallTilesIdZone_);
 		addRenderUpdateLists(hud_);

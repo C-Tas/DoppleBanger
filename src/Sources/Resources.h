@@ -437,6 +437,7 @@ public:
 	enum MusicChannels : int {
 		//Musica auxiliar
 		MainMusicChannel,
+		InventoryMusicChannel,
 		AuxMusicChannel1,
 		AuxMusicChannel2,
 		AuxMusicChannel3,
@@ -498,12 +499,19 @@ public:
 	enum AudioId : int {
 		//Música
 		MainTheme,
-		Caribbean,
+		ShipTheme,
 		Shop,
+		Inventory,
+		SkillState,
 		Storyboard,
-		WavesSound,
 		FuneralTheme,
 		CreditTheme,
+		Isle1Zone1,
+		Isle1Zone2,
+		Isle1Zone3,
+		Isle2Zone1,
+		Isle2Zone2,
+		Isle3,
 
 		//Efectos de sonido
 		Agro,
