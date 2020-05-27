@@ -313,27 +313,44 @@ void EnemyPirate::setPatrol(Vector2D pos)
 
 void EnemyPirate::initialStats()
 {
-	HEALTH = 1000;
-	MANA = 0;
-	MANA_REG = 0;
-	ARMOR = 15;
-	MELEE_DMG = 130;
-	DIST_DMG = 100;
-	CRIT = 10;
-	MELEE_RANGE = 50;
-	DIST_RANGE = 1500;
-	MOVE_SPEED = 300;
-	MELEE_RATE = 1000;
-	DIST_RATE = 1000;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	GameManager* gm_ = GameManager::instance();
+	if (gm_->getCurrIsland() == Island::Caribbean) {
+		initHealth_ = 800;
+		initMana_ = 0;
+		initManaReg_ = 0;
+		initArmor_ = 15;
+		initMeleeDmg = 130;
+		initDistDmg = 100;
+		initCrit_ = 10;
+		initMeleeRange = getScaleX() / 3;
+		initDistRange_ = 700;
+		initMoveSpeed = 300;
+		initMeleeRate_ = 1000;
+		initDistRate_ = 1000;
+	}
+	else {
+		initHealth_ = 1500;
+		initMana_ = 0;
+		initManaReg_ = 0;
+		initArmor_ = 15;
+		initMeleeDmg = 200;
+		initDistDmg = 200;
+		initCrit_ = 20;
+		initMeleeRange = getScaleX() / 3;
+		initDistRange_ = 1500;
+		initMoveSpeed = 300;
+		initMeleeRate_ = 1000;
+		initDistRate_ = 1000;
+	}
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
 
 void EnemyPirate::initRewards()
 {
 	minGold = 30;
 	maxGold = 70;
-	minArchievementPoints = 35;
-	maxArchievementPoints = 50;
+	minArchievementPoints = 3;
+	maxArchievementPoints = 9;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
@@ -343,4 +360,14 @@ void EnemyPirate::updateCooldowns()
 	if (idleCD_.isCooldownActive()) idleCD_.updateCooldown();
 	if (meleeCD_.isCooldownActive()) meleeCD_.updateCooldown();
 	if (shootCD_.isCooldownActive()) shootCD_.updateCooldown();
+}
+
+void EnemyPirate::initDie() {
+	Enemy::initDie();
+
+	GameManager* gm_ = GameManager::instance();
+	missions mission = missions::arlongPark;
+	if (gm_->isThatMissionStarted(mission)) {
+		gm_->addMissionCounter(mission);
+	}
 }

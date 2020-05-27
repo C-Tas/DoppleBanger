@@ -95,8 +95,6 @@ bool Tentacle::sweepUpdate()
 				turns_++;
 			}
 		}
-
-		//cout << collisionRot_ << endl;
 	}
 	//Si ha hecho su recorrido y no se est� muriendo se muere
 	else if (currState_ != STATE::DYING)
@@ -169,12 +167,9 @@ void Tentacle::onCollider()
 	else if (currState_ == STATE::ATTACKING) {
 		if (attack_ == ATTACKS::SWEEP) {
 			player->receiveDamage(kraken_->getMeleeDmg());
-			cout << "Daño SWEEP" << endl;
 		}
 		else {
 			player->receiveDamage(kraken_->getMeleeDmg() *15);
-			cout << "Daño 2" << endl;
-
 		}
 	
 	

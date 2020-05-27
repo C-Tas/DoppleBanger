@@ -633,9 +633,6 @@ void TextBox::dialogMorty(bool unlock, int num) {
 
 				break;
 			}
-
-
-
 		}
 	}
 	//Di�logo del Morty cuando a�n est� bloqueado
@@ -663,7 +660,7 @@ void TextBox::dialogMorty(bool unlock, int num) {
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
 
-				text.loadFromText(app_->getRenderer(), "Mira, hazme el favor y mata a 3 esqueletos de por ah" + Resources::tildes_["i"] + ". Los reconocer" + Resources::tildes_["a"] + "s cuando los veas, est" + Resources::tildes_["a"] + "n en los huesos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "Mira, hazme el favor y mata a 4 esqueletos de por ah" + Resources::tildes_["i"] + ". Los reconocer" + Resources::tildes_["a"] + "s cuando los veas, est" + Resources::tildes_["a"] + "n en los huesos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 3));
 
 				button_->draw();
@@ -780,7 +777,7 @@ void TextBox::dialogCartographer(bool unlock, int num) {
 				text.loadFromText(app_->getRenderer(), "Sin embargo, sus secuaces no han dejado de perseguirme desde entonces", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
 
-				text.loadFromText(app_->getRenderer(), Resources::tildes_["¿"] + "Podr" + Resources::tildes_["i"] + "as acabar con ellos? Con unos 5 bastar" + Resources::tildes_["a"] + " ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), Resources::tildes_["¿"] + "Podr" + Resources::tildes_["i"] + "as acabar con ellos? Con unos 4 bastar" + Resources::tildes_["a"] + " ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
 				text.loadFromText(app_->getRenderer(), "Si lo logras, me unir" + Resources::tildes_["e"] + " a tu tripulaci" + Resources::tildes_["o"] + "n", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });

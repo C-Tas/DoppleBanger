@@ -441,6 +441,7 @@ public:
 		AuxMusicChannel1,
 		AuxMusicChannel2,
 		AuxMusicChannel3,
+		KrakenMusicChannel,
 		//Cantidad de canales
 		NumMusicChannels
 	};

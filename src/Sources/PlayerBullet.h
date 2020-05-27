@@ -27,9 +27,9 @@ public:
 private:
 	bool perforate_ = false;								//Para saber si perfora
 	bool ricochet_ = false;									//Para saber si rebota
-	const int NUM_RICO = 100;								//N�mero de rebotes m�xmo
+	const int NUM_RICO = 4;									//N�mero de rebotes m�xmo
 	int currRico = 0;										//N�mero de rebotes
-	const float RADIUS = 1000;								// Radio de la circunferencia de b�squeda de la bala
+	const float RADIUS = 500;								//Radio de la circunferencia de b�squeda de la bala
 	const double W_H_BULLET = app_->getWindowHeight() / 40;	//Tama�o de la bala
 	virtual void initObject() {};
 };

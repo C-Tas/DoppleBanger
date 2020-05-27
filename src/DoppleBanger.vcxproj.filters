@@ -60,7 +60,6 @@
     <ClCompile Include="Sources\NPC.cpp" />
     <ClCompile Include="Sources\Obstacle.cpp" />
     <ClCompile Include="Sources\PauseState.cpp" />
-    <ClCompile Include="Sources\PerforateSkill.cpp" />
     <ClCompile Include="Sources\Physics.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\PlayerBullet.cpp" />
@@ -68,7 +67,6 @@
     <ClCompile Include="Sources\Pumpkin.cpp" />
     <ClCompile Include="Sources\RandEquipGen.cpp" />
     <ClCompile Include="Sources\Resources.cpp" />
-    <ClCompile Include="Sources\RicochetSkill.cpp" />
     <ClCompile Include="Sources\SaveState.cpp" />
     <ClCompile Include="Sources\SDL_macros.cpp" />
     <ClCompile Include="Sources\SelectLevelState.cpp" />

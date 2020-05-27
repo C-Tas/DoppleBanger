@@ -123,7 +123,7 @@ private:
 	//Puntos de haza�a
 	int achievementPoints_ = 0;
 	//Cantidad de dinero almacenada en el inventario
-	int inventoryGold_ = 10000;
+	int inventoryGold_ = 0;
 	//Cantidad de dinero almacenada en el alijo
 	int stashGold_ = 0;
 	//Booleano que indica si estamos en el barco
@@ -133,7 +133,7 @@ private:
 	//Enum de la isla actual
 	Island currIsland_ = Island::Caribbean;
 	//Maximo de los puntos de hazaña
-	int maxPoints_ = 1000;
+	int maxPoints_ = 300;
 	//Puntos de haza�a gastados en la rama precisi�n
 	int precisionPoints_ = 0;
 	//Puntos de haza�a gastados e la rama melee
@@ -163,16 +163,16 @@ private:
 	vector<int> countEnemiesMission_ = { 0, 0, 0, 0 };
 	//Recompensas de las misiones
 	//Oro <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector <int> goldReward_ = { 100, 200, 250, 300 };
+	vector <int> goldReward_ = { 100, 200, 0, 300 };
 	//Hazaña <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector <int> pointsReward_ = { 50, 50, 50, 50 };
+	vector <int> pointsReward_ = { 10, 15, 0, 20 };
 	//Objetos que te dan en las misiones <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
 	vector<int> numOfItemsReward_ = { 4,1,1,1 };
 	//Objetos que te dan en las misiones <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<double> statsReward_ = { 200,500,0,50 };
+	vector<double> statsReward_ = { 200, 500, 0, 30 };
 	//Vector que contiene el numero de enemigos que se tiene que matar en cada mision
 	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<int> enemiesMission_ = { 4, 3, 2, 5 };
+	vector<int> enemiesMission_ = { 4, 4, 0, 4 };
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados
@@ -180,7 +180,6 @@ private:
 	//Constante del tamaño de pintado de los tiles
 	const int tileSize = 128;
  
-
 	//Puntero al player a falta de estipular las variables que van a ir en gameManager sobre el player
 	Player* player_ = nullptr;
 	//Equipamento del player

@@ -25,19 +25,19 @@ bool tutorialObject::update() {
 
 void tutorialObject::initialStats() {
 	rangeVision_ = 0;
-	HEALTH = 800;
-	MANA = 0;
-	MANA_REG = 0;
-	ARMOR = 0;
-	MELEE_DMG = 0;
-	DIST_DMG = 0;
-	CRIT = 0;
-	MELEE_RANGE = 0;
-	DIST_RANGE = 0;
-	MOVE_SPEED = 0;
-	MELEE_RATE = 0;
-	DIST_RATE = 0;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initHealth_ = 800;
+	initMana_ = 0;
+	initManaReg_ = 0;
+	initArmor_ = 0;
+	initMeleeDmg = 0;
+	initDistDmg = 0;
+	initCrit_ = 0;
+	initMeleeRange = 0;
+	initDistRange_ = 0;
+	initMoveSpeed = 0;
+	initMeleeRate_ = 0;
+	initDistRate_ = 0;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
 
 void tutorialObject::onCollider() {

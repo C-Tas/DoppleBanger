@@ -27,7 +27,7 @@ bool MonkeyCoco::update() {
 		if (currState_ == STATE::SHOOTING) {
 			if (!shootCD_.isCooldownActive()) {
 				//Si el mono tiene un enemigo y lo tiene a rango
-				if (onRange()) {
+				if (onRange(currStats_.distRange_)) {
 					initShoot();
 				}
 				//Tengo enemigo pero no a rango
@@ -110,20 +110,20 @@ void MonkeyCoco::initObject() {
 
 void MonkeyCoco::initialStats() 
 {
-	rangeVision_ = 1200;
-	HEALTH = 500;
-	MANA = 0;
-	MANA_REG = 0;
-	ARMOR = 5;
-	MELEE_DMG = 0;
-	DIST_DMG = 250;
-	CRIT = 5;
-	MELEE_RANGE = 0;
-	DIST_RANGE = 1000;
-	MOVE_SPEED = 0;
-	MELEE_RATE = 0;
-	DIST_RATE = 1500;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	rangeVision_ = 0;
+	initHealth_ = 600;
+	initMana_ = 0;
+	initManaReg_ = 0;
+	initArmor_ = 0;
+	initMeleeDmg = 0;
+	initDistDmg = 75;
+	initCrit_ = 5;
+	initMeleeRange = 0;
+	initDistRange_ = 600;
+	initMoveSpeed = 0;
+	initMeleeRate_ = 0;
+	initDistRate_ = 1200;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
 
 void MonkeyCoco::updateDirVisObjective(GameObject* objective) {

@@ -105,7 +105,6 @@ void Cleon::onCollider()
 
 void Cleon::receiveDamage(double damage)
 {
-	cout << "BARREL DMG CLEON \n";
 	if (!activeBlock()) {
 		lastTint_ = SDL_GetTicks();
 		feedBackHurtSounds();
@@ -119,7 +118,6 @@ void Cleon::receiveDamage(double damage)
 	else
 	{
 		app_->getAudioManager()->playChannel(Resources::CleonLaugh, 0, Resources::CleonChannel3);
-		cout << "BLOQUEADO! \n";
 		//Poner feedback del bloqueo de Cle�n
 	}
 }
@@ -133,7 +131,6 @@ void Cleon::lostAggro()
 
 void Cleon::thrust()
 {
-	cout << "ESTOCADA! \n";
 	lastThrust_.initCooldown(THRUST_TIME);
 	auto thrustAttack = dynamic_cast<Player*>(currEnemy_);
 	if (thrustAttack) {
@@ -155,7 +152,6 @@ void Cleon::pirateCharge()
 	auto chance = app_->getRandom()->nextInt(Resources::CleonInter1, Resources::CleonInter7 + 1);
 	app_->getAudioManager()->playChannel(chance, 0, Resources::CleonChannel2);
 
-	cout << "CARGA! \n";
 	lastCharge_.initCooldown(CHARGE_TIME);
 	target_ = player_->getCenter();
 	movSpeed_ = currStats_.moveSpeed_;
@@ -170,7 +166,6 @@ void Cleon::pirateCharge()
 
 void Cleon::sweep()
 {
-	cout << "Barrido!" << endl;
 	lastSweep_.initCooldown(SWEEP_TIME);
 	auto sweepAttack = dynamic_cast<Player*>(currEnemy_);
 	if (sweepAttack) {
@@ -196,19 +191,19 @@ void Cleon::createBarrel()
 void Cleon::initialStats()
 {
 	rangeVision_ = 300;
-	HEALTH = 4000;
-	MANA = 100;
-	MANA_REG = 1;
-	ARMOR = 10;
-	MELEE_DMG = 20;
-	DIST_DMG = 300;
-	CRIT = 0;
-	MELEE_RANGE = 50;
-	DIST_RANGE = 350;
-	MOVE_SPEED = 100;
-	MELEE_RATE = 1;
-	DIST_RATE = 2500;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initHealth_ = 4000;
+	initMana_ = 100;
+	initManaReg_ = 1;
+	initArmor_ = 10;
+	initMeleeDmg = 20;
+	initDistDmg = 300;
+	initCrit_ = 0;
+	initMeleeRange = 50;
+	initDistRange_ = 350;
+	initMoveSpeed = 100;
+	initMeleeRate_ = 1;
+	initDistRate_ = 2500;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
 
 void Cleon::initObject() {

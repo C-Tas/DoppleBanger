@@ -646,6 +646,7 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ AuxMusicChannel1, 5 },
 	{ AuxMusicChannel2, 5 },
 	{ AuxMusicChannel3, 5 },
+	{ KrakenMusicChannel, 20},
 
 	//Canal de los botones
 	{ BeerButtonChanel, 6 },

@@ -557,7 +557,7 @@ void Player::whirlAnim()
 		Vector2D playerCenter = getCenter();
 		list<Enemy*> enemies = CollisionCtrl::instance()->getEnemiesInArea(playerCenter, (int)round(scale_.getX() / 2));
 		for (auto it = enemies.begin(); it != enemies.end(); ++it)
-			(*it)->receiveDamage((int)round(currStats_.meleeDmg_ * BONUS_WHIRL));
+			(*it)->receiveDamage((int)round(WHIRL_DAMAGE));
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
 		initIdle();
@@ -619,11 +619,6 @@ void Player::checkInput()
 	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && !shootCD_.isCooldownActive()) {
 		shootCD_.initCooldown(currStats_.distRate_);
 		initShoot();
-	}
-
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::MIDDLE)) {
-		cout << mousePos_.getX() + Camera::instance()->getCamera().getX() << endl;
-		cout << mousePos_.getY() + Camera::instance()->getCamera().getY() << endl;
 	}
 
 	//Ataque/movimiento
@@ -953,7 +948,6 @@ void Player::cheatPlayer()
 {
 	if (!cheat_) {
 		cheat_ = true;
-		cout << "CHEAT ACTIVE" << endl;
 		maxHealth_ += healthCheat_;
 		currStats_.health_ = maxHealth_;
 		currStats_.manaReg_ += manaRegCheat_;	
@@ -967,7 +961,6 @@ void Player::cheatPlayer()
 	}
 	else {
 		cheat_ = false;
-		cout << "CHEAT DESACTIVE" << endl;
 		maxHealth_ -= healthCheat_;
 		currStats_.health_ = maxHealth_;
 		currStats_.manaReg_ -= manaRegCheat_;

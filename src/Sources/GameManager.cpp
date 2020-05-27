@@ -752,8 +752,7 @@ void GameManager::setCompleteMission(missions mission, bool complete)
 			break;
 		case missions::papelesSiniestros:
 			for (int i = 0; i < getNumOfObjectsReward(mission); i++) {
-				//TO DO: nivelar
-				addToInventory(new Armor(app_, 500, 200, 10, equipType::ArmorII));
+				addToInventory(new Armor(app_, 500, 400, 20, equipType::ArmorII));
 			}
 			getPlayer()->addMaxMana(getStatsReward(mission));
 			break;
@@ -761,8 +760,7 @@ void GameManager::setCompleteMission(missions mission, bool complete)
 			break;
 		case missions::arlongPark:
 			for (int i = 0; i < getNumOfObjectsReward(mission); i++) {
-				//TO DO: nivelar
-				addToInventory(new Gun(app_,300,150,2000,equipType::ShotgunII ));
+				addToInventory(new Gun(app_, 700, 150, 60,equipType::ShotgunII ));
 			}
 			getPlayer()->addMoveSpeed((int)round(getStatsReward(mission)));
 			break;
@@ -799,11 +797,11 @@ playerEquipment& GameManager::initEquipment(){
 	//pero no hace falta hacer nada con ellas al cambiar de estados
 	//Esta comprobacion esta para que no se pierda lo que se lleve equipado al cambiar del barco a la isla
 	if (currEquip_.armor_ == nullptr) { 
-		currEquip_.armor_ = new Armor(app_, 10, 10, 10, equipType::ArmorI);
-		currEquip_.gloves_ = new Gloves(app_, 10, 10, 10, equipType::GlovesI);
-		currEquip_.boots_ = new Boots(app_, 10, 10, 10, equipType::BootsI);
-		currEquip_.sword_ = new Sword(app_, 10, 10, 10, equipType::SwordI);
-		currEquip_.gun_ = new Gun(app_, 10, 10, 10, equipType::PistolI);
+		currEquip_.armor_ = new Armor(app_, 1, 100, 5, equipType::ArmorI);
+		currEquip_.gloves_ = new Gloves(app_, 1, 1, 0, equipType::GlovesI);
+		currEquip_.boots_ = new Boots(app_, 1, 30, 0, equipType::BootsI);
+		currEquip_.sword_ = new Sword(app_, 1, 200, 0, equipType::SwordI);
+		currEquip_.gun_ = new Gun(app_, 1, 100, 0, equipType::PistolI);
 	}
 	return currEquip_;
 }
@@ -851,6 +849,7 @@ void GameManager::resetIsland()
 		break;
 	}
 }
+
 GameManager::~GameManager() {
 	for (InventoryButton* ob : *inventory_)delete ob;
 	for (InventoryButton* ob : *stash_)delete ob;

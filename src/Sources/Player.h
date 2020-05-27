@@ -98,7 +98,7 @@ public:
 		void activeRicochet() { 
 		app_->getAudioManager()->playChannel(Resources::Ricochet, 0, 3);
 		ricochetCD_.initCooldown(RICOCHET_DELAY);
-	};
+		};
 		//Para saber si hay que inicializar el equipamiento
 		void setinitEquip(bool init) { initEquip_ = init; };
 		//Setea si el player ha colisionado
@@ -151,10 +151,10 @@ private:
 		bool slowed_ = false;			//Para saber si esta ralentizado
 		bool changeZone_ = false;		//Para saber si hay que cambiar de zona
 
-		int liberation_ = 2;			//Nivel de la habilidad del clon, debería llevarse a GameManager
+		int liberation_ = 0;			//Nivel de la habilidad del clon, debería llevarse a GameManager
 		double slowEffect_ = 0;			//Efecto del slow
 		double lastWalkSound_ = 0;		//Ultimo tick del sonido
-		double maxHealth_ = 1500;		//Representa la cantidad maxima de vida
+		double maxHealth_ = 1300;		//Representa la cantidad maxima de vida
 		double maxMana_ = 1000;			//Representa la cantidad maxima de mana
 
 		Vector2D previousPos_;
@@ -203,16 +203,16 @@ private:
 
 		#pragma region Constantes
 		//Estadisticas iniciales del jugador</summary>
-		const double MANA_REG = 1;				//Regeneración de maná por segundo, porcentaje
-		const double ARMOR = 5;					//Armadura, porcentaje
-		const double MELEE_DAMAGE = 200;		//Daño a melee
-		const double DIST_DAMAGE = 300;		//Daño a distancia y de las habilidades
-		const double CRIT = 0;					//Crítico
-		const double MELEE_RANGE = 50;			//Rango del ataque a melee
-		const double DIST_RANGE = 1000;			//Rango del ataque a distancia
-		const double MOVE_SPEED = 250;			//Velocidad de movimiento
-		const double MELEE_RATE = 1000;			//Velocidad del ataque a melee en milisegundos
-		const double DIST_RATE = 1500;			//Velocidad del ataque a distancia en milisegundos
+		const double MANA_REG = 3;						//Regeneración de maná por segundo, porcentaje
+		const double ARMOR = 0;							//Armadura, porcentaje
+		const double MELEE_DAMAGE = 0;					//Daño a melee
+		const double DIST_DAMAGE = 0;					//Daño a distancia y de las habilidades
+		const double CRIT = 0;							//Crítico
+		const double MELEE_RANGE = scale_.getX() / 2;	//Rango del ataque a melee
+		const double DIST_RANGE = 0;					//Rango del ataque a distancia
+		const double MOVE_SPEED = 250;					//Velocidad de movimiento
+		const double MELEE_RATE = 1200;					//Velocidad del ataque a melee en milisegundos
+		const double DIST_RATE = 1300;					//Velocidad del ataque a distancia en milisegundos
 
 		//Additional Stats
 		const int CRIT_INV = 20;				//Crítico agregado al player después de activar invencible( a falta de equilibrado)
@@ -221,9 +221,9 @@ private:
 		const int RANGE_SPEED = 1000;			//Velocidad extra para el pistolero raudo (a falta de equilibrado)
 
 		//Cooldowns milisegundos
-		const double EMPOWERED_DELAY = 10000;	//Cooldown del golpe fuerte
-		const double RICOCHET_DELAY = 5000;		//Cooldown del rebote
-		const double MANA_REG_DELAY = 3000;		//Tiempo regeneracion de mana = 1 seg
+		const double EMPOWERED_DELAY = 6000;	//Cooldown del golpe fuerte
+		const double RICOCHET_DELAY = 10000;	//Cooldown del rebote
+		const double MANA_REG_DELAY = 1500;		//Tiempo regeneracion de mana
 
 		//Balas
 		const double W_H_BULLET = app_->getWindowHeight() / 40;	//Tamaño de la bala
@@ -303,13 +303,13 @@ private:
 			const int SHOOT_R_FRAME_RATE = 150;		//Frame rate
 			//Disparo hacia arriba
 			const int SHOOT_U_FRAMES = 7;			//Frames de la animación
-			const int SHOOT_U_FRAME_RATE = 40;		//Frame rate
+			const int SHOOT_U_FRAME_RATE = 65;		//Frame rate
 			//Disparo hacia izquierda
 			const int SHOOT_L_FRAMES = 3;			//Frames de la animación
 			const int SHOOT_L_FRAME_RATE = 150;		//Frame rate
 			//Disparo hacia abajo
 			const int SHOOT_D_FRAMES = 7;			//Frames de la animación
-			const int SHOOT_D_FRAME_RATE = 40;		//Frame rate
+			const int SHOOT_D_FRAME_RATE = 65;		//Frame rate
 
 			//Melee
 			bool attacked_ = false;					//Para atacar una sola vez en el frame adecuado
@@ -317,16 +317,16 @@ private:
 			vector<Texture*> meleeTx_;				//Vector de las texturas
 			//Melee derecha
 			const int MELEE_R_FRAMES = 5;			//Frames de la animación
-			const int MELEE_R_FRAME_RATE = 200;		//Frame rate
+			const int MELEE_R_FRAME_RATE = 150;		//Frame rate
 			//Melee hacia arriba
 			const int MELEE_U_FRAMES = 3;			//Frames de la animación
-			const int MELEE_U_FRAME_RATE = 150;		//Frame rate
+			const int MELEE_U_FRAME_RATE = 250;		//Frame rate
 			//Melee hacia izquierda
 			const int MELEE_L_FRAMES = 5;			//Frames de la animación
-			const int MELEE_L_FRAME_RATE = 200;		//Frame rate
+			const int MELEE_L_FRAME_RATE = 150;		//Frame rate
 			//Melee hacia abajo
 			const int MELEE_D_FRAMES = 5;			//Frames de la animación
-			const int MELEE_D_FRAME_RATE = 200;		//Frame rate
+			const int MELEE_D_FRAME_RATE = 150;		//Frame rate
 
 			//Golpe Fuerte
 			vector<Texture*>empoweredTx_;
@@ -343,8 +343,8 @@ private:
 			vector<Anim> whirlAnim_;
 			const int W_H_WHIRL_FRAME = 500;
 			const int WHIRL_FRAMES = 11;
-			const int WHIRL_FRAME_RATE = 70;
-			const double BONUS_WHIRL = 1.5;
+			const int WHIRL_FRAME_RATE = 60;
+			const double WHIRL_DAMAGE = 300;
 
 			virtual void feedBackHurtSounds();
 			//Inicialización de las animaciones

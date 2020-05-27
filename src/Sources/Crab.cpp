@@ -168,19 +168,19 @@ void Crab::initAnims()
 }
 
 void Crab::initialStats() {
-	HEALTH = 750;
-	MANA = 0;
-	MANA_REG = 0;
-	ARMOR = 10;
-	MELEE_DMG = 150;
-	DIST_DMG = 0;
-	CRIT = 5;
-	MELEE_RANGE = getScaleX() / 2;	//Medido con photoshop
-	DIST_RANGE = 0;
-	MOVE_SPEED = 300;
-	MELEE_RATE = 1500;	//En milisegundos
-	DIST_RATE = 0;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initHealth_ = 600;
+	initMana_ = 0;
+	initManaReg_ = 0;
+	initArmor_ = 10;
+	initMeleeDmg = 60;
+	initDistDmg = 0;
+	initCrit_ = 5;
+	initMeleeRange = getScaleX() / 2;	//Medido con photoshop
+	initDistRange_ = 0;
+	initMoveSpeed = 250;
+	initMeleeRate_ = 1200;	//En milisegundos
+	initDistRate_ = 0;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
 
 void Crab::initRewards()
