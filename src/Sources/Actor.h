@@ -18,7 +18,8 @@ enum class STATE
 	CHARGING,
 	STOPSWIMMING,
 	CHARGING_EMPOWERED,
-	WHIRLING
+	WHIRLING,
+	THRUSTING,
 };
 
 //Enumerado para representar la dirección a la que mira una entidad

@@ -234,39 +234,39 @@ public:
 		ClonShootLeftAnim,
 		ClonShootUpAnim,
 		ClonShootDownAnim,
-			//Autodestrucción
+		//Autodestrucción
 		ClonSelfDestructionRightAnim,
 		ClonSelfDestructionLeftAnim,
 		ClonSelfDestructionUpAnim,
 		ClonSelfDestructionDownAnim,
-			//Desaparecer
+		//Desaparecer
 		ClonVanishRightAnim,
 		ClonVanishLeftAnim,
 		ClonVanishDownAnim,
 		ClonVanishUpAnim,
 
 		//Calabaza
-			//Idle
+		//Idle
 		PumpkinIdleRightAnim,
 		PumpkinIdleLeftAnim,
 		PumpkinIdleUpAnim,
 		PumpkinIdleDownAnim,
-			//Explosion
+		//Explosion
 		PumpkinExpRightAnim,
 		PumpkinExpLeftAnim,
 		PumpkinExpUpAnim,
 		PumpkinExpDownAnim,
-			//Attack
+		//Attack
 		PumpkinAttackRightAnim,
 		PumpkinAttackLeftAnim,
 		PumpkinAttackUpAnim,
 		PumpkinAttackDownAnim,
-			//Move
+		//Move
 		PumpkinMoveRightAnim,
 		PumpkinMoveLeftAnim,
 		PumpkinMoveUpAnim,
 		PumpkinMoveDownAnim,
-		
+
 		//Monkey
 		MonkeyIdleRightAnim,
 		MonkeyIdleLeftAnim,
@@ -297,29 +297,29 @@ public:
 
 		//Magordito
 		Altar,
-			//Idle
+		//Idle
 		MagorditoIdleRight,
 		MagorditoIdleLeft,
 		MagorditoIdleTopRight,
 		MagorditoIdleTopLeft,
-			//Disparo
+		//Disparo
 		MagorditoShootRight,
 		MagorditoShootLeft,
 		MagorditoShootDown,
 		MagorditoShootTopRight,
 		MagorditoShootTopLeft,
-			//Viaje
+		//Viaje
 		MagorditoTpRight,
 		MagorditoTpLeft,
 		MagorditoTpTopRight,
 		MagorditoTpTopLeft,
-			//Kirin
+		//Kirin
 		MagorditoKirinRight,
 		MagorditoKirinLeft,
 		MagorditoKirinTopRight,
 		MagorditoKirinTopLeft,
 		Kirin,
-			//Skeleton
+		//Skeleton
 		SkeletonIdleRightAnim,
 		SkeletonIdleLeftAnim,
 		SkeletonIdleUpAnim,
@@ -332,6 +332,36 @@ public:
 		SkeletonMoveLeftAnim,
 		SkeletonMoveDownAnim,
 		SkeletonMoveUpAnim,
+
+
+		//Cleon
+		//idle
+		CleonIdleUp,
+		CleonIdleDown,
+		CleonIdleRight,
+		CleonIdleLeft,
+		//CleonMov
+		CleonMovUp,
+		CleonMovDown,
+		CleonMovRight,
+		CleonMovLeft,
+		//estocada
+		CleonMelUp,
+		CleonMelDown,
+		CleonMelRight,
+		CleonMelLeft,
+		//Barrido
+		CleonSweptUp,
+		CleonSweptDown,
+		CleonSweptRight,
+		CleonSweptLeft,
+		//Carga
+		CleonChargeUp,
+		CleonChargeDown,
+		CleonChargeRight,
+		CleonChargeLeft,
+
+
 
 			//kraken
 	KrakenIdleAnim,
@@ -354,7 +384,7 @@ public:
 
 		//Colsionable
 		Rock,
-			//Tutorial
+		//Tutorial
 		Bottle,
 		Dummy,
 
@@ -433,7 +463,7 @@ public:
 		BarrelExplosion,
 		BarrelInitExpl,
 	};
-	
+
 	enum MusicChannels : int {
 		//Musica auxiliar
 		MainMusicChannel,
@@ -687,6 +717,25 @@ public:
 		CleonInter6,
 		CleonInter7,
 		CleonLaugh,
+		CleonWalk,
+		CleonAttack1,
+		CleonAttack2,
+		CleonAttack3,
+		CleonBlock,
+		CleonCharge,
+		CleonHurt1,
+		CleonHurt2,
+		CleonHurt3,
+		CleonHurt4,
+		CleonSword1,
+		CleonSword2,
+		CleonSword3,
+		CleonSword4,
+		CleonRun,
+		CleonTheme,
+		//Barril
+		BarrelExpl,
+		InitBarrel,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
@@ -739,7 +788,7 @@ public:
 
 	///<summary>Vector con las rutas de los audios a cargar</summary>
 	static vector<AudioInfo> audioRoutes;
-	
+
 	//<summary>Vector para el volumen de cada canal</summary>	
 	static vector<AudioVolume> audioVolume;
 

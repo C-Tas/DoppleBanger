@@ -39,6 +39,8 @@ public:
 	};
 	//Establece la duracion del cooldown
 	void setDuration(double duration) { duration_ = duration; };
+	//Método para terminar un coolDown
+	void endCoolDown() { duration_ = 0; }
 	//Establece la duracion del cooldown
 	void setLastTick() { lastTick_ = SDL_GetTicks(); };
 	//Te devuelve la duracion que le queda
