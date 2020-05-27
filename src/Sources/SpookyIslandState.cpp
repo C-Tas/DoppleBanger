@@ -47,10 +47,10 @@ SpookyIslandState::~SpookyIslandState()
 
 void SpookyIslandState::update()
 {
-	if (enemies_.empty() && gm_->getCurrentZone() == Zone::SpookyBoss) {
+	if (gm_->endDemo()) {
 		collisionCtrl_->clearList();
 		gm_->setUnlockedIslands(Island::Volcanic);
-		app_->getGameStateMachine()->changeState(new ShipState(app_));
+		app_->getGameStateMachine()->changeState(new WinState(app_));
 	}
 	else {
 		collisionCtrl_->islandCollisions();

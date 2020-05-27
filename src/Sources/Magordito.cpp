@@ -6,6 +6,11 @@
 #include "Skeleton.h"
 #include "Kirin.h"
 
+Magordito::~Magordito()
+{
+	GameManager::instance()->setEndDemo(true);
+}
+
 bool Magordito::update() {
 	updateFrame();
 	manageTint();
@@ -40,7 +45,6 @@ bool Magordito::update() {
 	}
 	return false;
 }
-
 
 void Magordito::initObject() {
 	texture_ = app_->getTextureManager()->getTexture(Resources::Magordito);

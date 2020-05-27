@@ -648,6 +648,8 @@ void GameManager::loadUsableType(jute::jValue& mainJson, string tag, int i)
 
 void GameManager::resetGameManager()
 {
+	//Resetea el estado de la demo
+	bool endDemo_ = false;
 	//Reset isla actual
 	currIsland_ = Island::Caribbean;
 	//Reset islas desbloqueadas

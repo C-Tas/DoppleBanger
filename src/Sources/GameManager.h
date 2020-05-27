@@ -128,6 +128,8 @@ private:
 	int stashGold_ = 0;
 	//Booleano que indica si estamos en el barco
 	bool onShip_ = true;
+	//Para finalizar la demo
+	bool endDemo_ = false;
 	//Enum de la �ltima isla desbloqueada
 	Island unlockedIslands_ = Island::Volcanic;
 	//Enum de la isla actual
@@ -274,6 +276,8 @@ public:
 #pragma endregion
 
 #pragma region getters
+	//Devuelve si se ha completado la demo
+	const bool endDemo() { return endDemo_; };
 	//Devuelve true si la misi�n ha sido pasada
 	const bool isThatMissionPass(missions mission) { return missionsComplete_[(int)mission]; };
 	//Devuelve true si la misi�n est� empezada
@@ -363,6 +367,8 @@ public:
 #pragma endregion
 
 #pragma region setters
+	//Para poner la demo en acabada
+	inline void setEndDemo(bool endDemo) { endDemo_ = endDemo; };
 	//Suma puntos de hazaña
 	inline void addArchievementPoints(int value) { achievementPoints_ += value; }
 	//Asigna los archievement points

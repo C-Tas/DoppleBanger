@@ -65,7 +65,7 @@ public:
 
 	///<summary>Constantes con las dimensiones de la ventana </summary>
 	static const int winWidth_ = 1920;
-	static const int winHeight_ = 1080;
+	static const int winHeight_ = 1080; 
 
 	///<summary>Bucle principal de la aplicacion</summary>
 	void runApp();

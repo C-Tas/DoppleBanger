@@ -77,7 +77,7 @@ void Kraken::initDie() {
 	//Se restaura el volumen default del canal de música
 	app_->getAudioManager()->playChannel(Resources::KrakenDeath, 0, Resources::KrakenChannel1);
 	app_->getAudioManager()->playChannel(Resources::Isle1Zone3, -1, Resources::MainMusicChannel);
-
+	GameManager::instance()->setCurrIsland(Island::Spooky);
 	//Cuando acabe la animaci�n, lo mata
 	if (!tentacles_.empty()) {
 		for (Tentacle* i : tentacles_) {
