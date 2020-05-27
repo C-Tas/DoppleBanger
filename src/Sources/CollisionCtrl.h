@@ -202,5 +202,5 @@ private:	//Private est� abajo porque necesitan enum del p�blico
 	bool isCollidingWithParrot_ = false;
 	int randomPhrase_ = 0;
 	const int MAX_MERCHANT_PHRASES = 4;
-	const int MAX_PARROT_PHRASES = 4;
+	const int MAX_PARROT_PHRASES = 7;
 };

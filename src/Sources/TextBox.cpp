@@ -496,7 +496,7 @@ void TextBox::dialogChef(bool unlock, int num) {
 			text.loadFromText(app_->getRenderer(), "Muchas gracias por ayudarme. Aqu" + Resources::tildes_["i"] + " est" + Resources::tildes_["a"] +
 				" t" + Resources::tildes_["u"] + " recompensa.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
-			text.loadFromText(app_->getRenderer(), "A parte del caldito, te doy algo de oro, qu" + Resources::tildes_['e'] + " seguro que no te vendr" + Resources::tildes_['a'] + " mal.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "A parte del caldito, te doy algo de oro, qu" + Resources::tildes_["e"] + " seguro que no te vendr" + Resources::tildes_["a"] + " mal.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
 			unlockReward_->setCallBack(unlockCookerReward);
@@ -712,9 +712,9 @@ void TextBox::dialogParrot(int dialog) {
 
 	if (!gm_->isThatRewardUnlocked(missions::masValePajaroEnMano)) {
 		Texture text;
-		text.loadFromText(app_->getRenderer(), Resources::tildes_['¡'] + "Pistachines! " + Resources::tildes_['¡'] + "Quiero pistachines!", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.loadFromText(app_->getRenderer(), Resources::tildes_["¡"] + "Pistachines! " + Resources::tildes_["¡"] + "Quiero pistachines!", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + lineSpacing);
-		text.loadFromText(app_->getRenderer(), "Os he visto y me preguntaba si aqu" + Resources::tildes_['¡'] + " podr" + Resources::tildes_['¡'] + "a comer pistachines...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+		text.loadFromText(app_->getRenderer(), "Os he visto y me preguntaba si aqu" + Resources::tildes_["i"] + " podr" + Resources::tildes_["i"] + "a comer pistachines...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 		text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
 		unlockReward_->setCallBack(unlockParrotReward);
@@ -723,19 +723,37 @@ void TextBox::dialogParrot(int dialog) {
 	}
 	else {
 		if (dialog == 0) {
-			Texture text(app_->getRenderer(), "Texto 1.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Sin duda hay que perderse para hallar destinos inalcanzables, o de lo contrario,", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
+			text.loadFromText(app_->getRenderer(), "todo el mundo sabr" + Resources::tildes_["i"] + "a donde estan.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
 		}
 		else if (dialog == 1) {
-			Texture text(app_->getRenderer(), "Texto 2.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "La vida es cruel, " + Resources::tildes_["¿"] + "por qu" + Resources::tildes_["e"] + " la otra vida iba a ser distinta?", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 		}
 		else if (dialog == 2) {
-			Texture text(app_->getRenderer(), "Texto 3.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Los muertos cuentan cuentos, lo que pasa es que no los oyes.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+		}
+		else if (dialog == 3) {
+			Texture text(app_->getRenderer(), "Al final no importa cuanto huyas, tendr" + Resources::tildes_["a"] + "s que enfrentar tus miedos.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+		}
+		else if (dialog == 4) {
+			Texture text(app_->getRenderer(), "Quien te ataca por la espalda sabe que por delante no podr" + Resources::tildes_["a"] + ".", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+		}
+		else if (dialog == 5) {
+			Texture text(app_->getRenderer(), "Mmmmm... Pistachines.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing);
+		}
+		else if (dialog == 6) {
+			Texture text(app_->getRenderer(), Resources::tildes_["¡"] + "Qu" + Resources::tildes_["e"] + " ricolinos pistachines!, quiero m" + Resources::tildes_["a"] + "s.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 		}
 		else {
-			Texture text(app_->getRenderer(), "Texto 4.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), "Si no dejan a nadie con vida, " + Resources::tildes_["¿"] + "qui" + Resources::tildes_["e"] + "n cuenta las historias?", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 		}
 	}

@@ -23,8 +23,6 @@ protected:
 private:
 	bool songActive = false;
 
-
-
 	//Para guardar la posici�n del clik del rat�n  
 	SDL_Point mouse; 
 

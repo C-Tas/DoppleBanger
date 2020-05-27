@@ -64,8 +64,8 @@ public:
 	virtual ~Application(); 
 
 	///<summary>Constantes con las dimensiones de la ventana </summary>
-	static const int winWidth_ = 800;
-	static const int winHeight_ = 450;
+	static const int winWidth_ = 1600;
+	static const int winHeight_ = 900;
 
 	///<summary>Bucle principal de la aplicacion</summary>
 	void runApp();
