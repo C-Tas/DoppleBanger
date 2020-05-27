@@ -14,11 +14,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ GoMainMenuButton, "../Sources/assets/botones/mainMenuButton.png" },
 	{ ResumeButton, "../Sources/assets/botones/resumeButton.png" },
 	{ BackButton, "../Sources/assets/botones/volver.png" },
-	{ SkipButton, "../Sources/assets/botones/skipButton.png" },
 	{ ViajarButton, "../Sources/assets/botones/viajarButton.png" },
 	{ IslaActualButton, "../Sources/assets/botones/islaActualButton.png" },
 	{ SkipStoryButton, "../Sources/assets/botones/skipStoryButton.png" },
-	{ RestartGame, "../Sources/assets/botones/restartGame.png" },
 	{ MuteSoundOff, "../Sources/assets/botones/muteSoundOff.png" },
 	{ MuteSoundOn, "../Sources/assets/botones/muteSoundOn.png" },
 	{ MuteMusicOff, "../Sources/assets/botones/muteMusicOff.png" },
@@ -183,13 +181,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 
 #pragma region Sprites y animaciones
 	//Sprites
-	{ Dragon,"../Sources/assets/enemigos/dragon.png" },
 	{ PlayerFront, "../Sources/assets/player/frontal.png" },
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	{ Kraken, "../Sources/assets/enemigos/kraken/kraken.png" },
-	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
-	{ Azul, "../Sources/assets/enemigos/azul.png" },
 	{ Cleon, "../Sources/assets/enemigos/cleon/cleon.png" },
 	{ VenancioDrink, "../Sources/assets/npc/venancioDrink.png" },
 	{ VenancioPushStart, "../Sources/assets/npc/venancioPushStart.png" },
@@ -387,8 +382,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 		//tinta
 	{ InkAnim,"../Sources/assets/enemigos/Kraken/tinta.png" },
 		//tentaculo
-	{ KrakenAzoteAnim,"../Sources/assets/enemigos/Kraken/kraken azote.png" },
-	{ KrakenAzoteAtrasAnim,"../Sources/assets/enemigos/Kraken/azote atras.png" },
 	{ tentaculo,"../Sources/assets/enemigos/Kraken/tentaculo.png" },
 
 

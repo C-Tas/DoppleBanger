@@ -22,7 +22,6 @@ public:
 		GoMainMenuButton,
 		ResumeButton,
 		BackButton,
-		SkipButton,
 		ViajarButton,
 		IslaActualButton,
 		SkipStoryButton,
@@ -30,7 +29,6 @@ public:
 		MuteSoundOn,
 		MuteMusicOff,
 		MuteMusicOn,
-		RestartGame,
 		RightArrow,
 		LeftArrow,
 		EquippedButton,
@@ -160,7 +158,6 @@ public:
 		PotionBG,
 
 		//Sprites
-		Dragon,
 		PlayerFront,
 		MonkeyFront,
 		WolfFront,
@@ -184,10 +181,6 @@ public:
 		//Bosses
 		Magordito,
 		Cleon,
-
-		//gizmos
-		Rojo,
-		Azul,
 
 		//Animaciones
 		EntityDie,
@@ -371,8 +364,6 @@ public:
 	//Tinta
 	InkAnim,
 	//Tentaculo
-	KrakenAzoteAnim,
-	KrakenAzoteAtrasAnim,
 	tentaculo,
 		//Interactuables
 		Wheel,
