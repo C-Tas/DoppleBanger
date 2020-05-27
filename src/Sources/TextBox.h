@@ -28,10 +28,9 @@ protected:
 	static void goToShipState(Application* app);
 	static void changeZone(Application* app);
 	static void unlockCookerReward(Application* app);
+	static void unlockParrotReward(Application* app);
 	static void unlockMortyReward(Application* app);
 	static void unlockNamiReward(Application* app);
-
-
 
 public:
 	///<summary>Constructora del textBox de di�logo</summary>
@@ -90,7 +89,7 @@ public:
 	void dialogMorty(bool unlock, int num);
 
 	///<summary>Frases del loro, se genera una al azar</summary>
-	void dialogParrot();
+	void dialogParrot(int dialog);
 
 	///<summary>Frases del esqueleto</summary>
 	void dialogSkeleton(bool unlock);

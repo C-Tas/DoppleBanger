@@ -197,6 +197,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ VenancioPushFinish, "../Sources/assets/npc/venancioPushFinish.png" },
 	{ Merchant, "../Sources/assets/npc/mercaderIdle.png" },
 	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
+	{ Parrot, "../Sources/assets/npc/loroIdle.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
 	{ Cartographer, "../Sources/assets/npc/idleCartografa.png" },
 	{ Morty, "../Sources/assets/npc/idleMorty.png" },

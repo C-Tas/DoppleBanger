@@ -212,6 +212,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 	}
 
 	bool auxMerchCollision = false;
+	bool auxParrotCollision = false;
 	//Colisi�n con los NPCs desbloqueados
 	for (auto npc : npcs_) {
 		if (Collisions::collides(npc.object->getPos(), npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 1.1,
@@ -245,6 +246,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 	            break;
 			case NPCsNames::Parrot:
 				npcCollision.id = NPCsNames::Parrot;
+				auxParrotCollision = true;
 				break;
 			case NPCsNames::Skeleton:
 				npcCollision.id = NPCsNames::Skeleton;
@@ -261,6 +263,12 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 		randomPhrase_ = rand() % MAX_MERCHANT_PHRASES;
 	}
 	else if (!auxMerchCollision) isCollidingWithMechant_ = false;
+
+	if (auxParrotCollision && !isCollidingWithParrot_) {
+		isCollidingWithParrot_ = true;
+		randomPhrase_ = rand() % MAX_PARROT_PHRASES;
+	}
+	else if (!auxParrotCollision) isCollidingWithParrot_ = false;
 
 	///Colision con las paredes del barco
 	for (auto ob : obstacles_) {
@@ -382,7 +390,7 @@ void CollisionCtrl::drawTextBox() {
 		npcCollision.object->getTextBox()->dialogMorty(onShip, numConversation_);
 		break;
 	case NPCsNames::Parrot:
-		npcCollision.object->getTextBox()->dialogParrot();
+		npcCollision.object->getTextBox()->dialogParrot(randomPhrase_);
 		break;
 	case NPCsNames::Skeleton:
 		npcCollision.object->getTextBox()->dialogSkeleton(onShip);
