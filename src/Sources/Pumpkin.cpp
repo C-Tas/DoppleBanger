@@ -21,6 +21,7 @@ bool Pumpkin::onDistRange() {
 		return false;
 	}
 }
+
 bool Pumpkin::onMeleeRange() {
 	if (currEnemy_ != nullptr) {
 		Point2D center = getCenter();
@@ -36,6 +37,7 @@ bool Pumpkin::onMeleeRange() {
 		return false;
 	}
 }
+
 bool Pumpkin::update() {
 #ifdef _DEBUG
 
@@ -102,6 +104,7 @@ bool Pumpkin::update() {
 	}
 	return false;
 }
+
 void Pumpkin::disAttack() {
 	app_->getAudioManager()->playChannel(Resources::AttackPumpkin, 0, Resources::PumpkinChannel1); 
 	Vector2D dir = Vector2D(currEnemy_->getPosX() + (currEnemy_->getScaleX() / 2), currEnemy_->getPosY() + (currEnemy_->getScaleY() / 2));
@@ -114,6 +117,7 @@ void Pumpkin::disAttack() {
 	app_->getCurrState()->addRenderUpdateListsAsFirst(seed);
 	CollisionCtrl::instance()->addEnemyBullet(seed);
 }
+
 void Pumpkin::follow() {
 	if (currEnemy_ != nullptr) {
 		move(currEnemy_->getCenter());
@@ -127,6 +131,7 @@ void Pumpkin::follow() {
 		initExplosion();
 	}
 }
+
 void Pumpkin::initObject() {
 	Enemy::initObject();
 	initRewards();
@@ -140,27 +145,30 @@ void Pumpkin::initObject() {
 	posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);*/
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
 }
+
 void Pumpkin::lostAgro()
 {
 	currEnemy_ = nullptr;
 }
+
 void Pumpkin::initialStats()
 {
 	rangeVision_ = 350;
-	HEALTH = 800;
-	MANA = 0;
-	MANA_REG = 0;
-	ARMOR = 0;
-	MELEE_DMG = 650;
-	DIST_DMG = 120;
-	CRIT = 0;
-	MELEE_RANGE = 50;
-	DIST_RANGE = 1200;
-	MOVE_SPEED = 400;
-	MELEE_RATE = 0;
-	DIST_RATE = 1500;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initHealth_ = 800;
+	initMana_ = 0;
+	initManaReg_ = 0;
+	initArmor_ = 0;
+	initMeleeDmg = 650;
+	initDistDmg = 120;
+	initCrit_ = 0;
+	initMeleeRange = getScaleX() * 1.5;
+	initDistRange_ = 1200;
+	initMoveSpeed = 400;
+	initMeleeRate_ = 0;
+	initDistRate_ = 1500;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
+
 void Pumpkin::move(Point2D posToReach) {
 	if ((getCenter() - target_).magnitude() <= 0.05)
 	{
@@ -180,6 +188,7 @@ void Pumpkin::move(Point2D posToReach) {
 	pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 	pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 }
+
 void Pumpkin::initAnims()
 {
 	//Animaci�n de idle
@@ -240,12 +249,13 @@ void Pumpkin::initAnims()
 
 	initIdle();
 }
+
 void Pumpkin::initRewards()
 {
 	minGold = 20;
 	maxGold = 50;
-	minArchievementPoints = 70;
-	maxArchievementPoints = 110;
+	minArchievementPoints = 5;
+	maxArchievementPoints = 10;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
@@ -264,6 +274,7 @@ void Pumpkin::initIdle()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 }
+
 void Pumpkin::initAttack()
 {
 	shooted_ = false;
@@ -275,6 +286,7 @@ void Pumpkin::initAttack()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 }
+
 void Pumpkin::initExplosion()
 {
 	texture_ = explosionTx_[(int)currDir_];
@@ -286,6 +298,7 @@ void Pumpkin::initExplosion()
 	CollisionCtrl::instance()->removeEnemy(this);
 
 }
+
 bool Pumpkin::explosionAnim()
 {
 	if (currEnemy_ == nullptr) {
@@ -321,6 +334,7 @@ bool Pumpkin::explosionAnim()
 		return false;
 	}
 }
+
 void Pumpkin::initMove()
 {
 	app_->getAudioManager()->playChannel(Resources::MovePumpkin, -1, Resources::PumpkinChannel1);
@@ -331,6 +345,7 @@ void Pumpkin::initMove()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 }
+
 //Testeo
 void Pumpkin::updateDirVisEnemy() {
 	if (currEnemy_ != nullptr) {
@@ -351,6 +366,7 @@ void Pumpkin::updateDirVisEnemy() {
 		}
 	}
 }
+
 //testeo
 void Pumpkin::shootAnim()
 {

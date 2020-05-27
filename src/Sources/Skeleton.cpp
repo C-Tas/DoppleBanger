@@ -10,10 +10,7 @@ bool Skeleton::update() {
 
 	//Si el esqueleto ha muerto
 	if (currState_ == STATE::DYING) {
-		//Sonido muerte
-
 		dieAnim();
-
 	}
 	else {
 		updateCooldowns();
@@ -34,19 +31,19 @@ bool Skeleton::update() {
 }
 
 void Skeleton::initialStats() {
-	HEALTH = 1200;
-	MANA = 0;
-	MANA_REG = 0;
-	ARMOR = 5;
-	MELEE_DMG = 0;
-	DIST_DMG = 150;
-	CRIT = 0;
-	MELEE_RANGE = 0;
-	DIST_RANGE = 800;
-	MOVE_SPEED = 300;
-	MELEE_RATE = 0;
-	DIST_RATE = 2000;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initHealth_ = 1500;
+	initMana_ = 0;
+	initManaReg_ = 0;
+	initArmor_ = 5;
+	initMeleeDmg = 0;
+	initDistDmg = 150;
+	initCrit_ = 10;
+	initMeleeRange = 0;
+	initDistRange_ = 800;
+	initMoveSpeed = 300;
+	initMeleeRate_ = 0;
+	initDistRate_ = 1300;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
 
 void Skeleton::updateCooldowns()
@@ -100,8 +97,8 @@ void Skeleton::initRewards()
 {
 	minGold = 20;
 	maxGold = 30;
-	minArchievementPoints = 65;
-	maxArchievementPoints = 95;
+	minArchievementPoints = 2;
+	maxArchievementPoints = 6;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }
@@ -233,4 +230,9 @@ void Skeleton::initDie()
 {
 	Enemy::initDie();
 	app_->getAudioManager()->playChannel(Resources::SkeletonDeath, 0, Resources::SkeletonChannel1);
+	GameManager* gm_ = GameManager::instance();
+	missions mission = missions::papelesSiniestros;
+	if (GameManager::instance()->isThatMissionStarted(mission)) {
+		GameManager::instance()->addMissionCounter(mission);
+	}
 }

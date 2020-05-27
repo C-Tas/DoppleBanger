@@ -82,18 +82,18 @@ protected:
 	//Actualiza los Cooldowns
 	virtual void updateCooldowns() = 0;
 #pragma region stats
-	double HEALTH = 0;
-	double MANA = 0;
-	double MANA_REG = 0;
-	double ARMOR = 0;
-	double MELEE_DMG = 0;
-	double DIST_DMG = 0;
-	double CRIT = 0;
-	double MELEE_RANGE = 0;
-	double DIST_RANGE = 0;
-	double MOVE_SPEED = 0;
-	double MELEE_RATE = 0;
-	double DIST_RATE = 0;
+	double initHealth_ = 0;
+	double initMana_ = 0;
+	double initManaReg_ = 0;
+	double initArmor_ = 0;
+	double initMeleeDmg = 0;
+	double initDistDmg = 0;
+	double initCrit_ = 0;
+	double initMeleeRange = 0;
+	double initDistRange_ = 0;
+	double initMoveSpeed = 0;
+	double initMeleeRate_ = 0;
+	double initDistRate_ = 0;
 #pragma endregion
 
 };

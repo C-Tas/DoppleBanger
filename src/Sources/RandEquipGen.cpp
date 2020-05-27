@@ -30,49 +30,46 @@ Item* RandEquipGen::genEquip(int type)
 	int area = (int)gameManager_->getUnlockedIslands() + 1;
 	//comprobamos si se trata de equipamiento o pociones
 	if (type <= (int)equipType::Size) {
-#ifdef _DEBUG
-		cout << type << endl;
-#endif // _DEBUG
 		switch ((equipType)type)
 		{
 			//Vida y armadura
 		case equipType::ArmorI:
-			health = rn_->nextInt(7 * area, 16 * area);
+			health = rn_->nextInt(200 * area, 300 * area);
 			armor = rn_->nextInt(3 * area, 8 * area);
 			price = rn_->nextInt(50 * area, 150 * area);
 			obj = new Armor(app_, price, health, armor, (equipType)type);
 			break;
 
 		case equipType::ArmorII:
-			health = rn_->nextInt(7 * area, 16 * area);
-			armor = rn_->nextInt(3 * area, 8 * area);
+			health = rn_->nextInt(100 * area, 200 * area);
+			armor = rn_->nextInt(5 * area, 10 * area);
 			price = rn_->nextInt(50 * area, 150 * area);
 			obj = new Armor(app_, price, health, armor, (equipType)type);
 			break;
 			//Velocidad y armadura
 		case equipType::BootsI:
-			speed = rn_->nextInt(1 * area, 4 * area);
-			armor = rn_->nextInt(2 * area, 6 * area);
+			speed = rn_->nextInt(8 * area, 14 * area);
+			armor = rn_->nextInt(2 * area, 3 * area);
 			price = rn_->nextInt(20 * area, 80 * area);
 			obj = new Boots(app_, price, speed, armor, (equipType)type);
 			break;
 		case equipType::BootsII:
-			speed = rn_->nextInt(1 * area, 4 * area);
-			armor = rn_->nextInt(2 * area, 6 * area);
+			speed = rn_->nextInt(5 * area, 9 * area);
+			armor = rn_->nextInt(5 * area, 9 * area);
 			price = rn_->nextInt(20 * area, 80 * area);
 			obj = new Boots(app_, price, speed, armor, (equipType)type);
 			break;
 
 			//Cr�tico y armadura
 		case equipType::GlovesI:
-			crit = rn_->nextInt(3 * area, 8 * area);
-			armor = rn_->nextInt(1 * area, 3 * area);
+			crit = rn_->nextInt(15 * area, 50* area);
+			armor = rn_->nextInt(0 * area, 4 * area);
 			price = rn_->nextInt(35 * area, 100 * area);
 			obj = new Gloves(app_, price, crit, armor, (equipType)type);
 			break;
 		case equipType::GlovesII:
-			crit = rn_->nextInt(3 * area, 8 * area);
-			armor = rn_->nextInt(1 * area, 3 * area);
+			crit = rn_->nextInt(10 * area, 20 * area);
+			armor = rn_->nextInt(10 * area, 20 * area);
 			price = rn_->nextInt(35 * area, 100 * area);
 			obj = new Gloves(app_, price, crit, armor, (equipType)type);
 			break;
@@ -80,57 +77,57 @@ Item* RandEquipGen::genEquip(int type)
 			//Ad y velocidad de ataque
 			//Mas alcance que el sable
 		case equipType::SwordI:
-			ad = rn_->nextInt(5 * area, 16 * area);
-			meleeRate = rn_->nextInt(3 * area, 6 * area);
+			ad = rn_->nextInt(50 * area, 100 * area);
+			meleeRate = rn_->nextInt(70 * area, 100 * area);
 			price = rn_->nextInt(50 * area, 100 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 			break;
 		case equipType::SwordII:
-			ad = rn_->nextInt(5 * area, 16 * area);
-			meleeRate = rn_->nextInt(3 * area, 6 * area);
+			ad = rn_->nextInt(40 * area, 150 * area);
+			meleeRate = rn_->nextInt(50 * area, 130 * area);
 			price = rn_->nextInt(50 * area, 100 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 			break;
 
 			//Mas da�o que la espada
 		case equipType::SaberI:
-			ad = rn_->nextInt(6 * area, 17 * area);
-			meleeRate = rn_->nextInt(1 * area, 4 * area);
+			ad = rn_->nextInt(130 * area, 180 * area);
+			meleeRate = rn_->nextInt(20 * area, 60 * area);
 			price = rn_->nextInt(60 * area, 90 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 			break;
 		case equipType::SaberII:
-			ad = rn_->nextInt(6 * area, 17 * area);
-			meleeRate = rn_->nextInt(1 * area, 4 * area);
+			ad = rn_->nextInt(115 * area, 200 * area);
+			meleeRate = rn_->nextInt(8 * area, 35 * area);
 			price = rn_->nextInt(60 * area, 90 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 			break;
 
 			//Ap y velocidad de disparo
-			//Dispara en linea recta con mas da�o y alcance que la escopeta
+			//Dispara en linea recta con mas da�o
 		case equipType::PistolI:
-			ad = rn_->nextInt(5 * area, 16 * area);
-			distRate = rn_->nextInt(2 * area, 4 * area);
+			ad = rn_->nextInt(80 * area, 120 * area);
+			distRate = rn_->nextInt(100 * area, 150 * area);
 			price = rn_->nextInt(75 * area, 165 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
 		case equipType::PistolII:
-			ad = rn_->nextInt(5 * area, 16 * area);
-			distRate = rn_->nextInt(2 * area, 4 * area);
+			ad = rn_->nextInt(50 * area, 180 * area);
+			distRate = rn_->nextInt(60 * area, 170 * area);
 			price = rn_->nextInt(75 * area, 165 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
 
-			//Dispara en are recta con menos da�o y alcance que la escopeta
+			//Dispara en are recta con menos da�o
 		case equipType::ShotgunI:
-			ad = rn_->nextInt(3 * area, 13 * area);
-			distRate = rn_->nextInt(1 * area, 2 * area);
+			ad = rn_->nextInt(30 * area, 40 * area);
+			distRate = rn_->nextInt(30 * area, 80 * area);
 			price = rn_->nextInt(80 * area, 175 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
 		case equipType::ShotgunII:
-			ad = rn_->nextInt(3 * area, 13 * area);
-			distRate = rn_->nextInt(1 * area, 2 * area);
+			ad = rn_->nextInt(20 * area, 50 * area);
+			distRate = rn_->nextInt(20 * area, 90 * area);
 			price = rn_->nextInt(80 * area, 175 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
@@ -143,52 +140,27 @@ Item* RandEquipGen::genEquip(int type)
 		}
 	}
 	else {
-#ifdef _DEBUG
-	cout << "  x  " << type << endl;
-#endif // _DEBUG
 	//no estamos en el rango de los equipamientos por lo que estamos en el de las pociones 
 	type -= ((int)equipType::Size+1);
-#ifdef _DEBUG
-	cout <<"  x2  "<< type << endl;
-#endif // _DEBUG
 
 	switch ((potionType)type)
 	{
 	case potionType::Health:
-#ifdef _DEBUG
-		cout << "h" << endl;
-#endif // _DEBUG
-
 		obj = new usable(app_,(potionType)type);
 		break;
 	case potionType::Mana:
-#ifdef _DEBUG
-		cout << "m" << endl;
-#endif // _DEBUG
 		obj = new usable(app_, (potionType)type);
 		break;
 	case potionType::Speed:
-#ifdef _DEBUG
-		cout << "s" << endl;
-#endif // _DEBUG
 		obj = new usable(app_, (potionType)type);
 		break;
 	case potionType::Armor:
-#ifdef _DEBUG
-		cout << "a" << endl;
-#endif // _DEBUG
 		obj = new usable(app_, (potionType)type);
 		break;
 	case potionType::Damage:
-#ifdef _DEBUG
-		cout << "d" << endl;
-#endif // _DEBUG
 		obj = new usable(app_, (potionType)type);
 		break;
 	case potionType::Crit:
-#ifdef _DEBUG
-		cout << "h" << endl;
-#endif // _DEBUG
 		obj = new usable(app_, (potionType)type);
 		break;
 	case potionType::Size:

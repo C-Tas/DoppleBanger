@@ -15,18 +15,21 @@ void backShip(Application* app) {
 
 //Para viajar a la isla 1
 void goToIsland1(Application* app) {
+	SDL_ShowCursor(SDL_DISABLE);
 	GameManager::instance()->setCurrIsland(Island::Caribbean);
 	app->getGameStateMachine()->popState();
 }
 
 //Para viajar a la isla 2
 void goToIsland2(Application* app) {
+	SDL_ShowCursor(SDL_DISABLE);
 	GameManager::instance()->setCurrIsland(Island::Spooky);
 	app->getGameStateMachine()->popState();
 }
 
 //Para viajar a la isla 3
 void goToIsland3(Application* app) {
+	SDL_ShowCursor(SDL_DISABLE);
 	GameManager::instance()->setCurrIsland(Island::Volcanic);
 	app->getGameStateMachine()->popState();
 }

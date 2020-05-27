@@ -58,9 +58,10 @@ void Application::runApp() {
 
 		SDL_RenderPresent(renderer_); //Draw
 
+	#ifdef _DEBUG
 		if (input->isKeyDown(SDL_SCANCODE_P))
 			appClosed_ = true;
-	
+	#endif
 	}
 	endGame();
 }

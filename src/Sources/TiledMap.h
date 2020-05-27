@@ -116,8 +116,11 @@ private:
 	const double W_NPC_MORTY= app_->getWindowWidth() / 20;
 	const double H_NPC_MORTY= app_->getWindowHeight() / 8;
 
-	const double W_NPC_NAMI = app_->getWindowWidth() / 12;
-	const double H_NPC_NAMI = app_->getWindowHeight() / 6;
+	const double W_NPC_SKELETON = app_->getWindowWidth() / 18;
+	const double H_NPC_SKELETON = app_->getWindowHeight() * 2 / 15;
+
+	const double W_NPC_NAMI = app_->getWindowWidth() / 10;
+	const double H_NPC_NAMI = app_->getWindowHeight() / 5;
 
 	//Dimensiones de las entidades
 	const double W_PLAYER = app_->getWindowWidth() / 12;

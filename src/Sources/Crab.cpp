@@ -72,7 +72,7 @@ void Crab::initMeleeAnim()
 void Crab::initWalk()
 {
 	currEnemy_ = nullptr;
-	app_->getAudioManager()->playChannel(Resources::AudioId::CrabIdleSound, -1, Resources::CrabChannel2);
+	app_->getAudioManager()->playChannel(Resources::AudioId::CrabDetection, -1, Resources::CrabChannel2);
 	currState_ = STATE::PATROLLING;
 	texture_ = walkTex_;
 	currAnim_ = walkAnim_;
@@ -85,7 +85,7 @@ void Crab::initWalk()
 void Crab::initIdle()
 {
 	currState_ = STATE::IDLE;
-	app_->getAudioManager()->playChannel(Resources::CrabIdle, -1, Resources::CrabChannel2);
+	app_->getAudioManager()->playChannel(Resources::AudioId::CrabIdleSound, -1, Resources::CrabChannel2);
 	texture_ = idleTx_;
 	currAnim_ = idleAnim_;
 
@@ -108,17 +108,11 @@ void Crab::meleeAnim()
 	if (currAnim_.currFrame_ == FRAME_ACTION) {
 		attack();
 		meleeCD_.initCooldown(currStats_.meleeRate_);
-		cout << "CONTINUA ATACANDO" << endl;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();
-		cout << "CAMBIO A IDLE" << endl;
 		currEnemy_ = nullptr;
 	}
-	else {
-		cout << "MELEE ANIM NO HACE NADA (ATTACKING)" << endl;
-	}
-	
 }
 
 void Crab::attack() {
@@ -168,19 +162,19 @@ void Crab::initAnims()
 }
 
 void Crab::initialStats() {
-	HEALTH = 750;
-	MANA = 0;
-	MANA_REG = 0;
-	ARMOR = 10;
-	MELEE_DMG = 150;
-	DIST_DMG = 0;
-	CRIT = 5;
-	MELEE_RANGE = getScaleX() / 2;	//Medido con photoshop
-	DIST_RANGE = 0;
-	MOVE_SPEED = 300;
-	MELEE_RATE = 1500;	//En milisegundos
-	DIST_RATE = 0;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initHealth_ = 600;
+	initMana_ = 0;
+	initManaReg_ = 0;
+	initArmor_ = 10;
+	initMeleeDmg = 60;
+	initDistDmg = 0;
+	initCrit_ = 5;
+	initMeleeRange = getScaleX() / 2;	//Medido con photoshop
+	initDistRange_ = 0;
+	initMoveSpeed = 250;
+	initMeleeRate_ = 1200;	//En milisegundos
+	initDistRate_ = 0;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
 
 void Crab::initRewards()

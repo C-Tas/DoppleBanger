@@ -62,28 +62,35 @@ bool Kraken::update() {
 
 	//Si ha muerto
 	if (currState_ == STATE::DYING) {
-		//Se restaura el volumen default del canal de música
-		app_->getAudioManager()->setChannelVolume(7, Resources::MainMusicChannel);
-		app_->getAudioManager()->playChannel(Resources::KrakenDeath, 0, Resources::KrakenChannel1);
-		app_->getAudioManager()->haltChannel(Resources::KrakenChannel2);
-		//Cuando acabe la animaci�n, lo mata
-		if (!tentacles_.empty()) {
-			for (Tentacle* i : tentacles_) {
-				if (i != nullptr)
-				{
-					i->die();
-					app_->getCurrState()->removeRenderUpdateLists(i);
-					static_cast<PlayState*>(app_->getCurrState())->removeEnemy(i);
-				}
-			}
-			tentacles_.clear();
-		}
+		
 		dieAnim();
 	}
 
 	return false;
 }
 
+void Kraken::initDie() {
+	Enemy::initDie();
+	app_->resetMusicChannels();
+	app_->resetSoundsChannels();
+
+	//Se restaura el volumen default del canal de música
+	app_->getAudioManager()->playChannel(Resources::KrakenDeath, 0, Resources::KrakenChannel1);
+	app_->getAudioManager()->playChannel(Resources::Isle1Zone3, -1, Resources::MainMusicChannel);
+	GameManager::instance()->setCurrIsland(Island::Spooky);
+	//Cuando acabe la animaci�n, lo mata
+	if (!tentacles_.empty()) {
+		for (Tentacle* i : tentacles_) {
+			if (i != nullptr)
+			{
+				i->die();
+				app_->getCurrState()->removeRenderUpdateLists(i);
+				static_cast<PlayState*>(app_->getCurrState())->removeEnemy(i);
+			}
+		}
+		tentacles_.clear();
+	}
+}
 //Inicializa todas las animaciones
 void Kraken::initAnims()
 {
@@ -100,11 +107,26 @@ void Kraken::initAnims()
 	idle();
 }
 
+void Kraken::initialStats() {
+	initHealth_ = 3000;
+	initMana_ = 0;
+	initManaReg_ = 0;
+	initArmor_ = 15;
+	initMeleeDmg = 200; 
+	initDistDmg = 100;
+	initCrit_ = 0; 
+	initMeleeRange = 0;
+	initDistRange_ = 0;
+	initMoveSpeed = 0;
+	initMeleeRate_ = 200;
+	initDistRate_ = 5000;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
+}
+
 //Inicializa el kraken
 void Kraken::initObject()
 {
 	setTexture(app_->getTextureManager()->getTexture(Resources::Kraken));
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
@@ -115,8 +137,8 @@ void Kraken::initObject()
 	tag_ = "Kraken";
 	app_->resetMusicChannels();
 	app_->getAudioManager()->playChannel(Resources::KrakenIdle, -1, Resources::KrakenChannel1);
-	app_->getAudioManager()->playChannel(Resources::KrakenMusic, -1, Resources::MainMusicChannel);
-	app_->getAudioManager()->setChannelVolume(20, Resources::MainMusicChannel);
+	app_->getAudioManager()->playChannel(Resources::KrakenMusic, -1, Resources::KrakenMusicChannel);
+	initialStats();
 }
 
 void Kraken::slam()
@@ -208,10 +230,7 @@ void Kraken::swimInit()
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
 
-	
 	app_->getAudioManager()->playChannel(Resources::KrakenDive, 0, Resources::KrakenChannel2);
-
-	cout << "nada" << endl;
 
 	if (!tentacles_.empty()) {
 		for (Tentacle* i : tentacles_) {
@@ -314,10 +333,10 @@ void Kraken::lostAggro()
 
 void Kraken::initRewards()
 {
-	minGold = 30;
-	maxGold = 50;
-	minArchievementPoints = 2;
-	maxArchievementPoints = 10;
+	minGold = 100;
+	maxGold = 200;
+	minArchievementPoints = 10;
+	maxArchievementPoints = 15;
 	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
 	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
 }

@@ -269,7 +269,6 @@ void SkillState::auxPointsActualized(list<SkillButton*>::iterator aux, Texture* 
 		gm_->setSkillUnlocked((*aux)->getSkillId());
 		if (p2 != nullptr) {
 			p2(player_);
-
 		}
 	}
 	++aux;

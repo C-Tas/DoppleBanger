@@ -100,6 +100,7 @@ private:
 	void initIdle();
 	void initMove();
 	void initMelee();
+	virtual void initDie();
 	//Controla la animación
 	void meleeAnim();
 #pragma endregion

@@ -121,4 +121,3 @@ void CaribbeanIslandState::changeZone()
 	hud_->setPlayerInHUD(player_);
 	player_->initSkills();
 }
-

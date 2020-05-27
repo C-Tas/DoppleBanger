@@ -6,6 +6,11 @@
 #include "Skeleton.h"
 #include "Kirin.h"
 
+Magordito::~Magordito()
+{
+	GameManager::instance()->setEndDemo(true);
+}
+
 bool Magordito::update() {
 	updateFrame();
 	manageTint();
@@ -40,7 +45,6 @@ bool Magordito::update() {
 	}
 	return false;
 }
-
 
 void Magordito::initObject() {
 	texture_ = app_->getTextureManager()->getTexture(Resources::Magordito);
@@ -161,19 +165,19 @@ inline bool Magordito::enemyIsTooClose()
 void Magordito::initialStats()
 {
 	rangeVision_ = 500;
-	HEALTH = 4000;
-	MANA = 100;
-	MANA_REG = 1;
-	ARMOR = 10;
-	MELEE_DMG = 750;
-	DIST_DMG = 300;
-	CRIT = 0;
-	MELEE_RANGE = 200;
-	DIST_RANGE = 350;
-	MOVE_SPEED = 100;
-	MELEE_RATE = 1;
-	DIST_RATE = 2500;
-	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+	initHealth_ = 4000;
+	initMana_ = 100;
+	initManaReg_ = 1;
+	initArmor_ = 10;
+	initMeleeDmg = 750;
+	initDistDmg = 300;
+	initCrit_ = 0;
+	initMeleeRange = 200;
+	initDistRange_ = 350;
+	initMoveSpeed = 100;
+	initMeleeRate_ = 1;
+	initDistRate_ = 2500;
+	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
 
 void Magordito::teleport()

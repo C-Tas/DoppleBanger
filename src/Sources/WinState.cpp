@@ -1,8 +1,8 @@
 #include "WinState.h"
-#include "EndState.h"
+#include "CreditsState.h"
 
 void resetGame(Application* app) {
-	app->getGameStateMachine()->clearAllStateExceptFirst();
+	app->getGameStateMachine()->changeState(new CreditsState(app));
 }
 
 void WinState::initState()
@@ -13,7 +13,14 @@ void WinState::initState()
 	app_->resetSoundsChannels();
 	app_->getAudioManager()->playChannel(Resources::MainTheme, -1, Resources::MainMusicChannel);
 
-	createButton(app_, app_->getTextureManager()->getTexture(Resources::Win), Vector2D(0, 0),
-		Vector2D(app_->getWindowWidth(), app_->getWindowHeight()), resetGame);
+	background_ = new VisualElement(app_, app_->getTextureManager()->getTexture(Resources::Win));
+	addRenderUpdateLists(background_);
+
+	double winWidth = app_->getWindowWidth();
+	double winHeight = app_->getWindowHeight();
+
+	Vector2D sizeButton = Vector2D(winWidth / 6, winHeight / 10);
+	Vector2D posButton = Vector2D((winWidth / 2) - sizeButton.getX() / 2, (winHeight * 5 / 6));
+	createBeerButton(app_, app_->getTextureManager()->getTexture(Resources::CreditsButton), posButton, sizeButton, resetGame, this);
 }
 
