@@ -290,7 +290,7 @@ void EnemyPirate::initObject() {
 	initRewards();
 	target_ = pos_;
 	nextTarget_ = pos_;
-	rangeVision_ = VIS_RANGE;
+
 	/*double w = 1 / 3,
 		h = 2 / 3,
 		x = 1 / 3,
@@ -318,6 +318,7 @@ void EnemyPirate::initialStats()
 {
 	GameManager* gm_ = GameManager::instance();
 	if (gm_->getCurrIsland() == Island::Caribbean) {
+		rangeVision_ = 800;
 		initHealth_ = 800;
 		initMana_ = 0;
 		initManaReg_ = 0;
@@ -332,6 +333,7 @@ void EnemyPirate::initialStats()
 		initDistRate_ = 1000;
 	}
 	else {
+		rangeVision_ = 1600;
 		initHealth_ = 1500;
 		initMana_ = 0;
 		initManaReg_ = 0;

@@ -120,8 +120,7 @@ private:
 	void meleeAnim();
 #pragma endregion
 
-	//Estadisticas para inicializar
-	const int VIS_RANGE = 200;
+	
 	//Entero que representa la cantidad de frames que tiene para las animaciones
 	const int NUM_FRAMES = 0;
 	//Frame para renderizar dentro de un spritesheet

@@ -77,13 +77,13 @@ Item* RandEquipGen::genEquip(int type)
 			//Ad y velocidad de ataque
 			//Mas alcance que el sable
 		case equipType::SwordI:
-			ad = rn_->nextInt(50 * area, 100 * area);
+			ad = rn_->nextInt(100 * area, 185 * area);
 			meleeRate = rn_->nextInt(70 * area, 100 * area);
 			price = rn_->nextInt(50 * area, 100 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 			break;
 		case equipType::SwordII:
-			ad = rn_->nextInt(40 * area, 150 * area);
+			ad = rn_->nextInt(90 * area, 210 * area);
 			meleeRate = rn_->nextInt(50 * area, 130 * area);
 			price = rn_->nextInt(50 * area, 100 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
@@ -91,13 +91,13 @@ Item* RandEquipGen::genEquip(int type)
 
 			//Mas da�o que la espada
 		case equipType::SaberI:
-			ad = rn_->nextInt(130 * area, 180 * area);
+			ad = rn_->nextInt(150 * area, 210 * area);
 			meleeRate = rn_->nextInt(20 * area, 60 * area);
 			price = rn_->nextInt(60 * area, 90 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);
 			break;
 		case equipType::SaberII:
-			ad = rn_->nextInt(115 * area, 200 * area);
+			ad = rn_->nextInt(130 * area, 240 * area);
 			meleeRate = rn_->nextInt(8 * area, 35 * area);
 			price = rn_->nextInt(60 * area, 90 * area);
 			obj = new Sword(app_, price, ad, meleeRate, (equipType)type);

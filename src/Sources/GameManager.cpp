@@ -809,7 +809,7 @@ playerEquipment& GameManager::initEquipment(){
 		currEquip_.armor_ = new Armor(app_, 1, 100, 5, equipType::ArmorI);
 		currEquip_.gloves_ = new Gloves(app_, 1, 1, 0, equipType::GlovesI);
 		currEquip_.boots_ = new Boots(app_, 1, 30, 0, equipType::BootsI);
-		currEquip_.sword_ = new Sword(app_, 1, 200, 0, equipType::SwordI);
+		currEquip_.sword_ = new Sword(app_, 1, 150, 0, equipType::SwordI);
 		currEquip_.gun_ = new Gun(app_, 1, 120, 0, equipType::PistolI);
 	}
 	return currEquip_;
