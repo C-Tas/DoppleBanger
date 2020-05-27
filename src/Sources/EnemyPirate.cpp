@@ -25,7 +25,6 @@ bool EnemyPirate::update() {
 				initMove();
 			}
 			if (currState_ == STATE::PATROLLING) {
-				updateDirVisObjective(target_);
 				move(target_);
 			}
 		}
@@ -43,7 +42,6 @@ bool EnemyPirate::update() {
 				stop();
 			}
 			else if (onRange(rangeVision_) && currState_ != STATE::ATTACKING && currState_ != STATE::SHOOTING) {
-				updateDirVisObjective(currEnemy_->getCenter());
 				if (idle_) initMove();
 				move(currEnemy_->getCenter());
 				idle_ = false;
@@ -67,8 +65,13 @@ void EnemyPirate::move(Vector2D posToReach) {
 	{
 		pathPos_ = { (int)PosToTile(nextTarget_).getX(), (int)PosToTile(nextTarget_).getY() };
 		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
-		if (pathing_.size() > 1)
+		if (pathing_.size() > 1) {
 			nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
+
+			updateDirVisObjective(nextTarget_);
+			texture_ = moveTx_[(int)currDir_];
+			currAnim_ = moveAnims_[(int)currDir_];
+		}
 		else
 		{
 			initIdle();

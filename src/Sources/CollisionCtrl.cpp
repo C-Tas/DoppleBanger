@@ -107,18 +107,18 @@ void CollisionCtrl::islandCollisions() {
 	}
 
 	//Colisi�n NPC con jugador -- Como mucho habrá uno por zona
-	if (npcs_.size() > 0) {
-		if (player_ != nullptr && Collisions::collides(npcs_[0].object->getPos(), npcs_[0].object->getScaleX() * 1.1, npcs_[0].object->getScaleY() * 1.1,
+	for (auto npc : npcs_) {
+		if (player_ != nullptr && Collisions::collides(npc.object->getPos(), npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 1.1,
 			player_->getPos(), player_->getScaleX() * 1.1, player_->getScaleY() * 1.1)) {
-			if (Collisions::collides(npcs_[0].object->getColliderPos(), npcs_[0].object->getColliderScale().getX(), npcs_[0].object->getColliderScale().getY(),
+			if (Collisions::collides(npc.object->getColliderPos(), npc.object->getColliderScale().getX(), npc.object->getColliderScale().getY(),
 				player_->getColliderPos(), player_->getColliderScale().getX(), player_->getColliderScale().getY())) {
 				player_->stop();
 				player_->setPos(player_->getPreviousPos());
 			}
 
 			onShip = false;
-			npcCollision.object = npcs_[0].object;
-			switch (npcs_[0].id) {
+			npcCollision.object = npc.object;
+			switch (npc.id) {
 			case NPCsNames::Chef:
 				npcCollision.id = NPCsNames::Chef;
 				break;
@@ -212,6 +212,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 	}
 
 	bool auxMerchCollision = false;
+	bool auxParrotCollision = false;
 	//Colisi�n con los NPCs desbloqueados
 	for (auto npc : npcs_) {
 		if (Collisions::collides(npc.object->getPos(), npc.object->getScaleX() * 1.1, npc.object->getScaleY() * 1.1,
@@ -245,6 +246,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 	            break;
 			case NPCsNames::Parrot:
 				npcCollision.id = NPCsNames::Parrot;
+				auxParrotCollision = true;
 				break;
 			case NPCsNames::Skeleton:
 				npcCollision.id = NPCsNames::Skeleton;
@@ -261,6 +263,12 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 		randomPhrase_ = rand() % MAX_MERCHANT_PHRASES;
 	}
 	else if (!auxMerchCollision) isCollidingWithMechant_ = false;
+
+	if (auxParrotCollision && !isCollidingWithParrot_) {
+		isCollidingWithParrot_ = true;
+		randomPhrase_ = rand() % MAX_PARROT_PHRASES;
+	}
+	else if (!auxParrotCollision) isCollidingWithParrot_ = false;
 
 	///Colision con las paredes del barco
 	for (auto ob : obstacles_) {
@@ -312,7 +320,6 @@ void CollisionCtrl::volcanicCollision()
 	}
 	barrelsToErase_.clear();
 
-	cout << barrels_.size() << endl;
 	for (auto barrel : barrels_) {
 		if (barrel->getBarrelState() == BARREL_STATE::INIT_EXPLOTION) {
 			//Collisión contra el player
@@ -383,10 +390,10 @@ void CollisionCtrl::drawTextBox() {
 		npcCollision.object->getTextBox()->dialogMorty(onShip, numConversation_);
 		break;
 	case NPCsNames::Parrot:
-		npcCollision.object->getTextBox()->dialogParrot();
+		npcCollision.object->getTextBox()->dialogParrot(randomPhrase_);
 		break;
 	case NPCsNames::Skeleton:
-		npcCollision.object->getTextBox()->dialogSkeleton(onShip);
+		npcCollision.object->getTextBox()->dialogSkeleton(onShip, numConversation_);
 		break;
 	case NPCsNames::Cartographer:
 		npcCollision.object->getTextBox()->dialogCartographer(onShip, numConversation_);

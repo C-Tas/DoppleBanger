@@ -1,0 +1,1 @@
+Si se borra este archivo no guarda partida porque al subir los cambios al gitHub se eliminan carpetas vacías.

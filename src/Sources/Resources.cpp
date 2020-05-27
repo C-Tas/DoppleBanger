@@ -14,11 +14,9 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ GoMainMenuButton, "../Sources/assets/botones/mainMenuButton.png" },
 	{ ResumeButton, "../Sources/assets/botones/resumeButton.png" },
 	{ BackButton, "../Sources/assets/botones/volver.png" },
-	{ SkipButton, "../Sources/assets/botones/skipButton.png" },
 	{ ViajarButton, "../Sources/assets/botones/viajarButton.png" },
 	{ IslaActualButton, "../Sources/assets/botones/islaActualButton.png" },
 	{ SkipStoryButton, "../Sources/assets/botones/skipStoryButton.png" },
-	{ RestartGame, "../Sources/assets/botones/restartGame.png" },
 	{ MuteSoundOff, "../Sources/assets/botones/muteSoundOff.png" },
 	{ MuteSoundOn, "../Sources/assets/botones/muteSoundOn.png" },
 	{ MuteMusicOff, "../Sources/assets/botones/muteMusicOff.png" },
@@ -183,13 +181,10 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 
 #pragma region Sprites y animaciones
 	//Sprites
-	{ Dragon,"../Sources/assets/enemigos/dragon.png" },
 	{ PlayerFront, "../Sources/assets/player/frontal.png" },
 	{ MonkeyFront, "../Sources/assets/enemigos/monkey/monkeyFront.png" },
 	{ WolfFront, "../Sources/assets/enemigos/wolf/wolf.png" },
 	{ Kraken, "../Sources/assets/enemigos/kraken/kraken.png" },
-	{ Rojo, "../Sources/assets/enemigos/rojo.png" },
-	{ Azul, "../Sources/assets/enemigos/azul.png" },
 	{ Cleon, "../Sources/assets/enemigos/cleon/cleon.png" },
 	{ VenancioDrink, "../Sources/assets/npc/venancioDrink.png" },
 	{ VenancioPushStart, "../Sources/assets/npc/venancioPushStart.png" },
@@ -197,6 +192,7 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ VenancioPushFinish, "../Sources/assets/npc/venancioPushFinish.png" },
 	{ Merchant, "../Sources/assets/npc/mercaderIdle.png" },
 	{ Cooker, "../Sources/assets/npc/cookerIdle.png" },
+	{ Parrot, "../Sources/assets/npc/loroIdle.png" },
 	{ SkeletonMusician, "../Sources/assets/npc/EsqueletoMusico.png" },
 	{ Cartographer, "../Sources/assets/npc/idleCartografa.png" },
 	{ Morty, "../Sources/assets/npc/idleMorty.png" },
@@ -310,6 +306,20 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PirateShootUpAnim, "../Sources/assets/enemigos/pirata/PirateShootBack.png" },
 	{ PirateShootDownAnim, "../Sources/assets/enemigos/pirata/PirateShootFront.png" },
 
+	//Lobo
+	{ WolfIdleRightAnim, "../Sources/assets/enemigos/wolf/LoboIdleDer.png" },
+	{ WolfIdleLeftAnim, "../Sources/assets/enemigos/wolf/LoboIdleIzq.png" },
+	{ WolfIdleUpAnim, "../Sources/assets/enemigos/wolf/LoboIdleArriba.png" },
+	{ WolfIdleDownAnim, "../Sources/assets/enemigos/wolf/LoboIdleAbajo.png" },
+	{ WolfAttackRightAnim, "../Sources/assets/enemigos/wolf/LoboAtaqueDer.png" },
+	{ WolfAttackLeftAnim, "../Sources/assets/enemigos/wolf/LoboAtaqueIzq.png" },
+	{ WolfAttackUpAnim, "../Sources/assets/enemigos/wolf/LoboAtaqueArriba.png" },
+	{ WolfAttackDownAnim, "../Sources/assets/enemigos/wolf/LoboAtaqueAbajo.png" },
+	{ WolfMoveRightAnim, "../Sources/assets/enemigos/wolf/LoboCorrerDer.png" },
+	{ WolfMoveLeftAnim, "../Sources/assets/enemigos/wolf/LoboCorrerIzq.png" },
+	{ WolfMoveDownAnim, "../Sources/assets/enemigos/wolf/LoboCorrerAbajo.png" },
+	{ WolfMoveUpAnim, "../Sources/assets/enemigos/wolf/LoboCorrerArriba.png" },
+
 	//Skeleton
 	{ SkeletonIdleRightAnim, "../Sources/assets/enemigos/skeleton/IdleLadoDer.png" },
 	{ SkeletonIdleLeftAnim, "../Sources/assets/enemigos/skeleton/IdleLadoIzq.png" },
@@ -348,7 +358,36 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ MagorditoKirinTopRight, "../Sources/assets/enemigos/magordito/kirin/kirinTopDcha.png" },
 	{ MagorditoKirinTopLeft, "../Sources/assets/enemigos/magordito/kirin/kirinTopIz.png" },
 	{ Kirin, "../Sources/assets/enemigos/magordito/kirin/rayo.png" },
-#pragma endregion
+    
+    //Cleon
+	//Idle
+	{ CleonIdleUp,"../Sources/assets/enemigos/cleon/Idle/CleonIdleBack.png" },
+	{ CleonIdleDown,"../Sources/assets/enemigos/cleon/Idle/CleonIdleFront.png" },
+	{ CleonIdleRight,"../Sources/assets/enemigos/cleon/Idle/CleonIdleRight.png" },
+	{ CleonIdleLeft, "../Sources/assets/enemigos/cleon/Idle/CleonIdleLeft.png" },
+	//Movimiento
+	{ CleonMovUp,"../Sources/assets/enemigos/cleon/Movimiento/CleonMoveBack.png" },
+	{ CleonMovDown,"../Sources/assets/enemigos/cleon/Movimiento/CleonMoveFront.png" },
+	{ CleonMovRight,"../Sources/assets/enemigos/cleon/Movimiento/CleonMoveRight.png" },
+	{ CleonMovLeft, "../Sources/assets/enemigos/cleon/Movimiento/CleonMoveLeft.png" },
+	//Estocada
+	{ CleonMelUp,"../Sources/assets/enemigos/cleon/Melee/CleonEstocadaBack.png" },
+	{ CleonMelDown,"../Sources/assets/enemigos/cleon/Melee/CleonEstocadaFront.png" },
+	{ CleonMelRight,"../Sources/assets/enemigos/cleon/Melee/CleonEstocadaRight.png" },
+	{ CleonMelLeft, "../Sources/assets/enemigos/cleon/Melee/CleonEstocadaLeft.png" },
+	//Barrido
+	{ CleonSweptUp,"../Sources/assets/enemigos/cleon/Barrido/CleonBarridoBack.png" },
+	{ CleonSweptDown,"../Sources/assets/enemigos/cleon/Barrido/CleonBarridoFront.png" },
+	{ CleonSweptRight,"../Sources/assets/enemigos/cleon/Barrido/CleonBarridoRight.png" },
+	{ CleonSweptLeft, "../Sources/assets/enemigos/cleon/Barrido/CleonBarridoLeft.png" },
+	//Carga
+	{ CleonChargeUp,"../Sources/assets/enemigos/cleon/Carga/CleonChargeBack.png" },
+	{ CleonChargeDown,"../Sources/assets/enemigos/cleon/Carga/CleonChargeFront.png" },
+	{ CleonChargeRight,"../Sources/assets/enemigos/cleon/Carga/CleonChargeRight.png" },
+	{ CleonChargeLeft, "../Sources/assets/enemigos/cleon/Carga/CleonChargeLeft.png" },
+
+
+	#pragma endregion
 
  //Kraken
 	{ KrakenIdleAnim,"../Sources/assets/enemigos/Kraken/krakenIdleanim.png"},
@@ -358,8 +397,6 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 		//tinta
 	{ InkAnim,"../Sources/assets/enemigos/Kraken/tinta.png" },
 		//tentaculo
-	{ KrakenAzoteAnim,"../Sources/assets/enemigos/Kraken/kraken azote.png" },
-	{ KrakenAzoteAtrasAnim,"../Sources/assets/enemigos/Kraken/azote atras.png" },
 	{ tentaculo,"../Sources/assets/enemigos/Kraken/tentaculo.png" },
 
 
@@ -637,6 +674,24 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 	{ CleonInter7 ,"../Sources/assets/efectos_sonido/cleon/cleonInter7.wav" },
 	{ CleonLaugh ,"../Sources/assets/efectos_sonido/cleon/cleonLaugh.wav" },
 
+	{ CleonWalk ,"../Sources/assets/efectos_sonido/cleon/walk.wav" },
+	{ CleonAttack1 ,"../Sources/assets/efectos_sonido/cleon/cleonAttack1.mp3" },
+	{ CleonAttack2 ,"../Sources/assets/efectos_sonido/cleon/cleonAttack2.mp3" },
+	{ CleonAttack3 ,"../Sources/assets/efectos_sonido/cleon/cleonAttack3.mp3" },
+	{ CleonBlock ,"../Sources/assets/efectos_sonido/cleon/block.wav" },
+	{ CleonCharge ,"../Sources/assets/efectos_sonido/cleon/carga.wav" },
+	{ CleonHurt1 ,"../Sources/assets/efectos_sonido/cleon/cleonHurt1.mp3" },
+	{ CleonHurt2 ,"../Sources/assets/efectos_sonido/cleon/cleonHurt2.mp3" },
+	{ CleonHurt3 ,"../Sources/assets/efectos_sonido/cleon/cleonHurt3.mp3" },
+	{ CleonHurt4 ,"../Sources/assets/efectos_sonido/cleon/cleonHurt4.mp3" },
+	{ CleonSword1 ,"../Sources/assets/efectos_sonido/cleon/swordAttack1.wav" },
+	{ CleonSword2 ,"../Sources/assets/efectos_sonido/cleon/swordAttack2.wav" },
+	{ CleonSword3 ,"../Sources/assets/efectos_sonido/cleon/swordAttack3.wav" },
+	{ CleonSword4 ,"../Sources/assets/efectos_sonido/cleon/swordAttack4.wav" },
+	{ CleonRun ,"../Sources/assets/efectos_sonido/cleon/walk.wav" },
+	{ CleonTheme ,"../Sources/assets/efectos_sonido/cleon/cleonTheme.mp3" },
+	{ BarrelExpl ,"../Sources/assets/efectos_sonido/cleon/explosión.wav" },
+	{ InitBarrel ,"../Sources/assets/efectos_sonido/cleon/initBarrel.wav" },
 };
 
 vector<Resources::AudioVolume> Resources::audioVolume{

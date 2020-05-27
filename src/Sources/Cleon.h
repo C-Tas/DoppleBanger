@@ -15,7 +15,7 @@ public:
 	};
 	~Cleon() {};
 
-	//Métodos virtuales públicos
+	//Mï¿½todos virtuales pï¿½blicos
 	virtual bool update() override ;
 	virtual void onCollider()override;
 	virtual void receiveDamage(double damage) override;
@@ -36,32 +36,34 @@ private:
 	bool activeBlock() { return app_->getRandom()->nextInt(0, BLOCK_CHANCE + 1) == BLOCK_CHANCE ? true : false; }
 		
 		//*Estocada
-			//Método que se encarga de crear la estocada
+			//Mï¿½todo que se encarga de crear la estocada
 	void thrust();
-			//última estocada
+			//ï¿½ltima estocada
 	Cooldown lastThrust_;
 			//Cooldown de la estocada
 	const double THRUST_TIME = 2500;
 
 		//*Carga
 			//Rango en que aplica la carga del pirata
-	const double CHARGE_RANGE = 350;
-			//Úlima carga
+	const double CHARGE_RANGE = 500;
+			//ï¿½lima carga
 	Cooldown lastCharge_;
 			//Cooldown de la carga
 	const double CHARGE_TIME = 5000;
-			//Velocidad con la que carga Cleón
+			//Velocidad con la que carga Cleï¿½n
 	const double CHARGE_SPEED = 3000;
-			//Velocidad de movimiento de Cleón para recuperar luego
+			//Velocidad de movimiento de Cleï¿½n para recuperar luego
 	double movSpeed_ = 0;
-			//Daño que produce la carga
+			//Daï¿½o que produce la carga
 	const int CHARGE_DMG = 300;
-			//Método que crea la carga del pirata
+			//Mï¿½todo que crea la carga del pirata
 	void pirateCharge();
+			//auxiliar de target
+	Vector2D chargePoint_;
 	
 		//* Barrido
-	void sweep();
-		//Úlimo barrido
+	void swept();
+		//ï¿½limo barrido
 	Cooldown lastSweep_;
 		//Cooldown del barrido
 	const double SWEEP_TIME = 3000;
@@ -69,7 +71,7 @@ private:
 		//*Barril
 			//Cooldown del barril
 	Cooldown lastBarrel_;
-			//Número máximo de barriles a crear
+			//Nï¿½mero mï¿½ximo de barriles a crear
 	const int NUM_MAX_BARREL = 10;
 			//Posibilidad de crear un barril
 	const int BARREL_CHANCE = 100;
@@ -79,9 +81,9 @@ private:
 	const double BARREL_H = 100;
 			//Barriles creados
 	int barrelsInGame = 0;
-			//Tiempo de creación de barril
+			//Tiempo de creaciï¿½n de barril
 	const double BARREL_CREATOR = 6500;
-			//Método que crea un barril
+			//Mï¿½todo que crea un barril
 	void createBarrel();
 
 		//*Combo
@@ -89,60 +91,94 @@ private:
 	//Fin habilidades//
 
 
-	//Métodos virtuales privados
+	//Mï¿½todos virtuales privados
 	virtual void initialStats()override;
 	virtual void initObject()override;
 	virtual void initRewards()override;
 	virtual void initAnims()override;
 	virtual void updateCooldowns() override;
 	virtual void move(Point2D target);
+	virtual void initRun();
+	virtual void initThrust();
+	virtual void initIdle();
+	void initSwept();
+	void initCharge();
+
+	//gestores de las animaciones
+	void thrustAnim();
+	void sweptAnim();
 
 	void selectTarget();
 	//Punteros
 	Player* player_ = nullptr;
 
 	//Animaciones de Cleon
-	Anim idleAnim_ = { 0,0,0,0,"" };
-	Anim runAnim_ = { 0,0,0,0, "" };
-	Anim assaultAnim_ = { 0,0,0,0,"" };
-	Anim meleeAnim_ = { 0,0,0,0, "" };
-	Anim barrelAnim_ = { 0,0,0,0, "" };
+	vector<Anim> idleAnim_;
+	vector<Anim> runAnim_;
+	vector<Anim> meleeAnim_;
+	vector<Anim> chargeAnim_;
+	vector<Anim> sweptAnim_;
+	vector<Texture*> idleTxt_;
+	vector<Texture*> runTxt_;
+	vector<Texture*> meleeTxt_;
+	vector<Texture*> chargeTxt_;
+	vector<Texture*> sweptTxt_;
 
+	bool attacked_ = false;
+	Cooldown walkTime_;
+	const int WALK_TIME = 750;
+	Cooldown iteraction_;
+	const int ITER_TIME = 10000;
+	Cooldown laugh_;
+	const int LAUGH_TIME = 3000;
 #pragma region Constantes
+	//Frame en el cual vamos a atacar
+	int frameAction_ = 0;
+	//Constantes de ancho y alto de los frames
+	const uint W_FRAME_CLEON = 100;
+	const uint H_FRAME_CLEON = W_FRAME_CLEON;
+
 	//Animacion idle de Cleon
-	const int NUM_FRAMES_IDLE = 0;
+	const int NUM_FRAMES_IDLE = 2;
 	const int NUM_FRAMES_ROW_IDLE = 0;
-	const uint W_FRAME_IDLE = 0;
-	const uint H_FRAME_IDLE = 0;
-	const int FRAME_RATE_IDLE = 0;
+	const int FRAME_RATE_IDLE = 500;
 
 	//Animacion correr
-	const int NUM_FRAMES_RUN = 0;
-	const int NUM_FRAMES_ROW_RUN = 0;
-	const uint W_FRAME_RUN = 0;
-	const uint H_FRAME_RUN = 0;
-	const int FRAME_RATE_RUN = 0;
-
-	//Animacion embestida
-	const int NUM_FRAMES_ASSAULT = 0;
-	const int NUM_FRAMES_ROW_ASSAULT = 0;
-	const uint W_FRAME_ASSAULT = 0;
-	const uint H_FRAME_ASSAULT = 0;
-	const int FRAME_RATE_ASSAULT = 0;
+	const int NUM_FRAMES_RUN_UD = 4;
+	const int NUM_FRAMES_ROW_RUN_UD = 0;
+	const int FRAME_RATE_RUN_UD = 30;
+	
+	const int NUM_FRAMES_RUN_RL = 7;
+	const int NUM_FRAMES_ROW_RUN_RL = 0;
+	const int FRAME_RATE_RUN_RL = 60;
 
 	//Animacion cuerpo a cuerpo
-	const int NUM_FRAMES_MELEE = 0;
-	const int NUM_FRAMES_ROW_MELEE = 0;
-	const uint W_FRAME_MELEE = 0;
-	const uint H_FRAME_MELEE = 0;
-	const int FRAME_RATE_MELEE = 0;
+	const int NUM_FRAMES_MELEE_UD = 7;
+	const int FRAME_RATE_MELEE_UD = 30;
 
-	//Animacion embestida
-	const int NUM_FRAMES_BARREL = 0;
-	const int NUM_FRAMES_ROW_BARREL = 0;
-	const uint W_FRAME_BARREL = 0;
-	const uint H_FRAME_BARREL = 0;
-	const int FRAME_RATE_BARREL = 0;
+	const int NUM_FRAMES_MELEE_RL = 9;
+	const int FRAME_RATE_MELEE_RL = 40;
+
+	//Animacion carga
+	//arriba/abajo
+	const int NUM_FRAMES_CHARGE_UD = 9;
+	const int FRAME_RATE_CHARGE_UD = 120;
+	//izquierda/dcha
+	const int NUM_FRAMES_CHARGE_RL = 4;
+	const int FRAME_RATE_CHARGE_RL = 80;
+
+	//Animacion barrido
+	//arriba
+	const int NUM_FRAMES_SWEPT_UP = 5;
+	const int FRAME_RATE_SWEPT_UP = 60;
+	//abajo
+	const int NUM_FRAMES_SWEPT_DOWN = 6;
+	const int FRAME_RATE_SWEPT_DOWN = 50;
+	//izquierda/dcha
+	const int NUM_FRAMES_SWEPT_RL = 4;
+	const int FRAME_RATE_SWEPT_RL = 40;
+
+	
 #pragma endregion
 };
 

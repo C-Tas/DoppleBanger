@@ -72,7 +72,7 @@ void Crab::initMeleeAnim()
 void Crab::initWalk()
 {
 	currEnemy_ = nullptr;
-	app_->getAudioManager()->playChannel(Resources::CrabWalk, -1, Resources::CrabChannel2);
+	app_->getAudioManager()->playChannel(Resources::AudioId::CrabDetection, -1, Resources::CrabChannel2);
 	currState_ = STATE::PATROLLING;
 	texture_ = walkTex_;
 	currAnim_ = walkAnim_;
@@ -85,7 +85,7 @@ void Crab::initWalk()
 void Crab::initIdle()
 {
 	currState_ = STATE::IDLE;
-	app_->getAudioManager()->playChannel(Resources::CrabIdle, -1, Resources::CrabChannel2);
+	app_->getAudioManager()->playChannel(Resources::AudioId::CrabIdleSound, -1, Resources::CrabChannel2);
 	texture_ = idleTx_;
 	currAnim_ = idleAnim_;
 
@@ -108,17 +108,11 @@ void Crab::meleeAnim()
 	if (currAnim_.currFrame_ == FRAME_ACTION) {
 		attack();
 		meleeCD_.initCooldown(currStats_.meleeRate_);
-		cout << "CONTINUA ATACANDO" << endl;
 	}
 	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
 		initIdle();
-		cout << "CAMBIO A IDLE" << endl;
 		currEnemy_ = nullptr;
 	}
-	else {
-		cout << "MELEE ANIM NO HACE NADA (ATTACKING)" << endl;
-	}
-	
 }
 
 void Crab::attack() {

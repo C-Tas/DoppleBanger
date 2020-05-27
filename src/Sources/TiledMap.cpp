@@ -363,6 +363,14 @@ void TiledMap::createElement(Vector2D pos, string objectType){
 			state_->addObject(morty);
 		}
 	}
+	else if (objectType == "Musician") {
+		if (!gm_->isThatMissionPass(missions::arlongPark)) {
+			NPC* musician;
+			musician = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), pos, Vector2D(W_NPC_SKELETON, H_NPC_SKELETON), 5);
+			state_->addRenderUpdateLists(musician);
+			state_->addObject(musician);
+		}
+	}
 	else if (objectType == "Nami") {
 		if (!gm_->isThatMissionPass(missions::arlongPark)) {
 			NPC* nami;			

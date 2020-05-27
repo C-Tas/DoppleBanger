@@ -22,7 +22,6 @@ public:
 		GoMainMenuButton,
 		ResumeButton,
 		BackButton,
-		SkipButton,
 		ViajarButton,
 		IslaActualButton,
 		SkipStoryButton,
@@ -30,7 +29,6 @@ public:
 		MuteSoundOn,
 		MuteMusicOff,
 		MuteMusicOn,
-		RestartGame,
 		RightArrow,
 		LeftArrow,
 		EquippedButton,
@@ -160,7 +158,6 @@ public:
 		PotionBG,
 
 		//Sprites
-		Dragon,
 		PlayerFront,
 		MonkeyFront,
 		WolfFront,
@@ -171,6 +168,7 @@ public:
 		VenancioPushFinish,
 		Merchant,
 		Cooker,
+		Parrot,
 		SkeletonMusician,
 		Cartographer,
 		Morty,
@@ -184,10 +182,6 @@ public:
 		//Bosses
 		Magordito,
 		Cleon,
-
-		//gizmos
-		Rojo,
-		Azul,
 
 		//Animaciones
 		EntityDie,
@@ -234,39 +228,39 @@ public:
 		ClonShootLeftAnim,
 		ClonShootUpAnim,
 		ClonShootDownAnim,
-			//Autodestrucción
+		//Autodestrucción
 		ClonSelfDestructionRightAnim,
 		ClonSelfDestructionLeftAnim,
 		ClonSelfDestructionUpAnim,
 		ClonSelfDestructionDownAnim,
-			//Desaparecer
+		//Desaparecer
 		ClonVanishRightAnim,
 		ClonVanishLeftAnim,
 		ClonVanishDownAnim,
 		ClonVanishUpAnim,
 
 		//Calabaza
-			//Idle
+		//Idle
 		PumpkinIdleRightAnim,
 		PumpkinIdleLeftAnim,
 		PumpkinIdleUpAnim,
 		PumpkinIdleDownAnim,
-			//Explosion
+		//Explosion
 		PumpkinExpRightAnim,
 		PumpkinExpLeftAnim,
 		PumpkinExpUpAnim,
 		PumpkinExpDownAnim,
-			//Attack
+		//Attack
 		PumpkinAttackRightAnim,
 		PumpkinAttackLeftAnim,
 		PumpkinAttackUpAnim,
 		PumpkinAttackDownAnim,
-			//Move
+		//Move
 		PumpkinMoveRightAnim,
 		PumpkinMoveLeftAnim,
 		PumpkinMoveUpAnim,
 		PumpkinMoveDownAnim,
-		
+
 		//Monkey
 		MonkeyIdleRightAnim,
 		MonkeyIdleLeftAnim,
@@ -295,31 +289,48 @@ public:
 		PirateShootUpAnim,
 		PirateShootDownAnim,
 
+		//Lobo
+			//Idle
+		WolfIdleRightAnim,
+		WolfIdleLeftAnim,
+		WolfIdleUpAnim,
+		WolfIdleDownAnim,
+			//Attack
+		WolfAttackRightAnim,
+		WolfAttackLeftAnim,
+		WolfAttackUpAnim,
+		WolfAttackDownAnim,
+			//Move
+		WolfMoveRightAnim,
+		WolfMoveLeftAnim,
+		WolfMoveUpAnim,
+		WolfMoveDownAnim,
+
 		//Magordito
 		Altar,
-			//Idle
+		//Idle
 		MagorditoIdleRight,
 		MagorditoIdleLeft,
 		MagorditoIdleTopRight,
 		MagorditoIdleTopLeft,
-			//Disparo
+		//Disparo
 		MagorditoShootRight,
 		MagorditoShootLeft,
 		MagorditoShootDown,
 		MagorditoShootTopRight,
 		MagorditoShootTopLeft,
-			//Viaje
+		//Viaje
 		MagorditoTpRight,
 		MagorditoTpLeft,
 		MagorditoTpTopRight,
 		MagorditoTpTopLeft,
-			//Kirin
+		//Kirin
 		MagorditoKirinRight,
 		MagorditoKirinLeft,
 		MagorditoKirinTopRight,
 		MagorditoKirinTopLeft,
 		Kirin,
-			//Skeleton
+		//Skeleton
 		SkeletonIdleRightAnim,
 		SkeletonIdleLeftAnim,
 		SkeletonIdleUpAnim,
@@ -333,6 +344,36 @@ public:
 		SkeletonMoveDownAnim,
 		SkeletonMoveUpAnim,
 
+
+		//Cleon
+		//idle
+		CleonIdleUp,
+		CleonIdleDown,
+		CleonIdleRight,
+		CleonIdleLeft,
+		//CleonMov
+		CleonMovUp,
+		CleonMovDown,
+		CleonMovRight,
+		CleonMovLeft,
+		//estocada
+		CleonMelUp,
+		CleonMelDown,
+		CleonMelRight,
+		CleonMelLeft,
+		//Barrido
+		CleonSweptUp,
+		CleonSweptDown,
+		CleonSweptRight,
+		CleonSweptLeft,
+		//Carga
+		CleonChargeUp,
+		CleonChargeDown,
+		CleonChargeRight,
+		CleonChargeLeft,
+
+
+
 			//kraken
 	KrakenIdleAnim,
 	KrakenInkAnim,
@@ -341,8 +382,6 @@ public:
 	//Tinta
 	InkAnim,
 	//Tentaculo
-	KrakenAzoteAnim,
-	KrakenAzoteAtrasAnim,
 	tentaculo,
 		//Interactuables
 		Wheel,
@@ -354,7 +393,7 @@ public:
 
 		//Colsionable
 		Rock,
-			//Tutorial
+		//Tutorial
 		Bottle,
 		Dummy,
 
@@ -433,7 +472,7 @@ public:
 		BarrelExplosion,
 		BarrelInitExpl,
 	};
-	
+
 	enum MusicChannels : int {
 		//Musica auxiliar
 		MainMusicChannel,
@@ -688,6 +727,25 @@ public:
 		CleonInter6,
 		CleonInter7,
 		CleonLaugh,
+		CleonWalk,
+		CleonAttack1,
+		CleonAttack2,
+		CleonAttack3,
+		CleonBlock,
+		CleonCharge,
+		CleonHurt1,
+		CleonHurt2,
+		CleonHurt3,
+		CleonHurt4,
+		CleonSword1,
+		CleonSword2,
+		CleonSword3,
+		CleonSword4,
+		CleonRun,
+		CleonTheme,
+		//Barril
+		BarrelExpl,
+		InitBarrel,
 	};
 
 	///<summary>Enum para las distintos fuentes del juego</summary>
@@ -740,7 +798,7 @@ public:
 
 	///<summary>Vector con las rutas de los audios a cargar</summary>
 	static vector<AudioInfo> audioRoutes;
-	
+
 	//<summary>Vector para el volumen de cada canal</summary>	
 	static vector<AudioVolume> audioVolume;
 

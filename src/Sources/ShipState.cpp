@@ -93,7 +93,7 @@ void ShipState::initState()
 	POST_TUTORIAL_POS = Vector2D((double)(W_WIN * 2 / 7), (double)(H_WIN / 10));
 	TUTORIAL_POS = Vector2D((double)(destRect.x - W_WIN / 8), (double)(destRect.y - H_WIN / 9));
 
-	createNPCs();	//Método de testeo de los NPCs del barco, faltaría hacer uno definitivo para todos los NPCs desbloqueados
+	createNPCs();
 
 	////Siempre se a�ade el �ltimo para que se renderice por encima de los dem�s objetos
 	playerEntry_= Vector2D((W_WIN - W_PLAYER * 4), ((H_WIN * 3 / 4) - H_PLAYER));
@@ -144,18 +144,17 @@ void ShipState::loadState(){
 		addRenderUpdateLists(morty);
 	}
 
-	//Por si se añaden estos NPCs
-	//if (gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
-	//	NPC* parrot;
-	//	parrot = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Parrot), Vector2D(W_WIN / 2, (double)H_WIN * 3 / 4), Vector2D(W_PARROT, H_PARROT), 4);
-	//	addRenderUpdateLists(parrot);
-	//}
+	if (gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
+		NPC* parrot;
+		parrot = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Parrot), Vector2D(W_WIN / 4, (double)H_WIN * 7 / 16), Vector2D(W_PARROT, H_PARROT), 4);
+		addRenderUpdateLists(parrot);
+	}
 
-	//if (gm_->isThatMissionPass(missions::misionDelEsqueleto)) {
-	//	NPC* skeleton;
-	//	skeleton = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), Vector2D(W_WIN / 2, H_WIN * 3 / 4), Vector2D(W_SKELETON, H_SKELETON), 5);
-	//	addRenderUpdateLists(skeleton);
-	//}
+	if (gm_->isThatMissionPass(missions::laboon)) {
+		NPC* skeleton;
+		skeleton = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), Vector2D(W_WIN * 3 / 5, H_WIN / 7), Vector2D(W_SKELETON, H_SKELETON), 5);
+		addRenderUpdateLists(skeleton);
+	}
 
 	if (gm_->isThatMissionPass(missions::arlongPark)) {
 		NPC* cartographer;
@@ -186,18 +185,17 @@ void ShipState::createNPCs() {
 		addRenderUpdateLists(morty);
 	}
 
-	//Por si se añaden estos NPCs
-	//if (gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
-	//	NPC* parrot;
-	//	parrot = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Parrot), Vector2D(W_WIN / 2, (double)H_WIN * 3 / 4), Vector2D(W_PARROT, H_PARROT), 4);
-	//	addRenderUpdateLists(parrot);
-	//}
+	if (gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
+		NPC* parrot;
+		parrot = new NPC(app_, app_->getTextureManager()->getTexture(Resources::Parrot), Vector2D(W_WIN / 4, (double)H_WIN * 7 / 16), Vector2D(W_PARROT, H_PARROT), 4);
+		addRenderUpdateLists(parrot);
+	}
 
-	//if (gm_->isThatMissionPass(missions::misionDelEsqueleto)) {
-	//	NPC* skeleton;
-	//	skeleton = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), Vector2D(W_WIN / 2, H_WIN * 3 / 4), Vector2D(W_SKELETON, H_SKELETON), 5);
-	//	addRenderUpdateLists(skeleton);
-	//}
+	if (gm_->isThatMissionPass(missions::laboon)) {
+		NPC* skeleton;
+		skeleton = new NPC(app_, app_->getTextureManager()->getTexture(Resources::SkeletonMusician), Vector2D(W_WIN * 3 / 5, H_WIN / 7), Vector2D(W_SKELETON, H_SKELETON), 5);
+		addRenderUpdateLists(skeleton);
+	}
 
 	if (gm_->isThatMissionPass(missions::arlongPark)) {
 		NPC* cartographer;

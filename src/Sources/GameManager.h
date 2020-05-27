@@ -52,6 +52,7 @@ enum class missions : int {
 	papelesSiniestros,
 	masValePajaroEnMano,
 	arlongPark,
+	laboon,
 	//En caso de tener misión para el loro añadirla tb (o si se añade el esqueleto)
 
 	//Para saber el tamaño
@@ -162,19 +163,19 @@ private:
 	vector<int> pointrTree_ = { 0, 0, 0 };
 	//Vector que contiene la cantidad de enemigos que se han muerto de la mision correspondiente
 	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<int> countEnemiesMission_ = { 0, 0, 0, 0 };
+	vector<int> countEnemiesMission_ = { 0, 0, 0, 0, 0 };
 	//Recompensas de las misiones
 	//Oro <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector <int> goldReward_ = { 100, 200, 0, 300 };
+	vector <int> goldReward_ = { 100, 200, 0, 300, 250 };
 	//Hazaña <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector <int> pointsReward_ = { 10, 15, 0, 20 };
-	//Objetos que te dan en las misiones <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<int> numOfItemsReward_ = { 4,1,1,1 };
-	//Objetos que te dan en las misiones <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<double> statsReward_ = { 200, 500, 0, 30 };
+	vector <int> pointsReward_ = { 10, 15, 0, 20, 20 };
+	//Objetos que te dan en las misiones <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark, laboon>
+	vector<int> numOfItemsReward_ = { 4, 4, 0, 4, 4 };
+	//Objetos que te dan en las misiones <gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark, laboon >
+	vector<double> statsReward_ = { 200, 500, 0, 30, 10 };
 	//Vector que contiene el numero de enemigos que se tiene que matar en cada mision
 	//<gallegaEnProblemas, papelesSiniestros, masValePajaroEnMano, arlongPark >
-	vector<int> enemiesMission_ = { 4, 4, 0, 4 };
+	vector<int> enemiesMission_ = { 4, 3, 2, 5, 5 };
 	//Vector que contiene las habilidades equipadas
 	vector<SkillName> skillsEquipped_ = { SkillName::Unequipped, SkillName::Unequipped, SkillName::Unequipped, SkillName::Clon };
 	//Vector que contiene los objetos equipados

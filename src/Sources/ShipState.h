@@ -23,8 +23,6 @@ protected:
 private:
 	bool songActive = false;
 
-
-
 	//Para guardar la posici�n del clik del rat�n  
 	SDL_Point mouse; 
 
@@ -77,11 +75,11 @@ private:
 	const double W_MORTY = W_WIN / 14;
 	const double H_MORTY = H_WIN / 5;
 
-	const double W_PARROT = W_WIN / 20;
-	const double H_PARROT = H_WIN / 10;
+	const double W_PARROT = W_WIN / 16;
+	const double H_PARROT = H_WIN / 8;
 
-	const double W_SKELETON = W_WIN / 20;
-	const double H_SKELETON = H_WIN / 10;
+	const double W_SKELETON = W_WIN / 13;
+	const double H_SKELETON = H_WIN / 6;
 
 	const double W_CARTOGRAPHER = W_WIN / 6;
 	const double H_CARTOGRAPHER = H_WIN / 3;

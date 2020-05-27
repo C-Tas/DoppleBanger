@@ -79,6 +79,11 @@ void CaribbeanIslandState::initZone2()
 
 void CaribbeanIslandState::initZone3()
 {
+	GameManager* gm_ = GameManager::instance();
+	if (!gm_->isThatMissionPass(missions::masValePajaroEnMano)) {
+		gm_->setMissionFinished(missions::masValePajaroEnMano, true);
+	}
+	
 	//Se inicia la música
 	app_->getAudioManager()->playChannel(Resources::Isle1Zone3, -1, Resources::MainMusicChannel);
 
@@ -116,4 +121,3 @@ void CaribbeanIslandState::changeZone()
 	hud_->setPlayerInHUD(player_);
 	player_->initSkills();
 }
-
