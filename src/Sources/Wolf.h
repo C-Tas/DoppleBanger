@@ -19,7 +19,8 @@ public:
 	//Cuando pierde agro del enemigo
 	virtual void lostAggro();
 	void setPatrol(Vector2D pos);
-	virtual ~Wolf() {};
+	virtual ~Wolf() {
+	};
 
 private:
 	virtual void dieAudio() { app_->getAudioManager()->playChannel(Resources::AudioId::WolfDeath, 0, Resources::WolfChannel1); }

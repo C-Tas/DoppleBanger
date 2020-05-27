@@ -76,7 +76,6 @@ void Skeleton::initObject() {
 	scaleCollision_.setVec(Vector2D(scale_.getX() * w, scale_.getY() * h));
 	posCollision_ = Vector2D(scale_.getX() * x, scale_.getY() * y);*/
 	collisionArea_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scaleCollision_.getX(),(int)scaleCollision_.getY() });
-	app_->getAudioManager()->playChannel(Resources::SkeletonIdle, -1, Resources::SkeletonChannel1);
 	initAnims();
 }
 
@@ -227,9 +226,6 @@ void Skeleton::feedBackHurtSounds()
 void Skeleton::initDie() 
 {
 	Enemy::initDie();
-	app_->getAudioManager()->haltChannel(Resources::SkeletonChannel1);
-	app_->getAudioManager()->haltChannel(Resources::SkeletonChannel2);
-	app_->getAudioManager()->haltChannel(Resources::SkeletonChannel3);
 	app_->getAudioManager()->playChannel(Resources::SkeletonDeath, 0, Resources::SkeletonChannel1);
 	GameManager* gm_ = GameManager::instance();
 	missions mission = missions::papelesSiniestros;

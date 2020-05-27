@@ -735,10 +735,10 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ PumpkinChannel1, 4 },
 	{ PumpkinChannel2, 4 },
 	//Canal del esqueleto
-	{ SkeletonChannel1, 20 },
-	{ SkeletonChannel2, 20 },
-	{ SkeletonChannel3, 20 },
-	{ SkeletonChannel4, 6 },
+	{ SkeletonChannel1, 10 },
+	{ SkeletonChannel2, 10 },
+	{ SkeletonChannel3, 10 },
+	{ SkeletonChannel4, 2 },
 	//Canal de la cangrejo
 	{ CrabChannel1, 3 },
 	{ CrabChannel2, 3 },
