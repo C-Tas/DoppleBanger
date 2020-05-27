@@ -178,7 +178,7 @@ void Tentacle::onCollider()
 		}
 	
 	
-		currState_ == STATE::IDLE;
+		currState_ = STATE::IDLE;
 	}
 }
 
