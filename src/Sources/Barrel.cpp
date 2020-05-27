@@ -8,6 +8,7 @@ void Barrel::initObject()
 	app_->getAudioManager()->playChannel(Resources::InitBarrel, 0, Resources::CleonChannel5);
 	activeBarrel_.initCooldown(BARREL_TIME_ACTIVE);
 	initAnims();
+	damage_ = cleon_->getDistDmg();
 }
 
 bool Barrel::update()
@@ -61,7 +62,7 @@ void Barrel::applyRangeDmg()
 	currState_ = BARREL_STATE::EXPLODING;
 	list<Collider*>affecteds = CollisionCtrl::instance()->getEntitiesInArea(getCenter(), (int)round(EXPL_BARREL_RANGE));
 	for (auto afected : affecteds) {
-		dynamic_cast<Actor*>(afected)->receiveDamage(BARREL_DMG);
+		dynamic_cast<Actor*>(afected)->receiveDamage(damage_);
 	}
 	affecteds.clear();
 	CollisionCtrl::instance()->removeBarrel(this);

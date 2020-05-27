@@ -545,7 +545,7 @@ vector<Resources::AudioInfo> Resources::audioRoutes{
 #pragma endregion
 #pragma region ClonSounds
 	//Clon
-	//{ Explosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
+	{ ClonExplosion   ,"../Sources/assets/efectos_sonido/clon/explosion.wav"},
 #pragma endregion
 
 	//Lobo
@@ -737,10 +737,10 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ PumpkinChannel1, 4 },
 	{ PumpkinChannel2, 4 },
 	//Canal del esqueleto
-	{ SkeletonChannel1, 20 },
-	{ SkeletonChannel2, 20 },
-	{ SkeletonChannel3, 20 },
-	{ SkeletonChannel4, 6 },
+	{ SkeletonChannel1, 10 },
+	{ SkeletonChannel2, 10 },
+	{ SkeletonChannel3, 10 },
+	{ SkeletonChannel4, 2 },
 	//Canal de la cangrejo
 	{ CrabChannel1, 3 },
 	{ CrabChannel2, 3 },
@@ -767,6 +767,7 @@ vector<Resources::AudioVolume> Resources::audioVolume{
 	{ NPCChannel1, 30 },
 	{ ChestChannelChannel, 10 },
 	{ BulletRemoveChannel, 7 },
+	{ ClonChannel1,8},
 };
 
 vector <Resources::FontInfo> Resources::fontsRoutes{

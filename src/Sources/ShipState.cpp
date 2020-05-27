@@ -54,7 +54,7 @@ void ShipState::initState()
 		TILESET_FILS, TILESET_COLS, Vector2D(0, 0));
 
 	background_ = new Draw(app_, app_->getTextureManager()->getTexture(Resources::Ship));
-	addRenderUpdateLists(background_);
+	//addRenderUpdateLists(background_);
 
 	SDL_Rect destRect; //Rect�ngulo para los objetos
 
@@ -115,6 +115,12 @@ void ShipState::initState()
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
 	app_->getAudioManager()->playChannel(Resources::ShipTheme, -1, 0);
+}
+
+void ShipState::draw() const
+{
+	background_->draw();
+	PlayState::draw();
 }
 
 void ShipState::update()

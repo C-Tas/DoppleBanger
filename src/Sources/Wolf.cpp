@@ -28,22 +28,30 @@ bool Wolf::update() {
 			}
 			if (currState_ == STATE::PATROLLING) {
 				move(target_);
-				app_->getAudioManager()->playChannel(Resources::AudioId::WolfChase, -1, Resources::WolfChannel1);
 			}
 		}
 		else {
 			if (Enemy::onRange(currStats_.meleeRange_)) {
 				if (!meleeCD_.isCooldownActive()) {
 					initMelee();
+					switch (rand() % 2)
+					{
+					case 0:
+						app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttack1, 0, Resources::WolfChannel2);
+						break;
+					case 1:
+						app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttack2, 0, Resources::WolfChannel2);
+						break;
+					}
 				}
 				stop();
 			}
 			else if (Enemy::onRange() && currState_ != STATE::ATTACKING) {
 				if (idle_) {
 					initMove();
-					app_->getAudioManager()->playChannel(Resources::AudioId::WolfChase, -1, Resources::WolfChannel1);
 				}
 				move(currEnemy_->getCenter());
+				app_->getAudioManager()->playChannel(Resources::AudioId::WolfChase, -1, Resources::WolfChannel1);
 				idle_ = false;
 			}
 			else if (currState_ != STATE::ATTACKING) {
@@ -51,7 +59,6 @@ bool Wolf::update() {
 				initMove();
 				target_ = patrol_[currPatrol_];
 				idle_ = false;
-				app_->getAudioManager()->playChannel(Resources::AudioId::WolfChase, -1, Resources::WolfChannel1);
 			}
 		}
 		if (currState_ == STATE::ATTACKING) meleeAnim();
@@ -120,15 +127,6 @@ void Wolf::initObject() {
 	initRewards();
 	rangeVision_ = VIS_RANGE;
 	tag_ = "Wolf";
-	switch (rand() % 2)
-	{
-	case 0:
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle1, -1, Resources::WolfChannel1);
-		break;
-	case 1:
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle2, -1, Resources::WolfChannel1);
-		break;
-	}
 }
 
 void Wolf::onCollider() {}
@@ -138,15 +136,6 @@ void Wolf::lostAggro()
 {
 	currEnemy_ = nullptr;
 	currState_ = STATE::PATROLLING;
-	switch (rand() % 2)
-	{
-	case 0:
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle1, -1, Resources::WolfChannel1);
-		break;
-	case 1:
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle2, -1, Resources::WolfChannel1);
-		break;
-	}
 }
 
 //Genera la posici�n a la que se mueve el pirata en funci�n de su rango 
@@ -175,15 +164,6 @@ void Wolf::lostAgro()
 {
 	currEnemy_ = nullptr;
 	currState_ = STATE::PATROLLING;
-	switch (rand() % 2)
-	{
-	case 0:
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle1, -1, Resources::WolfChannel1);
-		break;
-	case 1:
-		app_->getAudioManager()->playChannel(Resources::AudioId::WolfIdle2, -1, Resources::WolfChannel1);
-		break;
-	}
 }
 
 void Wolf::initialStats()
@@ -328,6 +308,7 @@ void Wolf::initMelee() {
 
 void Wolf::initDie() {
 	Enemy::initDie();
+	app_->getAudioManager()->playChannel(Resources::AudioId::WolfDeath, 0, Resources::WolfChannel1);
 
 	GameManager* gm_ = GameManager::instance();
 	if (gm_->isThatMissionStarted(missions::laboon))

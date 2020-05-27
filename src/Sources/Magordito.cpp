@@ -143,7 +143,7 @@ void Magordito::kirin()
 	if (currEnemy_ != nullptr) {
 		double newX = currEnemy_->getCenter().getX() - scale_.getX() * 1.5 / 2;
 		double newY = currEnemy_->getPos().getY() + currEnemy_->getScaleY() - scale_.getY() * 1.5;
-		Kirin* kirin = new Kirin(app_, Vector2D(newX, newY), Vector2D(scale_.getX() * 1.5, scale_.getY() * 1.5));
+		Kirin* kirin = new Kirin(app_, Vector2D(newX, newY), Vector2D(scale_.getX() * 1.5, scale_.getY() * 1.5), currStats_.distDmg_);
 	}
 }
 
@@ -166,12 +166,12 @@ inline bool Magordito::enemyIsTooClose()
 void Magordito::initialStats()
 {
 	rangeVision_ = 500;
-	initHealth_ = 4000;
-	initMana_ = 100;
+	initHealth_ = 2500;
+	initMana_ = 1000;
 	initManaReg_ = 1;
 	initArmor_ = 10;
-	initMeleeDmg = 750;
-	initDistDmg = 300;
+	initMeleeDmg = 400;
+	initDistDmg = 400;
 	initCrit_ = 0;
 	initMeleeRange = 200;
 	initDistRange_ = 350;
