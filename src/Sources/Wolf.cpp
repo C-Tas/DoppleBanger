@@ -12,62 +12,98 @@ bool Wolf::update() {
 
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {
-		//Tendr�a que hacer la animaci�n de muerte?
-		applyRewards();
 		dieAnim();
-		return true;
 	}
 	else
 	{
-		//Si el lobo no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
-		if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && getEnemy()) {
+		if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && currEnemy_ == nullptr && getEnemy() && !idle_) {
 			app_->getAudioManager()->playChannel(Resources::AudioId::WolfDetection, 0, Resources::WolfChannel2);
-			currState_ = STATE::ATTACKING;
+			initMove();
 		}
-		//Si el lobo tiene enemigo y puede atacar
-		if (currState_ == STATE::ATTACKING) {
-			//Si el lobo tiene un enemigo y lo tiene a rango ->ataca
-			if (onRange()) {
-				attack();
+
+		if (currEnemy_ == nullptr) {
+			if (currState_ == STATE::IDLE && !idleCD_.isCooldownActive()) {
+				target_ = patrol_[currPatrol_];
+				initMove();
 			}
-			//Tengo enemigo pero no a rango -> lo sigue
-			else
-			{
-				cout << "FOLLOWING \n";
-				currState_ = STATE::FOLLOWING;
+			if (currState_ == STATE::PATROLLING) {
+				move(target_);
 				app_->getAudioManager()->playChannel(Resources::AudioId::WolfChase, -1, Resources::WolfChannel1);
-				selectTarget();
 			}
 		}
-		//Si el lobo se est� moviendo hacia un enemigo
-		if (currState_ == STATE::FOLLOWING) {
-			if (onRange()) {
-				currState_ = STATE::ATTACKING;
+		else {
+			if (Enemy::onRange(currStats_.meleeRange_)) {
+				if (!meleeCD_.isCooldownActive()) {
+					initMelee();
+				}
 				stop();
 			}
-			else//sigue follow al player
-			{
-				//changeAnim(walkAnim_);
-				selectTarget();
-				if (!Enemy::onRange(rangeVision_)) {
-					currEnemy_ = nullptr;
-					currState_ = STATE::IDLE;
+			else if (Enemy::onRange() && currState_ != STATE::ATTACKING) {
+				if (idle_) {
+					initMove();
+					app_->getAudioManager()->playChannel(Resources::AudioId::WolfChase, -1, Resources::WolfChannel1);
 				}
+				move(currEnemy_->getCenter());
+				idle_ = false;
+			}
+			else if (currState_ != STATE::ATTACKING) {
+				currEnemy_ = nullptr;
+				initMove();
+				target_ = patrol_[currPatrol_];
+				idle_ = false;
+				app_->getAudioManager()->playChannel(Resources::AudioId::WolfChase, -1, Resources::WolfChannel1);
 			}
 		}
-		//Paso a la siguiente patrulla
-		if (currState_ == STATE::IDLE && !idleCD_.isCooldownActive()) {
-			currState_ = STATE::PATROLLING;
-			target_ = patrol_[currPatrol_];
-			cout << "INIT PATROL \n";
-		}
-		//Si el lobo est� en patrulla
-		if (currState_ == STATE::PATROLLING) {
-			updateDirVisObjective(target_);
-			move(target_);
-		}
+		if (currState_ == STATE::ATTACKING) meleeAnim();
+
+		////Si el lobo no tiene enemigo al atacar, elige enemigo teniendo prioridad sobre el enemigo m�s cercano
+		//if ((currState_ == STATE::IDLE || currState_ == STATE::PATROLLING) && getEnemy()) {
+		//	app_->getAudioManager()->playChannel(Resources::AudioId::WolfDetection, 0, Resources::WolfChannel2);
+		//	currState_ = STATE::ATTACKING;
+		//}
+		////Si el lobo tiene enemigo y puede atacar
+		//if (currState_ == STATE::ATTACKING) {
+		//	//Si el lobo tiene un enemigo y lo tiene a rango ->ataca
+		//	if (onRange()) {
+		//		attack();
+		//	}
+		//	//Tengo enemigo pero no a rango -> lo sigue
+		//	else
+		//	{
+		//		cout << "FOLLOWING \n";
+		//		currState_ = STATE::FOLLOWING;
+		//		app_->getAudioManager()->playChannel(Resources::AudioId::WolfChase, -1, Resources::WolfChannel1);
+		//		selectTarget();
+		//	}
+		//}
+		////Si el lobo se est� moviendo hacia un enemigo
+		//if (currState_ == STATE::FOLLOWING) {
+		//	if (onRange()) {
+		//		currState_ = STATE::ATTACKING;
+		//		stop();
+		//	}
+		//	else//sigue follow al player
+		//	{
+		//		//changeAnim(walkAnim_);
+		//		selectTarget();
+		//		if (!Enemy::onRange(rangeVision_)) {
+		//			currEnemy_ = nullptr;
+		//			currState_ = STATE::IDLE;
+		//		}
+		//	}
+		//}
+		////Paso a la siguiente patrulla
+		//if (currState_ == STATE::IDLE && !idleCD_.isCooldownActive()) {
+		//	currState_ = STATE::PATROLLING;
+		//	target_ = patrol_[currPatrol_];
+		//	cout << "INIT PATROL \n";
+		//}
+		////Si el lobo est� en patrulla
+		//if (currState_ == STATE::PATROLLING) {
+		//	updateDirVisObjective(target_);
+		//	move(target_);
+		//}
 	}
-	updateFrame();
 	return false;
 }
 
@@ -76,17 +112,23 @@ void Wolf::move(Vector2D posToReach) {
 	//establecemos el objetivo para poder parar al llegar
 	if ((getCenter() - nextTarget_).magnitude() <= 1)
 	{
-		pathPos_ = { (int)PosToTile(getCenter()).getX(), (int)PosToTile(getCenter()).getY() };
+		pathPos_ = { (int)PosToTile(nextTarget_).getX(), (int)PosToTile(nextTarget_).getY() };
 		pathing_ = ((PlayState*)app_->getCurrState())->getGenerator()->findPath({ (int)PosToTile(posToReach).getX(), (int)PosToTile(posToReach).getY() }, pathPos_);
-		if (pathing_.size() > 1)
+		if (pathing_.size() > 1) {
 			nextTarget_.setVec(TileToPos(Vector2D(pathing_[1].x, pathing_[1].y)));
-		else {
+
+			updateDirVisObjective(nextTarget_);
+			texture_ = moveTx_[(int)currDir_];
+			currAnim_ = moveAnims_[(int)currDir_];
+		}
+		else
+		{
+			initIdle();
 			idleCD_.initCooldown(IDLE_PAUSE);
-			currState_ = STATE::IDLE;
+
 			//Pasamos al siguiente patrol
 			if (currPatrol_ == patrol_.size() - 1) currPatrol_ = 0;
 			else currPatrol_++;
-			
 		}
 	}
 	dir_.setVec(nextTarget_ - getCenter());
@@ -96,56 +138,10 @@ void Wolf::move(Vector2D posToReach) {
 	pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 }
 
-//Devuelve true si el enemigo que tengo est� a rango DONE
-bool Wolf::onRange() {
-	if (currEnemy_ == nullptr) {
-		return false;
-	}
-	SDL_Rect enemyRect = SDL_Rect({ (int)currEnemy_->getPosX(),(int)currEnemy_->getPosY(),
-		(int)currEnemy_->getScaleX(),(int)currEnemy_->getScaleY() });
-
-	double meleePosX = getPosX() + getScaleX() / 2 - currStats_.meleeRange_ - getScaleX() / 2;
-	double meleePosY = getPosY() + getScaleY() / 2 - currStats_.meleeRange_ - getScaleY() / 2;
-	double meleeRangeX = currStats_.meleeRange_ + getScaleX() / 2;
-	double meleeRangeY = currStats_.meleeRange_ + getScaleY() / 2;
-
-	SDL_Rect meleeAttack = { (int)round(meleePosX)   ,(int)round(meleePosY),(int)round(meleeRangeX * 2), (int)round(meleeRangeY * 2) };
-	if (currEnemy_ != nullptr && SDL_HasIntersection(&enemyRect, &meleeAttack)) {
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-void Wolf::initMove() {
-	if (currEnemy_ != nullptr) updateDirVisObjective(currEnemy_->getCenter());
-	else updateDirVisObjective(target_);
-
-
-	frame_.x = 0; frame_.y = 0;
-	currState_ = STATE::PATROLLING;
-	frame_.w = currAnim_.widthFrame_;
-	frame_.h = currAnim_.heightFrame_;
-}
-
-//Inicializa todas las animaciones 
-void Wolf::initAnims()
-{
-	//Para la animaci�n de ataque
-	attackAnim_ = Anim(NUM_FRAMES_ATK, W_FRAME_ATK, H_FRAME_ATK, FRAME_RATE_ATK, false);
-	//Para la animaci�n de caminar
-	walkAnim_ = Anim(NUM_FRAMES_MOV, W_FRAME_MOV, H_FRAME_MOV, FRAME_RATE_MOV, true);
-	//Para la animaci�n de parado
-	idleAnim_ = Anim(NUM_FRAMES_IDLE, W_FRAME_IDLE, H_FRAME_IDLE, FRAME_RATE_IDLE, true);
-}
-
 //Se encarga de gestionar el ataque a melee DONE
 void Wolf::attack() {
-	if (!meleeCD_.isCooldownActive())
-	{
-		meleeCD_.initCooldown(currStats_.meleeRate_);
+	auto dmg = dynamic_cast<Player*>(currEnemy_);
+	if (dmg != nullptr) {
 		switch (rand() % 2)
 		{
 		case 0:
@@ -155,13 +151,10 @@ void Wolf::attack() {
 			app_->getAudioManager()->playChannel(Resources::AudioId::WolfAttack2, 0, Resources::WolfChannel1);
 			break;
 		}
-		auto dmg = dynamic_cast<Player*>(currEnemy_);
-		if (dmg != nullptr) {
-			double realDamage = currStats_.meleeDmg_;
-			if (applyCritic()) realDamage *= 1.5;
-			dmg->receiveDamage(realDamage);
+		double realDamage = currStats_.meleeDmg_;
+		if (applyCritic()) realDamage *= 1.5;
+		dmg->receiveDamage(realDamage);
 
-		}
 	}
 }
 
@@ -173,7 +166,7 @@ void Wolf::initObject() {
 	nextTarget_ = pos_;
 	setTexture(app_->getTextureManager()->getTexture(Resources::WolfFront));
 	initRewards();
-	rangeVision_ = 80;//numero magico
+	rangeVision_ = VIS_RANGE;
 	tag_ = "Wolf";
 	switch (rand() % 2)
 	{
@@ -186,10 +179,7 @@ void Wolf::initObject() {
 	}
 }
 
-//gesti�n de colisiones
-void Wolf::onCollider()
-{
-}
+void Wolf::onCollider() {}
 
 //Esto lo llama el clon cuando se destruye
 void Wolf::lostAggro()
@@ -244,7 +234,6 @@ void Wolf::lostAgro()
 	}
 }
 
-
 void Wolf::initialStats()
 {
 	HEALTH = 1500;
@@ -254,12 +243,61 @@ void Wolf::initialStats()
 	MELEE_DMG = 450;
 	DIST_DMG = 0;
 	CRIT = 10;
-	MELEE_RANGE = 50;
-	DIST_RANGE = 75;
+	MELEE_RANGE = getScaleX() / 3;
+	DIST_RANGE = 0;
 	MOVE_SPEED = 500;
 	MELEE_RATE = 1500;
-	DIST_RATE = 1500;
+	DIST_RATE = 0;
 	initStats(HEALTH, MANA, MANA_REG, ARMOR, MELEE_DMG, DIST_DMG, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
+}
+
+//Inicializa todas las animaciones 
+void Wolf::initAnims() {
+	//Animación de idle
+	//Arriba
+	idleAnims_.push_back(Anim(IDLE_U_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, IDLE_U_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfIdleUpAnim));
+	//Derecha																						
+	idleAnims_.push_back(Anim(IDLE_R_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, IDLE_R_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfIdleRightAnim));
+	//Abajo																							
+	idleAnims_.push_back(Anim(IDLE_D_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, IDLE_D_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfIdleDownAnim));
+	//Izquierda																						
+	idleAnims_.push_back(Anim(IDLE_L_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, IDLE_L_FRAME_RATE, true));
+	idleTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfIdleLeftAnim));
+
+	//Animación de movimiento
+	//Arriba
+	moveAnims_.push_back(Anim(MOVE_U_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, MOVE_U_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfMoveUpAnim));
+	//Derecha														
+	moveAnims_.push_back(Anim(MOVE_R_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, MOVE_R_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfMoveRightAnim));
+	//Abajo
+	moveAnims_.push_back(Anim(MOVE_D_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, MOVE_D_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfMoveDownAnim));
+	//Izquierda
+	moveAnims_.push_back(Anim(MOVE_L_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, MOVE_L_FRAME_RATE, true));
+	moveTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfMoveLeftAnim));
+
+	//Animación de melee
+	//Arriba
+	meleeAnims_.push_back(Anim(MELEE_U_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, MELEE_U_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfAttackUpAnim));
+	//Derecha
+	meleeAnims_.push_back(Anim(MELEE_R_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, MELEE_R_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfAttackRightAnim));
+	//Abajo
+	meleeAnims_.push_back(Anim(MELEE_D_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, MELEE_D_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfAttackDownAnim));
+	//Izquierda
+	meleeAnims_.push_back(Anim(MELEE_L_FRAMES, W_H_WOLF_FRAME, W_H_WOLF_FRAME, MELEE_L_FRAME_RATE, false));
+	meleeTx_.push_back(app_->getTextureManager()->getTexture(Resources::WolfAttackLeftAnim));
+
+	//Inicializamos con la animación del idle
+	currDir_ = DIR::DOWN;
+	initIdle();
 }
 
 void Wolf::initRewards()
@@ -291,4 +329,63 @@ void Wolf::initIdle() {
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
+}
+
+void Wolf::initMove() {
+	if (currEnemy_ != nullptr) updateDirVisObjective(currEnemy_->getCenter());
+	else updateDirVisObjective(target_);
+	texture_ = moveTx_[(int)currDir_];
+	currAnim_ = moveAnims_[(int)currDir_];
+
+	frame_.x = 0; frame_.y = 0;
+	currState_ = STATE::PATROLLING;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+}
+
+void Wolf::initMelee() {
+	currState_ = STATE::ATTACKING;	//Cambio de estado
+	attacked_ = false;	//Aún no se ha atacado
+	updateDirVisObjective(currEnemy_);	//Hacia dónde está el enemigo
+	texture_ = meleeTx_[(int)currDir_];
+	currAnim_ = meleeAnims_[(int)currDir_];
+	//Frame exacto del ataque
+	switch (currDir_)
+	{
+	case DIR::UP:
+		frameAction_ = 5;
+		break;
+	case DIR::RIGHT:
+		frameAction_ = 4;
+		break;
+	case DIR::DOWN:
+		frameAction_ = 6;
+		break;
+	case DIR::LEFT:
+		frameAction_ = 4;
+		break;
+	}
+
+	//Se inicia el frame
+	frame_.x = 0; frame_.y = 0;
+	frame_.w = currAnim_.widthFrame_;
+	frame_.h = currAnim_.heightFrame_;
+
+	meleeCD_.initCooldown(currStats_.meleeRate_);
+}
+
+void Wolf::meleeAnim() {
+	stop();
+	if (!attacked_ && currAnim_.currFrame_ == frameAction_) {
+		attack();
+
+		meleeCD_.initCooldown(currStats_.meleeRate_);
+		attacked_ = true;
+	}
+	else if (currAnim_.currFrame_ >= currAnim_.numberFrames_) {
+		idleCD_.initCooldown(IDLE_PAUSE);
+		currEnemy_ = nullptr;
+		idle_ = true;
+		initIdle();	//Activa el idle
+	}
 }

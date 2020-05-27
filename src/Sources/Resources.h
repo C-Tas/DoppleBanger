@@ -295,6 +295,23 @@ public:
 		PirateShootUpAnim,
 		PirateShootDownAnim,
 
+		//Lobo
+			//Idle
+		WolfIdleRightAnim,
+		WolfIdleLeftAnim,
+		WolfIdleUpAnim,
+		WolfIdleDownAnim,
+			//Attack
+		WolfAttackRightAnim,
+		WolfAttackLeftAnim,
+		WolfAttackUpAnim,
+		WolfAttackDownAnim,
+			//Move
+		WolfMoveRightAnim,
+		WolfMoveLeftAnim,
+		WolfMoveUpAnim,
+		WolfMoveDownAnim,
+
 		//Magordito
 		Altar,
 			//Idle

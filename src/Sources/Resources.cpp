@@ -310,6 +310,20 @@ vector<Resources::ImageInfo> Resources::imageRoutes {
 	{ PirateShootUpAnim, "../Sources/assets/enemigos/pirata/PirateShootBack.png" },
 	{ PirateShootDownAnim, "../Sources/assets/enemigos/pirata/PirateShootFront.png" },
 
+	//Lobo
+	{ WolfIdleRightAnim, "../Sources/assets/enemigos/wolf/LoboIdleDer.png" },
+	{ WolfIdleLeftAnim, "../Sources/assets/enemigos/wolf/LoboIdleIzq.png" },
+	{ WolfIdleUpAnim, "../Sources/assets/enemigos/wolf/LoboIdleArriba.png" },
+	{ WolfIdleDownAnim, "../Sources/assets/enemigos/wolf/LoboIdleAbajo.png" },
+	{ WolfAttackRightAnim, "../Sources/assets/enemigos/wolf/LoboAtaqueDer.png" },
+	{ WolfAttackLeftAnim, "../Sources/assets/enemigos/wolf/LoboAtaqueIzq.png" },
+	{ WolfAttackUpAnim, "../Sources/assets/enemigos/wolf/LoboAtaqueArriba.png" },
+	{ WolfAttackDownAnim, "../Sources/assets/enemigos/wolf/LoboAtaqueAbajo.png" },
+	{ WolfMoveRightAnim, "../Sources/assets/enemigos/wolf/LoboCorrerDer.png" },
+	{ WolfMoveLeftAnim, "../Sources/assets/enemigos/wolf/LoboCorrerIzq.png" },
+	{ WolfMoveDownAnim, "../Sources/assets/enemigos/wolf/LoboCorrerAbajo.png" },
+	{ WolfMoveUpAnim, "../Sources/assets/enemigos/wolf/LoboCorrerArriba.png" },
+
 	//Skeleton
 	{ SkeletonIdleRightAnim, "../Sources/assets/enemigos/skeleton/IdleLadoDer.png" },
 	{ SkeletonIdleLeftAnim, "../Sources/assets/enemigos/skeleton/IdleLadoIzq.png" },
