@@ -77,7 +77,6 @@ bool Cleon::update() {
 	//El estado es following
 	else {
 		if (lastDir_ != currDir_) {
-			cout << "init run following \n";
 			initRun();
 		}
 		else selectTarget();
@@ -98,7 +97,10 @@ bool Cleon::update() {
 		app_->getAudioManager()->haltChannel(Resources::CleonChannel3);
 		app_->getAudioManager()->haltChannel(Resources::CleonChannel5);
 	}
-	cout << "FIN UPDATE \n";
+
+	if (currState_ == STATE::FOLLOWING) {
+		currStats_.moveSpeed_ = MOVE_SPEED;
+	}
 	return false;
 }
 
@@ -113,8 +115,6 @@ void Cleon::receiveDamage(double damage)
 		lastTint_ = SDL_GetTicks();
 		feedBackHurtSounds();
 		//Reduccion de da�o
-		/*auto choice = app_->getRandom()->nextInt(Resources::CleonHurt1, Resources::CleonHurt4 + 1);
-		app_->getAudioManager()->playChannel(choice, 0, Resources::CleonChannel1);*/
 		double realDamage = damage - (damage * currStats_.armor_ / 100);
 		currStats_.health_ -= realDamage;
 		if (currStats_.health_ <= 0) {
@@ -151,7 +151,7 @@ void Cleon::thrust()
 	app_->getAudioManager()->playChannel(meleeSound, 0, Resources::CleonChannel2);
 	lastThrust_.initCooldown(THRUST_TIME);
 	if (!attacked_) {
-		cout << currAnim_.currFrame_ << endl;
+		//cout << currAnim_.currFrame_ << endl;
 		attacked_ = true;
 		auto thrustAttack = dynamic_cast<Player*>(currEnemy_);
 		if (thrustAttack) {
@@ -411,6 +411,7 @@ void Cleon::initThrust() {
 }
 
 void Cleon::initRun() {
+	currState_ = STATE::FOLLOWING;
 	int dir = (int)currDir_;
 	texture_ = runTxt_[dir];
 	currAnim_ = runAnim_[dir];
