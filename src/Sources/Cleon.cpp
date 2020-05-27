@@ -220,11 +220,11 @@ void Cleon::initialStats()
 	initHealth_ = 4000;
 	initMana_ = 100;
 	initManaReg_ = 1;
-	initArmor_ = 10;
-	initMeleeDmg = 20;
-	initDistDmg = 300;
+	initArmor_ = 15;
+	initMeleeDmg = 350;
+	initDistDmg = 550;
 	initCrit_ = 0;
-	initMeleeRange = 50;
+	initMeleeRange = 60;
 	initDistRange_ = 350;
 	initMoveSpeed = 100;
 	initMeleeRate_ = 1;

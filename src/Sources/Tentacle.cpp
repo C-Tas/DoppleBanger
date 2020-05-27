@@ -14,7 +14,7 @@ bool Tentacle::update()
 		//Una vez cae se le asigna su hitbox
 		collisionArea_ = collArea_;
 		scaleCollision_ = scale_;
-		//setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
+		setTexture(app_->getTextureManager()->getTexture(Resources::RedBar));
 		currState_ = STATE::ATTACKING;
 		//Durante 1 frame se hace daño al jugador
 	}
@@ -137,7 +137,7 @@ bool Tentacle::slamUpdate()
 
 void Tentacle::initObject()
 {
-	setTexture(app_->getTextureManager()->getTexture(Resources::tentaculo));
+	setTexture(app_->getTextureManager()->getTexture(Resources::BlueBar));
 	destiny_ = SDL_Rect({ (int)pos_.getX(),(int)pos_.getY(),(int)scale_.getX(),(int)scale_.getY() });
 	scaleCollision_.setVec(Vector2D(scale_.getX(), scale_.getY()));
 	//Empieza sin hitbox as� que se guarda en una variable a parte
@@ -155,9 +155,6 @@ void Tentacle::initObject()
 	posCollision_ = Point2D(0, 0);
 }
 
-
-
-
 void Tentacle::onCollider()
 {
 	Player* player = static_cast<Player*>(GameManager::instance()->getPlayer());
@@ -165,14 +162,8 @@ void Tentacle::onCollider()
 		player->stop();
 	}
 	else if (currState_ == STATE::ATTACKING) {
-		if (attack_ == ATTACKS::SWEEP) {
-			player->receiveDamage(kraken_->getMeleeDmg());
-		}
-		else {
-			player->receiveDamage(kraken_->getMeleeDmg() *15);
-		}
-	
-	
+		cout << "Ataque" << endl;
+		player->receiveDamage(kraken_->getMeleeDmg());
 		currState_ = STATE::IDLE;
 	}
 }

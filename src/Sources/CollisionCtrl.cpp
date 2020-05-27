@@ -356,14 +356,19 @@ list<Enemy*> CollisionCtrl::getEnemiesInArea(Point2D center, double radius)
 list<Collider*> CollisionCtrl::getEntitiesInArea(Point2D center, double radius)
 {
 	list<Collider*> entities;
-	SDL_Rect coll = player_->getCollider();
-	if (RectBall((float)(coll.x + coll.w / 2), (float)(coll.y + coll.h / 2), (float)coll.w, (float)coll.h, (float)center.getX(), (float)center.getY(), (float)radius)) {
-		entities.push_back(player_);
+	SDL_Rect coll;
+	if (player_ != nullptr) {
+		coll = player_->getCollider();
+		if (RectBall((float)(coll.x + coll.w / 2), (float)(coll.y + coll.h / 2), (float)coll.w, (float)coll.h, (float)center.getX(), (float)center.getY(), (float)radius)) {
+			entities.push_back(player_);
+		}
 	}
 	for (auto enemy : enemies_) {
-		coll = (enemy)->getCollider();
-		if (RectBall((float)(coll.x + coll.w / 2), (float)(coll.y + coll.h / 2), (float)coll.w, (float)coll.h, (float)center.getX(), (float)center.getY(), (float)radius)) {
-			entities.push_back((enemy));
+		if (enemy != nullptr) {
+			coll = (enemy)->getCollider();
+			if (RectBall((float)(coll.x + coll.w / 2), (float)(coll.y + coll.h / 2), (float)coll.w, (float)coll.h, (float)center.getX(), (float)center.getY(), (float)radius)) {
+				entities.push_back((enemy));
+			}
 		}
 	}
 	return entities;

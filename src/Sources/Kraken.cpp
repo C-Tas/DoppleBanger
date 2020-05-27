@@ -28,20 +28,18 @@ bool Kraken::update() {
 
 	if (!attackCD_.isCooldownActive())
 	{
-		int probSwim, probInk, probSweep;
+		int probSwim, probInk;
 		if ((currEnemy_->getPos() - getCenter()).magnitude() < 1.5 * scale_.getX())
 		{
 			//Frecuencias acumuladas de los ataques
 			//Probabilidad acumulada de slam es siempre 100 por que es el ultimo
-			probSwim = 10;
+			probSwim = 20;
 			probInk = 30;
-			probSweep = 60;
 		}
 		else
 		{
-			probSwim = 50;
-			probInk = 80;
-			probSweep = 90;
+			probSwim = 70;
+			probInk = 20;
 		}
 
 		int attack = rand() % 100;
@@ -49,8 +47,6 @@ bool Kraken::update() {
 			swimInit();
 		else if (attack < probInk)
 			ink();
-		else if (attack < probSweep)
-			sweep();
 		else
 			slam();
 
@@ -108,17 +104,17 @@ void Kraken::initAnims()
 }
 
 void Kraken::initialStats() {
-	initHealth_ = 3000;
+	initHealth_ = 2000;
 	initMana_ = 0;
 	initManaReg_ = 0;
-	initArmor_ = 15;
-	initMeleeDmg = 200; 
-	initDistDmg = 100;
+	initArmor_ = 0;
+	initMeleeDmg = 300; 
+	initDistDmg = 225;
 	initCrit_ = 0; 
 	initMeleeRange = 0;
 	initDistRange_ = 0;
 	initMoveSpeed = 0;
-	initMeleeRate_ = 2000;
+	initMeleeRate_ = 4000;
 	initDistRate_ = 5000;
 	initStats(initHealth_, initMana_, initManaReg_, initArmor_, initMeleeDmg, initDistDmg, initCrit_, initMeleeRange, initDistRange_, initMoveSpeed, initMeleeRate_, initDistRate_);
 }
@@ -137,8 +133,8 @@ void Kraken::initObject()
 	tag_ = "Kraken";
 	app_->resetMusicChannels();
 	app_->getAudioManager()->playChannel(Resources::KrakenIdle, -1, Resources::KrakenChannel1);
-	app_->getAudioManager()->playChannel(Resources::KrakenMusic, -1, Resources::KrakenMusicChannel);
 	initialStats();
+	attackCD_.initCooldown(currStats_.meleeRate_);
 }
 
 void Kraken::slam()
@@ -310,8 +306,6 @@ void Kraken::idle()
 	frame_.x = 0; frame_.y = 0;
 	frame_.w = currAnim_.widthFrame_;
 	frame_.h = currAnim_.heightFrame_;
-	//Ink* ink = new Ink(app_, this, { 1148, 1800 }, scale);
-	//app_->getGameStateMachine()->getState()->addRenderUpdateListsAsFirst(ink);
 }
 
 void Kraken::updateCooldowns()
@@ -333,10 +327,6 @@ void Kraken::lostAggro()
 
 void Kraken::initRewards()
 {
-	minGold = 100;
-	maxGold = 200;
-	minArchievementPoints = 10;
-	maxArchievementPoints = 15;
-	goldPoints_ = app_->getRandom()->nextInt(minGold, maxGold + 1);
-	achievementPoints_ = app_->getRandom()->nextInt(minArchievementPoints, maxArchievementPoints + 1);
+	goldPoints_ = 1000;
+	achievementPoints_ = 300;
 }
