@@ -6,10 +6,11 @@ void backShipSpooky(Application* app) {
 }
 void SpookyIslandState::initState()
 {
+	gm_->setMagorditoDead(false);
 	//Resetamos los sonidos
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
-
+	app_->getAudioManager()->playChannel(Resources::Isle1Zone1, -1, Resources::MainMusicChannel);
 
 	gm_->setOnShip(false);
 	//background_ = app_->getTextureManager()->getTexture(Resources::Spooky);
@@ -36,7 +37,6 @@ void SpookyIslandState::initState()
 
 	//Setteamos que la zona en la que nos encontramos es la SpookyA
 	gm_->setCurrentZone(Zone::SpookyA);
-	
 }
 
 SpookyIslandState::SpookyIslandState(Application* app) : PlayState(app)
@@ -78,7 +78,7 @@ void SpookyIslandState::changeZone()
 		deleteExceptHUD(Zone::SpookyBoss);
 
 		//Se inicia la música
-		app_->getAudioManager()->playChannel(Resources::Isle2Zone1, -1, Resources::MainMusicChannel);
+		app_->getAudioManager()->playChannel(Resources::AudioId::Isle1Zone2, -1, Resources::MainMusicChannel);
 		currentMap_ = new TiledMap(app_, this, BOSSZONE_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
 			TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone_, wallTilesIdZone_);
 		addRenderUpdateLists(hud_);

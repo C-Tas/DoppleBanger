@@ -323,7 +323,7 @@ void CollisionCtrl::volcanicCollision()
 	for (auto barrel : barrels_) {
 		if (barrel->getBarrelState() == BARREL_STATE::INIT_EXPLOTION) {
 			//Collisión contra el player
-			if (Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
+			if (player_ != nullptr && Collisions::collides(player_->getPos(), player_->getScaleX(), player_->getScaleY(),
 				barrel->getPos(), barrel->getScaleX(), barrel->getScaleY())) {
 				barrel->onCollider();
 			}
