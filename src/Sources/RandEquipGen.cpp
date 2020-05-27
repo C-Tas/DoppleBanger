@@ -106,13 +106,13 @@ Item* RandEquipGen::genEquip(int type)
 			//Ap y velocidad de disparo
 			//Dispara en linea recta con mas da�o
 		case equipType::PistolI:
-			ad = rn_->nextInt(80 * area, 120 * area);
+			ad = rn_->nextInt(90 * area, 150 * area);
 			distRate = rn_->nextInt(100 * area, 150 * area);
 			price = rn_->nextInt(75 * area, 165 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
 			break;
 		case equipType::PistolII:
-			ad = rn_->nextInt(50 * area, 180 * area);
+			ad = rn_->nextInt(70 * area, 200 * area);
 			distRate = rn_->nextInt(60 * area, 170 * area);
 			price = rn_->nextInt(75 * area, 165 * area);
 			obj = new Gun(app_, price, ad, distRate, (equipType)type);
