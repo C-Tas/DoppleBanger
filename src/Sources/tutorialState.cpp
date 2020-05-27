@@ -92,7 +92,7 @@ void tutorialState::createDummy()
 void tutorialState::createChest()
 {
 	chestCreated_ = true;
-	Chest* chest = new Chest(app_, Vector2D(app_->getWindowWidth() * 2 / 3, app_->getWindowHeight() / 6), Vector2D(150,150), 50);
+	Chest* chest = new Chest(app_, Vector2D(app_->getWindowWidth() * 2 / 3, app_->getWindowHeight() / 6), Vector2D(150,150), 100);
 	collisionCtrl_->addChest(chest);
 	addRenderUpdateLists(chest);
 }
