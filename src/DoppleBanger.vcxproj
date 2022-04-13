@@ -327,7 +327,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\SDL2_image-2.0.5\include;$(SolutionDir)deps\SDL2_ttf-2.0.14\include;$(SolutionDir)deps\SDL2_mixer-2.0.2\include;$(SolutionDir)deps\SDL2\include;$(SolutionDir)SDL2_gfx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -341,7 +341,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SDL2_image-2.0.5\include;$(SolutionDir)SDL2_ttf-2.0.14\include;$(SolutionDir)SDL2_mixer-2.0.2\include;$(SolutionDir)SDL2\include;$(SolutionDir)SDL2_gfx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\SDL2_image-2.0.5\include;$(SolutionDir)deps\SDL2_ttf-2.0.14\include;$(SolutionDir)deps\SDL2_mixer-2.0.2\include;$(SolutionDir)deps\SDL2\include;$(SolutionDir)SDL2_gfx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
     </ClCompile>
@@ -359,7 +359,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\SDL2_image-2.0.5\include;$(SolutionDir)deps\SDL2_ttf-2.0.14\include;$(SolutionDir)deps\SDL2_mixer-2.0.2\include;$(SolutionDir)deps\SDL2\include;$(SolutionDir)SDL2_gfx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -377,7 +377,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)SDL2_image-2.0.5\include;$(SolutionDir)SDL2_ttf-2.0.14\include;$(SolutionDir)SDL2_mixer-2.0.2\include;$(SolutionDir)SDL2\include;$(SolutionDir)SDL2_gfx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)deps\SDL2_image-2.0.5\include;$(SolutionDir)deps\SDL2_ttf-2.0.14\include;$(SolutionDir)deps\SDL2_mixer-2.0.2\include;$(SolutionDir)deps\SDL2\include;$(SolutionDir)SDL2_gfx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -5,7 +5,6 @@
     <ClCompile Include="SDL2_gfx\SDL2_gfxPrimitives.cpp" />
     <ClCompile Include="SDL2_gfx\SDL2_imageFilter.cpp" />
     <ClCompile Include="SDL2_gfx\SDL2_rotozoom.cpp" />
-    <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Altar.cpp" />
     <ClCompile Include="Sources\AltarSkeleton.cpp" />
     <ClCompile Include="Sources\Application.cpp" />
@@ -108,9 +107,9 @@
     <ClCompile Include="Sources\tutorialObject.cpp" />
     <ClCompile Include="Sources\tutorialState.cpp" />
     <ClCompile Include="Sources\Barrel.cpp" />
+    <ClCompile Include="Sources\Actor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Altar.h" />
     <ClInclude Include="Sources\AltarSkeleton.h" />
     <ClInclude Include="Sources\Application.h" />
@@ -228,6 +227,7 @@
     <ClInclude Include="Sources\tutorialState.h" />
     <ClInclude Include="Sources\Barrel.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Sources\Actor.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
