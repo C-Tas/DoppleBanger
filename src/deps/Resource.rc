@@ -62,7 +62,7 @@ LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON                    "Sources\\DoppleBangger.ico"
+IDI_ICON1               ICON                    "..\\Sources\\DoppleBangger.ico"
 
 #endif    // Español (España, alfabetización internacional) resources
 /////////////////////////////////////////////////////////////////////////////
