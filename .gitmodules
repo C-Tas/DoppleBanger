@@ -1,0 +1,3 @@
+[submodule "src/deps/UsabilidadTelemetria"]
+	path = src/deps/UsabilidadTelemetria
+	url = https://github.com/Sounagix/UsabilidadTelemetria.git
