@@ -11,9 +11,16 @@
 
 using namespace std;
 
+// USABILIDAD
+class Tracker;
+
 class Application
 {
 private:
+	// USABILIDAD
+	Tracker* tracker_ = nullptr;
+	bool trackerStarted_ = false;
+
 	///<summary>Variables basicas de SDL</summary>
 	SDL_Window* window_ = nullptr;
 	SDL_Renderer* renderer_ = nullptr;
@@ -66,6 +73,13 @@ public:
 	///<summary>Constantes con las dimensiones de la ventana </summary>
 	static const int winWidth_ = 1600;
 	static const int winHeight_ = 900; 
+
+	/// <summary>
+	/// USABILIDAD.
+	/// Inicializa el tracker para capturar los eventos
+	/// </summary>
+	/// <returns>Devuelve si ha sido posible inicializarlo</returns>
+	bool initTracker();
 
 	///<summary>Bucle principal de la aplicacion</summary>
 	void runApp();

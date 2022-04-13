@@ -110,7 +110,6 @@
     <ClCompile Include="..\deps\tmxLite\Tileset.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="..\..\Sources\Actor.h" />
     <ClInclude Include="..\Sources\Altar.h" />
     <ClInclude Include="..\Sources\AltarSkeleton.h" />
@@ -228,8 +227,9 @@
     <ClInclude Include="..\deps\tmxLite\TileLayer.hpp" />
     <ClInclude Include="..\deps\tmxLite\Tileset.hpp" />
     <ClInclude Include="..\deps\tmxLite\Types.hpp" />
+    <ClInclude Include="..\deps\resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Resource.rc" />
+    <ResourceCompile Include="..\deps\Resource.rc" />
   </ItemGroup>
 </Project>

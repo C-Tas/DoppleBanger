@@ -7,6 +7,8 @@
 #include "VisualElement.h"
 #include "BeerButton.h"
 #include <fstream>
+#include "Tracker.h"
+#include "OpenInv.h"
 
 using namespace std;
 
@@ -19,11 +21,23 @@ void MainMenuState::goCreditsState(Application* app) {
 };
 void MainMenuState::goLoadState(Application* app) {
 	app->getGameStateMachine()->pushState(new LoadState(app));
+
+	// USABILIDAD
+	//OpenInv* openInv = (OpenInv*)(Tracker::CreateNewEvent(0, "a", "a", (int)EventInfo::EventType::OpenInv));
+	//openInv->setTimeOut(10);
+	//openInv->setEquipPot(true);
+	//Tracker::TrackEvent(openInv);
 };
 void MainMenuState::goStoryState(Application* app) {
 	app->resetMusicChannels();
 	app->getAudioManager()->playChannel(Resources::Storyboard, -1, Resources::MainMusicChannel);
 	app->getGameStateMachine()->pushState(new StoryState(app));
+
+	// USABILIDAD
+	//OpenInv* openInv = (OpenInv*)(Tracker::CreateNewEvent(0, "a", "a", (int)EventInfo::EventType::OpenInv));
+	//openInv->setTimeOut(10);
+	//openInv->setEquipPot(true);
+	//Tracker::TrackEvent(openInv);
 };
 
 void MainMenuState::exitGame(Application* app) {

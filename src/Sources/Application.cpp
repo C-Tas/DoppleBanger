@@ -5,6 +5,10 @@
 #include <exception>
 #include "GameManager.h"
 
+// USABILIDAD
+#include "Tracker.h"
+#define PATH_TRACKER "./"
+
 Application::Application(GameStateMachine* state) {
 	initSDL();
 	initResources();
@@ -13,9 +17,16 @@ Application::Application(GameStateMachine* state) {
 	machine_ = new GameStateMachine();
 	GameState* startState = new MainMenuState(this);
 	machine_->pushState(startState);
+
+	// USABILIDAD
+	//tracker_ = Tracker::GetInstance();
 }
 
 Application::~Application() {
+	// USABILIDAD
+	//tracker_->End(); // FLUSH DE PRUEBA - BORRAR
+	//tracker_->Free();
+
 	delete machine_;
 	closeResources();
 
@@ -42,6 +53,17 @@ void Application::initSDL() {
 	if (window_ == nullptr || renderer_ == nullptr) {
 		throw exception("Game window or renderer was null");
 	}
+}
+
+bool Application::initTracker()
+{
+	if (trackerStarted_) {
+		std::cout << "El tracker ya se habia inicializado...\n";
+		return false;
+	}
+
+	trackerStarted_ =  tracker_->Init(PersistenceType::FILE, TypeOfFile::Json, PATH_TRACKER);
+	return trackerStarted_;
 }
 
 void Application::runApp() {
