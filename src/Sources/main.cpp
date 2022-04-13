@@ -12,11 +12,11 @@ int main(int argc, char** argv) {
 
 	Application* app = new Application();
 	// USABILIDAD
-	//if (!app->initTracker()) {
-	//	std::cout << "Error al inicializar el tracker\n";
-	//	delete app;
-	//	return 0;
-	//}
+	if (!app->initTracker()) {
+		std::cout << "Error al inicializar el tracker\n";
+		delete app;
+		return 0;
+	}
 
 	app->runApp();
 

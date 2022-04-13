@@ -7,7 +7,7 @@
 
 // USABILIDAD
 #include "Tracker.h"
-#define PATH_TRACKER "./"
+#define PATH_TRACKER "../Events/"
 
 Application::Application(GameStateMachine* state) {
 	initSDL();
@@ -19,13 +19,13 @@ Application::Application(GameStateMachine* state) {
 	machine_->pushState(startState);
 
 	// USABILIDAD
-	//tracker_ = Tracker::GetInstance();
+	tracker_ = Tracker::GetInstance();
 }
 
 Application::~Application() {
 	// USABILIDAD
-	//tracker_->End(); // FLUSH DE PRUEBA - BORRAR
-	//tracker_->Free();
+	tracker_->End(); // FLUSH DE PRUEBA - BORRAR
+	tracker_->Free();
 
 	delete machine_;
 	closeResources();

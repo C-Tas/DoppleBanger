@@ -8,7 +8,7 @@
 #include "BeerButton.h"
 #include <fstream>
 #include "Tracker.h"
-#include "OpenInv.h"
+#include "Login.h"
 
 using namespace std;
 
@@ -23,10 +23,8 @@ void MainMenuState::goLoadState(Application* app) {
 	app->getGameStateMachine()->pushState(new LoadState(app));
 
 	// USABILIDAD
-	//OpenInv* openInv = (OpenInv*)(Tracker::CreateNewEvent(0, "a", "a", (int)EventInfo::EventType::OpenInv));
-	//openInv->setTimeOut(10);
-	//openInv->setEquipPot(true);
-	//Tracker::TrackEvent(openInv);
+	//Login* login = (Login*)(Tracker::CreateNewEvent(0, "a", "a", (int)EventInfo::EventType::Login));
+	//Tracker::TrackEvent(login);
 };
 void MainMenuState::goStoryState(Application* app) {
 	app->resetMusicChannels();
@@ -34,10 +32,8 @@ void MainMenuState::goStoryState(Application* app) {
 	app->getGameStateMachine()->pushState(new StoryState(app));
 
 	// USABILIDAD
-	//OpenInv* openInv = (OpenInv*)(Tracker::CreateNewEvent(0, "a", "a", (int)EventInfo::EventType::OpenInv));
-	//openInv->setTimeOut(10);
-	//openInv->setEquipPot(true);
-	//Tracker::TrackEvent(openInv);
+	//Login* login = (Login*)(Tracker::CreateNewEvent(0, "a", "a", (int)EventInfo::EventType::Login));
+	//Tracker::TrackEvent(login);
 };
 
 void MainMenuState::exitGame(Application* app) {
