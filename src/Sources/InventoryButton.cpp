@@ -7,6 +7,7 @@
 #include "Sword.h"
 #include "Gun.h"
 #include "usable.h"
+#include <algorithm>
 
 void InventoryButton::initObject()
 {

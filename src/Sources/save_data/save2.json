@@ -1,0 +1,46 @@
+{
+  "currIsland": 0,
+  "unlockedIsland": 0,
+  "currGold": 0,
+  "stashGold": 0,
+  "skillPoints": 0,
+  "precision": 0,
+  "melee": 0,
+  "clon": 0,
+  "questStarted": [false, false, false, false, false],
+  "questFinished": [false, false, false, false, false],
+  "rewardObtained": [false, false, false, false, false],
+  "unlockedSkills": [false, false, false, false, false, false, true, false, false, false],
+  "skills": ["null", "null", "null"],
+  "objects": ["null", "null"],
+  "equipment": [{
+      "name": 0,
+      "price": 1,
+      "armor": 5.000000,
+      "health": 100.000000
+    }, {
+      "name": 2,
+      "price": 1,
+      "armor": 0.000000,
+      "critic": 1.000000
+    }, {
+      "name": 4,
+      "price": 1,
+      "armor": 0.000000,
+      "speed": 30.000000
+    }, {
+      "name": 6,
+      "price": 1,
+      "rate": 0.000000,
+      "damage": 150.000000
+    }, {
+      "name": 10,
+      "price": 1,
+      "rate": 1000.000000,
+      "damage": 120.000000
+    }],
+  "inventory": [],
+  "inventorySize": 0,
+  "stash": [],
+  "stashSize": 0
+}

@@ -13,6 +13,7 @@
 #include "RicochetSkill.h"
 #include "PerforateSkill.h"
 #include "ClonSelfDestructSkill.h"
+#include <algorithm>
 
 using namespace jute;
 unique_ptr<GameManager> GameManager::instance_;
