@@ -303,14 +303,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>$(LibraryPath)dll</LibraryPath>
-    <OutDir>$(SolutionDir)exes/</OutDir>
-    <IntDir>$(SolutionDir)tmp/$(Configuration)/$(Platform)/</IntDir>
+    <OutDir>$(SolutionDir)exes\</OutDir>
+    <IntDir>$(SolutionDir)tmp\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_d64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)exes/</OutDir>
-    <IntDir>$(SolutionDir)tmp/$(Configuration)/$(Platform)/</IntDir>
+    <OutDir>$(SolutionDir)exes\</OutDir>
+    <IntDir>$(SolutionDir)tmp\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)exes/</OutDir>
