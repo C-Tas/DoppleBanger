@@ -587,20 +587,36 @@ void Player::checkInputCheat(){
 }
 
 void Player::checkInput()
-{
+{ 
+	//USABILIDAD
+	Skill* auxskill=nullptr;
 	//Skills
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0] != nullptr) {
 		skills_[0]->action();
+		auxskill = skills_[0];
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_W) && skills_[1] != nullptr) {
 		skills_[1]->action();
+		auxskill = skills_[1];
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_E) && skills_[2] != nullptr) {
 		skills_[2]->action();
+		auxskill = skills_[2];
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_R) && skills_[3] != nullptr) {
 		skills_[3]->action();
+		auxskill = skills_[2];
 	}
+	//USABILIDAD
+	if (auxskill != nullptr) {
+		int timest = std::chrono::duration_cast<std::chrono::seconds>(
+			std::chrono::system_clock::now().time_since_epoch()).count();
+		UseSkill* usSkill = (UseSkill*)Tracker::CreateNewEvent(timest, "hola", "20012", (int)EventInfo::EventType::UseSkill);
+		usSkill->setZone((int)auxskill->getSkillType() * 10 + (int)auxskill->getSkillBranch());
+		Tracker::TrackEvent(usSkill);
+	}
+	//
+
 
 	//Pociones
 	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr) {
@@ -649,6 +665,7 @@ void Player::checkInputState() {
 	else if (eventHandler_->isKeyDown(SDL_SCANCODE_C)) {
 		killClon();
 		app_->getGameStateMachine()->pushState(new Inventory(app_));
+		
 		stop();
 	}
 	else if (eventHandler_->isKeyDown(SDL_SCANCODE_V)) {
@@ -861,10 +878,19 @@ void Player::usePotion(usable* potion, int key) {
 	double auxValue = potion->getValue();
 	switch (potion->getType())
 	{
-	case potionType::Health:
+	case potionType::Health: {
+		if (currStats_.health_ < maxHealth_ * 0.4) {
+			//USABILIDAD
+			int timest= std::chrono::duration_cast<std::chrono::seconds>(
+				std::chrono::system_clock::now().time_since_epoch()).count();
+			UsePot* usPot = (UsePot*)Tracker::CreateNewEvent(timest, "hola", "20012", (int)EventInfo::EventType::UsePot);
+			Tracker::TrackEvent(usPot);
+			//
+		}
 		currStats_.health_ += maxHealth_ * auxValue / 100;
 		if (currStats_.health_ > maxHealth_) currStats_.health_ = maxHealth_;
 		break;
+	}
 	case potionType::Mana:
 		currStats_.mana_ += maxMana_ * auxValue / 100;
 		if (currStats_.mana_ > maxMana_) currStats_.mana_ = maxMana_;

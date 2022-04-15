@@ -28,6 +28,12 @@ void SkillState::initState() {
 	createTexts();
 	createBars();
 	createSkillsIcons();
+	//USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	openSkills = (OpenSkills*)Tracker::CreateNewEvent(timest, "hola", "20012", (int)EventInfo::EventType::OpenSkills);
+	pointsInOpen= GameManager::instance()->getAchievementPoints();
+	//
 }
 
 void SkillState::update()
@@ -434,6 +440,10 @@ SkillState::~SkillState()
 	for (int i = 0; i < 3; i++)delete bars_[i];
 	delete bg_; delete selectedRectangle;
 	delete totalPoints_;
+	//USABILIDAD
+	if(GameManager::instance()->getAchievementPoints()!=pointsInOpen)openSkills->setPoints(true);
+	Tracker::TrackEvent(openSkills);
+	//
 }
 
 void SkillState::backToPreviousState(Application* app) {

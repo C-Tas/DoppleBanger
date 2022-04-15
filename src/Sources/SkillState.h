@@ -48,7 +48,10 @@ private:
 	const double UNLOCK_SECOND_SKILL = maxPoints * 2 / 3;
  	const double UNLOCK_THRID_SKILL = maxPoints;
 
-	
+	//USABILIDAD
+	OpenSkills* openSkills;
+	int pointsInOpen;
+	//
 protected:
 	///<summary>Se inicializa el skill state</summary>
 	virtual void initState();

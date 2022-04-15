@@ -23,7 +23,9 @@ void MainMenuState::goLoadState(Application* app) {
 	app->getGameStateMachine()->pushState(new LoadState(app));
 
 	// USABILIDAD
-	Login* login = (Login*)(Tracker::CreateNewEvent(0, "a", "a", (int)EventInfo::EventType::Login));
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	Login* login = (Login*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::Login));
 	Tracker::TrackEvent(login);
 };
 void MainMenuState::goStoryState(Application* app) {

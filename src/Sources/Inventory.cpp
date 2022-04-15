@@ -114,6 +114,13 @@ void Inventory::initState() {
 	//descripcion de objetos
 	descriptionPoint = Point2D((double)(app_->getWindowWidth() / 1.777), (double)(app_->getWindowHeight() / 1.38));
 	descriptionBox = new TextBox(app_, descriptionPoint);
+
+	//USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	openInv = (OpenInv*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::OpenInv));
+	
+	//
 }
 
 void Inventory::selectObject(InventoryButton* ob) {
@@ -133,6 +140,9 @@ void Inventory::equipObject() {
 			selectEquipment();
 			break;
 		case ObjectType::Usable:
+			//USABILIDAD
+			equipPot = true;
+			//
 			equipPotion();
 			break;
 		}
@@ -644,4 +654,9 @@ Inventory::~Inventory() {
 	delete equipment_.potion1_;
 	delete equipment_.potion2_;
 	delete descriptionBox;
+	//USABILIDAD
+	timeInv = 1000;
+	openInv->setTimeOut(timeInv);
+	openInv->setEquipPot(equipPot);
+	Tracker::TrackEvent(openInv);
 }

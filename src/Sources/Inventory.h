@@ -35,6 +35,11 @@ private:
 	int advanced = 0;							//Complamentario a listPos, gurda cuantas veces se ha avanzado o retrocedido en la lista,para actualizar el iterador
 	Player* player_ = nullptr;
 
+	//USABILIDAD
+	OpenInv* openInv;
+	int timeInv=0;
+	bool equipPot=false;
+
 	virtual void initState();
 
 	//metodos privados

@@ -23,6 +23,12 @@ void TextBox::goShopState(Application* app)
 	app->getAudioManager()->playChannel(Resources::Shop, -1, Resources::MainMusicChannel);
 	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	app->getGameStateMachine()->pushState(new ShopState(app));
+	//USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	OpenShop* openShop = (OpenShop*)Tracker::CreateNewEvent(timest, "hola", "20012", (int)EventInfo::EventType::OpenShop);
+	Tracker::TrackEvent(openShop);
+	//
 }
 
 void TextBox::nextConversation(Application* app) {
