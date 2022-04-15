@@ -33,4 +33,14 @@ private:
 	void createChest();
 	//Constantes
 	const int POTION_COST = 250;
+	
+	//USABILIDAD
+	TutoTask* tutoTask1;
+	TutoTask* tutoTask2;
+	TutoTask* tutoTask3;
+	TutoTask* tutoTask4;
+	TutoTask* tutoTask5;
+
+	int timest;
+	int timeOut;
 };

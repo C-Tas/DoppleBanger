@@ -6,7 +6,7 @@
 #include "GameManager.h"
 
 // USABILIDAD
-#include "Tracker.cpp"
+#include "Tracker.h"
 #define PATH_TRACKER "../Events/"
 
 Application::Application(GameStateMachine* state) {

@@ -5,6 +5,7 @@
 #include "ShopState.h" 
 #include "usable.h"
 #include "HUD.h"
+#include "TutoTask.h"
 
 void tutorialState::update()
 {
@@ -17,13 +18,30 @@ void tutorialState::update()
 	case 1:
 		//crear botella
 		if (!bottleCreated_) {
+			//USABILIDAD
+			timest = std::chrono::duration_cast<std::chrono::seconds>(
+				std::chrono::system_clock::now().time_since_epoch()).count();
+			tutoTask1 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+			tutoTask1->setName("Aprender a disparar.");
 			createBottle();
 		}
 		break;
 	//Aprender el ataque a melee
 	case 2:
+		//USABILIDAD
+		timeOut = std::chrono::duration_cast<std::chrono::seconds>(
+			std::chrono::system_clock::now().time_since_epoch()).count();
+		tutoTask1->setTimeOut(timeOut);
+		Tracker::TrackEvent(tutoTask1);
+
 		//crear dummy
 		if (!dummyCreated_) {
+			//USABILIDAD
+			timest = std::chrono::duration_cast<std::chrono::seconds>(
+				std::chrono::system_clock::now().time_since_epoch()).count();
+			tutoTask2 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+			tutoTask2->setName("Aprender ataque melee.");
+
 			createDummy();
 			HUD* hud = new HUD(app_);
 			addRenderUpdateLists(hud);
@@ -31,16 +49,40 @@ void tutorialState::update()
 		break;
 	//Apreder a usar habilidades
 	case 3:
+		//USABILIDAD
+		timeOut = std::chrono::duration_cast<std::chrono::seconds>(
+			std::chrono::system_clock::now().time_since_epoch()).count();
+		tutoTask2->setTimeOut(timeOut);
+		Tracker::TrackEvent(tutoTask2);
+
 		//crear dummy
 		if (!dummyCreated_) {
+			//USABILIDAD
+			timest = std::chrono::duration_cast<std::chrono::seconds>(
+				std::chrono::system_clock::now().time_since_epoch()).count();
+			tutoTask3 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+			tutoTask3->setName("Aprender a usar habilidades.");
+
 			gm_->setMeleePoints(gm_->getMeleePoints() + (gm_->getMaxPoints() / 3) - 10);
 			createDummy();
 		}
 		break;
 	//Aprender los cofres
 	case 4:
+		//USABILIDAD
+		timeOut = std::chrono::duration_cast<std::chrono::seconds>(
+			std::chrono::system_clock::now().time_since_epoch()).count();
+		tutoTask3->setTimeOut(timeOut);
+		Tracker::TrackEvent(tutoTask3);
+
 		//crear cofre con oro
 		if (!chestCreated_) {
+			//USABILIDAD
+			timest = std::chrono::duration_cast<std::chrono::seconds>(
+				std::chrono::system_clock::now().time_since_epoch()).count();
+			tutoTask4 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+			tutoTask4->setName("Aprender los cofres.");
+
 			createChest();
 		}
 		else {
@@ -55,6 +97,18 @@ void tutorialState::update()
 		break;
 	//Aprender sobre pociones
 	case 5:
+		//USABILIDAD
+		timeOut = std::chrono::duration_cast<std::chrono::seconds>(
+			std::chrono::system_clock::now().time_since_epoch()).count();
+		tutoTask4->setTimeOut(timeOut);
+		Tracker::TrackEvent(tutoTask4);
+
+		//USABILIDAD
+		timest = std::chrono::duration_cast<std::chrono::seconds>(
+			std::chrono::system_clock::now().time_since_epoch()).count();
+		tutoTask5 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+		tutoTask5->setName("Aprender sobre pociones.");
+
 		if (gm_->getInventoryGold() > 0 && !goldWasted_) {
 			goldWasted_ = true;
 		}
@@ -62,6 +116,11 @@ void tutorialState::update()
 			gm_->getObjectEquipped(Key::Two) == ObjectName::Unequipped && gm_->getInventoryGold() < 50)
 		{
 			GameManager::instance()->nextPhaseVenancio();
+			//USABILIDAD
+			timeOut = std::chrono::duration_cast<std::chrono::seconds>(
+				std::chrono::system_clock::now().time_since_epoch()).count();
+			tutoTask5->setTimeOut(timeOut);
+			Tracker::TrackEvent(tutoTask5);
 		}
 		break;
 	default:
@@ -71,6 +130,8 @@ void tutorialState::update()
 
 void tutorialState::createBottle()
 {
+	
+
 	bottleCreated_ = true;
 	bottlePos_ = Vector2D(app_->getWindowWidth() / 3, app_->getWindowHeight() / 7);
 	tutorialObject* bottle = new tutorialObject(app_, bottlePos_, Vector2D(50, 60), app_->getTextureManager()->getTexture(Resources::Bottle),1);
