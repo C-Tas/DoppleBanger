@@ -35,6 +35,7 @@ bool Chest::update() {
 
 			app_->getCurrState()->removeRenderUpdateLists(this);
 			CollisionCtrl::instance()->removeChest(this);
+			
 		}
 	}
 	return false;
@@ -43,4 +44,12 @@ bool Chest::update() {
 void Chest::onCollider() {
 	open = true;	
 	app_->getAudioManager()->playChannel(Resources::ChestOpeningAudio, 0, Resources::ChestChannelChannel);
+	//USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	OpenChest* opchest = (OpenChest*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::OpenChest));
+	Tracker::TrackEvent(opchest);
+	//
+	//TO DO PENSAR EL COFRE AGAIN
 }
+

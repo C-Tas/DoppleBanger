@@ -67,6 +67,13 @@ void CaribbeanIslandState::initZone1()
 	//Creamos el mapa
 	currentMap_ = new TiledMap(app_, this, ZONE1_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
 		TILESET_FILS, TILESET_COLS,  Vector2D(app_->getWindowWidth() / 2, 0),  collisionTilesIdZone1, wallTilesIdZone1);
+
+	//USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	LoginZone*logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::LoginZone));
+	logzone->setZone(11);
+	Tracker::TrackEvent(logzone);
 }
 
 void CaribbeanIslandState::initZone2()
@@ -76,6 +83,12 @@ void CaribbeanIslandState::initZone2()
 
 	currentMap_ = new TiledMap(app_, this, ZONE2_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
 		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone2);
+	//USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::LoginZone));
+	logzone->setZone(12);
+	Tracker::TrackEvent(logzone);
 }
 
 void CaribbeanIslandState::initZone3()
@@ -90,6 +103,12 @@ void CaribbeanIslandState::initZone3()
 
 	currentMap_ = new TiledMap(app_, this, ZONE3_TILEMAP, TILESET_TILE_WIDTH, TILESET_TILE_HEIGHT, TILE_DRAWING_SIZE, app_->getTextureManager()->getTexture(Resources::TextureId::Tileset1),
 		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone2);
+	//USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::LoginZone));
+	logzone->setZone(13);
+	Tracker::TrackEvent(logzone);
 }
 
 void CaribbeanIslandState::initBossZone()
@@ -100,6 +119,13 @@ void CaribbeanIslandState::initBossZone()
 
 	Actor* boss = static_cast<Actor*>(gameObjects_.back());
 	GameManager::instance()->activeHealthBoss(boss);
+
+	//USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::LoginZone));
+	logzone->setZone(14);
+	Tracker::TrackEvent(logzone);
 }
 
 void CaribbeanIslandState::changeZone()

@@ -14,7 +14,7 @@ void tutorialState::update()
 	//Control de tutorial
 	switch (gm_->getVenancioPhase())
 	{
-	//Aprender a disparar
+		//Aprender a disparar
 	case 1:
 		//crear botella
 		if (!bottleCreated_) {
@@ -26,7 +26,7 @@ void tutorialState::update()
 			createBottle();
 		}
 		break;
-	//Aprender el ataque a melee
+		//Aprender el ataque a melee
 	case 2:
 		//USABILIDAD
 		timeOut = std::chrono::duration_cast<std::chrono::seconds>(
@@ -47,7 +47,7 @@ void tutorialState::update()
 			addRenderUpdateLists(hud);
 		}
 		break;
-	//Apreder a usar habilidades
+		//Apreder a usar habilidades
 	case 3:
 		//USABILIDAD
 		timeOut = std::chrono::duration_cast<std::chrono::seconds>(
@@ -55,18 +55,19 @@ void tutorialState::update()
 		tutoTask2->setTimeOut(timeOut);
 		Tracker::TrackEvent(tutoTask2);
 
+		//USABILIDAD
+		timest = std::chrono::duration_cast<std::chrono::seconds>(
+			std::chrono::system_clock::now().time_since_epoch()).count();
+		tutoTask3 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+		tutoTask3->setName("Aprender a usar habilidades.");
 		//crear dummy
 		if (!dummyCreated_) {
-			//USABILIDAD
-			timest = std::chrono::duration_cast<std::chrono::seconds>(
-				std::chrono::system_clock::now().time_since_epoch()).count();
-			tutoTask3 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
-			tutoTask3->setName("Aprender a usar habilidades.");
 
 			gm_->setMeleePoints(gm_->getMeleePoints() + (gm_->getMaxPoints() / 3) - 10);
 			createDummy();
 		}
 		break;
+	
 	//Aprender los cofres
 	case 4:
 		//USABILIDAD

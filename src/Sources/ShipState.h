@@ -10,7 +10,7 @@ class ShipState : public PlayState
 public:
 	///<summary> Constructora del barco</summary>
 	ShipState(Application* app) : PlayState(app) { initState(); }
-	virtual ~ShipState() { delete collisionMap_; delete background_; }
+	virtual ~ShipState();
 	virtual void draw()const;
 	void update();
 	bool onTutorial() { return tutorialComplete; }

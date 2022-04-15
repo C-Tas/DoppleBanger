@@ -115,6 +115,19 @@ void ShipState::initState()
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
 	app_->getAudioManager()->playChannel(Resources::ShipTheme, -1, 0);
+
+	//USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::LoginZone));
+	logzone->setZone(0);
+	logzone->setCompleted(true);
+	Tracker::TrackEvent(logzone);
+}
+
+ShipState::~ShipState()
+{
+	 delete collisionMap_; delete background_; 
 }
 
 void ShipState::draw() const
