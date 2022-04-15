@@ -31,7 +31,8 @@ void SkillState::initState() {
 	//USABILIDAD
 	int timest = std::chrono::duration_cast<std::chrono::seconds>(
 		std::chrono::system_clock::now().time_since_epoch()).count();
-	openSkills = (OpenSkills*)Tracker::CreateNewEvent(timest, "hola", "20012", (int)EventInfo::EventType::OpenSkills);
+
+	openSkills = (OpenSkills*)Tracker::CreateNewEvent(timest,gm_->getIdUser(), "20012", (int)EventInfo::EventType::OpenSkills);
 	pointsInOpen= GameManager::instance()->getAchievementPoints();
 	//
 }

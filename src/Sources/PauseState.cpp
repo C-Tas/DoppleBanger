@@ -21,6 +21,18 @@ void PauseState::showControls(Application* app) {
 
 ///<summary>Vuelve al men� principal sin guardar partida</summary>
 void PauseState::goMainMenuState(Application* app) {
+
+	// USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
+	
+	if (!GameManager::instance()->getStayShip()) {
+		logoutZone->setZone((int)GameManager::instance()->getCurrIsland() * 10 + (int)GameManager::instance()->getCurrentZone());
+	}
+	logoutZone->setNext(-2);
+	Tracker::TrackEvent(logoutZone);
+	//
 	app->getGameStateMachine()->clearAllStateExceptFirst();
 }
 

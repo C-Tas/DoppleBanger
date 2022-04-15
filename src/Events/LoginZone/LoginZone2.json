@@ -1,8 +1,8 @@
 {
   "idUser": "a",
   "idGame": "a",
-  "timestamp": 1650023120,
+  "timestamp": 1650039754,
   "eventType": "LoginZone",
-  "zone": 11,
-  "completed": 0
+  "zone": 0,
+  "completed": 1
 }

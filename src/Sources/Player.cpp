@@ -569,6 +569,14 @@ void Player::dieAnim()
 	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
 
 		dead_ = true;
+		// USABILIDAD
+		int timest = std::chrono::duration_cast<std::chrono::seconds>(
+			std::chrono::system_clock::now().time_since_epoch()).count();
+		LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
+		logoutZone->setZone((int) GameManager::instance()->getCurrIsland() *10 +(int)GameManager::instance()->getCurrentZone());
+		logoutZone->setNext(-1);
+		Tracker::TrackEvent(logoutZone);
+		//
 	}
 }
 
@@ -611,7 +619,7 @@ void Player::checkInput()
 	if (auxskill != nullptr) {
 		int timest = std::chrono::duration_cast<std::chrono::seconds>(
 			std::chrono::system_clock::now().time_since_epoch()).count();
-		UseSkill* usSkill = (UseSkill*)Tracker::CreateNewEvent(timest, "hola", "20012", (int)EventInfo::EventType::UseSkill);
+		UseSkill* usSkill = (UseSkill*)Tracker::CreateNewEvent(timest,gm_->getIdUser(), "20012", (int)EventInfo::EventType::UseSkill);
 		usSkill->setZone((int)auxskill->getSkillType() * 10 + (int)auxskill->getSkillBranch());
 		Tracker::TrackEvent(usSkill);
 	}
@@ -883,7 +891,7 @@ void Player::usePotion(usable* potion, int key) {
 			//USABILIDAD
 			int timest= std::chrono::duration_cast<std::chrono::seconds>(
 				std::chrono::system_clock::now().time_since_epoch()).count();
-			UsePot* usPot = (UsePot*)Tracker::CreateNewEvent(timest, "hola", "20012", (int)EventInfo::EventType::UsePot);
+			UsePot* usPot = (UsePot*)Tracker::CreateNewEvent(timest,gm_->getIdUser(), "20012", (int)EventInfo::EventType::UsePot);
 			Tracker::TrackEvent(usPot);
 			//
 		}

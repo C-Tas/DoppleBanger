@@ -47,7 +47,7 @@ void Chest::onCollider() {
 	//USABILIDAD
 	int timest = std::chrono::duration_cast<std::chrono::seconds>(
 		std::chrono::system_clock::now().time_since_epoch()).count();
-	OpenChest* opchest = (OpenChest*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::OpenChest));
+	OpenChest* opchest = (OpenChest*)(Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "a", (int)EventInfo::EventType::OpenChest));
 	Tracker::TrackEvent(opchest);
 	//
 	//TO DO PENSAR EL COFRE AGAIN

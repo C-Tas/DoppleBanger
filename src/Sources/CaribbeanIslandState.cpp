@@ -22,6 +22,17 @@ void CaribbeanIslandState::update()
 	if (enemies_.empty() && gm_->getCurrentZone() == Zone::CaribeanBoss) {
 		collisionCtrl_->clearList();
 		gm_->setUnlockedIslands(Island::Spooky);
+
+		// USABILIDAD
+		int timest = std::chrono::duration_cast<std::chrono::seconds>(
+			std::chrono::system_clock::now().time_since_epoch()).count();
+		LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
+		logoutZone->setZone(14);
+		//USABILIDAD
+		logoutZone->setNext(0);
+		Tracker::TrackEvent(logoutZone);
+		//
+
 		app_->getGameStateMachine()->changeState(new ShipState(app_));
 	}
 	else {
@@ -33,9 +44,12 @@ void CaribbeanIslandState::update()
 void CaribbeanIslandState::initState()
 {
 	//Resteo de la isla
+	// USABILIDAD
+	
 	gm_->setCurrentZone(Zone::CaribeanA);
 	gm_->setCurrIsland(Island::Caribbean);
 
+	//
 	//Inicializamos la musica
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
@@ -71,7 +85,7 @@ void CaribbeanIslandState::initZone1()
 	//USABILIDAD
 	int timest = std::chrono::duration_cast<std::chrono::seconds>(
 		std::chrono::system_clock::now().time_since_epoch()).count();
-	LoginZone*logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::LoginZone));
+	LoginZone*logzone = (LoginZone*)(Tracker::CreateNewEvent(timest,gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
 	logzone->setZone(11);
 	Tracker::TrackEvent(logzone);
 }
@@ -86,7 +100,7 @@ void CaribbeanIslandState::initZone2()
 	//USABILIDAD
 	int timest = std::chrono::duration_cast<std::chrono::seconds>(
 		std::chrono::system_clock::now().time_since_epoch()).count();
-	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::LoginZone));
+	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
 	logzone->setZone(12);
 	Tracker::TrackEvent(logzone);
 }
@@ -106,7 +120,7 @@ void CaribbeanIslandState::initZone3()
 	//USABILIDAD
 	int timest = std::chrono::duration_cast<std::chrono::seconds>(
 		std::chrono::system_clock::now().time_since_epoch()).count();
-	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::LoginZone));
+	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest,gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
 	logzone->setZone(13);
 	Tracker::TrackEvent(logzone);
 }
@@ -123,13 +137,24 @@ void CaribbeanIslandState::initBossZone()
 	//USABILIDAD
 	int timest = std::chrono::duration_cast<std::chrono::seconds>(
 		std::chrono::system_clock::now().time_since_epoch()).count();
-	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::LoginZone));
+	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
 	logzone->setZone(14);
 	Tracker::TrackEvent(logzone);
 }
 
 void CaribbeanIslandState::changeZone()
 { 
+
+	// USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
+
+	logoutZone->setZone((int)GameManager::instance()->getCurrIsland() * 10 + (int)GameManager::instance()->getCurrentZone());
+	logoutZone->setNext((int)GameManager::instance()->getCurrIsland() * 10 + (int)GameManager::instance()->getCurrentZone()+1);
+	Tracker::TrackEvent(logoutZone);
+	//
+
 	delete currentMap_;
 	collisionCtrl_->clearList();
 
@@ -151,4 +176,6 @@ void CaribbeanIslandState::changeZone()
 	}
 	hud_->setPlayerInHUD(player_);
 	player_->initSkills();
+
+	
 }

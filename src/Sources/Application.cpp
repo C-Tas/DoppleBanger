@@ -20,10 +20,15 @@ Application::Application(GameStateMachine* state) {
 
 	// USABILIDAD
 	tracker_ = Tracker::GetInstance();
+	
 }
 
 Application::~Application() {
 	// USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	Logout* logout = (Logout*)(Tracker::CreateNewEvent(timest, gameManager_->getIdUser(), "a", (int)EventInfo::EventType::Logout));
+	Tracker::TrackEvent(logout);
 	tracker_->End(); // FLUSH DE PRUEBA - BORRAR
 	tracker_->Free();
 
@@ -54,7 +59,7 @@ void Application::initSDL() {
 		throw exception("Game window or renderer was null");
 	}
 }
-
+//USABILIDAD
 bool Application::initTracker()
 {
 	if (trackerStarted_) {
@@ -62,7 +67,38 @@ bool Application::initTracker()
 		return false;
 	}
 
+	//USABILIDAD
+	std::string cmd = "getmac";
+	std::string filename = "macaddress.txt";
+
+	system((cmd + ">" + filename).c_str());
+	std::string line;
+	std::ifstream myfile("macaddress.txt");
+
+
+	std::string mac;
+	int i = 0;
+	if (myfile.is_open()) {
+
+		while (i < 4 && std::getline(myfile, line)) {
+			i++;
+		}
+		mac = line.substr(0, 17);
+		myfile.close();
+	}
+	else
+		std::cout << "Unable to open the file";
+
+	system(("del " + filename).c_str());
+
+	gameManager_->setIdUser(mac);
+
 	trackerStarted_ =  tracker_->Init(PersistenceType::FILE, TypeOfFile::Json, PATH_TRACKER);
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	Login* login = (Login*)(Tracker::CreateNewEvent(timest, mac, "a", (int)EventInfo::EventType::Login));
+	Tracker::TrackEvent(login);
+
 	return trackerStarted_;
 }
 

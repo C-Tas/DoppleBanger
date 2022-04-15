@@ -26,7 +26,7 @@ void TextBox::goShopState(Application* app)
 	//USABILIDAD
 	int timest = std::chrono::duration_cast<std::chrono::seconds>(
 		std::chrono::system_clock::now().time_since_epoch()).count();
-	OpenShop* openShop = (OpenShop*)Tracker::CreateNewEvent(timest, "hola", "20012", (int)EventInfo::EventType::OpenShop);
+	OpenShop* openShop = (OpenShop*)Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "20012", (int)EventInfo::EventType::OpenShop);
 	Tracker::TrackEvent(openShop);
 	//
 }
@@ -53,6 +53,15 @@ void TextBox::goToShipState(Application* app)
 {
 	CollisionCtrl::instance()->clearList();
 	GameManager::instance()->resetIsland();
+	// USABILIDAD
+
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
+	logoutZone->setZone((int)GameManager::instance()->getCurrIsland() * 10 + (int)GameManager::instance()->getCurrentZone());
+	logoutZone->setNext(0);
+	Tracker::TrackEvent(logoutZone);
+	//
 	app->getGameStateMachine()->changeState(new ShipState(app));
 }
 

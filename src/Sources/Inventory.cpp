@@ -118,7 +118,7 @@ void Inventory::initState() {
 	//USABILIDAD
 	int timest = std::chrono::duration_cast<std::chrono::seconds>(
 		std::chrono::system_clock::now().time_since_epoch()).count();
-	openInv = (OpenInv*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::OpenInv));
+	openInv = (OpenInv*)(Tracker::CreateNewEvent(timest,gm_->getIdUser(), "a", (int)EventInfo::EventType::OpenInv));
 	
 	//
 }
@@ -655,8 +655,8 @@ Inventory::~Inventory() {
 	delete equipment_.potion2_;
 	delete descriptionBox;
 	//USABILIDAD
-	timeInv = 1000;
-	openInv->setTimeOut(timeInv);
+	openInv->setTimeOut(std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count());
 	openInv->setEquipPot(equipPot);
 	Tracker::TrackEvent(openInv);
 }

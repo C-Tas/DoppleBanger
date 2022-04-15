@@ -37,7 +37,6 @@ private:
 
 	//USABILIDAD
 	OpenInv* openInv;
-	int timeInv=0;
 	bool equipPot=false;
 
 	virtual void initState();

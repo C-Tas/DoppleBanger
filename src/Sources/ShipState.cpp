@@ -18,6 +18,15 @@ void ShipState::goIsland(Application* app)
 	//Viajamos a la isla correspondiente
 	GameManager* gm = GameManager::instance();
 	Island currIsland = gm->getCurrIsland();
+	// USABILIDAD
+	int timest = std::chrono::duration_cast<std::chrono::seconds>(
+		std::chrono::system_clock::now().time_since_epoch()).count();
+	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
+	logoutZone->setZone(0);
+	logoutZone->setNext((int)gm->getCurrIsland() * 10 + 1);
+	Tracker::TrackEvent(logoutZone);
+	gm->setStayShip(false);
+    //
 	if (currIsland == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
 	else if (currIsland == Island::Spooky) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
 	else if (currIsland == Island::Volcanic) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
@@ -119,10 +128,12 @@ void ShipState::initState()
 	//USABILIDAD
 	int timest = std::chrono::duration_cast<std::chrono::seconds>(
 		std::chrono::system_clock::now().time_since_epoch()).count();
-	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::LoginZone));
+	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
 	logzone->setZone(0);
 	logzone->setCompleted(true);
 	Tracker::TrackEvent(logzone);
+	gm_->setStayShip(true);
+
 }
 
 ShipState::~ShipState()

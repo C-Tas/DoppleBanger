@@ -21,7 +21,7 @@ void tutorialState::update()
 			//USABILIDAD
 			timest = std::chrono::duration_cast<std::chrono::seconds>(
 				std::chrono::system_clock::now().time_since_epoch()).count();
-			tutoTask1 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+			tutoTask1 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
 			tutoTask1->setName("Aprender a disparar.");
 			createBottle();
 		}
@@ -39,7 +39,7 @@ void tutorialState::update()
 			//USABILIDAD
 			timest = std::chrono::duration_cast<std::chrono::seconds>(
 				std::chrono::system_clock::now().time_since_epoch()).count();
-			tutoTask2 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+			tutoTask2 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
 			tutoTask2->setName("Aprender ataque melee.");
 
 			createDummy();
@@ -58,7 +58,7 @@ void tutorialState::update()
 		//USABILIDAD
 		timest = std::chrono::duration_cast<std::chrono::seconds>(
 			std::chrono::system_clock::now().time_since_epoch()).count();
-		tutoTask3 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+		tutoTask3 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
 		tutoTask3->setName("Aprender a usar habilidades.");
 		//crear dummy
 		if (!dummyCreated_) {
@@ -81,7 +81,7 @@ void tutorialState::update()
 			//USABILIDAD
 			timest = std::chrono::duration_cast<std::chrono::seconds>(
 				std::chrono::system_clock::now().time_since_epoch()).count();
-			tutoTask4 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+			tutoTask4 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
 			tutoTask4->setName("Aprender los cofres.");
 
 			createChest();
@@ -107,7 +107,7 @@ void tutorialState::update()
 		//USABILIDAD
 		timest = std::chrono::duration_cast<std::chrono::seconds>(
 			std::chrono::system_clock::now().time_since_epoch()).count();
-		tutoTask5 = (TutoTask*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::TutoTask));
+		tutoTask5 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
 		tutoTask5->setName("Aprender sobre pociones.");
 
 		if (gm_->getInventoryGold() > 0 && !goldWasted_) {

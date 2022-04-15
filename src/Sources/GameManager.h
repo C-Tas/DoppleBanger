@@ -119,6 +119,9 @@ class GameManager {
 private:
 	//Puntero unico para evitar copias
 	static unique_ptr<GameManager> instance_;
+	//USABILIDAD
+	string idUser_="";
+	bool stayship_ = false;
 	//Milisegundo para considerar una pausa
 	const int DELAYTIME = 200;
 	//Puntos de haza�a
@@ -279,6 +282,10 @@ public:
 #pragma endregion
 
 #pragma region getters
+	//USABILIDAD
+	const bool getStayShip() { return stayship_; }
+	const string getIdUser() { return idUser_; }
+	//
 	//Devuelve si se ha completado la demo
 	const bool endDemo() { return endDemo_; };
 	//Devuelve si ha muerto Magordito
@@ -369,9 +376,14 @@ public:
 	const int getNumOfObjectsReward(missions mission) { return numOfItemsReward_[(int)mission]; };
 	//Devuelve el numero de objetos que se obtienen como recompensa al completar una mision
 	const double getStatsReward(missions mission) { return statsReward_[(int)mission]; };
+	
 #pragma endregion
 
 #pragma region setters
+	//USABILIDAD
+	inline void setStayShip(bool stay) { stayship_ = stay; };
+	inline void setIdUser(string iduser) { idUser_ = iduser; };
+	//
 	//Para poner magorditoDead_ a true
 	inline void setMagorditoDead(bool magorditoDead) { magorditoDead_ = magorditoDead; };
 	//Para poner la demo en acabada
@@ -468,6 +480,7 @@ public:
 	inline void setCurrentPlayerLife(double newPlayerLife) { currPlayerLife_ = newPlayerLife; }
 	//Devuelve el currentMana del player
 	inline void setCurrentPlayerMana(double newPlayerMana) { currPlayerMana_ = newPlayerMana; }
+	
 
 	//Activa el HUD del boss
 	void activeHealthBoss(Actor* boss);

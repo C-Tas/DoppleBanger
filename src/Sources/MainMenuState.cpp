@@ -21,23 +21,12 @@ void MainMenuState::goCreditsState(Application* app) {
 };
 void MainMenuState::goLoadState(Application* app) {
 	app->getGameStateMachine()->pushState(new LoadState(app));
-
-	// USABILIDAD
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
-	Login* login = (Login*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::Login));
-	Tracker::TrackEvent(login);
 };
 void MainMenuState::goStoryState(Application* app) {
 	app->resetMusicChannels();
 	app->getAudioManager()->playChannel(Resources::Storyboard, -1, Resources::MainMusicChannel);
 	app->getGameStateMachine()->pushState(new StoryState(app));
 
-	// USABILIDAD
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
-	Login* login = (Login*)(Tracker::CreateNewEvent(timest, "a", "a", (int)EventInfo::EventType::Login));
-	Tracker::TrackEvent(login);
 };
 
 void MainMenuState::exitGame(Application* app) {
@@ -83,6 +72,8 @@ void MainMenuState::initState()
 
 	//Cargamos un objeto con el fondo(tipo Draw)
 	createButtons();
+
+
 }
 bool MainMenuState::isExistingDataGame()
 {
