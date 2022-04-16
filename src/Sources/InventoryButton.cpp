@@ -107,7 +107,7 @@ bool InventoryButton::update() {
 	HandleEvents* input = HandleEvents::instance();
 	Vector2D aux = input->getRealMousePos();
 	SDL_Point mouse = { (int)round(aux.getX()), (int)round(aux.getY()) };
-	if (SDL_PointInRect(&mouse, &getDestiny()) && input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+	if (SDL_PointInRect(&mouse, &getDestiny()) && input->getMouseButtonState((Uint8)HandleEvents::MOUSEBUTTON::LEFT)) {
 		callBackInventory_(app_, this);
 		return true;
 	}

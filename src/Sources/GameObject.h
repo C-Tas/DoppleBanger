@@ -7,7 +7,6 @@
 //USABILIDAD
 #include "Tracker.h"
 #include <AllEvents.h>
-#include <chrono>
 
 //
 using namespace std;

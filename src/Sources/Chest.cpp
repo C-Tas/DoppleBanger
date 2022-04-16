@@ -45,8 +45,7 @@ void Chest::onCollider() {
 	open = true;	
 	app_->getAudioManager()->playChannel(Resources::ChestOpeningAudio, 0, Resources::ChestChannelChannel);
 	//USABILIDAD
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
+	long long timest = Tracker::GetTimeStamp();
 	OpenChest* opchest = (OpenChest*)(Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "a", (int)EventInfo::EventType::OpenChest));
 	Tracker::TrackEvent(opchest);
 	//

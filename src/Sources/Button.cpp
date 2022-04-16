@@ -23,7 +23,7 @@ bool Button::update() {
 	Vector2D aux = input->getRealMousePos(); //Guardas la posicion del raton
 	SDL_Point mouse = { (int)round(aux.getX()), (int)round(aux.getY()) };
 
-	if (SDL_PointInRect(&mouse, &getDestiny()) && input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+	if (SDL_PointInRect(&mouse, &getDestiny()) && input->getMouseButtonState((Uint8)HandleEvents::MOUSEBUTTON::LEFT)) {
 		if (cbClick_ != nullptr) {
 			cbClick_(app_);
 			//app_->getAudioManager()->playChannel(Resources::Time, 0, Resources::AuxMusicChannel2);

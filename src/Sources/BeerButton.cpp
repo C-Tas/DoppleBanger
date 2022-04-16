@@ -36,7 +36,7 @@ bool BeerButton::update(){
 		if (!clicked_ && SDL_PointInRect(&mouse, &getDestiny())) {
 			select_ = true;
 			//Cuando se ha clickado
-			if (input->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+			if (input->getMouseButtonState((Uint8)HandleEvents::MOUSEBUTTON::LEFT)) {
 				app_->getAudioManager()->playChannel(Resources::Shout, 0, Resources::BeerButtonChanel);
 				currentState_->setButtonClick(true);
 				clicked_ = true;

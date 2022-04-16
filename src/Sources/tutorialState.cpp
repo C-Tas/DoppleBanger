@@ -19,8 +19,7 @@ void tutorialState::update()
 		//crear botella
 		if (!bottleCreated_) {
 			//USABILIDAD
-			timest = std::chrono::duration_cast<std::chrono::seconds>(
-				std::chrono::system_clock::now().time_since_epoch()).count();
+			timest = Tracker::GetTimeStamp();
 			tutoTask1 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
 			tutoTask1->setName("Aprender a disparar.");
 			createBottle();
@@ -29,16 +28,14 @@ void tutorialState::update()
 		//Aprender el ataque a melee
 	case 2:
 		//USABILIDAD
-		timeOut = std::chrono::duration_cast<std::chrono::seconds>(
-			std::chrono::system_clock::now().time_since_epoch()).count();
+		timeOut = Tracker::GetTimeStamp();
 		tutoTask1->setTimeOut(timeOut);
 		Tracker::TrackEvent(tutoTask1);
 
 		//crear dummy
 		if (!dummyCreated_) {
 			//USABILIDAD
-			timest = std::chrono::duration_cast<std::chrono::seconds>(
-				std::chrono::system_clock::now().time_since_epoch()).count();
+			timest = Tracker::GetTimeStamp();
 			tutoTask2 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
 			tutoTask2->setName("Aprender ataque melee.");
 
@@ -50,14 +47,12 @@ void tutorialState::update()
 		//Apreder a usar habilidades
 	case 3:
 		//USABILIDAD
-		timeOut = std::chrono::duration_cast<std::chrono::seconds>(
-			std::chrono::system_clock::now().time_since_epoch()).count();
+		timeOut = Tracker::GetTimeStamp();
 		tutoTask2->setTimeOut(timeOut);
 		Tracker::TrackEvent(tutoTask2);
 
 		//USABILIDAD
-		timest = std::chrono::duration_cast<std::chrono::seconds>(
-			std::chrono::system_clock::now().time_since_epoch()).count();
+		timest = Tracker::GetTimeStamp();
 		tutoTask3 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
 		tutoTask3->setName("Aprender a usar habilidades.");
 		//crear dummy
@@ -67,20 +62,18 @@ void tutorialState::update()
 			createDummy();
 		}
 		break;
-	
-	//Aprender los cofres
+
+		//Aprender los cofres
 	case 4:
 		//USABILIDAD
-		timeOut = std::chrono::duration_cast<std::chrono::seconds>(
-			std::chrono::system_clock::now().time_since_epoch()).count();
+		timeOut = Tracker::GetTimeStamp();
 		tutoTask3->setTimeOut(timeOut);
 		Tracker::TrackEvent(tutoTask3);
 
 		//crear cofre con oro
 		if (!chestCreated_) {
 			//USABILIDAD
-			timest = std::chrono::duration_cast<std::chrono::seconds>(
-				std::chrono::system_clock::now().time_since_epoch()).count();
+			timest = Tracker::GetTimeStamp();
 			tutoTask4 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
 			tutoTask4->setName("Aprender los cofres.");
 
@@ -96,17 +89,15 @@ void tutorialState::update()
 			GameManager::instance()->nextPhaseVenancio();
 		}
 		break;
-	//Aprender sobre pociones
+		//Aprender sobre pociones
 	case 5:
 		//USABILIDAD
-		timeOut = std::chrono::duration_cast<std::chrono::seconds>(
-			std::chrono::system_clock::now().time_since_epoch()).count();
+		timeOut = Tracker::GetTimeStamp();
 		tutoTask4->setTimeOut(timeOut);
 		Tracker::TrackEvent(tutoTask4);
 
 		//USABILIDAD
-		timest = std::chrono::duration_cast<std::chrono::seconds>(
-			std::chrono::system_clock::now().time_since_epoch()).count();
+		timest = Tracker::GetTimeStamp();
 		tutoTask5 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
 		tutoTask5->setName("Aprender sobre pociones.");
 
@@ -118,8 +109,7 @@ void tutorialState::update()
 		{
 			GameManager::instance()->nextPhaseVenancio();
 			//USABILIDAD
-			timeOut = std::chrono::duration_cast<std::chrono::seconds>(
-				std::chrono::system_clock::now().time_since_epoch()).count();
+			timeOut = Tracker::GetTimeStamp();
 			tutoTask5->setTimeOut(timeOut);
 			Tracker::TrackEvent(tutoTask5);
 		}
@@ -131,11 +121,9 @@ void tutorialState::update()
 
 void tutorialState::createBottle()
 {
-	
-
 	bottleCreated_ = true;
 	bottlePos_ = Vector2D(app_->getWindowWidth() / 3, app_->getWindowHeight() / 7);
-	tutorialObject* bottle = new tutorialObject(app_, bottlePos_, Vector2D(50, 60), app_->getTextureManager()->getTexture(Resources::Bottle),1);
+	tutorialObject* bottle = new tutorialObject(app_, bottlePos_, Vector2D(50, 60), app_->getTextureManager()->getTexture(Resources::Bottle), 1);
 	collisionCtrl_->setBottle(bottle);
 	dynamic_cast<PlayState*>(app_->getCurrState())->addEnemy(bottle);
 	collisionCtrl_->addEnemy(bottle);
@@ -145,7 +133,7 @@ void tutorialState::createDummy()
 {
 	dummyCreated_ = true;
 	dummyPos_ = Vector2D(app_->getWindowWidth() / 3, app_->getWindowHeight() * 7 / 10);
-	tutorialObject* dummy = new tutorialObject(app_, dummyPos_, Vector2D(100, 100), app_->getTextureManager()->getTexture(Resources::Dummy),2);
+	tutorialObject* dummy = new tutorialObject(app_, dummyPos_, Vector2D(100, 100), app_->getTextureManager()->getTexture(Resources::Dummy), 2);
 	collisionCtrl_->setDummy(dummy);
 	addEnemy(dummy);
 	collisionCtrl_->addEnemy(dummy);
@@ -154,7 +142,9 @@ void tutorialState::createDummy()
 void tutorialState::createChest()
 {
 	chestCreated_ = true;
-	Chest* chest = new Chest(app_, Vector2D(app_->getWindowWidth() * 2 / 3, app_->getWindowHeight() / 6), Vector2D(150,150), 100);
+	double x = app_->getWindowWidth() * 2 / 3;
+	double y = app_->getWindowHeight() / 6;
+	Chest* chest = new Chest(app_, Vector2D(x, y), Vector2D(150, 150), 100);
 	//collisionCtrl_->addChest(chest);
 	addRenderUpdateLists(chest);
 }

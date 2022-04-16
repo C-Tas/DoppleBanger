@@ -23,8 +23,7 @@ void PauseState::showControls(Application* app) {
 void PauseState::goMainMenuState(Application* app) {
 
 	// USABILIDAD
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
+	long long timest = Tracker::GetTimeStamp();
 	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
 	
 	if (!GameManager::instance()->getStayShip()) {

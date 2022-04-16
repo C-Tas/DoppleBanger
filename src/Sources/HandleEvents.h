@@ -48,19 +48,19 @@ private:
 	inline void onMouseButtonChange(SDL_Event& event, bool isDown) {
 		isMouseButton_ = true;
 		if (event.button.button == SDL_BUTTON_LEFT) {
-			mbState_[LEFT] = isDown;
+			mbState_[(Uint8)MOUSEBUTTON::LEFT] = isDown;
 		}
 		else if (event.button.button == SDL_BUTTON_MIDDLE) {
-			mbState_[MIDDLE] = isDown;
+			mbState_[(Uint8)MOUSEBUTTON::MIDDLE] = isDown;
 		}
 		else if (event.button.button == SDL_BUTTON_RIGHT) {
-			mbState_[RIGHT] = isDown;
+			mbState_[(Uint8)MOUSEBUTTON::RIGHT] = isDown;
 		}
 	}
 
 public:
 	//<summary>enum para diferenciar los botones del raton</summary>
-	enum  MOUSEBUTTON : Uint8 {
+	enum  class MOUSEBUTTON : Uint8 {
 		LEFT = 0, MIDDLE = 1, RIGHT = 2
 	};
 
@@ -144,12 +144,7 @@ public:
 	}
 
 	//<summary>devuelve el estado del boton que le pases por paremtro</summary>
-	inline bool getMouseButtonState(MOUSEBUTTON button) {
-		return mbState_[button];
-	}
-
-	//<summary>devuelve el estado del boton que le pases por paremtro</summary>
-	inline int getMouseButtonState(int button) { //No s� usar el MOUSEBUTTON xD
+	inline bool getMouseButtonState(Uint8 button) {
 		return mbState_[button];
 	}
 	#pragma endregion

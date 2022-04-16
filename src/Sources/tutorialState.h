@@ -35,12 +35,12 @@ private:
 	const int POTION_COST = 250;
 	
 	//USABILIDAD
-	TutoTask* tutoTask1;
-	TutoTask* tutoTask2;
-	TutoTask* tutoTask3;
-	TutoTask* tutoTask4;
-	TutoTask* tutoTask5;
+	TutoTask* tutoTask1 = nullptr;
+	TutoTask* tutoTask2 = nullptr;
+	TutoTask* tutoTask3 = nullptr;
+	TutoTask* tutoTask4 = nullptr;
+	TutoTask* tutoTask5 = nullptr;
 
-	int timest;
-	int timeOut;
+	long long timest = 0;
+	long long timeOut = 0;
 };

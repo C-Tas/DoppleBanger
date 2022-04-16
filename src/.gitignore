@@ -29,6 +29,8 @@
 .vs/
 /[Tt]mp
 /[Ee]xes
+/[Ee]vents
+!/[Ee]vents/noDel.txt
 !/[Ll]ib
 !/[Dd]ll
 

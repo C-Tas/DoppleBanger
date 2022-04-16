@@ -19,8 +19,7 @@ void ShipState::goIsland(Application* app)
 	GameManager* gm = GameManager::instance();
 	Island currIsland = gm->getCurrIsland();
 	// USABILIDAD
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
+	long long timest = Tracker::GetTimeStamp();
 	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
 	logoutZone->setZone(0);
 	logoutZone->setNext((int)gm->getCurrIsland() * 10 + 1);
@@ -126,8 +125,7 @@ void ShipState::initState()
 	app_->getAudioManager()->playChannel(Resources::ShipTheme, -1, 0);
 
 	//USABILIDAD
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
+	long long timest = Tracker::GetTimeStamp();
 	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
 	logzone->setZone(0);
 	logzone->setCompleted(true);

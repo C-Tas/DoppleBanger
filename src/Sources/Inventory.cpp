@@ -116,8 +116,7 @@ void Inventory::initState() {
 	descriptionBox = new TextBox(app_, descriptionPoint);
 
 	//USABILIDAD
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
+	long long timest = Tracker::GetTimeStamp();
 	openInv = (OpenInv*)(Tracker::CreateNewEvent(timest,gm_->getIdUser(), "a", (int)EventInfo::EventType::OpenInv));
 	
 	//
@@ -655,8 +654,8 @@ Inventory::~Inventory() {
 	delete equipment_.potion2_;
 	delete descriptionBox;
 	//USABILIDAD
-	openInv->setTimeOut(std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count());
+	long long timeOut = Tracker::GetTimeStamp();
+	openInv->setTimeOut(timeOut);
 	openInv->setEquipPot(equipPot);
 	Tracker::TrackEvent(openInv);
 }

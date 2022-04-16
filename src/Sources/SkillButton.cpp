@@ -12,7 +12,7 @@ bool SkillButton::update()
 {
 	SDL_Point mouse = { (int)round(handleEvents_->getRealMousePos().getX()), (int)round(handleEvents_->getRealMousePos().getY()) };
 
-	if (unlocked_ && SDL_PointInRect(&mouse, &getDestiny()) && handleEvents_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+	if (unlocked_ && SDL_PointInRect(&mouse, &getDestiny()) && handleEvents_->getMouseButtonState((Uint8)HandleEvents::MOUSEBUTTON::LEFT)) {
 		callbackSkill_(app_, this);
 		return true;
 	}

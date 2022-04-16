@@ -570,8 +570,7 @@ void Player::dieAnim()
 
 		dead_ = true;
 		// USABILIDAD
-		int timest = std::chrono::duration_cast<std::chrono::seconds>(
-			std::chrono::system_clock::now().time_since_epoch()).count();
+		long long timest = Tracker::GetTimeStamp();
 		LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
 		logoutZone->setZone((int) GameManager::instance()->getCurrIsland() *10 +(int)GameManager::instance()->getCurrentZone());
 		logoutZone->setNext(-1);
@@ -617,8 +616,7 @@ void Player::checkInput()
 	}
 	//USABILIDAD
 	if (auxskill != nullptr) {
-		int timest = std::chrono::duration_cast<std::chrono::seconds>(
-			std::chrono::system_clock::now().time_since_epoch()).count();
+		long long timest = Tracker::GetTimeStamp();
 		UseSkill* usSkill = (UseSkill*)Tracker::CreateNewEvent(timest,gm_->getIdUser(), "20012", (int)EventInfo::EventType::UseSkill);
 		usSkill->setZone((int)auxskill->getSkillType() * 10 + (int)auxskill->getSkillBranch());
 		Tracker::TrackEvent(usSkill);
@@ -640,13 +638,13 @@ void Player::checkInput()
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_SPACE)) shout();
 
 	//Disparo
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::RIGHT) && !shootCD_.isCooldownActive()) {
+	if (eventHandler_->getMouseButtonState((Uint8)HandleEvents::MOUSEBUTTON::RIGHT) && !shootCD_.isCooldownActive()) {
 		shootCD_.initCooldown(currStats_.distRate_);
 		initShoot();
 	}
 
 	//Ataque/movimiento
-	if (eventHandler_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT))
+	if (eventHandler_->getMouseButtonState((Uint8)HandleEvents::MOUSEBUTTON::LEFT))
 	{
 		Enemy* obj; obj = checkAttack();
 		updateDirVisMouse();
@@ -889,8 +887,7 @@ void Player::usePotion(usable* potion, int key) {
 	case potionType::Health: {
 		if (currStats_.health_ < maxHealth_ * 0.4) {
 			//USABILIDAD
-			int timest= std::chrono::duration_cast<std::chrono::seconds>(
-				std::chrono::system_clock::now().time_since_epoch()).count();
+			long long timest= Tracker::GetTimeStamp();
 			UsePot* usPot = (UsePot*)Tracker::CreateNewEvent(timest,gm_->getIdUser(), "20012", (int)EventInfo::EventType::UsePot);
 			Tracker::TrackEvent(usPot);
 			//

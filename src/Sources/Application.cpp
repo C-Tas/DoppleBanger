@@ -25,11 +25,10 @@ Application::Application(GameStateMachine* state) {
 
 Application::~Application() {
 	// USABILIDAD
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
+	long long timest = Tracker::GetTimeStamp();
 	Logout* logout = (Logout*)(Tracker::CreateNewEvent(timest, gameManager_->getIdUser(), "a", (int)EventInfo::EventType::Logout));
 	Tracker::TrackEvent(logout);
-	tracker_->End(); // FLUSH DE PRUEBA - BORRAR
+	tracker_->End();
 	tracker_->Free();
 
 	delete machine_;
@@ -69,9 +68,9 @@ bool Application::initTracker()
 
 	//USABILIDAD
 	std::string cmd = "getmac";
-	std::string filename = "macaddress.txt";
+	std::string auxFile = "macaddress.txt";
 
-	system((cmd + ">" + filename).c_str());
+	system((cmd + ">" + auxFile).c_str());
 	std::string line;
 	std::ifstream myfile("macaddress.txt");
 
@@ -89,13 +88,18 @@ bool Application::initTracker()
 	else
 		std::cout << "Unable to open the file";
 
-	system(("del " + filename).c_str());
+	system(("del " + auxFile).c_str());
+
+	if (gameManager_ == nullptr) {
+		std::cout << "Error al inicializar el tracker. Gamemanager sin inicializar...\n";
+		return false;
+	}
 
 	gameManager_->setIdUser(mac);
 
 	trackerStarted_ =  tracker_->Init(PersistenceType::FILE, TypeOfFile::Json, PATH_TRACKER);
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
+	long long timest = Tracker::GetTimeStamp();
+
 	Login* login = (Login*)(Tracker::CreateNewEvent(timest, mac, "a", (int)EventInfo::EventType::Login));
 	Tracker::TrackEvent(login);
 

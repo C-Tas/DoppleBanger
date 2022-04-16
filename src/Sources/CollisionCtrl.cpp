@@ -173,7 +173,7 @@ void CollisionCtrl::shipCollisions() {	//Est� comentado porque falta a�adir 
 
 	Vector2D mousePos = input_->getRelativeMousePos();	//Guardamos la posici�n del rat�n
 	//Comprobamos si se ha hecho click
-	if (input_->getMouseButtonState(HandleEvents::MOUSEBUTTON::LEFT)) {
+	if (input_->getMouseButtonState((Uint8)HandleEvents::MOUSEBUTTON::LEFT)) {
 		SDL_Point mouse = { (int)mousePos.getX(), (int)mousePos.getY() };
 		//Las ponemos todas a false por si no se ha pulsado ninguno de los objetos
 		for (int i = 0; i < shipObjects_.size(); i++) {

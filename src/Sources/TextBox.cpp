@@ -24,8 +24,7 @@ void TextBox::goShopState(Application* app)
 	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	app->getGameStateMachine()->pushState(new ShopState(app));
 	//USABILIDAD
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
+	long long timest = Tracker::GetTimeStamp();
 	OpenShop* openShop = (OpenShop*)Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "20012", (int)EventInfo::EventType::OpenShop);
 	Tracker::TrackEvent(openShop);
 	//
@@ -55,8 +54,7 @@ void TextBox::goToShipState(Application* app)
 	GameManager::instance()->resetIsland();
 	// USABILIDAD
 
-	int timest = std::chrono::duration_cast<std::chrono::seconds>(
-		std::chrono::system_clock::now().time_since_epoch()).count();
+	long long timest = Tracker::GetTimeStamp();
 	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
 	logoutZone->setZone((int)GameManager::instance()->getCurrIsland() * 10 + (int)GameManager::instance()->getCurrentZone());
 	logoutZone->setNext(0);
@@ -367,7 +365,7 @@ void TextBox::dialogElderMan(int num) {
 				text.render(lineSpacing, dest.y + lineSpacing * 2);
 				break;
 			}
-
+			
 			break;
 		case Island::Spooky:
 			switch (num) {
@@ -475,7 +473,7 @@ void TextBox::dialogElderMan(int num) {
 			text.loadFromText(app_->getRenderer(), "y uno de ellos no se lo deseo ni a mis enemigos... ", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing * 3);
 
-
+			break;
 		default:
 			break;
 		}
