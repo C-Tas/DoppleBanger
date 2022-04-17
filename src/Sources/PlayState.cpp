@@ -23,6 +23,16 @@ void PlayState::draw() const {
 
 void PlayState::update() {
 	if (player_->getDead()) { //Comprobamos que el player haya muerto para cambiar de estado
+		// USABILIDAD
+		long long timest = Tracker::GetTimeStamp();
+		auto sesion = gm_->getIdSesion();
+		LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::LogoutZone));
+		int zone = gm_->generateZoneUsa();
+		logoutZone->setZone(zone);
+		logoutZone->setNext(-1);
+		Tracker::TrackEvent(logoutZone);
+		Tracker::End();
+		//
 		app_->getGameStateMachine()->changeState(new EndState(app_));
 	}
 	else {

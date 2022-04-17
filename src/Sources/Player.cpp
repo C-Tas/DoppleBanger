@@ -27,6 +27,9 @@
 #include "Gun.h"
 #include "Blunderbuss.h"
 
+// USABILIDAD
+#include "UseSkill.h"
+#include "Tracker.h"
 
 //Inicializadores
 Player::Player(Application* app, Vector2D pos, Vector2D scale) : Actor(app, pos, scale) { initObject(); };
@@ -64,14 +67,14 @@ void Player::initObject()
 
 	initAnims();
 	initStats(maxHealth_, maxMana_, MANA_REG, ARMOR, MELEE_DAMAGE, DIST_DAMAGE, CRIT, MELEE_RANGE, DIST_RANGE, MOVE_SPEED, MELEE_RATE, DIST_RATE);
-	
+
 	gm_->setPlayer(this);
 	collisionCtrl_->setPlayer(this);
-	
+
 	endZoneTextBox_ = new TextBox(app_);
 	posCollision_ = Vector2D((scale_.getX() / 3), (scale_.getY() / 4));
 	scaleCollision_ = { scale_.getX() / 3, scale_.getY() / 2 };
-	
+
 	//Equipamiento inicial del jugador
 	playerEquipment auxEquip = gm_->initEquipment();
 	armor_ = auxEquip.armor_;
@@ -212,14 +215,14 @@ bool Player::update()
 		updateBuffPotion();	//Actualiza estado de pociones
 		updateDebuffs();	//Efectos de estado
 		manaReg();			//Regeneramos mana
-		
+
 		//Gestion de animaciones con accion
 		animator();
 
-		#ifdef _DEBUG
+#ifdef _DEBUG
 		//Checkea el input para chetar al player
 		checkInputCheat();
-		#endif // _DEBUG
+#endif // _DEBUG
 
 		//Eventos de teclado
 		checkInputState();
@@ -249,7 +252,7 @@ void Player::updateCooldowns()
 	if (slowTimeCD_.isCooldownActive()) slowTimeCD_.updateCooldown();
 }
 
-void Player::updateBuffPotion(){
+void Player::updateBuffPotion() {
 	//Como se ha hecho previamente, se ha guardado el momento en el que se usó la poción
 	//de esa manera, si se vuelve a usar una poción del mismo tipo, se resetea timerPotion_[timerPos]
 	//por lo que unicamente quitara el debufo cuando se cumpla ese tiempo
@@ -310,7 +313,7 @@ void Player::manaReg() {
 	}
 	//Actualiza el cooldown
 	if (manaCD_.isCooldownActive()) manaCD_.updateCooldown();
-	else if(!initManaReg_){
+	else if (!initManaReg_) {
 		currStats_.mana_ += maxMana_ * (currStats_.manaReg_ / 100);
 		if (currStats_.mana_ >= maxMana_) {
 			currStats_.mana_ = maxMana_;
@@ -343,7 +346,7 @@ void Player::animator()
 		whirlAnim();
 	}
 }
-	//Inits
+//Inits
 void Player::initIdle()
 {
 	//Resteo los booleanos bussy
@@ -351,7 +354,7 @@ void Player::initIdle()
 	meleeBussy_ = false;
 
 	//Apaño para que deje de sonar al caminar
-	if(currState_ == STATE::FOLLOWING)
+	if (currState_ == STATE::FOLLOWING)
 		app_->getAudioManager()->playChannel(Resources::WalkAudio, 0, Resources::PlayerChannel1);
 	currState_ = STATE::IDLE;
 	texture_ = idleTx_[(int)currDir_];
@@ -500,7 +503,7 @@ void Player::initDie() {
 	app_->getAudioManager()->playChannel(Resources::AudioId::FuneralTheme, -1, Resources::MainMusicChannel);
 }
 
-	//Managers
+//Managers
 void Player::shootAnim()
 {
 	if (!shooted_ && currAnim_.currFrame_ == frameAction_) {
@@ -569,18 +572,11 @@ void Player::dieAnim()
 	if (currAnim_.currFrame_ >= currAnim_.numberFrames_ - 1) {
 
 		dead_ = true;
-		// USABILIDAD
-		long long timest = Tracker::GetTimeStamp();
-		LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
-		logoutZone->setZone((int) GameManager::instance()->getCurrIsland() *10 +(int)GameManager::instance()->getCurrentZone());
-		logoutZone->setNext(-1);
-		Tracker::TrackEvent(logoutZone);
-		//
 	}
 }
 
 //Input y sus dependencias
-void Player::checkInputCheat(){
+void Player::checkInputCheat() {
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_L) && !gm_->getOnShip() && !gm_->onTutorial()) {
 		cheatPlayer();
 	}
@@ -594,35 +590,36 @@ void Player::checkInputCheat(){
 }
 
 void Player::checkInput()
-{ 
+{
 	//USABILIDAD
-	Skill* auxskill=nullptr;
+	bool useSkill = false;
 	//Skills
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_Q) && skills_[0] != nullptr) {
 		skills_[0]->action();
-		auxskill = skills_[0];
+		useSkill = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_W) && skills_[1] != nullptr) {
 		skills_[1]->action();
-		auxskill = skills_[1];
+		useSkill = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_E) && skills_[2] != nullptr) {
 		skills_[2]->action();
-		auxskill = skills_[2];
+		useSkill = true;
 	}
 	if (eventHandler_->isKeyDown(SDL_SCANCODE_R) && skills_[3] != nullptr) {
 		skills_[3]->action();
-		auxskill = skills_[2];
+		useSkill = true;
 	}
 	//USABILIDAD
-	if (auxskill != nullptr) {
+	if (useSkill) {
 		long long timest = Tracker::GetTimeStamp();
-		UseSkill* usSkill = (UseSkill*)Tracker::CreateNewEvent(timest,gm_->getIdUser(), "20012", (int)EventInfo::EventType::UseSkill);
-		usSkill->setZone((int)auxskill->getSkillType() * 10 + (int)auxskill->getSkillBranch());
-		Tracker::TrackEvent(usSkill);
+		auto sesion = gm_->getIdSesion();
+		UseSkill* useSkill = (UseSkill*)Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::UseSkill);
+		int zone = gm_->generateZoneUsa();
+		useSkill->setZone(zone);
+		Tracker::TrackEvent(useSkill);
 	}
 	//
-
 
 	//Pociones
 	if ((!gm_->getOnShip() || gm_->onTutorial()) && eventHandler_->isKeyDown(SDLK_1) && potions_[0] != nullptr) {
@@ -649,7 +646,7 @@ void Player::checkInput()
 		Enemy* obj; obj = checkAttack();
 		updateDirVisMouse();
 		if (obj != nullptr) {
-			if(!meleeBussy_) attack(obj);
+			if (!meleeBussy_) attack(obj);
 		}
 		else if (!getOnCollision()) {
 			move(eventHandler_->getRelativeMousePos());
@@ -657,7 +654,7 @@ void Player::checkInput()
 		else setOnCollision(false);
 
 		if (collisionCtrl_->isNextZoneTextBoxActive()) {
-			changeZone_  = getEndZoneTextBox()->updateButtons();
+			changeZone_ = getEndZoneTextBox()->updateButtons();
 		}
 	}
 }
@@ -671,7 +668,7 @@ void Player::checkInputState() {
 	else if (eventHandler_->isKeyDown(SDL_SCANCODE_C)) {
 		killClon();
 		app_->getGameStateMachine()->pushState(new Inventory(app_));
-		
+
 		stop();
 	}
 	else if (eventHandler_->isKeyDown(SDL_SCANCODE_V)) {
@@ -685,7 +682,7 @@ Enemy* Player::checkAttack() {
 	bool found = false;
 	Enemy* obj = nullptr;
 	Vector2D mousePos = eventHandler_->getRelativeMousePos();
-	SDL_Point mouse = { 0, 0 }; mouse.x =(int)round( mousePos.getX()); mouse.y =(int)round( mousePos.getY());
+	SDL_Point mouse = { 0, 0 }; mouse.x = (int)round(mousePos.getX()); mouse.y = (int)round(mousePos.getY());
 	list<Enemy*> enemies_ = dynamic_cast<PlayState*>(app_->getCurrState())->getListEnemies();
 	for (auto it = enemies_.begin(); !found && it != enemies_.end(); ++it) {
 		if (SDL_PointInRect(&mouse, &(*it)->getCollider())) {
@@ -725,7 +722,7 @@ void Player::movementManager()
 		pos_.setX(pos_.getX() + (dir_.getX() * (currStats_.moveSpeed_ * delta)));
 		pos_.setY(pos_.getY() + (dir_.getY() * (currStats_.moveSpeed_ * delta)));
 		//Al actualizarse aquí la cámara solo modificará la posición de los objetos del estado si existe un jugador
-		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera((int)round(pos_.getX() + scale_.getX() / 2),(int)round( pos_.getY() + scale_.getY() / 2));
+		if (!gm_->getOnShip() && !gm_->onTutorial()) Camera::instance()->updateCamera((int)round(pos_.getX() + scale_.getX() / 2), (int)round(pos_.getY() + scale_.getY() / 2));
 	}
 	//Cuando se llegue al target
 	else {
@@ -887,8 +884,9 @@ void Player::usePotion(usable* potion, int key) {
 	case potionType::Health: {
 		if (currStats_.health_ < maxHealth_ * 0.4) {
 			//USABILIDAD
-			long long timest= Tracker::GetTimeStamp();
-			UsePot* usPot = (UsePot*)Tracker::CreateNewEvent(timest,gm_->getIdUser(), "20012", (int)EventInfo::EventType::UsePot);
+			long long timest = Tracker::GetTimeStamp();
+			auto sesion = gm_->getIdSesion();
+			UsePot* usPot = (UsePot*)Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::UsePot);
 			Tracker::TrackEvent(usPot);
 			//
 		}
@@ -981,12 +979,12 @@ void Player::cheatPlayer()
 		cheat_ = true;
 		maxHealth_ += healthCheat_;
 		currStats_.health_ = maxHealth_;
-		currStats_.manaReg_ += manaRegCheat_;	
-		currStats_.armor_ += armorCheat_;			
-		currStats_.meleeDmg_ += meleeDamageCheat_;	
-		currStats_.distDmg_ += distDmgCheat_;		
-		currStats_.crit_ += critCheat_;			
-		currStats_.distRange_ += distRangeCheat_;		
+		currStats_.manaReg_ += manaRegCheat_;
+		currStats_.armor_ += armorCheat_;
+		currStats_.meleeDmg_ += meleeDamageCheat_;
+		currStats_.distDmg_ += distDmgCheat_;
+		currStats_.crit_ += critCheat_;
+		currStats_.distRange_ += distRangeCheat_;
 		currStats_.moveSpeed_ += moveSpeedCheat_;
 		collisionCtrl_->setPlayer(nullptr);
 	}
@@ -1050,7 +1048,7 @@ void Player::isEnemyDead(Actor* obj)
 	}
 }
 
-void Player:: setSkillAt(int key, Skill* skill) {
+void Player::setSkillAt(int key, Skill* skill) {
 	if (skills_[key] != nullptr)delete skills_[key];
 	skills_[key] = skill;
 }

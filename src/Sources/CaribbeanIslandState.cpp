@@ -24,12 +24,13 @@ void CaribbeanIslandState::update()
 		gm_->setUnlockedIslands(Island::Spooky);
 
 		// USABILIDAD
+		gm_->setCompletedZone(Zone::CaribeanBoss, true);
 		long long timest = Tracker::GetTimeStamp();
 		std::string idUser = gm_->getIdUser();
-		std::string idGame = "a";
-		LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, idUser, "a", (int)EventInfo::EventType::LogoutZone));
-		logoutZone->setZone(14);
-		//USABILIDAD
+		auto sesion = gm_->getIdSesion();
+		LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, idUser, sesion, (int)EventInfo::EventType::LogoutZone));
+		int zone = gm_->generateZoneUsa();
+		logoutZone->setZone(zone);
 		logoutZone->setNext(0);
 		Tracker::TrackEvent(logoutZone);
 		//
@@ -45,12 +46,8 @@ void CaribbeanIslandState::update()
 void CaribbeanIslandState::initState()
 {
 	//Resteo de la isla
-	// USABILIDAD
-
 	gm_->setCurrentZone(Zone::CaribeanA);
 	gm_->setCurrIsland(Island::Caribbean);
-
-	//
 	//Inicializamos la musica
 	app_->resetMusicChannels();
 	app_->resetSoundsChannels();
@@ -85,9 +82,12 @@ void CaribbeanIslandState::initZone1()
 
 	//USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
-	logzone->setZone(11);
-	Tracker::TrackEvent(logzone);
+	auto sesion = gm_->getIdSesion();
+	LoginZone* loginzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::LoginZone));
+	int zone = gm_->generateZoneUsa();
+	loginzone->setZone(zone);
+	loginzone->setCompleted(gm_->getCompletedZone(Zone::CaribeanA));
+	Tracker::TrackEvent(loginzone);
 }
 
 void CaribbeanIslandState::initZone2()
@@ -99,9 +99,12 @@ void CaribbeanIslandState::initZone2()
 		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone2);
 	//USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
-	logzone->setZone(12);
-	Tracker::TrackEvent(logzone);
+	auto sesion = gm_->getIdSesion();
+	LoginZone* loginzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::LoginZone));
+	int zone = gm_->generateZoneUsa();
+	loginzone->setZone(zone);
+	loginzone->setCompleted(gm_->getCompletedZone(Zone::CaribeanB));
+	Tracker::TrackEvent(loginzone);
 }
 
 void CaribbeanIslandState::initZone3()
@@ -118,9 +121,12 @@ void CaribbeanIslandState::initZone3()
 		TILESET_FILS, TILESET_COLS, Vector2D(app_->getWindowWidth() / 2, 0), collisionTilesIdZone1, wallTilesIdZone2);
 	//USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
-	logzone->setZone(13);
-	Tracker::TrackEvent(logzone);
+	auto sesion = gm_->getIdSesion();
+	LoginZone* loginzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::LoginZone));
+	int zone = gm_->generateZoneUsa();
+	loginzone->setZone(zone);
+	loginzone->setCompleted(gm_->getCompletedZone(Zone::CaribeanC));
+	Tracker::TrackEvent(loginzone);
 }
 
 void CaribbeanIslandState::initBossZone()
@@ -134,37 +140,52 @@ void CaribbeanIslandState::initBossZone()
 
 	//USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
-	logzone->setZone(14);
-	Tracker::TrackEvent(logzone);
+	auto sesion = gm_->getIdSesion();
+	LoginZone* loginzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::LoginZone));
+	int zone = gm_->generateZoneUsa();
+	loginzone->setZone(zone);
+	loginzone->setCompleted(gm_->getCompletedZone(Zone::CaribeanBoss));
+	Tracker::TrackEvent(loginzone);
 }
 
 void CaribbeanIslandState::changeZone()
 {
 	// USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
-
-	logoutZone->setZone((int)GameManager::instance()->getCurrIsland() * 10 + (int)GameManager::instance()->getCurrentZone());
-	logoutZone->setNext((int)GameManager::instance()->getCurrIsland() * 10 + (int)GameManager::instance()->getCurrentZone() + 1);
+	auto sesion = gm_->getIdSesion();
+	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::LogoutZone));
+	int zone = gm_->generateZoneUsa();
+	logoutZone->setZone(zone);
 	Tracker::TrackEvent(logoutZone);
 	//
-
 	delete currentMap_;
 	collisionCtrl_->clearList();
 
 	enemies_.clear();
 	if (gm_->getCurrentZone() == Zone::CaribeanA) {
+		gm_->setCompletedZone(Zone::CaribeanA, true);
+		// Zona 2
+		logoutZone->setNext(12);
 		deleteExceptHUD(Zone::CaribeanB);
 		initZone2();
 		addRenderUpdateLists(hud_);
 	}
 	else if (gm_->getCurrentZone() == Zone::CaribeanB) {
+		gm_->setCompletedZone(Zone::CaribeanB, true);
+		int zone = gm_->generateZoneUsa();
+		logoutZone->setZone(zone);
+		// Zona 3
+		logoutZone->setNext(13);
 		deleteExceptHUD(Zone::CaribeanC);
 		initZone3();
 		addRenderUpdateLists(hud_);
 	}
 	else if (gm_->getCurrentZone() == Zone::CaribeanC) {
+		gm_->setCompletedZone(Zone::CaribeanC, true);
+		int zone = gm_->generateZoneUsa();
+		logoutZone->setZone(zone);
+		// Zona del boss
+		logoutZone->setNext(14);
 		deleteExceptHUD(Zone::CaribeanBoss);
 		initBossZone();
 		addRenderUpdateLists(hud_);
@@ -172,5 +193,5 @@ void CaribbeanIslandState::changeZone()
 	hud_->setPlayerInHUD(player_);
 	player_->initSkills();
 
-
+	Tracker::End();
 }

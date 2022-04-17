@@ -30,8 +30,8 @@ void SkillState::initState() {
 	createSkillsIcons();
 	//USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-
-	openSkills = (OpenSkills*)Tracker::CreateNewEvent(timest,gm_->getIdUser(), "20012", (int)EventInfo::EventType::OpenSkills);
+	auto sesion = gm_->getIdSesion();
+	openSkills = (OpenSkills*)Tracker::CreateNewEvent(timest,gm_->getIdUser(), sesion, (int)EventInfo::EventType::OpenSkills);
 	pointsInOpen= GameManager::instance()->getAchievementPoints();
 	//
 }

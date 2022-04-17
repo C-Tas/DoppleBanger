@@ -25,6 +25,7 @@ class usable;
 
 //Enumerados que representan la �ltima isla desbloqueada
 enum class Zone : int {
+	Ship = 0,
 	CaribeanA = 1,
 	CaribeanB = 2,
 	CaribeanC = 3,
@@ -34,13 +35,16 @@ enum class Zone : int {
 	SpookyC = 7,
 	SpookyD = 8,
 	SpookyBoss = 9,
-	Volcanic = 10
+	Volcanic = 10,
+
+	Size
 };
 enum class Island : int {
-	Caribbean,
-	Spooky,
-	Volcanic
+	Caribbean = 1,
+	Spooky = 2,
+	Volcanic = 3
 };
+
 enum class PointsTree : int {
 	Precision = 0,
 	Melee = 0,
@@ -120,8 +124,14 @@ private:
 	//Puntero unico para evitar copias
 	static unique_ptr<GameManager> instance_;
 	//USABILIDAD
+	// Identifica al usuario
 	string idUser_="";
-	bool stayship_ = false;
+	// Identifica la sesion de juego (desde inicio hasta cierre)
+	string idSesion_ = "";
+	// Determina si la zona ha sido completada
+	vector<bool> completedZones_ = vector<bool>((int)Zone::Size + 1);
+	//USABILIDAD
+
 	//Milisegundo para considerar una pausa
 	const int DELAYTIME = 200;
 	//Puntos de haza�a
@@ -219,6 +229,8 @@ private:
 		void saveEquipment(jute::jValue& mainJson);
 		//Guarda el inventario
 		void saveInventory_Stash(jute::jValue& mainJson);
+		// USABILIDAD
+		void saveUsabilidadData(jute::jValue& mainJson);
 		#pragma endregion
 		#pragma region Cargar
 		//Carga los datos desde el json pasado como parámetro
@@ -239,6 +251,8 @@ private:
 		void loadEquipType(jute::jValue& mainJson, string tag, int i);
 		//Carga un objeto de tipo usable
 		void loadUsableType(jute::jValue& mainJson, string tag, int i);
+		//USABILDIAD
+		void loadUsabilidadData(jute::jValue& mainJson);
 		#pragma endregion
 	#pragma endregion
 
@@ -283,9 +297,12 @@ public:
 
 #pragma region getters
 	//USABILIDAD
-	const bool getStayShip() { return stayship_; }
 	const string getIdUser() { return idUser_; }
-	//
+	const string getIdSesion() { return idSesion_; }
+	const bool getCompletedZone(Zone zone) { return completedZones_[(int)zone]; }
+	int generateZoneUsa();
+	//USABILIDAD
+
 	//Devuelve si se ha completado la demo
 	const bool endDemo() { return endDemo_; };
 	//Devuelve si ha muerto Magordito
@@ -302,7 +319,7 @@ public:
 	const bool isSkillUnlocked(SkillName skill) { return skillsUnlocked_[(int)skill]; };
 	//Devuelve si la skill está equipada
 	const bool isSkillAsign(SkillName skill);
-	//Devuelve si estamos o no en la isla
+	//Devuelve si estamos o no en el barco
 	const bool getOnShip() { return onShip_; };
 
 	const int getTileSize() { return tileSize; };
@@ -381,8 +398,9 @@ public:
 
 #pragma region setters
 	//USABILIDAD
-	inline void setStayShip(bool stay) { stayship_ = stay; };
 	inline void setIdUser(string iduser) { idUser_ = iduser; };
+	inline void setIdSesion(string idSesion) { idSesion_ = idSesion; };
+	inline void setCompletedZone(Zone zone, bool completed) { completedZones_[(int)zone] = completed; };
 	//
 	//Para poner magorditoDead_ a true
 	inline void setMagorditoDead(bool magorditoDead) { magorditoDead_ = magorditoDead; };

@@ -44,11 +44,12 @@ bool Chest::update() {
 void Chest::onCollider() {
 	open = true;	
 	app_->getAudioManager()->playChannel(Resources::ChestOpeningAudio, 0, Resources::ChestChannelChannel);
+	auto gm = GameManager::instance();
 	//USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	OpenChest* opchest = (OpenChest*)(Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "a", (int)EventInfo::EventType::OpenChest));
+	auto sesion = gm->getIdSesion();
+	OpenChest* opchest = (OpenChest*)(Tracker::CreateNewEvent(timest, gm->getIdUser(), sesion, (int)EventInfo::EventType::OpenChest));
 	Tracker::TrackEvent(opchest);
 	//
-	//TO DO PENSAR EL COFRE AGAIN
 }
 

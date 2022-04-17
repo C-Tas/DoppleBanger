@@ -20,13 +20,13 @@ Application::Application(GameStateMachine* state) {
 
 	// USABILIDAD
 	tracker_ = Tracker::GetInstance();
-	
 }
 
 Application::~Application() {
 	// USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	Logout* logout = (Logout*)(Tracker::CreateNewEvent(timest, gameManager_->getIdUser(), "a", (int)EventInfo::EventType::Logout));
+	auto sesion = gameManager_->getIdSesion();
+	Logout* logout = (Logout*)(Tracker::CreateNewEvent(timest, gameManager_->getIdUser(), sesion, (int)EventInfo::EventType::Logout));
 	Tracker::TrackEvent(logout);
 	tracker_->End();
 	tracker_->Free();
@@ -58,6 +58,7 @@ void Application::initSDL() {
 		throw exception("Game window or renderer was null");
 	}
 }
+
 //USABILIDAD
 bool Application::initTracker()
 {
@@ -66,44 +67,24 @@ bool Application::initTracker()
 		return false;
 	}
 
-	//USABILIDAD
-	std::string cmd = "getmac";
-	std::string auxFile = "macaddress.txt";
-
-	system((cmd + ">" + auxFile).c_str());
-	std::string line;
-	std::ifstream myfile("macaddress.txt");
-
-
-	std::string mac;
-	int i = 0;
-	if (myfile.is_open()) {
-
-		while (i < 4 && std::getline(myfile, line)) {
-			i++;
-		}
-		mac = line.substr(0, 17);
-		myfile.close();
-	}
-	else
-		std::cout << "Unable to open the file";
-
-	system(("del " + auxFile).c_str());
-
 	if (gameManager_ == nullptr) {
 		std::cout << "Error al inicializar el tracker. Gamemanager sin inicializar...\n";
 		return false;
 	}
 
-	gameManager_->setIdUser(mac);
+	createIdUser();
+	std::string mac = gameManager_->getIdUser();
+	createIdSesion();
+	std::string sesion = gameManager_->getIdSesion();
 
-	trackerStarted_ =  tracker_->Init(PersistenceType::FILE, TypeOfFile::Json, PATH_TRACKER);
+	if (!tracker_->Init(PersistenceType::FILE, TypeOfFile::Json, PATH_TRACKER))
+		return false;
+	
 	long long timest = Tracker::GetTimeStamp();
-
-	Login* login = (Login*)(Tracker::CreateNewEvent(timest, mac, "a", (int)EventInfo::EventType::Login));
+	Login* login = (Login*)(Tracker::CreateNewEvent(timest, mac, sesion, (int)EventInfo::EventType::Login));
 	Tracker::TrackEvent(login);
 
-	return trackerStarted_;
+	return true;
 }
 
 void Application::runApp() {
@@ -147,6 +128,62 @@ void Application::updateDelta()
 	lastTicks_ = currTicks_;
 	currTicks_ = SDL_GetPerformanceCounter();
 	deltaTime_ = (double)((currTicks_ - lastTicks_) / (double)SDL_GetPerformanceFrequency());
+}
+
+void Application::createIdUser()
+{
+	// Comando de la consola de windows
+	std::string cmd = "getmac";
+	std::string auxFile = "macaddress.txt";
+
+	system((cmd + ">" + auxFile).c_str());
+
+	std::string line;
+	// Fichero auxiliar temporal
+	std::ifstream myfile("macaddress.txt");
+	// Direccion mac final
+	std::string mac;
+	int i = 0;
+	if (myfile.is_open()) {
+
+		while (i < 4 && std::getline(myfile, line)) {
+			i++;
+		}
+		mac = line.substr(0, 17);
+		myfile.close();
+	}
+	else
+		std::cout << "Unable to open the file";
+
+	system(("del " + auxFile).c_str());
+
+	gameManager_->setIdUser(mac);
+}
+
+void Application::createIdSesion()
+{
+	/* initialize random seed: */
+	srand(time(NULL));
+	int length = rand() % 16 + 10;
+	std::string idSesion = "";
+	for (int i = 0; i < length; i++) {
+		int choice = (char)rand() % 3 + 0;
+		switch (choice)
+		{
+		case 1:
+			idSesion += rand() % ('9' - '0' + 1) + '0';;
+			break;
+		case 2:
+			idSesion += rand() % ('Z' - 'A' + 1) + 'A';
+			break;
+		case 3:
+		default:
+			idSesion += rand() % ('z' - 'a' + 1) + 'a';
+			break;
+		}
+	}
+
+	gameManager_->setIdSesion(idSesion);
 }
 
 void Application::initResources() {

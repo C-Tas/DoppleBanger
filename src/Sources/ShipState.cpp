@@ -20,15 +20,18 @@ void ShipState::goIsland(Application* app)
 	Island currIsland = gm->getCurrIsland();
 	// USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
+	auto sesion = gm->getIdSesion();
+	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm->getIdUser(), sesion, (int)EventInfo::EventType::LogoutZone));
 	logoutZone->setZone(0);
-	logoutZone->setNext((int)gm->getCurrIsland() * 10 + 1);
+	int next = (int)currIsland * 10 + 1;
+	logoutZone->setNext(next);
 	Tracker::TrackEvent(logoutZone);
-	gm->setStayShip(false);
+	Tracker::End();
     //
 	if (currIsland == Island::Caribbean) app->getGameStateMachine()->changeState(new CaribbeanIslandState(app));
 	else if (currIsland == Island::Spooky) app->getGameStateMachine()->changeState(new SpookyIslandState(app));
 	else if (currIsland == Island::Volcanic) app->getGameStateMachine()->changeState(new VolcanicIslandState(app));
+	
 }
 //Callback del alijo para ir al men� de alijo
 void ShipState::goStashState(Application* app)
@@ -126,16 +129,16 @@ void ShipState::initState()
 
 	//USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::LoginZone));
+	auto sesion = gm_->getIdSesion();
+	LoginZone* logzone = (LoginZone*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::LoginZone));
 	logzone->setZone(0);
-	logzone->setCompleted(true);
+	logzone->setCompleted(gm_->getCompletedZone(Zone::Ship));
 	Tracker::TrackEvent(logzone);
-	gm_->setStayShip(true);
-
 }
 
 ShipState::~ShipState()
 {
+	Tracker::End();
 	 delete collisionMap_; delete background_; 
 }
 

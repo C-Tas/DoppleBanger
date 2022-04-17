@@ -25,7 +25,9 @@ void TextBox::goShopState(Application* app)
 	app->getGameStateMachine()->pushState(new ShopState(app));
 	//USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	OpenShop* openShop = (OpenShop*)Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "20012", (int)EventInfo::EventType::OpenShop);
+	auto gm = GameManager::instance();
+	auto sesion = gm->getIdSesion();
+	OpenShop* openShop = (OpenShop*)Tracker::CreateNewEvent(timest, gm->getIdUser(), sesion, (int)EventInfo::EventType::OpenShop);
 	Tracker::TrackEvent(openShop);
 	//
 }
@@ -37,9 +39,12 @@ void TextBox::nextConversation(Application* app) {
 
 void TextBox::skipTutorial(Application* app)
 {
+	auto gm = GameManager::instance();
+	gm->setCompletedZone(Zone::Ship, true);
+	Tracker::End();
 	app->getGameManager()->desactiveTutorial();
 	app->getGameManager()->resetGameManager();
-	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
+	dynamic_cast<Player*>(gm->getPlayer())->stop();
 	app->getGameStateMachine()->pushState(new ShipState(app));
 }
 
@@ -48,18 +53,22 @@ void TextBox::nextTutorialVenancio(Application* app)
 	dynamic_cast<Player*>(GameManager::instance()->getPlayer())->stop();
 	GameManager::instance()->nextPhaseVenancio();
 }
+
 void TextBox::goToShipState(Application* app)
 {
 	CollisionCtrl::instance()->clearList();
-	GameManager::instance()->resetIsland();
+	auto gm = GameManager::instance();
 	// USABILIDAD
-
 	long long timest = Tracker::GetTimeStamp();
-	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
-	logoutZone->setZone((int)GameManager::instance()->getCurrIsland() * 10 + (int)GameManager::instance()->getCurrentZone());
+	auto sesion = gm->getIdSesion();
+	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm->getIdUser(), sesion, (int)EventInfo::EventType::LogoutZone));
+	int zone = gm->generateZoneUsa();
+	logoutZone->setZone(zone);
 	logoutZone->setNext(0);
 	Tracker::TrackEvent(logoutZone);
+	Tracker::End();
 	//
+	gm->resetIsland();
 	app->getGameStateMachine()->changeState(new ShipState(app));
 }
 
@@ -136,7 +145,6 @@ void TextBox::passZoneDialog()
 	goToShipButton_->draw();
 	goToNextZoneButton_->draw();
 }
-
 
 #pragma region Dialogos
 void TextBox::dialogElderMan(int num) {
@@ -365,11 +373,11 @@ void TextBox::dialogElderMan(int num) {
 				text.render(lineSpacing, dest.y + lineSpacing * 2);
 				break;
 			}
-			
+
 			break;
 		case Island::Spooky:
 			switch (num) {
-			case 0: 
+			case 0:
 				text.loadFromText(app_->getRenderer(), Resources::tildes_["¿"] + "Has... matado a un kraken? Incre" + Resources::tildes_["i"] + "ble... Pensaba que no exist" + Resources::tildes_["i"] + "an m" + Resources::tildes_["a"] + "s",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
@@ -382,7 +390,7 @@ void TextBox::dialogElderMan(int num) {
 				button_->draw();
 				button_->update();
 				break;
-			case 1: 
+			case 1:
 				text.loadFromText(app_->getRenderer(), "La leyenda que te mencion" + Resources::tildes_["e"] + ", la historia del pirata m" + Resources::tildes_["a"] + "s infame de todos los mares, est" + Resources::tildes_["a"] + " tomando m" + Resources::tildes_["a"] + "s",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
@@ -392,8 +400,8 @@ void TextBox::dialogElderMan(int num) {
 				button_->draw();
 				button_->update();
 				break;
-			case 2: 
-				text.loadFromText(app_->getRenderer(),"Se cree que el pirata lleg" + Resources::tildes_["o"] + " no solo a encontrar un kraken, sino que lo encerr" + Resources::tildes_["o"] + " en sus islas," ,
+			case 2:
+				text.loadFromText(app_->getRenderer(), "Se cree que el pirata lleg" + Resources::tildes_["o"] + " no solo a encontrar un kraken, sino que lo encerr" + Resources::tildes_["o"] + " en sus islas,",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
 				text.loadFromText(app_->getRenderer(), "para siempre obligado a ser el guardi" + Resources::tildes_["a"] + "n del archipi" + Resources::tildes_["e"] + "lago. Si las islas no constan en",
@@ -418,7 +426,7 @@ void TextBox::dialogElderMan(int num) {
 				button_->draw();
 				button_->update();
 				break;
-			case 4: 
+			case 4:
 				text.loadFromText(app_->getRenderer(), "Se dice que varios gobiernos colaboraron para contratar a este asesino con el objetivo poner fin a la era ",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
@@ -430,12 +438,12 @@ void TextBox::dialogElderMan(int num) {
 				text.render(lineSpacing, dest.y + lineSpacing * 3);
 				text.loadFromText(app_->getRenderer(), "islas y todo lo que se encontraba en ellas. ",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-				text.render(lineSpacing, dest.y + lineSpacing *4 );
+				text.render(lineSpacing, dest.y + lineSpacing * 4);
 
-			
+
 				button_->draw();
 				button_->update();
-				
+
 				break;
 			case 5:
 				text.loadFromText(app_->getRenderer(), "Una forma de venganza extrema, pero parece que efectiva, ya que se dice que desde ese d" + Resources::tildes_["i"] + "a ",
@@ -447,7 +455,7 @@ void TextBox::dialogElderMan(int num) {
 				button_->draw();
 				button_->update();
 				break;
-			case 6: 
+			case 6:
 				text.loadFromText(app_->getRenderer(), "Y este es el final de la leyenda, Cle" + Resources::tildes_["o"] + "n y su tripulaci" + Resources::tildes_["o"] + "n quedaron para siempre condenados a vivir  ",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
@@ -842,7 +850,7 @@ void TextBox::dialogSkeleton(bool unlock, int num) {
 		else {
 			if (!gm_->isThatMissionPass(missions::laboon)) gm_->setMissionFinished(missions::laboon, true);
 
-			Texture text(app_->getRenderer(), Resources::tildes_["¿"] + "De verdad? " + Resources::tildes_["¡"] + "Menos mal que llegaste a esta isla perdida y me salvaste, siempre te lo agradecer" + Resources::tildes_["e"] + "." , app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			Texture text(app_->getRenderer(), Resources::tildes_["¿"] + "De verdad? " + Resources::tildes_["¡"] + "Menos mal que llegaste a esta isla perdida y me salvaste, siempre te lo agradecer" + Resources::tildes_["e"] + ".", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 		}
 	}
@@ -854,10 +862,10 @@ void TextBox::dialogCartographer(bool unlock, int num) {
 	if (unlock) {
 		Texture text;
 		if (gm_->isThatMissionPass(missions::arlongPark) && !gm_->isThatRewardUnlocked(missions::arlongPark)) {
-			text.loadFromText(app_->getRenderer(), "Gracias por sacarme de aquella espantosa isla. Por el camino me encontr" + Resources::tildes_["e"] , app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "Gracias por sacarme de aquella espantosa isla. Por el camino me encontr" + Resources::tildes_["e"], app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
-			text.loadFromText(app_->getRenderer(), "este trabuco, espero que te sea " + Resources::tildes_["u"]+"til", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
-			text.render(lineSpacing, dest.y + lineSpacing*2);
+			text.loadFromText(app_->getRenderer(), "este trabuco, espero que te sea " + Resources::tildes_["u"] + "til", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.render(lineSpacing, dest.y + lineSpacing * 2);
 			unlockReward_->setCallBack(unlockNamiReward);
 			unlockReward_->draw();
 			unlockReward_->update();
@@ -926,7 +934,7 @@ void TextBox::dialogCartographer(bool unlock, int num) {
 			default:
 				break;
 			}
-			
+
 		}
 		//Cuando se maten todos los enemigos hay que volver a hablar con el npc
 		else {
@@ -935,7 +943,7 @@ void TextBox::dialogCartographer(bool unlock, int num) {
 			Texture text(app_->getRenderer(), "Muchas gracias. No pensaba que iba a salir con vida de esta...", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 
-			text.loadFromText(app_->getRenderer(), "Te espero en tu barco, " + Resources::tildes_["¿"] +"Tienes mandarinas all" + Resources::tildes_["i"], app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+			text.loadFromText(app_->getRenderer(), "Te espero en tu barco, " + Resources::tildes_["¿"] + "Tienes mandarinas all" + Resources::tildes_["i"], app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + (lineSpacing * 2));
 		}
 	}
@@ -1209,7 +1217,7 @@ void TextBox::LiberationI()
 
 	text.loadFromText(app_->getRenderer(), " del jugador.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 	text.render(dest.x + lineSpacing, dest.y + (lineSpacing * 3));
-	
+
 
 }
 

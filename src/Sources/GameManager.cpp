@@ -23,6 +23,10 @@ GameManager::GameManager() {
 	for (int i = 0; i < (int)missions::Size; i++) {
 		missionsComplete_[i] = false;
 	}
+
+	for (int i = 0; i < (int)Zone::Size; i++) {
+		completedZones_[i] = false;
+	}
 }
 
 #pragma region Callbacks Guardar/Cargar
@@ -75,6 +79,9 @@ void GameManager::save(ofstream& slot)
 	saveEquipment(mainJson);
 	//Inventario
 	saveInventory_Stash(mainJson);
+	//USABILIDAD
+	saveUsabilidadData(mainJson);
+
 	//Se guarda todo en el archivo
 	slot << mainJson.to_string();
 	slot.close();
@@ -140,7 +147,7 @@ void GameManager::saveMissions(jute::jValue& mainJson)
 		questFinished.add_element(aux);
 	}
 	mainJson.add_property("questFinished", questFinished);
-	
+
 	////Recompensas obtenidas
 	jValue rewardObtained(jType::JARRAY);
 	for (int i = 0; i < missionsRewardObtained_.size(); i++) {
@@ -288,7 +295,7 @@ void GameManager::saveEquipment(jute::jValue& mainJson)
 				strAux = to_string(vEquip[i]->getHealth());
 				replace(strAux.begin(), strAux.end(), ',', '.');
 				aux.set_string(strAux);
-				equip[i].add_property("health", aux); 
+				equip[i].add_property("health", aux);
 			}
 			else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
 				//Armadura
@@ -327,7 +334,7 @@ void GameManager::saveEquipment(jute::jValue& mainJson)
 				aux.set_string(strAux);
 				equip[i].add_property("damage", aux);
 			}
-			else if(auxType == equipType::PistolI || auxType == equipType::PistolII
+			else if (auxType == equipType::PistolI || auxType == equipType::PistolII
 				|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
 				//Cadencia disparo
 				strAux = to_string(vEquip[i]->getDistRate());
@@ -365,6 +372,28 @@ void GameManager::saveInventory_Stash(jute::jValue& mainJson)
 	aux.set_string(to_string(stash_->size()));
 	mainJson.add_property("stashSize", aux);
 }
+
+void GameManager::saveUsabilidadData(jute::jValue& mainJson)
+{
+	// USABILIDAD
+	jValue usa(jType::JARRAY);
+	jValue aux(jType::JBOOLEAN);
+	//Misiones empezadas
+	for (int i = 0; i < completedZones_.size(); i++) {
+		switch (completedZones_[i])
+		{
+		case true:
+			aux.set_string("true");
+			break;
+		case false:
+			aux.set_string("false");
+			break;
+		}
+
+		usa.add_element(aux);
+	}
+	mainJson.add_property("completedZones", usa);
+}
 #pragma endregion
 
 #pragma region Cargar
@@ -382,11 +411,14 @@ void GameManager::load(string jsonName)
 	loadHUD(mainJson);
 	//Inventario
 	loadInventory_Stash(mainJson);
+	//USABILIDAD
+	loadUsabilidadData(mainJson);
+
 	//Carga el estado del barco (NPCs)
 	app_->getCurrState()->loadState();
 }
 
-void GameManager::loadJNUMBER(jute::jValue& mainJson){
+void GameManager::loadJNUMBER(jute::jValue& mainJson) {
 	currIsland_ = (Island)mainJson["currIsland"].as_int();
 	unlockedIslands_ = (Island)mainJson["unlockedIsland"].as_int();
 	inventoryGold_ = mainJson["currGold"].as_int();
@@ -397,19 +429,19 @@ void GameManager::loadJNUMBER(jute::jValue& mainJson){
 	clonPoints_ = mainJson["clon"].as_int();
 }
 
-void GameManager::loadMissions(jute::jValue& mainJson){
+void GameManager::loadMissions(jute::jValue& mainJson) {
 	for (int i = 0; i < missionsStarted_.size(); i++) {
 		missionsStarted_[i] = mainJson["questStarted"][i].as_bool();
 	}
 	for (int i = 0; i < missionsComplete_.size(); i++) {
 		missionsComplete_[i] = mainJson["questFinished"][i].as_bool();
 	}
-	for (int i = 0; i <missionsRewardObtained_.size(); i++) {
+	for (int i = 0; i < missionsRewardObtained_.size(); i++) {
 		missionsRewardObtained_[i] = mainJson["rewardObtained"][i].as_bool();
 	}
 }
 
-void GameManager::loadEquipment(jute::jValue& mainJson){
+void GameManager::loadEquipment(jute::jValue& mainJson) {
 	//Objetos equipados
 	for (int i = 0; i < 2; i++) {
 		if (mainJson["objects"][i].as_string() == "Health") {
@@ -520,7 +552,7 @@ void GameManager::loadSkills(jute::jValue& mainJson)
 		player_->activateSwiftGunslinger();
 	if (skillsUnlocked_[(int)SkillName::LiberacionII])
 		player_->setLiberation(2);
-	else if(skillsUnlocked_[(int)SkillName::LiberacionI])
+	else if (skillsUnlocked_[(int)SkillName::LiberacionI])
 		player_->setLiberation(1);
 
 	//Equipadas
@@ -642,8 +674,15 @@ void GameManager::loadUsableType(jute::jValue& mainJson, string tag, int i)
 	//Tipo de equipamiento
 	potionType auxType = (potionType)mainJson[tag][i]["name"].as_int();
 	usable* loadPot = new usable(app_, auxType);
-	if(tag == "inventory") addToInventory(loadPot);
+	if (tag == "inventory") addToInventory(loadPot);
 	else if (tag == "stash") addToStash(loadPot);
+}
+
+void GameManager::loadUsabilidadData(jute::jValue& mainJson)
+{
+	for (int i = 0; i < missionsStarted_.size(); i++) {
+		missionsStarted_[i] = mainJson["completedZones"][i].as_bool();
+	}
 }
 #pragma endregion
 
@@ -702,6 +741,27 @@ void GameManager::resetGameManager()
 	//Resetea el tutorial
 	tutorial = false;
 	venancioPhase = 0;
+}
+
+int GameManager::generateZoneUsa()
+{
+	int zone = (int)currIsland_ * 10;
+	switch (currIsland_)
+	{
+	case Island::Caribbean:
+		zone +=  (int)currentZone_;
+		break;
+	case Island::Spooky:
+		zone += (int)currentZone_ - (int)Zone::CaribeanBoss;
+		break;
+	case Island::Volcanic:
+		zone += (int)currentZone_ - (int)Zone::SpookyBoss;
+		break;
+	default:
+		break;
+	}
+
+	return zone;
 }
 
 const int GameManager::getFontSize()
@@ -763,7 +823,7 @@ void GameManager::setCompleteMission(missions mission, bool complete)
 			break;
 		case missions::arlongPark:
 			for (int i = 0; i < getNumOfObjectsReward(mission); i++) {
-				addToInventory(new Gun(app_, 700, 150, 60,equipType::ShotgunII ));
+				addToInventory(new Gun(app_, 700, 150, 60, equipType::ShotgunII));
 			}
 			getPlayer()->addMoveSpeed((int)round(getStatsReward(mission)));
 			break;
@@ -800,13 +860,13 @@ void GameManager::setObjectEquipped(ObjectName newObject, Key key)
 	if (hudActive_) hud_->updateKey((int)key);
 }
 
-playerEquipment& GameManager::initEquipment(){
+playerEquipment& GameManager::initEquipment() {
 	//Nos basta saber con que la pechera no esta equipada para saber si hay que inicializar
 	//ya que el player no se puede desnudar, siempre va a tener estas 5 piezas iniciales al menos
 	//por otro lado, las pociones se van a borrar en caso de que se vuelva al MainMenuState
 	//pero no hace falta hacer nada con ellas al cambiar de estados
 	//Esta comprobacion esta para que no se pierda lo que se lleve equipado al cambiar del barco a la isla
-	if (currEquip_.armor_ == nullptr) { 
+	if (currEquip_.armor_ == nullptr) {
 		currEquip_.armor_ = new Armor(app_, 1, 100, 5, equipType::ArmorI);
 		currEquip_.gloves_ = new Gloves(app_, 1, 1, 0, equipType::GlovesI);
 		currEquip_.boots_ = new Boots(app_, 1, 30, 0, equipType::BootsI);
@@ -838,7 +898,7 @@ void GameManager::addToStash(Item* ob)
 	b->setIterator(it);
 }
 
-void GameManager::addToShop(Item* ob) 
+void GameManager::addToShop(Item* ob)
 {
 	//creamos un boton
 	InventoryButton* b = new InventoryButton(app_, Vector2D{ 300,400 }, Vector2D{ 75,75 }, ob, nullptr);

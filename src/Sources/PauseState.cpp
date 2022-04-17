@@ -23,15 +23,19 @@ void PauseState::showControls(Application* app) {
 void PauseState::goMainMenuState(Application* app) {
 
 	// USABILIDAD
+	auto gm = GameManager::instance();
 	long long timest = Tracker::GetTimeStamp();
-	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, GameManager::instance()->getIdUser(), "a", (int)EventInfo::EventType::LogoutZone));
+	auto sesion = gm->getIdSesion();
+	LogoutZone* logoutZone = (LogoutZone*)(Tracker::CreateNewEvent(timest, gm->getIdUser(), sesion, (int)EventInfo::EventType::LogoutZone));
 	
-	if (!GameManager::instance()->getStayShip()) {
-		logoutZone->setZone((int)GameManager::instance()->getCurrIsland() * 10 + (int)GameManager::instance()->getCurrentZone());
+	if (!GameManager::instance()->getOnShip()) {
+		int zone = gm->generateZoneUsa();
+		logoutZone->setZone(zone);
 	}
 	logoutZone->setNext(-2);
 	Tracker::TrackEvent(logoutZone);
-	//
+	Tracker::End();
+	// 
 	app->getGameStateMachine()->clearAllStateExceptFirst();
 }
 

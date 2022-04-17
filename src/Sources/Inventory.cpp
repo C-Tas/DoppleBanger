@@ -82,7 +82,7 @@ void Inventory::initState() {
 	//Boton para ir al SkillState
 	auxpos = Vector2D{ 7 * (double)(app_->getWindowWidth() / 13), 1 * (double)(app_->getWindowHeight() / 40) };
 	auxSize = Vector2D{ (double)(app_->getWindowWidth() / 2.62),  (double)(app_->getWindowHeight() / 7.5) };
-	goToSkillsButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos,auxSize, callSkillsState);
+	goToSkillsButton_ = new Button(app_, app_->getTextureManager()->getTexture(Resources::TextureId::Wheel), auxpos, auxSize, callSkillsState);
 	addRenderUpdateLists(goToSkillsButton_);
 
 	//Cogemos los objetos equpados de player
@@ -117,8 +117,9 @@ void Inventory::initState() {
 
 	//USABILIDAD
 	long long timest = Tracker::GetTimeStamp();
-	openInv = (OpenInv*)(Tracker::CreateNewEvent(timest,gm_->getIdUser(), "a", (int)EventInfo::EventType::OpenInv));
-	
+	auto sesion = gm_->getIdSesion();
+	openInv = (OpenInv*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::OpenInv));
+
 	//
 }
 
@@ -273,7 +274,7 @@ void Inventory::equipPotion() {
 void Inventory::forwardList() {
 	int aux = advanced;
 	aux += 1;
-	if ((((__int64)aux * VIEW_LIST))<= (int)inventoryList_->size()){
+	if ((((__int64)aux * VIEW_LIST)) <= (int)inventoryList_->size()) {
 
 		app_->getAudioManager()->playChannel(Resources::Pag, 0, Resources::AuxMusicChannel2);
 		advanced = aux;
@@ -488,7 +489,7 @@ void Inventory::printCompareObject() const
 		}
 		else if (auxType == equipType::GlovesI || auxType == equipType::GlovesII) {
 			if (select_->isEquipped()) {
-				auxTex1 = "Cr"+ Resources::tildes_["i"] +"tico: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getCrit());
+				auxTex1 = "Cr" + Resources::tildes_["i"] + "tico: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getCrit());
 
 				auxTex2 = "Defensa: " + to_string((int)static_cast<Equipment*>(equipment_.gloves_->getObject())->getArmor());
 			}
@@ -523,7 +524,7 @@ void Inventory::printCompareObject() const
 			|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
 
 			if (select_->isEquipped()) {
-				auxTex1 = "da"+ Resources::tildes_["ñ"] +"o: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg());
+				auxTex1 = "da" + Resources::tildes_["ñ"] + "o: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg());
 
 				auxTex2 = "AtaqueVel.: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeRate());
 			}

@@ -5,13 +5,8 @@
 
 class tutorialState : public ShipState {
 public:
-	tutorialState(Application* app) : ShipState(app) {
-		gm_ = GameManager::instance();
-		gm_->activeTutorial();
-		venancio_->setPos(TUTORIAL_POS);
-		//gm_->setOnShip(false);
-	};
-	~tutorialState() {}
+	tutorialState(Application* app);
+	~tutorialState();
 	virtual void update();
 	void activeDummyCreation() { dummyCreated_ = false; }
 	void currTaskSucess() { currTaskComplete_ = true; }

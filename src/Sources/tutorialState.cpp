@@ -7,75 +7,121 @@
 #include "HUD.h"
 #include "TutoTask.h"
 
+tutorialState::tutorialState(Application* app) : ShipState(app)
+{
+	gm_ = GameManager::instance();
+	gm_->activeTutorial();
+	venancio_->setPos(TUTORIAL_POS);
+}
+
+tutorialState::~tutorialState()
+{
+	//USABILIDAD
+	int phase = gm_->getVenancioPhase();
+	switch (gm_->getVenancioPhase())
+	{
+	case 1:
+		timeOut = Tracker::GetTimeStamp();
+		tutoTask1->setTimeOut(timeOut);
+		break;
+	case 2:
+		timeOut = Tracker::GetTimeStamp();
+		tutoTask2->setTimeOut(timeOut);
+		break;
+	case 3:
+		timeOut = Tracker::GetTimeStamp();
+		tutoTask3->setTimeOut(timeOut);
+		break;
+	case 4:
+		timeOut = Tracker::GetTimeStamp();
+		tutoTask4->setTimeOut(timeOut);
+		break;
+	case 5:
+		timeOut = Tracker::GetTimeStamp();
+		tutoTask5->setTimeOut(timeOut);
+		break;
+	}
+}
+
 void tutorialState::update()
 {
 	ShipState::update();
 	collisionCtrl_->tutorialCollision();
+
 	//Control de tutorial
 	switch (gm_->getVenancioPhase())
 	{
 		//Aprender a disparar
-	case 1:
+	case 1: {
 		//crear botella
 		if (!bottleCreated_) {
 			//USABILIDAD
 			timest = Tracker::GetTimeStamp();
-			tutoTask1 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
-			tutoTask1->setName("Aprender a disparar.");
+			auto sesion = gm_->getIdSesion();
+			tutoTask1 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::TutoTask));
+			tutoTask1->setName("Aprender a disparar");
+			Tracker::TrackEvent(tutoTask1);
 			createBottle();
 		}
 		break;
-		//Aprender el ataque a melee
-	case 2:
-		//USABILIDAD
-		timeOut = Tracker::GetTimeStamp();
-		tutoTask1->setTimeOut(timeOut);
-		Tracker::TrackEvent(tutoTask1);
-
+	}
+		  //Aprender el ataque a melee
+	case 2: {
 		//crear dummy
 		if (!dummyCreated_) {
 			//USABILIDAD
+			//Se acaba el la fase uno
+			timeOut = Tracker::GetTimeStamp();
+			tutoTask1->setTimeOut(timeOut);
+
+			//USABILIDAD
 			timest = Tracker::GetTimeStamp();
-			tutoTask2 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
-			tutoTask2->setName("Aprender ataque melee.");
+			auto sesion = gm_->getIdSesion();
+			tutoTask2 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::TutoTask));
+			tutoTask2->setName("Aprender ataque melee");
+			Tracker::TrackEvent(tutoTask2);
 
 			createDummy();
 			HUD* hud = new HUD(app_);
 			addRenderUpdateLists(hud);
 		}
 		break;
-		//Apreder a usar habilidades
-	case 3:
-		//USABILIDAD
-		timeOut = Tracker::GetTimeStamp();
-		tutoTask2->setTimeOut(timeOut);
-		Tracker::TrackEvent(tutoTask2);
+	}
+		  //Apreder a usar habilidades
+	case 3: {
 
-		//USABILIDAD
-		timest = Tracker::GetTimeStamp();
-		tutoTask3 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
-		tutoTask3->setName("Aprender a usar habilidades.");
 		//crear dummy
 		if (!dummyCreated_) {
+			//Se acaba el la fase dos
+			timeOut = Tracker::GetTimeStamp();
+			tutoTask2->setTimeOut(timeOut);
+
+			//USABILIDAD
+			timest = Tracker::GetTimeStamp();
+			auto sesion = gm_->getIdSesion();
+			tutoTask3 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::TutoTask));
+			tutoTask3->setName("Aprender a usar habilidades");
+			Tracker::TrackEvent(tutoTask3);
 
 			gm_->setMeleePoints(gm_->getMeleePoints() + (gm_->getMaxPoints() / 3) - 10);
 			createDummy();
 		}
 		break;
-
-		//Aprender los cofres
+	}
+		  //Aprender los cofres
 	case 4:
-		//USABILIDAD
-		timeOut = Tracker::GetTimeStamp();
-		tutoTask3->setTimeOut(timeOut);
-		Tracker::TrackEvent(tutoTask3);
-
 		//crear cofre con oro
 		if (!chestCreated_) {
+			//Se acaba el la fase tres
+			timeOut = Tracker::GetTimeStamp();
+			tutoTask3->setTimeOut(timeOut);
+
 			//USABILIDAD
 			timest = Tracker::GetTimeStamp();
-			tutoTask4 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
-			tutoTask4->setName("Aprender los cofres.");
+			auto sesion = gm_->getIdSesion();
+			tutoTask4 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::TutoTask));
+			tutoTask4->setName("Aprender los cofres");
+			Tracker::TrackEvent(tutoTask4);
 
 			createChest();
 		}
@@ -90,18 +136,19 @@ void tutorialState::update()
 		}
 		break;
 		//Aprender sobre pociones
-	case 5:
-		//USABILIDAD
-		timeOut = Tracker::GetTimeStamp();
-		tutoTask4->setTimeOut(timeOut);
-		Tracker::TrackEvent(tutoTask4);
-
-		//USABILIDAD
-		timest = Tracker::GetTimeStamp();
-		tutoTask5 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), "a", (int)EventInfo::EventType::TutoTask));
-		tutoTask5->setName("Aprender sobre pociones.");
-
+	case 5: {
 		if (gm_->getInventoryGold() > 0 && !goldWasted_) {
+			//USABILIDAD
+			timeOut = Tracker::GetTimeStamp();
+			tutoTask4->setTimeOut(timeOut);
+
+			//USABILIDAD
+			timest = Tracker::GetTimeStamp();
+			auto sesion = gm_->getIdSesion();
+			tutoTask5 = (TutoTask*)(Tracker::CreateNewEvent(timest, gm_->getIdUser(), sesion, (int)EventInfo::EventType::TutoTask));
+			tutoTask5->setName("Aprender sobre pociones");
+			Tracker::TrackEvent(tutoTask5);
+
 			goldWasted_ = true;
 		}
 		else if (goldWasted_ && gm_->getInventory()->empty() && gm_->getStash()->empty() && gm_->getObjectEquipped(Key::One) == ObjectName::Unequipped &&
@@ -111,9 +158,10 @@ void tutorialState::update()
 			//USABILIDAD
 			timeOut = Tracker::GetTimeStamp();
 			tutoTask5->setTimeOut(timeOut);
-			Tracker::TrackEvent(tutoTask5);
+			gm_->setCompletedZone(Zone::Ship, true);
 		}
 		break;
+	}
 	default:
 		break;
 	}
