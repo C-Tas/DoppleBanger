@@ -38,26 +38,32 @@ void SkillState::initState() {
 
 void SkillState::update()
 {	
-	//Comprobamos si el rat�n est� sobre alguna de las skills equipadas
-	int i = 0;
-	SDL_Point point;
-	point.x = (int)round(eventHandler_->getRealMousePos().getX());
-	point.y = (int)round(eventHandler_->getRealMousePos().getY());
-	while (i < assignButtons.size() && !SDL_PointInRect(&point, &assignButtons[i]))i++;
-	//Si lo est�, actualizamos cual descripcion debe mostrarse
-	if (i < assignButtons.size()) lastPointed = gm_->getEquippedSkill((Key)i);
-	
-	if (SDL_PointInRect(&point, &goToInventary_->getDestiny())) {
-		goToInventary_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryBButton));
+	if (eventHandler_->isKeyDown(SDLK_v)) {
+		callExit(app_);
 	}
 	else {
-		goToInventary_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryAButton));
-	}
+		//Comprobamos si el rat�n est� sobre alguna de las skills equipadas
+		int i = 0;
+		SDL_Point point;
+		point.x = (int)round(eventHandler_->getRealMousePos().getX());
+		point.y = (int)round(eventHandler_->getRealMousePos().getY());
+		while (i < assignButtons.size() && !SDL_PointInRect(&point, &assignButtons[i]))i++;
+		//Si lo est�, actualizamos cual descripcion debe mostrarse
+		if (i < assignButtons.size()) lastPointed = gm_->getEquippedSkill((Key)i);
 
-	//update de las barras
-	updateBars();
-	//update de todos los objetos
-	GameState::update();
+		if (SDL_PointInRect(&point, &goToInventary_->getDestiny())) {
+			goToInventary_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryBButton));
+		}
+		else {
+			goToInventary_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToInventoryAButton));
+		}
+
+		//update de las barras
+		updateBars();
+		//update de todos los objetos
+		GameState::update();
+	}
+	
 }
 
 void SkillState::createBars() {

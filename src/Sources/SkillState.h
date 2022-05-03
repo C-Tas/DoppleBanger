@@ -53,6 +53,18 @@ private:
 	int pointsInOpen;
 	//
 protected:
+
+	// <summary>
+	/// Callback para volver al menu principal
+	/// </summary>
+	/// <param name="app"></param>
+	void callExit(Application* app) {
+		app->getAudioManager()->playChannel(Resources::Time, 0, Resources::AuxMusicChannel2);
+		SDL_ShowCursor(SDL_DISABLE);
+		app->getAudioManager()->resumeChannel(Resources::MainMusicChannel);
+		app->getAudioManager()->pauseChannel(Resources::SkillState);
+		app->getGameStateMachine()->popState();
+	}
 	///<summary>Se inicializa el skill state</summary>
 	virtual void initState();
 
