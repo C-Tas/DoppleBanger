@@ -41,6 +41,15 @@ void SkillState::update()
 	if (eventHandler_->isKeyDown(SDLK_v)) {
 		callExit(app_);
 	}
+	else if (eventHandler_->isKeyDown(SDLK_q) && selected_ != nullptr) {
+		equipSelectedSkill(Key::Q);
+	}
+	else if (eventHandler_->isKeyDown(SDLK_w) && selected_ != nullptr) {
+		equipSelectedSkill(Key::W);
+	}
+	else if (eventHandler_->isKeyDown(SDLK_e) && selected_ != nullptr) {
+		equipSelectedSkill(Key::E);
+	}
 	else {
 		//Comprobamos si el rat�n est� sobre alguna de las skills equipadas
 		int i = 0;
