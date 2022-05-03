@@ -182,14 +182,14 @@ void TextBox::dialogElderMan(int num) {
 			text.loadFromText(app_->getRenderer(), "Presionando una " + Resources::tildes_["u"] + "nica vez el click izquierdo sobre un enemigo, puedes mocharlo.",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
-			text.loadFromText(app_->getRenderer(), "Te recomiendo limpiar tu espada despu" + Resources::tildes_["e"] + "s de mochar al susodicho.",
+			text.loadFromText(app_->getRenderer(), "Te recomiendo limpiar tu espada despu" + Resources::tildes_["e"] + "s .",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing * 2);
 			break;
 		case 3:
 			switch (num) {
 			case 0:
-				text.loadFromText(app_->getRenderer(), Resources::tildes_["¿"] + "Has visto que el susodicho te ha dado puntos de haza" + Resources::tildes_["ñ"] + "a?",
+				text.loadFromText(app_->getRenderer(), "Mira abajo a la derecha, son tus puntos de haza" + Resources::tildes_["ñ"] + "a",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
 				text.loadFromText(app_->getRenderer(), "Puedes verlos en la esquina derecha de abajo. Se consiguen al ganar experiencia.",
