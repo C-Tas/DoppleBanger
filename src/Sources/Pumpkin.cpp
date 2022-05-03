@@ -45,6 +45,7 @@ bool Pumpkin::update() {
 
 	updateFrame();
 	updateCooldowns();
+	manageTint();
 
 	//Si la calabaza ha muerto
 	if (currState_ == STATE::DYING) {

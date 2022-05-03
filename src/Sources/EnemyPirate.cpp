@@ -9,6 +9,7 @@
 bool EnemyPirate::update() {
 	updateFrame();
 	updateCooldowns();
+	manageTint();
 	//Si el pirata ha muerto
 	if (currState_ == STATE::DYING) {
 		dieAnim();

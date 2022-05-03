@@ -7,6 +7,7 @@
 bool Crab::update() {
 	updateFrame();
 	updateCooldowns();
+	manageTint();
 
 	if (currState_ == STATE::DYING) {
 		dieAnim();

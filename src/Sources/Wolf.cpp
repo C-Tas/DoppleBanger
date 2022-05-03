@@ -9,6 +9,7 @@
 bool Wolf::update() {
 	updateFrame();
 	updateCooldowns();
+	manageTint();
 
 	//Si el lobo ha muerto
 	if (currState_ == STATE::DYING) {

@@ -87,12 +87,17 @@ void Actor::receiveDamage(double damage) {
 }
 
 void Actor::manageTint() {
-	if (SDL_GetTicks() - lastTint_ <= TINT_TIME) {
-		SDL_SetTextureColorMod(texture_->getSDLTex(), 255, 0, 0);
-	}
-	else
-	{
+	if (currState_ == STATE::DYING || currState_ == STATE::DIED) {
 		SDL_SetTextureColorMod(texture_->getSDLTex(), 255, 255, 255);
+	}
+	else {
+		if (SDL_GetTicks() - lastTint_ <= TINT_TIME) {
+			SDL_SetTextureColorMod(texture_->getSDLTex(), 255, 0, 0);
+		}
+		else
+		{
+			SDL_SetTextureColorMod(texture_->getSDLTex(), 255, 255, 255);
+		}
 	}
 }
 

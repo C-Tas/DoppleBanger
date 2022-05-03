@@ -67,6 +67,7 @@ bool Enemy::getEnemy(double n)
 }
 
 void Enemy::receiveDamage(double damage) {
+	lastTint_ = SDL_GetTicks();
 	currStats_.health_ -= damage;
 	if (currStats_.health_ <= 0) {
 		Player* player_ = GameManager::instance()->getPlayer();

@@ -6,35 +6,28 @@
     <ClCompile Include="..\deps\SDL2_gfx\SDL2_gfxPrimitives.cpp" />
     <ClCompile Include="..\deps\SDL2_gfx\SDL2_imageFilter.cpp" />
     <ClCompile Include="..\deps\SDL2_gfx\SDL2_rotozoom.cpp" />
-    <ClCompile Include="..\Sources\Altar.cpp" />
-    <ClCompile Include="..\Sources\AltarSkeleton.cpp" />
     <ClCompile Include="..\Sources\Application.cpp" />
     <ClCompile Include="..\Sources\Armor.cpp" />
     <ClCompile Include="..\Sources\AStar.cpp" />
     <ClCompile Include="..\Sources\Barrel.cpp" />
     <ClCompile Include="..\Sources\BeerButton.cpp" />
-    <ClCompile Include="..\Sources\Blunderbuss.cpp" />
     <ClCompile Include="..\Sources\Boots.cpp" />
     <ClCompile Include="..\Sources\AudioManager.cpp" />
-    <ClCompile Include="..\Sources\BoneBullet.cpp" />
     <ClCompile Include="..\Sources\Bullet.cpp" />
     <ClCompile Include="..\Sources\Button.cpp" />
     <ClCompile Include="..\Sources\Camera.cpp" />
     <ClCompile Include="..\Sources\CaribbeanIslandState.cpp" />
     <ClCompile Include="..\Sources\Chest.cpp" />
-    <ClCompile Include="..\Sources\Cleon.cpp" />
     <ClCompile Include="..\Sources\Clon.cpp" />
     <ClCompile Include="..\Sources\CollisionCtrl.cpp" />
     <ClCompile Include="..\Sources\Collisions.cpp" />
     <ClCompile Include="..\Sources\ControlsState.cpp" />
     <ClCompile Include="..\Sources\Cooldown.cpp" />
-    <ClCompile Include="..\Sources\Crab.cpp" />
     <ClCompile Include="..\Sources\CreditsState.cpp" />
     <ClCompile Include="..\Sources\Draw.cpp" />
     <ClCompile Include="..\Sources\Dynamic.cpp" />
     <ClCompile Include="..\Sources\EndState.cpp" />
     <ClCompile Include="..\Sources\Enemy.cpp" />
-    <ClCompile Include="..\Sources\EnemyPirate.cpp" />
     <ClCompile Include="..\Sources\Equipment.cpp" />
     <ClCompile Include="..\Sources\Font.cpp" />
     <ClCompile Include="..\Sources\FontManager.cpp" />
@@ -52,13 +45,9 @@
     <ClCompile Include="..\Sources\Item.cpp" />
     <ClCompile Include="..\Sources\jute.cpp" />
     <ClCompile Include="..\Sources\Kirin.cpp" />
-    <ClCompile Include="..\Sources\Kraken.cpp" />
     <ClCompile Include="..\Sources\LoadState.cpp" />
-    <ClCompile Include="..\Sources\Magordito.cpp" />
-    <ClCompile Include="..\Sources\MagorditoIA.cpp" />
     <ClCompile Include="..\Sources\main.cpp" />
     <ClCompile Include="..\Sources\MainMenuState.cpp" />
-    <ClCompile Include="..\Sources\MonkeyCoco.cpp" />
     <ClCompile Include="..\Sources\NPC.cpp" />
     <ClCompile Include="..\Sources\Obstacle.cpp" />
     <ClCompile Include="..\Sources\PauseState.cpp" />
@@ -66,7 +55,6 @@
     <ClCompile Include="..\Sources\Player.cpp" />
     <ClCompile Include="..\Sources\PlayerBullet.cpp" />
     <ClCompile Include="..\Sources\PlayState.cpp" />
-    <ClCompile Include="..\Sources\Pumpkin.cpp" />
     <ClCompile Include="..\Sources\RandEquipGen.cpp" />
     <ClCompile Include="..\Sources\Resources.cpp" />
     <ClCompile Include="..\Sources\SaveState.cpp" />
@@ -96,7 +84,6 @@
     <ClCompile Include="..\Sources\Vector2D.cpp" />
     <ClCompile Include="..\Sources\VolcanicIslandState.cpp" />
     <ClCompile Include="..\Sources\WinState.cpp" />
-    <ClCompile Include="..\Sources\Wolf.cpp" />
     <ClCompile Include="..\deps\tmxLite\FreeFuncs.cpp" />
     <ClCompile Include="..\deps\tmxLite\ImageLayer.cpp" />
     <ClCompile Include="..\deps\tmxLite\LayerGroup.cpp" />
@@ -108,26 +95,54 @@
     <ClCompile Include="..\deps\tmxLite\pugixml.cpp" />
     <ClCompile Include="..\deps\tmxLite\TileLayer.cpp" />
     <ClCompile Include="..\deps\tmxLite\Tileset.cpp" />
+    <ClCompile Include="..\Sources\AltarSkeleton.cpp">
+      <Filter>Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Cleon.cpp">
+      <Filter>Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Crab.cpp">
+      <Filter>Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\EnemyPirate.cpp">
+      <Filter>Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Kraken.cpp">
+      <Filter>Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Magordito.cpp">
+      <Filter>Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\MagorditoIA.cpp">
+      <Filter>Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\MonkeyCoco.cpp">
+      <Filter>Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Pumpkin.cpp">
+      <Filter>Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Wolf.cpp">
+      <Filter>Enemigos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Altar.cpp" />
+    <ClCompile Include="..\Sources\Blunderbuss.cpp" />
+    <ClCompile Include="..\Sources\BoneBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Sources\Actor.h" />
-    <ClInclude Include="..\Sources\Altar.h" />
-    <ClInclude Include="..\Sources\AltarSkeleton.h" />
     <ClInclude Include="..\Sources\Application.h" />
     <ClInclude Include="..\Sources\Armor.h" />
     <ClInclude Include="..\Sources\AStar.hpp" />
     <ClInclude Include="..\Sources\Barrel.h" />
     <ClInclude Include="..\Sources\BeerButton.h" />
-    <ClInclude Include="..\Sources\Blunderbuss.h" />
     <ClInclude Include="..\Sources\Boots.h" />
-    <ClInclude Include="..\Sources\BoneBullet.h" />
     <ClInclude Include="..\Sources\Bullet.h" />
     <ClInclude Include="..\Sources\AudioManager.h" />
     <ClInclude Include="..\Sources\Button.h" />
     <ClInclude Include="..\Sources\Camera.h" />
     <ClInclude Include="..\Sources\CaribbeanIslandState.h" />
     <ClInclude Include="..\Sources\checkML.h" />
-    <ClInclude Include="..\Sources\Cleon.h" />
     <ClInclude Include="..\Sources\Chest.h" />
     <ClInclude Include="..\Sources\Clon.h" />
     <ClInclude Include="..\Sources\ClonSelfDestructSkill.h" />
@@ -137,14 +152,12 @@
     <ClInclude Include="..\Sources\Collisions.h" />
     <ClInclude Include="..\Sources\ControlsState.h" />
     <ClInclude Include="..\Sources\Cooldown.h" />
-    <ClInclude Include="..\Sources\Crab.h" />
     <ClInclude Include="..\Sources\CreditsState.h" />
     <ClInclude Include="..\Sources\Draw.h" />
     <ClInclude Include="..\Sources\Dynamic.h" />
     <ClInclude Include="..\Sources\EmpoweredSkill.h" />
     <ClInclude Include="..\Sources\EndState.h" />
     <ClInclude Include="..\Sources\Enemy.h" />
-    <ClInclude Include="..\Sources\EnemyPirate.h" />
     <ClInclude Include="..\Sources\Equipment.h" />
     <ClInclude Include="..\Sources\Font.h" />
     <ClInclude Include="..\Sources\FontManager.h" />
@@ -158,13 +171,9 @@
     <ClInclude Include="..\Sources\Ink.h" />
     <ClInclude Include="..\Sources\jute.h" />
     <ClInclude Include="..\Sources\Kirin.h" />
-    <ClInclude Include="..\Sources\Kraken.h" />
     <ClInclude Include="..\Sources\LoadState.h" />
-    <ClInclude Include="..\Sources\Magordito.h" />
     <ClInclude Include="..\Sources\HUD.h" />
-    <ClInclude Include="..\Sources\MagorditoIA.h" />
     <ClInclude Include="..\Sources\Obstacle.h" />
-    <ClInclude Include="..\Sources\MonkeyCoco.h" />
     <ClInclude Include="..\Sources\PerforateSkill.h" />
     <ClInclude Include="..\Sources\Physics.h" />
     <ClInclude Include="..\Sources\Inventory.h" />
@@ -176,7 +185,6 @@
     <ClInclude Include="..\Sources\Player.h" />
     <ClInclude Include="..\Sources\PlayerBullet.h" />
     <ClInclude Include="..\Sources\PlayState.h" />
-    <ClInclude Include="..\Sources\Pumpkin.h" />
     <ClInclude Include="..\Sources\RandEquipGen.h" />
     <ClInclude Include="..\Sources\Resources.h" />
     <ClInclude Include="..\Sources\RicochetSkill.h" />
@@ -209,7 +217,6 @@
     <ClInclude Include="..\Sources\VisualElement.h" />
     <ClInclude Include="..\Sources\VolcanicIslandState.h" />
     <ClInclude Include="..\Sources\WinState.h" />
-    <ClInclude Include="..\Sources\Wolf.h" />
     <ClInclude Include="..\Sources\WhirlwindSkill.h" />
     <ClInclude Include="..\deps\tmxLite\Config.hpp" />
     <ClInclude Include="..\deps\tmxLite\FreeFuncs.hpp" />
@@ -228,8 +235,46 @@
     <ClInclude Include="..\deps\tmxLite\Tileset.hpp" />
     <ClInclude Include="..\deps\tmxLite\Types.hpp" />
     <ClInclude Include="..\deps\resource.h" />
+    <ClInclude Include="..\Sources\AltarSkeleton.h">
+      <Filter>Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Cleon.h">
+      <Filter>Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Crab.h">
+      <Filter>Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\EnemyPirate.h">
+      <Filter>Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Kraken.h">
+      <Filter>Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Magordito.h">
+      <Filter>Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\MagorditoIA.h">
+      <Filter>Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\MonkeyCoco.h">
+      <Filter>Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Pumpkin.h">
+      <Filter>Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Wolf.h">
+      <Filter>Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Altar.h" />
+    <ClInclude Include="..\Sources\Blunderbuss.h" />
+    <ClInclude Include="..\Sources\BoneBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\deps\Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Enemigos">
+      <UniqueIdentifier>{fd98e81f-7b6e-404a-9b9b-d73f60a83ebb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

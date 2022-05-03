@@ -11,6 +11,7 @@ bool Kraken::update() {
 
 	updateFrame();
 	updateCooldowns();
+	manageTint();
 
 	if (currEnemy_ == nullptr)
 		currEnemy_ = static_cast<Draw*>(GameManager::instance()->getPlayer());

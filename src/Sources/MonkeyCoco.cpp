@@ -8,6 +8,7 @@
 bool MonkeyCoco::update() {
 	updateFrame();
 	updateCooldowns();
+	manageTint();
 	//Si el mono ha muerto
 	if (currState_ == STATE::DYING) {
 		dieAnim();
