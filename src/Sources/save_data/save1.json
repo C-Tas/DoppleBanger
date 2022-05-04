@@ -1,0 +1,68 @@
+{
+  "currIsland": 2,
+  "unlockedIsland": 2,
+  "currGold": 438,
+  "stashGold": 5643,
+  "skillPoints": 415,
+  "precision": 300,
+  "melee": 173,
+  "clon": 300,
+  "questStarted": [true, false, false, false, false],
+  "questFinished": [true, false, true, false, false],
+  "rewardObtained": [true, false, true, false, false],
+  "unlockedSkills": [true, true, true, true, false, false, true, true, true, true],
+  "skills": ["Perforante", "Rebote", "Explosion"],
+  "objects": ["null", "null"],
+  "equipment": [{
+      "name": 0,
+      "price": 156,
+      "armor": 13.000000,
+      "health": 512.000000
+    }, {
+      "name": 3,
+      "price": 105,
+      "armor": 30.000000,
+      "critic": 35.000000
+    }, {
+      "name": 4,
+      "price": 121,
+      "armor": 5.000000,
+      "speed": 21.000000
+    }, {
+      "name": 6,
+      "price": 195,
+      "rate": 190.000000,
+      "damage": 260.000000
+    }, {
+      "name": 12,
+      "price": 328,
+      "rate": 300.000000,
+      "damage": 101.000000
+    }],
+  "inventory": [{
+      "type": 1,
+      "name": 3
+    }, {
+      "type": 0,
+      "name": 11,
+      "price": 220.000000,
+      "rate": 1000.000000,
+      "damage": 302.000000
+    }, {
+      "type": 1,
+      "name": 0
+    }, {
+      "type": 1,
+      "name": 0
+    }, {
+      "type": 1,
+      "name": 0
+    }, {
+      "type": 1,
+      "name": 0
+    }],
+  "inventorySize": 6,
+  "stash": [],
+  "stashSize": 0,
+  "completedZones": [true, true, true, true, true, false, false, false, false, false, false, false]
+}

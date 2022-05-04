@@ -35,6 +35,9 @@ private:
 	int advanced = 0;							//Complamentario a listPos, gurda cuantas veces se ha avanzado o retrocedido en la lista,para actualizar el iterador
 	Player* player_ = nullptr;
 
+	//UPGRATE
+	bool dragging = false;		//	Determina si el ratón se está draggeando un button
+
 	//USABILIDAD
 	OpenInv* openInv;
 	bool equipPot=false;

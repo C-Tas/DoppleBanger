@@ -313,7 +313,12 @@ void Inventory::draw()const {
 		//dibujamos los objetos de la primera columna
 		while (i < VIEW_LIST / 2 && aux != inventoryList_->end()) {
 			auxOb = *aux;
-			auxOb->setPos(Vector2D{ double(posx),double(posy + double(i * (double(app_->getWindowHeight()) / 9))) });
+			if (select_ == auxOb && dragging) {
+				auxOb->setPos(eventHandler_->getRealMousePos());
+			}
+			else {
+				auxOb->setPos(Vector2D{ double(posx),double(posy + double(i * (double(app_->getWindowHeight()) / 9))) });
+			}
 			equipType auxType = static_cast<Equipment*>(auxOb->getObject())->getEquipType();
 			if ((auxType == equipType::SwordI || auxType == equipType::SwordII
 				|| auxType == equipType::SaberI || auxType == equipType::SaberII)) {
@@ -328,7 +333,12 @@ void Inventory::draw()const {
 		int j = 0;
 		while (j < VIEW_LIST / 2 && aux != inventoryList_->end()) {
 			auxOb = *aux;
-			auxOb->setPos(Vector2D{ double(posx + (double)(app_->getWindowWidth() / 5)),double(posy + (j * (double(app_->getWindowHeight()) / 9))) });
+			if (select_ == auxOb && dragging) {
+				auxOb->setPos(eventHandler_->getRealMousePos());
+			}
+			else {
+				auxOb->setPos(Vector2D{ double(posx + (double)(app_->getWindowWidth() / 5)),double(posy + (j * (double(app_->getWindowHeight()) / 9))) });
+			}
 			equipType auxType = static_cast<Equipment*>(auxOb->getObject())->getEquipType();
 			if ((auxType == equipType::SwordI || auxType == equipType::SwordII
 				|| auxType == equipType::SaberI || auxType == equipType::SaberII)) {
@@ -620,8 +630,89 @@ void Inventory::update() {
 		else {
 			goToSkillsButton_->setTexture(app_->getTextureManager()->getTexture(Resources::TextureId::GoToSkillsAButton));
 		}
-		//Actualizamos los objetos normales
 
+		// Upgrate
+
+		if (select_ != nullptr && eventHandler_->getMouseButtonState((Uint8)HandleEvents::MOUSEBUTTON::LEFT)) {
+			dragging = true;
+			//printf("CLICK ON ");
+		}
+		else if (select_ != nullptr && eventHandler_->mouseButtonEvent()) {
+				dragging = false;
+				SDL_Rect selectedRect = {
+					eventHandler_->getRealMousePos().getX(),
+					eventHandler_->getRealMousePos().getY(),
+					10,
+					10
+				};
+
+				SDL_Rect rectPot1 = {
+					9.3 * (double)(app_->getWindowWidth() / 21),
+					5.5 * (double)(app_->getWindowHeight() / 17),
+					(double)(app_->getWindowWidth() / 18),
+					(double)(app_->getWindowWidth() / 18)
+				};
+
+				SDL_Rect rectPot2 = {
+					9.3 * (double)(app_->getWindowWidth() / 21),
+					9.3 * (double)(app_->getWindowHeight() / 17),
+					(double)(app_->getWindowWidth() / 18),
+					(double)(app_->getWindowWidth() / 18)
+				};
+
+				//comprobamos de que tipo es
+				Equipment* selEquip = static_cast<Equipment*>(select_->getObject());
+				equipType selType = selEquip->getEquipType();
+
+				Equipment* other = nullptr;
+				equipType otherType;
+
+				if (SDL_HasIntersection(&selectedRect, &equipment_.armor_->getDestiny())) {
+					selectObject(select_);
+					equipObject();
+				}
+				else if (SDL_HasIntersection(&selectedRect, &equipment_.boots_->getDestiny())) {
+					selectObject(select_);
+					equipObject();
+				}
+				else if (SDL_HasIntersection(&selectedRect, &equipment_.gloves_->getDestiny())) {
+					selectObject(select_);
+					equipObject();
+				}
+				else if (SDL_HasIntersection(&selectedRect, &equipment_.gun_->getDestiny())) {
+					selectObject(select_);
+					equipObject();
+				}
+				else if (equipment_.potion1_ == nullptr && SDL_HasIntersection(&selectedRect, &rectPot1) && select_->getObject()->getObjectType() == ObjectType::Usable) {
+					selectObject(select_);
+					equipObject();
+				}
+				else if (equipment_.potion2_ == nullptr && SDL_HasIntersection(&selectedRect, &rectPot2) && select_->getObject()->getObjectType() == ObjectType::Usable) {
+					selectObject(select_);
+					equipObject();
+				}
+				else if (equipment_.potion1_ != nullptr && SDL_HasIntersection(&selectedRect, &equipment_.potion1_->getDestiny()) && select_->getObject()->getObjectType() == ObjectType::Usable) {
+					selectObject(select_);
+					equipObject();
+				}
+				else if (equipment_.potion2_ != nullptr && SDL_HasIntersection(&selectedRect, &equipment_.potion2_->getDestiny()) && select_->getObject()->getObjectType() == ObjectType::Usable) {
+					selectObject(select_);
+					equipObject();
+				}
+				else if (SDL_HasIntersection(&selectedRect, &equipment_.sword_->getDestiny())) {
+					selectObject(select_);
+					equipObject();
+				}
+		}
+		else if (select_ != nullptr && dragging) {
+			if (eventHandler_->mouseMotionEvent()) {
+
+			}
+			else {
+				//printf("STA ");
+			}
+		}
+		//Actualizamos los objetos normales
 		GameState::update();
 	}
 }

@@ -23,7 +23,7 @@ private:
 	//
 	///<summary>Variables basicas de SDL</summary>
 	SDL_Window* window_ = nullptr;
-	SDL_Renderer* renderer_ = nullptr;
+	
 
 	///<summary>Máquina de estados</summary>
 	GameStateMachine* machine_ = nullptr;
@@ -72,6 +72,8 @@ private:
 	// de forma aleatoria
 	void createIdSesion();
 	//
+protected:
+	SDL_Renderer* renderer_ = nullptr;
 public:
 	///<summary>Construtora de la app</summary>
 	Application(GameStateMachine* state = nullptr);
