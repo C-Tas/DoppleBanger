@@ -531,7 +531,8 @@ void Inventory::printCompareObject() const
 			}
 		}
 		else if (auxType == equipType::SwordI || auxType == equipType::SwordII
-			|| auxType == equipType::SaberI || auxType == equipType::SaberII) {
+			|| auxType == equipType::SaberI || auxType == equipType::SaberII) 
+		{
 
 			if (select_->isEquipped()) {
 				auxTex1 = "da" + Resources::tildes_["ñ"] + "o: " + to_string((int)static_cast<Equipment*>(equipment_.sword_->getObject())->getMeleeDmg());
@@ -549,7 +550,6 @@ void Inventory::printCompareObject() const
 				auxTex2 = "AtaqueVel.: " + to_string(aux2);
 			}
 		}
-
 		else if (auxType == equipType::PistolI || auxType == equipType::PistolII
 			|| auxType == equipType::ShotgunI || auxType == equipType::ShotgunII) {
 
@@ -685,24 +685,33 @@ void Inventory::update() {
 				}
 				else if (equipment_.potion1_ == nullptr && SDL_HasIntersection(&selectedRect, &rectPot1) && select_->getObject()->getObjectType() == ObjectType::Usable) {
 					selectObject(select_);
+					usable* auxPotion = static_cast<usable*>(select_->getObject());
+					gm_->setObjectEquipped((ObjectName)auxPotion->getType(), Key::One);
 					equipObject();
 				}
 				else if (equipment_.potion2_ == nullptr && SDL_HasIntersection(&selectedRect, &rectPot2) && select_->getObject()->getObjectType() == ObjectType::Usable) {
 					selectObject(select_);
+					usable* auxPotion = static_cast<usable*>(select_->getObject());
+					gm_->setObjectEquipped((ObjectName)auxPotion->getType(), Key::Two);
 					equipObject();
 				}
 				else if (equipment_.potion1_ != nullptr && SDL_HasIntersection(&selectedRect, &equipment_.potion1_->getDestiny()) && select_->getObject()->getObjectType() == ObjectType::Usable) {
 					selectObject(select_);
+					usable* auxPotion = static_cast<usable*>(select_->getObject());
+					gm_->setObjectEquipped((ObjectName)auxPotion->getType(), Key::One);
 					equipObject();
 				}
 				else if (equipment_.potion2_ != nullptr && SDL_HasIntersection(&selectedRect, &equipment_.potion2_->getDestiny()) && select_->getObject()->getObjectType() == ObjectType::Usable) {
 					selectObject(select_);
+					usable* auxPotion = static_cast<usable*>(select_->getObject());
+					gm_->setObjectEquipped((ObjectName)auxPotion->getType(), Key::Two);
 					equipObject();
 				}
 				else if (SDL_HasIntersection(&selectedRect, &equipment_.sword_->getDestiny())) {
 					selectObject(select_);
 					equipObject();
 				}
+				
 		}
 		else if (select_ != nullptr && dragging) {
 			if (eventHandler_->mouseMotionEvent()) {

@@ -1,6 +1,7 @@
 #include "tutorialObject.h"
 
 bool tutorialObject::update() {
+	Enemy::manageTint();
 	//Solo entra con el dummy
 	if (currState_ == STATE::DYING) {
 		if (id_ >= 2) app_->getAudioManager()->playChannel(Resources::AudioId::DummyDie, 0, (int)EFFECT::TUTORIAL);

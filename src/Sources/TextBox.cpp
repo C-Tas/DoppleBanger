@@ -174,12 +174,14 @@ void TextBox::dialogElderMan(int num) {
 		case 1:
 			skipTutorial_->setPos(Vector2D{ app_->getWindowWidth() - skipTutorial_->getScaleX() - lineSpacing, dest.y + (double)lineSpacing * 3 });
 
+			//	upgrateOK
 			text.loadFromText(app_->getRenderer(), "Usa tu pistola con click derecho para romper esa botella que me recuerda al amor de ella.",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			break;
 		case 2:
-			text.loadFromText(app_->getRenderer(), "Presionando una " + Resources::tildes_["u"] + "nica vez el click izquierdo sobre un enemigo, puedes mocharlo.",
+			//	upgrateOK
+			text.loadFromText(app_->getRenderer(), "Presionando una " + Resources::tildes_["u"] + "nica vez el click izquierdo sobre un enemigo, puedes atacar con la espada.",
 				app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 			text.render(lineSpacing, dest.y + lineSpacing);
 			text.loadFromText(app_->getRenderer(), "Te recomiendo limpiar tu espada despu" + Resources::tildes_["e"] + "s .",
@@ -189,10 +191,11 @@ void TextBox::dialogElderMan(int num) {
 		case 3:
 			switch (num) {
 			case 0:
-				text.loadFromText(app_->getRenderer(), "Mira abajo a la derecha, son tus puntos de haza" + Resources::tildes_["ñ"] + "a",
+				//	upgrateOK
+				text.loadFromText(app_->getRenderer(), "Mira abajo a la derecha en la interfaz, son tus puntos de haza" + Resources::tildes_["ñ"] + "a.",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
-				text.loadFromText(app_->getRenderer(), "Puedes verlos en la esquina derecha de abajo. Se consiguen al ganar experiencia.",
+				text.loadFromText(app_->getRenderer(), "Se consiguen al matar enemigos.",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing * 2);
 				text.loadFromText(app_->getRenderer(), "Abre el menu de habilidades con la 'V' y s" + Resources::tildes_["u"] + "malos a la segunda rama.",
@@ -203,16 +206,17 @@ void TextBox::dialogElderMan(int num) {
 				button_->update();
 				break;
 			case 1:
-				text.loadFromText(app_->getRenderer(), "Al desbloquear la habilidad haz click sobre esta y luego haz click sobre el acceso (Q, W, E) que te guste.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				//	upgrateOK
+				text.loadFromText(app_->getRenderer(), "Al desbloquear una habilidad puedes equiparla haciendo click en ella y pulsando las teclas.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
 
-				text.loadFromText(app_->getRenderer(), "Ahora usa ese acesso para activar la habilidad y mocha al susodicho.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "(QWE) creando un acceso r" + Resources::tildes_["a"] + "pido." , app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
-				text.loadFromText(app_->getRenderer(), "Utilizar una habilidad te consumir" + Resources::tildes_["a"] + " man" + Resources::tildes_["a"] + ", puedes ver la cantidad que tienes en la barra", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "Utilizar una habilidad consumir" + Resources::tildes_["a"] + " man" + Resources::tildes_["a"] + ", puedes ver la cantidad que tienes en el tim" + Resources::tildes_["o"] + "n.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 3));
 
-				text.loadFromText(app_->getRenderer(), "azul del tim" + Resources::tildes_["o"] + "n.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "Prueba ahora con tu nueva habilidad matar al mu" +Resources::tildes_["ñ"] + "eco", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 4));
 				break;
 			}
@@ -220,10 +224,11 @@ void TextBox::dialogElderMan(int num) {
 		case 5:
 			switch (num) {
 			case 0:
-				text.loadFromText(app_->getRenderer(), "Algunas veces encontrar" + Resources::tildes_["a"] + "s tesoros, no lo dudes " + Resources::tildes_["¡"] + Resources::tildes_["¡"] + "m" + Resources::tildes_["o"] + "chalos a todos!!",
+				//	upgrateOK
+				text.loadFromText(app_->getRenderer(), "Algunas veces encontrar" + Resources::tildes_["a"] + "s tesoros en tus aventuras.",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
-				text.loadFromText(app_->getRenderer(), "Usa el oro del cofre para comprar una poci" + Resources::tildes_["o"] + "n a ese t" + Resources::tildes_["i"] + "o mas verde que t" + Resources::tildes_["u"] + ".",
+				text.loadFromText(app_->getRenderer(), "Usa el oro del cofre para comprar una poci" + Resources::tildes_["o"] + "n al lagarto.",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing * 2);
 				text.loadFromText(app_->getRenderer(), "Si te sobra algo podr" + Resources::tildes_["i"] + "as comprarme un ron, " + Resources::tildes_["¿"] + "no?",
@@ -233,20 +238,22 @@ void TextBox::dialogElderMan(int num) {
 				button_->update();
 				break;
 			case 1:
-				text.loadFromText(app_->getRenderer(), "Abre el inventario con la tecla 'C' y equ" + Resources::tildes_["i"] + "pala con el bot" + Resources::tildes_["o"] + "n verde.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				//	upgrateOK
+				text.loadFromText(app_->getRenderer(), "Abre el inventario con la tecla 'C' y equ" + Resources::tildes_["i"] + "pala.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
 
-				text.loadFromText(app_->getRenderer(), "Los objetos equipados se usan con los accesos '1' y '2' respectivamente.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "Los objetos equipados se usan con las teclas '1' y '2'.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 2));
 
-				text.loadFromText(app_->getRenderer(), "Prueba a beberte la poci" + Resources::tildes_["o"] + "n, ver" + Resources::tildes_["a"] + "s como te sube la cantidad de man" + Resources::tildes_["a"] + ".", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
+				text.loadFromText(app_->getRenderer(), "B" + Resources::tildes_["e"] + "bete la poci" + Resources::tildes_["o"] + "n como si fuera ron.", app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + (lineSpacing * 3));
 				break;
 			}
 			break;
 		case 6:
 			switch (num) {
-			case 0:
+			case 0:			
+				//	upgrateOK
 				skipTutorial_->setTexture(app_->getTextureManager()->getTexture(Resources::ButtonFinishTutorial));
 				text.loadFromText(app_->getRenderer(), "Ten cuidado ah" + Resources::tildes_["i"] + " fuera porque si eres derrotada podr" + Resources::tildes_["e"] + " ir a salvarte",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
@@ -261,13 +268,14 @@ void TextBox::dialogElderMan(int num) {
 				button_->update();
 				break;
 			case 1:
-				text.loadFromText(app_->getRenderer(), "Actuar" + Resources::tildes_["a"] + " como diana para los enemigos y disparar" + Resources::tildes_["a"] + " donde t" + Resources::tildes_["u"] + " lo hagas.",
+				//	upgrateOK
+				text.loadFromText(app_->getRenderer(), "Actuar" + Resources::tildes_["a"] + " como se"+ Resources::tildes_["ñ"]+"uelo.",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing);
-				text.loadFromText(app_->getRenderer(), "Adem" + Resources::tildes_["a"] + "s podr" + Resources::tildes_["a"] + "s mejorarla con los puntos de haza" + Resources::tildes_["ñ"] + "a para que tambi" + Resources::tildes_["e"] + "n pueda mochar.",
+				text.loadFromText(app_->getRenderer(), "Adem" + Resources::tildes_["a"] + "s podr" + Resources::tildes_["a"] + "s mejorarla con los puntos de haza" + Resources::tildes_["ñ"] + "a.",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing * 2);
-				text.loadFromText(app_->getRenderer(), "Bueno, si me disculpas, hoy tocha pecho y biceps.",
+				text.loadFromText(app_->getRenderer(), "Bueno, si me disculpas, hoy toca pecho y biceps.",
 					app_->getFontManager()->getFont(Resources::FontId::RETRO), { COLOR(0x00000000) });
 				text.render(lineSpacing, dest.y + lineSpacing * 3);
 				break;
